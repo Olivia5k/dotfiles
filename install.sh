@@ -39,6 +39,7 @@ if [ "$PWD" = "$HOME/config" ] ; then
 	dirs[3]='ncmpcpp'
 	dirs[4]='vim'
 	dirs[5]='weechat'
+	dirs[6]='terminfo'
 
 	for i in `seq 1 ${#dirs[@]}` ; do
 		_ins "./${dirs[$i]}" "$HOME/.${dirs[$i]}"
