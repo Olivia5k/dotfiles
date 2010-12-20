@@ -1,7 +1,7 @@
 #=======================================================#
 # Boring details
 set realname = "Lowe Thiderman"
-set from = "lowe.thiderman@gmail.com"
+set from = "lowe.thiderman@mancx.com"
 set use_from = yes
 set envelope_from ="yes"
 
@@ -10,7 +10,7 @@ set envelope_from ="yes"
 
 # Use msmtp rather than sendmail. Check that 
 # the path is correct for your system:
-#set sendmail="/usr/bin/msmtp"
+set sendmail="/usr/bin/msmtp"
 
 # If not set in ~/.bashrc:
 set spoolfile = "$HOME/mail/"

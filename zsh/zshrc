@@ -70,6 +70,9 @@
 		export HASTODO=false
 	fi
 
+	#export PYTHONSTARTUP=$HOME/.pystartup
+	export PYTHONSTARTUP=$HOME/.bpystartup
+
 	if [ $TERM = "linux" ] && $FORCE_CONSOLE; then
 		export PMODE=1
 	elif [ $TERM = "xterm" ] && $FORCE_MOBILE ; then
@@ -367,7 +370,7 @@
 	alias dm='python2 manage.py'
 	alias dr='dm runserver'
 	alias ds='echo "no" | dm syncdb'
-	alias dz='dm shell'
+	alias dz='bpython'
 
 	# Django sync hard. Useful when you update a model and the regular sync
 	# cant catch it. Note that extensive fixtures are crucial for this to be
@@ -410,7 +413,8 @@
 		alias go='git checkout'
 		alias gp='git push'
 		alias gs='git status'
-		alias gt='git stash'
+		alias gst='git stash'
+		alias gt='git tag'
 		alias gU='git pull && git submodule update'
 		alias gu='git pull' # git update...-ish.
 
@@ -418,6 +422,15 @@
 		alias gm='git config branch.master.remote origin &&
 				git config branch.master.merge refs/heads/master' 
 		alias gau='git update-index --assume-unchanged'
+		gi() {
+			if [ -z "$1" ] ; then ; echo "Specify project name" && exit 1 ; fi
+
+			git init $1
+			cd $1
+			touch README
+			git add README
+			git commit -m "Initial commit"
+		}
 	fi
 # }}}
 # System and service handling {{{
@@ -439,6 +452,7 @@
 		sudo netcfg $wlan
 	}
 	alias ia='sudo ifconfig -a'
+	alias ar='sudo /etc/init.d/apache2 restart'
 # }}}
 # MPD {{{
 	if $(has mpd); then

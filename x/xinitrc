@@ -1,4 +1,4 @@
-setxkbmap a6 &
+setxkbmap q6 &
 xset r rate 330 45 &
 
 exec xsetroot -cursor_name left_ptr &

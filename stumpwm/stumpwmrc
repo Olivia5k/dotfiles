@@ -35,7 +35,7 @@
 
 ;;(setf *debug-level*   10
 
-;;      *mouse-focus-policy* :click)
+;;	  *mouse-focus-policy* :click)
 
 ; ditch the x
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr -fg white -bg black")
@@ -57,33 +57,33 @@
 
 
 (setf *mode-line-background-color* "black"
-      *mode-line-foreground-color* "White"
-      *mode-line-border-color* "darkgrey"
-      *mode-line-timeout* 1
-      *mode-line-screen-position* :bottom
-      *window-format* "^B^8*%n%s%m%30t :: ^7*"
-      *group-format* "%t")
+    *mode-line-foreground-color* "White"
+    *mode-line-border-color* "darkgrey"
+    *mode-line-timeout* 1
+    *mode-line-screen-position* :bottom
+    *window-format* "^B^8*%n%s%m%30t :: ^7*"
+    *group-format* "%t")
 
 ;(setf *disk-usage-paths* '("/mnt/Books" "/mnt/Docs" "/mnt/Games" "/mnt/Movies_1" "/mnt/Movies_2" "/mnt/Movies_3" "/mnt/Music_1" "/mnt/Music_2/" "/mnt/Music_3" "/mnt/Music_4" "/mnt/Music_5" "/mnt/Mvids" "/mnt/Porn" "/mnt/TV" "/mnt/TV_2""))
 ;(setf stumpwm:*screen-mode-line-format*
-;      "%D")
+;	  "%D")
 
 ; FIXME dont wanna have to use mode-line just so I can use dzen2
 ;(dolist (head (screen-heads (current-screen))) (enable-mode-line (current-screen) head
-;                t *screen-mode-line-format*
-;                ))
+;				t *screen-mode-line-format*
+;				))
 
 ;; Mode line setup - separate setup per head
 ;(setf stumpwm:*mode-line-timeout* 1)
 
 ;(defun set-mode-line-formats ()
 ;  (let ((heads (screen-heads (current-screen))))
-;    (defun set-ml (h-idx format)
-;      (enable-mode-line (current-screen) (nth h-idx heads) t format))
+;	(defun set-ml (h-idx format)
+;	  (enable-mode-line (current-screen) (nth h-idx heads) t format))
 
-;    (set-ml 0 "%D ")
-;    (set-ml 1 "%m ")
-;    ))
+;	(set-ml 0 "%D ")
+;	(set-ml 1 "%m ")
+;	))
 ;(set-mode-line-formats)
 
 
@@ -94,21 +94,53 @@
 (set-msg-border-width 1)
 
 (setf *maxsize-border-width* 1
- *normal-border-width* 1
- *window-border-style* :thin
- *transient-border-width* 4) ; popups \o/
+    *normal-border-width* 1
+    *window-border-style* :thin
+    *transient-border-width* 4) ; popups \o/
 
 (setf *message-window-gravity* :top-right
-      *timeout-wait*           10
-      *input-window-gravity*   :top-left)
+    *timeout-wait*           10
+    *input-window-gravity*   :top-left)
 
 
 ;; Turn of welcome message
 (setf *startup-message* nil)
 
+;; Little helper
+(defun cat (&rest strings) "A shortcut for (concatenate 'string foo bar)."
+  (apply 'concatenate 'string strings))
+
+;; INTARNETS
+(defcommand uzbl (s)
+  ((:string "uzbl: "))
+  (check-type s string)
+  (substitute #\+ #\Space s)
+  (run-shell-command (cat "python /home/daethorian/script/py/www.py " s)))
+
+;; MPD
+(defparameter *mpd-map*
+  (let ((m (make-sparse-keymap)))
+  (define-key m (kbd "h") "exec mpc prev")
+  (define-key m (kbd "l") "exec mpc next")
+  (define-key m (kbd "m") "exec mpc toggle")
+  (define-key m (kbd "z") "exec mpc random")
+  (define-key m (kbd "SPC") "exec mpc toggle")
+  m))
+
+(define-key *root-map* (kbd "m") '*mpd-map*)
+(define-key *root-map* (kbd "C-m") '*mpd-map*)
+
+;; Volume
+(defcommand volume (v)
+  ((:string "vol: "))
+  (check-type v string)
+  (run-shell-command (cat "amixer set PCM " v "%")))
+
+(define-key *root-map* (kbd "v") "volume")
+
 ;;;; Windows
 
-(set-focus-color   "lightskyblue1")
+(set-focus-color "lightskyblue1")
 (set-unfocus-color "grey20")
 (set-normal-gravity :center)
 (setf *normal-border-width* 1)
@@ -116,6 +148,7 @@
 (define-key *top-map* (kbd "s-RET") "exec urxvt -name smallfont")
 (define-key *root-map* (kbd "RET") "exec urxvt -name smallfont")
 (define-key *root-map* (kbd "c") "exec urxvt")
+(define-key *root-map* (kbd "u") "uzbl")
 
 ;; sane bindings for window management
 (define-key *root-map* (kbd "h") "move-focus left")
@@ -128,12 +161,15 @@
 (define-key *top-map* (kbd "s-k") "move-focus up")
 (define-key *top-map* (kbd "s-l") "move-focus right")
 
+(define-key *root-map* (kbd "H") "move-window left")
 (define-key *root-map* (kbd "J") "move-window down")
 (define-key *root-map* (kbd "K") "move-window up")
 (define-key *root-map* (kbd "L") "move-window right")
 
 (define-key *root-map* (kbd "s") "hsplit")
 (define-key *root-map* (kbd "z") "vsplit")
+
+(define-key *root-map* (kbd "x") "exec xlock")
 
 (define-key *top-map* (kbd "s-Tab") "gnext")
 (define-key *top-map* (kbd "s-S-Tab") "gprev")
@@ -146,9 +182,6 @@
 (define-key *top-map* (kbd "F12") "exec setxkbmap q6; stumpish echo qwerty")
 
 ;;; The End
-
-
-
 
 ;(define-key *root-map* (kbd "p") "exec mpc -h 192.168.1.100 next")
 ;(define-key *root-map* (kbd "o") "exec rmcd -t")
@@ -179,3 +212,4 @@
 ;(define-key *root-map* (kbd "m") "exec perl /home/scp1/bin/dmenurl")
 ;(define-key *root-map* (kbd "e") "exec sh /home/scp1/bin/dmenu.sh")
 
+; vim: set et,ts=2,sts=2,ft=lisp
