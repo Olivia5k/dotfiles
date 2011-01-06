@@ -79,6 +79,13 @@
 
 	if which $_EDITOR &> /dev/null ; then
 		export EDITOR=$(which $_EDITOR)
+
+		# vim has the -p option that opens multiple files in tabs istead of
+		# buffers. If you think that buffers are teh awesome, change the below
+		# true into false.
+		if true && [ $_EDITOR = "vim" ] ; then
+			export EDITOR="$EDITOR -p"
+		fi
 	else
 		export EDITOR=$(which vi)
 	fi
@@ -126,15 +133,20 @@
 # User chpwd and path {{{
 	# Your todo list. The defaults are specified for devtodo
 	# (http://swapoff.org/DevTodo). If $TODO is installed and $TODOFILE is in
-	# the current directory, $TODO is run on chpwd().
+	# the current directory, $TODO is run upon chpwd().
 	export TODO='todo'
 	export TODOFILE='.todo'
 
-	# Your choice of other chpwd() command.
 	# When I used lscmd() (included in main zshrc) and found out that 25% of all
 	# the commands I ever used in zsh was ls, I figured that it could be more
-	# effective. It takes some getting used to, but it is really worth it!
+	# effective and put ls into chpwd.
+	# It takes some getting used to, but it is really worth it!
 	export CHPWD=true
+
+	# Your choice of chpwd() command.
+	_chpwd() {
+		ls
+	}
 	
 	# Your home bin. In the rc there are functions included that handles
 	# installation and uninstallation of custom executables. If this is desired,
