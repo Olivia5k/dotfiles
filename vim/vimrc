@@ -103,7 +103,7 @@
 		colorscheme ninjaloot
 	else
 		let g:force_lofi = 0
-		colorscheme xoria
+		colorscheme mancx
 	endif
 " }
 " Custom functions {
@@ -145,15 +145,6 @@
 			echo 'Paste disabled'
 		endif
 	endfunction " }
-	"function! Toggle(name, var, on, off) " {
-		"if a:var == 0
-			"set paste
-			"echo 'Paste enabled'
-		"else
-			"set nopaste
-			"echo 'Paste disabled'
-		"endif
-	"endfunction " }
 	function! WhitespaceToggle() " {
 		if &expandtab == 0
 			set expandtab
@@ -206,75 +197,88 @@
 	endfunction " }
 " }
 " Custom mappings {
-	" Unmap them evil arrows
-	noremap <Up> <NOP>
-	noremap <Right> <NOP>
-	noremap <Down> <NOP>
-	noremap <Left> <NOP>
-	
-	noremap <space> /
+	" Navigation {
+		" Unmap them evil arrows
+		noremap <Up> <NOP>
+		noremap <Right> <NOP>
+		noremap <Down> <NOP>
+		noremap <Left> <NOP>
 
-	com! W call SudoWrite()
+		" Map Ctrl-hjkl to be navigation when in insert mode.
+		imap <C-h> <Left>
+		imap <C-j> <Down>
+		imap <C-k> <Up>
+		imap <C-l> <Right>
+		
+		noremap <space> /
+	" }
+	" Sourcing {
+		nmap ,v :source $MYVIMRC<cr>
+		nmap ,V :tabe $MYVIMRC<cr>
+		nmap ,t :NERDTree<cr>
+		nmap ,x :!xclip %<cr>
+	" }
+	" Colorschemes {
+		nmap ,ne :colo neverland
+		nmap ,ni :colo ninjaloot
+		nmap ,en :tabe ~/.vim/colors/ninjaloot.vim<cr>
+		nmap ,ev :tabe ~/.vim/colors/neverland.vim<cr>
+		nmap ,ex :tabe ~/.vim/colors/xoria.vim<cr>
+	" }
+	" Togglers {
+		nmap ,w :call WrapToggle()<cr>
+		nmap ,<space> :call HlsToggle()<cr>
+		nmap ,p :call PasteToggle()<cr>
+		nmap ,l :call LoFiToggle()<cr>
+		nmap ,o :call ScrolloffToggle()<cr>
+		nmap ,C :call ColorschemeToggle()<cr>
+		nmap ,s mt:call WhitespaceToggle()<cr>`t
+		nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
+	" }
+	" Misc. {
+		"com! W call SudoWrite()
+		
+		" Show syntax groups beneath cursor
+		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-	nmap ,v :source $MYVIMRC<cr>
-	nmap ,V :tabe $MYVIMRC<cr>
-	nmap ,t :NERDTree<cr>
-	nmap ,x :!xclip %<cr>
-
-	nmap ,ne :colo neverland
-	nmap ,ni :colo ninjaloot
-	nmap ,en :tabe ~/.vim/colors/ninjaloot.vim<cr>
-	nmap ,ev :tabe ~/.vim/colors/neverland.vim<cr>
-	nmap ,ex :tabe ~/.vim/colors/xoria.vim<cr>
-
-	nmap ,w :call WrapToggle()<cr>
-	nmap ,<space> :call HlsToggle()<cr>
-	nmap ,p :call PasteToggle()<cr>
-	nmap ,l :call LoFiToggle()<cr>
-	nmap ,o :call ScrolloffToggle()<cr>
-	nmap ,C :call ColorschemeToggle()<cr>
-	nmap ,s mt:call WhitespaceToggle()<cr>`t
-	nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
-
-	nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-	nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
-
-	nmap ,fm :set foldmethod=marker<cr>
-	nmap ,fi :set foldmethod=indent<cr>
-
-	" CSS
-	nmap ,b A {<cr>}<esc>k^
-
-	" Django
-	nmap ,dd odebug()<esc>i
-	nmap ,db o{% block <++> %}<cr>{% endblock %}<esc>k^<C-j>
-	nmap ,di o{% if <++> %}<cr>{% endif %}<esc>k^<C-j>
-	nmap ,df o{% for <++> as <++> %}<cr>{% endfor %}<esc>k^<C-j>
-	nmap ,dtt I{% trans "<esc>A" %}<esc>^
-	nmap ,dtb o{% blocktrans %}<cr>{% endblocktrans %}<esc>k^
-	nmap ,dvd a{{  }}<esc>2hi
-	nmap ,dvv o{{  }}<esc>2hi
-
-	" Python
-	nmap ,zii oimport
-	nmap ,ziz ofrom  import <++><esc>2Tma
-	" nmap ,zz ?def \|class <cr>/):$<cr>o""""""<cr><esc>k2la
-	nmap ,zz ?def\\|class<cr>/):$<cr>o""""""<cr><esc>k2la
-	nmap ,zd o""""""<cr><esc>k2la
-
-	" Better tabs for the hands
-	" Real men only use z[HL] anyway
-	nmap zh gT
-	nmap zl gt
-	nmap zn :tabe<cr>
-	nmap gh gT
-
-	" Better windowing as well?
-	" nmap w <C-w>
-
-	" I hate these
-	nmap K k
-	nmap S S<esc>
-	noremap Q <nop>
+		" Search for all single/double-quoted strings
+		nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
+	" }
+	" Folding {
+		nmap ,fm :set foldmethod=marker<cr>
+		nmap ,fi :set foldmethod=indent<cr>
+	" }
+	" CSS {
+		nmap ,b A {<cr>}<esc>k^
+	" }
+	" Django {
+		nmap ,dd odebug()<esc>i
+		nmap ,db o{% block <++> %}<cr>{% endblock %}<esc>k^<C-j>
+		nmap ,di o{% if <++> %}<cr>{% endif %}<esc>k^<C-j>
+		nmap ,df o{% for <++> as <++> %}<cr>{% endfor %}<esc>k^<C-j>
+		nmap ,dtt I{% trans "<esc>A" %}<esc>^
+		nmap ,dtb o{% blocktrans %}<cr>{% endblocktrans %}<esc>k^
+		nmap ,dvd a{{  }}<esc>2hi
+		nmap ,dvv o{{  }}<esc>2hi
+	" }
+	" Python {
+		nmap ,zii oimport
+		nmap ,ziz ofrom  import <++><esc>2Tma
+		" nmap ,zz ?def \|class <cr>/):$<cr>o""""""<cr><esc>k2la
+		nmap ,zz ?def\\|class<cr>/):$<cr>o""""""<cr><esc>k2la
+		nmap ,zd o""""""<cr><esc>k2la
+	" }
+	" Better tabs for the hands {
+		nmap zh gT
+		nmap zl gt
+		nmap zn :tabe<cr>
+	" }
+	" I hate these {
+		nmap K k
+		vmap K k
+		nmap S S<esc>
+		noremap Q <nop>
+	" }
 " }
+
 " vim: set noet:sw=4:fmr=marker:fdm={,}

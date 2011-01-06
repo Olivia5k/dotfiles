@@ -5,6 +5,11 @@ set from = "lowe.thiderman@mancx.com"
 set use_from = yes
 set envelope_from ="yes"
 
+# Forward attachments
+#set mime_forward=yes
+#set mime_forward_rest=yes
+
+
 # Use a signature
 # set signature="~/.signature"
 
@@ -51,9 +56,9 @@ set edit_headers=yes      # See the headers when editing
 #======================================================#
 # Aliases
 
-set alias_file = ~/.mutt/mutt_aliases # In their own file
-source ~/.mutt/mutt_aliases           # Source them
-set sort_alias=alias                 # Sort alphabetically
+set alias_file = ~/.local/share/mutt/aliases # In their own file
+source ~/.local/share/mutt/aliases           # Source them
+set sort_alias=alias                              # Sort alphabetically
 
 #======================================================#
 # Macros

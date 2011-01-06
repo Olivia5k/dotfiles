@@ -150,7 +150,7 @@ nmap gcc O/*  */<esc>2hi
 " Custom
 nmap ghdC o<div class="clear"></div><esc>^<esc>
 nmap ghdm o</div><return><div class="main container"><esc>^<esc>
-nmap ,h :source ~/.vim/plugin/html.vim<cr>
-nmap ,H :sp ~/.vim/plugin/html.vim<cr>
+"nmap ,h :source ~/.vim/plugin/html.vim<cr>
+"nmap ,H :sp ~/.vim/plugin/html.vim<cr>
 nmap gxc o<x><return></x><esc>k:.,+1s/x/
 nmap gxe o< /><esc>2hi

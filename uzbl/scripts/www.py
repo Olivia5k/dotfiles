@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import re
 
 from urllib.parse import quote
 import subprocess as sub
@@ -11,7 +12,6 @@ ENGINES = {
     'g': 'google',
     't': 'tvtropes',
     'w': 'wikipedia',
-    'y': 'youtube',
     'l': 'localhost'
 }
 
@@ -37,12 +37,19 @@ def localhost(args):
 def main():
     url = None
 
-    if len(sys.argv) > 1 and len(sys.argv[1]) == 1:
-        url = globals()[ENGINES[sys.argv[1]]](sys.argv[1:])
+    if len(sys.argv) == 1:
+        url = 'http://www.google.com'
+    elif len(sys.argv[1]) == 1:
+        # This is probably the least pythonic row of code ever written
+        url = globals()[ENGINES[sys.argv[1]]](sys.argv[2:])
     elif len(sys.argv) > 2 or len(sys.argv) == 2 and '.' not in sys.argv[1]:
         url = google(sys.argv[1:])
     else:
-        url = 'http://' + sys.argv[1]
+        url = sys.argv[1]
+
+        # If no protocol, add http
+        if not re.search(r'[a-z]{2,}://', url):
+            url = 'http://%s' % url
 
     if url:
         browser(url)

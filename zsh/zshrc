@@ -9,6 +9,18 @@
 # http://grml.org/zsh/zsh-lovers.html
 # http://aperiodic.net/phil/prompt/
 # https://bbs.archlinux.org
+#
+# TODO:
+# Add prompt colorschemes \o/
+# Make dirdiff more useful
+# Make PKEEP more logical. Add -h and --help
+# Add hide and unhide
+# Add bak and unbak
+# Move PYHTONARGSWHATEVER
+# Add docstring style to all functions and add a function that prints most of
+# them
+# Split ls and files
+# TMOUT prompt shower
 
 # Loading and setting {{{
 	setopt extendedglob
@@ -51,6 +63,7 @@
 	export TCOLORS=$(echotc Co)
 
 	# Helper function and setter
+	# With this, one can just run if has <application> ; then [...].
 	has() {
 		if which $1 &> /dev/null ; then
 			echo true
@@ -71,7 +84,7 @@
 	fi
 
 	#export PYTHONSTARTUP=$HOME/.pystartup
-	export PYTHONSTARTUP=$HOME/.bpystartup
+	export PYTHONSTARTUP=$XDG_DATA_HOME/python/djangoloader.py
 
 	if [ $TERM = "linux" ] && $FORCE_CONSOLE; then
 		export PMODE=1
@@ -84,7 +97,7 @@
 
 	# Kill root after three minutes
 	if [ "$UID" = 0 ] && [ -n "$ROOT_TIMEOUT" ] ; then
-		print -P "Warning: Root shell will timeout after %B%F{red}180 seconds%f%b."
+		print -P "Warning: Root shell will timeout after %B%F{red}$ROOT_TIMEOUT seconds%f%b."
 		TMOUT=$ROOT_TIMEOUT
 	fi
 # }}}
@@ -141,24 +154,25 @@
 	alias vim="vim -p"
 	alias t='todo'
 	alias tt='todo +children'
-	alias dt='dmesg'
+	alias dt='dmesg' # `dm` is django manage alias
 	alias fm='fetchmail'
 	alias py='python'
 	alias bp='bpython' # <3
 	alias pl='perl'
 	alias am='alsamixer'
-	alias xr='xset r rate 330 45'
+	alias xr='xset r rate 330 45 && echo 330/45'
 	alias xa='setxkbmap a6'
 	alias xq='setxkbmap q6'
-	alias ms="rsync $REMOTE:mail/ ~/mail -a --delete &> /dev/null"
-	alias :q="exit"
 	alias aoeu="xq"
 	alias asdf="xa"
+	alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
+	alias :q="exit"
+
+	alias vga="xrandr --output VGA1 --auto && xrandr --output LVDS1 --off"
+	alias lvds="xrandr --output LVDS1 --auto && xrandr --output VGA1 --off"
 
 	alias u='urxvt &| exit'
 	alias us='urxvt -name smallfont &| exit'
-	alias uz='uzbl-browser'
-	alias ut='uzbl-tabbed'
 
 	alias lock='vlock -n'
 	alias bell='echo -en "\007"'
@@ -223,7 +237,8 @@
 	alias lle="$ls -ld *(-/DN^F)"       # list details of all empty directories
 	alias ller="$ls -lhd **/*(-/DN^F)"  # list details of all empty directories recursively
 
-	swap() { # Swap name of $1 and $2
+	# Swap name of $1 and $2
+	swap() {
 		if [ -f $1 ] ; then
 			if [ -f $2 ] ; then
 				mv $1 $1.swapcopy;
@@ -236,9 +251,67 @@
 			echo "'$1' is not a valid file!"
 		fi
 	}
+
+	# Backup a file
+	# First argument is the file, second argument is the extension; defaults to
+	# .bak
+	b() {
+		if [ -z "$1" ] ; then
+			zerror "No arguments given."
+			return
+		fi
+
+		local ext=${$2:-".bak"}
+		local dest="$1.$ext"
+		if [ -f $dest ] ; then
+			zerror "Backup destination $dest already exists."
+			return
+		fi
+
+		cp $1 $dest
+	}
+
+	# Hide or unhide files.
+	h() {
+		if [ -z "$1" ] ; then
+			zerror "No arguments given"
+			return
+		fi
+
+		for f in $* ; do
+			if [ ! -f $f ] ; then
+				zerror "$f: Not a file"
+				continue
+			elif [ ! -w $f ] ; then
+				zerror "$f: Not writable"
+				continue
+			fi
+
+			local b=$(basename $f)
+			local dir=$(dirname $f)
+			if [[ $b =~ "^\." ]] ; then
+				# File is hidden
+				local dest="$dir/$(echo $b | sed -e 's/^\.//')"
+			else
+				# File is not hidden
+				local dest="$dir/.$b"
+			fi
+
+			if [ -f $dest ] ; then
+				zerror "Destination file $dest exists"
+				continue
+			fi
+
+			echo "$f -> $dest"
+		done
+	}
+
+	# Make the directories and enter $1
 	mk() {
 		mkdir $* && cd $1
 	}
+
+	# Remove all files of certain extension
 	rmext() {
 		for e in $*; do
 			find . -iname "*.$e" | xargs rm -rv
@@ -272,6 +345,11 @@
 	# through files with criminally long lines.
 	ggl() {
 		grep "$*" * -RlIis
+	}
+
+	# Same as above, but instead of printing the files, open them in your editor
+	eggl() {
+		$EDITOR $(ggl $*)
 	}
 
 	# List differential files between two directories
@@ -405,25 +483,32 @@
 		alias ga='git add'
 		alias gb='git branch'
 		alias gc='git commit -a'
-		alias gC='git commit -a && git push'
 		alias gd='git diff'
 		alias gdt='git difftool'
 		alias gl='git log --pretty=oneline'
-		alias gL='git log'
+		alias gll='git log'
+		alias gm="git merge"
 		alias go='git checkout'
 		alias gp='git push'
 		alias gs='git status'
-		alias gst='git stash'
-		alias gt='git tag'
 		alias gU='git pull && git submodule update'
 		alias gu='git pull' # git update...-ish.
 
-		# Setup default master options
-		alias gm='git config branch.master.remote origin &&
-				git config branch.master.merge refs/heads/master' 
 		alias gau='git update-index --assume-unchanged'
+
+		# Setup remote for a branch
+		gbr() {
+			if [ -n "$1" ] ; then
+				git config branch.$1.remote origin
+				git config branch.$1.merge refs/heads/$1
+			else
+				echo "Tell me a branch, fool."
+			fi
+		}
+
+		# Initialize a project
 		gi() {
-			if [ -z "$1" ] ; then ; echo "Specify project name" && exit 1 ; fi
+			if [ -z "$1" ] ; then ; echo "Specify project name" && return 1 ; fi
 
 			git init $1
 			cd $1
@@ -445,7 +530,7 @@
 		if [ -n "$1" ] ; then
 			wlan=$1
 		else
-			wlan='home'
+			wlan='ninjanet'
 		fi
 
 		sudo netcfg -d $wlan
@@ -642,12 +727,13 @@
 			$TODO && echo
 		fi
 
-		if [ -n "$CHPWD" ] ; then
+		if $CHPWD ; then
 			ls
 		fi
 	}
 	precmd () {
 		if [ $TERM != "linux" ] ; then
+			# Print xterm title
 			print -Pn "\e]0;%n@%m: %~\a"
 
 			# Add svn?

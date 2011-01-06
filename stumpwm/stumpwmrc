@@ -22,15 +22,9 @@
 
 
 ;(load-module "mpd")
-;(load-module "disk")
-;(load "/home/scp1/bin/mpd.lisp")
 (set-prefix-key (kbd "C-f"))
 
 ;; Variables
-
-;;(defparameter terminal "exec urxvtc -e screen -dr -X screen zsh && screen -x")
-;;(defparameter terminal "$HOME/bin/fuckingscreenbugshit")
-
 (setf *shell-program* (stumpwm::getenv "SHELL")) ;getenv is not exported
 
 ;;(setf *debug-level*   10
@@ -48,13 +42,6 @@
 ;(head-resize nr x y width height)
 
 (set-font "-xos4-terminus-*-*-*-*-14-*-*-*-*-*-*-*")
-;(set-font "-xos4-terminus-medium-r-normal--0-0-72-72-c-0-iso8859-1")
-;(set-font "-xos4-terminus-medium-r-normal--0-0-72-72-c-0-iso8859-7")
-;(set-font "-*-dina-medium-r-normal-*-*-*-*-*-*-*-*-*")
-;(set-font "-lispm-fixed-medium-r-normal-*-13-*-*-*-*-*-*-*")
-
-
-
 
 (setf *mode-line-background-color* "black"
     *mode-line-foreground-color* "White"
@@ -63,29 +50,6 @@
     *mode-line-screen-position* :bottom
     *window-format* "^B^8*%n%s%m%30t :: ^7*"
     *group-format* "%t")
-
-;(setf *disk-usage-paths* '("/mnt/Books" "/mnt/Docs" "/mnt/Games" "/mnt/Movies_1" "/mnt/Movies_2" "/mnt/Movies_3" "/mnt/Music_1" "/mnt/Music_2/" "/mnt/Music_3" "/mnt/Music_4" "/mnt/Music_5" "/mnt/Mvids" "/mnt/Porn" "/mnt/TV" "/mnt/TV_2""))
-;(setf stumpwm:*screen-mode-line-format*
-;	  "%D")
-
-; FIXME dont wanna have to use mode-line just so I can use dzen2
-;(dolist (head (screen-heads (current-screen))) (enable-mode-line (current-screen) head
-;				t *screen-mode-line-format*
-;				))
-
-;; Mode line setup - separate setup per head
-;(setf stumpwm:*mode-line-timeout* 1)
-
-;(defun set-mode-line-formats ()
-;  (let ((heads (screen-heads (current-screen))))
-;	(defun set-ml (h-idx format)
-;	  (enable-mode-line (current-screen) (nth h-idx heads) t format))
-
-;	(set-ml 0 "%D ")
-;	(set-ml 1 "%m ")
-;	))
-;(set-mode-line-formats)
-
 
 ;;;; The Message Window
 (set-fg-color "lightskyblue1")
@@ -115,7 +79,7 @@
   ((:string "uzbl: "))
   (check-type s string)
   (substitute #\+ #\Space s)
-  (run-shell-command (cat "python /home/daethorian/script/py/www.py " s)))
+  (run-shell-command (cat "python /home/daethorian/config/uzbl/scripts/www.py " s)))
 
 ;; MPD
 (defparameter *mpd-map*
@@ -182,34 +146,4 @@
 (define-key *top-map* (kbd "F12") "exec setxkbmap q6; stumpish echo qwerty")
 
 ;;; The End
-
-;(define-key *root-map* (kbd "p") "exec mpc -h 192.168.1.100 next")
-;(define-key *root-map* (kbd "o") "exec rmcd -t")
-;(define-key *root-map* (kbd "n") "exec /home/scp1/bin/np")
-;(define-key *root-map* (kbd "g") "exec perl /home/scp1/bin/google_dmenu.pl")
-;(define-key *root-map* (kbd "u") "exec sh $HOME/.config/uzbl/urlload")
-;(define-key *root-map* (kbd "SunPrint_Screen") "exec sh $HOME/bin/shot")
-;(define-key *root-map* (kbd "SPC") "exec stumpish echo `mpc --format '%artist% - %title% (%album%)'|head -1`")
-;(define-key *root-map* (kbd "SPC") "exec stumpish echo `mpc --format '%artist% - (%album%) -  %title% [ %file% ]'|head -1`")
-;(define-key *root-map* (kbd "SPC") "exec stumpish echo `pimpd -i`")
-;(define-key *root-map* (kbd "dead_acute") "exec stumpish echo `weather norrköping --irc`")
-;(define-key *root-map* (kbd "KP_Add") "exec ossmix vmix.0.pcm8 -- +2")
-;(define-key *root-map* (kbd "KP_Subtract") "exec ossmix vmix.0.pcm8 -- -2")
-;(define-key *root-map* (kbd "KP_Subtract") "exec ossmix mplayer -- -2")
-;(define-key *root-map* (kbd "Pause") "exec killall X")
-
-;;(defvar *maximized-frame-size* (make-frame :number -1 :x 1680 :y 1020 :width 1680 :height 1020))
-;;(defvar *maximized-frame-size* (make-frame :number -1 :x 1680 :y 1020 :width 1680 :height 1020))
-;;(defvar *current-frame-size* (make-frame :number -1 :x 1680 :y 1020 :width 1680 :height 1020))
-;;(defvar *current-maximized-frame* nil)
-
-;(define-key *root-map* (kbd "odiaeresis") "exec mppc -s")
-;(define-key *root-map* (kbd "aring") "exec sh /home/scp1/bin/mpdfav")
-;(define-key *root-map* (kbd ",") "exec xdotool click 1")
-;(define-key *root-map* (kbd "DEL") "exec pimpd --rand 20")
-;(define-key *root-map* (kbd "b") "exec sh /home/scp1/bin/dmenumpd.sh")
-;(define-key *root-map* (kbd "d") "exec perl /home/scp1/devel/clipbored/scripts/fmenuclip")
-;(define-key *root-map* (kbd "m") "exec perl /home/scp1/bin/dmenurl")
-;(define-key *root-map* (kbd "e") "exec sh /home/scp1/bin/dmenu.sh")
-
 ; vim: set et,ts=2,sts=2,ft=lisp

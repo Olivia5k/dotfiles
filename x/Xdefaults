@@ -3,7 +3,7 @@
 *.saveLines:           5000
 *.urgentOnBell:        true
 *.perl-ext-common:     default,matcher,url-select
-*.urlLauncher:         firefox
+*.urlLauncher:         /home/daethorian/config/uzbl/scripts/www.py
 *.matcher.button:      1
 *.matcher.pattern.1:   \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
 *.meta8:               false
