@@ -9,7 +9,7 @@
 *.meta8:               false
 *.underlineURLs:       true
 !*.transparent:        true
-*.shading:              25
+*.shading:              10
 *.keysym.M-u:          perl:url-select:select_next
 
 *.font:                    -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
