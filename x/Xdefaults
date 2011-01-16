@@ -3,13 +3,13 @@
 *.saveLines:           5000
 *.urgentOnBell:        true
 *.perl-ext-common:     default,matcher,url-select
-*.urlLauncher:         firefox
+*.urlLauncher:         /home/daethorian/config/uzbl/scripts/www.py
 *.matcher.button:      1
 *.matcher.pattern.1:   \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
 *.meta8:               false
 *.underlineURLs:       true
-#*.transparent:        true
-*.shading:              25
+!*.transparent:        true
+*.shading:              10
 *.keysym.M-u:          perl:url-select:select_next
 
 *.font:                    -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
@@ -43,25 +43,7 @@ XLock.mousemotion:         True
 XLock.showdate:            True
 XLock.usefirst:            True
 ! }
-! Ninjaloot {
-!*color0:       #292929
-!*color1:       #a71d1d
-!*color2:       #4c9318
-!*color3:       #cbca6c
-!*color4:       #3465a4
-!*color5:       #ce5c00
-!*color6:       #405060
-!*color7:       #999999
-!*color8:       #555555
-!*color9:       #db3333
-!*color10:      #7acb7a
-!*color11:      #ffc123
-!*color12:      #77b4c7
-!*color13:      #ff3600
-!*color14:      #009492
-!*color15:      #dbdbdb
-!! }
-! Fullowin {
+! Colorscheme (unnamed) {
 *foreground:   #dcdccc
 *background:   #1c1c1c
 *color0:       #333333
@@ -81,44 +63,5 @@ XLock.usefirst:            True
 *color14:      #41dbb5
 *color15:      #ffffff
 ! }
-! Zenburn {
-!*background:  #3f3f3f
-!*foreground:  #dcdccc
-!*color0:      #1E2320
-!*color1:      #705050
-!*color2:      #60b48a
-!*color3:      #dfaf8f
-!*color4:      #506070
-!*color5:      #dc8cc3
-!*color6:      #8cd0d3
-!*color7:      #dcdccc
-!*color8:      #709080
-!*color9:      #dca3a3
-!*color10:     #c3bf9f
-!*color11:     #f0dfaf
-!*color12:     #94bff3
-!*color13:     #ec93d3
-!*color14:     #93e0e3
-!*color15:     #ffffff
-!! }
-! Neverland {
-!*foreground:  #dcdccc
-!*background:  #1c1c1c
-!*color0:      #3c3c3c
-!*color1:      #4cdc38
-!*color2:      #60b48a
-!*color3:      #dfaf8f
-!*color4:      #506070
-!*color5:      #dc8cc3
-!*color6:      #8cd0d3
-!*color7:      #dcdccc
-!*color8:      #709080
-!*color9:      #dca3a3
-!*color10:     #c3bf9f
-!*color11:     #d78700
-!*color12:     #94bff3
-!*color13:     #ec93d3
-!*color14:     #93e0e3
-!*color15:     #ffffff
-! }
-! vim: foldmarker={,}
+
+! vim: ft=xdefaults,foldmarker={,}

@@ -285,7 +285,7 @@ set ebind     = @mode_bind global,-insert
 
 # Link following (similar to vimperator and konqueror)
 # Set custom keys you wish to use for navigation. Some common examples:
-set follow_hint_keys = aoeu
+set follow_hint_keys = asdf
 #set follow_hint_keys = qwerty
 #set follow_hint_keys = asdfghjkl;
 #set follow_hint_keys = thsnd-rcgmvwb/;789aefijkopquxyz234

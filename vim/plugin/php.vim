@@ -1,7 +1,7 @@
 " Control
-nmap <C-J> <esc>/<++><cr>4s
-nmap E <esc>/<++><cr>4s
-imap <C-J> <esc>/<++><cr>4s
+"nmap E <esc>/<++><cr>4s
+"nmap <C-J> <esc>/<++><cr>4s
+"imap <C-J> <esc>/<++><cr>4s
 
 " Starting
 nmap gppe o?><esc>
@@ -71,8 +71,8 @@ nmap gplg oif(in_array("",<esc>gpluGa))<cr>{<cr><++><cr>}<esc>3k2f"i
 
 nmap gpt mt:%s/    /\t<cr>`t
 
-nmap ,p :source ~/.vim/plugin/php.vim<cr>
-nmap ,P :sp ~/.vim/plugin/php.vim<cr>
+"nmap ,p :source ~/.vim/plugin/php.vim<cr>
+"nmap ,P :sp ~/.vim/plugin/php.vim<cr>
 
 " Notes
 " Names to remember MySQL functions are; gpm + query/row/if/while
