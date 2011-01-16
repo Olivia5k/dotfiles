@@ -43,25 +43,7 @@ XLock.mousemotion:         True
 XLock.showdate:            True
 XLock.usefirst:            True
 ! }
-! Ninjaloot {
-!*color0:       #292929
-!*color1:       #a71d1d
-!*color2:       #4c9318
-!*color3:       #cbca6c
-!*color4:       #3465a4
-!*color5:       #ce5c00
-!*color6:       #405060
-!*color7:       #999999
-!*color8:       #555555
-!*color9:       #db3333
-!*color10:      #7acb7a
-!*color11:      #ffc123
-!*color12:      #77b4c7
-!*color13:      #ff3600
-!*color14:      #009492
-!*color15:      #dbdbdb
-!! }
-! Fullowin {
+! Colorscheme (unnamed) {
 *foreground:   #dcdccc
 *background:   #1c1c1c
 *color0:       #333333
@@ -81,75 +63,5 @@ XLock.usefirst:            True
 *color14:      #41dbb5
 *color15:      #ffffff
 ! }
-! Zenburn {
-!*background:  #3f3f3f
-!*foreground:  #dcdccc
-!*color0:      #1E2320
-!*color1:      #705050
-!*color2:      #60b48a
-!*color3:      #dfaf8f
-!*color4:      #506070
-!*color5:      #dc8cc3
-!*color6:      #8cd0d3
-!*color7:      #dcdccc
-!*color8:      #709080
-!*color9:      #dca3a3
-!*color10:     #c3bf9f
-!*color11:     #f0dfaf
-!*color12:     #94bff3
-!*color13:     #ec93d3
-!*color14:     #93e0e3
-!*color15:     #ffffff
-!! }
-! Neverland {
-!*foreground:  #dcdccc
-!*background:  #1c1c1c
-!*color0:      #3c3c3c
-!*color1:      #4cdc38
-!*color2:      #60b48a
-!*color3:      #dfaf8f
-!*color4:      #506070
-!*color5:      #dc8cc3
-!*color6:      #8cd0d3
-!*color7:      #dcdccc
-!*color8:      #709080
-!*color9:      #dca3a3
-!*color10:     #c3bf9f
-!*color11:     #d78700
-!*color12:     #94bff3
-!*color13:     #ec93d3
-!*color14:     #93e0e3
-!*color15:     #ffffff
-! }
 
-! xscreensaver {
-!font settings
-xscreensaver.Dialog.headingFont:        -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.Dialog.bodyFont:           -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.Dialog.labelFont:          -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.Dialog.unameFont:          -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.Dialog.buttonFont:         -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.Dialog.dateFont:           -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-xscreensaver.passwd.passwdFont:         -xos4-terminus-*-*-*-*-*-*-*-*-*-*-*-*
-! general dialog box (affects main hostname, username, password text)
-xscreensaver.Dialog.foreground:         #ffffff
-xscreensaver.Dialog.background:         #111111
-xscreensaver.Dialog.topShadowColor:     #111111
-xscreensaver.Dialog.bottomShadowColor:  #111111
-xscreensaver.Dialog.Button.foreground:  #dbdbdb
-xscreensaver.Dialog.Button.background:  #111111
-!username/password input box and date text colour
-xscreensaver.Dialog.text.foreground:    #666666
-xscreensaver.Dialog.text.background:    #ffffff
-xscreensaver.Dialog.internalBorderWidth:24
-xscreensaver.Dialog.borderWidth:        20
-xscreensaver.Dialog.shadowThickness:    2
-!timeout bar (background is actually determined by Dialog.text.background)
-xscreensaver.passwd.thermometer.foreground:  #405060
-xscreensaver.passwd.thermometer.background:  #000000
-xscreensaver.passwd.thermometer.width:       8
-!datestamp format--see the strftime(3) manual page for details
-xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
-! }
-
-! vim: foldmarker={,}
+! vim: ft=xdefaults,foldmarker={,}
