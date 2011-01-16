@@ -65,6 +65,12 @@
 	set listchars=trail:-,tab:\>\ 
 " }
 " Indent Related {
+	set softtabstop=4 " unify
+	set shiftwidth=4 " unify
+	set tabstop=4 " real tabs should be 4, but they will show with set list on
+	set copyindent " follow the conventions laid before us
+	set noexpandtab " do not use spaces
+	let g:pyindent_open_paren = &sw
 	filetype plugin indent on " load filetype plugins and indent settings
 " }
 " Text Formatting/Layout {
