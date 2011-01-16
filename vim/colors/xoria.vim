@@ -36,6 +36,7 @@ let colors_name = "xoria"
 hi Normal       ctermfg=252 guifg=#d0d0d0 ctermbg=234 guibg=#1c1c1c cterm=bold gui=none
 hi Cursor                                 ctermbg=214 guibg=#ffaf00
 hi CursorColumn                           ctermbg=238 guibg=#444444
+hi ColorColumn                            ctermbg=235
 hi CursorLine                             ctermbg=238 guibg=#444444 cterm=bold
 hi Directory    ctermfg=159 guifg=Cyan                              cterm=bold
 hi Error        ctermfg=15  guifg=#ffffff ctermbg=1   guibg=#800000

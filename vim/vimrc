@@ -14,6 +14,7 @@
 	set nostartofline " leave my cursor where it was
 	set backspace=indent,eol,start
 	set gdefault " always replace everything when substituting
+	set magic " use magic regular expressions
 
 	let g:pydoc_wh = 20
 " }
@@ -43,6 +44,7 @@
 	set wildmenu " turn on wild menu
 	set wildmode=list:longest " turn on wild menu in special format (long format)
 	set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
+	set splitbelow " Split below
 	set ruler " Always show current positions along the bottom
 	set cmdheight=1 " the command bar is 1 high
 	set number " turn on line numbers
@@ -52,6 +54,7 @@
 	set statusline=%<%f\:%l\,%v\ %m\ %=\ %r%h%w%y\ %l\/%L\ %P
 " }
 " Visual Cues {
+	set colorcolumn=+1 " Show a colored column one column from &tw
 	set showmatch " show matching brackets
 	set nohlsearch " do not highlight searched for phrases
 	set incsearch " BUT do highlight as you type you search phrase
@@ -60,20 +63,8 @@
 	set novisualbell " don't blink
 	set list " Show whitespace characters
 	set listchars=trail:-,tab:\>\ 
-
-	" Mark all characters behind column 80 with red bg
-	augroup vimrc_autocmds
-		autocmd BufRead * highlight OverLength ctermbg=236
-		autocmd BufRead * match OverLength /\%81v.*/
-	augroup END
 " }
 " Indent Related {
-	set softtabstop=4 " unify
-	set shiftwidth=4 " unify
-	set tabstop=4 " real tabs should be 4, but they will show with set list on
-	set copyindent " follow the conventions laid before us
-	set noexpandtab " do not use spaces
-	let g:pyindent_open_paren = &sw
 	filetype plugin indent on " load filetype plugins and indent settings
 " }
 " Text Formatting/Layout {
@@ -104,7 +95,7 @@
 		colorscheme ninjaloot
 	else
 		let g:force_lofi = 0
-		colorscheme mancx
+		colorscheme xoria
 	endif
 " }
 " Custom functions {
@@ -179,8 +170,8 @@
 		write !sudo tee %
 	endfunction " }
 	function! ColorschemeToggle() " {
-		if g:colors_name == 'neverland'
-			colorscheme ninjaloot
+		if g:colors_name == 'xoria'
+			colorscheme mancx
 		else
 			colorscheme xoria
 		endif
@@ -210,8 +201,15 @@
 		imap <C-j> <Down>
 		imap <C-k> <Up>
 		imap <C-l> <Right>
+
+		" Map Ctrl-hjkl to be window smitching otherwise
+		nmap <C-k> <C-w><Up>
+		nmap <C-j> <C-w><Down>
+		nmap <C-l> <C-w><Right>
+		nmap <C-h> <C-w><Left>
 		
 		noremap <space> /
+		noremap <c-space> ?
 	" }
 	" Sourcing {
 		nmap ,v :source $MYVIMRC<cr>
@@ -272,13 +270,17 @@
 	" Better tabs for the hands {
 		nmap zh gT
 		nmap zl gt
-		nmap zn :tabe<cr>
+		" Remember that this one breaks if you KillTrailingWhitespace on this
+		" file.
+		nmap zn :tabe 
 	" }
 	" I hate these {
 		nmap K k
 		vmap K k
 		nmap S S<esc>
 		noremap Q <nop>
+		noremap qq <nop>
+		nnoremap ; :
 	" }
 " }
 
