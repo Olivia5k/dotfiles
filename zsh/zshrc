@@ -21,96 +21,113 @@
 # https://bbs.archlinux.org
 #
 # TODO:
-# Add docstring style to all functions and add a function that prints them
-# Add prompt colorschemes \o/
-# Make PKEEP more logical
+# Add colorschemes \o/
 # Make dirdiff more useful
-# Add daemon completion and listing
-# Actually, add general completion for the functions
+# Wallpaper management (check for $DISPLAY)
+# Extend grab() to shift arguments (-g)
+# Add mplayer aliases
 
-# Add git configurator
-# Add git rebase prompt
-# Add git graph aliases
+# Colors. You are expected to be wanting those.
+autoload colors zsh/terminfo
 
-# Core {{{
-	# Colors. You are expected to be wanting those.
-	autoload colors zsh/terminfo
+# git and svn integration
+autoload -Uz vcs_info
 
-	# git and svn integration
-	autoload -Uz vcs_info
+# zshs awesome renamer
+autoload zmv
 
-	# URL escaping. Whenever you paste a URL to your terminal, zsh will escape
-	# any characters with special meaning to it.
-	autoload -Uz url-quote-magic # URL escaping
-	zle -N self-insert url-quote-magic
+# URL escaping. Whenever you paste a URL to your terminal, zsh will escape
+# any characters with special meaning to it.
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
 
-	function zdebug() {
-		if [ -n "$DEBUG" ] && $DEBUG ; then
-			print -P "%B%F{cyan}Debug%f%b:" $*
+function _zdebug()#
+{
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Internal debug message printer"
 		fi
-	}
-	function zerror() {
-		print -P "%B%F{red}Error%f%b:" $*
-	}
-
-	# Helper function and setter
-	# With this, one can just run if $(has <application>) ; then [...].
-	function has() {
-		which $1 &> /dev/null ; return $?
-	}
-# }}}
-# Variables {{{
-	# zsh configuration directory
-	ZSHCONFDIR="$HOME/config/zsh"
-
-	# File with variables that most probably changes per user.
-	# Most documentation about this configuration is in there.
-	# If no file is found, using daethorians default.
-	local USERFILE="$ZSHCONFDIR/$USER.zsh"
-	if [ -f $USERFILE ] ; then
-		source $USERFILE
-	else
-		source $ZSHCONFDIR/daethorian.zsh
+		return
 	fi
 
-	# Prompt variables
-	# To avoid checking for these every time the prompt is rendered, they are
-	# stored in global variables.
-	export TCOLORS=$(echotc Co)
-
-	if [ -n "$MULTI" ] && has $MULTI; then
-		export HASMULTI=true
-	else
-		export HASMULTI=false
+	if [[ -n "$DEBUG" ]] && $DEBUG ; then
+		print -P "%B%F{cyan}Debug%f%b:" $*
 	fi
-	if [ -n "$TODO" ] && has $TODO ; then
-		export HASTODO=true
-	else
-		export HASTODO=false
-	fi
+}
 
-	if [ $TERM = "linux" ] && $FORCE_CONSOLE; then
-		export PMODE=1
-	elif [ $TERM = "xterm" ] && $FORCE_MOBILE ; then
-		export PMODE=0
-	fi
-
-	# Store last prompt; for use with CVS prompt
-	export POLD=$PMODE
-
-	# Kill root after three minutes
-	if [ "$UID" = 0 ] && [ -n "$ROOT_TIMEOUT" ] ; then
-		print -P "Warning: Root shell will timeout after %B%F{red}$ROOT_TIMEOUT seconds%f%b."
-		TMOUT=$ROOT_TIMEOUT
-	fi
-# }}}
-# Directories {{{
-	for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
-		if ! [ -d $d ] ; then
-			zdebug "Autocreating %B%F{blue}${d}%b%f"
-			mkdir -p $d &> /dev/null
+function _zerror()#
+{
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Internal error message printer"
 		fi
-	done
-# }}}
+		return
+	fi
 
-# vim: ft=zsh fmr={{{,}}}
+	print -P "%B%F{red}Error%f%b:" $*
+}
+
+function _has()#
+{
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Internal checker if an application exists."
+		fi
+		return
+	fi
+
+	which $1 &> /dev/null ; return $?
+}
+
+# zsh configuration directory; dynamically found
+export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
+
+# File with variables that most probably changes per user.
+# Most documentation about this configuration is in there.
+# If no file is found, using daethorians default.
+local USERFILE="$ZSHCONFDIR/$USER.zsh"
+if [[ -f $USERFILE ]] ; then
+	source $USERFILE
+else
+	source $ZSHCONFDIR/daethorian.zsh
+fi
+
+# Prompt variables
+# To avoid checking for these every time the prompt is rendered, they are
+# stored in global variables.
+export TCOLORS=$(echotc Co)
+
+if [[ -n "$MULTI" ]] && _has $MULTI; then
+	export HASMULTI=true
+else
+	export HASMULTI=false
+fi
+if [[ -n "$TODO" ]] && _has $TODO ; then
+	export HASTODO=true
+else
+	export HASTODO=false
+fi
+
+if [[ $TERM = "linux" ]] && $FORCE_CONSOLE; then
+	export PMODE=1
+elif [[ $TERM = "xterm" ]] && $FORCE_MOBILE ; then
+	export PMODE=0
+fi
+
+# Store last prompt; for use with CVS prompt
+export POLD=$PMODE
+
+# Kill root after three minutes
+if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
+	print -P "Warning: Root shell will timeout after %B%F{red}$ROOT_TIMEOUT seconds%f%b."
+	TMOUT=$ROOT_TIMEOUT
+fi
+
+for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
+	if ! [[ -d $d ]] ; then
+		_zdebug "Autocreating %B%F{blue}${d}%b%f"
+		mkdir -p $d &> /dev/null
+	fi
+done
+
+# vim: ft=zsh

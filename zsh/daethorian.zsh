@@ -83,13 +83,6 @@
 
 		if which $_EDITOR &> /dev/null ; then
 			export EDITOR=$(which $_EDITOR)
-
-			# vim has the -p option that opens multiple files in tabs istead of
-			# buffers. If you think that buffers are teh awesome, change the below
-			# true into false.
-			if true && [ $_EDITOR = "vim" ] ; then
-				export EDITOR="$EDITOR -p"
-			fi
 		else
 			export EDITOR=$(which vi)
 		fi
@@ -125,7 +118,7 @@
 		# seconds. $BATT is the timestamp of when the cache was last reset.
 		# The cache is mainly to not access battery files every time a prompt is
 		# read.
-		if [ -n "$LAPTOP" ] && $LAPTOP ; then
+		if [[ -n "$LAPTOP" ]] && $LAPTOP ; then
 			export BAT='/tmp/battery'
 			export BATC='/tmp/battery_cache' # Battery cache
 			export BATT=0 # Battery timeout
@@ -203,26 +196,31 @@
 	# zsh module directory
 	export ZMODDIR="$HOME/config/zsh/modules"
 
+	# Set the loaded module array
+	ZMODULES=()
+	export ZMODULES
+
 	# The module loader. Specific for this zsh setup, ofc.
 	modload() {
-		if [ -z "$1" ] ; then
-			zerror "modload() needs at least one argument."
+		if [[ -z "$1" ]] ; then
+			_zerror "modload() needs at least one argument."
 			return 1
 		fi
 
 		for m in $* ; do
-			# If a path is given as absolute, just load it.
+			# If a path is given as absolute (the cores are), just load it.
 			if [[ "$m" =~ "^/" ]] ; then
 				f=$m
 			else
 				f="$ZMODDIR/${m}.zsh"
 			fi
 
-			if [ -f "$f" ] ; then
-				zdebug "Loading $m"
+			if [[ -f "$f" ]] ; then
+				_zdebug "Loading $m"
 				source $f
+				ZMODULES+=(${f##*/})
 			else
-				zerror "$m is not a valid module."
+				_zerror "$m is not a valid module."
 			fi
 		done
 		unset m
@@ -232,6 +230,9 @@
 	for i in $ZMODDIR/core/* ; do
 		modload $i
 	done
+
+	# Chpwd. If you want commands executed on cd, this is the way to go.
+	modload "chpwd"
 
 	# Colorscheme printers. Probably only useful if you customize alot.
 	modload "colors"
@@ -254,15 +255,15 @@
 
 	# Application specific modules; loaded if they are installed
 	for m in git svn tmux screen mpd ; do
-		zdebug "Testing for $m"
-		if has $m ; then
+		_zdebug "Testing for $m"
+		if _has $m ; then
 			modload "apps/$m"
 		fi
 	done
 	unset m
 
 	# Aliases that helps when you are working with Django
-	if has "django-admin.py" ; then
+	if _has "django-admin.py" ; then
 		modload "apps/django"
 	fi
 # }}}
@@ -271,12 +272,22 @@
 	# Put whatever else you want here that is specific to your setup.
 	export VIMPERATOR_INIT=":source ~/config/vimperator/vimperatorrc"
 	alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
+	alias mplayer="mplayer -msgcolor -msgmodule"
 
 	alias vga="xrandr --output VGA1 --auto && xrandr --output LVDS1 --off"
 	alias lvds="xrandr --output LVDS1 --auto && xrandr --output VGA1 --off"
 
-	alias n="ssh $REMOTE"
-	alias nl='ssh 10.0.0.6'
+	function beta()
+	{
+		ssh dt -t 'mysql -e "use dev_main ; select id, email, date_created from mancx_betaregistry;"'
+	}
+
+	function live()
+	{
+		rmext pyc
+		dsh
+		dm loaddata apps/mancx/fixtures/beta.json
+	}
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}

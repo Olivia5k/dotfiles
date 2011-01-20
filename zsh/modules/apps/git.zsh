@@ -7,6 +7,7 @@ alias gb='git branch'
 alias gc='git commit -a'
 alias gp='git push'
 alias gu='git pull'
+alias gm="git merge"
 
 # Checkouting
 alias go='git checkout'
@@ -20,23 +21,29 @@ alias gus='git pull && gsu'
 # Diffing
 alias gd='git diff'
 alias gdt='git difftool'
-alias gm="git merge"
 
 # Logging
-alias gl='git log --pretty=oneline --decorate'
-alias gll='git log --decorate --stat'
+alias gl='git log --abbrev-commit --pretty=oneline --decorate'
+alias gll='git log --abbrev-commit --decorate --stat'
 alias glg="gl --graph"
 alias gllg="gll --graph"
-alias gsl="git shortlog"
-alias gss="git shortlog --summary --numbered"
-alias grl="git reflog"
+alias gls="git shortlog"
+alias glc="git shortlog --summary --numbered"
+alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
 
 # Setup remote for a branch
-function gbr()
+function gbr()#
 {
-	if [ -n "$1" ] ; then
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Setup remote for a branch"
+		fi
+		return
+	fi
+
+	if [[ -n "$1" ]] ; then
 		git config branch.$1.remote origin
 		git config branch.$1.merge refs/heads/$1
 	else
@@ -45,9 +52,16 @@ function gbr()
 }
 
 # Initialize a project
-function gi()
+function gi()#
 {
-	if [ -z "$1" ] ; then ; echo "Specify project name" && return 1 ; fi
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Initialize a new git project"
+		fi
+		return
+	fi
+
+	if [[ -z "$1" ]] ; then ; echo "Specify project name" && return 1 ; fi
 
 	git init $1
 	cd $1
@@ -57,17 +71,24 @@ function gi()
 }
 
 # Record yourself for a project
-function gcu()
+function gcu()#
 {
-	if [ -n "$1" ] && [ -n "$2" ] ; then
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Record yourself for a project"
+		fi
+		return
+	fi
+
+	if [[ -n "$1" ]] && [[ -n "$2" ]] ; then
 		name="$1"
 		email="$2"
-	elif [ -n "$FULLNAME" ] && [ -n "$EMAIL" ] ; then
-		zdebug "Not enough arguments; defaulting to default data"
+	elif [[ -n "$FULLNAME" ]] && [[ -n "$EMAIL" ]] ; then
+		_zdebug "Not enough arguments; defaulting to default data"
 		name="$FULLNAME"
 		email="$EMAIL"
 	else
-		zerror "gcu() needs two arguments or default data set in userfile."
+		_zerror "gcu() needs two arguments or default data set in userfile."
 		return 1
 	fi
 

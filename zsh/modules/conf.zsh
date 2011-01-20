@@ -11,7 +11,7 @@ alias ez="$EDITOR ~/config/zsh/zshrc"
 alias z=ez # \o/
 
 # Sourcing
-if has awesome ; then
+if _has awesome ; then
 	alias aa='awesome -k'
 fi
 

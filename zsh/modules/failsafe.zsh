@@ -1,6 +1,13 @@
-function fail()
+function fail()#
 {
-	if has figlet && [ $PMODE != 0 ]; then
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Prints really angry text when the user misspells a command."
+		fi
+		return
+	fi
+
+	if _has figlet && [[ $PMODE != 0 ]] ; then
 		# If figlet exists and we are not on a mobile connection, doit
 		figlet :@ && echo
 	else
@@ -18,4 +25,4 @@ alias cd..='fail && cd ..'
 alias vom='fail && vim'
 alias bim='fail && vim'
 alias vum='fail && vim'
-alias shitdown='fail && shutdown' # This has actually happened.
+alias shitdown='fail && shutdown' # This has actually happened. Hilarity ensued.
