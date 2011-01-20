@@ -8,8 +8,8 @@ xkb_symbols "q6" {
     key <RWIN> { [ Super_R                                           ] };
     key <LSGT> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
     key <MENU> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
-    key <AD01> { [ q,          Q,          braceleft,           none ] };
-    key <AD02> { [ w,          W,          braceright,          none ] };
+    key <AD01> { [ q,          Q,          parenleft,           none ] };
+    key <AD02> { [ w,          W,          parenright,          none ] };
     key <AD03> { [ e,          E,          bracketleft,         none ] };
     key <AD04> { [ r,          R,          bracketright,        none ] };
     key <AD05> { [ t,          T,          dollar,              none ] };
@@ -21,10 +21,10 @@ xkb_symbols "q6" {
     key <AD11> { [ aring,      Aring,      none,                none ] };
     key <AD12> { [ slash,      Adiaeresis, dead_tilde,          asciicircum ] };
     key <AE12> { [ dead_acute, dead_grave, plusminus,           notsign ]    };
-    key <AC01> { [ a,          A,          semicolon,         none ] };
-    key <AC02> { [ s,          S,          slash,              none ] };
-    key <AC03> { [ d,          D,          parenleft,           none ] };
-    key <AC04> { [ f,          F,          parenright,          none ] };
+    key <AC01> { [ a,          A,          asciicircum,         none ] };
+    key <AC02> { [ s,          S,          dollar,              none ] };
+    key <AC03> { [ d,          D,          braceleft,           none ] };
+    key <AC04> { [ f,          F,          braceright,          none ] };
     key <AC05> { [ g,          G,          bar,                 none ] };
     key <AC06> { [ h,          H,          percent,             none ] };
     key <AC07> { [ j,          J,          slash,               none ] };
@@ -33,9 +33,9 @@ xkb_symbols "q6" {
     key <AC10> { [ odiaeresis, Odiaeresis, colon,               none ] };
     key <AC11> { [ adiaeresis, Adiaeresis, at,                  none ] };
     key <BKSL> { [ apostrophe, asterisk,   asterisk,            none ] };
-    key <AB01> { [ z,          Z,          asciicircum,           none ] };
-    key <AB02> { [ x,          X,          dollar,           none ] };
-    key <AB03> { [ c,          C,          slash,               none ] };
+    key <AB01> { [ z,          Z,          semicolon,           none ] };
+    key <AB02> { [ x,          X,          slash,               none ] };
+    key <AB03> { [ c,          C,          ampersand,           none ] };
     key <AB04> { [ v,          V,          exclam,              none ] };
     key <AB05> { [ b,          B,          backslash,           none ] };
     key <AB06> { [ n,          N,          percent,             none ] };
