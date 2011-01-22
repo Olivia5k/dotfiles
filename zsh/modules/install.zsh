@@ -16,7 +16,7 @@ function ins()#
 		fi
 
 		if ! _has $target ; then
-			print -P "Installing %B%F{green}$(basename $1)%f%b as %B%F{green}${target}%f%b"
+			print -P "Installing %B%F{${c[19]}}$(basename $1)%f%b as %B%F{${c[19]}}${target}%f%b"
 			ln -s $f $HOMEBIN/$target
 		else
 			_zerror "$target is already installed"
@@ -36,7 +36,7 @@ function unins()#
 	fi
 	f=$HOMEBIN/$(basename $1)
 	if [[ -L $f ]] ; then
-		print -P "Uninstalling %B%F{green}$(basename $1)%f%b."
+		print -P "Uninstalling %B%F{${c[19]}}$(basename $1)%f%b."
 		unlink $f
 	else
 		_zerror "$(basename $f) is not installed"

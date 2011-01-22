@@ -51,7 +51,7 @@ function _zdebug()#
 	fi
 
 	if [[ -n "$DEBUG" ]] && $DEBUG ; then
-		print -P "%B%F{cyan}Debug%f%b:" $*
+		print -P "%B%F{${c[18]}}Debug%f%b:" $*
 	fi
 }
 
@@ -64,7 +64,7 @@ function _zerror()#
 		return
 	fi
 
-	print -P "%B%F{red}Error%f%b:" $*
+	print -P "%B%F{${c[6]}}Error%f%b:" $*
 }
 
 function _has()#
@@ -81,6 +81,9 @@ function _has()#
 
 # zsh configuration directory; dynamically found
 export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
+
+# Colorscheme. Load default as fallback
+source $ZSHCONFDIR/colorschemes/default.zsh
 
 # File with variables that most probably changes per user.
 # Most documentation about this configuration is in there.
@@ -119,13 +122,13 @@ export POLD=$PMODE
 
 # Kill root after three minutes
 if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
-	print -P "Warning: Root shell will timeout after %B%F{red}$ROOT_TIMEOUT seconds%f%b."
+	print -P "Warning: Root shell will timeout after %B%F{${c[12]}}$ROOT_TIMEOUT seconds%f%b."
 	TMOUT=$ROOT_TIMEOUT
 fi
 
 for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
 	if ! [[ -d $d ]] ; then
-		_zdebug "Autocreating %B%F{blue}${d}%b%f"
+		_zdebug "Autocreating %B%F{${c[4]}}${d}%b%f"
 		mkdir -p $d &> /dev/null
 	fi
 done

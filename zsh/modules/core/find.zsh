@@ -10,6 +10,18 @@ function f()#
 	find 2>/dev/null | grep -is "$1"
 }
 
+function fd()#
+{
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Find directories based on their filenames"
+		fi
+		return
+	fi
+
+	find 2>/dev/null -type d | grep -is "$1"
+}
+
 # Todo grep. Prints reminding lines that developers leave in their code.
 # (gt is taken by git stash)
 function tg()#
@@ -112,7 +124,7 @@ function _dirdiff()#
 	local listfile="/tmp/.zshlistfile"
 	find $2 -type f > $listfile
 
-	print -P "\n%BFiles in %F{blue}${1}%f not in %F{blue}${2}%f%b:"
+	print -P "\n%BFiles in %F{${c[4]}}${1}%f not in %F{${c[4]}}${2}%f%b:"
 	for i in $(find $1 -type f) ; do
 		f=$(basename $i)
 		if ! grep $f $listfile &> /dev/null; then
