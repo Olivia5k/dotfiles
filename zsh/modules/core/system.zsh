@@ -37,11 +37,11 @@ function d()#
 		for f in $(ls /etc/rc.d/*(.x)) ; do
 			d=${f##*/}
 			if [[ -f "$p/$d" ]] ; then
-				c="green"
+				co=${c[19]}
 			else
-				c="240" # \o/
+				co=${c[20]}
 			fi
-			print -P "%B%F{$c}${d}%f%b"
+			print -P "%B%F{$co}${d}%f%b"
 		done
 		return
 	fi
@@ -66,7 +66,7 @@ _daemoncomplete()
 }
 
 # Completion \o/
-compctl -Y "%B%F{red}daemon%f%b" -K _daemoncomplete d
+compctl -Y "%B%F{${c[24]}}daemon%f%b" -K _daemoncomplete d
 
 # Control wireless network
 function nr()#
@@ -105,13 +105,13 @@ function ips()#
 		ip6=$(echo $ifdata | grep -Eo "inet6 addr: [a-f0-9:/]* " | grep -Eo "[a-f0-9:/]+ $")
 
 		if [[ -n "$ip" ]] ; then
-			s="%F{green}%B${i}%b%f: %F{cyan}%B${ip}%b%f"
+			s="%F{${c[19]}}%B${i}%b%f: %F{${c[27]}}%B${ip}%b%f"
 			if [[ -n "$ip6" ]] ; then
-				s+=" and %F{cyan}%B${ip6}%b%f"
+				s+=" and %F{${c[27]}}%B${ip6}%b%f"
 			fi
 			print -P $s
 		else
-			print -P "%F{red}%B${i}%b%f"
+			print -P "%F{${c[20]}}%B${i}%b%f"
 		fi
 	done
 
@@ -119,13 +119,13 @@ function ips()#
 	pub=$(curl http://dns.loopia.se/checkip/checkip.php 2> /dev/null | grep -Eo "([0-9]+\.?){4}")
 	
 	if [[ -n "$pub" ]] ; then
-		print -P "%F{green}%BPublic%b%f: %F{cyan}%B${pub}%b%f"
+		print -P "%F{${c[19]}}%BPublic%b%f: %F{${c[27]}}%B${pub}%b%f"
 	else
-		print -P "%F{red}%BPublic%b%f"
+		print -P "%F{${c[20]}}%BPublic%b%f"
 	fi
 
 	avahi=$(ps aux | grep "avahi-daemon: running" | grep -Eo "\[.*\]" | tr -d "[]")
 	if [[ -n "$avahi" ]] ; then
-		print -P "%F{green}%BAvahi%b%f: %F{cyan}%B${avahi}%b%f"
+		print -P "%F{${c[19]}}%BAvahi%b%f: %F{${c[27]}}%B${avahi}%b%f"
 	fi
 }

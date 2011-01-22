@@ -71,6 +71,9 @@
 		# Unset (and/or comment out here) to disable.
 		export ROOT_TIMEOUT=180
 	# }}}
+	# User colorscheme {{{
+		source $ZSHCONFDIR/colorschemes/frostbite.zsh
+	# }}}
 	# User editor {{{
 		# Your editor. If an alias exists for it, it will be unaliased to avoid
 		# confusion and breakage. (if one exists and you run which on it, which will

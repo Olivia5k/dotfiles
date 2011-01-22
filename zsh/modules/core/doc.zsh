@@ -108,24 +108,22 @@ function _zfuncformat()#
 	fi
 
 	func=$func[1,$x]
-	s="%F{blue}%B${func}()%b%f"
+	s="%F{${c[21]}}%B${func}()%b%f"
 
 	if $fdoc ; then
 		s+=": $($func --zdoc s)"
 	else
-		s+=": %F{white}Undocumented.%f"
+		s+=": %F{${c[22]}}Undocumented.%f"
 	fi
 
 	if $full ; then
-		s+="\nFound inside %F{blue}%B${file}%b%f:%F{red}%B${num}%b%f"
+		s+="\nFound inside %F{${c[21]}}%B${file}%b%f:%F{${c[23]}}%B${num}%b%f"
 		s+="\n\n"
 		if $ldoc; then
 			s+="$($func --zdoc l)"
 		else
-			s+="%F{white}No further information available.%f"
+			s+="%F{${c[22]}}No further information available.%f"
 		fi
-	#else
-		#s+=" %F{green}($file:$num)%f"
 	fi
 
 	print -P $s
