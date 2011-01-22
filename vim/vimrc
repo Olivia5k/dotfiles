@@ -245,6 +245,7 @@
 		
 		" Show syntax groups beneath cursor
 		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+		nmap ,q :redraw!<cr>
 
 		" Search for all single/double-quoted strings
 		nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>

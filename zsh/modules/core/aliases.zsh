@@ -2,37 +2,37 @@ alias grep="grep $GREPOPTS"
 alias :q="exit"
 alias bell='echo -en "\007"'
 
-if has alsamixer ; then
+if _has alsamixer ; then
 	alias am='alsamixer'
 fi
 
-if has todo ; then
+if _has todo ; then
 	alias t='todo'
 	alias tt='todo +children'
 fi
 
-if has fetchmail ; then
+if _has fetchmail ; then
 	alias fm='fetchmail'
 fi
 
-if has python ; then
+if _has python ; then
 	alias py='python'
-	if has bpython ; then
+	if _has bpython ; then
 		alias bp='bpython' # <3
 	fi
 fi
 
 # rsync should always be timed, nuff said.
-if has rsync ; then
+if _has rsync ; then
 	alias rsync='time rsync'
 fi
 
-if has vlock ; then
+if _has vlock ; then
 	alias lock='vlock -n'
 fi
 
 # X11 specific aliases
-if [ -n "$DISPLAY" ] ; then
+if [[ -n "$DISPLAY" ]] ; then
 	# Sets your keyboard to be snappier. Very recommended.
 	alias xr='xset r rate 330 45 && echo 330/45'
 
@@ -42,7 +42,7 @@ if [ -n "$DISPLAY" ] ; then
 	alias aoeu="xq"
 	alias asdf="xa"
 
-	if has urxvt ; then
+	if _has urxvt ; then
 		alias u='urxvt &| exit'
 		alias us='urxvt -name smallfont &| exit'
 	fi
@@ -51,9 +51,16 @@ fi
 # Count which commands you use the most. Give a numerical argument and it
 # will print a list of that length.
 # The aliases module is the best suited place for this one, really.
-function lscmd()
+function lscmd()#
 {
-	if [ -n "$1" ] ; then
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "Count the usage of your commands and print as a table"
+		fi
+		return
+	fi
+
+	if [[ -n "$1" ]] ; then
 		c=$1
 	else
 		c=25

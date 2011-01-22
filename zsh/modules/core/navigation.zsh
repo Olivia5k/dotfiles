@@ -1,17 +1,41 @@
-function cl()
+# These three are mostly useful when on mobile connections and things are slow.
+function cl()#
 {
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "cd && ls"
+		fi
+		return
+	fi
+
 	cd $1 && ls
 }
-function cll()
+
+function cll()#
 {
-cd $1 && ls -l
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "cd && ls -l"
+		fi
+		return
+	fi
+
+	cd $1 && ls -l
 }
-function clal()
+
+function clal()#
 {
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo "cd && lal"
+		fi
+		return
+	fi
+
 	cd $1 && ls -al
 }
 
 alias '..'='cd ..'
-alias -g '...'='../..'
-alias -g '....'='../../..'
-alias -g '.....'='../../../..'
+alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
