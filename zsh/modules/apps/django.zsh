@@ -23,9 +23,10 @@ function dsh()##
 		return
 	fi
 
-	for db in `mysql -s -s -e "show tables in dev_main"` ; do
-		mysql -e "drop table dev_main.$db"
-	done
+	#for db in `mysql -s -s -e "show tables in dev_main"` ; do
+		#mysql -e "drop table dev_main.$db"
+	#done
 
+	mysql -e "drop database dev_main ; create database dev_main;"
 	ds
 }

@@ -21,11 +21,19 @@
 # https://bbs.archlinux.org
 #
 # TODO:
-# Add colorschemes \o/
 # Make dirdiff more useful
 # Wallpaper management (check for $DISPLAY)
 # Extend grab() to shift arguments (-g)
 # Add mplayer aliases
+# Add bindkey modules
+#	Add exitstatus resetter
+# Rename zmodload to zmod
+# Add completion to zmod
+# Rename daethorian.zsh to user.zsh
+# Add set paste, paste, set nopaste function
+# Fix the completion-adds-letter bug
+# Figure out what's up with the colorscheme errors
+# Add zmv module
 
 # Colors. You are expected to be wanting those.
 autoload colors zsh/terminfo
@@ -76,7 +84,8 @@ function _has()#
 		return
 	fi
 
-	which $1 &> /dev/null ; return $?
+	#which $1 &> /dev/null ; return $?
+	[[ -x $commands[$1] ]] && return true # zsh style \o/
 }
 
 # zsh configuration directory; dynamically found

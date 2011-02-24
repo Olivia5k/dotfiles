@@ -20,7 +20,7 @@ alias zz="source ~/.zshrc"
 # Project directories
 alias cdc='cd ~/config'
 alias cdg='cd ~/git'
-alias cdr='cd ~/git/rls'
+#alias cdr='cd ~/git/rls'
 alias cdn='cd ~/git/ndev'
 alias cdm='cd ~/git/django-mancx'
 alias cdu='cd /warez/unpack' # onoes
