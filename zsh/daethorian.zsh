@@ -43,10 +43,10 @@
 		# #2: The default prompt. Uses double rows and is pretty advanced.
 		# Always shows current machine, current PWD and a clock.
 		# It also has several situational modules:
-		#     # Exitstatus. Shown whenever exitstatus is non-zero.
-		#     # Jobs. Shown whenever you have backgrounded jobs.
-		#     # Mail. Shown whenever there are files in any maildir in $MAIL.
-		#     # Battery. Shown if laptop and if battery is toggled.
+		#	 # Exitstatus. Shown whenever exitstatus is non-zero.
+		#	 # Jobs. Shown whenever you have backgrounded jobs.
+		#	 # Mail. Shown whenever there are files in any maildir in $MAIL.
+		#	 # Battery. Shown if laptop and if battery is toggled.
 		#
 		# Mail and battery requires simple setting up and are ignored otherwise.
 		#
@@ -155,7 +155,7 @@
 		_chpwd() {
 			ls
 		}
-		
+
 		# Your home bin. In the rc there are functions included that handles
 		# installation and uninstallation of custom executables. If this is desired,
 		# $HOMEBIN must of course be included in your path.
@@ -274,23 +274,28 @@
 # User custom whatever {{{
 	# Put whatever else you want here that is specific to your setup.
 	export VIMPERATOR_INIT=":source ~/config/vimperator/vimperatorrc"
+	export PYLINTRC="$HOME/.config/pylint/pylintrc"
 	alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
 	alias mplayer="mplayer -msgcolor -msgmodule"
+	alias dlint="pylint --init-hook=\"import sys ; sys.path.append('/home/daethorian/git/django-mancx/') ; sys.path.append('/home/daethorian/git/django-mancx/apps')\""
 
-	alias vga="xrandr --output VGA1 --auto && xrandr --output LVDS1 --off"
-	alias lvds="xrandr --output LVDS1 --auto && xrandr --output VGA1 --off"
-
-	function beta()
+	function vga()
 	{
-		ssh dt -t 'mysql -e "use dev_main ; select id, email, date_created from mancx_betaregistry;"'
+		xrandr --output VGA1 --auto && xrandr --output LVDS1 --off
+		xr
+		xq
+		feh --bg-center img/wp/velocity.1680x1050.jpg
 	}
-
-	function live()
+	function lvds()
 	{
-		rmext pyc
-		dsh
-		dm loaddata apps/mancx/fixtures/beta.json
+		xrandr --output LVDS1 --auto && xrandr --output VGA1 --off
+		feh --bg-center img/wp/velocity.jpg
 	}
+	#fpath=(
+			#$fpath
+			#$HOME/.zen/zsh/scripts
+			#$HOME/.zen/zsh/zle )
+	#autoload -U zen
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}

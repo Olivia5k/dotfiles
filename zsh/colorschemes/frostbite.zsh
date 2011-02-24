@@ -1,4 +1,4 @@
-if [[ $TCOLORS = 256 ]] ; then
+if true || [[ $TCOLORS = 256 ]] ; then
 	c=()
 	c+="239"       # 1.  Prompt decoration
 	c+="81"        # 2.  Hostname
@@ -26,9 +26,10 @@ if [[ $TCOLORS = 256 ]] ; then
 	c+="48"        # 24. Comp: Descriptions
 	c+="67"        # 25. Comp: Directories
 	c+="196"       # 26. Comp: Corrections
-	c+="84"        # 27. IP Adress
+	c+="45"        # 27. IP Adress
 
 	export c
 else
 	_zerror "This colorscheme requires a terminal that supports 256 colors."
+	_zerror $TCOLORS
 fi

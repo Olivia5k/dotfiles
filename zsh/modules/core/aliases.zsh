@@ -7,7 +7,12 @@ if _has alsamixer ; then
 fi
 
 if _has todo ; then
-	alias t='todo'
+	# Better indexing. The rc file does not always work for some retarded reason.
+	for i in todo tdd tda tde tdr ; do
+		alias $i="$i --sort done,priority,-text,created"
+	done
+
+	alias t='todo -children'
 	alias tt='todo +children'
 fi
 
@@ -61,9 +66,9 @@ function lscmd()#
 	fi
 
 	if [[ -n "$1" ]] ; then
-		c=$1
+		local c=$1
 	else
-		c=25
+		local c=25
 	fi
 
 	cat $LOGS/zsh.history.log |

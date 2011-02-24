@@ -1,5 +1,6 @@
 alias -g G="| grep -i"
 alias -g M="| most"
+alias -g L="| less"
 alias -g X="| xargs"
 alias -g H="| head"
 alias -g T="| tail"
@@ -9,6 +10,7 @@ alias -g SN='| sort -n'
 alias -g SNR='| sort -nr'
 alias -g W="| wc -l"
 alias -g E="&| exit"
+alias -g EE="&& exit"
 alias -g N="&> /dev/null"
 alias -g 1N="1> /dev/null"
 alias -g 2N="2> /dev/null"

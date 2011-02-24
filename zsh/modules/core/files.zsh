@@ -156,6 +156,19 @@ function mk()#
 	mkdir $* && cd $1
 }
 
+# Make the directories and enter $1
+function cpmk()#
+{
+	if [[ "$1" = "--zdoc" ]] ; then
+		if [[ "$2" =~ "s(hort)?" ]] ; then
+			echo 'Make a directory and copy files to it'
+		fi
+		return
+	fi
+
+	echo mkdir ${*[-1]} && echo cp $*
+}
+
 # Remove all files of certain extension
 function rmext()#
 {
