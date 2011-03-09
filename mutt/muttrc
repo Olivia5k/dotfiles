@@ -96,6 +96,7 @@ set markers                  # mark wrapped lines of text in the pager with a +
 set smart_wrap               # Don't wrap mid-word
 set pager_context=5          # Retain 5 lines of previous page when scrolling.
 set status_on_top            # Status bar on top.
+set pager_index_lines=10     # Show the pager.
 push <show-version>          # Shows mutt version at startup
 macro index,pager I '<shell-escape> fetchmail<enter>'
 #macro pager,index \er '<enter-command>source ~/.mutt/muttrc<enter>'
@@ -105,7 +106,7 @@ macro index,pager I '<shell-escape> fetchmail<enter>'
 # Highlight with the bell
 set beep_new = yes
 set check_new = yes
-set timeout = 60
+set timeout = 30
 
 #======================================================#
 # lol sidebar
@@ -113,9 +114,11 @@ set timeout = 60
 # set up the sidebar, default not visible
 set sidebar_width = 20
 set sidebar_visible = yes
+set sidebar_delim='|'
 
 # color of folders with new mail
-color sidebar_new brightwhite brightcolor160
+color sidebar_new red default
+
 bind pager,index \ej sidebar-next
 bind pager,index \ek sidebar-prev
 bind pager,index \el sidebar-open

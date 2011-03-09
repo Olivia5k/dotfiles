@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<todo version="0.1.20">
+    <note priority="veryhigh" time="1299588599" done="1299697326">
+        pyflakes
+    </note>
+    <note priority="high" time="1297495464">
+        absolute whitespace toggler
+    </note>
+    <note priority="high" time="1297495443">
+        fugitive
+        <note priority="medium" time="1299588585">
+            try to fix diff to new tab
+        </note>
+    </note>
+    <note priority="high" time="1297495434">
+        fuzzyfinder
+    </note>
+    <note priority="high" time="1297495453">
+        matchit
+    </note>
+    <note priority="high" time="1297495470">
+        nic colorscheme
+    </note>
+    <note priority="high" time="1297495593">
+        word toggler
+    </note>
+    <note priority="medium" time="1299588543">
+        html.vim
+        <note priority="medium" time="1299588560">
+            add forms
+        </note>
+        <note priority="medium" time="1299588563">
+            fix spans
+        </note>
+    </note>
+</todo>

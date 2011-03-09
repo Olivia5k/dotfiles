@@ -3,5 +3,5 @@ xset r rate 330 45 &
 
 exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 5 -root &
-exec feh --bg-center ~/img/wp/scsw.jpg &
+exec feh --bg-center ~/img/wp/velocity.jpg &
 exec stumpwm

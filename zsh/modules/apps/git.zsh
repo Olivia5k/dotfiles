@@ -20,6 +20,7 @@ alias gus='git pull && gsu'
 
 # Diffing
 alias gd='git diff'
+alias gdh='git diff HEAD'
 alias gdt='git difftool'
 
 # Logging

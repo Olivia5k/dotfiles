@@ -1,7 +1,6 @@
 export PYTHONSTARTUP=$XDG_DATA_HOME/python/djangoloader.py
 
 alias dm='python2 manage.py'
-alias dr='dm runserver'
 alias ds='echo "no" | dm syncdb'
 alias dz='bpython'
 
@@ -23,9 +22,21 @@ function dsh()##
 		return
 	fi
 
-	for db in `mysql -s -s -e "show tables in dev_main"` ; do
-		mysql -e "drop table dev_main.$db"
-	done
+	#for db in `mysql -s -s -e "show tables in dev_main"` ; do
+		#mysql -e "drop table dev_main.$db"
+	#done
 
+	mysql -e "drop database dev_main ; create database dev_main;"
 	ds
+}
+
+function dr()
+{
+    if [[ ! -f "manage.py" ]] ; then
+        _zerror "No django manager found. Exiting"
+        return 1
+    fi
+
+    rmext pyc
+    dm runserver 0.0.0.0:8000
 }
