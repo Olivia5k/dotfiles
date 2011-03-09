@@ -179,9 +179,7 @@ function rmext()#
 		return
 	fi
 
-	for e in $*; do
-		find . -iname "*.$e" | xargs rm -rv
-	done
+	rm -v **/*.$1
 }
 
 # Extract files from archives

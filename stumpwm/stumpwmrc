@@ -1,74 +1,59 @@
-;; vim: set ts=2 filetype=lisp:
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;																									;;
-;; .stumpwmrc																				;;
-;; Sane windows management (vim-bindings)						;;
-;; Basic mode-line, quick hack for dual head setups	;;
-;; trapd00r@trapd00r.se															;;
-;; Feel free to send me the diff										;;
-;; Updated: 2009.08.26															;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; COLORS(SteelBlue, ForestGreen, SlateGrey
-
-; dump-group-to-file
-; restore-from-file
-
-;-*-lisp-*-
-
+; vim: set et,ts=2,sts=2,ft=lisp
 (in-package :stumpwm)
-
 (setf *default-package* :stumpwm)
-
+(set-contrib-dir "/usr/share/stumpwm")
 
 ;(load-module "mpd")
 (set-prefix-key (kbd "C-f"))
 
+;; Turn of welcome message
+(setf *startup-message* nil)
+
 ;; Variables
 (setf *shell-program* (stumpwm::getenv "SHELL")) ;getenv is not exported
-
-;;(setf *debug-level*   10
-
-;;	  *mouse-focus-policy* :click)
-
-; ditch the x
-(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr -fg white -bg black")
-
-
-(set-contrib-dir "/usr/share/stumpwm")
 
 ;(head-resize 1 0 0 1680 1040)
 ;(head-resize 2 0 0 1680 1040)
 ;(head-resize nr x y width height)
 
-(set-font "-xos4-terminus-*-*-*-*-14-*-*-*-*-*-*-*")
+(set-font "-xos4-terminus-*-*-*-*-12-*-*-*-*-*-*-*")
+(set-font "-*-montecarlo-*-*-*-*-11-*-*-*-*-*-*-*")
 
-(setf *mode-line-background-color* "black"
-    *mode-line-foreground-color* "White"
+(setf *mouse-focus-policy* :click
+    *mode-line-background-color* "grey10"
+    *mode-line-foreground-color* "lightskyblue1"
     *mode-line-border-color* "darkgrey"
     *mode-line-timeout* 1
-    *mode-line-screen-position* :bottom
-    *window-format* "^B^8*%n%s%m%30t :: ^7*"
+    *mode-line-border-width* 0
+    *mode-line-screen-position* :top
+    *window-format* "%n%s %12t"
     *group-format* "%t")
+
+(stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
 
 ;;;; The Message Window
 (set-fg-color "lightskyblue1")
 (set-bg-color "grey10")
 (set-border-color "lightskyblue4")
+;(set-fg-color "olivedrab1")
+;(set-bg-color "grey10")
+;(set-border-color "olivedrab4")
 (set-msg-border-width 1)
 
-(setf *maxsize-border-width* 1
-    *normal-border-width* 1
+(setf *maxsize-border-width* 2
+    *normal-border-width* 2
+    *mode-line-border-width* 0
     *window-border-style* :thin
     *transient-border-width* 4) ; popups \o/
 
 (setf *message-window-gravity* :top-right
-    *timeout-wait*           10
+    *timeout-wait*           5
     *input-window-gravity*   :top-left)
 
-
-;; Turn of welcome message
-(setf *startup-message* nil)
+(set-focus-color "lightskyblue1")
+;(set-focus-color "olivedrab1")
+(set-unfocus-color "grey20")
+(set-normal-gravity :center)
 
 ;; Little helper
 (defun cat (&rest strings) "A shortcut for (concatenate 'string foo bar)."
@@ -79,20 +64,20 @@
   ((:string "uzbl: "))
   (check-type s string)
   (substitute #\+ #\Space s)
-  (run-shell-command (cat "python /home/daethorian/config/uzbl/scripts/www.py " s)))
+  (run-shell-command
+    (cat "python /home/daethorian/config/uzbl/scripts/www.py " s)))
 
 ;; MPD
 (defparameter *mpd-map*
   (let ((m (make-sparse-keymap)))
   (define-key m (kbd "h") "exec mpc prev")
   (define-key m (kbd "l") "exec mpc next")
-  (define-key m (kbd "m") "exec mpc toggle")
   (define-key m (kbd "z") "exec mpc random")
+  (define-key m (kbd "m") "exec mpc toggle")
   (define-key m (kbd "SPC") "exec mpc toggle")
   m))
 
 (define-key *root-map* (kbd "m") '*mpd-map*)
-(define-key *root-map* (kbd "C-m") '*mpd-map*)
 
 ;; Volume
 (defcommand volume (v)
@@ -102,17 +87,21 @@
 
 (define-key *root-map* (kbd "v") "volume")
 
-;;;; Windows
-
-(set-focus-color "lightskyblue1")
-(set-unfocus-color "grey20")
-(set-normal-gravity :center)
-(setf *normal-border-width* 1)
-
+;; Terminals
 (define-key *top-map* (kbd "s-RET") "exec urxvt -name smallfont")
 (define-key *root-map* (kbd "RET") "exec urxvt -name smallfont")
 (define-key *root-map* (kbd "c") "exec urxvt")
+
+;; Browsers
 (define-key *root-map* (kbd "u") "uzbl")
+(define-key *root-map* (kbd "i") "exec firefox")
+
+;; The statusbar
+(define-key *root-map* (kbd "d") "exec dzentinel")
+(define-key *root-map* (kbd "C-d") "exec killall dzentinel ; dzentinel")
+
+(define-key *root-map* (kbd "x") "exec xlock")
+(define-key *root-map* (kbd "C-r") "loadrc")
 
 ;; sane bindings for window management
 (define-key *root-map* (kbd "h") "move-focus left")
@@ -120,30 +109,19 @@
 (define-key *root-map* (kbd "k") "move-focus up")
 (define-key *root-map* (kbd "l") "move-focus right")
 
-(define-key *top-map* (kbd "s-h") "move-focus left")
-(define-key *top-map* (kbd "s-j") "move-focus down")
-(define-key *top-map* (kbd "s-k") "move-focus up")
-(define-key *top-map* (kbd "s-l") "move-focus right")
-
 (define-key *root-map* (kbd "H") "move-window left")
 (define-key *root-map* (kbd "J") "move-window down")
 (define-key *root-map* (kbd "K") "move-window up")
 (define-key *root-map* (kbd "L") "move-window right")
 
+;; Simple control
 (define-key *root-map* (kbd "s") "hsplit")
 (define-key *root-map* (kbd "z") "vsplit")
-
-(define-key *root-map* (kbd "x") "exec xlock")
-
-(define-key *top-map* (kbd "s-Tab") "gnext")
-(define-key *top-map* (kbd "s-S-Tab") "gprev")
+(define-key *root-map* (kbd "C-s") "repack-window-numbers")
 (define-key *root-map* (kbd "SPC") "gnext")
 (define-key *root-map* (kbd "C-SPC") "gprev")
+(define-key *root-map* (kbd "DEL") "gprev")
+(define-key *root-map* (kbd "C-DEL") "gprev")
 
-(define-key *top-map* (kbd "F9") "exec xset r rate 330 45 ; stumpish echo 330/45")
-(define-key *top-map* (kbd "F10") "loadrc")
-(define-key *top-map* (kbd "F11") "exec setxkbmap a6; stumpish echo svorak")
-(define-key *top-map* (kbd "F12") "exec setxkbmap q6; stumpish echo qwerty")
-
-;;; The End
+;; The End
 ; vim: set et,ts=2,sts=2,ft=lisp

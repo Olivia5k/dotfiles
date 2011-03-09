@@ -18,6 +18,9 @@
 
 	let g:pydoc_wh = 20
 " }
+" Pathogen {
+	call pathogen#runtime_append_all_bundles()
+" }
 " Filetypes {
 	au Filetype python set foldmethod=indent expandtab
 	au Filetype python syn keyword Special self
@@ -51,7 +54,7 @@
 	set lazyredraw " do not redraw while running macros (much faster)
 	set noerrorbells " don't make noise
 	set laststatus=2 " always have the statusline
-	set statusline=%<%f\:%l\,%v\ %m\ %=\ %r%h%w%y\ %l\/%L\ %P
+	set statusline=%<%f\:%l\,%v\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
 " }
 " Visual Cues {
 	set colorcolumn=+1 " Show a colored column one column from &tw
@@ -69,7 +72,7 @@
 	set shiftwidth=4 " unify
 	set tabstop=4 " real tabs should be 4, but they will show with set list on
 	set copyindent " follow the conventions laid before us
-	set noexpandtab " do not use spaces
+	set expandtab " do not use tabs
 	let g:pyindent_open_paren = &sw
 	filetype plugin indent on " load filetype plugins and indent settings
 " }
@@ -103,6 +106,10 @@
 		let g:force_lofi = 0
 		colorscheme xoria
 	endif
+" }
+" Plugins {
+	source $VIMRUNTIME/macros/matchit.vim
+	set makeprg=pep8\ %
 " }
 " Custom functions {
 	function! ScrolloffToggle() " {
@@ -193,6 +200,29 @@
 
 		silent colorscheme ninjaloot
 	endfunction " }
+	function! JqueryTemplateEscape() " {
+		" Escapes a jQuery template into a Django parsable format
+		try
+			silent :%s/{{/{% templatetag openvariable %}/
+		catch /E486:/
+		endtry
+
+		try
+			silent :%s/}}/{% templatetag closevariable %}/
+		catch /E486:/
+		endtry
+
+		try
+			silent :%s/\${ /${% templatetag openbrace %} /
+		catch /E486:/
+		endtry
+
+		try
+			silent :%s/ }/ {% templatetag closebrace %}/
+		catch /E486:/
+		endtry
+		echo 'JSON escape done'
+	endfunction " }
 " }
 " Custom mappings {
 	" Navigation {
@@ -209,10 +239,10 @@
 		imap <C-l> <Right>
 
 		" Map Ctrl-hjkl to be window smitching otherwise
-		nmap <C-k> <C-w><Up>
-		nmap <C-j> <C-w><Down>
-		nmap <C-l> <C-w><Right>
-		nmap <C-h> <C-w><Left>
+		"nmap <C-k> <C-w><Up>
+		"nmap <C-j> <C-w><Down>
+		"nmap <C-l> <C-w><Right>
+		"nmap <C-h> <C-w><Left>
 		
 		noremap <space> /
 		noremap <c-space> ?
@@ -220,7 +250,7 @@
 	" Sourcing {
 		nmap ,v :source $MYVIMRC<cr>
 		nmap ,V :tabe $MYVIMRC<cr>
-		nmap ,t :NERDTree<cr>
+		nmap ,t :NERDTreeToggle<cr>
 		nmap ,x :!xclip %<cr>
 	" }
 	" Colorschemes {
@@ -240,11 +270,23 @@
 		nmap ,s mt:call WhitespaceToggle()<cr>`t
 		nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
 	" }
+	" Fugitive <3 {
+		nmap ,gb :Gblame<cr>
+		nmap ,gd :Gdiff<cr>
+		nmap ,gl :Glog<cr>
+		nmap ,gr :Gremove<cr>
+		nmap ,gs :Gstatus<cr>
+		nmap ,gw :Gwrite<cr>
+		nmap ,gcc :Gcommit<cr>
+		nmap ,gca :Gcommit -a<cr>
+
+		nmap ,gm :Gmove 
+	" }
 	" Misc. {
 		"com! W call SudoWrite()
 		
 		" Show syntax groups beneath cursor
-		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+		nmap ,sg  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 		nmap ,q :redraw!<cr>
 
 		" Search for all single/double-quoted strings
@@ -257,6 +299,9 @@
 	" CSS {
 		nmap ,b A {<cr>}<esc>k^
 	" }
+	" CSS {
+		nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
+	" }
 	" Django {
 		nmap ,dd odebug()<esc>i
 		nmap ,db o{% block <++> %}<cr>{% endblock %}<esc>k^<C-j>
@@ -266,6 +311,7 @@
 		nmap ,dtb o{% blocktrans %}<cr>{% endblocktrans %}<esc>k^
 		nmap ,dvd a{{  }}<esc>2hi
 		nmap ,dvv o{{  }}<esc>2hi
+		nmap ,dj :call JqueryTemplateEscape()<cr>
 	" }
 	" Python {
 		nmap ,zii oimport

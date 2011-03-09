@@ -36,6 +36,9 @@ def localhost(args):
 
 def main():
     url = None
+    f = open("/tmp/hax", "w")
+    f.write(" ".join(sys.argv))
+    f.close()
 
     if len(sys.argv) == 1:
         url = 'http://www.google.com'

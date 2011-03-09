@@ -34,6 +34,8 @@
 # Fix the completion-adds-letter bug
 # Figure out what's up with the colorscheme errors
 # Add zmv module
+# Make dangerous aliases checked. Function?
+
 
 # Colors. You are expected to be wanting those.
 autoload colors zsh/terminfo

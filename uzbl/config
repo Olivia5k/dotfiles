@@ -98,7 +98,7 @@ set name_section      = <span foreground="khaki">\@[\@NAME]\@</span>
 set status_section    = <span foreground="orange">\@status_message</span>
 set selected_section  = <span foreground="#606060">\@[\@SELECTED_URI]\@</span>
 
-set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @name_section @status_section @scroll_section @selected_section</span>
+set status_format     = <span font_family="montecarlo">@mode_section @keycmd_section @progress_section @uri_section @name_section @status_section @scroll_section @selected_section</span>
 
 set title_format_long = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl browser <\@NAME> \@SELECTED_URI
 
@@ -208,15 +208,18 @@ set ebind     = @mode_bind global,-insert
 @cbind  <Ctrl>l = forward
 @cbind  S   = stop
 @cbind  r   = reload
+@cbind  <Ctrl>r   = reload_ign_cache
 @cbind  R   = reload_ign_cache
 
 # Zoom binds
 @cbind  +   = zoom_in
 @cbind  -   = zoom_out
 @cbind  T   = toggle_zoom_type
-@cbind  1   = set zoom_level = 1.0
-@cbind  2   = set zoom_level = 1.5
-@cbind  3   = set zoom_level = 2.0
+@cbind  zz   = set zoom_level = 1.0
+@cbind  z1   = set zoom_level = 1.2
+@cbind  z2   = set zoom_level = 1.5
+@cbind  z3   = set zoom_level = 1.8
+@cbind  z4   = set zoom_level = 2.0
 
 # Appearance binds
 @cbind  e   = toggle_status
@@ -232,6 +235,7 @@ set ebind     = @mode_bind global,-insert
 @cbind  zg<Google:>_    = uri http://www.google.com/search?q=\@<encodeURIComponent(%r)>\@
 @cbind  za<Archwiki:>_  = uri http://wiki.archlinux.org/index.php/Special:Search?search=\@<encodeURIComponent(%r)>\@&go=Go
 @cbind  zw<Wikipedia:>_ = uri http://en.wikipedia.org/w/index.php?title=Special:Search&search=\@<encodeURIComponent(%r)>\@&go=Go
+@cbind  zp<www:>_ = spawn $XDG_CONFIG_HOME/scripts/www.py %s
 
 # Handy binds
 # Set function shortcut
@@ -245,8 +249,8 @@ set ebind     = @mode_bind global,-insert
 
 # Use socat to directly inject commands into uzbl-core and view events
 # raised by uzbl-core:
-@cbind  <Ctrl><Alt>t  = sh 'xterm -e "socat unix-connect:$5 -"'
-#@cbind  <Ctrl><Alt>t  = sh 'urxvt -e socat unix-connect:$5 -'
+#@cbind  <Ctrl><Alt>t  = sh 'xterm -e "socat unix-connect:$5 -"'
+@cbind  <Ctrl><Alt>t  = sh 'urxvt -e socat unix-connect:$5 -'
 
 # Uri opening prompts
 @cbind  o<open:>_       = uri %s
@@ -332,9 +336,9 @@ set preset = event PRESET_TABS
 # === Context menu items =====================================================
 
 # Default context menu
-menu_add Google = set uri = http://google.com
-menu_add Go Home = set uri = http://uzbl.org
-menu_separator separator_1
+#menu_add Google = set uri = http://google.com
+#menu_add Go Home = set uri = http://uzbl.org
+#menu_separator separator_1
 menu_add Quit uzbl = exit
 
 # Link context menu
