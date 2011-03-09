@@ -279,6 +279,9 @@
 	alias mplayer="mplayer -msgcolor -msgmodule"
 	alias dlint="pylint --init-hook=\"import sys ; sys.path.append('/home/daethorian/git/django-mancx/') ; sys.path.append('/home/daethorian/git/django-mancx/apps')\""
 
+    alias wpg="touch /tmp/gemma && wp"
+    alias wpn="rm /tmp/gemma &> /dev/null && wp"
+
 	function vga()
 	{
 		xrandr --output VGA1 --auto && xrandr --output LVDS1 --off
