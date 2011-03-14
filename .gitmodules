@@ -16,3 +16,9 @@
 [submodule "vim/bundle/fugitive"]
 	path = vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/bundle/css"]
+	path = vim/bundle/css
+	url = git@github.com:daethorian/css-snippets-snipmate.git
+[submodule "vim/snippets"]
+	path = vim/snippets
+	url = https://github.com/scrooloose/snipmate-snippets.git

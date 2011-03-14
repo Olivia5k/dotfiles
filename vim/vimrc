@@ -63,7 +63,9 @@
 	set statusline=%<%f\:%l\,%v\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
 " }
 " Visual Cues {
-	set colorcolumn=+1 " Show a colored column one column from &tw
+	if version >= 703
+		set colorcolumn=+1 " Show a colored column one column from &tw
+	endif
 	set showmatch " show matching brackets
 	set nohlsearch " do not highlight searched for phrases
 	set incsearch " BUT do highlight as you type you search phrase
