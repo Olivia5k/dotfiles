@@ -26,7 +26,7 @@
 # Extend grab() to shift arguments (-g)
 # Add mplayer aliases
 # Add bindkey modules
-#	Add exitstatus resetter
+#    Add exitstatus resetter
 # Rename zmodload to zmod
 # Add completion to zmod
 # Rename daethorian.zsh to user.zsh
@@ -53,42 +53,74 @@ zle -N self-insert url-quote-magic
 
 function _zdebug()#
 {
-	if [[ "$1" = "--zdoc" ]] ; then
-		if [[ "$2" =~ "s(hort)?" ]] ; then
-			echo "Internal debug message printer"
-		fi
-		return
-	fi
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Internal debug message printer"
+        fi
+        return
+    fi
 
-	if [[ -n "$DEBUG" ]] && $DEBUG ; then
-		print -P "%B%F{${c[18]}}Debug%f%b:" $*
-	fi
+    if [[ -n "$DEBUG" ]] && $DEBUG ; then
+        print -P "%B%F{${c[18]}}Debug%f%b:" $*
+    fi
 }
 
 function _zerror()#
 {
-	if [[ "$1" = "--zdoc" ]] ; then
-		if [[ "$2" =~ "s(hort)?" ]] ; then
-			echo "Internal error message printer"
-		fi
-		return
-	fi
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Internal error message printer"
+        fi
+        return
+    fi
 
-	print -P "%B%F{${c[6]}}Error%f%b:" $*
+    print -P "%B%F{${c[6]}}Error%f%b:" $*
 }
 
 function _has()#
 {
-	if [[ "$1" = "--zdoc" ]] ; then
-		if [[ "$2" =~ "s(hort)?" ]] ; then
-			echo "Internal checker if an application exists."
-		fi
-		return
-	fi
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Internal checker if an application exists."
+        fi
+        return
+    fi
 
-	#which $1 &> /dev/null ; return $?
-	[[ -x $commands[$1] ]] && return true # zsh style \o/
+    #which $1 &> /dev/null ; return $?
+    [[ -x $commands[$1] ]] && return true # zsh style \o/
 }
+
+function _modload()#
+{
+    if [[ -z "$1" ]] ; then
+        _zerror "_modload() needs at least one argument."
+        return 1
+    elif [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Loads internal modules"
+        fi
+        return
+    fi
+
+    for m in $* ; do
+        # If a path is given as absolute (the cores are), just load it.
+        if [[ "$m" =~ "^/" ]] ; then
+            f=$m
+        else
+            f="$ZMODDIR/${m}.zsh"
+        fi
+
+        if [[ -f "$f" ]] ; then
+            _zdebug "Loading $m"
+            source $f
+            ZMODULES+=(${f##*/})
+        else
+            _zerror "$m is not a valid module."
+        fi
+    done
+    unset m
+}
+
 
 # zsh configuration directory; dynamically found
 export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
@@ -96,14 +128,17 @@ export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
 # Colorscheme. Load default as fallback
 source $ZSHCONFDIR/colorschemes/default.zsh
 
+# The most useful alias there ever was
+alias zz="source ~/.zshrc"
+
 # File with variables that most probably changes per user.
 # Most documentation about this configuration is in there.
 # If no file is found, using daethorians default.
 local USERFILE="$ZSHCONFDIR/$USER.zsh"
 if [[ -f $USERFILE ]] ; then
-	source $USERFILE
+    source $USERFILE
 else
-	source $ZSHCONFDIR/daethorian.zsh
+    source $ZSHCONFDIR/daethorian.zsh
 fi
 
 # Prompt variables
@@ -111,21 +146,13 @@ fi
 # stored in global variables.
 export TCOLORS=$(echotc Co)
 
-if [[ -n "$MULTI" ]] && _has $MULTI; then
-	export HASMULTI=true
-else
-	export HASMULTI=false
-fi
-if [[ -n "$TODO" ]] && _has $TODO ; then
-	export HASTODO=true
-else
-	export HASTODO=false
-fi
+HASTODO=$([[ -n "$TODO" ]] && _has $TODO)
+HASMULTI=$([[ -n "$MULTI" ]] && _has $MULTI)
 
 if [[ $TERM = "linux" ]] && $FORCE_CONSOLE; then
-	export PMODE=1
+    export PMODE=1
 elif [[ $TERM = "xterm" ]] && $FORCE_MOBILE ; then
-	export PMODE=0
+    export PMODE=0
 fi
 
 # Store last prompt; for use with CVS prompt
@@ -133,15 +160,15 @@ export POLD=$PMODE
 
 # Kill root after three minutes
 if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
-	print -P "Warning: Root shell will timeout after %B%F{${c[12]}}$ROOT_TIMEOUT seconds%f%b."
-	TMOUT=$ROOT_TIMEOUT
+    print -P "Warning: Root shell will timeout after %B%F{${c[12]}}$ROOT_TIMEOUT seconds%f%b."
+    TMOUT=$ROOT_TIMEOUT
 fi
 
 for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
-	if ! [[ -d $d ]] ; then
-		_zdebug "Autocreating %B%F{${c[4]}}${d}%b%f"
-		mkdir -p $d &> /dev/null
-	fi
+    if [[ ! -d $d ]] ; then
+        _zdebug "Autocreating %B%F{${c[4]}}${d}%b%f"
+        mkdir -p $d &> /dev/null
+    fi
 done
 
 # vim: ft=zsh

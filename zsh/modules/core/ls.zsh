@@ -28,12 +28,12 @@ alias ller="$ls -lhd **/*(-/DN^F)" # list details of all empty directories recur
 
 function lsx()#
 {
-	if [[ "$1" = "--zdoc" ]] ; then
-		if [[ "$2" =~ "s(hort)?" ]] ; then
-			echo "List files by extension"
-		fi
-		return
-	fi
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "List files by extension"
+        fi
+        return
+    fi
 
-	ls *.$1
+    ls *.$1
 }
