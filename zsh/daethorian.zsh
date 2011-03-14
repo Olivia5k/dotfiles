@@ -193,7 +193,7 @@
         export COMPDUMP="$ZDUMPDIR/compdump"
 
         # Use the debugger?
-        export DEBUG=true
+        export DEBUG=false
 
         # The globbing!
         setopt extendedglob
