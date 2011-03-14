@@ -23,12 +23,18 @@ alias gd='git diff'
 alias gdh='git diff HEAD'
 alias gdt='git difftool'
 
+# Merging
+alias gls="git ls-files"
+alias glsu="git ls-files --unmerged"
+alias glsm="git ls-files --modified"
+alias glss="git ls-files --stage"
+alias glsd="git ls-files --deleted"
+
 # Logging
 alias gl='git log --abbrev-commit --pretty=oneline --decorate'
 alias gll='git log --abbrev-commit --decorate --stat'
 alias glg="gl --graph"
 alias gllg="gll --graph"
-alias gls="git shortlog"
 alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
 
