@@ -5,9 +5,6 @@ zstyle ':vcs_info:*' get-revision true
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr "%f%F{${c[16]}}" # Just make it red!
 
-repo="%B%F{${c[1]}}├─[%F{${c[13]}}%s%F{${c[1]}}:%F{${c[14]}}%r%F{${c[1]}}]"
-branch="─[%F{${c[15]}}%u%b%F{${c[1]}}]%%b"
-zstyle ':vcs_info:*' formats "${repo}${branch}"
 zstyle ':vcs_info:*' actionformats "${repo}─[%F{${c[17]}}%a%F{${c[1]}}]${branch}"
 zstyle ':vcs_info:(svn):*' branchformat '%b'
 
@@ -47,7 +44,19 @@ function precmd()
         fi
     fi
 
-    if [[ $PMODE = 3 ]] ; then
+    if [[ $PMODE -ge 3 ]] ; then
+        if [[ $PMODE = 4 ]]; then
+            repo="%B%F{${c[14]}}%r%F{${c[1]}}:%F{${c[4]}}/%S"
+            branch=" %F{${c[15]}}%u%b%%b"
+        elif [[ $PMODE = 5 ]] ; then
+            repo="%B%F{${c[14]}}%r%F{${c[1]}}:%F{${c[4]}}/%S"
+            branch=" %F{${c[15]}}%u%b%%b"
+        else
+            repo="%B%F{${c[1]}}├─[%F{${c[13]}}%s%F{${c[1]}}:%F{${c[14]}}%r%F{${c[1]}}]"
+            branch="─[%F{${c[15]}}%u%b%F{${c[1]}}]%%b"
+        fi
+
+        zstyle ':vcs_info:*' formats "${repo}${branch}"
         vcs_info
 
         # If the message is empty, we are no longer in the CVS.
@@ -105,14 +114,23 @@ function prompt()
         local e="%(?..─[%F{${c[6]}}$(bell)%?%F{${c[1]}}])" # Errorcodes
         local j="%(1j.─[%F{${c[7]}}%j%F{${c[1]}}].)" # Jobs
 
-        local r1="%B%F{${c[1]}}┌─[%(#.%F{${c[3]}}%m.%F{${c[2]}}$u)%F{${c[1]}}]$t─[%F{$dc}%~%F{${c[1]}}]%b"
-        local r2="%B%F{${c[1]}}└${e}${b}${j}${m}─[%F{${c[8]}}%D{%H:%M}%F{${c[1]}}]>%f%b "
+        if [[ $PMODE -ge 4 ]]; then
+            if [[ -n "${vcs_info_msg_0_}" ]]; then
+                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) ${vcs_info_msg_0_} %B%F{${c[4]}}%#%b%f "
+            else
+                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) %F{${c[4]}}%~ %#%b%f "
+            fi
+        else
+            local r1="%B%F{${c[1]}}┌─[%(#.%F{${c[3]}}%m.%F{${c[2]}}$u)%F{${c[1]}}]$t─[%F{$dc}%~%F{${c[1]}}]%b"
+            local r2="%B%F{${c[1]}}└${e}${b}${j}${m}─[%F{${c[8]}}%D{%H:%M}%F{${c[1]}}]>%f%b "
+        fi
     fi
 
     case $PMODE in
         0) ; PROMPT="%# "; ;;
         1) ; PROMPT="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) %F{${c[4]}}%~ %#%b%f " ; ;;
         2) ; PROMPT=$(print "$r1\n$r2") ; ;;
-        3) ; PROMPT=$(print "$r1\n${vcs_info_msg_0_}\n$r2")
+        3) ; PROMPT=$(print "$r1\n${vcs_info_msg_0_}\n$r2") ; ;;
+        4) ; PROMPT=$(print "$r1") ; ;;
     esac
 }
