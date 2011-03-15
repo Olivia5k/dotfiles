@@ -1,24 +1,12 @@
 [submodule "vim/bundle/vim-sparkup"]
 	path = vim/bundle/vim-sparkup
 	url = http://github.com/bingaman/vim-sparkup.git
-[submodule "vim/bundle/snipmate"]
-	path = vim/bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim.git
 [submodule "vim/bundle/taglist"]
 	path = vim/bundle/taglist
 	url = https://github.com/mexpolk/vim-taglist.git
-[submodule "vim/bundle/django-snipmate"]
-	path = vim/bundle/django-snipmate
-	url = https://github.com/robhudson/snipmate_for_django.git
 [submodule "vim/bundle/csapprox"]
 	path = vim/bundle/csapprox
 	url = https://github.com/godlygeek/csapprox.git
 [submodule "vim/bundle/fugitive"]
 	path = vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim/bundle/css"]
-	path = vim/bundle/css
-	url = git@github.com:daethorian/css-snippets-snipmate.git
-[submodule "vim/snippets"]
-	path = vim/snippets
-	url = https://github.com/scrooloose/snipmate-snippets.git
