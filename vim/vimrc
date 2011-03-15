@@ -22,9 +22,14 @@
 	call pathogen#runtime_append_all_bundles()
 " }
 " Filetypes {
-	au Filetype python set foldmethod=indent expandtab
+	au Filetype python set foldmethod=indent expandtab ft=python.django
 	au Filetype python syn keyword Special self
-	au Filetype html,htmldjango set foldmethod=indent expandtab
+	au Filetype python set makeprg=pep8\ -r\ %
+	au Filetype html,htmldjango set foldmethod=indent expandtab ft=htmldjango.html
+
+	" TODO: omg full paths :////
+	au Filetype javascript set makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/bundle/jslint/ext/mylintrun.js\ %
+	au Filetype javascript set errorformat=%f:%l:%c:%m
 
 	augroup filetypedetect
 		au BufNewFile,BufRead *.notes setf notes
@@ -48,6 +53,7 @@
 	set wildmode=list:longest " turn on wild menu in special format (long format)
 	set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
 	set splitbelow " Split below
+	set splitright " Split to the right
 	set ruler " Always show current positions along the bottom
 	set cmdheight=1 " the command bar is 1 high
 	set number " turn on line numbers
@@ -57,7 +63,9 @@
 	set statusline=%<%f\:%l\,%v\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
 " }
 " Visual Cues {
-	set colorcolumn=+1 " Show a colored column one column from &tw
+	if version >= 703
+		set colorcolumn=+1 " Show a colored column one column from &tw
+	endif
 	set showmatch " show matching brackets
 	set nohlsearch " do not highlight searched for phrases
 	set incsearch " BUT do highlight as you type you search phrase
@@ -92,7 +100,7 @@
 	set foldcolumn=1 " Give 1 column for fold markers
 	set foldmethod=marker " Fold on the marker
 	set foldlevel=0 " Open files with folds closed
-	set foldopen=undo,search,jump,hor,tag,mark " open folds when you do stuff
+	set foldopen=undo,search,jump,hor,tag,mark,quickfix " open folds when you do stuff
 	function! SimpleFoldText() " 
 		return getline(v:foldstart).' '
 	endfunction " 
@@ -109,7 +117,6 @@
 " }
 " Plugins {
 	source $VIMRUNTIME/macros/matchit.vim
-	set makeprg=pep8\ %
 " }
 " Custom functions {
 	function! ScrolloffToggle() " {
@@ -245,7 +252,6 @@
 		"nmap <C-h> <C-w><Left>
 		
 		noremap <space> /
-		noremap <c-space> ?
 	" }
 	" Sourcing {
 		nmap ,v :source $MYVIMRC<cr>
@@ -271,26 +277,27 @@
 		nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
 	" }
 	" Fugitive <3 {
-		nmap ,gb :Gblame<cr>
-		nmap ,gd :Gdiff<cr>
-		nmap ,gl :Glog<cr>
-		nmap ,gr :Gremove<cr>
-		nmap ,gs :Gstatus<cr>
-		nmap ,gw :Gwrite<cr>
-		nmap ,gcc :Gcommit<cr>
-		nmap ,gca :Gcommit -a<cr>
+		nmap gb :Gblame<cr>
+		nmap gc :Gcommit<cr>
+		nmap gd :Gdiff<cr>
+		nmap gl :Glog<cr>
+		nmap gp :Git push 
+		nmap gr :Gremove
+		nmap gs :Gstatus<cr>
+		nmap gw :Gwrite<cr>
 
-		nmap ,gm :Gmove 
+		nmap gm :Gmove 
 	" }
 	" Misc. {
 		"com! W call SudoWrite()
 		
 		" Show syntax groups beneath cursor
-		nmap ,sg  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 		nmap ,q :redraw!<cr>
 
 		" Search for all single/double-quoted strings
 		nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
+		nmap ,m :make<cr>
 	" }
 	" Folding {
 		nmap ,fm :set foldmethod=marker<cr>
@@ -299,7 +306,7 @@
 	" CSS {
 		nmap ,b A {<cr>}<esc>k^
 	" }
-	" CSS {
+	" XML {
 		nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 	" }
 	" Django {
@@ -332,7 +339,6 @@
 		vmap K k
 		nmap S S<esc>
 		noremap Q <nop>
-		noremap qq <nop>
 		nnoremap ; :
 	" }
 " }

@@ -12,7 +12,7 @@
 #
 
 # general-doesn't-fit stuff
-color normal     color188 default
+color normal     default default
 color error      brightcolor255 color88
 color markers    brightcolor159 default
 color tilde      color108 default
@@ -28,7 +28,7 @@ color index      brightcolor174 default ~F
 color index      brightcolor160 default ~D
 
 # messages
-color message   color015 default
+color message   default default
 
 # header stuff
 color hdrdefault color223 default

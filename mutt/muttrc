@@ -98,7 +98,7 @@ set pager_context=5          # Retain 5 lines of previous page when scrolling.
 set status_on_top            # Status bar on top.
 set pager_index_lines=10     # Show the pager.
 push <show-version>          # Shows mutt version at startup
-macro index,pager I '<shell-escape> fetchmail<enter>'
+macro index,pager I '<shell-escape> fetchmail && medusa<enter>'
 #macro pager,index \er '<enter-command>source ~/.mutt/muttrc<enter>'
 #macro pager,index \ef '<enter-command>source ~/.mutt/fullowin.mutt<enter>'
 

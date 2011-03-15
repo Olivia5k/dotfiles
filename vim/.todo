@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <todo version="0.1.20">
-    <note priority="veryhigh" time="1299588599" done="1299697326">
-        pyflakes
-    </note>
     <note priority="high" time="1297495464">
         absolute whitespace toggler
     </note>
@@ -21,6 +18,12 @@
     <note priority="high" time="1297495470">
         nic colorscheme
     </note>
+    <note priority="high" time="1299832517">
+        snippets
+        <note priority="medium" time="1299832537">
+            return to json
+        </note>
+    </note>
     <note priority="high" time="1297495593">
         word toggler
     </note>
@@ -32,5 +35,11 @@
         <note priority="medium" time="1299588563">
             fix spans
         </note>
+    </note>
+    <note priority="medium" time="1299832512">
+        python block indent formatexpr
+    </note>
+    <note priority="veryhigh" time="1299588599" done="1299697326">
+        pyflakes
     </note>
 </todo>
