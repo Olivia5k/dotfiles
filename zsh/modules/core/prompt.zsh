@@ -39,7 +39,7 @@ function precmd()
         if [[ $PWD =~ "git/" ]] || [[ -d "$PWD/.git" ]] ; then
             if ! $PKEEP && [[ $PMODE != 3 ]] ; then
                 export POLD=$PMODE
-                export PMODE=3
+                export PMODE=4
             fi
         fi
     fi

@@ -13,10 +13,10 @@ hi clear
 if exists("syntax_on")
     syntax reset
 endif
-let g:colors_name="vylight"
+let g:colors_name="wyvern"
 
 
-hi Normal        guifg=#1a1a1a  guibg=white gui=bold
+hi Normal        guifg=#1a1a1a  gui=bold
 hi Title         guifg=black    guibg=white
 hi Cursor        guibg=#111111
 hi LineNr        guifg=#aaaaaa  guibg=#f8f8f8

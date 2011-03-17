@@ -1,4 +1,4 @@
-! urxvt {
+! urxvt 
 *.scrollBar:           false
 *.saveLines:           100
 *.urgentOnBell:        true
@@ -9,8 +9,8 @@
 *.meta8:               false
 *.underlineURLs:       true
 *.transparent:        true
-*.shading:              20
-!*.shading:              180
+!*.shading:              20
+*.shading:              180
 *.keysym.M-u:          perl:url-select:select_next
 
 *.font:                    -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
@@ -18,8 +18,8 @@
 *smallfont*font:           xft:montecarlo:pixelsize=11
 *smallfont*boldFont:       xft:montecarlo:bold:pixelsize=11
 Xft.dpi:                   75.0
-! }
-! XLock {
+! 
+! XLock 
 XLock.fpsfont:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.font:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.planfont:            -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
@@ -39,12 +39,12 @@ XLock.echokey:             *
 XLock.mousemotion:         True
 XLock.showdate:            True
 XLock.usefirst:            True
-! }
-! Colorscheme (unnamed) {
+! 
+! Colorscheme (unnamed) 
 *foreground:   #dcdccc
 *background:   #1c1c1c
-!*foreground:   #000000
-!*background:   #ffffff
+*foreground:   #000000
+*background:   #ffffff
 *color0:       #333333
 *color1:       #8e2b2e
 *color2:       #45702c
@@ -61,6 +61,6 @@ XLock.usefirst:            True
 *color13:      #E41F66
 *color14:      #41dbb5
 *color15:      #ffffff
-! }
+! 
 
 ! vim: ft=xdefaults
