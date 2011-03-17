@@ -32,7 +32,7 @@ def tvtropes(args=None):
     pass
 
 def localhost(args):
-    return 'http://localhost:8000'
+    return 'http://localhost'
 
 def main():
     url = None

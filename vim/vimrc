@@ -60,7 +60,7 @@
 	set lazyredraw " do not redraw while running macros (much faster)
 	set noerrorbells " don't make noise
 	set laststatus=2 " always have the statusline
-	set statusline=%<%f\:%l\,%v\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
+	set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
 " }
 " Visual Cues {
 	if version >= 703
@@ -112,7 +112,7 @@
 		colorscheme ninjaloot
 	else
 		let g:force_lofi = 0
-		colorscheme xoria
+		colorscheme wyvern
 	endif
 " }
 " Plugins {
@@ -191,7 +191,8 @@
 	endfunction " }
 	function! ColorschemeToggle() " {
 		if g:colors_name == 'xoria'
-			colorscheme mancx
+			colorscheme wyvern
+			hi Normal ctermbg=none
 		else
 			colorscheme xoria
 		endif
@@ -230,6 +231,14 @@
 		endtry
 		echo 'JSON escape done'
 	endfunction " }
+	function! QuickfixCount(...) " {
+		let errors = len(getqflist())
+		if errors == 0
+			return ''
+		else
+			return ' ['.errors.' cc]'
+		endif
+	endfunction " }
 " }
 " Custom mappings {
 	" Navigation {
@@ -258,6 +267,7 @@
 		nmap ,V :tabe $MYVIMRC<cr>
 		nmap ,t :NERDTreeToggle<cr>
 		nmap ,x :!xclip %<cr>
+		nmap ,r :call ReloadAllSnippets()<cr>
 	" }
 	" Colorschemes {
 		nmap ,ne :colo neverland
@@ -277,23 +287,25 @@
 		nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
 	" }
 	" Fugitive <3 {
+		nmap ge :Git 
 		nmap gb :Gblame<cr>
 		nmap gc :Gcommit<cr>
 		nmap gd :Gdiff<cr>
 		nmap gl :Glog<cr>
-		nmap gp :Git push 
-		nmap gr :Gremove
+		nmap go :Git checkout 
+		nmap gpp :Git push 
+		nmap gre :Gread 
+		nmap grr :Gremove
 		nmap gs :Gstatus<cr>
 		nmap gw :Gwrite<cr>
-
 		nmap gm :Gmove 
 	" }
 	" Misc. {
 		"com! W call SudoWrite()
 		
 		" Show syntax groups beneath cursor
+		" TODO: Make function
 		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-		nmap ,q :redraw!<cr>
 
 		" Search for all single/double-quoted strings
 		nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
@@ -310,14 +322,6 @@
 		nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 	" }
 	" Django {
-		nmap ,dd odebug()<esc>i
-		nmap ,db o{% block <++> %}<cr>{% endblock %}<esc>k^<C-j>
-		nmap ,di o{% if <++> %}<cr>{% endif %}<esc>k^<C-j>
-		nmap ,df o{% for <++> as <++> %}<cr>{% endfor %}<esc>k^<C-j>
-		nmap ,dtt I{% trans "<esc>A" %}<esc>^
-		nmap ,dtb o{% blocktrans %}<cr>{% endblocktrans %}<esc>k^
-		nmap ,dvd a{{  }}<esc>2hi
-		nmap ,dvv o{{  }}<esc>2hi
 		nmap ,dj :call JqueryTemplateEscape()<cr>
 	" }
 	" Python {
