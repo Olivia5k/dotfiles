@@ -99,6 +99,7 @@ if exists("syntax_on")
 endif
 let g:colors_name="zenburn"
 
+hi Normal          guifg=#dcdccc guibg=#1f1f1f
 hi Boolean         guifg=#dca3a3
 hi Character       guifg=#dca3a3 gui=bold
 hi Comment         guifg=#7f9f7f gui=italic
@@ -187,6 +188,7 @@ if &t_Co > 255
     hi Keyword         ctermfg=223   cterm=bold
     hi Label           ctermfg=187   cterm=underline
     hi LineNr          ctermfg=248   ctermbg=none
+    hi Normal          ctermfg=248   ctermbg=236
     hi Macro           ctermfg=223   cterm=bold
     hi ModeMsg         ctermfg=223   cterm=none
     hi MoreMsg         ctermfg=15    cterm=bold

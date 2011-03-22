@@ -15,6 +15,7 @@
 	set backspace=indent,eol,start
 	set gdefault " always replace everything when substituting
 	set magic " use magic regular expressions
+	set autoread " reload files that has changed externally
 
 	let g:pydoc_wh = 20
 " }
@@ -290,7 +291,7 @@
 		nmap ge :Git 
 		nmap gb :Gblame<cr>
 		nmap gc :Gcommit<cr>
-		nmap gd :Gdiff<cr>
+		nmap gd :Gdiff HEAD<cr>
 		nmap gl :Glog<cr>
 		nmap go :Git checkout 
 		nmap gpp :Git push 
