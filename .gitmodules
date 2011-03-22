@@ -1,6 +1,3 @@
-[submodule "vim/bundle/vim-sparkup"]
-	path = vim/bundle/vim-sparkup
-	url = http://github.com/bingaman/vim-sparkup.git
 [submodule "vim/bundle/taglist"]
 	path = vim/bundle/taglist
 	url = https://github.com/mexpolk/vim-taglist.git

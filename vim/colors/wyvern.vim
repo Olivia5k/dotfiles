@@ -17,7 +17,7 @@ let g:colors_name="wyvern"
 
 
 hi Normal        guifg=#1a1a1a  gui=bold
-hi Title         guifg=black    guibg=white
+hi Title         guifg=black
 hi Cursor        guibg=#111111
 hi LineNr        guifg=#aaaaaa  guibg=#f8f8f8
 hi Visual        guibg=#bbddff
@@ -28,6 +28,7 @@ hi VertSplit     guifg=#eeeeee  guibg=#eeeeee  gui=none
 hi ModeMsg       guifg=#007050  guibg=#eeeeee  gui=none
 hi ErrorMsg      guifg=#f03050  guibg=#eeeeee  gui=none
 hi Error         guifg=#bb3355  guibg=white    gui=none
+hi ColorColumn   guibg=#eeeeee
 
 
 " Vim 7.x specific
@@ -51,10 +52,10 @@ hi Operator      guifg=#1a1a1a  gui=bold
 hi Identifier    guifg=#1a1a1a  gui=bold
 hi Statement     guifg=#0050b0  gui=bold
 hi Type          guifg=#0050b0  gui=bold
-hi Constant      guifg=#204070  gui=bold
+hi Constant      guifg=#204070
 hi Conditional   guifg=#004040  gui=bold
 hi Delimiter     guifg=#1a1a1a  gui=bold
-hi PreProc       guifg=#007050  gui=bold
+hi PreProc       guifg=#0070a0  gui=bold
 hi Special       guifg=#a05050  gui=bold
 hi Keyword       guifg=#007050  gui=bold
 
