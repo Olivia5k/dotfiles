@@ -65,7 +65,8 @@ set sort_alias=alias                              # Sort alphabetically
 source ~/.mutt/macros
 #======================================================#
 # Colours: 
-source ~/.mutt/fullowin.mutt
+#source ~/.mutt/fullowin.mutt
+source ~/.mutt/zenburn.mutt
 
 #======================================================#
 # GPG: encryption-party!
@@ -117,7 +118,7 @@ set sidebar_visible = yes
 set sidebar_delim='|'
 
 # color of folders with new mail
-color sidebar_new red default
+color sidebar_new brightcolor108 color235
 
 bind pager,index \ej sidebar-next
 bind pager,index \ek sidebar-prev
