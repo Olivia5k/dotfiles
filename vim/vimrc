@@ -15,6 +15,7 @@
 	set backspace=indent,eol,start
 	set gdefault " always replace everything when substituting
 	set magic " use magic regular expressions
+	set autoread " reload files that has changed externally
 
 	let g:pydoc_wh = 20
 " }
@@ -61,6 +62,18 @@
 	set noerrorbells " don't make noise
 	set laststatus=2 " always have the statusline
 	set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
+
+	" 256 colors to putty
+	if &term =~ "xterm"
+		set t_Co=256
+		if has("terminfo")
+			let &t_Sf=nr2char(27).'[3%p1%dm'
+			let &t_Sb=nr2char(27).'[4%p1%dm'
+		else
+			let &t_Sf=nr2char(27).'[3%dm'
+			let &t_Sb=nr2char(27).'[4%dm'
+		endif
+	endif
 " }
 " Visual Cues {
 	if version >= 703
@@ -112,7 +125,7 @@
 		colorscheme ninjaloot
 	else
 		let g:force_lofi = 0
-		colorscheme wyvern
+		colorscheme zenburn
 	endif
 " }
 " Plugins {
@@ -290,7 +303,7 @@
 		nmap ge :Git 
 		nmap gb :Gblame<cr>
 		nmap gc :Gcommit<cr>
-		nmap gd :Gdiff<cr>
+		nmap gd :Gdiff HEAD<cr>
 		nmap gl :Glog<cr>
 		nmap go :Git checkout 
 		nmap gpp :Git push 
