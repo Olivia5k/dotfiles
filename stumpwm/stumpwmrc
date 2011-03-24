@@ -88,9 +88,10 @@
 (define-key *root-map* (kbd "v") "volume")
 
 ;; Terminals
-(define-key *top-map* (kbd "s-RET") "exec urxvt -name smallfont")
-(define-key *root-map* (kbd "RET") "exec urxvt -name smallfont")
-(define-key *root-map* (kbd "c") "exec urxvt")
+(define-key *top-map* (kbd "s-RET") "exec term smallfont")
+(define-key *root-map* (kbd "RET") "exec term smallfont")
+(define-key *root-map* (kbd "c") "exec term")
+(define-key *root-map* (kbd "b") "exec bright")
 
 ;; Browsers
 (define-key *root-map* (kbd "u") "uzbl")
