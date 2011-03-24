@@ -51,7 +51,8 @@
 " Vim UI {
 	set showcmd " show the command being typed
 	set wildmenu " turn on wild menu
-	set wildmode=list:longest " turn on wild menu in special format (long format)
+	" XXX: This one breaks in 7.3.138 for some reason
+	"set wildmode=list:longest " turn on wild menu in special format (long format)
 	set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
 	set splitbelow " Split below
 	set splitright " Split to the right
