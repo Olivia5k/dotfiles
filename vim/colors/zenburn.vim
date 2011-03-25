@@ -260,7 +260,7 @@ if &t_Co > 255
     hi Structure       ctermfg=229   cterm=bold
     hi Tag             ctermfg=181   cterm=bold
     hi Title           ctermfg=7     ctermbg=234     cterm=bold
-    hi Todo            ctermfg=108   ctermbg=234     cterm=bold
+    hi Todo            ctermfg=228   ctermbg=234     cterm=bold
     hi Typedef         ctermfg=253   cterm=bold
     hi Type            ctermfg=187   cterm=bold
     hi Underlined      ctermfg=188   ctermbg=234     cterm=bold
@@ -275,7 +275,7 @@ if &t_Co > 255
 
     " spellchecking, always "bright" background
     hi SpellLocal  ctermfg=174 ctermbg=none
-    hi SpellBad    ctermfg=none ctermbg=240 cterm=underline
+    hi SpellBad    ctermfg=196 ctermbg=none cterm=underline
     hi SpellCap    ctermfg=174 ctermbg=none
     hi SpellRare   ctermfg=174 ctermbg=none
 
