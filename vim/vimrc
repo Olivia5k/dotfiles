@@ -4,361 +4,364 @@
 " Once upon a time based on MetaCosms vimrc (http://www.vi-improved.org/vimrc.php)
 
 " Basics {
-	set nocompatible " get out of horrible vi-compatible mode
-	set background=dark " we are using a dark background
-	syntax enable
+    set nocompatible " get out of horrible vi-compatible mode
+    set background=dark " we are using a dark background
+    syntax enable
 " }
 " General {
-	set history=100 " How many lines of history to remember
-	set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
-	set nostartofline " leave my cursor where it was
-	set backspace=indent,eol,start
-	set gdefault " always replace everything when substituting
-	set magic " use magic regular expressions
-	set autoread " reload files that has changed externally
+    set history=100 " How many lines of history to remember
+    set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
+    set nostartofline " leave my cursor where it was
+    set backspace=indent,eol,start
+    set gdefault " always replace everything when substituting
+    set magic " use magic regular expressions
+    set autoread " reload files that has changed externally
 
-	let g:pydoc_wh = 20
+    let g:pydoc_wh = 20
 " }
 " Pathogen {
-	call pathogen#runtime_append_all_bundles()
+    call pathogen#runtime_append_all_bundles()
 " }
 " Filetypes {
-	au Filetype python set foldmethod=indent expandtab ft=python.django
-	au Filetype python syn keyword Special self
-	au Filetype python set makeprg=pep8\ -r\ %
-	au Filetype html,htmldjango set foldmethod=indent expandtab ft=htmldjango.html
+    au Filetype python set foldmethod=indent expandtab ft=python.django
+    au Filetype python syn keyword Special self
+    au Filetype python set makeprg=pep8\ -r\ %
+    au Filetype html,htmldjango set foldmethod=indent expandtab ft=htmldjango.html
 
-	" TODO: omg full paths :////
-	au Filetype javascript set makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/bundle/jslint/ext/mylintrun.js\ %
-	au Filetype javascript set errorformat=%f:%l:%c:%m
+    " TODO: omg full paths :////
+    au Filetype javascript set makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/bundle/jslint/ext/mylintrun.js\ %
+    au Filetype javascript set errorformat=%f:%l:%c:%m
 
-	augroup filetypedetect
-		au BufNewFile,BufRead *.notes setf notes
-	augroup END
+    augroup filetypedetect
+        au BufNewFile,BufRead *.notes setf notes
+    augroup END
 " }
 " Files/Backups (XDG style) {
-	set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
-	set backup " make backup file
-	set backupdir=~/.cache/vim/backup " where to put backup file
-	set directory=~/.cache/vim/tmp " directory is the directory for temp file
+    set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
+    set backup " make backup file
+    set backupdir=~/.cache/vim/backup " where to put backup file
+    set directory=~/.cache/vim/tmp " directory is the directory for temp file
 
-	" Autocreate the needed directories if they don't exist
-	if isdirectory(&directory) == 0
-		silent! !mkdir -p "$HOME/.cache/vim/backup"
-		silent! !mkdir -p "$HOME/.cache/vim/tmp"
-	endif
+    " Autocreate the needed directories if they don't exist
+    if isdirectory(&directory) == 0
+        silent! !mkdir -p "$HOME/.cache/vim/backup"
+        silent! !mkdir -p "$HOME/.cache/vim/tmp"
+    endif
 " }
 " Vim UI {
-	set showcmd " show the command being typed
-	set wildmenu " turn on wild menu
-	" XXX: This one breaks in 7.3.138 for some reason
-	"set wildmode=list:longest " turn on wild menu in special format (long format)
-	set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
-	set splitbelow " Split below
-	set splitright " Split to the right
-	set ruler " Always show current positions along the bottom
-	set cmdheight=1 " the command bar is 1 high
-	set number " turn on line numbers
-	set lazyredraw " do not redraw while running macros (much faster)
-	set noerrorbells " don't make noise
-	set laststatus=2 " always have the statusline
-	set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
+    set showcmd " show the command being typed
+    set wildmenu " turn on wild menu
+    " XXX: This one breaks in 7.3.138 for some reason
+    set wildmode=list:longest " turn on wild menu in special format (long format)
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
+    set splitbelow " Split below
+    set splitright " Split to the right
+    set ruler " Always show current positions along the bottom
+    set cmdheight=1 " the command bar is 1 high
+    set number " turn on line numbers
+    set lazyredraw " do not redraw while running macros (much faster)
+    set noerrorbells " don't make noise
+    set laststatus=2 " always have the statusline
+    set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
 
-	" 256 colors to putty
-	if &term =~ "xterm"
-		set t_Co=256
-		if has("terminfo")
-			let &t_Sf=nr2char(27).'[3%p1%dm'
-			let &t_Sb=nr2char(27).'[4%p1%dm'
-		else
-			let &t_Sf=nr2char(27).'[3%dm'
-			let &t_Sb=nr2char(27).'[4%dm'
-		endif
-	endif
+    " 256 colors to putty
+    if &term =~ "xterm"
+        set t_Co=256
+        if has("terminfo")
+            let &t_Sf=nr2char(27).'[3%p1%dm'
+            let &t_Sb=nr2char(27).'[4%p1%dm'
+        else
+            let &t_Sf=nr2char(27).'[3%dm'
+            let &t_Sb=nr2char(27).'[4%dm'
+        endif
+    endif
 " }
 " Visual Cues {
-	if version >= 703
-		set colorcolumn=+1 " Show a colored column one column from &tw
-	endif
-	set showmatch " show matching brackets
-	set nohlsearch " do not highlight searched for phrases
-	set incsearch " BUT do highlight as you type you search phrase
-	set scrolloff=5 " Keep 5 lines (top/bottom) for scope
-	set sidescrolloff=5 " Keep 5 lines at the side
-	set novisualbell " don't blink
-	set list " Show whitespace characters
-	set listchars=trail:-,tab:\>\ 
+    if version >= 703
+        set colorcolumn=+1 " Show a colored column one column from &tw
+    endif
+    set showmatch " show matching brackets
+    set hlsearch " highlight searched phrases
+    set incsearch " highlight as you type you search phrase
+    set scrolloff=5 " Keep 5 lines (top/bottom) for scope
+    set sidescrolloff=5 " Keep 5 lines at the side
+    set novisualbell " don't blink
+    set list " Show whitespace characters
+    set listchars=trail:-,tab:\>\ ,nbsp:§
 " }
 " Indent Related {
-	set softtabstop=4 " unify
-	set shiftwidth=4 " unify
-	set tabstop=4 " real tabs should be 4, but they will show with set list on
-	set copyindent " follow the conventions laid before us
-	set expandtab " do not use tabs
-	let g:pyindent_open_paren = &sw
-	filetype plugin indent on " load filetype plugins and indent settings
+    set softtabstop=4 " unify
+    set shiftwidth=4 " unify
+    set tabstop=4 " real tabs should be 4, but they will show with set list on
+    set copyindent " follow the conventions laid before us
+    set expandtab " do not use tabs
+    let g:pyindent_open_paren = &sw " Just add one shiftwidth when indenting python
+    filetype plugin indent on " load filetype plugins and indent settings
 " }
 " Text Formatting/Layout {
-	set formatoptions=tcrq " See Help (complex)
-	set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
-	set nowrap " do not wrap line
-	set preserveindent " but above all -- follow the conventions laid before us
-	set ignorecase " case insensitive by default
-	set smartcase " if there are caps, go case-sensitive
-	set completeopt=menu,longest,preview " improve the way autocomplete works
-	set textwidth=80 " use the universal convention as a default
+    set formatoptions=tcrq " See Help (complex)
+    set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
+    set nowrap " do not wrap line
+    set preserveindent " but above all -- follow the conventions laid before us
+    set ignorecase " case insensitive by default
+    set smartcase " if there are caps, go case-sensitive
+    set completeopt=menu,longest,preview " improve the way autocomplete works
+    set textwidth=79 " use the universal convention as a default
 " }
 " Folding {
-	set foldenable " Turn on folding
-	set foldmarker={,} " Fold C style code
-	set foldcolumn=1 " Give 1 column for fold markers
-	set foldmethod=marker " Fold on the marker
-	set foldlevel=0 " Open files with folds closed
-	set foldopen=undo,search,jump,hor,tag,mark,quickfix " open folds when you do stuff
-	function! SimpleFoldText() " 
-		return getline(v:foldstart).' '
-	endfunction " 
-	set foldtext=SimpleFoldText() " Custom fold text
+    set foldenable " Turn on folding
+    set foldmarker={,} " Fold C style code
+    set foldcolumn=1 " Give 1 column for fold markers
+    set foldmethod=marker " Fold on the marker
+    set foldlevel=0 " Open files with folds closed
+    set foldopen=undo,search,jump,hor,tag,mark,quickfix " open folds when you do stuff
+
+    set foldtext=FoldWithLines()
+    function! FoldWithLines()
+        let nucolwidth = &fdc + &number*&numberwidth
+        let winwd = winwidth(0) - nucolwidth - 5
+        let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
+        let fdnfo = " " . string(foldlinecount) . " lines "
+        let line =  strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
+        let fillcharcount = &tw - len(line) - len(fdnfo)
+        return line . repeat("-",fillcharcount) . fdnfo
+    endfunction
 " }
 " Colorschemes {
-	if &term == 'linux'
-		let g:force_lofi = 1
-		colorscheme ninjaloot
-	else
-		let g:force_lofi = 0
-		colorscheme zenburn
-	endif
+    if &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
+        let g:force_lofi = 0
+        colorscheme zenburnt
+    else
+        let g:force_lofi = 1
+        colorscheme ninjaloot
+    endif
 " }
 " Plugins {
-	source $VIMRUNTIME/macros/matchit.vim
+    source $VIMRUNTIME/macros/matchit.vim
 " }
 " Custom functions {
-	function! ScrolloffToggle() " {
-		if &scrolloff == 5
-			set scrolloff=0
-			set sidescrolloff=0
-			echo 'Scrolloff disabled'
-		else
-			set scrolloff=5
-			set sidescrolloff=5
-			echo 'Scrolloff enabled'
-		endif
-	endfunction " }
-	function! WrapToggle() " {
-		if &wrap == 0
-			set nolist wrap linebreak
-			echo 'Wrap enabled'
-		else
-			set list nowrap nolinebreak
-			echo 'Wrap disabled'
-		endif
-	endfunction " }
-	function! HlsToggle() " {
-		if &hls == 0
-			set hls
-			echo 'Highlightsearch enabled'
-		else
-			set nohls
-			echo 'Highlightsearch disabled'
-		endif
-	endfunction " }
-	function! PasteToggle() " {
-		if &paste == 0
-			set paste
-			echo 'Paste enabled'
-		else
-			set nopaste
-			echo 'Paste disabled'
-		endif
-	endfunction " }
-	function! WhitespaceToggle() " {
-		if &expandtab == 0
-			set expandtab
-			try
-				silent :%s/\t/    /
-			catch /E486:/
-			endtry
-			echo 'Whitespace set to space'
-		else
-			set noexpandtab
-			try
-				silent :%s/    /\t/
-			catch /E486:/
-			endtry
-			echo 'Whitespace set to tabs'
-		endif
-	endfunction " }
-	function! KillTrailingWhitespace(write_file) " {
-		try
-			:%s/\s\+$//
-			echo 'Trailing whitespace eliminated'
-		catch /E486:/
-			echo 'No trailing whitespace'
-		endtry
+    function! ScrolloffToggle() " {
+        if &scrolloff == 5
+            set scrolloff=0
+            set sidescrolloff=0
+            echo 'Scrolloff disabled'
+        else
+            set scrolloff=5
+            set sidescrolloff=5
+            echo 'Scrolloff enabled'
+        endif
+    endfunction " }
+    function! WrapToggle() " {
+        if &wrap == 0
+            set nolist wrap linebreak
+            echo 'Wrap enabled'
+        else
+            set list nowrap nolinebreak
+            echo 'Wrap disabled'
+        endif
+    endfunction " }
+    function! HlsToggle() " {
+        if &hls == 0
+            set hls
+            echo 'Highlightsearch enabled'
+        else
+            set nohls
+            echo 'Highlightsearch disabled'
+        endif
+    endfunction " }
+    function! PasteToggle() " {
+        if &paste == 0
+            set paste
+            echo 'Paste enabled'
+        else
+            set nopaste
+            echo 'Paste disabled'
+        endif
+    endfunction " }
+    function! WhitespaceToggle() " {
+        if &expandtab == 0
+            set expandtab
+            try
+                silent :%s/\t/    /
+            catch /E486:/
+            endtry
+            echo 'Whitespace set to space'
+        else
+            set noexpandtab
+            try
+                silent :%s/    /\t/
+            catch /E486:/
+            endtry
+            echo 'Whitespace set to tabs'
+        endif
+    endfunction " }
+    function! KillTrailingWhitespace(write_file) " {
+        try
+            :%s/\s\+$//
+            echo 'Trailing whitespace eliminated'
+        catch /E486:/
+            echo 'No trailing whitespace'
+        endtry
 
-		if a:write_file == 1
-			write
-		endif
-	endfunction " }
-	function! SudoWrite() " {
-		write !sudo tee %
-	endfunction " }
-	function! ColorschemeToggle() " {
-		if g:colors_name == 'xoria'
-			colorscheme wyvern
-			hi Normal ctermbg=none
-		else
-			colorscheme xoria
-		endif
-	endfunction " }
-	function! LoFiToggle() " {
-		if g:force_lofi == 1
-			let g:force_lofi = 0
-			echo 'Lofi disabled'
-		else
-			let g:force_lofi = 1
-			echo 'Lofi enabled'
-		endif
+        if a:write_file == 1
+            write
+        endif
+    endfunction " }
+    function! SudoWrite() " {
+        write !sudo tee %
+    endfunction " }
+    function! ColorschemeToggle() " {
+        if g:colors_name == 'xoria'
+            colorscheme wyvern
+            hi Normal ctermbg=none
+        else
+            colorscheme xoria
+        endif
+    endfunction " }
+    function! LoFiToggle() " {
+        if g:force_lofi == 1
+            let g:force_lofi = 0
+            echo 'Lofi disabled'
+        else
+            let g:force_lofi = 1
+            echo 'Lofi enabled'
+        endif
 
-		silent colorscheme ninjaloot
-	endfunction " }
-	function! JqueryTemplateEscape() " {
-		" Escapes a jQuery template into a Django parsable format
-		try
-			silent :%s/{{/{% templatetag openvariable %}/
-		catch /E486:/
-		endtry
+        silent colorscheme ninjaloot
+    endfunction " }
+    function! JqueryTemplateEscape() " {
+        " Escapes a jQuery template into a Django parsable format
+        try
+            silent :%s/{{/{% templatetag openvariable %}/
+        catch /E486:/
+        endtry
 
-		try
-			silent :%s/}}/{% templatetag closevariable %}/
-		catch /E486:/
-		endtry
+        try
+            silent :%s/}}/{% templatetag closevariable %}/
+        catch /E486:/
+        endtry
 
-		try
-			silent :%s/\${ /${% templatetag openbrace %} /
-		catch /E486:/
-		endtry
+        try
+            silent :%s/\${ /${% templatetag openbrace %} /
+        catch /E486:/
+        endtry
 
-		try
-			silent :%s/ }/ {% templatetag closebrace %}/
-		catch /E486:/
-		endtry
-		echo 'JSON escape done'
-	endfunction " }
-	function! QuickfixCount(...) " {
-		let errors = len(getqflist())
-		if errors == 0
-			return ''
-		else
-			return ' ['.errors.' cc]'
-		endif
-	endfunction " }
+        try
+            silent :%s/ }/ {% templatetag closebrace %}/
+        catch /E486:/
+        endtry
+        echo 'JSON escape done'
+    endfunction " }
+    function! QuickfixCount(...) " {
+        let errors = len(getqflist())
+        if errors == 0
+            return ''
+        else
+            return ' ['.errors.' cc]'
+        endif
+    endfunction " }
 " }
 " Custom mappings {
-	" Navigation {
-		" Unmap them evil arrows
-		noremap <Up> <NOP>
-		noremap <Right> <NOP>
-		noremap <Down> <NOP>
-		noremap <Left> <NOP>
+    let mapleader = ","
+    " Navigation {
+        " Unmap them evil arrows
+        noremap <Up> <NOP>
+        noremap <Right> <NOP>
+        noremap <Down> <NOP>
+        noremap <Left> <NOP>
 
-		" Map Ctrl-hjkl to be navigation when in insert mode.
-		imap <C-h> <Left>
-		imap <C-j> <Down>
-		imap <C-k> <Up>
-		imap <C-l> <Right>
+        " Map Ctrl-hjkl to be navigation when in insert mode.
+        imap <C-h> <Left>
+        imap <C-j> <Down>
+        imap <C-k> <Up>
+        imap <C-l> <Right>
+        noremap <space> /
+    " }
+    " Sourcing {
+        nmap ,v :source $MYVIMRC<cr>
+        nmap ,V :tabe $MYVIMRC<cr>
+        nmap ,t :NERDTreeToggle<cr>
+        nmap ,x :!xclip %<cr>
+        nmap ,r :call ReloadAllSnippets()<cr>
+    " }
+    " Colorschemes {
+        nmap ,ne :colo neverland
+        nmap ,ni :colo ninjaloot
+        nmap ,en :tabe ~/.vim/colors/ninjaloot.vim<cr>
+        nmap ,ev :tabe ~/.vim/colors/neverland.vim<cr>
+        nmap ,ex :tabe ~/.vim/colors/xoria.vim<cr>
+    " }
+    " Togglers {
+        nmap ,w :call WrapToggle()<cr>
+        nmap ,<space> :call HlsToggle()<cr>
+        nmap ,p :call PasteToggle()<cr>
+        nmap ,l :call LoFiToggle()<cr>
+        nmap ,o :call ScrolloffToggle()<cr>
+        nmap ,C :call ColorschemeToggle()<cr>
+        nmap ,s mt:call WhitespaceToggle()<cr>`t
+        nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
+        nnoremap <silent> <C-l> :nohl<CR><C-l>
+    " }
+    " Fugitive <3 {
+        nmap ge :Git 
+        nmap gb :Gblame<cr>
+        nmap gc :Gcommit<cr>
+        nmap gdd :Gdiff 
+        nmap gdh :Gdiff HEAD<cr>
+        nmap gl :Glog<cr>
+        nmap go :Git checkout 
+        nmap gpp :Git push 
+        nmap gre :Gread 
+        nmap grr :Gremove
+        nmap gs :Gstatus<cr>
+        nmap gw :Gwrite<cr>
+        nmap gm :Gmove 
+    " }
+    " Misc. {
+        "com! W call SudoWrite()
+        " Show syntax groups beneath cursor
+        " TODO: Make function
+        nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+        nmap gpb o{<cr>}<esc>k
 
-		" Map Ctrl-hjkl to be window smitching otherwise
-		"nmap <C-k> <C-w><Up>
-		"nmap <C-j> <C-w><Down>
-		"nmap <C-l> <C-w><Right>
-		"nmap <C-h> <C-w><Left>
-		
-		noremap <space> /
-	" }
-	" Sourcing {
-		nmap ,v :source $MYVIMRC<cr>
-		nmap ,V :tabe $MYVIMRC<cr>
-		nmap ,t :NERDTreeToggle<cr>
-		nmap ,x :!xclip %<cr>
-		nmap ,r :call ReloadAllSnippets()<cr>
-	" }
-	" Colorschemes {
-		nmap ,ne :colo neverland
-		nmap ,ni :colo ninjaloot
-		nmap ,en :tabe ~/.vim/colors/ninjaloot.vim<cr>
-		nmap ,ev :tabe ~/.vim/colors/neverland.vim<cr>
-		nmap ,ex :tabe ~/.vim/colors/xoria.vim<cr>
-	" }
-	" Togglers {
-		nmap ,w :call WrapToggle()<cr>
-		nmap ,<space> :call HlsToggle()<cr>
-		nmap ,p :call PasteToggle()<cr>
-		nmap ,l :call LoFiToggle()<cr>
-		nmap ,o :call ScrolloffToggle()<cr>
-		nmap ,C :call ColorschemeToggle()<cr>
-		nmap ,s mt:call WhitespaceToggle()<cr>`t
-		nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
-	" }
-	" Fugitive <3 {
-		nmap ge :Git 
-		nmap gb :Gblame<cr>
-		nmap gc :Gcommit<cr>
-		nmap gd :Gdiff HEAD<cr>
-		nmap gl :Glog<cr>
-		nmap go :Git checkout 
-		nmap gpp :Git push 
-		nmap gre :Gread 
-		nmap grr :Gremove
-		nmap gs :Gstatus<cr>
-		nmap gw :Gwrite<cr>
-		nmap gm :Gmove 
-	" }
-	" Misc. {
-		"com! W call SudoWrite()
-		
-		" Show syntax groups beneath cursor
-		" TODO: Make function
-		nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-		" Search for all single/double-quoted strings
-		nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
-		nmap ,m :make<cr>
-	" }
-	" Folding {
-		nmap ,fm :set foldmethod=marker<cr>
-		nmap ,fi :set foldmethod=indent<cr>
-	" }
-	" CSS {
-		nmap ,b A {<cr>}<esc>k^
-	" }
-	" XML {
-		nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
-	" }
-	" Django {
-		nmap ,dj :call JqueryTemplateEscape()<cr>
-	" }
-	" Python {
-		nmap ,zii oimport
-		nmap ,ziz ofrom  import <++><esc>2Tma
-		" nmap ,zz ?def \|class <cr>/):$<cr>o""""""<cr><esc>k2la
-		nmap ,zz ?def\\|class<cr>/):$<cr>o""""""<cr><esc>k2la
-		nmap ,zd o""""""<cr><esc>k2la
-	" }
-	" Better tabs for the hands {
-		nmap zh gT
-		nmap zl gt
-		" Remember that this one breaks if you KillTrailingWhitespace on this
-		" file.
-		nmap zn :tabe 
-	" }
-	" I hate these {
-		nmap K k
-		vmap K k
-		nmap S S<esc>
-		noremap Q <nop>
-		nnoremap ; :
-	" }
+        " Search for all single/double-quoted strings
+        nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
+        nmap ,m :make<cr>
+    " }
+    " Folding {
+        nmap ,fm :set foldmethod=marker<cr>
+        nmap ,fi :set foldmethod=indent<cr>
+    " }
+    " CSS {
+        nmap ,b A {<cr>}<esc>k^
+    " }
+    " XML {
+        nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
+    " }
+    " Django {
+        nmap ,dj :call JqueryTemplateEscape()<cr>
+    " }
+    " Python {
+        nmap ,zii oimport
+        nmap ,ziz ofrom  import <++><esc>2Tma
+        " nmap ,zz ?def \|class <cr>/):$<cr>o""""""<cr><esc>k2la
+        nmap ,zz ?def\\|class<cr>/):$<cr>o""""""<cr><esc>k2la
+        nmap ,zd o""""""<cr><esc>k2la
+    " }
+    " Better tabs for the hands {
+        nmap zh gT
+        nmap zl gt
+        " Remember that this one breaks if you KillTrailingWhitespace on this
+        " file.
+        nmap zn :tabe 
+    " }
+    " I hate these {
+        nmap K k
+        vmap K k
+        nmap S S<esc>
+        noremap Q <nop>
+        nnoremap ; :
+    " }
 " }
 
 " vim: set noet:sw=4:fmr=marker:fdm={,}
