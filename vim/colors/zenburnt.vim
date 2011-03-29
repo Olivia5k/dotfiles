@@ -56,7 +56,7 @@ hi ModeMsg         ctermfg=223                 cterm=none
 hi NonText         ctermfg=242   ctermbg=236
 hi Normal          ctermfg=188   ctermbg=237
 hi Number          ctermfg=116
-hi Operator        ctermfg=230
+hi Operator        ctermfg=223                 cterm=bold
 hi PMenu           ctermfg=248   ctermbg=0
 hi PMenuSel        ctermfg=223   ctermbg=235
 hi PreCondit       ctermfg=180                 cterm=bold
@@ -68,7 +68,7 @@ hi Special         ctermfg=181
 hi SpecialChar     ctermfg=181                 cterm=bold
 hi SpecialComment  ctermfg=108                 cterm=bold
 hi SpecialKey      ctermfg=240
-hi SpellBad        ctermfg=196                 cterm=underline
+hi SpellBad        ctermfg=none   ctermbg=88
 hi SpellCap        ctermfg=174
 hi SpellLocal      ctermfg=174
 hi SpellRare       ctermfg=174
@@ -86,7 +86,7 @@ hi Title                         ctermbg=237
 hi Todo            ctermfg=228   ctermbg=234   cterm=bold
 hi Type            ctermfg=187                 cterm=bold
 hi Typedef         ctermfg=253                 cterm=bold
-hi Underlined      ctermfg=188   ctermbg=234   cterm=bold
+hi Underlined      ctermfg=188                 cterm=bold
 hi VertSplit       ctermfg=235   ctermbg=65
 hi Visual                        ctermbg=234
 hi VisualNOS                     ctermbg=234
