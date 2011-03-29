@@ -77,7 +77,7 @@
     endif
 " }
 " Visual Cues {
-    if version >= 703
+    if exists('+colorcolumn')
         set colorcolumn=+1 " Show a colored column one column from &tw
     endif
     set showmatch " show matching brackets
@@ -122,8 +122,13 @@
         let winwd = winwidth(0) - nucolwidth - 5
         let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
         let fdnfo = " " . string(foldlinecount) . " lines "
-        let line =  strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
-        let fillcharcount = &tw - len(line) - len(fdnfo)
+        let line = strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
+        if &tw
+            let base = &tw
+        else
+            let base = 79
+        endif
+        let fillcharcount = base - len(line) - len(fdnfo)
         return line . repeat("-",fillcharcount) . fdnfo
     endfunction
 " }
@@ -278,28 +283,21 @@
         noremap <space> /
     " }
     " Sourcing {
-        nmap ,v :source $MYVIMRC<cr>
-        nmap ,V :tabe $MYVIMRC<cr>
-        nmap ,t :NERDTreeToggle<cr>
-        nmap ,x :!xclip %<cr>
-        nmap ,r :call ReloadAllSnippets()<cr>
-    " }
-    " Colorschemes {
-        nmap ,ne :colo neverland
-        nmap ,ni :colo ninjaloot
-        nmap ,en :tabe ~/.vim/colors/ninjaloot.vim<cr>
-        nmap ,ev :tabe ~/.vim/colors/neverland.vim<cr>
-        nmap ,ex :tabe ~/.vim/colors/xoria.vim<cr>
+        nmap <Leader>v :source $MYVIMRC<cr>
+        nmap <Leader>V :tabe $MYVIMRC<cr>
+        nmap <Leader>t :NERDTreeToggle<cr><C-w>=
+        nmap <Leader>x :!xclip %<cr>
+        nmap <Leader>r :call ReloadAllSnippets()<cr>
     " }
     " Togglers {
-        nmap ,w :call WrapToggle()<cr>
-        nmap ,<space> :call HlsToggle()<cr>
-        nmap ,p :call PasteToggle()<cr>
-        nmap ,l :call LoFiToggle()<cr>
-        nmap ,o :call ScrolloffToggle()<cr>
-        nmap ,C :call ColorschemeToggle()<cr>
-        nmap ,s mt:call WhitespaceToggle()<cr>`t
-        nmap ,S mt:call KillTrailingWhitespace(0)<cr>`t
+        nmap <Leader>w :call WrapToggle()<cr>
+        nmap <Leader><space> :call HlsToggle()<cr>
+        nmap <Leader>p :call PasteToggle()<cr>
+        nmap <Leader>l :call LoFiToggle()<cr>
+        nmap <Leader>o :call ScrolloffToggle()<cr>
+        nmap <Leader>C :call ColorschemeToggle()<cr>
+        nmap <Leader>s mt:call WhitespaceToggle()<cr>`t
+        nmap <Leader>S mt:call KillTrailingWhitespace(0)<cr>`t
         nnoremap <silent> <C-l> :nohl<CR><C-l>
     " }
     " Fugitive <3 {
@@ -321,39 +319,31 @@
         "com! W call SudoWrite()
         " Show syntax groups beneath cursor
         " TODO: Make function
-        nmap ,g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+        nmap <Leader>g  :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
         nmap gpb o{<cr>}<esc>k
 
         " Search for all single/double-quoted strings
-        nmap ,hs /\('.\{-}'\\|".\{-}"\)<cr>
-        nmap ,m :make<cr>
+        nmap <Leader>hs /\('.\{-}'\\|".\{-}"\)<cr>
+        nmap <Leader>m :make<cr>
     " }
     " Folding {
-        nmap ,fm :set foldmethod=marker<cr>
-        nmap ,fi :set foldmethod=indent<cr>
+        nmap <Leader>fm :set foldmethod=marker<cr>
+        nmap <Leader>fi :set foldmethod=indent<cr>
     " }
     " CSS {
-        nmap ,b A {<cr>}<esc>k^
+        nmap <Leader>b A {<cr>}<esc>k^
     " }
     " XML {
-        nmap ,ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
+        nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
     " }
     " Django {
-        nmap ,dj :call JqueryTemplateEscape()<cr>
-    " }
-    " Python {
-        nmap ,zii oimport
-        nmap ,ziz ofrom  import <++><esc>2Tma
-        " nmap ,zz ?def \|class <cr>/):$<cr>o""""""<cr><esc>k2la
-        nmap ,zz ?def\\|class<cr>/):$<cr>o""""""<cr><esc>k2la
-        nmap ,zd o""""""<cr><esc>k2la
+        nmap <Leader>dj :call JqueryTemplateEscape()<cr>
     " }
     " Better tabs for the hands {
         nmap zh gT
         nmap zl gt
-        " Remember that this one breaks if you KillTrailingWhitespace on this
-        " file.
         nmap zn :tabe 
+        nmap zH :tab he 
     " }
     " I hate these {
         nmap K k
