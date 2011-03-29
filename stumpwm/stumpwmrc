@@ -16,28 +16,28 @@
 ;(head-resize 2 0 0 1680 1040)
 ;(head-resize nr x y width height)
 
-(set-font "-xos4-terminus-*-*-*-*-12-*-*-*-*-*-*-*")
+;(set-font "-xos4-terminus-*-*-*-*-14-*-*-*-*-*-*-*")
 (set-font "-*-montecarlo-*-*-*-*-11-*-*-*-*-*-*-*")
 
 (setf *mouse-focus-policy* :click
-    *mode-line-background-color* "grey10"
-    *mode-line-foreground-color* "lightskyblue1"
+    *mode-line-background-color* "grey25"
+    *mode-line-foreground-color* "darkseagreen3"
     *mode-line-border-color* "darkgrey"
-    *mode-line-timeout* 1
+    *mode-line-timeout* 60
     *mode-line-border-width* 0
     *mode-line-screen-position* :top
     *window-format* "%n%s %12t"
-    *group-format* "%t")
+    *group-format* "%n:%t")
 
 (stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
 
 ;;;; The Message Window
-(set-fg-color "lightskyblue1")
-(set-bg-color "grey10")
-(set-border-color "lightskyblue4")
-;(set-fg-color "olivedrab1")
+(set-fg-color "darkseagreen1")
+(set-bg-color "grey25")
+(set-border-color "darkseagreen4")
+;(set-fg-color "darkseagreen1")
 ;(set-bg-color "grey10")
-;(set-border-color "olivedrab4")
+;(set-border-color "darkseagreen4")
 (set-msg-border-width 1)
 
 (setf *maxsize-border-width* 2
@@ -50,9 +50,9 @@
     *timeout-wait*           5
     *input-window-gravity*   :top-left)
 
-(set-focus-color "lightskyblue1")
-;(set-focus-color "olivedrab1")
-(set-unfocus-color "grey20")
+;(set-focus-color "lightskyblue1")
+(set-focus-color "darkseagreen1")
+(set-unfocus-color "grey50")
 (set-normal-gravity :center)
 
 ;; Little helper
@@ -115,14 +115,23 @@
 (define-key *root-map* (kbd "K") "move-window up")
 (define-key *root-map* (kbd "L") "move-window right")
 
+;; sane bindings for group selections
+(define-key *root-map* (kbd "C-h") "gselect term")
+(define-key *root-map* (kbd "C-j") "gselect www")
+(define-key *root-map* (kbd "C-k") "gselect dev")
+(define-key *root-map* (kbd "C-l") "gselect ctrl")
+
 ;; Simple control
 (define-key *root-map* (kbd "s") "hsplit")
 (define-key *root-map* (kbd "z") "vsplit")
 (define-key *root-map* (kbd "C-s") "repack-window-numbers")
-(define-key *root-map* (kbd "SPC") "gnext")
-(define-key *root-map* (kbd "C-SPC") "gprev")
-(define-key *root-map* (kbd "DEL") "gprev")
-(define-key *root-map* (kbd "C-DEL") "gprev")
+;(define-key *root-map* (kbd "SPC") "gnext")
+;(define-key *root-map* (kbd "C-SPC") "gprev")
+;(define-key *root-map* (kbd "DEL") "gprev")
+;(define-key *root-map* (kbd "C-DEL") "gprev")
+(define-key *root-map* (kbd "M-h") "gprev-with-window")
+(define-key *root-map* (kbd "M-l") "gnext-with-window")
+(define-key *root-map* (kbd "M-k") "kill")
 
 ;; The End
 ; vim: set et,ts=2,sts=2,ft=lisp

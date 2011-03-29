@@ -117,6 +117,11 @@ set status_format_right = <span font_family="montecarlo" weight="bold">@uri_sect
 
 set title_format_long = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl browser <\@NAME> \@SELECTED_URI
 
+set default_font_family = dejavu sans
+set monospace_font_family = terminus
+set sans_serif_font_family = dejavu sans
+set serif_font_family = dejavu sans
+
 # Progress bar config
 # %d = done, %p = pending %c = percent done, %i = int done, %s = spinner,
 # %t = percent pending, %o = int pending, %r = sprite scroll
