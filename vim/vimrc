@@ -325,6 +325,7 @@
         " Search for all single/double-quoted strings
         nmap <Leader>hs /\('.\{-}'\\|".\{-}"\)<cr>
         nmap <Leader>m :make<cr>
+        nmap <Leader>f gggqG
     " }
     " Folding {
         nmap <Leader>fm :set foldmethod=marker<cr>
