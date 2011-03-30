@@ -3,11 +3,13 @@ export HASCVS=true
 # Committing
 alias ga='git add'
 alias gs='git status'
-alias gb='git branch'
-alias gc='git commit -a'
+alias gc='git commit'
+alias gca='git commit -a'
 alias gp='git push'
 alias gu='git pull'
-alias gm="git merge"
+
+# Branching
+alias gb='git branch -v'
 
 # Checkouting
 alias go='git checkout'
@@ -15,6 +17,8 @@ alias goo='git checkout --ours'
 alias got='git checkout --theirs'
 
 # Submodules
+alias gsa='git submodule add'
+alias gsi='git submodule init'
 alias gsu='git submodule update'
 alias gus='git pull && gsu'
 
@@ -24,6 +28,8 @@ alias gdh='git diff HEAD'
 alias gdt='git difftool'
 
 # Merging
+alias gm="git merge"
+alias gmt="git mergetool"
 alias gls="git ls-files"
 alias glsu="git ls-files --unmerged"
 alias glsm="git ls-files --modified"
@@ -129,4 +135,26 @@ function gr()#
     else
         _zerror "Currently not in a git repository"
     fi
+}
+
+# Fetch and merge a branch
+function gmr()#
+{
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Fetch and merge a branch."
+        fi
+        return
+    fi
+
+    if [[ -n "$2" ]]; then
+        remote="$1"
+        branch="$2"
+    else
+        remote="origin"
+        branch="$1"
+    fi
+
+    git fetch $remote $branch
+    git merge $remote/$branch
 }
