@@ -28,3 +28,12 @@
 [submodule "vim/bundle/repeat"]
 	path = vim/bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "vim/bundle/xptemplate"]
+	path = vim/bundle/xptemplate
+	url = https://github.com/drmingdrmer/xptemplate-dist.git
+[submodule "vim/bundle/argtextobj"]
+	path = vim/bundle/argtextobj
+	url = https://github.com/vim-scripts/argtextobj.vim.git
+[submodule "vim/bundle/apachelogs"]
+	path = vim/bundle/apachelogs
+	url = https://github.com/vim-scripts/apachelogs.vim.git
