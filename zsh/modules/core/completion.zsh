@@ -17,6 +17,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path $ZDOTDIR/zcompcache
+zstyle ':completion:*' hosts off
 
 # tab completion for PID :D
 zstyle ':completion:*:*:kill:*' menu yes select
