@@ -271,7 +271,8 @@
         xrandr --output VGA1 --auto && xrandr --output LVDS1 --off
         xr
         xq
-        wpg
+        wp
+        #wpg
     }
     function lvds()
     {

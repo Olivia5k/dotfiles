@@ -115,7 +115,7 @@ set download_section  = <span foreground="white">\@downloads</span>
 set status_format       = <span font_family="montecarlo">@mode_section @keycmd_section @scroll_section @progress_section @status_section @selected_section @download_section</span>
 set status_format_right = <span font_family="montecarlo" weight="bold">@uri_section</span>
 
-set title_format_long = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl browser <\@NAME> \@SELECTED_URI
+set title_format_long = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE \@SELECTED_URI
 
 set default_font_family = dejavu sans
 set monospace_font_family = terminus
