@@ -23,21 +23,22 @@
     *mode-line-background-color* "grey25"
     *mode-line-foreground-color* "darkseagreen3"
     *mode-line-border-color* "darkgrey"
-    *mode-line-timeout* 60
+    *mode-line-timeout* 9001
     *mode-line-border-width* 0
     *mode-line-screen-position* :top
-    *window-format* "%n%s %12t"
+    ;*screen-mode-line-format* "[%g] | %w"
+    *window-format* "%n%s %8t "
     *group-format* "%n:%t")
 
 (stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
 
-;;;; The Message Window
+;; Colors
 (set-fg-color "darkseagreen1")
 (set-bg-color "grey25")
 (set-border-color "darkseagreen4")
-;(set-fg-color "darkseagreen1")
-;(set-bg-color "grey10")
-;(set-border-color "darkseagreen4")
+(set-focus-color "darkseagreen1")
+(set-unfocus-color "grey50")
+(set-normal-gravity :center)
 (set-msg-border-width 1)
 
 (setf *maxsize-border-width* 2
@@ -45,15 +46,17 @@
     *mode-line-border-width* 0
     *window-border-style* :thin
     *transient-border-width* 4) ; popups \o/
+    ;*screen-mode-line-format*
+    ;(list "^6*::^n  %g  ^6*::^n%w^6* :: ^8*CPU: ^n%f %C ^3*%t ^6*:: ^n^r%M ^6*:: ^n%b ^6*:: ^n %l ^6*::^8* - "
+        ;'(:eval (run-shell-command "date +\"%T %d-%m-%Y\" | tr -d '[:cntrl:]'" t))
 
 (setf *message-window-gravity* :top-right
     *timeout-wait*           5
     *input-window-gravity*   :top-left)
 
-;(set-focus-color "lightskyblue1")
-(set-focus-color "darkseagreen1")
-(set-unfocus-color "grey50")
-(set-normal-gravity :center)
+(defun echo-urgent-window (target)
+    (message-no-timeout "~a wants something" (window-title target)))
+(add-hook *urgent-window-hook* 'echo-urgent-window)
 
 ;; Little helper
 (defun cat (&rest strings) "A shortcut for (concatenate 'string foo bar)."
@@ -96,13 +99,16 @@
 ;; Browsers
 (define-key *root-map* (kbd "u") "uzbl")
 (define-key *root-map* (kbd "i") "exec firefox")
+(define-key *root-map* (kbd "b") "exec ssh -Y nl linuxdcpp")
 
 ;; The statusbar
 (define-key *root-map* (kbd "d") "exec dzentinel")
 (define-key *root-map* (kbd "C-d") "exec killall dzentinel ; dzentinel")
 
+
 (define-key *root-map* (kbd "x") "exec xlock")
 (define-key *root-map* (kbd "C-r") "loadrc")
+(define-key *root-map* (kbd "C-c") "exec xclip-reset")
 
 ;; sane bindings for window management
 (define-key *root-map* (kbd "h") "move-focus left")
@@ -125,10 +131,10 @@
 (define-key *root-map* (kbd "s") "hsplit")
 (define-key *root-map* (kbd "z") "vsplit")
 (define-key *root-map* (kbd "C-s") "repack-window-numbers")
-;(define-key *root-map* (kbd "SPC") "gnext")
-;(define-key *root-map* (kbd "C-SPC") "gprev")
-;(define-key *root-map* (kbd "DEL") "gprev")
-;(define-key *root-map* (kbd "C-DEL") "gprev")
+(define-key *root-map* (kbd "SPC") "gnext")
+(define-key *root-map* (kbd "C-SPC") "gprev")
+(define-key *root-map* (kbd "DEL") "gprev")
+(define-key *root-map* (kbd "C-DEL") "gprev")
 (define-key *root-map* (kbd "M-h") "gprev-with-window")
 (define-key *root-map* (kbd "M-l") "gnext-with-window")
 (define-key *root-map* (kbd "M-k") "kill")

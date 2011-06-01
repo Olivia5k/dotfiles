@@ -16,7 +16,7 @@ ENGINES = {
 }
 
 def browser(url):
-    print(BROWSER, url)
+    #print(BROWSER, url)
     b = sub.Popen([BROWSER, url], stdout=sub.PIPE, stderr=sub.PIPE)
 
 def urlize(args):
@@ -36,7 +36,7 @@ def localhost(args):
 
 def main():
     url = None
-    f = open("/tmp/hax", "w")
+    f = open("/tmp/hax", "a")
     f.write(" ".join(sys.argv))
     f.close()
 
