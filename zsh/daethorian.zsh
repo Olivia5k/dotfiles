@@ -278,6 +278,10 @@
         xrandr --output LVDS1 --auto && xrandr --output VGA1 --off
         wpn
     }
+
+    if [[ $TCOLORS = 256 ]] ; then
+        eval $(dircolors -b $HOME/config/LS_COLORS/LS_COLORS)
+    fi
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}
