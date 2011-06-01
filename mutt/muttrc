@@ -67,6 +67,7 @@ source ~/.mutt/macros
 # Colours: 
 #source ~/.mutt/fullowin.mutt
 source ~/.mutt/zenburn.mutt
+#source ~/.mutt/trap.mutt
 
 #======================================================#
 # GPG: encryption-party!
@@ -115,10 +116,10 @@ set timeout = 30
 # set up the sidebar, default not visible
 set sidebar_width = 20
 set sidebar_visible = yes
-set sidebar_delim='|'
+set sidebar_delim='│'
 
 # color of folders with new mail
-color sidebar_new brightcolor108 color235
+color sidebar_new brightcolor118 color235
 
 bind pager,index \ej sidebar-next
 bind pager,index \ek sidebar-prev

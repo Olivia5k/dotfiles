@@ -10,12 +10,6 @@
 [submodule "vim/bundle/snipmate"]
 	path = vim/bundle/snipmate
 	url = git@github.com:daethorian/snipmate.vim.git
-[submodule "vim/bundle/fuzzyfinder"]
-	path = vim/bundle/fuzzyfinder
-	url = https://github.com/clones/vim-fuzzyfinder.git
-[submodule "vim/bundle/l9"]
-	path = vim/bundle/l9
-	url = https://github.com/clones/vim-l9.git
 [submodule "vim/bundle/nerdcommenter"]
 	path = vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git

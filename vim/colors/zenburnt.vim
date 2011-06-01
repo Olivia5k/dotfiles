@@ -19,6 +19,10 @@ endif
 
 let g:colors_name="zenburnt"
 
+if !exists("g:zenburnt_dark")
+    let g:zenburnt_dark = 0
+endif
+
 hi Boolean         ctermfg=181
 hi Character       ctermfg=181                 cterm=bold
 hi ColorColumn                   ctermbg=238
@@ -37,8 +41,8 @@ hi DiffChange                    ctermbg=239
 hi DiffDelete      ctermfg=174   ctermbg=236
 hi DiffText                      ctermbg=236   cterm=underline
 hi Directory       ctermfg=188                 cterm=bold
-hi Error           ctermfg=228   ctermbg=95
-hi ErrorMsg        ctermfg=115   ctermbg=236   cterm=bold
+hi Error           ctermfg=231   ctermbg=124   cterm=bold
+hi ErrorMsg        ctermfg=174                 cterm=bold
 hi Exception       ctermfg=249                 cterm=bold
 hi Float           ctermfg=251
 hi FoldColumn      ctermfg=109   ctermbg=236
@@ -52,6 +56,7 @@ hi Keyword         ctermfg=223                 cterm=bold
 hi Label           ctermfg=187                 cterm=underline
 hi LineNr          ctermfg=248   ctermbg=235
 hi Macro           ctermfg=223                 cterm=bold
+hi MatchParen      ctermfg=223   ctermbg=235   cterm=bold
 hi ModeMsg         ctermfg=223                 cterm=none
 hi NonText         ctermfg=242   ctermbg=236
 hi Normal          ctermfg=188   ctermbg=237
@@ -68,13 +73,14 @@ hi Special         ctermfg=181
 hi SpecialChar     ctermfg=181                 cterm=bold
 hi SpecialComment  ctermfg=108                 cterm=bold
 hi SpecialKey      ctermfg=240
-hi SpellBad        ctermfg=none   ctermbg=88
+hi SpellBad                      ctermbg=88
 hi SpellCap        ctermfg=174
 hi SpellLocal      ctermfg=174
 hi SpellRare       ctermfg=174
-hi Statement       ctermfg=187   ctermbg=237   cterm=bold
+hi Statement       ctermfg=187                 cterm=bold
 hi StatusLine      ctermfg=236   ctermbg=186
-hi StatusLineNC    ctermfg=235   ctermbg=108
+hi StatusLineNC    ctermfg=236   ctermbg=108
+hi StatusLineError ctermfg=174                 cterm=bold
 hi StorageClass    ctermfg=249                 cterm=bold
 hi String          ctermfg=174
 hi Structure       ctermfg=229                 cterm=bold
@@ -93,3 +99,33 @@ hi VisualNOS                     ctermbg=234
 hi WarningMSG                    ctermbg=236
 hi WarningMsg      ctermfg=15    ctermbg=236   cterm=bold
 hi WildMenu        ctermfg=194   ctermbg=236   cterm=bold
+
+hi User1           ctermfg=064   ctermbg=236   cterm=bold
+hi User2           ctermfg=085   ctermbg=236   cterm=bold
+hi User3           ctermfg=238   ctermbg=236   cterm=bold
+hi User4           ctermfg=032   ctermbg=236   cterm=bold
+hi User5           ctermfg=044   ctermbg=236   cterm=bold
+hi User6           ctermfg=058   ctermbg=236   cterm=bold
+hi User7           ctermfg=242   ctermbg=236   cterm=bold
+hi User8           ctermfg=130   ctermbg=236   cterm=bold
+hi User9           ctermfg=065   ctermbg=236   cterm=bold
+
+" TODO: Align
+hi User1 ctermfg=223 ctermbg=236 cterm=bold
+hi User2 ctermfg=107 ctermbg=236 cterm=bold
+hi User3 ctermfg=238 ctermbg=236 cterm=bold
+hi User4 ctermfg=032 ctermbg=236 cterm=bold
+hi User5 ctermfg=044 ctermbg=236 cterm=bold
+hi User6 ctermfg=196 ctermbg=236 cterm=bold
+hi User7 ctermfg=242 ctermbg=236 cterm=bold
+hi User8 ctermfg=130 ctermbg=236 cterm=bold
+hi User9 ctermfg=065 ctermbg=236 cterm=bold
+
+if g:zenburnt_dark
+    hi Normal        ctermbg=234
+    hi Visual        ctermbg=236
+    hi VisualNOS     ctermbg=236
+    hi FoldColumn    ctermbg=237
+    hi Folded        ctermbg=236
+    hi ColorColumn   ctermbg=236
+endif

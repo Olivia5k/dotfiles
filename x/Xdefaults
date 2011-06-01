@@ -6,7 +6,7 @@
 *.urlLauncher:         /home/daethorian/config/uzbl/scripts/www.py
 *.matcher.button:      1
 *.matcher.pattern.1:   \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
-*.meta8:               false
+*.meta8:               true
 *.underlineURLs:       true
 !*.transparent:        true
 !*.shading:              20
