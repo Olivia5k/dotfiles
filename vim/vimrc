@@ -4,11 +4,13 @@
 " Once upon a time based on MetaCosms vimrc (http://www.vi-improved.org/vimrc.php)
 
 " Basics {
-    set nocompatible " get out of horrible vi-compatible mode
+    set nocompatible        " disable horrible vi compatability mode!
     set background=dark " we are using a dark background
+    set hidden
     syntax enable
 " }
 " General {
+    nohls " When starting vim, disable first hls
     set history=100 " How many lines of history to remember
     set iskeyword+=_,$,@,%,# " none of these should be word dividers, so make them not be
     set nostartofline " leave my cursor where it was
@@ -16,25 +18,29 @@
     set gdefault " always replace everything when substituting
     set magic " use magic regular expressions
     set autoread " reload files that has changed externally
-
-    let g:pydoc_wh = 20
+    set ttyfast " Oh, right, this isn't the 70s
 " }
 " Pathogen {
     call pathogen#runtime_append_all_bundles()
 " }
 " Filetypes {
-    au Filetype python set foldmethod=indent expandtab ft=python.django
+    au Filetype python setlocal foldmethod=indent expandtab ft=python.django
+    au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
-    au Filetype python set makeprg=pep8\ -r\ %
     au Filetype html,htmldjango set foldmethod=indent expandtab ft=htmldjango.html
 
     " TODO: omg full paths :////
-    au Filetype javascript set makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/bundle/jslint/ext/mylintrun.js\ %
-    au Filetype javascript set errorformat=%f:%l:%c:%m
+    au Filetype javascript setlocal makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/jslint/mylintrun.js\ %
+    au Filetype javascript setlocal errorformat=%f:%l:%c:%m
+    au Filetype javascript syn keyword Special $
+
+    au FileType help nnoremap <buffer> <Enter> <C-]>
 
     augroup filetypedetect
         au BufNewFile,BufRead *.notes setf notes
     augroup END
+
+    au ColorScheme * source ~/.vim/plugin/bold.vim
 " }
 " Files/Backups (XDG style) {
     set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
@@ -56,13 +62,39 @@
     set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
     set splitbelow " Split below
     set splitright " Split to the right
-    set ruler " Always show current positions along the bottom
+    "set ruler " Always show current positions along the bottom
     set cmdheight=1 " the command bar is 1 high
     set number " turn on line numbers
     set lazyredraw " do not redraw while running macros (much faster)
     set noerrorbells " don't make noise
     set laststatus=2 " always have the statusline
-    set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
+
+    if !exists("g:disable_status_syntax")
+        let g:disable_status_syntax = 1 " Disable the syntax in statusline
+    endif
+
+    "set statusline=%<%f\:%l\,%v%{QuickfixCount()}\ %m\ %=%{fugitive#statusline()}\ %r%h%w%y\ %l\/%L\ %P
+    set statusline=[%n]\                        " Buffer number
+    set statusline+=%<%f                        " Filename
+    set statusline+=%m\                         " Modified flag
+    set statusline+=%1*%r%*                     " Readonly flag
+    set statusline+=%w                          " Preview flag
+    set statusline+=%{&ff!='unix'?'['.&ff.']':''} " display ff only if not unix
+
+    set statusline+=%#Error# " display a warning if file encoding isnt utf-8
+    set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}%*
+    set statusline+=%y                          " File type
+    set statusline+=%#Error#                    " display a warning if &paste is set
+    set statusline+=%{&paste?'[paste]':''}
+    set statusline+=%{QuickfixCount()}      " display quicklist items
+    set statusline+=%*
+
+    set statusline+=%=                          " Left/right separator
+    "set statusline+=%{StatuslineCurrentHighlight()}\ \  " current highlight
+    set statusline+=%{fugitive#statusline()}\   " Fugitive status <3
+    set statusline+=%c,%l/%L                    " Position column,line/total
+    set statusline+=\ %P                        " Percentage through file
+
 
     " 256 colors to putty
     if &term =~ "xterm"
@@ -86,8 +118,14 @@
     set scrolloff=5 " Keep 5 lines (top/bottom) for scope
     set sidescrolloff=5 " Keep 5 lines at the side
     set novisualbell " don't blink
+    set report=0 " always report number of lines changed
     set list " Show whitespace characters
-    set listchars=trail:-,tab:\>\ ,nbsp:§
+    if has("multi_byte")
+        set listchars=tab:»\ ,extends:›,precedes:‹,trail:·,nbsp:✂
+    else
+        set listchars=tab:>\ ,extends:>,precedes:<,trail:-,nbsp:%
+    endif
+    let &sbr = nr2char(8618).' ' " Show ↪ at the beginning of wrapped lines
 " }
 " Indent Related {
     set softtabstop=4 " unify
@@ -107,6 +145,12 @@
     set smartcase " if there are caps, go case-sensitive
     set completeopt=menu,longest,preview " improve the way autocomplete works
     set textwidth=79 " use the universal convention as a default
+" }
+" Spelling {
+    if has('spell')
+        autocmd filetype mail set spell spelllang=sv
+        autocmd filetype *commit* set spell spelllang=en
+    endif
 " }
 " Folding {
     set foldenable " Turn on folding
@@ -135,7 +179,7 @@
 " Colorschemes {
     if &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
         let g:force_lofi = 0
-        colorscheme zenburnt
+        colorscheme neverland
     else
         let g:force_lofi = 1
         colorscheme ninjaloot
@@ -143,19 +187,33 @@
 " }
 " Plugins {
     source $VIMRUNTIME/macros/matchit.vim
+    let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
+" }
+" XPT {
+    " Set personal snippet folder location:
+    let g:xptemplate_snippet_folders=['$HOME/.vim/xptemplate_personal_snippets']
+    " Turn off automatic closing of quotes and braces:
+    let g:xptemplate_brace_complete = 0
+    " Snippet triggering key:
+    let g:xptemplate_key = '<F1>'
+    " Open the pop-up menu:
+    let g:xptemplate_key_pum_only = '<F2>'
+    " Clear current placeholder and jump to the next:
+    imap <C-d> <Tab>
+    let g:xptemplate_nav_cancel = '<C-d>'
+    " Move to the next placeholder in a snippet:
+    let g:xptemplate_nav_next = '<Tab>'
+    " Go to the end of the current placeholder and in to insert mode:
+    " <C-_> is actually CONTROL-/ on my keyboard.
+    let g:xptemplate_to_right = '<C-_>'
+    " Move cursor back to last placeholder:
+    let g:xptemplate_goback = '<C-g>'
+    " Use TAB/S-TAB to navigate through the pop-up menu:
+    let g:xptemplate_pum_tab_nav = 1
+    " Reload xptemplate snippets without quitting vim.
+    nmap <A-F1> :XPTreload<CR>
 " }
 " Custom functions {
-    function! ScrolloffToggle() " {
-        if &scrolloff == 5
-            set scrolloff=0
-            set sidescrolloff=0
-            echo 'Scrolloff disabled'
-        else
-            set scrolloff=5
-            set sidescrolloff=5
-            echo 'Scrolloff enabled'
-        endif
-    endfunction " }
     function! WrapToggle() " {
         if &wrap == 0
             set nolist wrap linebreak
@@ -165,15 +223,6 @@
             echo 'Wrap disabled'
         endif
     endfunction " }
-    function! HlsToggle() " {
-        if &hls == 0
-            set hls
-            echo 'Highlightsearch enabled'
-        else
-            set nohls
-            echo 'Highlightsearch disabled'
-        endif
-    endfunction " }
     function! PasteToggle() " {
         if &paste == 0
             set paste
@@ -181,6 +230,15 @@
         else
             set nopaste
             echo 'Paste disabled'
+        endif
+    endfunction " }
+    function! SpellToggle() " {
+        if &spelllang == "en"
+            set spelllang=sv
+            echo 'Spell set to swedish'
+        else
+            set spelllang=en
+            echo 'Spell set to english'
         endif
     endfunction " }
     function! WhitespaceToggle() " {
@@ -230,9 +288,8 @@
         else
             let g:force_lofi = 1
             echo 'Lofi enabled'
+            silent colorscheme ninjaloot
         endif
-
-        silent colorscheme ninjaloot
     endfunction " }
     function! JqueryTemplateEscape() " {
         " Escapes a jQuery template into a Django parsable format
@@ -257,30 +314,79 @@
         endtry
         echo 'JSON escape done'
     endfunction " }
-    function! QuickfixCount(...) " {
-        let errors = len(getqflist())
-        if errors == 0
-            return ''
+    function! QuickfixCount() " {
+        let qflen = len(getqflist())
+        let quick = qflen == 0 ? '' : '['.qflen.'cc]'
+
+        let loclen = len(getloclist(0))
+        let location = loclen == 0 ? '' : '['.loclen.'ll]'
+
+        return quick . location
+    endfunction " }
+    "function! StatuslineCurrentHighlight() " {
+        "if exists("g:disable_status_syntax") && g:disable_status_syntax
+            "return ''
+        "endif
+        "let name = synIDattr(synID(line('.'),col('.'),1),'name')
+
+        "if name == ''
+            "return ''
+        "else
+            "let synId = synID(line('.'),col('.'),1)
+            "let realSynId = synIDtrans(synId)
+            "if synId == realSynId
+                "let realsyn =  'Normal'
+            "else
+                "let realsyn =  synIDattr(realSynId, 'name')
+            "endif
+            "return '[' . name . '/' . realsyn . ']'
+        "endif
+    "endfunction " }
+    function! StatusSyntaxToggle() " {
+        if g:disable_status_syntax == 0
+            let g:disable_status_syntax = 1
+            echo 'Syntax shower disabled'
         else
-            return ' ['.errors.' cc]'
+            let g:disable_status_syntax = 0
+            echo 'Syntax shower enabled'
         endif
     endfunction " }
+    function! RelSwitch(source, target) " {
+        let new = substitute(bufname("%"), a:source, a:target, 'g')
+        if filereadable(new)
+            edit `=new`
+        else
+            echo "Not a valid file: " . new
+        endif
+    endfunction " }
+    command! -nargs=+ S :call RelSwitch(<f-args>)
 " }
 " Custom mappings {
     let mapleader = ","
+
     " Navigation {
         " Unmap them evil arrows
         noremap <Up> <NOP>
         noremap <Right> <NOP>
         noremap <Down> <NOP>
         noremap <Left> <NOP>
+        inoremap <Up> <NOP>
+        inoremap <Right> <NOP>
+        inoremap <Down> <NOP>
+        inoremap <Left> <NOP>
 
         " Map Ctrl-hjkl to be navigation when in insert mode.
-        imap <C-h> <Left>
-        imap <C-j> <Down>
-        imap <C-k> <Up>
-        imap <C-l> <Right>
+        inoremap <C-h> <Left>
+        inoremap <C-j> <Down>
+        inoremap <C-k> <Up>
+        inoremap <C-l> <Right>
+
+        " Better searcher
         noremap <space> /
+
+        " Reselect the visuals when indenting
+        vnoremap < <gv
+        vnoremap > >gv
     " }
     " Sourcing {
         nmap <Leader>v :source $MYVIMRC<cr>
@@ -291,11 +397,11 @@
     " }
     " Togglers {
         nmap <Leader>w :call WrapToggle()<cr>
-        nmap <Leader><space> :call HlsToggle()<cr>
         nmap <Leader>p :call PasteToggle()<cr>
-        nmap <Leader>l :call LoFiToggle()<cr>
-        nmap <Leader>o :call ScrolloffToggle()<cr>
+        "nmap <Leader>l :call LoFiToggle()<cr>
+        nmap <Leader>l :call SpellToggle()<cr>
         nmap <Leader>C :call ColorschemeToggle()<cr>
+        nmap <Leader>y :call StatusSyntaxToggle()<cr>
         nmap <Leader>s mt:call WhitespaceToggle()<cr>`t
         nmap <Leader>S mt:call KillTrailingWhitespace(0)<cr>`t
         nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -326,6 +432,7 @@
         nmap <Leader>hs /\('.\{-}'\\|".\{-}"\)<cr>
         nmap <Leader>m :make<cr>
         nmap <Leader>f gggqG
+        nmap <Leader>a ,lj
     " }
     " Folding {
         nmap <Leader>fm :set foldmethod=marker<cr>
@@ -350,9 +457,13 @@
         nmap K k
         vmap K k
         nmap S S<esc>
-        noremap Q <nop>
+        noremap Q gq
+        nnoremap Y y$
         nnoremap ; :
     " }
 " }
 
-" vim: set noet:sw=4:fmr=marker:fdm={,}
+" For now, set this down here
+source /home/daethorian/.vim/after/plugin/statusline.vim
+
+" vim: set et:sw=4:fmr=marker:fdm={,}
