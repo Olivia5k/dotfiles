@@ -37,3 +37,21 @@
 [submodule "vim/bundle/apachelogs"]
 	path = vim/bundle/apachelogs
 	url = https://github.com/vim-scripts/apachelogs.vim.git
+[submodule "vim/bundle/lusty"]
+	path = vim/bundle/lusty
+	url = https://github.com/sjbach/lusty.git
+[submodule "vim/bundle/easymotion"]
+	path = vim/bundle/easymotion
+	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "vim/bundle/github-theme"]
+	path = vim/bundle/github-theme
+	url = git://github.com/vim-scripts/github-theme.git
+[submodule "vim/bundle/neverland"]
+	path = vim/bundle/neverland
+	url = https://github.com/trapd00r/neverland-vim-theme.git
+[submodule "LS_COLORS"]
+	path = LS_COLORS
+	url = https://github.com/trapd00r/LS_COLORS.git
+[submodule "vim/bundle/vimwiki"]
+	path = vim/bundle/vimwiki
+	url = https://github.com/vim-scripts/vimwiki.git
