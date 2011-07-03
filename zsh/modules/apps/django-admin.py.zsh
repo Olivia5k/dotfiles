@@ -26,7 +26,7 @@ function dsh()##
         #mysql -e "drop table dev_main.$db"
     #done
 
-    mysql -e "drop database dev_main ; create database dev_main;"
+    mysql -e "drop database dev_main ; create database dev_main character set utf8 collate utf8_general_ci;"
     ds
 }
 
