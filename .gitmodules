@@ -1,0 +1,15 @@
+[submodule "misc"]
+	path = misc
+	url = git@github.com:daethorian/conf-misc.git
+[submodule "vim"]
+	path = vim
+	url = git@github.com:daethorian/conf-vim.git
+[submodule "zsh"]
+	path = zsh
+	url = git@github.com:daethorian/conf-zsh.git
+[submodule "tmux"]
+	path = tmux
+	url = git@github.com:daethorian/conf-tmux.git
+[submodule "uzbl"]
+	path = uzbl
+	url = git@github.com:daethorian/conf-uzbl.git
