@@ -1,0 +1,66 @@
+[submodule "bundle/github-theme"]
+	path = bundle/github-theme
+	url = https://github.com/vim-scripts/github-theme.git
+[submodule "bundle/taglist"]
+	path = bundle/taglist
+	url = https://github.com/mexpolk/vim-taglist.git
+[submodule "bundle/csapprox"]
+	path = bundle/csapprox
+	url = https://github.com/godlygeek/csapprox.git
+[submodule "bundle/fugitive"]
+	path = bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "bundle/snipmate"]
+	path = bundle/snipmate
+	url = git@github.com:daethorian/snipmate.vim.git
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/surround"]
+	path = bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "bundle/repeat"]
+	path = bundle/repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "bundle/xptemplate"]
+	path = bundle/xptemplate
+	url = https://github.com/drmingdrmer/xptemplate-dist.git
+[submodule "bundle/argtextobj"]
+	path = bundle/argtextobj
+	url = https://github.com/vim-scripts/argtextobj.vim.git
+[submodule "bundle/apachelogs"]
+	path = bundle/apachelogs
+	url = https://github.com/vim-scripts/apachelogs.vim.git
+[submodule "bundle/lusty"]
+	path = bundle/lusty
+	url = https://github.com/sjbach/lusty.git
+[submodule "bundle/easymotion"]
+	path = bundle/easymotion
+	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "bundle/neverland"]
+	path = bundle/neverland
+	url = https://github.com/trapd00r/neverland-vim-theme.git
+[submodule "bundle/vimwiki"]
+	path = bundle/vimwiki
+	url = https://github.com/vim-scripts/vimwiki.git
+[submodule "bundle/extradite"]
+	path = bundle/extradite
+	url = https://github.com/int3/vim-extradite.git
+[submodule "bundle/gundo"]
+	path = bundle/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "bundle/pep8"]
+	path = bundle/pep8
+	url = https://github.com/vim-scripts/pep8.git
+[submodule "bundle/py.test"]
+	path = bundle/py.test
+	url = https://github.com/alfredodeza/pytest.vim.git
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule "bundle/ropevim"]
+	path = bundle/ropevim
+	url = https://github.com/sontek/rope-vim.git
