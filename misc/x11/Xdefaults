@@ -1,0 +1,97 @@
+! urxvt 
+*.scrollBar:           false
+*.saveLines:           100
+*.urgentOnBell:        true
+*.perl-ext-common:     default,matcher,url-select
+*.urlLauncher:         /home/daethorian/config/uzbl/scripts/www.py
+*.matcher.button:      1
+*.matcher.pattern.1:   \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
+*.meta8:               true
+*.underlineURLs:       true
+!*.transparent:        true
+!*.shading:              20
+*.keysym.M-u:          perl:url-select:select_next
+
+*.font:                    -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
+*.boldFont:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+*smallfont*font:           xft:montecarlo:pixelsize=11
+*smallfont*boldFont:       xft:montecarlo:bold:pixelsize=11
+Xft.dpi:                   75.0
+! 
+! XLock 
+XLock.fpsfont:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.font:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.planfont:            -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.fontset:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.planfontset:         -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.messagefont:         -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.username:
+XLock.password:            Password:
+XLock.info:
+XLock.validate:            Validating login...
+XLock.invalid:             Invalid login
+XLock.icongeometry:        28x28
+XLock.mode:                blank
+XLock.description:         false
+XLock.echokeys:            True
+XLock.echokey:             *
+XLock.mousemotion:         True
+XLock.showdate:            True
+XLock.usefirst:            True
+! 
+! Colorscheme (unnamed) 
+*foreground:   #dcdccc
+*background:   #1c1c1c
+*color0:       #333333
+*color1:       #8e2b2e
+*color2:       #45702c
+*color3:       #986f43
+*color4:       #25717a
+*color5:       #875C8D
+*color6:       #32a78a
+*color7:       #888888
+*color8:       #555555
+*color9:       #ff464b
+*color10:      #9dbf60
+*color11:      #e2a564
+*color12:      #5495DC
+*color13:      #E41F66
+*color14:      #41dbb5
+*color15:      #ffffff
+! 
+
+! Bright terminal settings
+*bright*.shading:       180
+*bright*.foreground:    #000000
+*bright*.background:    #ffffff
+! vim: ft=xdefaults
+
+! Zenburn color-scheme
+*background:  #3f3f3f
+*foreground:  #dcdccc
+! black + red
+!*color0:     #3f3f3f
+*color0:      #1E2320
+*color1:      #705050
+! green + yellow
+*color2:      #60b48a
+*color3:      #dfaf8f
+! blue + purple
+*color4:      #506070
+*color5:      #dc8cc3
+! cyan + white
+*color6:      #8cd0d3
+*color7:      #dcdccc
+! bright-black + bright-red
+*color8:      #1E2320
+*color9:      #dca3a3
+! bright-green + bright-yellow
+*color10:     #c3bf9f
+*color11:     #f0dfaf
+! bright-blue + bright-purple
+*color12:     #94bff3
+*color13:     #ec93d3
+! bright-cyan + bright-white
+*color14:     #93e0e3
+*color15:     #ffffff
+!}}}

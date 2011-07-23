@@ -1,0 +1,143 @@
+; vim: set et,ts=2,sts=2,ft=lisp
+(in-package :stumpwm)
+(setf *default-package* :stumpwm)
+(set-contrib-dir "/usr/share/stumpwm")
+
+;(load-module "mpd")
+(set-prefix-key (kbd "C-f"))
+
+;; Turn of welcome message
+(setf *startup-message* nil)
+
+;; Variables
+(setf *shell-program* (stumpwm::getenv "SHELL")) ;getenv is not exported
+
+;(head-resize 1 0 0 1680 1040)
+;(head-resize 2 0 0 1680 1040)
+;(head-resize nr x y width height)
+
+;(set-font "-xos4-terminus-*-*-*-*-14-*-*-*-*-*-*-*")
+(set-font "-*-montecarlo-*-*-*-*-11-*-*-*-*-*-*-*")
+
+(setf *mouse-focus-policy* :click
+    *mode-line-background-color* "grey25"
+    *mode-line-foreground-color* "darkseagreen3"
+    *mode-line-border-color* "darkgrey"
+    *mode-line-timeout* 9001
+    *mode-line-border-width* 0
+    *mode-line-screen-position* :top
+    ;*screen-mode-line-format* "[%g] | %w"
+    *window-format* "%n%s %8t "
+    *group-format* "%n:%t")
+
+(stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
+
+;; Colors
+(set-fg-color "darkseagreen1")
+(set-bg-color "grey25")
+(set-border-color "darkseagreen4")
+(set-focus-color "darkseagreen1")
+(set-unfocus-color "grey50")
+(set-normal-gravity :center)
+(set-msg-border-width 1)
+
+(setf *maxsize-border-width* 2
+    *normal-border-width* 2
+    *mode-line-border-width* 0
+    *window-border-style* :thin
+    *transient-border-width* 4) ; popups \o/
+    ;*screen-mode-line-format*
+    ;(list "^6*::^n  %g  ^6*::^n%w^6* :: ^8*CPU: ^n%f %C ^3*%t ^6*:: ^n^r%M ^6*:: ^n%b ^6*:: ^n %l ^6*::^8* - "
+        ;'(:eval (run-shell-command "date +\"%T %d-%m-%Y\" | tr -d '[:cntrl:]'" t))
+
+(setf *message-window-gravity* :top-right
+    *timeout-wait*           5
+    *input-window-gravity*   :top-left)
+
+(defun echo-urgent-window (target)
+    (message-no-timeout "~a wants something" (window-title target)))
+(add-hook *urgent-window-hook* 'echo-urgent-window)
+
+;; Little helper
+(defun cat (&rest strings) "A shortcut for (concatenate 'string foo bar)."
+  (apply 'concatenate 'string strings))
+
+;; INTARNETS
+(defcommand uzbl (s)
+  ((:string "uzbl: "))
+  (check-type s string)
+  (substitute #\+ #\Space s)
+  (run-shell-command
+    (cat "python /home/daethorian/config/uzbl/scripts/www.py " s)))
+
+;; MPD
+(defparameter *mpd-map*
+  (let ((m (make-sparse-keymap)))
+  (define-key m (kbd "h") "exec mpc prev")
+  (define-key m (kbd "l") "exec mpc next")
+  (define-key m (kbd "z") "exec mpc random")
+  (define-key m (kbd "m") "exec mpc toggle")
+  (define-key m (kbd "SPC") "exec mpc toggle")
+  m))
+
+(define-key *root-map* (kbd "m") '*mpd-map*)
+
+;; Volume
+(defcommand volume (v)
+  ((:string "vol: "))
+  (check-type v string)
+  (run-shell-command (cat "amixer set PCM " v "%")))
+
+(define-key *root-map* (kbd "v") "volume")
+
+;; Terminals
+(define-key *top-map* (kbd "s-RET") "exec term smallfont")
+(define-key *root-map* (kbd "RET") "exec term smallfont")
+(define-key *root-map* (kbd "c") "exec term")
+(define-key *root-map* (kbd "b") "exec bright")
+
+;; Browsers
+(define-key *root-map* (kbd "u") "uzbl")
+(define-key *root-map* (kbd "i") "exec firefox")
+(define-key *root-map* (kbd "b") "exec ssh -Y nl linuxdcpp")
+
+;; The statusbar
+(define-key *root-map* (kbd "d") "exec dzentinel")
+(define-key *root-map* (kbd "C-d") "exec killall dzentinel ; dzentinel")
+
+
+(define-key *root-map* (kbd "x") "exec xlock")
+(define-key *root-map* (kbd "C-r") "loadrc")
+(define-key *root-map* (kbd "C-c") "exec xclip-reset")
+
+;; sane bindings for window management
+(define-key *root-map* (kbd "h") "move-focus left")
+(define-key *root-map* (kbd "j") "move-focus down")
+(define-key *root-map* (kbd "k") "move-focus up")
+(define-key *root-map* (kbd "l") "move-focus right")
+
+(define-key *root-map* (kbd "H") "move-window left")
+(define-key *root-map* (kbd "J") "move-window down")
+(define-key *root-map* (kbd "K") "move-window up")
+(define-key *root-map* (kbd "L") "move-window right")
+
+;; sane bindings for group selections
+(define-key *root-map* (kbd "C-h") "gselect term")
+(define-key *root-map* (kbd "C-j") "gselect www")
+(define-key *root-map* (kbd "C-k") "gselect dev")
+(define-key *root-map* (kbd "C-l") "gselect ctrl")
+
+;; Simple control
+(define-key *root-map* (kbd "s") "hsplit")
+(define-key *root-map* (kbd "z") "vsplit")
+(define-key *root-map* (kbd "C-s") "repack-window-numbers")
+(define-key *root-map* (kbd "SPC") "gnext")
+(define-key *root-map* (kbd "C-SPC") "gprev")
+(define-key *root-map* (kbd "DEL") "gprev")
+(define-key *root-map* (kbd "C-DEL") "gprev")
+(define-key *root-map* (kbd "M-h") "gprev-with-window")
+(define-key *root-map* (kbd "M-l") "gnext-with-window")
+(define-key *root-map* (kbd "M-k") "kill")
+
+;; The End
+; vim: set et,ts=2,sts=2,ft=lisp
