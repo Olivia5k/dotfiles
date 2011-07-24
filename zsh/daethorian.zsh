@@ -251,7 +251,6 @@
 
 # User custom whatever {{{
     # Put whatever else you want here that is specific to your setup.
-    export VIMPERATOR_INIT=":source ~/config/vimperator/vimperatorrc"
     export PYLINTRC="$HOME/.config/pylint/pylintrc"
     alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
     alias mplayer="mplayer -msgcolor -msgmodule"
@@ -266,22 +265,9 @@
     alias cdu='cd /warez/unpack' # onoes
     alias cdp='cd /usr/lib/python2.7/site-packages/'
 
-    function vga()
-    {
-        xrandr --output VGA1 --auto && xrandr --output LVDS1 --off
-        xr
-        xq
-        wp
-        #wpg
-    }
-    function lvds()
-    {
-        xrandr --output LVDS1 --auto && xrandr --output VGA1 --off
-        wpn
-    }
-
-    if [[ $TCOLORS = 256 ]] ; then
-        eval $(dircolors -b $HOME/config/LS_COLORS/LS_COLORS)
+    lscf=$HOME/config/zsh/LS_COLORS/LS_COLORS
+    if [[ -f $lscf ]] ; then
+        eval $(dircolors -b $lscf)
     fi
 #}}}
 
