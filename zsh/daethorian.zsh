@@ -170,7 +170,7 @@
         export HOMEBIN="$HOME/.local/bin"
 
         # Your path. Remember to separate additional directories with a colon.
-        local _PATH="$HOMEBIN"
+        local _PATH="$HOME/bin:$HOMEBIN"
 
         # If $_PATH is not in $PATH, add it, but only once.
         if ! [[ $PATH =~ "$_PATH" ]] ; then
