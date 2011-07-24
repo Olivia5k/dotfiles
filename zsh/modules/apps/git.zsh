@@ -167,6 +167,13 @@ function gr()#
 
     cur=$PWD
     found=false
+    is_in=false
+
+    if [[ -d "$cur/.git" ]]; then
+        is_in=true
+        cur=${cur%/*}
+    fi
+
     until [[ -z "$cur" ]]; do
         if [[ -d "$cur/.git" ]]; then
             found=true
@@ -175,9 +182,15 @@ function gr()#
         cur=${cur%/*}
     done
 
-    if $found; then
+    if $is_in && $found; then
+        echo "In submodule: going to superproject"
         echo $cur
         cd $cur
+    elif $found; then
+        echo $cur
+        cd $cur
+    elif [[ -d "$PWD/.git" ]] ; then
+        echo "Already at project root"
     else
         _zerror "Currently not in a git repository"
     fi
