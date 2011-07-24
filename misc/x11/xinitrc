@@ -3,6 +3,9 @@ xset r rate 330 45 &
 
 exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 5 -root &
-exec feh --bg-center ~/img/wp/velocity.jpg &
-#exec stumpwm &> /home/daethorian/.logs/stumpwm
+exec feh --bg-center ~/img/thearcher1680x1050.png &
+
+exec /home/daethorian/.local/bin/dzentinel &
+#sudo bash /root/nr.zsh &
+
 exec i3 -V &> /home/daethorian/.logs/i3.log

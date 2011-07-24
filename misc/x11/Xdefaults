@@ -1,21 +1,23 @@
 ! urxvt 
-*.scrollBar:           false
-*.saveLines:           100
-*.urgentOnBell:        true
-*.perl-ext-common:     default,matcher,url-select
-*.urlLauncher:         /home/daethorian/config/uzbl/scripts/www.py
-*.matcher.button:      1
-*.matcher.pattern.1:   \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
-*.meta8:               true
-*.underlineURLs:       true
-!*.transparent:        true
-!*.shading:              20
-*.keysym.M-u:          perl:url-select:select_next
+*.scrollBar:               false
+*.saveLines:               100
+*.urgentOnBell:            true
+*.perl-ext-common:         default,matcher,url-select
+*.urlLauncher:             /home/daethorian/config/uzbl/scripts/www.py
+*.matcher.button:          1
+*.matcher.pattern.1:       \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
+*.meta8:                   false
+*.underlineURLs:           true
+*.transparent:             true
+*.shading:                 20
+*.keysym.M-u:              perl:url-select:select_next
 
-*.font:                    -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
-*.boldFont:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-*smallfont*font:           xft:montecarlo:pixelsize=11
-*smallfont*boldFont:       xft:montecarlo:bold:pixelsize=11
+*.font:                    xft:inconsolata:pixelsize=14
+*.boldFont:                xft:inconsolata:bold:pixelsize=14
+*largefont*.font:          xft:inconsolata:pixelsize=14
+*largefont*.boldFont:      xft:inconsolata:bold:pixelsize=14
+*smallfont*.font:          xft:inconsolata:pixelsize=11
+*smallfont*.boldFont:      xft:inconsolata:bold:pixelsize=11
 Xft.dpi:                   75.0
 ! 
 ! XLock 
@@ -41,7 +43,7 @@ XLock.usefirst:            True
 ! 
 ! Colorscheme (unnamed) 
 *foreground:   #dcdccc
-*background:   #1c1c1c
+*background:   #121212
 *color0:       #333333
 *color1:       #8e2b2e
 *color2:       #45702c
@@ -67,31 +69,56 @@ XLock.usefirst:            True
 ! vim: ft=xdefaults
 
 ! Zenburn color-scheme
-*background:  #3f3f3f
-*foreground:  #dcdccc
-! black + red
-!*color0:     #3f3f3f
-*color0:      #1E2320
-*color1:      #705050
-! green + yellow
-*color2:      #60b48a
-*color3:      #dfaf8f
-! blue + purple
-*color4:      #506070
-*color5:      #dc8cc3
-! cyan + white
-*color6:      #8cd0d3
-*color7:      #dcdccc
-! bright-black + bright-red
-*color8:      #1E2320
-*color9:      #dca3a3
-! bright-green + bright-yellow
-*color10:     #c3bf9f
-*color11:     #f0dfaf
-! bright-blue + bright-purple
-*color12:     #94bff3
-*color13:     #ec93d3
-! bright-cyan + bright-white
-*color14:     #93e0e3
-*color15:     #ffffff
-!}}}
+!*background:  #3f3f3f
+!*foreground:  #dcdccc
+!! black + red
+!!*color0:     #3f3f3f
+!*color0:      #1E2320
+!*color1:      #705050
+!! green + yellow
+!*color2:      #60b48a
+!*color3:      #dfaf8f
+!! blue + purple
+!*color4:      #506070
+!*color5:      #dc8cc3
+!! cyan + white
+!*color6:      #8cd0d3
+!*color7:      #dcdccc
+!! bright-black + bright-red
+!*color8:      #1E2320
+!*color9:      #dca3a3
+!! bright-green + bright-yellow
+!*color10:     #c3bf9f
+!*color11:     #f0dfaf
+!! bright-blue + bright-purple
+!*color12:     #94bff3
+!*color13:     #ec93d3
+!! bright-cyan + bright-white
+!*color14:     #93e0e3
+!*color15:     #ffffff
+
+! LOL SOLARIZED
+!*background:            #002b36
+!*foreground:            #657b83
+!*fading:                40
+!*fadeColor:             #002b36
+!*cursorColor:           #93a1a1
+!*pointerColorBackground:#586e75
+!*pointerColorForeground:#93a1a1
+
+!*color0:                #073642
+!*color8:                #002b36
+!*color1:                #dc322f
+!*color9:                #cb4b16
+!*color2:                #859900
+!*color10:               #586e75
+!*color3:                #b58900
+!*color11:               #657b83
+!*color4:                #268bd2
+!*color12:               #839496
+!*color5:                #d33682
+!*color13:               #6c71c4
+!*color6:                #2aa198
+!*color14:               #93a1a1
+!*color7:                #eee8d5
+!*color15:               #fdf6e3
