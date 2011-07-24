@@ -69,7 +69,13 @@ _ins() {
     done
 }
 
-if [ "$PWD" = "$HOME/config" ] ; then
+
+if [[ "$PWD" = "$HOME/config" ]] ; then
+    git submodule init
+    git submodule update
+    git submodule foreach git submodule init
+    git submodule foreach git submodule update
+
     if [[ -z "$1" ]]; then
         for a in $apps; do
             _ins ${(z)a}
@@ -81,11 +87,6 @@ if [ "$PWD" = "$HOME/config" ] ; then
         done
     fi
     mkdir -p $HOME/.cache/vim/{backup,tmp} $HOME/.logs $HOME/.local/{bin,share} &> /dev/null
-
-    git submodule init
-    git submodule update
-    git submodule foreach git submodule init
-    git submodule foreach git submodule update
 else
     print -Pn "The configs should be placed inside %B%F{12}~/config%f%b, "
     print "and the script should be run from there."
