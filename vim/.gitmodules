@@ -66,4 +66,4 @@
 	url = https://github.com/sontek/rope-vim.git
 [submodule "bundle/jslint"]
 	path = bundle/jslint
-	url = https://github.com/hallettj/jslint.vim.git
+	url = git@github.com:daethorian/jslint.vim.git
