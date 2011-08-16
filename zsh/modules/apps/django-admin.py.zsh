@@ -40,3 +40,26 @@ function dr()
     rmext pyc
     dm runserver 0.0.0.0:8000
 }
+
+function dcompile()
+{
+    if [[ ! -f "manage.py" ]] ; then
+        _zerror "No django manager found. Exiting"
+        return 1
+    fi
+
+    root=$PWD
+
+    for d in **/locale ; do
+        cd ${d%locale} &> /dev/null
+
+        if [[ -z "$1" ]]; then
+            for dd in locale/*(/); do
+                django-admin.py makemessages -l ${dd#locale/}
+            done
+        fi
+
+        django-admin.py compilemessages
+        cd $root &> /dev/null
+    done
+}

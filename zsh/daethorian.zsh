@@ -252,6 +252,7 @@
 # User custom whatever {{{
     # Put whatever else you want here that is specific to your setup.
     export PYLINTRC="$HOME/.config/pylint/pylintrc"
+    export DJANGO_SETTINGS_MODULE="settings"
     alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
     alias mplayer="mplayer -msgcolor -msgmodule"
 
