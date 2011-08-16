@@ -114,10 +114,10 @@ if [[ -z "$1" ]] || [[ "$1" =~ "-?-h(elp)?" ]]; then
 fi
 
 # git initialization
-#git submodule init
-#git submodule update
-#git submodule foreach git submodule init
-#git submodule foreach git submodule update
+git submodule init
+git submodule update
+git submodule foreach git submodule init
+git submodule foreach git submodule update
 
 if [[ "$1" = "-u" ]]; then
     print "Git updating done"
