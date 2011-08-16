@@ -33,6 +33,13 @@ let g:stl_spell = 1         " NI Spell language
 let g:stl_values = 1        " NI Cursor byte values
 let g:stl_ruler = 1         " NI File position data
 
+if !exists("g:disable_status_syntax")
+    let g:disable_status_syntax = 1 " Disable the syntax in statusline
+endif
+if !exists("g:show_full_path")
+    let g:show_full_path = 0 " Only show the file name
+endif
+
 function! RenderStlFlag(value, good_values, error)
     let good_values = split(a:good_values, ',')
     let good = index(good_values, a:value) != -1
@@ -84,8 +91,8 @@ function! StlCurrentHighlight()
         return ''
     endif
     return synIDattr(synID(line('.'),col('.'),1),'name')
-
 endfunction
+
 function! StlCurrentRealHighlight()
     if exists("g:disable_status_syntax") && g:disable_status_syntax
         return ''
@@ -101,25 +108,31 @@ function! StlCurrentRealHighlight()
     return realsyn
 endfunction
 
+function! StlFileName()
+    let name = bufname("%")
+    if exists("g:show_full_path") && g:show_full_path
+        return name
+    endif
+    return substitute(name, '.*/', '', '')
+endfunction
+
 function! StlCache()
     return
 endfunction
 
 set stl=
-set stl=%1*%t%*
+set stl+=%1*%{StlFileName()}%*
+set stl+=%<
 set stl+=%7*[
 call ColoredBufNr('%6*', '%2*')
 set stl+=%7*]%*
-set stl+=%<
-call AddStlFlag('&ff', 'unix', '%6*', '%2*')
-call AddStlFlag('&fenc', 'utf-8', '%6*', '%2*')
-call StlDelim('│')
-set stl+=\ %9*%03.3b%*
-set stl+=\ %7*\-\ %*
-set stl+=%7*0x%8*%02.2B%*
-call StlDelim('│')
-set stl+=\ %4*%c%7*c%*,
-set stl+=\ %*%1*%l%7*/%7*%L%3*
+"call AddStlFlag('&ff', 'unix', '%6*', '%2*')
+"call AddStlFlag('&fenc', 'utf-8', '%6*', '%2*')
+call AddStlFlag('&ft', '', '%6*', '%2*')
+"call StlDelim('│')
+"set stl+=\ %9*%03.3b%*
+"set stl+=\ %7*\-\ %*
+"set stl+=%7*0x%8*%02.2B%*
 call StlDelim('│')
 set stl+=%=
 call StlCondDelim('g:disable_status_syntax', '[')
@@ -132,9 +145,8 @@ set stl+=%{&paste?'[paste]':''}
 set stl+=%{QuickfixCount()}
 set stl+=%*
 set stl+=%7*
-set stl+=%m
 call StlDelim('│')
-
-if exists('g:loaded_fugitive')
-    set stl+=\ %5*%{fugitive#statusline()}
-endif
+set stl+=%5*%{fugitive#statusline()}
+call StlDelim('│')
+set stl+=\ %4*%c%7*c%*,
+set stl+=\ %*%1*%l%7*/%7*%L%3*

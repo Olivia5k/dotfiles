@@ -109,15 +109,27 @@ function! StatusSyntaxToggle() " {
         echo 'Syntax shower enabled'
     endif
 endfunction " }
+function! StatusPathToggle() " {
+    if g:show_full_path == 0
+        let g:show_full_path = 1
+        echo ""
+    else
+        let g:show_full_path = 0
+        echo ""
+    endif
+endfunction " }
 
-function! RelSwitch(source, target) " {
+function! RelSwitch(cmd, source, target) " {
     let new = substitute(bufname("%"), a:source, a:target, 'g')
     if filereadable(new)
-        edit `=new`
+        execute a:cmd . ' '  . new
     else
         echo "Not a valid file: " . new
     endif
 endfunction " }
-command! -nargs=+ S :call RelSwitch(<f-args>)
+command! -nargs=+ E :call RelSwitch('edit', <f-args>)
+command! -nargs=+ S :call RelSwitch('split', <f-args>)
+command! -nargs=+ V :call RelSwitch('vsplit', <f-args>)
+command! -nargs=+ T :call RelSwitch('tabe', <f-args>)
 
 " vim: set et:sw=4:fmr=marker:fdm={,}

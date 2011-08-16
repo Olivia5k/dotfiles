@@ -26,11 +26,9 @@
     au Filetype python setlocal foldmethod=indent expandtab ft=python.django
     au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
-    au Filetype html,htmldjango set foldmethod=indent expandtab ft=htmldjango.html
 
-    " TODO: omg full paths :////
-    au Filetype javascript setlocal makeprg=cat\ %\ \\\|\ /usr/bin/js\ /home/daethorian/config/vim/jslint/mylintrun.js\ %
-    au Filetype javascript setlocal errorformat=%f:%l:%c:%m
+    au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab ft=htmldjango.html
+
     au Filetype javascript syn keyword Special $
 
     au FileType help nnoremap <buffer> <Enter> <C-]>
@@ -62,10 +60,6 @@
     set noerrorbells " don't make noise
     set laststatus=2 " always have the statusline
     set scrolljump=10 " don't scroll the edges
-
-    if !exists("g:disable_status_syntax")
-        let g:disable_status_syntax = 1 " Disable the syntax in statusline
-    endif
 
     " 256 colors to putty
     if &term =~ "xterm"
@@ -119,19 +113,19 @@
 " }
 " Spelling {
     if has('spell')
-        autocmd filetype mail set spell spelllang=sv
-        autocmd filetype *commit* set spell spelllang=en
+        au filetype mail set spell spelllang=sv
+        au filetype *commit* set spell spelllang=en
     endif
 " }
 " Folding {
     set foldenable " Turn on folding
     set foldmarker={,} " Fold C style code
-    set foldcolumn=1 " Give 1 column for fold markers
+    set foldcolumn=0 " No foldcolumn plx
     set foldmethod=marker " Fold on the marker
     set foldlevel=0 " Open files with folds closed
-    set foldopen=undo,search,jump,hor,tag,mark,quickfix " open folds when you do stuff
+    set foldopen=undo,search,jump,hor,tag,mark,quickfix,block " open folds when you do stuff
 
-    set foldtext=FoldWithLines()
+    set foldtext=FoldWithLines() " See local/functions.vim
 " }
 " Colorschemes {
     if &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
@@ -142,14 +136,16 @@
         colorscheme ninjaloot
     endif
 
-    " 
+    " Always include the right highlights
     au ColorScheme * runtime local/highlights.vim
 " }
 
+" Load the local vim rc files
 for f in split(globpath(&runtimepath, 'local/*.vim'), "\n")
   execute 'source ' . f
 endfor
 
+" Load user specific settings
 let userfile = globpath(&runtimepath, 'local/user/$USER.vim')
 if userfile
     source userfile

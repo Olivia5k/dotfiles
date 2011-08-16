@@ -24,4 +24,7 @@ let g:xptemplate_pum_tab_nav = 1
 " Reload xptemplate snippets without quitting vim.
 nmap <A-F1> :XPTreload<CR>
 
+" Fugitive buffer cleanup
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 " vim: set et:sw=4:fmr=marker:fdm={,}

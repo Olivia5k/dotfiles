@@ -67,3 +67,9 @@
 [submodule "bundle/jslint"]
 	path = bundle/jslint
 	url = git@github.com:daethorian/jslint.vim.git
+[submodule "bundle/conque"]
+	path = bundle/conque
+	url = https://github.com/rosenfeld/conque-term.git
+[submodule "bundle/pyflakes"]
+	path = bundle/pyflakes
+	url = https://github.com/kevinw/pyflakes-vim.git
