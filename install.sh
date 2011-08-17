@@ -93,7 +93,6 @@ if [[ -z "$1" ]] || [[ "$1" =~ "-?-h(elp)?" ]]; then
     echo "Installation of configurations will be made by symbolic linking."
     echo
     echo "Any arguments given will be considered as configs for installation."
-    echo "If none are given, all configurations are installed"
     echo "Possible choices are:"
     echo ${(ko)apps}
     echo
@@ -167,11 +166,11 @@ if [[ "$1" = "-l" ]]; then
     shift 2
 fi
 
-if [[ -z "$1" ]] || [[ "$1" = "-a" ]]; then
+if [[ "$1" = "-a" ]]; then
     for a in $apps; do
         _install ${(z)a}
     done
-else
+elif [[ -n "$1" ]] ; then
     while [[ -n "$1" ]]; do
         _install ${(z)${apps[$1]}}
         shift
