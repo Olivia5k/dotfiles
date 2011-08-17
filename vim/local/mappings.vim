@@ -1,4 +1,5 @@
 let mapleader = ","
+let g:EasyMotion_leader_key = '<Leader>m'
 
 " Navigation {
     " Unmap them evil arrows
