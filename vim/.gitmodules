@@ -73,3 +73,6 @@
 [submodule "bundle/pyflakes"]
 	path = bundle/pyflakes
 	url = https://github.com/kevinw/pyflakes-vim.git
+[submodule "bundle/zenburn"]
+	path = bundle/zenburn
+	url = https://github.com/vim-scripts/Zenburn.git
