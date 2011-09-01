@@ -2,22 +2,21 @@
 *.scrollBar:               false
 *.saveLines:               100
 *.urgentOnBell:            true
-*.perl-ext-common:         default,matcher,url-select
-*.urlLauncher:             /home/daethorian/config/uzbl/scripts/www.py
+*.perl-ext-common:         default,matcher
+*.urlLauncher:             /home/daethorian/bin/www
 *.matcher.button:          1
 *.matcher.pattern.1:       \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
 *.meta8:                   false
 *.underlineURLs:           true
-*.transparent:             true
+*.transparent:             false
 *.shading:                 20
+!*.fading:                  20
 *.keysym.M-u:              perl:url-select:select_next
 
-*.font:                    xft:inconsolata:pixelsize=14
-*.boldFont:                xft:inconsolata:bold:pixelsize=14
-*largefont*.font:          xft:inconsolata:pixelsize=14
-*largefont*.boldFont:      xft:inconsolata:bold:pixelsize=14
-*smallfont*.font:          xft:inconsolata:pixelsize=11
-*smallfont*.boldFont:      xft:inconsolata:bold:pixelsize=11
+*.font:                    xft:montecarlo:pixelsize=11
+*.boldFont:                xft:montecarlo:bold:pixelsize=11
+*bigfont*.font:           xft:inconsolata:pixelsize=14
+*bigfont*.boldFont:       xft:inconsolata:bold:pixelsize=14
 Xft.dpi:                   75.0
 ! 
 ! XLock 
