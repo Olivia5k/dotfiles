@@ -3,8 +3,8 @@ alias mmu='mount /mnt/usb'
 alias muu='umount /mnt/usb'
 
 # Warez
-alias mmw='sshfs nl:/warez /mnt/warez -o allow_other'
-alias muw='fusermount -u /mnt/warez'
+alias mmw='sshfs nl:/warez ~/ssh/warez -o allow_other'
+alias muw='fusermount -u ~/ssh/warez'
 
 # sshfs home
 alias mmn='sshfs nl: ~/ssh/ninjaloot'
