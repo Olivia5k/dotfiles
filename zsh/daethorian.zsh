@@ -253,6 +253,7 @@
     # Put whatever else you want here that is specific to your setup.
     export PYLINTRC="$HOME/.config/pylint/pylintrc"
     export DJANGO_SETTINGS_MODULE="settings"
+    export MAILCHECK=0
     alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
     alias mplayer="mplayer -msgcolor -msgmodule"
 
@@ -270,6 +271,8 @@
     if [[ -f $lscf ]] ; then
         eval $(dircolors -b $lscf)
     fi
+
+    source ~/git/ext/trapd00r/configs/zsh/10-*
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}

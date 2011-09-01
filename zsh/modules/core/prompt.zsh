@@ -1,9 +1,9 @@
 # CVS integration
 setopt prompt_subst
-#zstyle ':vcs_info:*' enable git svn
-#zstyle ':vcs_info:*' get-revision true
-#zstyle ':vcs_info:*' check-for-changes true
-#zstyle ':vcs_info:*' unstagedstr "%f%F{${c[16]}}" # Just make it red!
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr "%f%F{${c[16]}}" # Just make it red!
 
 #zstyle ':vcs_info:*' actionformats "${repo}─[%F{${c[17]}}%a%F{${c[1]}}]${branch}"
 #zstyle ':vcs_info:(svn):*' branchformat '%b'
@@ -46,8 +46,8 @@ function precmd()
 
     if [[ $PMODE -ge 3 ]] ; then
         if [[ $PMODE = 4 ]]; then
-            repo="%B%F{${c[14]}}%r%F{${c[1]}}:%F{${c[4]}}/%S"
-            branch=" %F{${c[15]}}%u%b%%b"
+            repo="%B%F{${c[14]}}%r%F{${c[1]}}(%F{${c[15]}}%u%b%F{${c[1]}}):%F{${c[4]}}/%S"
+            branch=""
         elif [[ $PMODE = 5 ]] ; then
             repo="%B%F{${c[14]}}%r%F{${c[1]}}:%F{${c[4]}}/%S"
             branch=" %F{${c[15]}}%u%b%%b"
@@ -116,10 +116,11 @@ function prompt()
 
         if [[ $PMODE -ge 4 ]]; then
             if [[ -n "${vcs_info_msg_0_}" ]]; then
-                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) ${vcs_info_msg_0_} %B%F{${c[4]}}%#%b%f "
+                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}$u) ${vcs_info_msg_0_} "
             else
-                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) %F{${c[4]}}%~ %#%b%f "
+                local r1="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}$u) %F{${c[4]}}%~ "
             fi
+            local r2="%(?..%F{${c[6]}}$(bell)%?)%F{${c[1]}}%B>%b%f "
         else
             local r1="%B%F{${c[1]}}┌─[%(#.%F{${c[3]}}%m.%F{${c[2]}}$u)%F{${c[1]}}]$t─[%F{$dc}%~%F{${c[1]}}]%b"
             local r2="%B%F{${c[1]}}└${e}${b}${j}${m}─[%F{${c[8]}}%D{%H:%M}%F{${c[1]}}]>%f%b "
@@ -129,8 +130,7 @@ function prompt()
     case $PMODE in
         0) ; PROMPT="%# "; ;;
         1) ; PROMPT="%B%(#.%F{${c[3]}}%m.%F{${c[2]}}%n@%m) %F{${c[4]}}%~ %#%b%f " ; ;;
-        2) ; PROMPT=$(print "$r1\n$r2") ; ;;
+        2 | 4) ; PROMPT=$(print "$r1\n$r2") ; ;;
         3) ; PROMPT=$(print "$r1\n${vcs_info_msg_0_}\n$r2") ; ;;
-        4) ; PROMPT=$(print "$r1") ; ;;
     esac
 }

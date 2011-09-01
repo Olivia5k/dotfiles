@@ -1,41 +1,47 @@
 export HASCVS=true
 
 
-#zstyle ':vcs_info:*' enable git
-#zstyle ':vcs_info:git*:*' get-revision true
-#zstyle ':vcs_info:git*:*' check-for-changes true
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
 
+f="%B%F{${c[14]}}%r%F{${c[1]}}(%F{${c[15]}}%u%c%b%F{${c[1]}}):%F{${c[4]}}/%S %m"
 ## hash changes branch misc
-#zstyle ':vcs_info:git*' formats "%f%7.7i %c%u %b%m"
-#zstyle ':vcs_info:git*' actionformats "(%s|%a) %7.7i %c%u %b%m"
+zstyle ':vcs_info:git*' formats "%f%7.7i %c%u %b%m"
+zstyle ':vcs_info:git*' formats $f
+zstyle ':vcs_info:git*' actionformats "(%s|%a) %7.7i %c%u %b%m"
 
-zstyle ':vcs_info:git*+set-message:*' hooks git-stash
 
-## Show remote ref name and number of commits ahead-of or behind
-#function +vi-git-st() {
-    #local ahead behind remote
-    #local -a gitstatus
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
 
-    ## Are we on a remote-tracking branch?
-    #remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
-        #--symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+# Show remote ref name and number of commits ahead-of or behind
+function +vi-git-st() {
+    local ahead behind remote
+    local -a gitstatus
 
-    #if [[ -n ${remote} ]] ; then
-        ## for git prior to 1.7
-        ## ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-        #ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-        #(( $ahead )) && gitstatus+=( "%F{${c[15]}}+${ahead}${c2}" )
+    # Are we on a remote-tracking branch?
+    remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
+        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
-        ## for git prior to 1.7
-        ## behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-        #behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-        #(( $behind )) && gitstatus+=( "%F{${c[16]}}-${behind}${c2}" )
+    if [[ -n ${remote} ]] ; then
+        # for git prior to 1.7
+        # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+        ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+        (( $ahead )) && gitstatus+=( "%F{${c[15]}}+${ahead}%f" )
 
-        #hook_com[branch]="${hook_com[branch]} [${(j:/:)gitstatus}]"
-    #fi
-#}
+        # for git prior to 1.7
+        # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+        behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+        (( $behind )) && gitstatus+=( "%F{${c[16]}}-${behind}%f" )
 
-# Show count of stashed changes
+        # Only show if array is non-empty
+        if [[ ${#gitstatus} != 0 ]]; then
+            hook_com[branch]="${hook_com[branch]} [${remote} ${(j:/:)gitstatus}]"
+        fi
+    fi
+}
+
+ #Show count of stashed changes
 function +vi-git-stash() {
     local -a stashes
 

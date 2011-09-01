@@ -43,6 +43,7 @@ function dr()
 
 function dcompile()
 {
+    setopt extendedglob
     if [[ ! -f "manage.py" ]] ; then
         _zerror "No django manager found. Exiting"
         return 1
@@ -50,7 +51,15 @@ function dcompile()
 
     root=$PWD
 
-    for d in **/locale ; do
+    if [[ -n "$1" ]]; then
+        hax="apps/{${*/ /,}}/locale"
+    else
+        hax="**/locale"
+    fi
+
+    echo "start"
+    for d in ${(z)hax}; do
+        echo $d
         cd ${d%locale} &> /dev/null
 
         if [[ -z "$1" ]]; then
