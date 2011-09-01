@@ -271,8 +271,6 @@
     if [[ -f $lscf ]] ; then
         eval $(dircolors -b $lscf)
     fi
-
-    source ~/git/ext/trapd00r/configs/zsh/10-*
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}
