@@ -47,6 +47,7 @@ function! CoverageToggle()
 endfunction
 
 nmap ,C :call CoverageToggle()<cr>
+nmap ,nc A  # pragma: no cover
 
 function! HiglightCoverage(filename)
     sign unplace *

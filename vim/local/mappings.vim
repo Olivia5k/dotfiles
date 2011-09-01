@@ -103,7 +103,7 @@ let g:EasyMotion_leader_key = '<Leader>m'
     " Indent XML
     nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 " }
-" Better tabs for the hands {
+" Better for the hands {
     nmap zh gT
     nmap zl gt
     nmap zn :tabe 
@@ -114,6 +114,10 @@ let g:EasyMotion_leader_key = '<Leader>m'
     nmap cj :cc<CR>
     nmap ck :cw<CR>
     nmap cl :cn<CR>
+
+    " Diffing.
+    nmap dn ]c
+    nmap dN [c
 " }
 " Frustration {
     nmap K k

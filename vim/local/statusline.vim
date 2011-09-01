@@ -128,7 +128,7 @@ call ColoredBufNr('%6*', '%2*')
 set stl+=%7*]%*
 "call AddStlFlag('&ff', 'unix', '%6*', '%2*')
 "call AddStlFlag('&fenc', 'utf-8', '%6*', '%2*')
-call AddStlFlag('&ft', '', '%6*', '%2*')
+call AddStlFlag('&ft', '', '%4*', '%2*')
 "call StlDelim('│')
 "set stl+=\ %9*%03.3b%*
 "set stl+=\ %7*\-\ %*
