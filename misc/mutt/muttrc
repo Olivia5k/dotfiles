@@ -50,7 +50,9 @@ set sort_browser=alpha    # Sort mailboxes by alpha(bet)
 #======================================================#
 # which editor do you want to use? 
 # vim of course!
-set editor="vim -c 'set tw=70 et' '+/^$' " 
+# The commands sets tw, goes to the next empty line by searching, and disables
+# search highlight.
+set editor="vim -c 'set tw=72 et nohls' '+/^$'" 
 set edit_headers=yes      # See the headers when editing
 
 #======================================================#
