@@ -2,8 +2,8 @@ ls="ls $LSOPTS"
 alias ls="$ls"
 alias lc="$ls --color=never"
 alias ll="$ls -l"
-alias la="$ls -a"
-alias lal="$ls -al"
+alias la="$ls -A"
+alias lal="$ls -Al"
 
 alias lsd="$ls -d *(-/N)"          # list visible directories
 alias lsf="$ls *(-.N)"             # list visible files

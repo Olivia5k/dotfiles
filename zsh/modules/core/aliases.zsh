@@ -1,6 +1,7 @@
 alias grep="grep $GREPOPTS"
 alias :q="exit"
 alias bell='echo -en "\007"'
+alias pg="ping google.com -c 3"
 
 if _has alsamixer ; then
     alias am='alsamixer'
@@ -25,11 +26,6 @@ if _has python ; then
     if _has bpython ; then
         alias bp='bpython' # <3
     fi
-fi
-
-# rsync should always be timed, nuff said.
-if _has rsync ; then
-    alias rsync='time rsync'
 fi
 
 if _has vlock ; then

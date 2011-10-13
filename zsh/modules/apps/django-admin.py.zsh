@@ -58,7 +58,7 @@ function dcompile()
     fi
 
     echo "start"
-    for d in ${(z)hax}; do
+    for d in "$(eval ${(z)hax})"; do
         echo $d
         cd ${d%locale} &> /dev/null
 
