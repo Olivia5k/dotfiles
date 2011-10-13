@@ -9,14 +9,14 @@
 *.meta8:                   false
 *.underlineURLs:           true
 *.transparent:             false
-*.shading:                 20
-!*.fading:                  20
+!*.shading:                 20
+*.fading:                  30
 *.keysym.M-u:              perl:url-select:select_next
 
 *.font:                    xft:montecarlo:pixelsize=11
 *.boldFont:                xft:montecarlo:bold:pixelsize=11
-*bigfont*.font:           xft:inconsolata:pixelsize=14
-*bigfont*.boldFont:       xft:inconsolata:bold:pixelsize=14
+*bigfont*.font:            xft:inconsolata:pixelsize=14
+*bigfont*.boldFont:        xft:inconsolata:bold:pixelsize=14
 Xft.dpi:                   75.0
 ! 
 ! XLock 
@@ -59,65 +59,5 @@ XLock.usefirst:            True
 *color13:      #E41F66
 *color14:      #41dbb5
 *color15:      #ffffff
-! 
 
-! Bright terminal settings
-*bright*.shading:       180
-*bright*.foreground:    #000000
-*bright*.background:    #ffffff
 ! vim: ft=xdefaults
-
-! Zenburn color-scheme
-!*background:  #3f3f3f
-!*foreground:  #dcdccc
-!! black + red
-!!*color0:     #3f3f3f
-!*color0:      #1E2320
-!*color1:      #705050
-!! green + yellow
-!*color2:      #60b48a
-!*color3:      #dfaf8f
-!! blue + purple
-!*color4:      #506070
-!*color5:      #dc8cc3
-!! cyan + white
-!*color6:      #8cd0d3
-!*color7:      #dcdccc
-!! bright-black + bright-red
-!*color8:      #1E2320
-!*color9:      #dca3a3
-!! bright-green + bright-yellow
-!*color10:     #c3bf9f
-!*color11:     #f0dfaf
-!! bright-blue + bright-purple
-!*color12:     #94bff3
-!*color13:     #ec93d3
-!! bright-cyan + bright-white
-!*color14:     #93e0e3
-!*color15:     #ffffff
-
-! LOL SOLARIZED
-!*background:            #002b36
-!*foreground:            #657b83
-!*fading:                40
-!*fadeColor:             #002b36
-!*cursorColor:           #93a1a1
-!*pointerColorBackground:#586e75
-!*pointerColorForeground:#93a1a1
-
-!*color0:                #073642
-!*color8:                #002b36
-!*color1:                #dc322f
-!*color9:                #cb4b16
-!*color2:                #859900
-!*color10:               #586e75
-!*color3:                #b58900
-!*color11:               #657b83
-!*color4:                #268bd2
-!*color12:               #839496
-!*color5:                #d33682
-!*color13:               #6c71c4
-!*color6:                #2aa198
-!*color14:               #93a1a1
-!*color7:                #eee8d5
-!*color15:               #fdf6e3
