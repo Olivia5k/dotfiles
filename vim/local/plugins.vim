@@ -1,6 +1,10 @@
 source $VIMRUNTIME/macros/matchit.vim
 let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 
+" The retard that set C-C as default for SQL completion should get his face
+" caved in.
+let g:ftplugin_sql_omni_key = '<C-Q>'
+
 " Set personal snippet folder location:
 let g:xptemplate_snippet_folders=['$HOME/.vim/xptemplate_personal_snippets']
 " Turn off automatic closing of quotes and braces:
