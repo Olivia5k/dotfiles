@@ -27,7 +27,7 @@
 	url = https://github.com/tpope/vim-repeat.git
 [submodule "bundle/xptemplate"]
 	path = bundle/xptemplate
-	url = https://github.com/drmingdrmer/xptemplate-dist.git
+	url = https://github.com/drmingdrmer/xptemplate.git
 [submodule "bundle/argtextobj"]
 	path = bundle/argtextobj
 	url = https://github.com/vim-scripts/argtextobj.vim.git
