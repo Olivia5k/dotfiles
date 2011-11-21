@@ -5,54 +5,58 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
-f="%B%F{${c[14]}}%r%F{${c[1]}}(%F{${c[15]}}%u%c%b%F{${c[1]}}):%F{${c[4]}}/%S %m"
+f="%B%F{${c[14]}}%r%F{${c[1]}}(%F{${c[15]}}%u%c%b%m%F{${c[1]}}):%F{${c[4]}}/%S"
 ## hash changes branch misc
 zstyle ':vcs_info:git*' formats "%f%7.7i %c%u %b%m"
 zstyle ':vcs_info:git*' formats $f
 zstyle ':vcs_info:git*' actionformats "(%s|%a) %7.7i %c%u %b%m"
 
-
 zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
 
 # Show remote ref name and number of commits ahead-of or behind
-function +vi-git-st() {
-    local ahead behind remote
-    local -a gitstatus
+function +vi-git-st()
+{
+    local str branch ahead behind remote
+
+    # Store the current branch name
+    branch=${hook_com[branch]}
 
     # Are we on a remote-tracking branch?
-    remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
+    remote=${$(git rev-parse --verify ${b}@{upstream} \
         --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
     if [[ -n ${remote} ]] ; then
-        # for git prior to 1.7
-        # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-        ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-        (( $ahead )) && gitstatus+=( "%F{${c[15]}}+${ahead}%f" )
+        # Dark colon to mark tracking branch
+        str="${branch}%F{${c[1]}}:"
 
-        # for git prior to 1.7
-        # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-        behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-        (( $behind )) && gitstatus+=( "%F{${c[16]}}-${behind}%f" )
+        ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
+        behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
 
-        # Only show if array is non-empty
-        if [[ ${#gitstatus} != 0 ]]; then
-            hook_com[branch]="${hook_com[branch]} [${remote} ${(j:/:)gitstatus}]"
-        fi
+        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"
+        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"
+        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"
+        (( $ahead + $behind )) && str+="%F{${c[1]}}:"
+    else
+        # Just add a red colon to mark non-tracking branch
+        str="${branch}%F{${c[16]}}:"
     fi
+
+    hook_com[branch]=$str
 }
 
  #Show count of stashed changes
-function +vi-git-stash() {
+function +vi-git-stash()
+{
     local -a stashes
 
     if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
         stashes=$(git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+=" (${stashes} st)"
+        hook_com[misc]+="%F{${c[4]}}${stashes}st%F{${c[1]}}"
     fi
 }
 
 
-# Committing
+# Committing / General
 alias ga='git add'
 alias gs='git status'
 alias gc='git commit'
@@ -62,11 +66,20 @@ alias gu='git pull'
 
 # Branching
 alias gb='git branch -v'
+alias gbv='git branch -vv'
 
 # Checkouting
 alias go='git checkout'
 alias goo='git checkout --ours'
 alias got='git checkout --theirs'
+
+# Stashing
+alias gt="git stash"
+alias gtl="git stash list"
+alias gtp="git stash pop"
+alias gts="git stash show"
+# Since these are pretty irrevokably lost if dropped, aliases for that was
+# skipped
 
 # Submodules
 alias gsa='git submodule add'
@@ -117,7 +130,7 @@ function gbr()#
 }
 
 # Initialize a project
-function gi()#
+function ginit()#
 {
     if [[ "$1" = "--zdoc" ]] ; then
         if [[ "$2" =~ "s(hort)?" ]] ; then

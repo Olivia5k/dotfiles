@@ -3,6 +3,7 @@ export PYTHONSTARTUP=$XDG_DATA_HOME/python/djangoloader.py
 alias dm='python2 manage.py'
 alias ds='echo "no" | dm syncdb'
 alias dz='bpython'
+alias mm='django-admin.py makemessages -l en && django-admin.py compilemessages'
 
 # Django sync hard. Useful when you update a model and the regular sync
 # cant catch it. Note that extensive fixtures are crucial for this to be
@@ -30,6 +31,53 @@ function dsh()##
     ds
 }
 
+function dsr()##
+{
+    if [[ "$1" = "--zdoc" ]] ; then
+        if [[ "$2" =~ "s(hort)?" ]] ; then
+            echo "Remotely resync a Django database"
+        elif [[ "$2" =~ "l(ong)?" ]] ; then
+            local str="Same as dsh(), but uses and caches a remote mysqldump"
+            echo $str
+        fi
+        return
+    fi
+
+    if [[ ! -f "$PWD/manage.py" ]]; then
+        _zerror "No django manager found. Exiting"
+        return 1
+    fi
+
+    DBTMP="tmp"
+    DBHOST="dt"
+    REMOTEDB="mancx_django"
+    LOCALDB="dev_main"
+
+    DATE=$(date +'%Y.%m.%d')
+    F="$DBTMP/$DBHOST.$DATE.mysql"
+
+    # Ignore laser tables and the large session table
+    IGNORE=("django_admin_log" "django_session")
+    if [[ "$1" != "--laser" ]]; then
+        IGNORE+=("laser_metacategory" "laser_metacontroller" "laser_metaitem")
+        IGNORE+=("laser_metalink" "laser_metamatch" "laser_metaqueue")
+        IGNORE+=("laser_metatarget")
+    fi
+
+    i=""
+    for x in $IGNORE ; do
+        i+="--ignore-table=$REMOTEDB.$x "
+    done
+
+    if [[ ! -f $F ]] || [[ -n "$1" ]]; then
+        echo "Grabbing $REMOTEDB from $DBHOST"
+        ssh $DBHOST mysqldump $REMOTEDB $i > $F
+    fi
+
+    echo "Loading $F into $LOCALDB"
+    mysql $LOCALDB < $F
+}
+
 function dr()
 {
     if [[ ! -f "manage.py" ]] ; then
@@ -37,7 +85,8 @@ function dr()
         return 1
     fi
 
-    rmext pyc
+    rmext pyc &> /dev/null
+    echo "Removed .pyc files"
     dm runserver 0.0.0.0:8000
 }
 

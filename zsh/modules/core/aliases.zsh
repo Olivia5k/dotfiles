@@ -3,35 +3,6 @@ alias :q="exit"
 alias bell='echo -en "\007"'
 alias pg="ping google.com -c 3"
 
-if _has alsamixer ; then
-    alias am='alsamixer'
-fi
-
-if _has todo ; then
-    # Better indexing. The rc file does not always work for some retarded reason.
-    for i in todo tdd tda tde tdr ; do
-        alias $i="$i --sort done,priority,-text,created"
-    done
-
-    alias t='todo -children'
-    alias tt='todo +children'
-fi
-
-if _has fetchmail ; then
-    alias fm='fetchmail'
-fi
-
-if _has python ; then
-    alias py='python'
-    if _has bpython ; then
-        alias bp='bpython' # <3
-    fi
-fi
-
-if _has vlock ; then
-    alias lock='vlock -n'
-fi
-
 # X11 specific aliases
 if [[ -n "$DISPLAY" ]] ; then
     # Sets your keyboard to be snappier. Very recommended.

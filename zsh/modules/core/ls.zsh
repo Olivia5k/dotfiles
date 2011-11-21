@@ -1,4 +1,5 @@
 ls="ls $LSOPTS"
+alias l="ls++"
 alias ls="$ls"
 alias lc="$ls --color=never"
 alias ll="$ls -l"

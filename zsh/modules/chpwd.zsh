@@ -1,16 +1,5 @@
 function chpwd()
 {
-    if [[ $UID = 0 ]] && [[ "^/srv" =~ $PWD ]] ; then
-        echo
-        print -P "   %B%F{red}:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2%f%b"
-        echo "   Don't be root in /srv. :@"
-        echo
-    fi
-
-    if $HASTODO && [[ -f $TODOFILE ]] ; then
-        todo && echo
-    fi
-
     ls
 }
 

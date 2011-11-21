@@ -3,7 +3,8 @@ setopt prompt_subst
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:*' get-revision true
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr "%f%F{${c[16]}}" # Just make it red!
+zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}" # Just make it red!
+zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}" # Just make it cyan!
 
 #zstyle ':vcs_info:*' actionformats "${repo}─[%F{${c[17]}}%a%F{${c[1]}}]${branch}"
 #zstyle ':vcs_info:(svn):*' branchformat '%b'

@@ -183,25 +183,6 @@
         export LSOPTS='--color=auto --group-directories-first'
         export GREPOPTS='--color=auto'
     # }}}
-    # User zsh specifics {{{
-        # zsh specific directory that the core shell might use for dumping etc. Only
-        # used when set.
-        export ZDUMPDIR="$XDG_DATA_HOME/zsh"
-
-        # The completion system uses a cache file to speed up completion. To avoid
-        # cluttering the $HOME, it is put inside $ZDUMPDIR
-        export COMPDUMP="$ZDUMPDIR/compdump"
-
-        # Use the debugger?
-        export DEBUG=false
-
-        # The globbing!
-        setopt extendedglob
-        umask 022
-
-        # While vim is superior, shells in vi mode are unfortunately not.
-        bindkey -e
-    # }}}
 # }}}
 # Modules {{{
     # zsh module directory
@@ -252,10 +233,29 @@
     unset m
 # }}}
 
+# User zsh specifics {{{
+    # zsh specific directory that the core shell might use for dumping etc. Only
+    # used when set.
+    export ZDUMPDIR="$XDG_DATA_HOME/zsh"
+
+    # The completion system uses a cache file to speed up completion. To avoid
+    # cluttering the $HOME, it is put inside $ZDUMPDIR
+    export COMPDUMP="$ZDUMPDIR/compdump"
+
+    # Use the debugger?
+    #export DEBUG=false
+
+    # The globbing!
+    setopt extendedglob
+    umask 022
+
+    # While vim is superior, shells in vi mode are unfortunately not.
+    bindkey -e
+# }}}
 # User custom whatever {{{
     # Put whatever else you want here that is specific to your setup.
     export PYLINTRC="$HOME/.config/pylint/pylintrc"
-    export DJANGO_SETTINGS_MODULE="settings"
+    #export DJANGO_SETTINGS_MODULE="settings"
     export MAILCHECK=0
     alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
     alias mplayer="mplayer -msgcolor -msgmodule"
