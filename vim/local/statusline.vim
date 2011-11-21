@@ -141,6 +141,7 @@ call StlCondDelim('g:disable_status_syntax', '/')
 set stl+=%6*%{StlCurrentRealHighlight()}
 call StlCondDelim('g:disable_status_syntax', ']')
 set stl+=%6*
+"set stl+=%{SyntasticStatuslineFlag()}
 set stl+=%{&paste?'[paste]':''}
 set stl+=%{QuickfixCount()}
 set stl+=%*

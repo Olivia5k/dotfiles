@@ -32,6 +32,8 @@
     au Filetype javascript syn keyword Special $
 
     au FileType help nnoremap <buffer> <Enter> <C-]>
+
+    au FileType pytest setlocal nolist
 " }
 " Files/Backups (XDG style) {
     set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
@@ -48,35 +50,24 @@
 " Vim UI {
     set showcmd " show the command being typed
     set wildmenu " turn on wild menu
+
     " XXX: This one breaks in 7.3.138 for some reason
     set wildmode=list:longest " turn on wild menu in special format (long format)
-    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore some formats
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.mo,*.swp,*.jpg,*.gif,*.png " ignore some formats
     set splitbelow " Split below
     set splitright " Split to the right
-    "set ruler " Always show current positions along the bottom
     set cmdheight=1 " the command bar is 1 high
     set number " turn on line numbers
     set lazyredraw " do not redraw while running macros (much faster)
     set noerrorbells " don't make noise
     set laststatus=2 " always have the statusline
     set scrolljump=10 " don't scroll the edges
-
-    " 256 colors to putty
-    if &term =~ "xterm"
-        set t_Co=256
-        if has("terminfo")
-            let &t_Sf=nr2char(27).'[3%p1%dm'
-            let &t_Sb=nr2char(27).'[4%p1%dm'
-        else
-            let &t_Sf=nr2char(27).'[3%dm'
-            let &t_Sb=nr2char(27).'[4%dm'
-        endif
-    endif
 " }
 " Visual Cues {
     if exists('+colorcolumn')
         set colorcolumn=+1 " Show a colored column one column from &tw
     endif
+
     set showmatch " show matching brackets
     set hlsearch " highlight searched phrases
     set incsearch " highlight as you type you search phrase
@@ -85,6 +76,7 @@
     set novisualbell " don't blink
     set report=0 " always report number of lines changed
     set list " Show whitespace characters
+
     if has("multi_byte")
         set listchars=tab:»\ ,extends:›,precedes:‹,trail:·,nbsp:✂
         let &sbr = nr2char(8618).' ' " Show ↪ at the beginning of wrapped lines
@@ -98,6 +90,7 @@
     set tabstop=4 " real tabs should be 4, but they will show with set list on
     set copyindent " follow the conventions laid before us
     set expandtab " do not use tabs
+
     let g:pyindent_open_paren = &sw " Just add one shiftwidth when indenting python
     filetype plugin indent on " load filetype plugins and indent settings
 " }
@@ -110,6 +103,9 @@
     set smartcase " if there are caps, go case-sensitive
     set completeopt=menu,longest,preview " improve the way autocomplete works
     set textwidth=79 " use the universal convention as a default
+
+    " Kill whitespace on save
+    au BufWritePre * let pos=getpos('.')|silent! %s/\s\+$//e|call setpos('.',pos)
 " }
 " Spelling {
     if has('spell')

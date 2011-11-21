@@ -57,14 +57,6 @@ function! WhitespaceToggle() " {
         echo 'Whitespace set to tabs'
     endif
 endfunction " }
-function! ColorschemeToggle() " {
-    if g:colors_name == 'xoria'
-        colorscheme wyvern
-        hi Normal ctermbg=none
-    else
-        colorscheme xoria
-    endif
-endfunction " }
 function! LoFiToggle() " {
     if g:force_lofi == 1
         let g:force_lofi = 0
@@ -93,10 +85,10 @@ function! SudoWrite() " {
 endfunction " }
 function! QuickfixCount() " {
     let qflen = len(getqflist())
-    let quick = qflen == 0 ? '' : '['.qflen.'cc]'
+    let quick = qflen == 0 ? '' : '['.qflen.'q]'
 
     let loclen = len(getloclist(0))
-    let location = loclen == 0 ? '' : '['.loclen.'ll]'
+    let location = loclen == 0 ? '' : '['.loclen.'l]'
 
     return quick . location
 endfunction " }

@@ -1,6 +1,6 @@
 " Control
-nmap <C-J> <esc>/<++><cr>4s
-imap <C-J> <esc>/<++><cr>4s
+"nmap <C-J> <esc>/<++><cr>4s
+"imap <C-J> <esc>/<++><cr>4s
 
 " Standard
 nmap ghbr A<br /><esc>
@@ -143,9 +143,6 @@ vmap ghsi "hdi<span id=""<esc>mha><C-R>h</span><esc>`hi
 vmap ghsI "hdi<span id=""<esc>mha class="<++>"><C-R>h</span><esc>`hi
 vmap ghu "hdi<u><C-R>h</u><esc>l
 vmap ghc "hdi<!-- <C-R>h --><esc>l
-
-" CSS
-nmap gcc O/*  */<esc>2hi
 
 " Custom
 nmap ghdC o<div class="clear"></div><esc>^<esc>
