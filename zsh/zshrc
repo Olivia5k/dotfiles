@@ -135,7 +135,7 @@ alias zz="source ~/.zshrc"
 # Most documentation about this configuration is in there.
 # If no file is found, using daethorians default.
 local USERFILE="$ZSHCONFDIR/$USER.zsh"
-if [[ -f $USERFILE ]] ; then
+if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
     source $USERFILE
 else
     source $ZSHCONFDIR/daethorian.zsh
