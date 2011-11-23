@@ -10,27 +10,35 @@
 
 " Larger cool plugins
 " Fugitive {
-    " Run any git command from inside vim
-    nmap gi :Git 
-    nmap gb :Gblame<cr>
-    nmap gc :Gcommit<cr>
-    nmap gdd :Gdiff 
-    nmap gdc :Gdiff<cr>
-    nmap gdh :Gdiff HEAD<cr>
+    " As alot of these bindings end with a space, they are wrapped in an exec
+    " To avoid the unavoidable mistake of accidentally clearing them with the
+    " autocommand that clears trailing whitespace.
+    " To be consistent, all of them are wrapped, even if they don't have the
+    " trailing space.
+
+    exec "nmap gi :Git "
+    exec "nmap gb :Gblame<cr>"
+    exec "nmap gcc :Gcommit<cr>"
+    exec "nmap gca :Gcommit --amend<cr>"
+    exec "nmap gdd :Gdiff "
+    exec "nmap gdc :Gdiff<cr>"
+    exec "nmap gdh :Gdiff HEAD<cr>"
 
     " Check previous revisions of current file; git log
-    nmap gl :Extradite<cr>
-    nmap go :Git checkout 
-    nmap gpp :Git push origin 
-    nmap guu :Git pull origin 
-    nmap gre :Gread 
-    nmap grr :Gremove 
+    exec "nmap gle :Extradite<cr>"
+    exec "nmap gll :Glog<cr>"
+    exec "nmap glo :Glog "
+    exec "nmap go :Git checkout "
+    exec "nmap gpp :Git push origin "
+    exec "nmap guu :Git pull origin "
+    exec "nmap gre :Gread "
+    exec "nmap grr :Gremove "
 
     " Use - on files to add or reset them. Use C to go to commit
-    nmap gs :Gstatus<cr>
-    nmap gw :Gwrite<cr>
-    nmap ga :Gwrite<cr>
-    nmap gm :Gmove 
+    exec "nmap gs :Gstatus<cr>"
+    exec "nmap gw :Gwrite<cr>"
+    exec "nmap ga :Gwrite<cr>"
+    exec "nmap gm :Gmove "
 
     " Buffer cleanup
     autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -38,11 +46,11 @@
 " XPTemplate {
     let g:xptemplate_snippet_folders=['$HOME/.vim/xpt']
     let g:xptemplate_brace_complete = 0  " Delimitmate, bitches
-    let g:xptemplate_key = '<C-J>'  " Main snippet key
+    let g:xptemplate_key = '<Tab>'  " Main snippet key
     let g:xptemplate_key_pum_only = '<C-F>'  " Popup key
     let g:xptemplate_nav_cancel = '<C-D>'  " Cancel key
-    let g:xptemplate_nav_next = '<Tab>'  " Next key
-    let g:xptemplate_goback = '<S-Tab>'  " Prev key
+    let g:xptemplate_nav_next = '<C-J>'  " Next key
+    let g:xptemplate_goback = '<C-K>'  " Prev key
     let g:xptemplate_to_right = '<C-L>'  " Exit key
     let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 
@@ -87,4 +95,4 @@
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 " }
 
-" vim: set et:sw=4:fmr=marker:fdm={,}
+" vim: set et:sw=4:fdm=marker:fmr={,}

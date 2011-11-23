@@ -45,10 +45,10 @@ let g:EasyMotion_leader_key = '<Leader>m'
 " Turbo switching {
     " Expands %% into the directory containing the current buffer!
     cnoremap %% <C-R>=expand('%:h').'/'<cr>
-    map <leader>ee :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
+    nmap <leader>ee :e %%
+    nmap <leader>es :sp %%
+    nmap <leader>ev :vsp %%
+    nmap <leader>et :tabe %%
 " }
 " Folding {
     nmap <Leader>fm :set foldmethod=marker<cr>
@@ -61,8 +61,8 @@ let g:EasyMotion_leader_key = '<Leader>m'
 " Better for the hands {
     nmap zh gT
     nmap zl gt
-    nmap zn :tabe 
-    nmap zH :tab he 
+    exec "nmap zn :tabe "
+    exec "nmap zH :tab he "
 
     " loclist mappings.
     nmap ch :lpe<CR>
