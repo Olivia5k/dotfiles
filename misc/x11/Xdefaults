@@ -13,10 +13,14 @@
 *.fading:                  30
 *.keysym.M-u:              perl:url-select:select_next
 
-*.font:                    xft:montecarlo:pixelsize=11
-*.boldFont:                xft:montecarlo:bold:pixelsize=11
-*bigfont*.font:            xft:inconsolata:pixelsize=14
-*bigfont*.boldFont:        xft:inconsolata:bold:pixelsize=14
+!*.font:                    xft:montecarlo:pixelsize=11
+!*.boldFont:                xft:montecarlo:bold:pixelsize=11
+!*bigfont*.font:            xft:inconsolata:pixelsize=14
+!*bigfont*.boldFont:        xft:inconsolata:bold:pixelsize=14
+*.font:                    xft:inconsolata:pixelsize=14
+*.boldFont:                xft:inconsolata:bold:pixelsize=14
+*bigfont*.font:            xft:montecarlo:pixelsize=11
+*bigfont*.boldFont:        xft:montecarlo:bold:pixelsize=11
 Xft.dpi:                   75.0
 ! 
 ! XLock 
