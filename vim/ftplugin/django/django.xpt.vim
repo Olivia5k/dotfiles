@@ -108,3 +108,6 @@ ContentType.objects.get_for_model(`^)
 
 XPT ict " import ContentType
 from django.contrib.contenttypes.models import ContentType
+
+XPT f " objects.filter\(...)
+`objects^.filter(`^)

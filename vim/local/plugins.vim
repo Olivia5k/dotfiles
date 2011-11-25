@@ -72,6 +72,10 @@
     let g:loaded_html_syntax_checker = 1
     let g:syntastic_jslint_conf = ' --continue'
 " }
+" Powerline {
+    let Powerline_theme = 'neverland'
+    let Powerline_cachefile = ""
+" }
 
 " Helper plugins
 " Lusty {
@@ -89,6 +93,9 @@
     nmap ö \\\
     vmap ö \\\
 " }
+" Easymotion {
+    let g:EasyMotion_leader_key = '<Leader>m'
+"}
 
 " Random
 " vimwiki {
