@@ -68,18 +68,21 @@ function! LoFiToggle() " {
     endif
 endfunction " }
 
-function! KillTrailingWhitespace(write_file) " {
-    try
-        :%s/\s\+$//
-        echo 'Trailing whitespace eliminated'
-    catch /E486:/
-        echo 'No trailing whitespace'
-    endtry
+function! NonDefaultOptions() " {
+    let var = ""
 
-    if a:write_file == 1
-        write
-    endif
+    let var = &wrap == 1               ? var . 'w' : var
+    let var = &paste == 1              ? var . 'p' : var
+    let var = &spell == 1              ? var . 's' : var
+    let var = &spelllang == 'sv'        ? var . 's' : var
+    let var = &expandtab == 0          ? var . 't' : var
+    let var = &list == 0               ? var . 'L' : var
+    let var = &foldmarker != '{,}'     ? var . 'M' : var
+    let var = &paste == 0 && &tw != 79 ? var . &tw : var
+
+    return var
 endfunction " }
+
 function! SudoWrite() " {
     write !sudo tee %
 endfunction " }

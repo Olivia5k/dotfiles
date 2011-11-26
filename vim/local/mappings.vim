@@ -1,5 +1,4 @@
 let mapleader = ","
-let g:EasyMotion_leader_key = '<Leader>m'
 
 " Navigation {
     " Unmap them evil arrows
@@ -49,6 +48,7 @@ let g:EasyMotion_leader_key = '<Leader>m'
     nmap <leader>es :sp %%
     nmap <leader>ev :vsp %%
     nmap <leader>et :tabe %%
+    nmap <leader>eV :tabe ~/config/vim/
 " }
 " Folding {
     nmap <Leader>fm :set foldmethod=marker<cr>
