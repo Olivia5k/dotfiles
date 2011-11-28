@@ -21,7 +21,7 @@
 	url = https://github.com/Lokaltog/vim-easymotion.git
 [submodule "bundle/neverland"]
 	path = bundle/neverland
-	url = https://github.com/trapd00r/neverland-vim-theme.git
+	url = https://github.com/daethorian/neverland-vim-theme.git
 [submodule "bundle/vimwiki"]
 	path = bundle/vimwiki
 	url = https://github.com/vim-scripts/vimwiki.git
