@@ -87,7 +87,7 @@ _install() {
 }
 
 # lol print help
-if [[ -z "$1" ]] || [[ "$1" =~ "-?-h(elp)?" ]]; then
+if [[ "$1" =~ "-?-h(elp)?" ]]; then
     echo "install.sh:"
     echo "hax0r script helper for managing github config files"
     echo "Installation of configurations will be made by symbolic linking."
@@ -96,29 +96,35 @@ if [[ -z "$1" ]] || [[ "$1" =~ "-?-h(elp)?" ]]; then
     echo "Possible choices are:"
     echo ${(ko)apps}
     echo
+    echo "If no arguments are given, configurations will be installed if their"
+    echo "appications are found, with the exception of terminfo, which will"
+    echo "always be installed to make sure that users of cool terminals can"
+    echo "always ssh to boxen with these configurations."
+    echo
     echo "Possible options are:"
     echo '-a'
     echo "Installs all configurations."
     echo
-    echo '-l <repo> [<args>]'
+    echo '-l <github username>'
     echo "Sets up local monkeypatch repo."
-    echo "Follows normal argument procedure afterwards."
+    echo "Follows detection installation afterwards."
     echo
     echo '-u'
     echo "Does a git submodule update on all submodules."
     echo
-    echo '-a or --all'
+    echo '-h or --help'
     echo "Prints this crude help message."
     exit 0
 fi
 
-# git initialization
 git submodule init
 git submodule update
 git submodule foreach git submodule init
 git submodule foreach git submodule update
 
 if [[ "$1" = "-u" ]]; then
+    # This is actually it. Since the rows abowe do what they do, this step
+    # really only needs to stop the script.
     print "Git updating done"
     exit 0
 fi
@@ -128,48 +134,32 @@ if [[ "$1" = "-l" ]]; then
         print "Fatal error: Gief monkeypatch repo addrz plx"
         exit 1
     fi
+
+    print
     git clone $2 ./local || exit 1
 
-    for f in local/**/*(.); do
-        dst=${f#local/}
-        ins=false
-
-        if [[ ! -f $loc/$dst ]]; then
-            dst=$dst:h
-
-            # Check if the directory the file wants to live in exists
-            if [[ -d "$dst" ]]; then
-                _link $f $dst true
-                ins=true
-                continue
-            fi
-
-            f=$f:h
-            # Traverse upwards
-            while [[ "$dst" =~ "/" ]]; do
-                if [[ ! -d "$dst" ]]; then
-                    _link $f $dst true
-                    ins=true
-                    break
-                fi
-                f=$f:h
-                dst=$dst:h
-            done
+    for t in zsh vim; do
+        if [[ -f ./local/local.$t ]]; then
+            ln -s ./local/local.$t ./$t/local/
         fi
+    done
+fi
 
-        if ! $ins; then
-            print -P "%B%F{9}${f#./}%f%b not installed: already exists"
+# Install those detected
+if [[ -z "$1" ]] || [[ "$1" = "-l" ]]; then
+    for a in ${(ko)apps}; do
+        if [[ -x $commands[$a] ]] || [[ "$a" = "terminfo" ]] ; then
+            _install ${(z)a}
         fi
     done
 
-    print
-    shift 2
-fi
-
-if [[ "$1" = "-a" ]]; then
+# Install all of them
+elif [[ "$1" = "-a" ]]; then
     for a in $apps; do
         _install ${(z)a}
     done
+
+# Install specified
 elif [[ -n "$1" ]] ; then
     while [[ -n "$1" ]]; do
         _install ${(z)${apps[$1]}}
