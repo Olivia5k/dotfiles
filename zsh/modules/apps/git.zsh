@@ -7,13 +7,11 @@ zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}" # Just make it cyan!
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
-f="%B%F{${c[14]}}%r%F{${c[1]}}(%F{${c[15]}}%u%c%b%m%F{${c[1]}}):%F{${c[4]}}/%S"
-## hash changes branch misc
-zstyle ':vcs_info:git*' formats "%f%7.7i %c%u %b%m"
+f="%B%F{${c[14]}}%r%F{${c[1]}}(%a%F{${c[15]}}%u%c%b%m%F{${c[1]}}):%F{${c[4]}}/%S"
 zstyle ':vcs_info:git*' formats $f
-zstyle ':vcs_info:git*' actionformats "(%s|%a) %7.7i %c%u %b%m"
+zstyle ':vcs_info:git*' actionformats $f
 
-zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash git-action
 
 # Show remote ref name and number of commits ahead-of or behind
 function +vi-git-st() {
@@ -44,13 +42,21 @@ function +vi-git-st() {
     hook_com[branch]=$str
 }
 
- #Show count of stashed changes
+# Show count of stashed changes
 function +vi-git-stash() {
     local -a stashes
 
     if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
         stashes=$(git stash list 2>/dev/null | wc -l)
         hook_com[misc]+="%F{${c[4]}}${stashes}st%F{${c[1]}}"
+    fi
+}
+
+# Sexy hook to get purdy action messages
+function +vi-git-action() {
+    local s="${hook_com[action]}"
+    if [[ -n "$s" ]] ; then
+        hook_com[action]="%F{${c[6]}}omg ${s}!%F{${c[1]}}:"
     fi
 }
 
