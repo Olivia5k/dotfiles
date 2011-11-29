@@ -18,3 +18,11 @@ XPT tt " time.time
 time.time()
 XPT now " datetime.datetime.now
 datetime.datetime.now()
+
+XPT ds " Triple-quoted docstring
+"""
+`docstring^
+
+"""
+
+`^
