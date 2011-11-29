@@ -1,4 +1,3 @@
-alias et="cdc tmux && $EDITOR tmux.conf"
 function attach() {
     if [[ -n "$TMUX" ]]; then
         _zerror "Already in tmux. Bailing."

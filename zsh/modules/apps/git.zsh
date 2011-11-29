@@ -1,7 +1,9 @@
 export HASCVS=true
 
-
 zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}" # Just make it red!
+zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}" # Just make it cyan!
+
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
@@ -14,8 +16,7 @@ zstyle ':vcs_info:git*' actionformats "(%s|%a) %7.7i %c%u %b%m"
 zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
 
 # Show remote ref name and number of commits ahead-of or behind
-function +vi-git-st()
-{
+function +vi-git-st() {
     local str branch ahead behind remote
 
     # Store the current branch name
@@ -26,16 +27,15 @@ function +vi-git-st()
         --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
     if [[ -n ${remote} ]] ; then
-        # Dark colon to mark tracking branch
-        str="${branch}%F{${c[1]}}:"
+        str=${branch}
 
         ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
         behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
 
-        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"
-        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"
-        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"
-        (( $ahead + $behind )) && str+="%F{${c[1]}}:"
+        (( $ahead + $behind )) && str+="%F{${c[1]}}:"         # Dark colon if any
+        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"        # Ahead
+        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"  # Dark slash if both
+        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"      # Behind
     else
         # Just add a red colon to mark non-tracking branch
         str="${branch}%F{${c[16]}}:"
@@ -45,8 +45,7 @@ function +vi-git-st()
 }
 
  #Show count of stashed changes
-function +vi-git-stash()
-{
+function +vi-git-stash() {
     local -a stashes
 
     if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
@@ -78,7 +77,7 @@ alias gt="git stash"
 alias gtl="git stash list"
 alias gtp="git stash pop"
 alias gts="git stash show"
-# Since these are pretty irrevokably lost if dropped, aliases for that was
+# Since stashes are pretty irrevokably lost if dropped, aliases for that was
 # skipped
 
 # Submodules
@@ -112,15 +111,7 @@ alias glr="git reflog"
 alias gau='git update-index --assume-unchanged'
 
 # Setup remote for a branch
-function gbr()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Setup remote for a branch"
-        fi
-        return
-    fi
-
+function gbr() {
     if [[ -n "$1" ]] ; then
         git config branch.$1.remote origin
         git config branch.$1.merge refs/heads/$1
@@ -130,16 +121,10 @@ function gbr()#
 }
 
 # Initialize a project
-function ginit()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Initialize a new git project"
-        fi
-        return
+function ginit() {
+    if [[ -z "$1" ]] ; then
+        echo "Specify project name" && return 1
     fi
-
-    if [[ -z "$1" ]] ; then ; echo "Specify project name" && return 1 ; fi
 
     git init $1
     cd $1
@@ -149,15 +134,7 @@ function ginit()#
 }
 
 # Record yourself for a project
-function gcu()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Record yourself for a project"
-        fi
-        return
-    fi
-
+function gcu() {
     if [[ -n "$1" ]] && [[ -n "$2" ]] ; then
         name="$1"
         email="$2"
@@ -175,15 +152,7 @@ function gcu()#
 }
 
 # Relatively go up to a repository root
-function gr()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Relatively go up to a repository root"
-        fi
-        return
-    fi
-
+function gr() {
     cur=$PWD
     found=false
     is_in=false
@@ -201,38 +170,16 @@ function gr()#
         cur=${cur%/*}
     done
 
-    if $is_in && $found; then
-        echo "In submodule: going to superproject"
+    if $found; then
+        if $is_in; then
+            echo "In submodule: going to superproject"
+        fi
+
         echo $cur
         cd $cur
-    elif $found; then
-        echo $cur
-        cd $cur
-    elif [[ -d "$PWD/.git" ]] ; then
+    elif [[ -d "$PWD/.git" ]]; then
         echo "Already at project root"
     else
         _zerror "Currently not in a git repository"
     fi
-}
-
-# Fetch and merge a branch
-function gmr()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Fetch and merge a branch."
-        fi
-        return
-    fi
-
-    if [[ -n "$2" ]]; then
-        remote="$1"
-        branch="$2"
-    else
-        remote="origin"
-        branch="$1"
-    fi
-
-    git fetch $remote $branch
-    git merge $remote/$branch
 }

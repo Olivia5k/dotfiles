@@ -2,51 +2,19 @@ bindkey '^[[OA' history-beginning-search-backward
 bindkey '^[[OB' history-beginning-search-forward
 
 # These three are mostly useful when on mobile connections and things are slow.
-function cl()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "cd && ls"
-        fi
-        return
-    fi
-
+function cl() {
     cd $1 && ls
 }
 
-function cll()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "cd && ls -l"
-        fi
-        return
-    fi
-
+function cll() {
     cd $1 && ls -l
 }
 
-function clal()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "cd && lal"
-        fi
-        return
-    fi
-
+function clal() {
     cd $1 && ls -al
 }
 
-function tm()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Manipulate the TMOUT variable"
-        fi
-        return
-    fi
-
+function tm() {
     if [[ -n "$1" ]] ; then
         if [[ "$1" =~ "[0-9]+" ]] ; then
             echo "TMOUT set to $1"
@@ -65,8 +33,7 @@ function tm()#
     fi
 }
 
-function rationalise-dot()
-{
+function rationalise-dot() {
     if [[ $_IS_PASTING = 1 ]]; then
         zle self-insert
         return

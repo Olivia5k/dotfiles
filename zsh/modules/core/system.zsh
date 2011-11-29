@@ -1,19 +1,9 @@
-alias ia='ifconfig -a'
 alias ar='sudo /etc/init.d/apache2 restart'
-
 alias shutdown='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
 # grep processes and retain grep color
-function psg()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Grep process names."
-        fi
-        return
-    fi
-
+function psg() {
     if [[ -z "$1" ]] ; then
         _zerror "Arguments plx"
         return
@@ -23,15 +13,7 @@ function psg()#
 }
 
 # control daemons: d <daemon> <action>
-function d()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Daemon control and listing. Has completion."
-        fi
-        return
-    fi
-
+function d() {
     if [[ -z "$1" ]] ; then
         p="/var/run/daemons"
         for f in $(ls /etc/rc.d/*(.x)) ; do
@@ -53,8 +35,7 @@ function d()#
     fi
 }
 
-_daemoncomplete()
-{
+_daemoncomplete() {
     reply=()
     if (( CURRENT == 2 )) ; then
         for f in $(ls /etc/rc.d/*(.x)) ; do
@@ -69,15 +50,7 @@ _daemoncomplete()
 compctl -Y "%B%F{${c[24]}}daemon%f%b" -K _daemoncomplete d
 
 # Control wireless network
-function nr()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "netcfg wireless management"
-        fi
-        return
-    fi
-
+function nr() {
     if [[ -n "$1" ]] ; then
         wlan=$1
     else
@@ -89,15 +62,7 @@ function nr()#
 }
 
 # Print IP address info.
-function ips()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "IP adress information printer (v4 and v6)"
-        fi
-        return
-    fi
-
+function ips() {
     for i in $(ifconfig -a | grep -Eo "^[a-z0-9]+"); do
         ifdata=$(ifconfig $i)
 
@@ -117,7 +82,7 @@ function ips()#
 
     # Thank you Loopia! \o/
     pub=$(curl http://dns.loopia.se/checkip/checkip.php 2> /dev/null | grep -Eo "([0-9]+\.?){4}")
-    
+
     if [[ -n "$pub" ]] ; then
         print -P "%F{${c[19]}}%BPublic%b%f: %F{${c[27]}}%B${pub}%b%f"
     else

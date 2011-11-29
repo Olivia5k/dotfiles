@@ -8,7 +8,7 @@
 # whenever you want to share your zshrc and those you share it with make
 # changes.
 
-# The best way to use this file is to copy it to ~/config/zsh/$USER.conf and
+# The best way to use this file is to copy it to ~/config/zsh/local.conf and
 # mofify it to your needs. Whenever the zsh is updated (from git ;)), your
 # changes will be intact and you can diff properly without conflicts. Sweet.
 # $USER.conf files will be sourced from the main zshrc in favor of this file.
@@ -54,6 +54,10 @@
         # It is automatically toggled whenever you enter a directory that contains
         # CVS files, and automatically reverted whenever you leave.
         #
+        # #4: Compact cool prompt. Switches to a compact git mode if a repo is
+        # active. The git prompt is always relative to the project root rather
+        # than the filesystem root.
+        #
         # You can toggle between the prompts using the simple p() shell function
         # using numerical arguments. If you give a boolean argument (true/false),
         # the prompt will set $PKEEP. If $PKEEP is true, the prompt will not
@@ -67,9 +71,9 @@
         # Force mobile connections (any $TERM that is 'xterm') to use prompt #0.
         export FORCE_MOBILE=false
 
-        # Make root timeout after 180 seconds for security reasons.
+        # Make root timeout after 90 seconds for security reasons.
         # Unset (and/or comment out here) to disable.
-        export ROOT_TIMEOUT=180
+        export ROOT_TIMEOUT=90
     # }}}
     # User configurations {{{
         export CONFIG="$HOME/config"
@@ -95,11 +99,7 @@
         alias e=$EDITOR
     # }}}
     # User colorscheme {{{
-        if [[ $TCOLORS = 256 ]]; then
-            export ZCOLOR="frostbite"
-        else
-            export ZCOLOR="default"
-        fi
+        export ZCOLOR="default"
     # }}}
     # User directories and logs {{{
         # Your mail directory. If set and exists, the prompt will look for new mail
@@ -120,23 +120,7 @@
         SAVEHIST=100000
     # }}}
     # User laptop settings {{{
-        # Set if laptop. If false, no battery settings will take place.
-        export LAPTOP=true
-
-        # Battery settings.
-        # If the file $BAT exists, the prompt triggers the battery module.
-        # When triggered, it writes a simple cache to $BATC and uses this for $BATS
-        # seconds. $BATT is the timestamp of when the cache was last reset.
-        # The cache is mainly to not access battery files every time a prompt is
-        # read.
-        if [[ -n "$LAPTOP" ]] && $LAPTOP ; then
-            export BAT='/tmp/battery'
-            export BATC='/tmp/battery_cache' # Battery cache
-            export BATT=0 # Battery timeout
-            export BATS=30 # Battery shift
-        fi
-
-        # Your home network name.
+        # Your home network name. Used with netcfg.
         export HOMENET="ninjanet"
     # }}}
     # User multiplexer {{{
@@ -146,13 +130,7 @@
         export MULTI='tmux'
         export MULTITERM='screen-256color'
     # }}}
-    # User chpwd and path {{{
-        # Your todo list. The defaults are specified for devtodo
-        # (http://swapoff.org/DevTodo). If $TODO is installed and $TODOFILE is in
-        # the current directory, $TODO is run upon chpwd().
-        export TODO='todo'
-        export TODOFILE='.todo'
-
+    # User chpwd, PATH and paths {{{
         # When I used lscmd() (included in main zshrc) and found out that 25% of all
         # the commands I ever used in zsh was ls, I figured that it could be more
         # effective and put ls into chpwd.
@@ -176,6 +154,13 @@
         if ! [[ $PATH =~ "$_PATH" ]] ; then
             export PATH=$_PATH:$PATH
         fi
+
+        # The XDG standard is indeed quite exquisite.
+        export XDG_CACHE_HOME="$HOME/.cache"
+        export XDG_CONFIG_DIRS="/etc/xdg"
+        export XDG_CONFIG_HOME="$HOME/.config"
+        export XDG_DATA_DIRS="/usr/share/:/usr/local/share/"
+        export XDG_DATA_HOME="$HOME/.local/share"
     # }}}
     # User coreutils options {{{
         # It is not uncommon to always supply some arguments to common commands. ls
@@ -213,12 +198,6 @@
     # Management of local home path
     _modload "install"
 
-    # LOLCODE!! Mostly useless but kinda lolz.
-    _modload "lolcode"
-
-    # Mounting aliases.
-    _modload "mount"
-
     # Shell syntax highlighting. Cannot be sourced by _modload
     source $ZMODDIR/syntax.zsh
 
@@ -242,7 +221,7 @@
     # cluttering the $HOME, it is put inside $ZDUMPDIR
     export COMPDUMP="$ZDUMPDIR/compdump"
 
-    # Use the debugger?
+    # Use the debugger? NOTE: This breaks ls++
     #export DEBUG=false
 
     # The globbing!
@@ -254,11 +233,10 @@
 # }}}
 # User custom whatever {{{
     # Put whatever else you want here that is specific to your setup.
-    export PYLINTRC="$HOME/.config/pylint/pylintrc"
-    #export DJANGO_SETTINGS_MODULE="settings"
-    export MAILCHECK=0
-    alias ms="rsync $REMOTE:mail/ $MAIL -a --delete &> /dev/null"
-    alias mplayer="mplayer -msgcolor -msgmodule"
+    if _has mpc; then
+        export MPD_HOST=localhost
+        export MPD_PORT=6600
+    fi
 
     alias wpg="touch /tmp/gemma && wp"
     alias wpn="rm /tmp/gemma &> /dev/null && wp"
@@ -267,8 +245,22 @@
     #alias cdc='cd ~/config'
     alias cdg='cd ~/git'
     alias cdm='cd ~/git/django-mancx'
-    alias cdu='cd /warez/unpack' # onoes
     alias cdp='cd /usr/lib/python2.7/site-packages/'
+
+    # USB, yeah
+    alias mmu='mount /mnt/usb'
+    alias muu='umount /mnt/usb'
+
+    # Warez
+    alias mmw='sshfs nl:/warez ~/ssh/warez -o allow_other'
+    alias muw='fusermount -u ~/ssh/warez'
+
+    # sshfs home
+    alias mmn='sshfs nl: ~/ssh/ninjaloot'
+    alias mun='fusermount -u ~/ssh/ninjaloot'
+
+    # Force unmounting
+    alias muf='sudo umount -l /mnt/warez && sudo umount -l ~/ssh/ninjaloot'
 
     lscf=$HOME/config/zsh/LS_COLORS/LS_COLORS
     if [[ -f $lscf ]] ; then

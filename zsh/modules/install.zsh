@@ -1,12 +1,4 @@
-function ins()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Install an executable into \$HOMEBIN"
-        fi
-        return
-    fi
-
+function ins() {
     f=$(readlink -f $1)
     if [[ -f $f ]] && [[ -x $f ]] ; then
         if [[ -n "$2" ]] ; then
@@ -26,14 +18,7 @@ function ins()#
     fi
 }
 
-function unins()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Remove an executable installed by ins()"
-        fi
-        return
-    fi
+function unins() {
     f=$HOMEBIN/$(basename $1)
     if [[ -L $f ]] ; then
         print -P "Uninstalling %B%F{${c[19]}}$(basename $1)%f%b."

@@ -1,13 +1,6 @@
 # Prints a table of the 16 default colors. Usually comes as a standalone
 # script, but hey, why not integrate it? :>
-function c()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Integrated version of the most spread colorscheme tester."
-        fi
-        return
-    fi
+function c() {
     T='HaX' # The test text
     echo -e "                 40m     41m     42m     43m     44m     45m     46m     47m";
 
@@ -29,14 +22,7 @@ function c()#
 # terminal editor colorschemes. The default prints quite wide, so when in a
 # small terminal, it prints a simplified version. Given any arguments, the large
 # one is printed regardless.
-function C()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Prints a small table of the 256 extended colors."
-        fi
-        return
-    fi
+function C() {
     for line in {0..15}; do
         for col in {0..15}; do
             local code=$(( $col * 16 + ${line} ))
@@ -45,14 +31,7 @@ function C()#
     print ; done
 }
 
-function CC()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Prints a large table of the 256 extended colors."
-        fi
-        return
-    fi
+function CC() {
     for i in {16..255}; do
         echo -en "\e[38;5;${i}mColor $i\t"
         [ $((++j%6)) -eq 0 ] && echo

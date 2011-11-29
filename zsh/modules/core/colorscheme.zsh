@@ -1,5 +1,4 @@
-function color()#
-{
+function color() {
     if [[ -n "$1" ]]; then
         colorscheme=$1
     else
@@ -13,8 +12,8 @@ function color()#
     _zdebug "Setting colorscheme to $colorscheme"
     source $ZSHCONFDIR/colorschemes/$colorscheme.zsh
 }
-_colorcomplete()
-{
+
+function _colorcomplete() {
     reply=()
     if (( CURRENT == 2 )) ; then
         for f in $ZSHCONFDIR/colorschemes/* ; do
@@ -24,7 +23,7 @@ _colorcomplete()
 }
 
 # Completion \o/
-compctl -Y "%B%F{${c[24]}}daemon%f%b" -K _colorcomplete color
+compctl -Y "%B%F{${c[24]}}colorscheme%f%b" -K _colorcomplete color
 
 if [[ -z "$ZCOLORSCHEME" ]]; then
     color $ZCOLOR

@@ -23,15 +23,8 @@ fi
 # Count which commands you use the most. Give a numerical argument and it
 # will print a list of that length.
 # The aliases module is the best suited place for this one, really.
-function lscmd()#
+function lscmd()
 {
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Count the usage of your commands and print as a table"
-        fi
-        return
-    fi
-
     if [[ -n "$1" ]] ; then
         local c=$1
     else

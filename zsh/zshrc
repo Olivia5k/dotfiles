@@ -3,8 +3,8 @@
 #
 # <github link>
 
-# This zsh configuration is built to be incredibly modular, useful and usable by
-# others than myself. It keeps the core stuff that (probably) suits everyone
+# This zsh configuration is built to be incredibly modular, useful and usable
+# by others than myself. It keeps the core stuff that (probably) suits everyone
 # pretty tight but leaves alot of options and customizability. Other users can
 # modify their own parts (the $USER.zsh file) and do whatever they want without
 # ever creating conflicts when updating the git repo.
@@ -13,8 +13,8 @@
 # application specific. None of them will be loaded if the applications are not
 # found.
 
-# Compiled with bits and pieces from all over the place.  Notable sources are the
-# zsh manpages, zsh lovers, Phil!'s prompt and the Arch Linux BBS.
+# Compiled with bits and pieces from all over the place.  Notable sources are
+# the zsh manpages, zsh lovers, Phil!'s prompt and the Arch Linux BBS.
 
 # http://grml.org/zsh/zsh-lovers.html
 # http://aperiodic.net/phil/prompt/
@@ -27,14 +27,7 @@
 # Add mplayer aliases
 # Add bindkey modules
 #    Add exitstatus resetter
-# Rename zmodload to zmod
-# Add completion to zmod
-# Rename daethorian.zsh to user.zsh
-# Add set paste, paste, set nopaste function
 # Fix the completion-adds-letter bug
-# Figure out what's up with the colorscheme errors
-# Add zmv module
-# Make dangerous aliases checked. Function?
 
 
 # Colors. You are expected to be wanting those.
@@ -46,62 +39,22 @@ autoload -Uz vcs_info
 # zshs awesome renamer
 autoload zmv
 
-# URL escaping. Whenever you paste a URL to your terminal, zsh will escape
-# any characters with special meaning to it.
-autoload -Uz url-quote-magic
-zle -N self-insert url-quote-magic
-
-function _zdebug()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Internal debug message printer"
-        fi
-        return
-    fi
-
+function _zdebug() {
     if [[ -n "$DEBUG" ]] && $DEBUG ; then
         print -P "%B%F{${c[18]}}Debug%f%b:" $*
     fi
 }
 
-function _zerror()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Internal error message printer"
-        fi
-        return
-    fi
-
+function _zerror() {
     print -P "%B%F{${c[6]}}Error%f%b:" $*
 }
 
-function _has()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Internal checker if an application exists."
-        fi
-        return
-    fi
-
-    #which $1 &> /dev/null ; return $?
+function _has() {
     [[ -x $commands[$1] ]] && return true # zsh style \o/
 }
 
-function _modload()#
-{
-    if [[ -z "$1" ]] ; then
-        _zerror "_modload() needs at least one argument."
-        return 1
-    elif [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Loads internal modules"
-        fi
-        return
-    fi
-
+function _modload() {
+    local m
     for m in $* ; do
         # If a path is given as absolute (the cores are), just load it.
         if [[ "$m" =~ "^/" ]] ; then
@@ -118,9 +71,7 @@ function _modload()#
             _zerror "$m is not a valid module."
         fi
     done
-    unset m
 }
-
 
 # zsh configuration directory; dynamically found
 export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
@@ -131,22 +82,21 @@ source $ZSHCONFDIR/colorschemes/default.zsh
 # The most useful alias there ever was
 alias zz="source ~/.zshrc"
 
-# File with variables that most probably changes per user.
-# Most documentation about this configuration is in there.
-# If no file is found, using daethorians default.
-local USERFILE="$ZSHCONFDIR/$USER.zsh"
-if [[ -f $USERFILE ]] ; then
-    source $USERFILE
-else
-    source $ZSHCONFDIR/daethorian.zsh
-fi
-
 # Prompt variables
 # To avoid checking for these every time the prompt is rendered, they are
 # stored in global variables.
 export TCOLORS=$(echotc Co)
 
-HASTODO=$([[ -n "$TODO" ]] && _has $TODO)
+# File with variables that most probably changes per user.
+# Most documentation about this configuration is in there.
+# If no file is found, using daethorians default.
+local USERFILE="$ZSHCONFDIR/local.zsh"
+if [[ -f $USERFILE ]] || [[ -L $USERFILE ]] ; then
+    source $USERFILE
+else
+    source $ZSHCONFDIR/daethorian.zsh
+fi
+
 HASMULTI=$([[ -n "$MULTI" ]] && _has $MULTI)
 
 if [[ $TERM = "linux" ]] && $FORCE_CONSOLE; then

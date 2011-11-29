@@ -1,5 +1,10 @@
-ls="ls $LSOPTS"
-alias l="ls++"
+if _has ls++; then
+    ls="ls++ --group-directories-first"
+    alias l="/bin/ls $LSOPTS"
+else
+    ls="ls $LSOPTS"
+fi
+
 alias ls="$ls"
 alias lc="$ls --color=never"
 alias ll="$ls -l"
@@ -27,14 +32,6 @@ alias ler="$ls -d **/*(-/DN^F)"    # list all empty directories recursively
 alias lle="$ls -ld *(-/DN^F)"      # list details of all empty directories
 alias ller="$ls -lhd **/*(-/DN^F)" # list details of all empty directories recursively
 
-function lsx()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "List files by extension"
-        fi
-        return
-    fi
-
+function lsx() {
     ls *.$1
 }

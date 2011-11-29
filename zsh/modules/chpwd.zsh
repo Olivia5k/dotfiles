@@ -1,5 +1,4 @@
-function chpwd()
-{
+function chpwd() {
     ls
 }
 
@@ -25,8 +24,8 @@ function cd () {
 }
 
 function mkcd () {
-  test -z "$1" && echo >&2 "mkcd: no path given" && return
-  test -d "$1" && echo >&2 "mkcd: Directory $1 already exists"
+  [[ -z "$1" ]] && echo >&2 "mkcd: no path given" && return
+  [[ -d "$1" ]] && echo >&2 "mkcd: Directory $1 already exists"
   mkdir -p -- "$1"
   cd -- "$1"
 }

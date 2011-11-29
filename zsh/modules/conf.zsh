@@ -1,11 +1,4 @@
-function cdc()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Change PWD relative to configuration files"
-        fi
-        return
-    fi
+function cdc() {
     cd $CONFIG/$1
 }
 

@@ -1,4 +1,4 @@
-if true || [[ $TCOLORS = 256 ]] ; then
+if [[ $TCOLORS = 256 ]] ; then
     c=()
     c+="239"       # 1.  Prompt decoration
     c+="81"        # 2.  Hostname

@@ -1,54 +1,23 @@
 # Give it to me
-function grab()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Set ownership of any given files to yourself."
-        fi
-        return
-    fi
-
+function grab() {
     chmod -R u=rwX,go=rX "$@"
     chown -R ${USER}:users "$@"
 }
 
 # Sudo give it to me.
-function sgrab()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "sudo Set ownership of any given files to yourself."
-        fi
-        return
-    fi
-
+function sgrab() {
     sudo chmod -R u=rwX,go=rX "$@"
     sudo chown -R ${USER}:users "$@"
 }
 
 # Give it to the warez
-function wgrab()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Set ownership of any given files to root:warez."
-        fi
-        return
-    fi
+function wgrab() {
     sudo chmod -R 775 "$@"
     sudo chown -R root:warez "$@"
 }
 
 # Swap name of $1 and $2
-function swap()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo 'Swap name of first and second arguments'
-        fi
-        return
-    fi
-
+function swap() {
     if [[ -f $1 ]] ; then
         if [[ -f $2 ]] ; then
             mv $1 $1.swapcopy;
@@ -62,28 +31,13 @@ function swap()#
     fi
 }
 
-function s2d()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo 'Substitute spaces with dots in filenames'
-        fi
-        return
-    fi
-
+# Spaces to dots.
+function s2d() {
     zmv -v '(* *)' '${1// /.}'
 }
 
 # Backup a file
-function bak()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Backup a file or directory"
-        fi
-        return
-    fi
-
+function bak() {
     if [[ -z "$1" ]] ; then
         _zerror "No arguments given."
         return
@@ -100,15 +54,7 @@ function bak()#
 }
 
 # Hide or unhide files.
-function hide()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Hide or unhide a file."
-        fi
-        return
-    fi
-
+function hide() {
     if [[ -z "$1" ]] ; then
         _zerror "No arguments given"
         return
@@ -144,54 +90,17 @@ function hide()#
 }
 
 # Make the directories and enter $1
-function mk()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo 'Make a directory and enter it'
-        fi
-        return
-    fi
-
+function mk() {
     mkdir $* && cd $1
 }
 
-# Make the directories and enter $1
-function cpmk()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo 'Make a directory and copy files to it'
-        fi
-        return
-    fi
-
-    echo mkdir ${*[-1]} && echo cp $*
-}
-
 # Remove all files of certain extension
-function rmext()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Remove all files of certain extension"
-        fi
-        return
-    fi
-
+function rmext() {
     rm -v **/*.$1
 }
 
 # Extract files from archives
-function x()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Extract files from archives"
-        fi
-        return
-    fi
-
+function x() {
     if [[ -n "$1" ]] ; then
         _zerror "No files given."
         return

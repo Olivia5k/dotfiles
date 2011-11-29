@@ -1,23 +1,6 @@
-# CVS integration
 setopt prompt_subst
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:*' get-revision true
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}" # Just make it red!
-zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}" # Just make it cyan!
 
-#zstyle ':vcs_info:*' actionformats "${repo}─[%F{${c[17]}}%a%F{${c[1]}}]${branch}"
-#zstyle ':vcs_info:(svn):*' branchformat '%b'
-
-function p()#
-{
-    if [[ "$1" = "--zdoc" ]] ; then
-        if [[ "$2" =~ "s(hort)?" ]] ; then
-            echo "Change prompt behaviour."
-        fi
-        return
-    fi
-
+function p() {
     if [[ "$1" = "3" ]] ; then
         export PKEEP=false
     else
@@ -27,11 +10,7 @@ function p()#
     export PMODE=$1
 }
 
-# Since the two functions below are potentially executed on every prompt
-# reload, they do not have any inboud documentation.
-
-function precmd()
-{
+function precmd() {
     if [[ $TERM != "linux" ]] ; then
         # Print xterm title
         print -Pn "\e]0;%n@%m: %~\a"
@@ -68,8 +47,7 @@ function precmd()
     prompt
 }
 
-function prompt()
-{
+function prompt() {
     if [[ $PMODE -ge 2 ]] ; then
         if [[ "$USER" != "$ALIAS" ]] ; then
             local u="%n@%m"
