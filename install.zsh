@@ -135,7 +135,6 @@ if [[ "$1" = "-l" ]]; then
         exit 1
     fi
 
-    print
     git clone $2 ./local || exit 1
 
     for t in zsh vim; do
@@ -143,6 +142,10 @@ if [[ "$1" = "-l" ]]; then
             _link ./local.$t ./$t/
         fi
     done
+
+    if [[ -f .local/gitconfig ]] ; then
+        _link ./local/gitconfig $HOME/.gitconfig
+    fi
 fi
 
 # Install those detected
@@ -167,5 +170,13 @@ elif [[ -n "$1" ]] ; then
     done
 fi
 
+if [[ -r $HOME/.gitconfig ]]; then
+    name=$(git config user.name)
+    email=$(git config user.email)
+    print -P "%B%F{10}NOTE%f%b: git was installed for $name ($email)"
+else
+    print -P "%B%F{10}NOTE%f%b: No git configuration file was found."
+fi
+
 # These directories are required
-mkdir -p $HOME/.cache/vim/{backup,tmp} $HOME/.logs $HOME/.local/{bin,share} &> /dev/null
+mkdir -p $HOME/{.cache/vim/{backup,tmp},.logs,.local/{bin,share}} &> /dev/null
