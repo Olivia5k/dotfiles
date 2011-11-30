@@ -42,7 +42,7 @@ a=('./misc/i3.conf')
 apps[i3]=$a
 dest[./misc/i3.conf]="$HOME/.i3/config"
 
-_link() {
+function _link() {
     src=$1
     dst=$2
     nobackup=false
@@ -72,7 +72,7 @@ _link() {
     fi
 }
 
-_install() {
+function _install() {
     while [[ -n "$1" ]]; do
         src=$1
 
@@ -88,7 +88,7 @@ _install() {
 
 # lol print help
 if [[ "$1" =~ "-?-h(elp)?" ]]; then
-    echo "install.sh:"
+    echo "install.zsh:"
     echo "hax0r script helper for managing github config files"
     echo "Installation of configurations will be made by symbolic linking."
     echo
@@ -139,8 +139,8 @@ if [[ "$1" = "-l" ]]; then
     git clone $2 ./local || exit 1
 
     for t in zsh vim; do
-        if [[ -f ./local/local.$t ]]; then
-            ln -s ./local/local.$t ./$t/local/
+        if [[ -f ./local.$t ]]; then
+            _link ./local.$t ./$t/
         fi
     done
 fi
@@ -149,7 +149,7 @@ fi
 if [[ -z "$1" ]] || [[ "$1" = "-l" ]]; then
     for a in ${(ko)apps}; do
         if [[ -x $commands[$a] ]] || [[ "$a" = "terminfo" ]] ; then
-            _install ${(z)a}
+            _install ${(z)${apps[$a]}}
         fi
     done
 
