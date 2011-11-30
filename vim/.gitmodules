@@ -60,7 +60,7 @@
 # Syntax and testing
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
+	url = https://github.com/daethorian/syntastic.git
 [submodule "bundle/qfstatus"]
 	path = bundle/qfstatus
 	url = https://github.com/dannyob/quickfixstatus.git
