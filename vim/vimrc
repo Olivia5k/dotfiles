@@ -138,14 +138,13 @@
 
 " Load the local vim rc files
 for f in split(globpath(&runtimepath, 'local/*.vim'), "\n")
-  execute 'source ' . f
+    execute 'source ' . f
 endfor
 
 " Load user specific settings
-let userfile = globpath(&runtimepath, 'local/user/$USER.vim')
+let userfile = globpath(&runtimepath, 'local.vim')
 if filereadable(userfile)
     execute 'source ' . userfile
 endif
 
 " vim: set et:sw=4:fmr=marker:fdm={,}
-" asdf
