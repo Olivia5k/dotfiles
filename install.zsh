@@ -3,6 +3,9 @@
 # Written by Lowe Thiderman (daethorian@ninjaloot.se)
 # WTFPL.
 
+# TODO:
+# Uninstall
+
 loc=$0:a:h
 backup="$loc/old-configs-backup"
 
@@ -117,13 +120,20 @@ if [[ "$1" =~ "-?-h(elp)?" ]]; then
     exit 0
 fi
 
-git submodule init
+# If the zshrc file does not exist, we can assume that nothing has been cloned.
+if [[ ! -f ./zsh/zshrc ]]; then
+    echo init!
+    git submodule init
+    git submodule foreach git submodule init
+else
+    echo no init
+fi
+
 git submodule update
-git submodule foreach git submodule init
 git submodule foreach git submodule update
 
 if [[ "$1" = "-u" ]]; then
-    # This is actually it. Since the rows abowe do what they do, this step
+    # This is actually it. Since the rows above do what they do, this step
     # really only needs to stop the script.
     print "Git updating done"
     exit 0
@@ -131,21 +141,30 @@ fi
 
 if [[ "$1" = "-l" ]]; then
     if [[ -z "$2" ]]; then
-        print "Fatal error: Gief monkeypatch repo addrz plx"
+        print "Fatal error: Gief monkeypatch github userneam plx"
         exit 1
     fi
+    username=$2
 
-    git clone $2 ./local || exit 1
+    # Clone the local repo; not as a submodule, since that would be silly.
+    git clone git@github.com:$username/conf-local.git ./local || exit 1
 
+    # Symlink the files that are present
     for t in zsh vim; do
-        if [[ -f ./local.$t ]]; then
-            _link ./local.$t ./$t/
+        f="./local/local.$t"
+        if [[ -f $f ]]; then
+            _link $f ./$t/local.$t
         fi
     done
 
-    if [[ -f .local/gitconfig ]] ; then
+    # Install global git configurations if found
+    if [[ -f ./local/gitconfig ]]; then
         _link ./local/gitconfig $HOME/.gitconfig
     fi
+
+    # Add rw remotes to all submodules
+    url="git@github.com:$username/conf-\$name.git"
+    git submodule foreach "git remote add rw $url"
 fi
 
 # Install those detected
@@ -173,9 +192,9 @@ fi
 if [[ -r $HOME/.gitconfig ]]; then
     name=$(git config user.name)
     email=$(git config user.email)
-    print -P "%B%F{10}NOTE%f%b: git was installed for $name ($email)"
+    print -P "\n%B%F{13}NOTE%f%b: git config was installed for $name ($email)"
 else
-    print -P "%B%F{10}NOTE%f%b: No git configuration file was found."
+    print -P "\n%B%F{13}NOTE%f%b: No git configuration file was found."
 fi
 
 # These directories are required
