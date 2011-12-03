@@ -122,15 +122,15 @@ fi
 
 # If the zshrc file does not exist, we can assume that nothing has been cloned.
 if [[ ! -f ./zsh/zshrc ]]; then
-    echo init!
     git submodule init
+    git submodule update
     git submodule foreach git submodule init
+    git submodule foreach git submodule update
 else
-    echo no init
+    git submodule update
+    git submodule foreach git submodule update
 fi
 
-git submodule update
-git submodule foreach git submodule update
 
 if [[ "$1" = "-u" ]]; then
     # This is actually it. Since the rows above do what they do, this step
@@ -164,7 +164,8 @@ if [[ "$1" = "-l" ]]; then
 
     # Add rw remotes to all submodules
     url="git@github.com:$username/conf-\$name.git"
-    git submodule foreach "git remote add rw $url"
+    git submodule --quiet foreach "git remote add rw $url"
+    echo "Added rw remotes to all top-level submodules"
 fi
 
 # Install those detected
