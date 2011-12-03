@@ -147,7 +147,12 @@ if [[ "$1" = "-l" ]]; then
     username=$2
 
     # Clone the local repo; not as a submodule, since that would be silly.
-    git clone git@github.com:$username/conf-local.git ./local || exit 1
+    git clone https://github.com/$username/conf-local.git local || exit 1
+
+    # Add the rw remote!
+    cd local
+    git remote add rw git@github.com:$username/conf-local.git
+    cd ..
 
     # Symlink the files that are present
     for t in zsh vim; do
