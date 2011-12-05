@@ -1,8 +1,8 @@
 export HASCVS=true
 
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}" # Just make it red!
-zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}" # Just make it cyan!
+zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}"
+zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}"
 
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
@@ -30,10 +30,10 @@ function +vi-git-st() {
         ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
         behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
 
-        (( $ahead + $behind )) && str+="%F{${c[1]}}:"         # Dark colon if any
-        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"        # Ahead
-        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"  # Dark slash if both
-        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"      # Behind
+        (( $ahead + $behind )) && str+="%F{${c[1]}}:"  # Dark colon if any
+        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"  # Ahead
+        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"  # Dark slash
+        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"  # Behind
     else
         # Just add a red colon to mark non-tracking branch
         str="${branch}%F{${c[16]}}:"
@@ -48,7 +48,7 @@ function +vi-git-stash() {
 
     if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
         stashes=$(git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+="%F{${c[4]}}${stashes}st%F{${c[1]}}"
+        hook_com[misc]+="%F{${c[1]}}:%F{${c[4]}}${stashes}st%F{${c[1]}}"
     fi
 }
 
@@ -60,18 +60,26 @@ function +vi-git-action() {
     fi
 }
 
-
 # Committing / General
 alias ga='git add'
 alias gs='git status'
+alias gss='git status --short'
 alias gc='git commit'
-alias gca='git commit -a'
+alias gca='git commit --amend' # -a is for pussies
 alias gp='git push'
 alias gu='git pull'
+alias gpp='git push origin'
+alias guu='git pull origin'
 
-# Branching
+# Branching (only really useful with -v, really)
 alias gb='git branch -v'
+alias gba='git branch -av'
 alias gbv='git branch -vv'
+alias gbav='git branch -avv'
+
+# Remotes
+alias gre='git remote -v'
+alias gra='git remote add'
 
 # Checkouting
 alias go='git checkout'
@@ -83,8 +91,8 @@ alias gt="git stash"
 alias gtl="git stash list"
 alias gtp="git stash pop"
 alias gts="git stash show"
-# Since stashes are pretty irrevokably lost if dropped, aliases for that was
-# skipped
+# Since stashes are pretty irrevokably lost if dropped, aliases for dropping
+# was skipped
 
 # Submodules
 alias gsa='git submodule add'
@@ -116,20 +124,40 @@ alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
 
-# Setup remote for a branch
+
+# Setup remote for a branch (mnemonic: git branch remote)
 function gbr() {
-    if [[ -n "$1" ]] ; then
-        git config branch.$1.remote origin
-        git config branch.$1.merge refs/heads/$1
+    if [[ -n "$1" ]]; then
+        branch=$1
+        remote=${2:=origin}  # Optionally; what remote?
+
+        git config branch.$branch.remote $remote
+        git config branch.$branch.merge refs/heads/$1
+
+        echo "Branch $branch now tracking $remote"
     else
-        echo "Tell me a branch, fool."
+        _zerror "Tell me a branch, fool."
+    fi
+}
+
+# Setup upstream for a branch (mnemonic: git branch upstream)
+function gbu() {
+    if [[ -n "$1" ]] && [[ -n "$2" ]]; then
+        branch=$1
+        remote=$2
+        remote_branch=${3:=${1}}  # Optionally; which remote branch?
+
+        git branch $branch --set-upstream $remote/$remote_branch
+    else
+        _zerror "Tell me a branch and a remote, fool."
     fi
 }
 
 # Initialize a project
 function ginit() {
     if [[ -z "$1" ]] ; then
-        echo "Specify project name" && return 1
+        echo "Specify project name"
+        return 1
     fi
 
     git init $1
