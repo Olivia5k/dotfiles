@@ -170,7 +170,8 @@ if [[ "$1" = "-l" ]]; then
     # Add rw remotes to all submodules
     url="git@github.com:$username/conf-\$name.git"
     git submodule --quiet foreach "git remote add rw $url"
-    echo "Added rw remotes to all top-level submodules"
+    git submodule --quiet foreach "git branch master --set-upstream rw/master"
+    echo "Added rw remotes and upstreams to all top-level submodules"
 fi
 
 # Install those detected
