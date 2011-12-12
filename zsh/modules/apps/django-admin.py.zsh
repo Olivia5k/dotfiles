@@ -6,7 +6,7 @@ fi
 export DBTMP="tmp"
 export DBHOST="dt"
 export REMOTEDB="mancx_django"
-export LOCALDB="dev_main"
+export LOCALDB="mancx_django"
 
 alias dm='python2 manage.py'
 alias ds='echo "no" | dm syncdb'
@@ -14,7 +14,7 @@ alias dz='bpython'
 alias mm='django-admin.py makemessages -l en && django-admin.py compilemessages'
 
 function dsh() {
-    mysql -e "drop database dev_main ; create database dev_main character set utf8 collate utf8_general_ci;"
+    mysql -e "drop database $LOCALDB ; create database $LOCALDB character set utf8 collate utf8_general_ci;"
     ds
 }
 
