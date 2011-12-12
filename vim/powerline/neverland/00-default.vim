@@ -4,15 +4,16 @@
 " Move filetype to the left?
 " Add quickfix and loclist counters
 " Add special ft for gitcommit
+" \ Pl#Segment("%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', ' \\3 err ', 'i')}",
 
 call Pl#Statusline(
-	\ Pl#Segment(" %{substitute(mode(), '', '^V', 'g')} ",
+	\ Pl#Segment("  %-2{Stl_GetMode()} ",
 		\ Pl#HiCurrent(   Pl#FG(245), Pl#BG(232), Pl#Attr('bold')),
 		\ Pl#HiInsert(    Pl#FG(232), Pl#BG(32), Pl#Attr('bold')),
 		\ Pl#HiNonCurrent(Pl#FG(232), Pl#BG(232))
 		\ ),
 	\
-	\ Pl#Segment("%{substitute(fugitive#statusline(), 'GIT(\\([a-z0-9\\-_\\./:]\\+\\))', ' \\1 ', 'gi')}",
+	\ Pl#Segment("%{Stl_GetBranch('$branch')}",
 		\ exists('g:loaded_fugitive') && g:loaded_fugitive == 1,
 		\
 		\ Pl#HiCurrent(   Pl#FG(250), Pl#BG(236)),
@@ -45,7 +46,7 @@ call Pl#Statusline(
 			\ Pl#HiInsert(    Pl#FG(250)),
 			\ Pl#HiNonCurrent(Pl#FG(239))
 			\ ),
-		\ Pl#Segment("%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', ' \\3 err ', 'i')}",
+		\ Pl#Segment("%{Stl_GetSyntaxErrors('$line')}",
 			\ exists('g:loaded_syntastic_plugin') && g:loaded_syntastic_plugin == 1,
 			\
 			\ Pl#HiCurrent(   Pl#FG(255), Pl#BG(160), Pl#Attr('bold')),
