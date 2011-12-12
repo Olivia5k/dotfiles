@@ -101,5 +101,8 @@
 " vimwiki {
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 " }
+" yankring {
+    let g:yankring_history_file = ".cache/vim/tmp/yankring"
+" }
 
 " vim: set et:sw=4:fdm=marker:fmr={,}
