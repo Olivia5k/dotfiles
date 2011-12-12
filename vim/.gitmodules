@@ -81,3 +81,6 @@
 [submodule "bundle/extradite"]
 	path = bundle/extradite
 	url = https://github.com/int3/vim-extradite.git
+[submodule "bundle/toggle"]
+	path = bundle/toggle
+	url = https://github.com/vim-scripts/Toggle.git
