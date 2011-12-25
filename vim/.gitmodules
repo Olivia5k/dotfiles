@@ -84,3 +84,12 @@
 [submodule "bundle/toggle"]
 	path = bundle/toggle
 	url = https://github.com/vim-scripts/Toggle.git
+[submodule "bundle/pathogen"]
+	path = bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "bundle/unimpaired"]
+	path = bundle/unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "bundle/abolish"]
+	path = bundle/abolish
+	url = https://github.com/tpope/vim-abolish

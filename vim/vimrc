@@ -20,12 +20,13 @@
     set ttyfast " Oh, right, this isn't the 70s
 " }
 " Pathogen {
-    call pathogen#runtime_append_all_bundles()
+    call pathogen#infect()
 " }
 " Filetypes {
     au Filetype python setlocal foldmethod=indent expandtab ft=python.django
     au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
+    " au BufWritePost *.py silent! !kill `cat /tmp/gunicorn.pid`
 
     au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab ft=htmldjango.html
 
@@ -39,7 +40,7 @@
     set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
     set backup " make backup file
     set backupdir=~/.cache/vim/backup " where to put backup file
-    set directory=~/.cache/vim/tmp " directory is the directory for temp file
+    set directory=~/.cache/vim/tmp// " directory is the directory for temp file
 
     " Autocreate the needed directories if they don't exist
     if isdirectory(&directory) == 0

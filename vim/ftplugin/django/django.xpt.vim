@@ -37,6 +37,9 @@ XPT text " TextField\()
 XPT url " URLField\()
 `url^ = models.URLField(max_length=`200`, blank=True^)
 
+XPT bn " blank/null for models
+blank=True, null=True
+
 XPT resp " HttpResponse\()
 XSET http=Choose(['HttpResponse', 'HttpResponseForbidden', 'HttpResponseRedirect'])
 return `http^(`^);

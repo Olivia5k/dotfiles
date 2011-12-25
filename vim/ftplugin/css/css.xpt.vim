@@ -10,5 +10,10 @@ background-image: -ms-linear-gradient(top, `start^, `stop^);
 background-image: linear-gradient(top, `start^, `stop^);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='`start^', EndColorStr='`stop^');
 
+XPT r " border-radius
+-moz-border-radius: `radius^;
+-webkit-border-radius: `radius^;
+border-radius: `radius^;
+
 XPT ! " !important
 !important
