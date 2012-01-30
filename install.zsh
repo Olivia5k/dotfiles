@@ -5,6 +5,7 @@
 
 # TODO:
 # Uninstall
+# Force install: install new links even if old ones exists.
 
 loc=$0:a:h
 backup="$loc/old-configs-backup"
