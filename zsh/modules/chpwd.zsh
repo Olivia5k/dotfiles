@@ -2,7 +2,6 @@ function chpwd() {
     ls
 }
 
-
 function cd () {
     local opt=""
     if [[ ${+2} = 0 ]]; then
@@ -23,22 +22,18 @@ function cd () {
     fi
 }
 
-function mkcd () {
-  [[ -z "$1" ]] && echo >&2 "mkcd: no path given" && return
-  [[ -d "$1" ]] && echo >&2 "mkcd: Directory $1 already exists"
-  mkdir -p -- "$1"
-  cd -- "$1"
-}
+# Greh; this only works on very recent zshs :( Ugliest solution in the world,
+# for now.
+if [[ "${ZSH_VERSION[5,6]}" -ge 15 ]]; then
+    autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+    add-zsh-hook chpwd chpwd_recent_dirs
 
-# cdr <3
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
+    alias cdl="cdr -l"
 
-alias cdl="cdr -l"
-
-zstyle ':completion:*:*:cdr:*:*' menu selection
-zstyle ':chpwd:*' recent-dirs-file $XDG_DATA_HOME/zsh/cdr
-zstyle ':chpwd:*' recent-dirs-max 21
+    zstyle ':completion:*:*:cdr:*:*' menu selection
+    zstyle ':chpwd:*' recent-dirs-file $XDG_DATA_HOME/zsh/cdr
+    zstyle ':chpwd:*' recent-dirs-max 21
+fi
 
 zle -N _inline-updir
 zle -N _inline-back
