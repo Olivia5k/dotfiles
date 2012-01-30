@@ -63,7 +63,7 @@
     set lazyredraw " do not redraw while running macros (much faster)
     set noerrorbells " don't make noise
     set laststatus=2 " always have the statusline
-    set scrolljump=10 " don't scroll the edges
+    set scrolljump=9 " don't scroll the edges
 " }
 " Visual Cues {
     if exists('+colorcolumn')
