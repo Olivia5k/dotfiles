@@ -8,6 +8,7 @@
     set nocompatible  " disable horrible vi compatability mode!
     set background=dark  " we are using a dark background
     set hidden " use useable buffers
+    set synmaxcol=120 " Only sync lines that we can actually see.
     syntax enable
 " }
 " General {
@@ -26,7 +27,7 @@
     au Filetype python setlocal foldmethod=indent expandtab ft=python.django
     au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
-    " au BufWritePost *.py silent! !kill `cat /tmp/gunicorn.pid`
+    au BufWritePost *.py silent! !{if [[ -f /tmp/gunicorn.pid ]]; then kill -HUP `cat /tmp/gunicorn.pid` ; fi}
 
     au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab ft=htmldjango.html
 

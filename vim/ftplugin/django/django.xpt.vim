@@ -88,6 +88,18 @@ XPT dl " @login_required
 XPT db " @check_blacklist
 @check_blacklist
 
+XPT ajax " AJAX framework view
+@require_AJAX
+def `name^(request):
+    ret = {
+        'success': False
+    }
+
+    `cursor^
+
+    ret['success'] = True
+    return ret
+
 XPT ir " from notifications import report
 from notifications import report
 XPT r " report

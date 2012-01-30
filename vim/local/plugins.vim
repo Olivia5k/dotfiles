@@ -56,6 +56,12 @@
 
     " Easy reload
     nmap <leader>r :XPTreload<CR>
+
+    fun! XPTedit() "{{{
+        let filetypes = split(&filetype, '.')
+
+        " noremap \fx :exec 'e ~/.vim/xpt-personal/ftplugin/'.&filetype.'/'.&filetype.'.xpt.vim'<cr>
+    endfunction "}}}
 " }
 " Sparkup {
     " Sparkup bindings that don't mess with other existing bindings
@@ -70,10 +76,14 @@
 " Syntastic {
     let g:syntastic_enable_signs = 1
     let g:loaded_html_syntax_checker = 1
-    let g:syntastic_jslint_conf = ' --continue'
+    if executable('jsl')
+        let g:syntastic_javascript_checker = 'jsl'
+        let g:syntastic_javascript_jsl_conf = '-conf ~/.vim/local/conf/jsl.conf'
+    endif
 " }
 " Powerline {
-    let Powerline_theme = 'neverland'
+    let Powerline_theme = 'distinguished'
+    let g:Powerline_symbols = 'compatible'
     let Powerline_cachefile = ""
 " }
 
@@ -94,7 +104,7 @@
     vmap ö \\\
 " }
 " Easymotion {
-    let g:EasyMotion_leader_key = '<Leader>m'
+    " let g:EasyMotion_leader_key = '<Leader>'
 "}
 
 " Random
