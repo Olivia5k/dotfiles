@@ -10,8 +10,23 @@ export LOCALDB="mancx_django"
 
 alias dm='python2 manage.py'
 alias ds='echo "no" | dm syncdb'
-alias dz='bpython'
+alias dz='ipython'
 alias mm='django-admin.py makemessages -l en && django-admin.py compilemessages'
+
+function dt() {
+    coverage run manage.py test $*
+}
+
+_dtcomplete() {
+    reply=()
+
+    for f in ./apps/*(/); do
+        reply+=(${f##*/})
+    done
+}
+
+# Completion \o/
+compctl -Y "%B%F{${c[24]}}app%f%b" -K _dtcomplete dt
 
 function dsh() {
     mysql -e "drop database $LOCALDB ; create database $LOCALDB character set utf8 collate utf8_general_ci;"
@@ -28,7 +43,7 @@ function dsr() {
     F="$DBTMP/$DBHOST.$DATE.mysql"
 
     # Ignore laser tables and the large session table
-    IGNORE=("django_admin_log" "django_session")
+    IGNORE=()
 
     i=""
     for x in $IGNORE ; do
@@ -52,5 +67,10 @@ function dr() {
 
     rmext pyc &> /dev/null
     echo -e "\nRemoved .pyc files"
-    dm runserver 0.0.0.0:8000
+
+    if _has gunicorn_django; then
+        gunicorn_django --workers=3 --pid=/tmp/gunicorn.pid
+    else
+        dm runserver 0.0.0.0:8000
+    fi
 }
