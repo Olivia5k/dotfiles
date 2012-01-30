@@ -1,3 +1,6 @@
 [submodule "LS_COLORS"]
 	path = modules/ext/LS_COLORS
 	url = https://github.com/trapd00r/LS_COLORS.git
+[submodule "modules/ext/zsh-filedb"]
+	path = modules/ext/zsh-filedb
+	url = git://github.com/daethorian/zsh-filedb.git

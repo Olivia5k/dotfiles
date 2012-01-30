@@ -124,6 +124,12 @@ if [[ -f $lscf ]] && [[ $TCOLORS = 256 ]]; then
     eval $(dircolors -b $lscf)
 fi
 
+# zsh-filedb. Quickfast!
+fdb=$ZSHCONFDIR/modules/ext/zsh-filedb/filedb.zsh
+if [[ -f $fdb ]]; then
+    source $fdb
+fi
+
 for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
     if [[ ! -d $d ]] ; then
         _zdebug "Autocreating %B%F{${c[4]}}${d}%b%f"
