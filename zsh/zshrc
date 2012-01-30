@@ -40,7 +40,7 @@ autoload -Uz vcs_info
 autoload zmv
 
 function _zdebug() {
-    if [[ -n "$DEBUG" ]] && $DEBUG ; then
+    if [[ -n "$ZDEBUG" ]]; then
         print -P "%B%F{${c[18]}}Debug%f%b:" $*
     fi
 }
@@ -105,6 +105,10 @@ elif [[ $TERM = "xterm" ]] && $FORCE_MOBILE ; then
     export PMODE=0
 fi
 
+if [ -f "/usr/lib/stderred.so" ]; then
+    export LD_PRELOAD="/usr/lib/stderred.so"
+fi
+
 # Store last prompt; for use with CVS prompt
 export POLD=$PMODE
 
@@ -112,6 +116,12 @@ export POLD=$PMODE
 if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
     print -P "Warning: Root shell will timeout after %B%F{${c[12]}}$ROOT_TIMEOUT seconds%f%b."
     TMOUT=$ROOT_TIMEOUT
+fi
+
+# LS_COLORS. Placed in master as part of the main conf.
+lscf=$ZSHCONFDIR/modules/ext/LS_COLORS/LS_COLORS
+if [[ -f $lscf ]] && [[ $TCOLORS = 256 ]]; then
+    eval $(dircolors -b $lscf)
 fi
 
 for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
