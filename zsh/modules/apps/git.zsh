@@ -217,3 +217,143 @@ function gr() {
         _zerror "Currently not in a git repository"
     fi
 }
+
+# Log output:
+#
+# * 51c333e    (12 days)    <Gary Bernhardt>   add vim-eunuch
+#
+# The time massaging regexes start with ^[^<]* because that ensures that they
+# only operate before the first "<". That "<" will be the beginning of the
+# author name, ensuring that we don't destroy anything in the commit message
+# that looks like time.
+#
+# The log format uses } characters between each field, and `column` is later
+# used to split on them. A } in the commit subject or any other field will
+# break this.
+
+HASH="%C(yellow)%h%Creset"
+RELATIVE_TIME="%Cgreen(%ar)%Creset"
+AUTHOR="%C(bold blue)<%an>%Creset"
+REFS="%C(red)%d%Creset"
+SUBJECT="%s"
+
+FORMAT="$HASH£$RELATIVE_TIME£$AUTHOR£$REFS $SUBJECT"
+
+pretty_git_log() {
+    git log --abbrev-commit --date=relative --pretty="tformat:${FORMAT}" $* |
+        # Repalce (2 years ago) with (2 years)
+        # sed -Ee 's/(^[^<]*) ago\)/\1)/' |
+        # # Replace (2 years, 5 months) with (2 years)
+        # sed -Ee 's/(^[^<]*), [[:digit:]]+ .*months?\)/\1\)/' |
+        # Line columns up based on } delimiter
+        column -s '£' -t |
+        # Page only if we need to
+        less -FXRS
+}
+
+
+# ZLE hax0r
+zle -N _gitref
+zle -N _quote_word
+zle -N _unquote_word
+bindkey "^[g"    _gitref
+
+autoload -U modify-current-argument
+autoload -U split-shell-arguments
+
+function _quote_word()
+{
+  local q=qqqq
+  modify-current-argument '${('$q[1,${NUMERIC:-1}]')ARG}'
+}
+
+function _unquote_word()
+{
+  modify-current-argument '${(Q)ARG}'
+}
+
+function _quote_unquote_word()
+{
+  local q=qqqq
+  modify-current-argument '${('$q[1,${NUMERIC:-1}]')${(Q)ARG}}'
+}
+
+function _split_shell_arguments_under() {
+    local -a reply
+    split-shell-arguments
+    #have to duplicate some of modify-current-argument to get the word
+    #_under_ the cursor, not after.
+    setopt localoptions noksharrays multibyte
+    if (( REPLY > 1 )); then
+        if (( REPLY & 1 )); then
+            (( REPLY-- ))
+        fi
+    fi
+    REPLY=${reply[$REPLY]}
+}
+
+function _gitref() {
+    local REPLY
+    local msg="Select one of s, S, t, a, c, v, q, Q, r${${1+.}:-, h (help).}"
+    zle -R $msg
+    read -k
+    case $REPLY in
+        (s)
+            modify-current-argument '$(git rev-parse --short='${NUMERIC:-4}' ${(Q)ARG} 2> /dev/null)'
+            ;;
+        (S)
+            modify-current-argument '$(git rev-parse ${(Q)ARG} 2> /dev/null)'
+            ;;
+        (t)
+            modify-current-argument '$(git describe --tags ${(Q)ARG} 2> /dev/null)'
+            ;;
+        (a)
+            modify-current-argument '$(git describe --all ${(Q)ARG} 2> /dev/null)'
+            ;;
+        (c)
+            modify-current-argument '${(q)$(git describe --contains ${(Q)ARG} 2> /dev/null)}'
+            ;;
+        (v)
+            if [[ -d $(git rev-parse --show-cdup).git/svn ]]; then
+                modify-current-argument '$(git rev-parse --short='${NUMERIC:-4}' $(git svn find-rev r$ARG 2> /dev/null) 2> /dev/null || git svn find-rev $ARG 2> /dev/null)'
+            else
+                zle -R "Not a git-svn repo."
+            fi
+            ;;
+        (q)
+            _quote_word
+            ;;
+        (Q)
+            _unquote_word
+            ;;
+        (w)
+            modify-current-argument '$(git rev-list $ARG 2> /dev/null | wc -l)'
+            ;;
+        (r)
+            local -a match mbegin mend
+            modify-current-argument '${ARG//(#b)((#B)(*[^.])#)(#b)(.(#c2,3))((#B)([^.]*)#)/$match[3]$match[2]$match[1]}'
+            ;;
+        (h)
+            [[ $1 = help ]] && return
+            _split_shell_arguments_under
+            word=$REPLY
+            zle -M \
+"
+s: convert word to sha1, takes numeric argument (default: 4) ($(git rev-parse --short=${NUMERIC:-4} $word 2> /dev/null))
+S: convert word to full length sha1 ($(git rev-parse $word 2> /dev/null))
+t: convert word to described tag ($(git describe --tags $word 2> /dev/null))
+a: convert word to described ref ($(git describe --all $word 2> /dev/null))
+c: convert word to contained tag (${(q)$(git describe --contains $word 2> /dev/null)})
+v: convert word with git svn find-rev
+q: quote word
+Q: unquote word
+r: change order of range from a..b or a...b to b..a or b...a respectively
+h: this help message"
+            _gitref help
+            ;;
+        (*)
+            [[ -n $REPLY ]] && repeat ${NUMERIC:-1}; do zle -U - $REPLY; done
+            ;;
+    esac
+    zle -R -c
+}

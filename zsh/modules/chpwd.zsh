@@ -39,3 +39,22 @@ alias cdl="cdr -l"
 zstyle ':completion:*:*:cdr:*:*' menu selection
 zstyle ':chpwd:*' recent-dirs-file $XDG_DATA_HOME/zsh/cdr
 zstyle ':chpwd:*' recent-dirs-max 21
+
+zle -N _inline-updir
+zle -N _inline-back
+
+# ZLE hax0r navigation
+function _inline-updir() {
+    pushd -q ..
+    zle .reset-prompt
+}
+function _inline-back() {
+    if ! popd -q; then
+        zle -M 'Directory stack empty'
+        sleep 1
+    fi
+    zle .reset-prompt
+}
+
+bindkey "^[h" _inline-updir
+bindkey "^[l" _inline-back

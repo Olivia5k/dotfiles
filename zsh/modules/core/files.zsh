@@ -101,7 +101,7 @@ function rmext() {
 
 # Extract files from archives
 function x() {
-    if [[ -n "$1" ]] ; then
+    if [[ -z "$1" ]] ; then
         _zerror "No files given."
         return
     fi

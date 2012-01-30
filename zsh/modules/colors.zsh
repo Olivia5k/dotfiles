@@ -1,6 +1,6 @@
 # Prints a table of the 16 default colors. Usually comes as a standalone
 # script, but hey, why not integrate it? :>
-function c() {
+function cs() {
     T='HaX' # The test text
     echo -e "                 40m     41m     42m     43m     44m     45m     46m     47m";
 

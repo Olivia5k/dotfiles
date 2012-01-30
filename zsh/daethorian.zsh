@@ -79,24 +79,7 @@
         export CONFIG="$HOME/config"
     # }}}
     # User editor {{{
-        # Your editor. If an alias exists for it, it will be unaliased to avoid
-        # confusion and breakage. (if one exists and you run which on it, which will
-        # not return an absolute path to the application)
-        local _EDITOR='vim'
-
-        if alias $_EDITOR &> /dev/null ; then
-            unalias $_EDITOR
-        fi
-
-        if which $_EDITOR &> /dev/null ; then
-            export EDITOR=$(which $_EDITOR)
-        else
-            export EDITOR=$(which vi)
-        fi
-
-        # Your visual editor. Nuff said.
-        export VISUAL=$EDITOR
-        alias e=$EDITOR
+        EDITOR="vim"
     # }}}
     # User colorscheme {{{
         export ZCOLOR="default"
@@ -242,7 +225,6 @@
     alias wpn="rm /tmp/gemma &> /dev/null && wp"
 
     # Project directories
-    #alias cdc='cd ~/config'
     alias cdg='cd ~/git'
     alias cdm='cd ~/git/django-mancx'
     alias cdp='cd /usr/lib/python2.7/site-packages/'
@@ -261,11 +243,6 @@
 
     # Force unmounting
     alias muf='sudo umount -l /mnt/warez && sudo umount -l ~/ssh/ninjaloot'
-
-    lscf=$HOME/config/zsh/LS_COLORS/LS_COLORS
-    if [[ -f $lscf ]] ; then
-        eval $(dircolors -b $lscf)
-    fi
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}

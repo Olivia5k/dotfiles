@@ -1,13 +1,13 @@
 if _has ls++; then
     ls="ls++ --group-directories-first"
-    alias l="/bin/ls $LSOPTS"
+    alias ll="/bin/ls $LSOPTS"
 else
     ls="ls $LSOPTS"
 fi
 
 alias ls="$ls"
 alias lc="$ls --color=never"
-alias ll="$ls -l"
+# alias ll="$ls -l"
 alias la="$ls -A"
 alias lal="$ls -Al"
 
