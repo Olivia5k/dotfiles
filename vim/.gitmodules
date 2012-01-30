@@ -32,7 +32,7 @@
 # Templating
 [submodule "bundle/xptemplate"]
 	path = bundle/xptemplate
-	url = https://github.com/daethorian/xptemplate.git
+	url = https://github.com/drmingdrmer/xptemplate.git
 
 # Input, objects and navigation
 [submodule "bundle/argtextobj"]
@@ -60,7 +60,7 @@
 # Syntax and testing
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
-	url = https://github.com/daethorian/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "bundle/qfstatus"]
 	path = bundle/qfstatus
 	url = https://github.com/dannyob/quickfixstatus.git
