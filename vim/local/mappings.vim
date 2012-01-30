@@ -29,12 +29,12 @@ let mapleader = ","
 " }
 " Togglers {
     nmap <Leader>sw :call WrapToggle()<cr>
-    nmap <Leader>p :call PasteToggle()<cr>
     nmap <Leader>sl :call SpellToggle()<cr>
     nmap <Leader>sy :call StatusSyntaxToggle()<cr>
     nmap <Leader>sf :call StatusPathToggle()<cr>
-    nmap <Leader>s mt:call WhitespaceToggle()<cr>`t
     nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+    nmap zp :call PasteToggle()<cr>
 " }
 " Misc. {
     " Search for all single/double-quoted strings
@@ -51,8 +51,8 @@ let mapleader = ","
     nmap <leader>eV :tabe ~/config/vim/
 " }
 " Folding {
-    nmap <Leader>fm :set foldmethod=marker<cr>
-    nmap <Leader>fi :set foldmethod=indent<cr>
+    nmap zfm :set foldmethod=marker<cr>
+    nmap zfi :set foldmethod=indent<cr>
 " }
 " Indentation {
     " Indent XML
@@ -86,7 +86,7 @@ let mapleader = ","
     nmap S S<esc>
     noremap Q q:
     nnoremap Y y$
-    nnoremap ; :
+    " nnoremap ; :
 " }
 
 " vim: set et:sw=4:fmr=marker:fdm={,}

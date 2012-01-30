@@ -26,3 +26,6 @@ XPT ds " Triple-quoted docstring
 """
 
 `^
+
+XPT ipdb " import ipdb
+import ipdb ; ipdb.set_trace()
