@@ -22,9 +22,10 @@ function cd () {
     fi
 }
 
-# Greh; this only works on very recent zshs :( Ugliest solution in the world,
-# for now.
-if [[ "${ZSH_VERSION[5,6]}" -ge 15 ]]; then
+# Greh; this only works on very recent zshs! Check if chpwd_recent_dirs
+# actually is loadable!
+a=( ${^fpath}/chpwd_recent_dirs(N) )
+if (( $#a > 0 )); then
     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
     add-zsh-hook chpwd chpwd_recent_dirs
 
