@@ -89,6 +89,9 @@
 
 " Helper plugins
 " Lusty {
+    " Dat silence
+    let g:LustyJugglerSuppressRubyWarning = 1
+
     " Quick bindings
     nmap <Leader>q ,lb
     nmap <Leader>a ,lj
