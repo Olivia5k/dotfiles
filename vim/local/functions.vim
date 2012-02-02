@@ -1,18 +1,3 @@
-function! FoldWithLines() " {
-    let nucolwidth = &fdc + &number*&numberwidth
-    let winwd = winwidth(0) - nucolwidth - 5
-    let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
-    let fdnfo = " " . string(foldlinecount) . " lines "
-    let line = strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
-    if &tw
-        let base = &tw
-    else
-        let base = 79
-    endif
-    let fillcharcount = base - len(line) - len(fdnfo)
-    return line . repeat("-",fillcharcount) . fdnfo
-endfunction " }
-
 function! WrapToggle() " {
     if &wrap == 0
         set nolist wrap linebreak
@@ -127,4 +112,27 @@ command! -nargs=+ S :call RelSwitch('split', <f-args>)
 command! -nargs=+ V :call RelSwitch('vsplit', <f-args>)
 command! -nargs=+ T :call RelSwitch('tabe', <f-args>)
 
+" Place at the very bottom since the folding char fucks up the... folding.
+function! FoldWithLines() " {
+    let nucolwidth = &fdc + &number*&numberwidth
+    let winwd = winwidth(0) - nucolwidth - 5
+    let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
+    let fdnfo = " " . string(foldlinecount) . " lines "
+    let line = strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
+
+    if &tw
+        let base = &tw
+    else
+        let base = 79
+    endif
+
+    " Handle lines that are too long! Cut em down!
+    if len(line) + len(fdnfo) > base
+        let max = base - len(fdnfo) - 5
+        let line = line[:max] . '..{ '
+    endif
+
+    let fillcharcount = base - len(line) - len(fdnfo)
+    return line . repeat("-",fillcharcount) . fdnfo
+endfunction " }
 " vim: set et:sw=4:fmr=marker:fdm={,}
