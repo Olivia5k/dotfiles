@@ -96,3 +96,6 @@
 [submodule "bundle/css-syntax"]
 	path = bundle/css-syntax
 	url = https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git
+[submodule "bundle/gist"]
+	path = bundle/gist
+	url = https://github.com/mattn/gist-vim.git
