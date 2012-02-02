@@ -8,7 +8,6 @@
     set nocompatible  " disable horrible vi compatability mode!
     set background=dark  " we are using a dark background
     set hidden " use useable buffers
-    set synmaxcol=120 " Only sync lines that we can actually see.
     syntax enable
 " }
 " General {
