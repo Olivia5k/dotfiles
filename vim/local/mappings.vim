@@ -1,20 +1,11 @@
 let mapleader = ","
 
 " Navigation {
-    " Unmap them evil arrows
-    noremap <Up> <NOP>
-    noremap <Right> <NOP>
-    noremap <Down> <NOP>
-    noremap <Left> <NOP>
-    inoremap <Up> <NOP>
-    inoremap <Right> <NOP>
-    inoremap <Down> <NOP>
-    inoremap <Left> <NOP>
-
     " Better use of commons
     noremap <space> /
 
-    " Reselect the visuals when indenting
+    " Reselect the visuals when indenting. Borks slightly with undoing, but
+    " you'll get used to it.
     vnoremap < <gv
     vnoremap > >gv
 
