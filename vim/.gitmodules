@@ -99,3 +99,6 @@
 [submodule "bundle/gist"]
 	path = bundle/gist
 	url = https://github.com/mattn/gist-vim.git
+[submodule "bundle/nginx-syntax"]
+	path = bundle/nginx-syntax
+	url = https://github.com/daethorian/nginx-vim-syntax.git
