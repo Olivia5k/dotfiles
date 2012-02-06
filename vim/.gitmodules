@@ -102,3 +102,6 @@
 [submodule "bundle/nginx-syntax"]
 	path = bundle/nginx-syntax
 	url = https://github.com/daethorian/nginx-vim-syntax.git
+[submodule "bundle/eunuch"]
+	path = bundle/eunuch
+	url = https://github.com/tpope/vim-eunuch.git
