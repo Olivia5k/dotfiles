@@ -25,7 +25,7 @@ let mapleader = ","
     nmap <Leader>sf :call StatusPathToggle()<cr>
     nnoremap <silent> <C-l> :nohl<CR><C-l>
 
-    nmap zp :call PasteToggle()<cr>
+    nmap ,p :call PasteToggle()<cr>
 " }
 " Misc. {
     " Search for all single/double-quoted strings

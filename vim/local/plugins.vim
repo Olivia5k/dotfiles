@@ -116,6 +116,8 @@
 " }
 " yankring {
     let g:yankring_history_file = ".cache/vim/tmp/yankring"
+    nmap zp :YRShow<cr>
+    nmap zs :YRSearch<cr>
 " }
 
 " vim: set et:sw=4:fdm=marker:fmr={,}
