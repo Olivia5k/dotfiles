@@ -1,15 +1,15 @@
-! urxvt 
+! urxvt
 *.scrollBar:               false
 *.saveLines:               100
 *.urgentOnBell:            true
-*.perl-ext-common:         default,matcher
+*.perl-ext-common:         default,matcher,url-select
 *.urlLauncher:             /home/daethorian/bin/www
 *.matcher.button:          1
 *.matcher.pattern.1:       \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
 *.meta8:                   false
 *.underlineURLs:           true
-*.transparent:             false
-!*.shading:                 20
+*.transparent:             true
+*.shading:                 10
 *.fading:                  30
 *.keysym.M-u:              perl:url-select:select_next
 
@@ -22,8 +22,8 @@
 *bigfont*.font:            xft:montecarlo:pixelsize=11
 *bigfont*.boldFont:        xft:montecarlo:bold:pixelsize=11
 Xft.dpi:                   75.0
-! 
-! XLock 
+!
+! XLock
 XLock.fpsfont:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.font:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.planfont:            -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
@@ -43,8 +43,8 @@ XLock.echokey:             *
 XLock.mousemotion:         True
 XLock.showdate:            True
 XLock.usefirst:            True
-! 
-! Colorscheme (unnamed) 
+!
+! Colorscheme (unnamed)
 *foreground:   #dcdccc
 *background:   #121212
 *color0:       #333333
