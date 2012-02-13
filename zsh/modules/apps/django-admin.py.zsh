@@ -68,8 +68,16 @@ function dr() {
     rmext pyc &> /dev/null
     echo -e "\nRemoved .pyc files"
 
+
     if _has gunicorn_django; then
-        gunicorn_django --workers=3 --pid=/tmp/gunicorn.pid
+        local workers=${GUNICORN_WORKERS:-9}
+        local pid=${GUNICORN_PID:-/tmp/gunicorn.pid}
+        local worker=${GUNICORN_WORKER}
+
+        local cmd="gunicorn_django --workers=$workers --pid=$pid $worker $*"
+
+        echo "$cmd\n"
+        ${(z)cmd}
     else
         dm runserver 0.0.0.0:8000
     fi
