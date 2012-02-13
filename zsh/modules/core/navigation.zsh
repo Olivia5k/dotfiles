@@ -34,6 +34,7 @@ function tm() {
 }
 
 function rationalise-dot() {
+    local reply REPLY REPLY2
     if [[ $_IS_PASTING = 1 ]]; then
         zle self-insert
         return
@@ -45,6 +46,13 @@ function rationalise-dot() {
         zle self-insert
     else
         zle self-insert
+    fi
+
+    # Print the absolute path below the prompt if we have given ".."
+    if [[ $LBUFFER =~ '\.\.$' ]]; then
+        split-shell-arguments
+        (( REPLY -= 1 ))  # The actual $REPLY is whitespace. See doc for ssa.
+        zle -M ${reply[$REPLY]:a}
     fi
 }
 
