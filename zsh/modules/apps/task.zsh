@@ -1,5 +1,5 @@
-alias t="task long"
-alias to="task oldest"
+alias t="clear && task long"
+alias to="clear && task oldest"
 
 alias ta="task add"
 alias td="task done"
