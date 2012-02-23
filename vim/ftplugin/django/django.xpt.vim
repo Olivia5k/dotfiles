@@ -114,12 +114,15 @@ from django.contrib.auth.models import User
 XPT id " from notifications.debug import debug
 from notifications.debug import debug
 
+XPT i_ " import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
+
 XPT ex " if set.exists\()
 if `set^.exists():
     `pass^
 
 XPT gfm " Contenttype.get_for_model\(...)
-ContentType.objects.get_for_model(`^)
+ContentType.objects.get_for_model(`Model^)
 
 XPT ict " import ContentType
 from django.contrib.contenttypes.models import ContentType

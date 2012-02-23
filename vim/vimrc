@@ -26,7 +26,7 @@
     au Filetype python setlocal foldmethod=indent expandtab ft=python.django
     au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
-    au BufWritePost *.py silent! !{if [[ -f /tmp/gunicorn.pid ]]; then kill -HUP `cat /tmp/gunicorn.pid` ; fi}
+    au BufWritePost *.py silent! !{if [[ -f /tmp/gunicorn.pid ]]; then kill -HUP `cat /tmp/gunicorn.pid` &> /dev/null ; fi}
 
     au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab ft=htmldjango.html
 
@@ -119,8 +119,13 @@
     set foldmarker={,} " Fold C style code
     set foldcolumn=0 " No foldcolumn plx
     set foldmethod=marker " Fold on the marker
-    set foldlevel=0 " Open files with folds closed
     set foldopen=undo,search,jump,hor,tag,mark,quickfix,block " open folds when you do stuff
+
+    if $USER == 'daethorian' || $USER == 'bender'
+        set foldlevel=0 " Open files with folds closed
+    else
+        set foldlevel=100 " Open files with folds opened
+    endif
 
     set foldtext=FoldWithLines() " See local/functions.vim
 " }

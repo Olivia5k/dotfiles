@@ -5,6 +5,9 @@ XPT t " trans
 XPT c " clear
 <div class="clear"></div>
 
+XPT iif " inline if
+{% if `param^ %}`content^{% endif %}
+
 XPT spr " Mancx CSS sprite
 XSET sprite=Choose(["email", "facebook", "twitter", "linkedin", "refer", "check", "red-exclamation", "yellow-exclamation", "avatar", "speech", "trash", "arrow", "question", "edit", "eye", "close", "debug", "clock", "bubble-green", "bubble-gray", "bubble-yellow", "bubble-red", "bubble-red-x", "office", "profilematch", "networkmatch", "profilematch", "networkmatch", "sign-minus", "sign-plus"])
 XSET kind=Choose(['normal', 'hover', 'active'])

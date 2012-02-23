@@ -32,3 +32,11 @@ debug(`^);
 
 XPT es " e.stopPropagation\();
 `e^.stopPropagation();`^
+
+XPT f " fun\() {
+function(`e^) {
+    `cursor^
+}
+
+XPT dr " dict row setter
+'`key^': `value^,
