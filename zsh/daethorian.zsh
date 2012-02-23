@@ -154,7 +154,7 @@
 # }}}
 # Modules {{{
     # zsh module directory
-    export ZMODDIR="$HOME/etc/zsh/modules"
+    export ZMODDIR="$ZSHCONFDIR/modules"
 
     # Set the loaded module array
     ZMODULES=()
