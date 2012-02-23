@@ -154,7 +154,7 @@
 # }}}
 # Modules {{{
     # zsh module directory
-    export ZMODDIR="$HOME/config/zsh/modules"
+    export ZMODDIR="$HOME/etc/zsh/modules"
 
     # Set the loaded module array
     ZMODULES=()
@@ -226,7 +226,7 @@
 
     # Project directories
     alias cdg='cd ~/git'
-    alias cdm='cd ~/git/django-mancx'
+    # alias cdm='cd ~/git/django-mancx'
     alias cdp='cd /usr/lib/python2.7/site-packages/'
 
     # USB, yeah

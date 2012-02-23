@@ -1,5 +1,9 @@
 setopt prompt_subst
 
+# Prevent trailing singlequotes to break the command lines! :D
+setopt sunkeyboardhack
+export KEYBOARD_HACK="'"
+
 function p() {
     if [[ "$1" = "3" ]] ; then
         export PKEEP=false
