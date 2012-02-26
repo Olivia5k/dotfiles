@@ -1,1 +1,0 @@
-"imap <CR> <esc>o

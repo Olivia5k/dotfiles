@@ -54,7 +54,7 @@
 
     " XXX: This one breaks in 7.3.138 for some reason
     set wildmode=list:longest " turn on wild menu in special format (long format)
-    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.mo,*.swp,*.jpg,*.gif,*.png,*__pycache__* " ignore some formats
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.mo,*.swp,*.jpg,*.gif,*.png,*__pycache__*,*/.git/* " ignore some formats
     set splitbelow " Split below
     set splitright " Split to the right
     set cmdheight=1 " the command bar is 1 high
@@ -130,7 +130,7 @@
     set foldtext=FoldWithLines() " See local/functions.vim
 " }
 " Colorschemes {
-    if &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
+    if has('gui') || &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
         let g:force_lofi = 0
         colorscheme neverland
     else
@@ -140,6 +140,25 @@
 
     " Always include the right highlights
     au ColorScheme * runtime local/highlights.vim
+" }
+" GUI {
+    if has('gui')
+        if $USER == 'daethorian' || $USER == 'bender'
+            set guioptions=aegit  " Disable graphical elements
+            set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 11 " hax0r font
+
+            " No blinking cursor plz :(
+            set guicursor=n-v-c:blinkon0-block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkon0
+
+            set sj=0 " Scrolljump isn't needed here
+
+            " Need foldcolumn coolness :(
+            hi Folded guifg=#5F87AF guibg=#000000 gui=NONE
+            hi link FoldColumn Folded
+
+            let g:Powerline_symbols = 'fancy'
+        endif
+    endif
 " }
 
 " Load the local vim rc files

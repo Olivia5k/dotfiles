@@ -83,7 +83,7 @@
 " }
 " Powerline {
     let Powerline_theme = 'distinguished'
-    let g:Powerline_symbols = 'compatible'
+    " let g:Powerline_symbols = 'compatible'
     let Powerline_cachefile = ""
 " }
 
@@ -91,11 +91,11 @@
 " Lusty {
     " Dat silence
     let g:LustyJugglerSuppressRubyWarning = 1
-
+" }
+" CtrlP {
     " Quick bindings
-    nmap <Leader>q ,lb
-    nmap <Leader>a ,lj
-    nmap <Leader>z ,lf
+    nmap <Leader>q :CtrlP<cr>
+    nmap <Leader>a :CtrlPBuffer<cr>
 " }
 " delimitMate {
     let g:delimitMate_expand_space = 1
