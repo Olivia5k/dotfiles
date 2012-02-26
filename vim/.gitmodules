@@ -105,3 +105,12 @@
 [submodule "bundle/eunuch"]
 	path = bundle/eunuch
 	url = https://github.com/tpope/vim-eunuch.git
+[submodule "bundle/github"]
+	path = bundle/github
+	url = https://github.com/xonecas/github-vim-colorscheme.git
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "bundle/uzbl-reloader"]
+	path = bundle/uzbl-reloader
+	url = git://github.com/daethorian/vim-uzbl-reloader.git
