@@ -38,7 +38,83 @@ function _mm() {
 }
 
 function dt() {
-    coverage run manage.py test $*
+    local cmd
+
+    if [[ -n "$1" ]]; then
+        cmd="apps/$1/tests.py"
+
+        if [[ -n "$2" ]]; then
+            cmd+=":$2"
+            if [[ -n "$3" ]]; then
+                cmd+=".$3"
+            fi
+        fi
+    fi
+
+    coverage run manage.py test $cmd
+}
+
+_testcomplete() {
+    reply=()
+    local module class in_class
+
+    # Module
+    if (( CURRENT == 2 )); then
+        for f in ./apps/*(/); do
+            # Only include those that actually have tests
+            if [[ -f "$f/tests.py" ]]; then
+                reply+=(${f##*/})
+            fi
+        done
+
+    # Class
+    elif (( CURRENT == 3 )); then
+        split-shell-arguments
+        module=$reply[4]  # Current module
+
+        # Reset the reply array since ssa contaminates it
+        reply=()
+
+        # Loop all the lines in the tests file
+        for line in ${(f)"$(<apps/$module/tests.py)"} ; do
+            if [[ $line[1,5] = "class" ]]; then
+                # Grab all lines that start with "class". Extract the name
+                # only.
+                reply+=(${${line#class }%%\(testtype\):})
+            fi
+        done
+
+    # Function
+    elif (( CURRENT == 4 )); then
+        split-shell-arguments
+        module=$reply[4]  # Current module
+        class=$reply[6]  # Current class
+        has_class=false
+
+        # Reset the reply array since ssa contaminates it
+        reply=()
+
+        # Loop all the lines in the tests file
+        for line in ${(f)"$(<apps/$module/tests.py)"} ; do
+            # If we have found the class, examine the actual lines
+            if $has_class; then
+                if [[ $line[1,13] = '    def test_' ]]; then
+                    # If the line begins as a test function defition, add it!
+                    reply+=(${${line#    def }%%\(self\):})
+                elif [[ $line[1,5] = "class" ]]; then
+                    # If the line begins as a class, we have iterated over the
+                    # whole class that we are completing for. Bail.
+                    break
+                fi
+
+            # If we haven't found the class we are completing for yet, check if
+            # we are about to!
+            elif ! $has_class && [[ $line =~ "class $class\(" ]] ; then
+                has_class=true
+            fi
+        done
+
+    fi
 }
 
 _appscomplete() {
@@ -50,7 +126,7 @@ _appscomplete() {
 }
 
 # Completion \o/
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _appscomplete dt
+compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dt
 compctl -Y "%B%F{${c[24]}}app%f%b" -K _appscomplete mm
 
 function dsh() {
