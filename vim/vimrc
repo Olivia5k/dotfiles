@@ -54,7 +54,7 @@
 
     " XXX: This one breaks in 7.3.138 for some reason
     set wildmode=list:longest " turn on wild menu in special format (long format)
-    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.mo,*.swp,*.jpg,*.gif,*.png,*__pycache__*,*/.git/* " ignore some formats
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.mo,*.swp,*.jpg,*.gif,*.png,*__pycache__* " ignore some formats
     set splitbelow " Split below
     set splitright " Split to the right
     set cmdheight=1 " the command bar is 1 high

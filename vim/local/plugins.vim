@@ -44,13 +44,13 @@
     autocmd BufReadPost fugitive://* set bufhidden=delete
 " }
 " XPTemplate {
-    let g:xptemplate_snippet_folders=['$HOME/.vim/xpt']
+    " let g:xptemplate_snippet_folders=['$HOME/.vim/xpt']
     let g:xptemplate_brace_complete = 0  " Delimitmate, bitches
-    let g:xptemplate_key = '<Tab>'  " Main snippet key
+    let g:xptemplate_key = 'ö'  " Main snippet key
     let g:xptemplate_key_pum_only = '<C-F>'  " Popup key
     let g:xptemplate_nav_cancel = '<C-D>'  " Cancel key
-    let g:xptemplate_nav_next = '<C-J>'  " Next key
-    let g:xptemplate_goback = '<C-K>'  " Prev key
+    let g:xptemplate_nav_next = '<Tab>'  " Next key
+    let g:xptemplate_goback = '<S-Tab>'  " Prev key
     let g:xptemplate_to_right = '<C-L>'  " Exit key
     let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 
@@ -94,8 +94,10 @@
 " }
 " CtrlP {
     " Quick bindings
+    nmap <A-d> :CtrlP<cr>
     nmap <Leader>q :CtrlP<cr>
     nmap <Leader>a :CtrlPBuffer<cr>
+    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 " }
 " delimitMate {
     let g:delimitMate_expand_space = 1
@@ -103,14 +105,11 @@
 " }
 " commentary {
     " Backslash is horrible on swedish layouts. ö is not.
+    " However, ö is now the main xpt trigger key, which conflicts here in
+    " visual mode. Experiment with the more traditional #.
     nmap ö \\\
-    vmap ö \\\
+    vmap # \\\
 " }
-" Easymotion {
-    " let g:EasyMotion_leader_key = '<Leader>'
-"}
-
-" Random
 " vimwiki {
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 " }
@@ -119,5 +118,15 @@
     nmap zp :YRShow<cr>
     nmap zs :YRSearch<cr>
 " }
+" surround {
+    " While I love surround.vim, the s/S confusion in visual mode does not
+    " really tickle my fancy. To make up for this, these mappings happened.
+    vmap " S"
+    vmap ' S'
+    vmap t St
+    vmap ( S(
+    vmap [ S[
+    vmap { S{
+"
 
 " vim: set et:sw=4:fdm=marker:fmr={,}
