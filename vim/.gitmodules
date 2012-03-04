@@ -114,3 +114,6 @@
 [submodule "bundle/uzbl-reloader"]
 	path = bundle/uzbl-reloader
 	url = git://github.com/daethorian/vim-uzbl-reloader.git
+[submodule "bundle/pymode"]
+	path = bundle/pymode
+	url = https://github.com/klen/python-mode.git
