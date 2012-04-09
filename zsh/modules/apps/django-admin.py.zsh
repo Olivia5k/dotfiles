@@ -3,6 +3,11 @@ if [[ -f $psup ]]; then
     export PYTHONSTARTUP=$psup
 fi
 
+# Needed for uno because uno is sämst :(
+export URE_BOOTSTRAP="file:///usr/lib/libreoffice/program/fundamentalrc"
+export PYTHONPATH="$PYTHONPATH:/usr/lib/libreoffice/basis-link/program/"
+
+
 export DBTMP="tmp"
 export DBHOST="dt"
 export REMOTEDB="mancx_django"
@@ -42,16 +47,30 @@ function dt() {
 
     if [[ -n "$1" ]]; then
         cmd="apps/$1/tests.py"
+        shift
 
-        if [[ -n "$2" ]]; then
-            cmd+=":$2"
-            if [[ -n "$3" ]]; then
-                cmd+=".$3"
+        if [[ -n "$1" ]]; then
+            cmd+=":$1"
+            shift
+            if [[ -n "$1" ]]; then
+                cmd+=".$1"
+                shift
             fi
         fi
     fi
 
-    coverage run manage.py test $cmd
+    coverage run manage.py test $cmd $*
+}
+
+function dtc() {
+    local cmd
+
+    if [[ -z "$1" ]]; then
+        echo "Module plz"
+    fi
+
+    files=(apps/$1/**/*.py)
+    coverage report $files
 }
 
 _testcomplete() {
@@ -127,6 +146,7 @@ _appscomplete() {
 
 # Completion \o/
 compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dt
+compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dtc
 compctl -Y "%B%F{${c[24]}}app%f%b" -K _appscomplete mm
 
 function dsh() {
@@ -166,9 +186,6 @@ function dr() {
         return 1
     fi
 
-    rmext pyc &> /dev/null
-    echo -e "\nRemoved .pyc files"
-
 
     if _has gunicorn_django; then
         local workers=${GUNICORN_WORKERS:-9}
@@ -179,6 +196,10 @@ function dr() {
         local cmd="gunicorn_django --workers=$workers --pid=$pid $worker $*"
 
         while true; do
+            echo -e "\nRemoving .pyc files"
+            rmext pyc &> /dev/null
+            echo -e "Removed .pyc files"
+
             echo "$cmd\n"
             ${(z)cmd}
 
@@ -190,11 +211,33 @@ function dr() {
             echo
         done
     else
-        dm runserver 0.0.0.0:8000
+        while true ; do
+            local timeout=3
+            echo -e "\nRemoving .pyc files"
+            rmext pyc &> /dev/null
+            echo -e "Removed .pyc files"
+
+            dm runserver 0.0.0.0:8000 --traceback
+            echo -n "Sleeping $timeout: "
+            for ((i = 0; i < timeout; i++)); do
+                echo -n "."
+                sleep 1
+            done
+            echo
+        done
     fi
 }
 
 function cdm {
     # Go to the code root, and follow the symlink if one.
     cd $(readlink -f $CODE_ROOT) # $CODE_ROOT:a isn't available in the older zsh's
+}
+
+# Start open office :(
+function oo {
+    soffice "--accept=socket,host=localhost,port=8100;urp;StarOffice.ServiceManager" --norestore --nofirststartwizard --nologo --headless & > /dev/null 2>&1
+}
+
+function jenkins {
+    curl --user manfred:henriksunshine "http://ct.mancx.com/job/mancx_django/buildWithParameters?BRANCH=${1:-master}"
 }

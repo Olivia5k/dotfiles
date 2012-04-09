@@ -243,6 +243,9 @@
 
     # Force unmounting
     alias muf='sudo umount -l /mnt/warez && sudo umount -l ~/ssh/ninjaloot'
+
+    # For use of libs you compiled yourself.
+    export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
 #}}}
 
 # vim: ft=zsh fmr={{{,}}}
