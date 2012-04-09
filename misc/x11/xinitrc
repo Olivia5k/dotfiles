@@ -4,6 +4,6 @@ xrdb ~/.Xresources
 
 exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 5 -root &
-#exec feh --bg-center ~/img/thearcher1680x1050.png &
+/home/daethorian/bin/wp &
 
 exec i3 -V &> /home/daethorian/.logs/i3.log
