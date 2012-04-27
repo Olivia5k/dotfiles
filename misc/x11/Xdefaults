@@ -103,6 +103,48 @@ XLock.usefirst:            True
 #define S_cyan          #2aa198
 #define S_green         #859900
 
+!*background:            S_base03
+!*foreground:            S_base00
+!*fading:                40
+!*fadeColor:             S_base03
+!*cursorColor:           S_base1
+!*pointerColorBackground:S_base01
+!*pointerColorForeground:S_base1
+!
+!!! black dark/light
+!*color8:                S_base02
+!*color0:                S_base03
+!
+!!! red dark/light
+!*color9:                S_red
+!*color1:                S_orange
+!
+!!! green dark/light
+!*color10:                S_green
+!*color2:               S_base01
+!
+!!! yellow dark/light
+!*color11:                S_yellow
+!*color3:               S_base00
+!
+!!! blue dark/light
+!*color12:                S_blue
+!*color4:               S_base0
+!
+!!! magenta dark/light
+!*color13:                S_magenta
+!*color5:               S_violet
+!
+!!! cyan dark/light
+!*color14:                S_cyan
+!*color6:               S_base1
+!
+!!! white dark/light
+!*color15:                S_base2
+!*color7:               S_base3
+
+
+
 *background:            S_base03
 *foreground:            S_base00
 *fading:                40
@@ -142,4 +184,6 @@ XLock.usefirst:            True
 !! white dark/light
 *color7:                S_base2
 *color15:               S_base3
+
+
 ! vim: ft=xdefaults
