@@ -74,8 +74,8 @@ let mapleader = ","
     nmap dN [c
 " }
 " Frustration {
-    nmap K k
-    vmap K k
+    " nmap K k
+    " vmap K k
     nmap S S<esc>
     noremap Q q:
     nnoremap Y y$

@@ -28,8 +28,8 @@ if !has("python")
     finish
 endif
 
-hi NoCoverageSign ctermbg=234 ctermfg=196 cterm=bold guibg=#ffcccc
-hi NoCoverage ctermbg=234 guibg=#ffcccc
+hi link NoCoverageSign Error
+hi link NoCoverage CursorColumn
 sign define NoCoverage text=!! texthl=NoCoverageSign linehl=NoCoverage
 
 if !exists("g:coverage_enabled")

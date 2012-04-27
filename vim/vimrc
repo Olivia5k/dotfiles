@@ -74,7 +74,8 @@
     set incsearch " highlight as you type you search phrase
     set scrolloff=5 " Keep 5 lines (top/bottom) for scope
     set sidescrolloff=5 " Keep 5 lines at the side
-    set novisualbell " don't blink
+    set visualbell " don't blink
+    set t_vb=
     set report=0 " always report number of lines changed
     set list " Show whitespace characters
 
@@ -128,11 +129,18 @@
     endif
 
     set foldtext=FoldWithLines() " See local/functions.vim
+
+    au FileType json setlocal foldlevel=100
 " }
 " Colorschemes {
     if has('gui') || &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
         let g:force_lofi = 0
-        colorscheme neverland
+        if $USER == 'bender' || $USER == 'daethorian'
+            let g:solarized_underline = 0 " <3
+            colorscheme solarized
+        else
+            colorscheme neverland
+        endif
     else
         let g:force_lofi = 1
         colorscheme ninjaloot
@@ -142,20 +150,19 @@
     au ColorScheme * runtime local/highlights.vim
 " }
 " GUI {
-    if has('gui')
+    if has('gui_running')
         if $USER == 'daethorian' || $USER == 'bender'
-            set guioptions=aegit  " Disable graphical elements
+            " These are settings that as closely as possible mimics terminal
+            " vim.
+            set guioptions=cagit  " Disable graphical elements
             set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 11 " hax0r font
+            colorscheme solarized
+            call togglebg#map(",sd")
 
             " No blinking cursor plz :(
             set guicursor=n-v-c:blinkon0-block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkon0
 
             set sj=0 " Scrolljump isn't needed here
-
-            " Need foldcolumn coolness :(
-            hi Folded guifg=#5F87AF guibg=#000000 gui=NONE
-            hi link FoldColumn Folded
-
             let g:Powerline_symbols = 'fancy'
         endif
     endif
