@@ -82,7 +82,7 @@
         EDITOR="vim"
     # }}}
     # User colorscheme {{{
-        export ZCOLOR="default"
+        export ZCOLOR="solarized"
     # }}}
     # User directories and logs {{{
         # Your mail directory. If set and exists, the prompt will look for new mail

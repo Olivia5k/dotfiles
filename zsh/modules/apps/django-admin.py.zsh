@@ -1,3 +1,6 @@
+autoload -U regexp-replace
+setopt re_match_pcre
+
 local psup=$XDG_DATA_HOME/python/djangoloader.py
 if [[ -f $psup ]]; then
     export PYTHONSTARTUP=$psup
@@ -99,7 +102,9 @@ _testcomplete() {
             if [[ $line[1,5] = "class" ]]; then
                 # Grab all lines that start with "class". Extract the name
                 # only.
-                reply+=(${${line#class }%%\(testtype\):})
+                line=${line#class }
+                regexp-replace line '\(.*' ""
+                reply+=($line)
             fi
         done
 
