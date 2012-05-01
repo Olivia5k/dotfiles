@@ -14,7 +14,6 @@
 [submodule "bundle/speeddating"]
 	path = bundle/speeddating
 	url = https://github.com/tpope/vim-speeddating.git
-
 # Colorschemes and UI
 [submodule "bundle/neverland"]
 	path = bundle/neverland
@@ -31,12 +30,10 @@
 [submodule "bundle/solarized"]
 	path = bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-
 # Templating
 [submodule "bundle/xptemplate"]
 	path = bundle/xptemplate
 	url = https://github.com/drmingdrmer/xptemplate.git
-
 # Input, objects and navigation
 [submodule "bundle/argtextobj"]
 	path = bundle/argtextobj
@@ -79,7 +76,6 @@
 [submodule "bundle/py.test"]
 	path = bundle/py.test
 	url = https://github.com/alfredodeza/pytest.vim.git
-
 # Misc
 [submodule "bundle/vimwiki"]
 	path = bundle/vimwiki
@@ -120,12 +116,6 @@
 [submodule "bundle/pymode"]
 	path = bundle/pymode
 	url = https://github.com/klen/python-mode.git
-[submodule "bundle/solarized"]
-	path = bundle/solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/gitv"]
 	path = bundle/gitv
 	url = https://github.com/gregsexton/gitv.git
