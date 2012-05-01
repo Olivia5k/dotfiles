@@ -28,6 +28,9 @@
 [submodule "bundle/powerline"]
 	path = bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "bundle/solarized"]
+	path = bundle/solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
 
 # Templating
 [submodule "bundle/xptemplate"]
@@ -56,6 +59,12 @@
 [submodule "bundle/yankring"]
 	path = bundle/yankring
 	url = https://github.com/chrismetcalf/vim-yankring.git
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
 
 # Syntax and testing
 [submodule "bundle/syntastic"]
@@ -64,9 +73,6 @@
 [submodule "bundle/qfstatus"]
 	path = bundle/qfstatus
 	url = https://github.com/dannyob/quickfixstatus.git
-[submodule "bundle/rope"]
-	path = bundle/rope
-	url = https://github.com/daethorian/rope-vim.git
 [submodule "bundle/vimpdb"]
 	path = bundle/vimpdb
 	url = https://github.com/gotcha/vimpdb.git
@@ -108,9 +114,6 @@
 [submodule "bundle/github"]
 	path = bundle/github
 	url = https://github.com/xonecas/github-vim-colorscheme.git
-[submodule "bundle/ctrlp"]
-	path = bundle/ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
 [submodule "bundle/uzbl-reloader"]
 	path = bundle/uzbl-reloader
 	url = git://github.com/daethorian/vim-uzbl-reloader.git
