@@ -46,11 +46,11 @@
 " XPTemplate {
     " let g:xptemplate_snippet_folders=['$HOME/.vim/xpt']
     let g:xptemplate_brace_complete = 0  " Delimitmate, bitches
-    let g:xptemplate_key = 'ö'  " Main snippet key
+    let g:xptemplate_key = '<Tab>'  " Main snippet key
     let g:xptemplate_key_pum_only = '<C-F>'  " Popup key
     let g:xptemplate_nav_cancel = '<C-D>'  " Cancel key
-    let g:xptemplate_nav_next = '<Tab>'  " Next key
-    let g:xptemplate_goback = '<S-Tab>'  " Prev key
+    let g:xptemplate_nav_next = '<C-J>'  " Next key
+    let g:xptemplate_goback = '<C-K>'  " Prev key
     let g:xptemplate_to_right = '<C-L>'  " Exit key
     let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 
@@ -82,13 +82,12 @@
     endif
 " }
 " Powerline {
-    " let Powerline_theme = 'distinguished'
+    let Powerline_theme = 'default'
+    let Powerline_colorscheme = 'default'
     " let g:Powerline_symbols = 'compatible'
-    "let Powerline_cachefile = ""
+    let Powerline_cachefile = ""
 " }
 " Python mode {
-    " Disable pylint checking every save
-    let g:pymode_lint_write = 0
     " Set key 'R' for run python code
     let g:pymode_run_key = 'R'
 
@@ -98,16 +97,16 @@
     let g:pymode_doc_key = 'K'
 
     " Load run code plugin
-    let g:pymode_run = 1
+    let g:pymode_run = 0
 
     " Key for run python code
     let g:pymode_run_key = '<leader>pr'
 
     " Load pylint code plugin
-    let g:pymode_lint = 1
+    let g:pymode_lint = 0
     " Switch pylint, pyflakes, pep8, mccabe code-checkers
     " Can have multiply values "pep8,pyflakes,mcccabe"
-    let g:pymode_lint_checker = "pylint"
+    let g:pymode_lint_checker = "pyflakes"
     " Skip errors and warnings
     " E.g. "E501,W002", "E2,W" (Skip all Warnings and Errors startswith E2) and etc
     let g:pymode_lint_ignore = "E501"
@@ -120,9 +119,9 @@
     " If file not found use 'pylintrc' from python-mode plugin directory
     let g:pymode_lint_config = "$HOME/.pylintrc"
     " Check code every save
-    let g:pymode_lint_write = 1
+    let g:pymode_lint_write = 0
     " Auto open cwindow if errors be finded
-    let g:pymode_lint_cwindow = 1
+    let g:pymode_lint_cwindow = 0
     " Show error message if cursor placed at the error line
     let g:pymode_lint_message = 1
     " Auto jump on first error
@@ -144,7 +143,7 @@
     " Enable autoimport
     let g:pymode_rope_enable_autoimport = 1
     " Auto generate global cache
-    let g:pymode_rope_autoimport_generate = 1
+    let g:pymode_rope_autoimport_generate = 0
     let g:pymode_rope_autoimport_underlineds = 0
     let g:pymode_rope_codeassist_maxfixes = 10
     let g:pymode_rope_sorted_completions = 1
@@ -161,13 +160,13 @@
     " Load python objects and motion
     let g:pymode_motion = 1
     " Load breakpoints plugin
-    let g:pymode_breakpoint = 1
+    let g:pymode_breakpoint = 0
     " Key for set/unset breakpoint
     let g:pymode_breakpoint_key = '<leader>b'
     " Autoremove unused whitespaces
-    let g:pymode_utils_whitespaces = 1
+    let g:pymode_utils_whitespaces = 0
     " Auto fix vim python paths if virtualenv enabled
-    let g:pymode_virtualenv = 1
+    let g:pymode_virtualenv = 0
     " Set default pymode python indent options
     let g:pymode_options_indent = 1
     " Set default pymode python fold options
@@ -224,7 +223,7 @@
     " However, ö is now the main xpt trigger key, which conflicts here in
     " visual mode. Experiment with the more traditional #.
     nmap ö \\\
-    vmap # \\\
+    vmap ö \\\
 " }
 " vimwiki {
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
@@ -243,9 +242,14 @@
     vmap ( S(
     vmap [ S[
     vmap { S{
-"
-" Solarized {
+    " }}
+" }
+" unimpaired {
+    nmap <A-j> ]e
+    nmap <A-k> [e
 
+    vmap <A-j> ]egv
+    vmap <A-k> [egv
 " }
 
 " vim: set et:sw=4:fdm=marker:fmr={,}
