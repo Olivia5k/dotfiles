@@ -3,7 +3,8 @@ xset r rate 330 45 &
 xrdb ~/.Xresources
 
 exec xsetroot -cursor_name left_ptr &
-exec unclutter -idle 5 -root &
+exec unclutter -idle 1 -root &
+exec keynav &
 /home/daethorian/bin/wp &
 
 exec i3 -V &> /home/daethorian/.logs/i3.log

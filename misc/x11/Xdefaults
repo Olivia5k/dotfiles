@@ -3,27 +3,25 @@
 *.saveLines:               100
 *.urgentOnBell:            true
 *.perl-ext-common:         default,matcher,url-select,bell-command
+*.perl-ext:                searchable-scrollback<M-o>
 *.urlLauncher:             /home/daethorian/bin/www
 *.matcher.button:          1
 *.matcher.pattern.1:       \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
 *.meta8:                   false
 *.underlineURLs:           true
 *.transparent:             false
-*.shading:                 10
-*.fading:                  30
+!*.shading:                 10
+!*.fading:                  30
 *.bell-command:            /home/daethorian/bin/slig
 *.keysym.M-u:              perl:url-select:select_next
 
-!*.font:                    xft:montecarlo:pixelsize=11
-!*.boldFont:                xft:montecarlo:bold:pixelsize=11
-!*bigfont*.font:            xft:inconsolata:pixelsize=14
-!*bigfont*.boldFont:        xft:inconsolata:bold:pixelsize=14
 *.font:                    xft:inconsolata:pixelsize=14
 *.boldFont:                xft:inconsolata:bold:pixelsize=14
-*bigfont*.font:            xft:montecarlo:pixelsize=11
-*bigfont*.boldFont:        xft:montecarlo:bold:pixelsize=11
+!*.font:                    xft:montecarlo:pixelsize=11
+!*.boldFont:                xft:montecarlo:bold:pixelsize=11
+
 Xft.dpi:                   75.0
-!
+
 ! XLock
 XLock.fpsfont:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.font:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
