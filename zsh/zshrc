@@ -29,6 +29,9 @@
 #    Add exitstatus resetter
 # Fix the completion-adds-letter bug
 
+fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
+autoload -Uz compinit
+compinit
 
 # Colors. You are expected to be wanting those.
 autoload colors zsh/terminfo
@@ -38,6 +41,9 @@ autoload -Uz vcs_info
 
 # zshs awesome renamer
 autoload zmv
+
+# lol keys
+bindkey -e
 
 function _zdebug() {
     if [[ -n "$ZDEBUG" ]]; then
@@ -76,9 +82,6 @@ function _modload() {
 # zsh configuration directory; dynamically found
 export ZSHCONFDIR=$(dirname $(readlink $HOME/.zshrc))
 
-# Colorscheme. Load default as fallback
-source $ZSHCONFDIR/colorschemes/default.zsh
-
 # The most useful alias there ever was
 alias zz="source ~/.zshrc"
 
@@ -95,6 +98,12 @@ if [[ -f $USERFILE ]] || [[ -L $USERFILE ]] ; then
     source $USERFILE
 else
     source $ZSHCONFDIR/daethorian.zsh
+fi
+
+# Colorscheme. Load default as fallback
+cf=$ZSHCONFDIR/colorschemes/$ZCOLOR.zsh
+if [[ -f "$cf" ]] ; then
+    source $cf
 fi
 
 HASMULTI=$([[ -n "$MULTI" ]] && _has $MULTI)

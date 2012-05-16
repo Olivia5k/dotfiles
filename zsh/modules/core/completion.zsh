@@ -1,7 +1,7 @@
 zstyle :compinstall filename '~/.zshrc'
 
-autoload -Uz compinit
-compinit -d $COMPDUMP
+#autoload -Uz compinit
+#compinit -d $COMPDUMP
 
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
@@ -16,7 +16,7 @@ zstyle ':completion:*:manuals.(^1*)' insert-sections true
 zstyle ':completion:*' menu select
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path $ZDOTDIR/zcompcache
+zstyle ':completion:*' cache-path /tmp/.$USER.zshcompcache
 zstyle ':completion:*' hosts off
 
 # tab completion for PID :D

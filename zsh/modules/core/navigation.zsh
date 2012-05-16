@@ -44,15 +44,12 @@ function rationalise-dot() {
         LBUFFER+=/
         zle self-insert
         zle self-insert
-    else
-        zle self-insert
-    fi
 
-    # Print the absolute path below the prompt if we have given ".."
-    if [[ $LBUFFER =~ '\.\.$' ]]; then
         split-shell-arguments
         (( REPLY -= 1 ))  # The actual $REPLY is whitespace. See doc for ssa.
         zle -M ${reply[$REPLY]:a}
+    else
+        zle self-insert
     fi
 }
 

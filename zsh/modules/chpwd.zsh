@@ -47,7 +47,7 @@ function _inline-updir() {
 function _inline-back() {
     if ! popd -q; then
         zle -M 'Directory stack empty'
-        sleep 1
+        sleep 0.5
     fi
     zle .reset-prompt
 }
