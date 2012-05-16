@@ -17,8 +17,8 @@
 # they need to be set _and_ have a value of true. This way both commenting them
 # out and setting them to false will have immediate effect.
 
-# User settings
-    # User information
+# User settings {{{
+    # User information {{{
         # Your main alias. If $USER is the same as $ALIAS, the prompt will save
         # space and only show the hostname instead of both the username and the
         # hostname.
@@ -34,7 +34,8 @@
         # Your email adress. Used with git configurations.
         export EMAIL="${ALIAS}@$REMOTE"
 
-    # User prompt settings
+    # }}}
+    # User prompt settings {{{
         # Your prompt mode. Currently four modes are supported:
         # #0: A simple % (user) or # (root). No more, no less. Used for minimalism.
         # #1: $USER@$HOST $PWD. Identical to Gentoos basic bash prompt. Used for consoles.
@@ -74,18 +75,18 @@
         # Make root timeout after 90 seconds for security reasons.
         # Unset (and/or comment out here) to disable.
         export ROOT_TIMEOUT=90
-
-    # User configurations
+    # }}}
+    # User configurations {{{
         export CONFIG="$HOME/config"
-
-    # User editor
+    # }}}
+    # User editor {{{
         EDITOR="vim"
-
-    # User colorscheme
+    # }}}
+    # User colorscheme {{{
         export ZCOLOR="default"
         source $ZSHCONFDIR/colorschemes/$ZCOLOR.zsh
-
-    # User directories and logs
+    # }}}
+    # User directories and logs {{{
         # Your mail directory. If set and exists, the prompt will look for new mail
         # in maildirs within it. The principle is simple and very primitive, so any
         # file within a directory named new/ inside $MAIL will trigger the mail
@@ -102,19 +103,19 @@
         HISTFILE="$LOGS/zsh.history.log"
         HISTSIZE=100000
         SAVEHIST=100000
-
-    # User laptop settings
+    # }}}
+    # User laptop settings {{{
         # Your home network name. Used with netcfg.
         export HOMENET="ninjanet"
-
-    # User multiplexer
+    # }}}
+    # User multiplexer {{{
         # Your terminal multiplexer. If installed and you are not currently in it
         # (whether you are or not is decided if $TERM is equal to $MULTITERM) the
         # PWD in the prompt will be red. Unset $MULTI to disable.
         export MULTI='tmux'
         export MULTITERM='screen-256color'
-
-    # User chpwd, PATH and paths
+    # }}}
+    # User chpwd, PATH and paths {{{
         # When I used lscmd() (included in main zshrc) and found out that 25% of all
         # the commands I ever used in zsh was ls, I figured that it could be more
         # effective and put ls into chpwd.
@@ -145,15 +146,15 @@
         export XDG_CONFIG_HOME="$HOME/.config"
         export XDG_DATA_DIRS="/usr/share/:/usr/local/share/"
         export XDG_DATA_HOME="$HOME/.local/share"
-
-    # User coreutils options
+    # }}}
+    # User coreutils options {{{
         # It is not uncommon to always supply some arguments to common commands. ls
         # and grep needs colors, right?
         export LSOPTS='--color=auto --group-directories-first'
         export GREPOPTS='--color=auto'
-
-
-# Modules
+    # }}}
+# }}}
+# Modules {{{
     # zsh module directory
     export ZMODDIR="$ZSHCONFDIR/modules"
 
@@ -195,8 +196,8 @@
     done
     unset m
 
-
-# User zsh specifics
+# }}}
+# User zsh specifics {{{
     # zsh specific directory that the core shell might use for dumping etc. Only
     # used when set.
     export ZDUMPDIR="$XDG_DATA_HOME/zsh"
@@ -211,8 +212,8 @@
     # The globbing!
     setopt extendedglob
     umask 022
-
-# User custom whatever
+# }}}
+# User custom whatever {{{
     # Put whatever else you want here that is specific to your setup.
     if _has mpc; then
         export MPD_HOST=localhost
@@ -263,6 +264,6 @@
 
     # For use of libs you compiled yourself.
     export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
-#
+# }}}
 
-# vim: ft=zsh fmr=,
+# vim: ft=zsh fmr={{{,}}}
