@@ -94,3 +94,23 @@ function ips() {
         print -P "%F{${c[19]}}%BAvahi%b%f: %F{${c[27]}}%B${avahi}%b%f"
     fi
 }
+
+# Kill based on port!
+function kill_port() {
+    port=${1:-8000}
+    sig=${2:-9}
+
+    d="[[:digit:]]"
+    b="[[:blank:]]"
+
+    pid=$(netstat -apn 2> /dev/null | grep ":${port}${b}" | grep -Eo "$d+/")
+    pid=${pid%%/}
+
+    if [[ -z "$pid" ]] ; then
+        echo "No process found at $port"
+        return
+    fi
+
+    kill -$sig $pid
+}
+alias kp="kill_port"
