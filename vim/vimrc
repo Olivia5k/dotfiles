@@ -135,12 +135,7 @@
 " Colorschemes {
     if has('gui') || &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
         let g:force_lofi = 0
-        if $USER == 'bender' || $USER == 'daethorian'
-            let g:solarized_underline = 0 " <3
-            colorscheme solarized
-        else
-            colorscheme neverland
-        endif
+        colorscheme neverland
     else
         let g:force_lofi = 1
         colorscheme ninjaloot
@@ -155,9 +150,7 @@
             " These are settings that as closely as possible mimics terminal
             " vim.
             set guioptions=cagit  " Disable graphical elements
-            set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 11 " hax0r font
-            colorscheme solarized
-            call togglebg#map(",sd")
+            set guifont=Inconsolata\ 13 " hax0r font
 
             " No blinking cursor plz :(
             set guicursor=n-v-c:blinkon0-block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkon0
