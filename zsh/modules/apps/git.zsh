@@ -21,7 +21,7 @@ function +vi-git-st() {
     branch=${hook_com[branch]}
 
     # Are we on a remote-tracking branch?
-    remote=${$(git rev-parse --verify ${b}@{upstream} \
+    remote=${$(git rev-parse --verify ${branch}@{upstream} \
         --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
     if [[ -n ${remote} ]] ; then
