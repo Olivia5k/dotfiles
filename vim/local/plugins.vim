@@ -225,6 +225,10 @@
     nmap ö \\\
     vmap ö \\\
 " }
+" NERDTree {
+    nmap ,t :NERDTree<cr><C-W>=
+" }
+" true
 " vimwiki {
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 " }
@@ -239,9 +243,9 @@
     vmap " S"
     vmap ' S'
     vmap t St
-    vmap ( S(
-    vmap [ S[
-    vmap { S{
+    vmap ( S)
+    vmap [ S]
+    vmap { S}
     " }}
 " }
 " unimpaired {

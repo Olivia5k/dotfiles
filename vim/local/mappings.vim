@@ -32,6 +32,8 @@ let mapleader = ","
     nmap <A-s> ,hs
     nmap <Leader>hs /\('.\{-}'\\|".\{-}"\)<cr>
     nmap <Leader>m :make<cr>
+    nmap <A-i> a<C-T><esc>
+    nmap t a<C-T><esc>
 " }
 " Turbo switching {
     " Expands %% into the directory containing the current buffer!
@@ -80,6 +82,7 @@ let mapleader = ","
     noremap Q q:
     nnoremap Y y$
     " nnoremap ; :
+    nmap zE :echo "Don't do that."<cr>
 " }
 
 " vim: set et:sw=4:fmr=marker:fdm={,}
