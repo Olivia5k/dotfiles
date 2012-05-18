@@ -11,19 +11,10 @@
 [submodule "bundle/commentary"]
 	path = bundle/commentary
 	url = https://github.com/tpope/vim-commentary.git
-[submodule "bundle/speeddating"]
-	path = bundle/speeddating
-	url = https://github.com/tpope/vim-speeddating.git
 # Colorschemes and UI
 [submodule "bundle/neverland"]
 	path = bundle/neverland
 	url = https://github.com/daethorian/neverland-vim-theme.git
-[submodule "bundle/zenburn"]
-	path = bundle/zenburn
-	url = https://github.com/vim-scripts/Zenburn.git
-[submodule "bundle/molokai"]
-	path = bundle/molokai
-	url = https://github.com/tomasr/molokai.git
 [submodule "bundle/powerline"]
 	path = bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
@@ -50,12 +41,6 @@
 [submodule "bundle/easymotion"]
 	path = bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
-[submodule "bundle/lusty"]
-	path = bundle/lusty
-	url = https://github.com/sjbach/lusty.git
-[submodule "bundle/yankring"]
-	path = bundle/yankring
-	url = https://github.com/chrismetcalf/vim-yankring.git
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
@@ -70,12 +55,6 @@
 [submodule "bundle/qfstatus"]
 	path = bundle/qfstatus
 	url = https://github.com/dannyob/quickfixstatus.git
-[submodule "bundle/vimpdb"]
-	path = bundle/vimpdb
-	url = https://github.com/gotcha/vimpdb.git
-[submodule "bundle/py.test"]
-	path = bundle/py.test
-	url = https://github.com/alfredodeza/pytest.vim.git
 # Misc
 [submodule "bundle/vimwiki"]
 	path = bundle/vimwiki

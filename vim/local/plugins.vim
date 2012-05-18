@@ -203,10 +203,6 @@
 " }
 
 " Helper plugins
-" Lusty {
-    " Dat silence
-    let g:LustyJugglerSuppressRubyWarning = 1
-" }
 " CtrlP {
     " Quick bindings
     nmap <A-d> :CtrlP<cr>
