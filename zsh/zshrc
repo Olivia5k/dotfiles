@@ -5,9 +5,25 @@
 # TODO:
 # Fix the completion-adds-letter bug
 
+# zsh configuration directory; dynamically found
+export ZSHRC="$HOME/.zshrc"
+export ZSHCONFDIR=$ZSHRC:A:h
+export CONFIG=$ZSHCONFDIR:h
+
+# The XDG standard is indeed quite exquisite.
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share/:/usr/local/share/}
+export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+
+export TCOLORS=$(echotc Co)
+
 fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
-autoload -Uz compinit; compinit
-autoload colors zsh/terminfo  # Colors. You are expected to be wanting those.
+autoload -Uz compinit
+compinit -d $XDG_DATA_HOME/zsh/compdump
+
+autoload colors zsh/terminfo  # Colors
 autoload -Uz vcs_info  # git integration
 bindkey -e
 
@@ -35,15 +51,6 @@ function _modload() {
         fi
     done
 }
-
-# zsh configuration directory; dynamically found
-export ZSHCONFDIR=$0:A:h
-export CONFIF=$ZSHCONFDIR:h
-
-# The most useful alias there ever was
-alias zz="source ~/.zshrc"
-
-export TCOLORS=$(echotc Co)
 
 # LS_COLORS. Placed in master as part of the main conf.
 lscf=$ZSHCONFDIR/modules/ext/LS_COLORS/LS_COLORS

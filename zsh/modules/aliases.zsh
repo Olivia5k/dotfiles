@@ -1,3 +1,6 @@
+# The most useful alias there ever was
+alias zz="source $ZSHRC"
+
 alias grep="grep $GREPOPTS"
 alias :q="exit"
 alias bell='echo -en "\007"'

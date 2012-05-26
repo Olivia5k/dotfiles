@@ -43,28 +43,13 @@
         export PATH=$_PATH:$PATH
     fi
 
-    # The XDG standard is indeed quite exquisite.
-    if [[ -z "$XDG_CACHE_HOME" ]]; then
-        export XDG_CACHE_HOME="$HOME/.cache"
-        export XDG_CONFIG_DIRS="/etc/xdg"
-        export XDG_CONFIG_HOME="$HOME/.config"
-        export XDG_DATA_DIRS="/usr/share/:/usr/local/share/"
-        export XDG_DATA_HOME="$HOME/.local/share"
-    fi
-
     # It is not uncommon to always supply some arguments to common commands. ls
     # and grep needs colors, right?
     export LSOPTS='--color=auto --group-directories-first'
     export GREPOPTS='--color=auto'
 # }}}
 # User zsh specifics {{{
-    # zsh specific directory that the core shell might use for dumping etc. Only
-    # used when set.
-    export ZDUMPDIR="$XDG_DATA_HOME/zsh"
-
-    # The completion system uses a cache file to speed up completion. To avoid
-    # cluttering the $HOME, it is put inside $ZDUMPDIR
-    export COMPDUMP="$ZDUMPDIR/compdump"
+    export ZDUMPDIR=
 
     # The globbing!
     setopt extendedglob
@@ -75,25 +60,9 @@
     export ZMODDIR="$ZSHCONFDIR/modules"
 
     # Core modules are recommended and should most probably always be loaded.
-    for i in $ZMODDIR/core/* ; do
+    for i in $ZMODDIR/*.zsh(n) ; do
         _modload $i
     done
-
-    # Chpwd. If you want commands executed on cd, this is the way to go.
-    _modload "chpwd"
-
-    # Colorscheme printers. Only useful if you customize alot.
-    _modload "colors"
-
-    # Configuration specific aliases
-    _modload "conf"
-
-    # Failsafe aliases that catches common misspelled commands and runs the
-    # original ones. Also, it is incredibly angry.
-    _modload "failsafe"
-
-    # Management of local home path
-    _modload "install"
 
     # Shell syntax highlighting. Cannot be sourced by _modload
     source $ZMODDIR/syntax.zsh
