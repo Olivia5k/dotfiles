@@ -41,7 +41,8 @@ function precmd() {
             # Find the git root.
             cur=$PWD
             until [[ -z "$cur" ]]; do
-                if [[ -d "$cur/.git" ]]; then
+                # -r finds dirs and files. new-style submods are files.
+                if [[ -r "$cur/.git" ]]; then
                     break
                 fi
                 cur=${cur%/*}
