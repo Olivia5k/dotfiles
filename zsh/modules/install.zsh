@@ -7,14 +7,14 @@ function ins() {
             local target=$(basename $1)
         fi
 
-        if ! _has $target ; then
+        if ! has $target ; then
             print -P "Installing %B%F{${c[19]}}$(basename $1)%f%b as %B%F{${c[19]}}${target}%f%b"
             ln -s $f $HOMEBIN/$target
         else
-            _zerror "$target is already installed"
+            zerror "$target is already installed"
         fi
     else
-        _zerror "$(basename $f) is not an executable file"
+        zerror "$(basename $f) is not an executable file"
     fi
 }
 
@@ -24,6 +24,6 @@ function unins() {
         print -P "Uninstalling %B%F{${c[19]}}$(basename $1)%f%b."
         unlink $f
     else
-        _zerror "$(basename $f) is not installed"
+        zerror "$(basename $f) is not installed"
     fi
 }

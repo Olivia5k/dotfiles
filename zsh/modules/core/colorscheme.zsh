@@ -9,7 +9,6 @@ function color() {
         colorscheme="default"
     fi
 
-    _zdebug "Setting colorscheme to $colorscheme"
     source $ZSHCONFDIR/colorschemes/$colorscheme.zsh
 }
 

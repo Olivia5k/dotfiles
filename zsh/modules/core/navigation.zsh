@@ -20,7 +20,7 @@ function tm() {
             echo "TMOUT set to $1"
             export TMOUT=$1
         else
-            _zerror "TMOUT needs to be set to a numerical value."
+            zerror "TMOUT needs to be set to a numerical value."
         fi
     else
         if [[ -n "$TMOUT" ]] ; then

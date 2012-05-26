@@ -37,7 +37,7 @@ function dirdiff() {
         _dirdiff $1 $2
         _dirdiff $2 $1
     else
-        _zerror "Both arguments must be valid directories"
+        zerror "Both arguments must be valid directories"
     fi
 }
 

@@ -5,7 +5,7 @@ alias reboot='sudo reboot'
 # grep processes and retain grep color
 function psg() {
     if [[ -z "$1" ]] ; then
-        _zerror "Arguments plx"
+        zerror "Arguments plx"
         return
     fi
 
@@ -114,3 +114,8 @@ function kill_port() {
     kill -$sig $pid
 }
 alias kp="kill_port"
+
+# https://github.com/sickill/stderred
+if [ -f "/usr/lib/stderred.so" ]; then
+    export LD_PRELOAD="/usr/lib/stderred.so"
+fi

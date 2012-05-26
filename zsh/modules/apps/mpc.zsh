@@ -8,7 +8,7 @@ alias mpls='mpx && mpll' # Playlist switch
 alias mpp='np play'
 alias mpr='np random'
 
-if _has mpcext ; then
+if has mpcext ; then
     alias mpg='mpcext -s'
     alias mpag='mpcext -S' # grep all
     alias mpgs='mpcext -sw' # grep switch

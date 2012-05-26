@@ -30,6 +30,6 @@ if [[ $TCOLORS = 256 ]] ; then
 
     export c
 else
-    _zerror "This colorscheme requires a terminal that supports 256 colors."
-    _zerror $TCOLORS
+    zerror "This colorscheme requires a terminal that supports 256 colors."
+    zerror "You've got $TCOLORS."
 fi

@@ -161,7 +161,7 @@ function dsh() {
 
 function dsr() {
     if [[ ! -f "$PWD/manage.py" ]]; then
-        _zerror "No django manager found. Exiting"
+        zerror "No django manager found. Exiting"
         return 1
     fi
 
@@ -187,12 +187,12 @@ function dsr() {
 
 function dr() {
     if [[ ! -f "manage.py" ]] ; then
-        _zerror "No django manager found. Exiting"
+        zerror "No django manager found. Exiting"
         return 1
     fi
 
 
-    if _has gunicorn_django; then
+    if has gunicorn_django; then
         local workers=${GUNICORN_WORKERS:-9}
         local pid=${GUNICORN_PID:-/tmp/gunicorn.pid}
         local worker=${GUNICORN_WORKER}

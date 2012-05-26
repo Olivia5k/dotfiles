@@ -2,6 +2,11 @@ function chpwd() {
     ls
 }
 
+function mkcd() {
+    mkdir -p $1 &> /dev/null
+    cd $1
+}
+
 function cd () {
     local opt=""
     if [[ ${+2} = 0 ]]; then

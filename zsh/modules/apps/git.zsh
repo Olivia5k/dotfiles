@@ -136,7 +136,7 @@ function gbr() {
 
         echo "Branch $branch now tracking $remote"
     else
-        _zerror "Tell me a branch, fool."
+        zerror "Tell me a branch, fool."
     fi
 }
 
@@ -149,7 +149,7 @@ function gbu() {
 
         git branch $branch --set-upstream $remote/$remote_branch
     else
-        _zerror "Tell me a branch and a remote, fool."
+        zerror "Tell me a branch and a remote, fool."
     fi
 }
 
@@ -173,11 +173,10 @@ function gcu() {
         name="$1"
         email="$2"
     elif [[ -n "$FULLNAME" ]] && [[ -n "$EMAIL" ]] ; then
-        _zdebug "Not enough arguments; defaulting to default data"
         name="$FULLNAME"
         email="$EMAIL"
     else
-        _zerror "gcu() needs two arguments or default data set in userfile."
+        zerror "gcu() needs two arguments or default data set in userfile."
         return 1
     fi
 
@@ -214,7 +213,7 @@ function gr() {
     elif [[ -d "$PWD/.git" ]]; then
         echo "Already at project root"
     else
-        _zerror "Currently not in a git repository"
+        zerror "Currently not in a git repository"
     fi
 }
 

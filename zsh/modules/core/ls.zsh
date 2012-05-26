@@ -1,4 +1,4 @@
-if _has ls++; then
+if has ls++; then
     ls="ls++ --group-directories-first"
     alias ll="/bin/ls $LSOPTS"
 else

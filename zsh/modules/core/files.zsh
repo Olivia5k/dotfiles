@@ -39,14 +39,14 @@ function s2d() {
 # Backup a file
 function bak() {
     if [[ -z "$1" ]] ; then
-        _zerror "No arguments given."
+        zerror "No arguments given."
         return
     fi
 
     local ext=${$2:-".bak"}
     local dest="$1.$ext"
     if [[ -f $dest ]] || [[ -d $dest ]] ; then
-        _zerror "Backup destination $dest already exists."
+        zerror "Backup destination $dest already exists."
         return
     fi
 
@@ -56,16 +56,16 @@ function bak() {
 # Hide or unhide files.
 function hide() {
     if [[ -z "$1" ]] ; then
-        _zerror "No arguments given"
+        zerror "No arguments given"
         return
     fi
 
     for f in $* ; do
         if [[ ! -f $f ]] ; then
-            _zerror "$f: Not a file"
+            zerror "$f: Not a file"
             continue
         elif [[ ! -w $f ]] ; then
-            _zerror "$f: Not writable"
+            zerror "$f: Not writable"
             continue
         fi
 
@@ -80,7 +80,7 @@ function hide() {
         fi
 
         if [[ -f $dest ]] ; then
-            _zerror "Destination file $dest exists"
+            zerror "Destination file $dest exists"
             continue
         fi
 
@@ -102,7 +102,7 @@ function rmext() {
 # Extract files from archives
 function x() {
     if [[ -z "$1" ]] ; then
-        _zerror "No files given."
+        zerror "No files given."
         return
     fi
 

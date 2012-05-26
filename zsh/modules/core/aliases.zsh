@@ -14,7 +14,7 @@ if [[ -n "$DISPLAY" ]] ; then
     alias aoeu="xq"
     alias asdf="xa"
 
-    if _has urxvt ; then
+    if has urxvt ; then
         alias u='urxvt &| exit'
         alias us='urxvt -name smallfont &| exit'
     fi
