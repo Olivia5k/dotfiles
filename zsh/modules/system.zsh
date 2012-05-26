@@ -23,15 +23,17 @@ function d() {
             else
                 co=${c[20]}
             fi
-            print -P "%B%F{$co}${d}%f%b"
+            print -P "%B${co}${d}%f%b"
         done
         return
     fi
 
+    cmd=${2:-restart}
+
     if [[ "$UID" = 0 ]] ; then
-        /etc/rc.d/$1 $2
+        /etc/rc.d/$1 $cmd
     else
-        sudo /etc/rc.d/$1 $2
+        sudo /etc/rc.d/$1 $cmd
     fi
 }
 
