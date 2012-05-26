@@ -66,8 +66,8 @@ function ips() {
     for i in $(ifconfig -a | grep -Eo "^[a-z0-9]+"); do
         ifdata=$(ifconfig $i)
 
-        ip=$(echo $ifdata | grep -Eo "inet addr:[0-9.]* " | grep -Eo "([0-9]+\.?){4}")
-        ip6=$(echo $ifdata | grep -Eo "inet6 addr: [a-f0-9:/]* " | grep -Eo "[a-f0-9:/]+ $")
+        ip=$(echo $ifdata | grep -Eo "inet (addr:)?[0-9.]* " | grep -Eo "([0-9]+\.?){4}")
+        ip6=$(echo $ifdata | grep -Eo "inet6 (addr:)? [a-f0-9:/]* " | grep -Eo "[a-f0-9:/]+ $")
 
         if [[ -n "$ip" ]] ; then
             s="${c[19]}%B${i}%b%f: ${c[27]}%B${ip}%b%f"
