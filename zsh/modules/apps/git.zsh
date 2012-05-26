@@ -1,13 +1,13 @@
 export HASCVS=true
 
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}"
-zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}"
+zstyle ':vcs_info:*' unstagedstr "${c[16]}"
+zstyle ':vcs_info:*' stagedstr "${c[18]}"
 
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
-f="%B%F{${c[14]}}%r%F{${c[1]}}(%a%F{${c[15]}}%u%c%b%m%F{${c[1]}}):%F{${c[4]}}/%S"
+f="%B${c[14]}%r${c[1]}(%a${c[15]}%u%c%b%m${c[1]}):${c[4]}/%S"
 zstyle ':vcs_info:git*' formats $f
 zstyle ':vcs_info:git*' actionformats $f
 
@@ -30,13 +30,13 @@ function +vi-git-st() {
         ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
         behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
 
-        (( $ahead + $behind )) && str+="%F{${c[1]}}:"  # Dark colon if any
-        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"  # Ahead
-        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"  # Dark slash
-        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"  # Behind
+        (( $ahead + $behind )) && str+="${c[1]}:"  # Dark colon if any
+        (( $ahead )) && str+="${c[15]}+${ahead}%f"  # Ahead
+        (( $ahead )) && (( $behind )) && str+="${c[1]}/"  # Dark slash
+        (( $behind )) && str+="${c[16]}-${behind}%f"  # Behind
     else
         # Just add a red colon to mark non-tracking branch
-        str="${branch}%F{${c[16]}}:"
+        str="${branch}${c[16]}:"
     fi
 
     hook_com[branch]=$str
@@ -48,7 +48,7 @@ function +vi-git-stash() {
 
     if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
         stashes=$(git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+="%F{${c[1]}}:%F{${c[4]}}${stashes}st%F{${c[1]}}"
+        hook_com[misc]+="${c[1]}:${c[4]}${stashes}st${c[1]}"
     fi
 }
 
@@ -56,7 +56,7 @@ function +vi-git-stash() {
 function +vi-git-action() {
     local s="${hook_com[action]}"
     if [[ -n "$s" ]] ; then
-        hook_com[action]="%F{${c[6]}}omg ${s}!%F{${c[1]}}:"
+        hook_com[action]="${c[6]}omg ${s}!${c[1]}:"
     fi
 }
 

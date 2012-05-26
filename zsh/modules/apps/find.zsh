@@ -45,7 +45,7 @@ function _dirdiff() {
     local listfile="/tmp/.zshlistfile"
     find $2 -type f > $listfile
 
-    print -P "\n%BFiles in %F{${c[4]}}${1}%f not in %F{${c[4]}}${2}%f%b:"
+    print -P "\n%BFiles in ${c[4]}${1}%f not in ${c[4]}${2}%f%b:"
     for i in $(find $1 -type f) ; do
         f=$(basename $i)
         if ! grep $f $listfile &> /dev/null; then

@@ -22,7 +22,7 @@ function _colorcomplete() {
 }
 
 # Completion \o/
-compctl -Y "%B%F{${c[24]}}colorscheme%f%b" -K _colorcomplete color
+compctl -Y "%B${c[24]}colorscheme%f%b" -K _colorcomplete color
 
 if [[ -z "$ZCOLORSCHEME" ]]; then
     color $ZCOLOR

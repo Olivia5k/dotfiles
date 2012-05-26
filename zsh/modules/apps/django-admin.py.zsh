@@ -150,9 +150,9 @@ _appscomplete() {
 }
 
 # Completion \o/
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dt
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dtc
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _appscomplete mm
+compctl -Y "%B${c[24]}app%f%b" -K _testcomplete dt
+compctl -Y "%B${c[24]}app%f%b" -K _testcomplete dtc
+compctl -Y "%B${c[24]}app%f%b" -K _appscomplete mm
 
 function dsh() {
     mysql -e "drop database $LOCALDB ; create database $LOCALDB character set utf8 collate utf8_general_ci;"
