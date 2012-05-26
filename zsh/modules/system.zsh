@@ -53,12 +53,7 @@ compctl -Y "%B${c[24]}daemon%f%b" -K _daemoncomplete d
 
 # Control wireless network
 function nr() {
-    if [[ -n "$1" ]] ; then
-        wlan=$1
-    else
-        wlan=$HOMENET
-    fi
-
+    wlan=${1:-$HOMENET}
     sudo netcfg -d $wlan &> /dev/null
     sudo netcfg $wlan
 }
