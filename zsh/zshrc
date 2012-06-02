@@ -71,8 +71,8 @@ if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
     TMOUT=$ROOT_TIMEOUT
 fi
 
-# zsh-filedb. Quickfast!
-fdb=$ZSHCONFDIR/modules/ext/zsh-filedb/filedb.zsh
+# zsh-sysadmin. Quickfast!
+fdb=$ZSHCONFDIR/modules/ext/zsh-filedb/zsys.zsh
 if [[ -f $fdb ]]; then
     source $fdb
 fi
