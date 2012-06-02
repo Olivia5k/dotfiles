@@ -128,13 +128,13 @@ function gr() {
     found=false
     is_in=false
 
-    if [[ -d "$cur/.git" ]]; then
+    if [[ -r "$cur/.git" ]]; then
         is_in=true
         cur=${cur%/*}
     fi
 
     until [[ -z "$cur" ]]; do
-        if [[ -d "$cur/.git" ]]; then
+        if [[ -r "$cur/.git" ]]; then
             found=true
             break
         fi
@@ -188,7 +188,6 @@ function _quote_unquote_word()
   local q=qqqq
   modify-current-argument '${('$q[1,${NUMERIC:-1}]')${(Q)ARG}}'
 }
-
 function _split_shell_arguments_under() {
     local -a reply
     split-shell-arguments
@@ -267,4 +266,34 @@ h: this help message"
             ;;
     esac
     zle -R -c
+}
+
+function _find_git_root() {
+    # Helper that finds the real git root.
+    # Useful when relatively needing data from a new-style submodule.
+    cur=${1:-$PWD}
+    until [[ -z "$cur" ]]; do
+        if [[ -f "$cur/.git" ]]; then
+            # New-style submodules are files
+            rel=${${(s: :)"$(<$cur/.git)"}[2]}
+            if [[ "$rel" =~ "^../" ]]; then
+                # Relative relative! D:
+                combined="$cur/$rel"
+                git_root=$combined:A
+            else
+                # Absolute relative.
+                git_root=$rel
+            fi
+
+            break
+        elif [[ -d "$cur/.git" ]]; then
+            git_root="$cur/.git"
+            break
+        fi
+        cur=${cur%/*}
+    done
+
+    if [[ "$git_root" = "/" ]]; then
+        git_root=""
+    fi
 }

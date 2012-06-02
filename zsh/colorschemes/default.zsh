@@ -27,6 +27,7 @@ if [[ $TCOLORS = 256 ]]; then
     c+="%F{067}"       # 25. Comp: Directories
     c+="%F{196}"       # 26. Comp: Corrections
     c+="%F{045}"       # 27. IP Adress
+    c+="%F{123}"       # 28. CVS Super repo
 else
     c+="%F{black}"     # 1.  Prompt decoration
     c+="%F{green}"     # 2.  Hostname
@@ -55,6 +56,7 @@ else
     c+="%F{blue}"      # 25. Comp: Directories
     c+="%F{red}"       # 26. Comp: Corrections
     c+="%F{cyan}"      # 27. IP Adress
+    c+="%F{cyan}"      # 28. CVS Super repo
 fi
 
 export c

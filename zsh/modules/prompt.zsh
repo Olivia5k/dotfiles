@@ -50,8 +50,10 @@ function +vi-git-st() {
 # Show count of stashed changes
 function +vi-git-stash() {
     local -a stashes
+    local git_root
 
-    if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
+    _find_git_root
+    if [[ -n "$git_root" ]] && [[ -s $git_root/refs/stash ]] ; then
         stashes=$(git stash list 2>/dev/null | wc -l)
         hook_com[misc]+="${c[1]}:${c[4]}${stashes}st${c[1]}"
     fi
@@ -100,7 +102,7 @@ function precmd() {
         vcs_info
         if [[ -n "${vcs_info_msg_0_}" ]]; then
             # Find the git root.
-            cur=$PWD
+            local cur=$PWD
             until [[ -z "$cur" ]]; do
                 # -r finds dirs and files. new-style submods are files.
                 if [[ -r "$cur/.git" ]]; then
@@ -109,8 +111,18 @@ function precmd() {
                 cur=${cur%/*}
             done
 
+            local p=${${cur/$HOME/\~}:h}
+            local git_root
+            _find_git_root
+
+            # If we are in a submodule, decorate the super repo
+            if [[ "$cur" != "$git_root:h" ]]; then
+                local super=${${git_root%/.git/*}##*/}
+                p=${p/$super/${c[28]}${super}${c[4]}}
+            fi
+
             # Print in directory blue up until the repo.
-            r1+="${${cur/$HOME/\~}:h}/${vcs_info_msg_0_}"
+            r1+="$p/${vcs_info_msg_0_}"
         else
             r1+="%~"
         fi
