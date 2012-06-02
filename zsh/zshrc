@@ -19,7 +19,10 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
 export TCOLORS=$(echotc Co)
 
-fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
+if [[ "$UID" != 0 ]]; then
+    fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
+fi
+
 autoload -Uz compinit
 compinit -d $XDG_DATA_HOME/zsh/compdump
 
@@ -67,7 +70,7 @@ fi
 
 # Kill root after $ROOT_TIMEOUT seconds
 if [[ "$UID" = 0 ]] && [[ -n "$ROOT_TIMEOUT" ]] ; then
-    print -P "Warning: Root shell will timeout after %B%F{${c[12]}}$ROOT_TIMEOUT seconds%f%b."
+    print -P "Warning: Root shell will timeout after %B${c[12]}$ROOT_TIMEOUT seconds%f%b."
     TMOUT=$ROOT_TIMEOUT
 fi
 

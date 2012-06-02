@@ -83,7 +83,9 @@
         export MPD_PORT=6600
     fi
 
-    fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
+    if [[ "$UID" != 0 ]]; then
+        fpath=( $ZSHCONFDIR/completion "${fpath[@]}" )
+    fi
 
     alias wpg="touch /tmp/gemma && wp"
     alias wpn="rm /tmp/gemma &> /dev/null && wp"
