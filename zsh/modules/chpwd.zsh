@@ -1,7 +1,3 @@
-function chpwd() {
-    ls
-}
-
 function mkcd() {
     mkdir -p $1 &> /dev/null
     cd $1
