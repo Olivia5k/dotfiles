@@ -4,6 +4,67 @@ setopt prompt_subst
 setopt sunkeyboardhack
 export KEYBOARD_HACK="'"
 
+# hax0r git prompt setup!
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' unstagedstr "${c[16]}"
+zstyle ':vcs_info:*' stagedstr "${c[18]}"
+
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+
+f="%B${c[14]}%r${c[1]}(%a${c[15]}%u%c%b%m${c[1]}):${c[4]}/%S"
+zstyle ':vcs_info:git*' formats $f
+zstyle ':vcs_info:git*' actionformats $f
+
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash git-action
+
+# Show remote ref name and number of commits ahead-of or behind
+function +vi-git-st() {
+    local str branch ahead behind remote
+
+    # Store the current branch name
+    branch=${hook_com[branch]}
+
+    # Are we on a remote-tracking branch?
+    remote=${$(git rev-parse --verify ${branch}@{upstream} \
+        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+
+    if [[ -n ${remote} ]] ; then
+        str=${branch}
+
+        ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
+        behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
+
+        (( $ahead + $behind )) && str+="${c[1]}:"  # Dark colon if any
+        (( $ahead )) && str+="${c[15]}+${ahead}%f"  # Ahead
+        (( $ahead )) && (( $behind )) && str+="${c[1]}/"  # Dark slash
+        (( $behind )) && str+="${c[16]}-${behind}%f"  # Behind
+    else
+        # Just add a red colon to mark non-tracking branch
+        str="${branch}${c[16]}:"
+    fi
+
+    hook_com[branch]=$str
+}
+
+# Show count of stashed changes
+function +vi-git-stash() {
+    local -a stashes
+
+    if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
+        stashes=$(git stash list 2>/dev/null | wc -l)
+        hook_com[misc]+="${c[1]}:${c[4]}${stashes}st${c[1]}"
+    fi
+}
+
+# Sexy hook to get purdy action messages
+function +vi-git-action() {
+    local s="${hook_com[action]}"
+    if [[ -n "$s" ]] ; then
+        hook_com[action]="${c[6]}omg ${s}!${c[1]}:"
+    fi
+}
+
 repo="%B${c[14]}%r${c[1]}" # Repo root
 repo+="(${c[15]}%u%b${c[1]})" # Branch and status
 repo+=":${c[4]}/%S" # Actual location
