@@ -1,3 +1,6 @@
+# The most useful alias there ever was
+alias zz="source $ZSHRC"
+
 alias grep="grep $GREPOPTS"
 alias :q="exit"
 alias bell='echo -en "\007"'
@@ -14,7 +17,7 @@ if [[ -n "$DISPLAY" ]] ; then
     alias aoeu="xq"
     alias asdf="xa"
 
-    if _has urxvt ; then
+    if has urxvt ; then
         alias u='urxvt &| exit'
         alias us='urxvt -name smallfont &| exit'
     fi

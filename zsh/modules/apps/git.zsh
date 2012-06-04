@@ -1,65 +1,3 @@
-export HASCVS=true
-
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' unstagedstr "%F{${c[16]}}"
-zstyle ':vcs_info:*' stagedstr "%F{${c[18]}}"
-
-zstyle ':vcs_info:git*:*' get-revision true
-zstyle ':vcs_info:git*:*' check-for-changes true
-
-f="%B%F{${c[14]}}%r%F{${c[1]}}(%a%F{${c[15]}}%u%c%b%m%F{${c[1]}}):%F{${c[4]}}/%S"
-zstyle ':vcs_info:git*' formats $f
-zstyle ':vcs_info:git*' actionformats $f
-
-zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash git-action
-
-# Show remote ref name and number of commits ahead-of or behind
-function +vi-git-st() {
-    local str branch ahead behind remote
-
-    # Store the current branch name
-    branch=${hook_com[branch]}
-
-    # Are we on a remote-tracking branch?
-    remote=${$(git rev-parse --verify ${branch}@{upstream} \
-        --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
-
-    if [[ -n ${remote} ]] ; then
-        str=${branch}
-
-        ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
-        behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
-
-        (( $ahead + $behind )) && str+="%F{${c[1]}}:"  # Dark colon if any
-        (( $ahead )) && str+="%F{${c[15]}}+${ahead}%f"  # Ahead
-        (( $ahead )) && (( $behind )) && str+="%F{${c[1]}}/"  # Dark slash
-        (( $behind )) && str+="%F{${c[16]}}-${behind}%f"  # Behind
-    else
-        # Just add a red colon to mark non-tracking branch
-        str="${branch}%F{${c[16]}}:"
-    fi
-
-    hook_com[branch]=$str
-}
-
-# Show count of stashed changes
-function +vi-git-stash() {
-    local -a stashes
-
-    if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
-        stashes=$(git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+="%F{${c[1]}}:%F{${c[4]}}${stashes}st%F{${c[1]}}"
-    fi
-}
-
-# Sexy hook to get purdy action messages
-function +vi-git-action() {
-    local s="${hook_com[action]}"
-    if [[ -n "$s" ]] ; then
-        hook_com[action]="%F{${c[6]}}omg ${s}!%F{${c[1]}}:"
-    fi
-}
-
 # Committing / General
 alias ga='git add'
 alias gs='git status'
@@ -136,7 +74,7 @@ function gbr() {
 
         echo "Branch $branch now tracking $remote"
     else
-        _zerror "Tell me a branch, fool."
+        zerror "Tell me a branch, fool."
     fi
 }
 
@@ -149,7 +87,7 @@ function gbu() {
 
         git branch $branch --set-upstream $remote/$remote_branch
     else
-        _zerror "Tell me a branch and a remote, fool."
+        zerror "Tell me a branch and a remote, fool."
     fi
 }
 
@@ -173,11 +111,10 @@ function gcu() {
         name="$1"
         email="$2"
     elif [[ -n "$FULLNAME" ]] && [[ -n "$EMAIL" ]] ; then
-        _zdebug "Not enough arguments; defaulting to default data"
         name="$FULLNAME"
         email="$EMAIL"
     else
-        _zerror "gcu() needs two arguments or default data set in userfile."
+        zerror "gcu() needs two arguments or default data set in userfile."
         return 1
     fi
 
@@ -191,13 +128,13 @@ function gr() {
     found=false
     is_in=false
 
-    if [[ -d "$cur/.git" ]]; then
+    if [[ -r "$cur/.git" ]]; then
         is_in=true
         cur=${cur%/*}
     fi
 
     until [[ -z "$cur" ]]; do
-        if [[ -d "$cur/.git" ]]; then
+        if [[ -r "$cur/.git" ]]; then
             found=true
             break
         fi
@@ -214,7 +151,7 @@ function gr() {
     elif [[ -d "$PWD/.git" ]]; then
         echo "Already at project root"
     else
-        _zerror "Currently not in a git repository"
+        zerror "Currently not in a git repository"
     fi
 }
 
@@ -251,7 +188,6 @@ function _quote_unquote_word()
   local q=qqqq
   modify-current-argument '${('$q[1,${NUMERIC:-1}]')${(Q)ARG}}'
 }
-
 function _split_shell_arguments_under() {
     local -a reply
     split-shell-arguments
@@ -330,4 +266,34 @@ h: this help message"
             ;;
     esac
     zle -R -c
+}
+
+function _find_git_root() {
+    # Helper that finds the real git root.
+    # Useful when relatively needing data from a new-style submodule.
+    cur=${1:-$PWD}
+    until [[ -z "$cur" ]]; do
+        if [[ -f "$cur/.git" ]]; then
+            # New-style submodules are files
+            rel=${${(s: :)"$(<$cur/.git)"}[2]}
+            if [[ "$rel" =~ "^../" ]]; then
+                # Relative relative! D:
+                combined="$cur/$rel"
+                git_root=$combined:A
+            else
+                # Absolute relative.
+                git_root=$rel
+            fi
+
+            break
+        elif [[ -d "$cur/.git" ]]; then
+            git_root="$cur/.git"
+            break
+        fi
+        cur=${cur%/*}
+    done
+
+    if [[ "$git_root" = "/" ]]; then
+        git_root=""
+    fi
 }

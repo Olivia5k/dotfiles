@@ -1,5 +1,5 @@
 function fail() {
-    if _has figlet && [[ $PMODE != 0 ]] ; then
+    if has figlet && [[ $PMODE != 0 ]] ; then
         # If figlet exists and we are not on a mobile connection, doit
         figlet :@ && echo
     else

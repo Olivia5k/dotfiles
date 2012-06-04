@@ -1,4 +1,4 @@
-if _has ls++; then
+if has ls++; then
     ls="ls++ --group-directories-first"
     alias ll="/bin/ls $LSOPTS"
 else
@@ -34,4 +34,10 @@ alias ller="$ls -lhd **/*(-/DN^F)" # list details of all empty directories recur
 
 function lsx() {
     ls *.$1
+}
+
+function chpwd() {
+    if [[ -z "$ZSH_NO_CHPWD" ]]; then
+        ls
+    fi
 }

@@ -1,11 +1,11 @@
 function attach() {
     if [[ -n "$TMUX" ]]; then
-        _zerror "Already in tmux. Bailing."
+        zerror "Already in tmux. Bailing."
         return 1
     fi
 
     if [[ -z "$1" ]] ; then
-        _zerror "Argument required."
+        zerror "Argument required."
         return 1
     fi
 

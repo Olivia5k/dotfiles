@@ -149,9 +149,9 @@ _appscomplete() {
 }
 
 # Completion \o/
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dt
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _testcomplete dtc
-compctl -Y "%B%F{${c[24]}}app%f%b" -K _appscomplete mm
+compctl -Y "%B${c[24]}app%f%b" -K _testcomplete dt
+compctl -Y "%B${c[24]}app%f%b" -K _testcomplete dtc
+compctl -Y "%B${c[24]}app%f%b" -K _appscomplete mm
 
 function dsh() {
     dm=${1:-python2 manage.py}
@@ -161,7 +161,7 @@ function dsh() {
 
 function dsr() {
     if [[ ! -f "$PWD/manage.py" ]]; then
-        _zerror "No django manager found. Exiting"
+        zerror "No django manager found. Exiting"
         return 1
     fi
 
@@ -187,12 +187,12 @@ function dsr() {
 
 function dr() {
     if [[ ! -f "manage.py" ]] ; then
-        _zerror "No django manager found. Exiting"
+        zerror "No django manager found. Exiting"
         return 1
     fi
 
 
-    if _has gunicorn_django; then
+    if has gunicorn_django; then
         local workers=${GUNICORN_WORKERS:-9}
         local pid=${GUNICORN_PID:-/tmp/gunicorn.pid}
         local worker=${GUNICORN_WORKER}
