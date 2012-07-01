@@ -4,12 +4,11 @@ function my() {
 
     date=$(print -P '%D{%Y.%m.%d}')
 
-    case $service in
-        help)
-            echo "helpful help is helpful"
-        ;;
+    # TODO: Drop and recreate
 
+    case $service in
         dump)
+            # TODO: Query for db total size and use pv for visualization?
             mysqldump ${1:--all-databases} > ${1:-full}.$date.mysql
 
             return $?
@@ -22,7 +21,7 @@ function my() {
             fi
 
             print -P "Loading %B${c[23]}${1}%f%b"
-            return
+
             if has pv; then
                 pv -pte $1 | mysql
             else
@@ -32,26 +31,17 @@ function my() {
         ;;
 
         remote)
-            if [[ -z "$1" ]]; then
-                zerror "hostname required"
-                return 1
-            fi
-
-            ssh $1 -t mysql $2
+            ssh ${1:-dt} -t mysql $2
             return $?
         ;;
 
         remote_load)
-            if [[ -z "$1" ]]; then
-                zerror "hostname required"
-                return 1
-            fi
-
-            host=$1
+            host=${1:-dt}
             db=${2:-mancx_django}
 
             f="$host.$db.$date.mysql"
 
+            # TODO: See TODO on dump()
             if [[ ! -f $f ]]; then
                 print -P "Grabbing %B${c[19]}${db}%f%b from %B${c[27]}${host}%f%b"
                 ssh $host mysqldump $db > $f || return 1
@@ -63,13 +53,19 @@ function my() {
         ;;
 
         size)
-            if [[ -z "$1" ]]; then
-                zerror "hostname required"
-                return 1
-            fi
+            mb="ROUND(((data_length + index_length) / (1024*1024)),2) AS MB"
+            q="SELECT table_name, $mb FROM information_schema.tables "
+            q+="ORDER BY MB desc LIMIT ${2:-10}"
 
-            q='SELECT table_name, ROUND(((data_length + index_length) / (1024*1024)),2) AS "MB" FROM information_schema.tables ORDER BY MB desc LIMIT 10'
-            echo ssh $1 mysql -e \"${q}\"
+            ssh ${1:-dt} mysql -e ${(qqqq)q} | column -t
+
+            return $?
         ;;
+
+        *)
+            echo "helpful help is helpful"
+            return 1
+        ;;
+
     esac
 }
