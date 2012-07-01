@@ -3,11 +3,11 @@ if has ls++; then
     alias ll="/bin/ls $LSOPTS"
 else
     ls="ls $LSOPTS"
+    alias ll="$ls -l"
 fi
 
 alias ls="$ls"
 alias lc="$ls --color=never"
-# alias ll="$ls -l"
 alias la="$ls -A"
 alias lal="$ls -Al"
 
@@ -39,5 +39,9 @@ function lsx() {
 function chpwd() {
     if [[ -z "$ZSH_NO_CHPWD" ]]; then
         ls
+    fi
+
+    if [[ -z "$ZSH_NO_BUILDOUT" ]]; then
+        source $ZMODDIR/apps/buildout.zsh
     fi
 }
