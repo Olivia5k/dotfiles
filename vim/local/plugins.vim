@@ -17,9 +17,9 @@
     " trailing space.
 
     exec "nmap gi :Git "
+    exec "nmap ge :Gedit<cr>"
     exec "nmap gb :Gblame<cr>"
-    exec "nmap gcc :Gcommit<cr>"
-    exec "nmap gca :Gcommit --amend<cr>"
+    exec "nmap gc :Gcommit<cr>"
     exec "nmap gdd :Gdiff "
     exec "nmap gdc :Gdiff<cr>"
     exec "nmap gdh :Gdiff HEAD<cr>"
@@ -224,9 +224,9 @@
 " NERDTree {
     nmap ,t :NERDTree<cr><C-W>=
 " }
-" true
 " vimwiki {
     let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
+    let g:vimwiki_folding = 1
 " }
 " yankring {
     let g:yankring_history_file = ".cache/vim/tmp/yankring"
@@ -242,7 +242,6 @@
     vmap ( S)
     vmap [ S]
     vmap { S}
-    " }}
 " }
 " unimpaired {
     nmap <A-j> ]e
@@ -250,6 +249,9 @@
 
     vmap <A-j> ]egv
     vmap <A-k> [egv
+" }
+" vimroom {
+    nnoremap <silent> <Leader>mz <Plug>VimroomToggle
 " }
 
 " vim: set et:sw=4:fdm=marker:fmr={,}
