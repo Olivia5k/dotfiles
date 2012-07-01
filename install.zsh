@@ -22,7 +22,7 @@ apps[x11]=$a
 a=('./zsh/zshrc')
 apps[zsh]=$a
 
-a=('./tmux/tmux.conf')
+a=('./tmux' './tmux/tmux.conf')
 apps[tmux]=$a
 
 a=('./uzbl/')
