@@ -156,7 +156,7 @@ compctl -Y "%B${c[24]}app%f%b" -K _appscomplete mm
 function dsh() {
     dm=${1:-python2 manage.py}
     mysql -e "drop database $LOCALDB ; create database $LOCALDB character set utf8 collate utf8_general_ci;"
-    echo "no" | $dm syncdb
+    echo "no" | ${(z)dm} syncdb
 }
 
 function dsr() {
