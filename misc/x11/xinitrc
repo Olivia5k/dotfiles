@@ -5,6 +5,6 @@ xrdb ~/.Xresources
 exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 1 -root &
 exec keynav &
-/home/daethorian/bin/wp &
+wp &
 
-exec i3 -V &> /home/daethorian/.logs/i3.log
+exec i3 -V &> $HOME/.logs/i3.log
