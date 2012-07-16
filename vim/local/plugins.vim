@@ -76,10 +76,13 @@
 " Syntastic {
     let g:syntastic_enable_signs = 1
     let g:loaded_html_syntax_checker = 1
+    let loaded_css_syntax_checker = 1
+
     if executable('jsl')
         let g:syntastic_javascript_checker = 'jsl'
         let g:syntastic_javascript_jsl_conf = '-conf ~/.vim/local/conf/jsl.conf'
     endif
+    let g:syntastic_javascript_jslint_conf = "--maxerr 1000 --white --undef --nomen --regexp --plusplus --bitwise --newcap --sloppy --vars --continue"
 " }
 " Powerline {
     let Powerline_theme = 'default'
@@ -209,6 +212,7 @@
     nmap <Leader>q :CtrlP<cr>
     nmap <Leader>a :CtrlPBuffer<cr>
     let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+    let g:ctrlp_root_markers = ['.git']
 " }
 " delimitMate {
     let g:delimitMate_expand_space = 1
