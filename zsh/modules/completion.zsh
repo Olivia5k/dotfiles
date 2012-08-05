@@ -9,6 +9,7 @@ zstyle ':completion:*:approximate:*' max-errors 2 numeric
 zstyle ':completion:*:descriptions' format "%B${c[24]}%d%f%b:"
 zstyle ':completion:*:directories' format "%B${c[25]}%d%f%b:"
 zstyle ':completion:*:corrections' format "%B${c[26]}%d%b%f:"
+zstyle ':completion:*:warnings' format "%B${c[26]}No matches for%b%f: %d"
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:manuals' separate-sections true
