@@ -1,12 +1,12 @@
 [submodule "misc"]
 	path = misc
-	url = https://github.com/daethorian/conf-misc.git
+	url = https://github.com/thiderman/conf-misc.git
 [submodule "vim"]
 	path = vim
-	url = https://github.com/daethorian/conf-vim.git
+	url = https://github.com/thiderman/conf-vim.git
 [submodule "zsh"]
 	path = zsh
-	url = https://github.com/daethorian/conf-zsh.git
+	url = https://github.com/thiderman/conf-zsh.git
 [submodule "tmux"]
 	path = tmux
-	url = https://github.com/daethorian/conf-tmux.git
+	url = https://github.com/thiderman/conf-tmux.git
