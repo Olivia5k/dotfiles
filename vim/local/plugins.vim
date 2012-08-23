@@ -9,6 +9,9 @@
 " }
 
 " Larger cool plugins
+" Reinhardt {
+    let g:reinhardt_mapkey = "r"
+" }
 " Fugitive {
     " As alot of these bindings end with a space, they are wrapped in an exec
     " To avoid the unavoidable mistake of accidentally clearing them with the
@@ -208,7 +211,8 @@
     nmap <A-d> :CtrlP<cr>
     nmap <Leader>q :CtrlP<cr>
     nmap <Leader>a :CtrlPBuffer<cr>
-    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+    nmap <Leader>Q :CtrlPReload<cr>
+    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|eggs\?$'
 " }
 " delimitMate {
     let g:delimitMate_expand_space = 1
@@ -223,9 +227,10 @@
 " }
 " NERDTree {
     nmap ,t :NERDTree<cr><C-W>=
+    let NERDTreeIgnore = ['.pyc$', '\~$']
 " }
 " vimwiki {
-    let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
+    let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}, {'path': '~/etc/vim/bundle/reinhardt/vimwiki', 'path_html': '~/.local/share/vimwiki/html'}]
     let g:vimwiki_folding = 1
 " }
 " yankring {

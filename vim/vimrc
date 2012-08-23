@@ -23,12 +23,12 @@
     call pathogen#infect()
 " }
 " Filetypes {
-    au Filetype python setlocal foldmethod=indent expandtab ft=python.django
+    au Filetype python setlocal foldmethod=indent expandtab
     au Filetype python setlocal makeprg=pep8\ -r\ %
     au Filetype python syn keyword Special self
     au BufWritePost *.py silent! !{if [[ -f /tmp/gunicorn.pid ]]; then kill -HUP `cat /tmp/gunicorn.pid` &> /dev/null ; fi}
 
-    au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab ft=htmldjango.html
+    au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab
 
     au Filetype javascript syn keyword Special $
 

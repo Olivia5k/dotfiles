@@ -32,8 +32,6 @@ let mapleader = ","
     nmap <A-s> ,hs
     nmap <Leader>hs /\('.\{-}'\\|".\{-}"\)<cr>
     nmap <Leader>m :make<cr>
-    nmap <A-i> a<C-T><esc>
-    nmap t a<C-T><esc>
 " }
 " Turbo switching {
     " Expands %% into the directory containing the current buffer!
