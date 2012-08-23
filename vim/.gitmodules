@@ -27,6 +27,17 @@
 	path = bundle/eunuch
 	url = https://github.com/tpope/vim-eunuch.git
 
+# Badass quickfast
+[submodule "bundle/reinhardt"]
+	path = bundle/reinhardt
+	url = https://github.com/thiderman/vim-reinhardt.git
+[submodule "bundle/snakeskin"]
+	path = bundle/snakeskin
+	url = https://github.com/thiderman/vim-snakeskin.git
+[submodule "bundle/linguist"]
+	path = bundle/linguist
+	url = https://github.com/thiderman/vim-linguist.git
+
 # Colorschemes and UI
 [submodule "bundle/neverland"]
 	path = bundle/neverland
