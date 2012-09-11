@@ -72,9 +72,9 @@
     # Application specific modules; loaded if they are installed
     for m in $ZMODDIR/apps/* ; do
         app=${${m##*/}%\.*}  # Strip down to the actual executable name
-        if has $app ; then
+        # if has $app ; then
             _modload "apps/$app"
-        fi
+        # fi
     done
     unset m
 # }}}

@@ -47,21 +47,21 @@ function _mm() {
 function dt() {
     local cmd
 
-    if [[ -n "$1" ]]; then
-        cmd="apps/$1/tests.py"
+    if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
+        cmd="market/apps/$1/tests.py"
         shift
 
-        if [[ -n "$1" ]]; then
+        if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
             cmd+=":$1"
             shift
-            if [[ -n "$1" ]]; then
+            if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
                 cmd+=".$1"
                 shift
             fi
         fi
     fi
 
-    coverage run manage.py test $cmd $*
+    bin/test $cmd $*
 }
 
 function dtc() {
@@ -81,7 +81,7 @@ _testcomplete() {
 
     # Module
     if (( CURRENT == 2 )); then
-        for f in ./apps/*(/); do
+        for f in ./market/apps/*(/); do
             # Only include those that actually have tests
             if [[ -f "$f/tests.py" ]]; then
                 reply+=(${f##*/})
@@ -97,7 +97,7 @@ _testcomplete() {
         reply=()
 
         # Loop all the lines in the tests file
-        for line in ${(f)"$(<apps/$module/tests.py)"} ; do
+        for line in ${(f)"$(<market/apps/$module/tests.py)"} ; do
             if [[ $line[1,5] = "class" ]]; then
                 # Grab all lines that start with "class". Extract the name
                 # only.
@@ -118,7 +118,7 @@ _testcomplete() {
         reply=()
 
         # Loop all the lines in the tests file
-        for line in ${(f)"$(<apps/$module/tests.py)"} ; do
+        for line in ${(f)"$(<market/apps/$module/tests.py)"} ; do
             # If we have found the class, examine the actual lines
             if $has_class; then
                 if [[ $line[1,13] = '    def test_' ]]; then
@@ -154,7 +154,7 @@ compctl -Y "%B${c[24]}app%f%b" -K _testcomplete dtc
 compctl -Y "%B${c[24]}app%f%b" -K _appscomplete mm
 
 function dsh() {
-    dm=${1:-python2 manage.py}
+    dm=${1:-python2 bin/market}
     mysql -e "drop database $LOCALDB ; create database $LOCALDB character set utf8 collate utf8_general_ci;"
     echo "no" | ${(z)dm} syncdb
 }
