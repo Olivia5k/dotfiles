@@ -144,7 +144,7 @@
     au FileType json setlocal foldlevel=100
 " }
 " Colorschemes {
-    if has('gui') || &term == 'screen-256color' || &term == 'rxvt-unicode-256color'
+    if has('gui') || &t_Co == 256
         let g:force_lofi = 0
         colorscheme neverland
     else
