@@ -21,6 +21,7 @@
 " }
 " Pathogen {
     call pathogen#infect()
+    call pathogen#helptags()
 " }
 " Filetypes {
     au Filetype python setlocal foldmethod=indent expandtab
