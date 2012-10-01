@@ -81,6 +81,9 @@
     let g:loaded_html_syntax_checker = 1
     let loaded_css_syntax_checker = 1
 
+    " Until flake8 is appropriate
+    let g:syntastic_python_checker = 'pyflakes'
+
     if executable('jsl')
         let g:syntastic_javascript_checker = 'jsl'
         let g:syntastic_javascript_jsl_conf = '-conf ~/.vim/local/conf/jsl.conf'
@@ -246,7 +249,7 @@
     " really tickle my fancy. To make up for this, these mappings happened.
     vmap " S"
     vmap ' S'
-    vmap t St
+    " vmap t St
     vmap ( S)
     vmap [ S]
     vmap { S}
@@ -254,9 +257,13 @@
 " unimpaired {
     nmap <A-j> ]e
     nmap <A-k> [e
-
     vmap <A-j> ]egv
     vmap <A-k> [egv
+
+    " Normal JK will make for a lot of accidental changes due to my using of
+    " C-c as cancel.
+    vmap <C-j> ]egv
+    vmap <C-k> [egv
 " }
 " vimroom {
     nnoremap <silent> <Leader>mz <Plug>VimroomToggle
