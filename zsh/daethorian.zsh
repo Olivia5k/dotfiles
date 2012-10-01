@@ -112,8 +112,12 @@
     # Force unmounting
     alias muf='sudo umount -l /mnt/warez && sudo umount -l ~/ssh/ninjaloot'
 
-    alias xu="xbmc_update"
+    # Selenium Xvfb setup
+    alias selenium_xvfb="Xvfb :99 -ac -screen 0 1024x768x8"
+    alias sx="selenium_xvfb"
 
+    # XBMC
+    alias xu="xbmc_update"
     xbmc_update() {
         p=""
         if [[ -n "$1" ]]; then
