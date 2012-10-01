@@ -24,10 +24,10 @@
     call pathogen#helptags()
 " }
 " Filetypes {
-    au Filetype python setlocal foldmethod=indent expandtab
-    au Filetype python setlocal makeprg=pep8\ -r\ %
+    au Filetype python setlocal expandtab
     au Filetype python syn keyword Special self
-    au BufWritePost *.py silent! !{if [[ -f /tmp/gunicorn.pid ]]; then kill -HUP `cat /tmp/gunicorn.pid` &> /dev/null ; fi}
+    " au Filetype python syn match Delimiter [(){}\[\]]
+    au BufWritePost *.py silent! !{supervisorctl -c /home/daethorian/sup/supervisord.conf restart market &> /dev/null &}
 
     au Filetype xhtml,html,htmldjango setlocal foldmethod=indent expandtab
 
@@ -35,8 +35,7 @@
 
     au FileType help nnoremap <buffer> <Enter> <C-]>
 
-    au FileType pytest setlocal nolist
-    au! BufRead,BufNewFile *.json set filetype=json
+    au! BufRead,BufNewFile *.json set filetype=javascript
     augroup json_autocmd
         autocmd!
         autocmd FileType json set autoindent
