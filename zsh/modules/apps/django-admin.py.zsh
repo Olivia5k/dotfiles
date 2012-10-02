@@ -48,15 +48,19 @@ function dt() {
     local cmd
 
     if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
-        cmd="market/apps/$1/tests.py"
+        cmd="market/apps/$1/tests"
         shift
 
         if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
-            cmd+=":$1"
+            cmd+="/$1.py"
             shift
             if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
-                cmd+=".$1"
+                cmd+=":$1"
                 shift
+                if [[ -n "$1" ]] && ! [[ $1 =~ '^--' ]]; then
+                    cmd+=".$1"
+                    shift
+                fi
             fi
         fi
     fi
@@ -83,21 +87,26 @@ _testcomplete() {
     if (( CURRENT == 2 )); then
         for f in ./market/apps/*(/); do
             # Only include those that actually have tests
-            if [[ -f "$f/tests.py" ]]; then
+            if [[ -d "$f/tests" ]]; then
                 reply+=(${f##*/})
             fi
         done
 
-    # Class
+    # Kind
     elif (( CURRENT == 3 )); then
+        reply=(integration selenium unit)
+
+    # Class
+    elif (( CURRENT == 4 )); then
         split-shell-arguments
         module=$reply[4]  # Current module
+        file=$reply[6]
 
         # Reset the reply array since ssa contaminates it
         reply=()
 
         # Loop all the lines in the tests file
-        for line in ${(f)"$(<market/apps/$module/tests.py)"} ; do
+        for line in ${(f)"$(<market/apps/$module/tests/$file.py)"} ; do
             if [[ $line[1,5] = "class" ]]; then
                 # Grab all lines that start with "class". Extract the name
                 # only.
@@ -108,17 +117,18 @@ _testcomplete() {
         done
 
     # Function
-    elif (( CURRENT == 4 )); then
+    elif (( CURRENT == 5 )); then
         split-shell-arguments
         module=$reply[4]  # Current module
-        class=$reply[6]  # Current class
+        file=$reply[6]
+        class=$reply[8]  # Current class
         has_class=false
 
         # Reset the reply array since ssa contaminates it
         reply=()
 
         # Loop all the lines in the tests file
-        for line in ${(f)"$(<market/apps/$module/tests.py)"} ; do
+        for line in ${(f)"$(<market/apps/$module/tests/$file.py)"} ; do
             # If we have found the class, examine the actual lines
             if $has_class; then
                 if [[ $line[1,13] = '    def test_' ]]; then
