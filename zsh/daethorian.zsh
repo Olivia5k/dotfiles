@@ -120,7 +120,7 @@
             p=",/mnt/warez/$1"
         fi
 
-        url="http://xbmc.local:1337/xbmcCmds/xbmcHttp?"
+        url="http://sexbmc.local:1337/xbmcCmds/xbmcHttp?"
         url+="command=ExecBuiltIn&parameter=XBMC.updatelibrary(video${p})"
 
         curl --user xbmc:penis $url
