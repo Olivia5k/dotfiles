@@ -125,3 +125,6 @@
 [submodule "bundle/buildout"]
 	path = bundle/buildout
 	url = https://github.com/thiderman/vim-buildout.git
+[submodule "bundle/smartinput"]
+	path = bundle/smartinput
+	url = git://github.com/kana/vim-smartinput.git
