@@ -48,6 +48,9 @@
 [submodule "bundle/solarized"]
 	path = bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/badwolf"]
+	path = bundle/badwolf
+	url = https://github.com/thiderman/badwolf.git
 
 # Templating
 [submodule "bundle/xptemplate"]

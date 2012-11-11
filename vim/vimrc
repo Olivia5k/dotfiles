@@ -156,17 +156,14 @@
 " }
 " GUI {
     if has('gui_running')
-        if $USER == 'daethorian' || $USER == 'bender'
-            " These are settings that as closely as possible mimics terminal
-            " vim.
+        if $USER == 'daethorian' || $USER == 'bender' || $USER == 'thiderman'
+            " These are settings that as closely as possible mimics terminal vim
             set guioptions=cagit  " Disable graphical elements
             set guifont=Inconsolata\ 13 " hax0r font
 
             " No blinking cursor plz :(
             set guicursor=n-v-c:blinkon0-block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkon0
-
-            set sj=0 " Scrolljump isn't needed here
-            let g:Powerline_symbols = 'fancy'
+            colorscheme badwolf
         endif
     endif
 " }
