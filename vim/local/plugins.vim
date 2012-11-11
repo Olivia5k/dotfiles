@@ -221,8 +221,9 @@
     let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|eggs\?$'
 " }
 " delimitMate {
-    let g:delimitMate_expand_space = 1
-    let g:delimitMate_expand_cr = 1
+    let g:loaded_delimitMate = 1
+    " let g:delimitMate_expand_space = 1
+    " let g:delimitMate_expand_cr = 1
 " }
 " commentary {
     " Backslash is horrible on swedish layouts. ö is not.
