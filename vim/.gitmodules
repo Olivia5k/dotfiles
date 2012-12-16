@@ -45,9 +45,6 @@
 [submodule "bundle/powerline"]
 	path = bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
-[submodule "bundle/solarized"]
-	path = bundle/solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "bundle/badwolf"]
 	path = bundle/badwolf
 	url = https://github.com/thiderman/badwolf.git
@@ -61,32 +58,29 @@
 [submodule "bundle/argtextobj"]
 	path = bundle/argtextobj
 	url = https://github.com/vim-scripts/argtextobj.vim.git
-[submodule "bundle/delimitmate"]
-	path = bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule "bundle/indent-object"]
 	path = bundle/indent-object
 	url = https://github.com/michaeljsmith/vim-indent-object.git
 [submodule "bundle/matchtag"]
 	path = bundle/matchtag
 	url = https://github.com/gregsexton/MatchTag.git
-[submodule "bundle/easymotion"]
-	path = bundle/easymotion
-	url = https://github.com/Lokaltog/vim-easymotion.git
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/smartinput"]
+	path = bundle/smartinput
+	url = git://github.com/kana/vim-smartinput.git
+[submodule "bundle/ack"]
+	path = bundle/ack
+	url = git://github.com/mileszs/ack.vim.git
 
 # Syntax and testing
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "bundle/qfstatus"]
-	path = bundle/qfstatus
-	url = https://github.com/dannyob/quickfixstatus.git
 
 # Misc
 [submodule "bundle/vimwiki"]
@@ -98,15 +92,9 @@
 [submodule "bundle/css-syntax"]
 	path = bundle/css-syntax
 	url = https://github.com/ChrisYip/Better-CSS-Syntax-for-Vim.git
-[submodule "bundle/gist"]
-	path = bundle/gist
-	url = https://github.com/mattn/gist-vim.git
 [submodule "bundle/nginx-syntax"]
 	path = bundle/nginx-syntax
 	url = https://github.com/thiderman/nginx-vim-syntax.git
-[submodule "bundle/github"]
-	path = bundle/github
-	url = https://github.com/xonecas/github-vim-colorscheme.git
 [submodule "bundle/uzbl-reloader"]
 	path = bundle/uzbl-reloader
 	url = https://github.com/thiderman/vim-uzbl-reloader.git
@@ -116,15 +104,6 @@
 [submodule "bundle/gitv"]
 	path = bundle/gitv
 	url = https://github.com/gregsexton/gitv.git
-[submodule "bundle/vimroom"]
-	path = bundle/vimroom
-	url = https://github.com/mikewest/vimroom.git
-[submodule "bundle/json"]
-	path = bundle/json
-	url = https://github.com/vim-scripts/JSON.vim
 [submodule "bundle/buildout"]
 	path = bundle/buildout
 	url = https://github.com/thiderman/vim-buildout.git
-[submodule "bundle/smartinput"]
-	path = bundle/smartinput
-	url = git://github.com/kana/vim-smartinput.git
