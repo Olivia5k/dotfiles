@@ -1153,10 +1153,11 @@ nnoremap <Leader>Q :CtrlPReload<cr>
 " }}}
 " Fugitive {{{
 "
-fun! s:gm(short, cmd)  " git_map
+fun! s:gm(short, cmd, ...)  " git_map
   let silent = a:cmd =~ '\w$' ? '<silent>' : ''
   let cr = a:cmd =~ '\w$' ? '<cr>' : ''
-  exec "nmap" silent a:short ":" . a:cmd . cr
+  let extra = a:0 ? a:1 : ''
+  exec "nmap" silent a:short ":" . a:cmd . cr . extra
 endfunction
 
 call s:gm('gi',  'Git ')
@@ -1177,7 +1178,7 @@ call s:gm('guu', 'Git pull --no-edit origin')
 call s:gm('gre', 'Gread ')
 call s:gm('grr', 'Gremove ')
 
-call s:gm('gs',  'Gstatus')
+call s:gm('gs',  'Gstatus', '<c-n>')
 call s:gm('gw',  'Gwrite')
 call s:gm('ga',  'Gwrite')
 call s:gm('gm',  'Gmove ')
