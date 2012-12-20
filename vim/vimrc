@@ -6,7 +6,8 @@
 " This file was respectfully stolen from Steve Losh. It has been modified to
 " contain some of the configs I had, but 90% of the file is still in the magic.
 
-" For now
+" For now. Endwise and smartinput clash on imap <cr>. Rather, smartinput
+" refuses, since endwise was there first.
 let g:loaded_endwise = 1
 
 " Preamble {{{
@@ -593,18 +594,40 @@ set foldlevelstart=0
 nnoremap <Space> za
 nnoremap <C-Space> zM
 nnoremap <S-Space> zR
+" TODO: Map the weird A symbol.
+" nnoremap <A-Space> zA
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
 nnoremap zO zCzO
+
+" This fucker will destroy all your foldmarkers. That's a real bummer if you're
+" in C, Javascript or CSS where your markers are actual parts of the code. I've
+" accidentally hit zE while going for zR so many times that this is actually
+" warranted.
 nmap zE :echo "Don't do that."<cr>
 
 nmap <leader>fm :set foldmethod=marker<cr>
 nmap <leader>fi :set foldmethod=indent<cr>
 nmap <leader>ff :set nofoldenable<cr>:set foldenable<cr>
+nmap <leader>fp :set foldmethod=expr foldexpr=ParagraphFold(v:lnum)<cr>
+
+function! ParagraphFold(lnum)
+  " See examples at :he fold-expr
+  if getline(a:lnum) =~ '^\s*$' && getline(a:lnum+1) =~ '\S'
+    return '<1'
+  else
+    return 1
+  endif
+endfunction
 
 function! FoldWithLines()
-  let nucolwidth = &fdc + &number*&numberwidth
+  " Folding function that puts the line counter indication at &tw if &tw is set
+  " or at 79 if not.
+  " Makes for readable fold information even if you only have one window open in
+  " a wide instance of vim.
+
+  let nucolwidth = &fdc + &number * &numberwidth
   let winwd = winwidth(0) - nucolwidth - 5
   let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
   let fdnfo = " " . string(foldlinecount) . " lines "
