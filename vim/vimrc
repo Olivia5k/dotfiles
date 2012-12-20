@@ -903,6 +903,15 @@ augroup ft_javascript
 augroup END
 
 " }}}
+" JSON {{{
+
+augroup json_autocmd
+  au!
+  au BufEnter *.json setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=0
+  au BufEnter *.json setlocal foldmethod=marker foldmarker={,}
+augroup END
+
+" }}}
 " Lisp {{{
 
 augroup ft_lisp
