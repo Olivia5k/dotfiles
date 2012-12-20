@@ -639,6 +639,15 @@ augroup ft_c
 augroup END
 
 " }}}
+" cfg files {{{
+
+augroup ft_cfg
+  au!
+  " au FileType cfg setlocal foldmethod=expr
+  "       \ foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+augroup END
+
+" }}}
 " Clojure {{{
 
 " function! SlimvToggleRepl()
