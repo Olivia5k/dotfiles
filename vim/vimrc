@@ -42,7 +42,7 @@ set undofile
 set undoreload=10000
 set list
 set listchars=tab:▸\ ,trail:¬,extends:❯,precedes:❮
-set shell=/bin/bash\ --login
+" set shell=/bin/bash\ --login
 set lazyredraw
 set matchtime=3
 set showbreak=↪
