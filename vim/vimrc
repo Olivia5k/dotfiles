@@ -1065,6 +1065,9 @@ augroup ft_python
   au FileType python if exists("python_space_error_highlight") | unlet python_space_error_highlight | endif
 augroup END
 
+" Just add one shiftwidth when indenting python
+let g:pyindent_open_paren = &sw
+
 " }}}
 " QuickFix {{{
 
