@@ -121,7 +121,7 @@
     xbmc_update() {
         p=""
         if [[ -n "$1" ]]; then
-            p=",/mnt/warez/$1"
+            p=",/warez/$1"
         fi
 
         url="http://sexbmc.local:1337/xbmcCmds/xbmcHttp?"
