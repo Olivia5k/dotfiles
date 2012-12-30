@@ -128,21 +128,15 @@ function has() {
 # }}}
 # External modules {{{
 
-# LS_COLORS. Placed in master as part of the main conf.
-lscf=$ZSHCONFDIR/modules/LS_COLORS/LS_COLORS
-if [[ -f $lscf ]] && [[ $TCOLORS = 256 ]]; then
-  eval $(dircolors -b $lscf)
-fi
-
 # zsh-sysadmin. Quickfast!
-fdb=$ZSHCONFDIR/modules/filedb/zsys.zsh
-if [[ -f $fdb ]]; then
-  source $fdb
-fi
+source $ZSHCONFDIR/modules/filedb/zsys.zsh
 
-# Shell syntax highlighting, in realtime.
 if [[ "$TCOLORS" = 256 ]]; then
+  # Shell syntax highlighting, in realtime.
   source $ZSHCONFDIR/modules/syntax/zsh-syntax-highlighting-filetypes.zsh
+
+  # Really extensive LS_COLORS.
+  eval $(dircolors -b $ZSHCONFDIR/modules/LS_COLORS/LS_COLORS)
 fi
 
 # }}}
