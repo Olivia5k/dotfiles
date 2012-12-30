@@ -185,17 +185,6 @@ set undodir=~/.cache/vim/undo//   " undo files
 set backupdir=~/.cache/vim/backup// " backups
 set directory=~/.cache/vim/swap//   " swap files
 
-" Make those folders automatically if they don't already exist.
-if !isdirectory(expand(&undodir))
-  call mkdir(expand(&undodir), "p")
-endif
-if !isdirectory(expand(&backupdir))
-  call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&directory))
-  call mkdir(expand(&directory), "p")
-endif
-
 " }}}
 " Leader {{{
 
@@ -235,8 +224,8 @@ nnoremap M K
 nnoremap <leader>n :setlocal number!<cr>
 
 " Sort lines
-nnoremap <leader>s vip:!sort<cr>
-vnoremap <leader>s :!sort<cr>
+" nnoremap <leader>s vip:!sort<cr>
+" vnoremap <leader>s :!sort<cr>
 
 " Tabs
 nnoremap <leader>( :tabprev<cr>
