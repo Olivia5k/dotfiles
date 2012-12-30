@@ -107,3 +107,6 @@
 [submodule "bundle/buildout"]
 	path = bundle/buildout
 	url = https://github.com/thiderman/vim-buildout.git
+[submodule "bundle/supervisor"]
+	path = bundle/supervisor
+	url = https://github.com/thiderman/vim-supervisor.git
