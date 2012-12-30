@@ -5,7 +5,14 @@ alias gss='git status --short'
 alias gc='git commit'
 alias gca='gc --all'
 alias gp='git push'
-alias gu='git pull'
+
+alias gu="git pull"
+
+# No pull on production.
+if [[ -f "$HOME/.local/production" ]]; then
+    alias gu="zerror 'This is a production server. You cannot do that.' ;  return 1"
+fi
+
 alias gpp='git push origin'
 alias guu='git pull origin'
 
@@ -297,3 +304,10 @@ function _find_git_root() {
         git_root=""
     fi
 }
+
+if has hub; then
+    alias git=hub
+    if type compdef >/dev/null; then
+        compdef hub=git
+    fi
+fi
