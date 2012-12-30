@@ -80,11 +80,4 @@ if [[ -f $fdb ]]; then
     source $fdb
 fi
 
-for d in $HOMEBIN $LOGS $ZDUMPDIR ; do
-    if [[ ! -d $d ]] ; then
-        _zdebug "Autocreating %B%F{${c[4]}}${d}%b%f"
-        mkdir -p $d &> /dev/null
-    fi
-done
-
 # vim: ft=zsh
