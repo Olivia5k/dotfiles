@@ -31,7 +31,7 @@ autoload -Uz vcs_info  # git integration
 bindkey -e
 
 function zerror() {
-    print -P "%B%F{${c[6]}}Error%f%b:" $*
+    print -P "%B${c[6]}Error%f%b:" $*
 }
 function has() {
     [[ -x $commands[$1] ]] && return true # zsh style \o/
