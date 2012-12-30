@@ -45,7 +45,7 @@
 
     # It is not uncommon to always supply some arguments to common commands. ls
     # and grep needs colors, right?
-    export LSOPTS='--color=auto --group-directories-first'
+    export LSOPTS='--color=auto --group-directories-first -hv'
     export GREPOPTS='--color=auto'
 # }}}
 # User zsh specifics {{{

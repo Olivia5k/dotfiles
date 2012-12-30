@@ -19,6 +19,7 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path /tmp/.$USER.zshcompcache
 zstyle ':completion:*' hosts off
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # tab completion for PID :D
 zstyle ':completion:*:*:kill:*' menu yes select
