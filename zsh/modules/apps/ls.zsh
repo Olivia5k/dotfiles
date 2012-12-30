@@ -1,10 +1,5 @@
-if has ls++; then
-    ls="ls++ --group-directories-first"
-    alias ll="/bin/ls $LSOPTS"
-else
-    ls="ls $LSOPTS"
-    alias ll="$ls -l"
-fi
+ls="ls $LSOPTS"
+alias ll="$ls -l"
 
 alias ls="$ls"
 alias lc="$ls --color=never"
