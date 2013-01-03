@@ -98,9 +98,6 @@
 [submodule "bundle/uzbl-reloader"]
 	path = bundle/uzbl-reloader
 	url = https://github.com/thiderman/vim-uzbl-reloader.git
-[submodule "bundle/pymode"]
-	path = bundle/pymode
-	url = https://github.com/klen/python-mode.git
 [submodule "bundle/gitv"]
 	path = bundle/gitv
 	url = https://github.com/gregsexton/gitv.git
