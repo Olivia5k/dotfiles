@@ -1022,6 +1022,9 @@ augroup END
 " }}}
 " Python {{{
 
+" Just add one shiftwidth when indenting python
+let g:pyindent_open_paren = &sw
+
 function! PySwitchDef(l1, l2)
   let q = "[\"']"
   let obj = '\(\w\+\)\>=\(.\+\)$'
@@ -1062,14 +1065,17 @@ augroup ft_python
   au FileType man nnoremap <buffer> <cr> :q<cr>
   au Filetype python syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
+  au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
 
   " Jesus tapdancing Christ, built-in Python syntax, you couldn't let me
   " override this in a normal way, could you?
   au FileType python if exists("python_space_error_highlight") | unlet python_space_error_highlight | endif
 augroup END
 
-" Just add one shiftwidth when indenting python
-let g:pyindent_open_paren = &sw
+augroup pythonfold_reloader
+  au!
+  au BufWritePost pythonfold.vim so %
+augroup END
 
 " }}}
 " QuickFix {{{
