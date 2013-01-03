@@ -596,7 +596,7 @@ nmap zE :echo "Don't do that."<cr>
 
 nmap <leader>fm :set foldmethod=marker<cr>
 nmap <leader>fi :set foldmethod=indent<cr>
-nmap <leader>ff :set nofoldenable<cr>:set foldenable<cr>
+nmap <leader>fx :set foldmethod=expr<cr>
 nmap <leader>fp :set foldmethod=expr foldexpr=ParagraphFold\(v:lnum\)<cr>
 
 function! ParagraphFold(lnum)
