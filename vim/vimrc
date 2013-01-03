@@ -1086,6 +1086,10 @@ augroup END
 " }}}
 " Vim {{{
 
+function! HelpExpand()
+  exec "help" expand('<cword>')
+endfunction
+
 augroup ft_help
   au!
 
@@ -1102,6 +1106,7 @@ augroup ft_vim
   " If on real vimrc, source it upon save
   au BufWritePost *vimrc* let fn = expand("<afile>:p") | if fn !~ '://' | source `=fn` | endif
   au FileType vim setlocal foldmethod=marker
+  au FileType vim nnoremap <buffer> <silent> <bs> :call HelpExpand()<cr>
 augroup END
 
 " }}}
@@ -1511,8 +1516,8 @@ nmap <silent> <f4> :QFixToggle<cr>
 nnoremap <silent> <leader>A :set opfunc=<SID>AckMotion<CR>g@
 xnoremap <silent> <leader>A :<C-U>call <SID>AckMotion(visualmode())<CR>
 
-nnoremap <bs> :Ack! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <bs> :<C-U>call <SID>AckMotion(visualmode())<CR>
+" nnoremap <bs> :Ack! '\b<c-r><c-w>\b'<cr>
+" xnoremap <silent> <bs> :<C-U>call <SID>AckMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
   if a:type ==# 'v'
