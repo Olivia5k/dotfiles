@@ -1636,6 +1636,23 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 " }}}
 
 " }}}
+" Font resizer {{{
+
+function! GuiFont(size)
+  let spl = split(a:size == 0 ? g:guifont_save : &guifont, ' ')
+  let size = spl[-1]
+  exec "set guifont=" . join(spl[:-2], '\ ') . '\ ' . (size + a:size)
+
+  wincmd =
+  redraw!
+endfunction
+
+let g:guifont_save = &guifont
+nmap <silent> <c-up> :<C-U>call GuiFont(1)<cr>
+nmap <silent> <c-down> :<C-U>call GuiFont(-1)<cr>
+nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
+
+" }}}
 
 " }}}
 " Environments (GUI/Console) {{{
