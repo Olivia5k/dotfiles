@@ -107,3 +107,6 @@
 [submodule "bundle/supervisor"]
 	path = bundle/supervisor
 	url = https://github.com/thiderman/vim-supervisor.git
+[submodule "bundle/snakecharmer"]
+	path = bundle/snakecharmer
+	url = https://github.com/thiderman/vim-snakecharmer.git
