@@ -1099,8 +1099,9 @@ augroup END
 augroup ft_vim
   au!
 
+  " If on real vimrc, source it upon save
+  au BufWritePost *vimrc* let fn = expand("<afile>:p") | if fn !~ '://' | source `=fn` | endif
   au FileType vim setlocal foldmethod=marker
-  au BufWritePost *vimrc* source `=expand("<afile>:p")`
 augroup END
 
 " }}}
