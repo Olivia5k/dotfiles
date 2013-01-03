@@ -617,8 +617,24 @@ function! FoldWithLines()
   let nucolwidth = &fdc + &number * &numberwidth
   let winwd = winwidth(0) - nucolwidth - 5
   let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
-  let fdnfo = " " . string(foldlinecount) . " lines "
-  let line = strpart(getline(v:foldstart), 0 , winwd - len(fdnfo)) . " "
+  let foldinfo = " " . string(foldlinecount) . " lines "
+
+  let linedata = ""
+
+  " If there is a filetype specific foldtext method defined, use that to get the
+  " foldtext data line.
+  for ft in split(&ft, '\.')
+    if exists('*FoldText_' . ft)
+      let linedata = FoldText_{ft}(v:foldstart)
+      break
+    endif
+  endfor
+
+  if linedata == ""
+    let linedata = getline(v:foldstart)
+  endif
+
+  let line = strpart(linedata, 0 , winwd - len(foldinfo)) . " "
 
   if &tw
     let base = &tw
@@ -627,13 +643,13 @@ function! FoldWithLines()
   endif
 
   " Handle lines that are too long! Cut em down!
-  if len(line) + len(fdnfo) > base
-    let max = base - len(fdnfo) - 5
+  if len(line) + len(foldinfo) > base
+    let max = base - len(foldinfo) - 5
     let line = line[:max] . '... '
   endif
 
-  let fillcharcount = base - len(line) - len(fdnfo)
-  return line . repeat("-",fillcharcount) . fdnfo
+  let fillcharcount = base - len(line) - len(foldinfo)
+  return line . repeat("-", fillcharcount) . foldinfo
 endfunction
 
 set foldtext=FoldWithLines()
