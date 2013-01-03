@@ -49,6 +49,7 @@ autoload colors zsh/terminfo  # Colors
 autoload -Uz vcs_info  # git integration
 bindkey -e
 setopt extendedglob
+setopt sharehistory
 
 # }}}
 # Colors {{{
@@ -599,8 +600,8 @@ compdef _mp3 mp3
 # }}}
 # navigation {{{
 
-bindkey '^[[OA' history-beginning-search-backward
-bindkey '^[[OB' history-beginning-search-forward
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
 
 function rationalise-dot() {
   local reply REPLY REPLY2
