@@ -169,7 +169,7 @@ set tabstop=8
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set wrap
+set nowrap
 set textwidth=80
 set formatoptions=qrn1tcoj
 set colorcolumn=+1
@@ -264,36 +264,6 @@ nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 " Insert the directory of the current buffer in command line mode
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-" Select entire buffer
-nnoremap vaa ggvGg_
-nnoremap Vaa ggVG
-
-" "Uppercase word" mapping.
-"
-" This mapping allows you to press <c-u> in insert mode to convert the current
-" word to uppercase.  It's handy when you're writing names of constants and
-" don't want to use Capslock.
-"
-" To use it you type the name of the constant in lowercase.  While your
-" cursor is at the end of the word, press <c-u> to uppercase it, and then
-" continue happily on your way:
-"
-"              cursor
-"              v
-"   max_connections_allowed|
-"   <c-u>
-"   MAX_CONNECTIONS_ALLOWED|
-"              ^
-"              cursor
-"
-" It works by exiting out of insert mode, recording the current cursor location
-" in the z mark, using gUiw to uppercase inside the current word, moving back to
-" the z mark, and entering insert mode again.
-"
-" Note that this will overwrite the contents of the z mark.  I never use it, but
-" if you do you'll probably want to use another mark.
-inoremap <C-u> <esc>mzgUiw`za
-
 " Panic Button
 nnoremap <f9> mzggg?G`z
 
@@ -307,10 +277,6 @@ nnoremap <leader>D :diffoff!<cr>
 " Formatting, TextMate-style
 nnoremap Q gqip
 vnoremap Q gq
-
-" Reformat line.
-" I never use l as a macro register anyway.
-" nnoremap ql ^vg_gq
 
 " Easier linewise reselection
 nnoremap <leader>V V`]
@@ -337,10 +303,6 @@ vnoremap > >gv
 " Easier escaping!
 inoremap jj <ESC>
 inoremap jk <ESC>
-
-" Select (charwise) the contents of the current line, excluding indentation.
-" Great for pasting Python lines into REPLs.
-" nnoremap vv ^vg_
 
 " Sudo to write
 cnoremap w!! w !sudo tee % >/dev/null
@@ -481,16 +443,6 @@ inoremap <c-e> <esc>A
 " something similar: move to last change
 nnoremap gI `.
 
-" Fix linewise visual selection of various text objects
-nnoremap VV V
-nnoremap Vit vitVkoj
-nnoremap Vat vatV
-nnoremap Vab vabV
-nnoremap VaB vaBV
-
-" Toggle "keep current line in the center of the screen" mode
-nnoremap <leader>C :let &scrolloff=999-&scrolloff<cr>
-
 " Directional Keys {{{
 
 " It's 2012.
@@ -527,50 +479,6 @@ nnoremap <left>  :cprev<cr>zvzz
 nnoremap <right> :cnext<cr>zvzz
 nnoremap <up>  :lprev<cr>zvzz
 nnoremap <down>  :lnext<cr>zvzz
-
-" }}}
-" Auto tag showing {{{
-
-" au! CursorHold * nested call PreviewWord()
-function! PreviewWord()
-  if &previewwindow || exists('g:no_autotag')
-    return
-  endif
-  let w = expand("<cword>")    " get the word under cursor
-
-  " Try displaying a matching tag for the word under the cursor
-  try
-    if w !~ '\a'
-      throw 'error'
-    endif
-    exe "ptag " . w
-  catch
-    silent! wincmd P      " jump to preview window
-    if &previewwindow && exists('b:autotag_preview')
-      pclose
-    else
-      wincmd p
-    endif
-
-    return
-  endtry
-
-  silent! wincmd P      " jump to preview window
-
-  if &previewwindow    " if we really get there...
-    if has("folding")
-      silent! .foldopen    " don't want a closed fold
-    endif
-
-    call search("$", "b")    " to end of previous line
-    let w = substitute(w, '\\', '\\\\', "")
-    call search('\<\V' . w . '\>')  " position cursor on match
-
-    let b:autotag_preview = "hax0r"
-    normal zt
-    wincmd p      " back to old window
-  endif
-endfun
 
 " }}}
 
@@ -657,124 +565,6 @@ set foldtext=FoldWithLines()
 " }}}
 " Filetype-specific {{{
 
-" C {{{
-
-augroup ft_c
-  au!
-  au FileType c setlocal foldmethod=marker foldmarker={,}
-augroup END
-
-" }}}
-" cfg files {{{
-
-augroup ft_cfg
-  au!
-  " au FileType cfg setlocal foldmethod=expr
-  "       \ foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
-augroup END
-
-" }}}
-" Clojure {{{
-
-" function! SlimvToggleRepl()
-"   if bufname('%') ==# 'SLIMV.REPL'
-"     let origin = b:pop_back_to
-"     q
-"     execute "" . origin . "wincmd w"
-"   else
-"     let origin = winnr()
-"     vertical botright split
-"     e SLIMV.REPL
-"     let b:pop_back_to = origin
-"   endif
-" endfunction
-
-function! s:DebullshitClojureStacktrace() " {{{
-  syntax match GarbageFrame '\v +.+\.(java|clj):\d+ (clojure|swank)\..+$'
-  hi link GarbageFrame Comment
-endfunction " }}}
-
-command! -nargs=0 DebullshitClojureStacktrace call s:DebullshitClojureStacktrace()
-
-augroup ft_clojure
-  au!
-
-  au FileType SLDB DebullshitClojureStacktrace
-
-  au BufNewFile,BufRead riemann.config set filetype=clojure
-  au FileType clojure silent! call TurnOnClojureFolding()
-  au FileType clojure compiler clojure
-  au FileType clojure setlocal report=100000
-
-  au BufWinEnter      SLIMV.REPL setlocal nolist
-  au BufNewFile,BufReadPost SLIMV.REPL setlocal nowrap foldlevel=99
-  au BufNewFile,BufReadPost SLIMV.REPL nnoremap <buffer> A GA
-  au BufNewFile,BufReadPost SLIMV.REPL nnoremap <buffer> <localleader>R :emenu REPL.<Tab>
-
-  " Fix the eval mappings.
-  au FileType clojure nnoremap <buffer> <localleader>ef :call SlimvEvalExp()<cr>
-  au FileType clojure nnoremap <buffer> <localleader>ee :call SlimvEvalDefun()<cr>
-  au FileType clojure nnoremap <buffer> <localleader>en mzgg:call SlimvEvalDefun()<cr>`z
-
-  " Friendlier Paredit mappings.
-  au FileType clojure noremap <buffer> () :<c-u>call PareditWrap("(", ")")<cr>
-  au FileType clojure noremap <buffer> )( :<c-u>call PareditSplice()<cr>
-  au FileType clojure noremap <buffer> (( :<c-u>call PareditMoveLeft()<cr>
-  au FileType clojure noremap <buffer> )) :<c-u>call PareditMoveRight()<cr>
-  au FileType clojure noremap <buffer> (j :<c-u>call PareditJoin()<cr>
-  au FileType clojure noremap <buffer> (s :<c-u>call PareditSplit()<cr>
-  au FileType clojure noremap <buffer> [ :<c-u>call PareditSmartJumpOpening(0)<cr>
-  au FileType clojure noremap <buffer> ] :<c-u>call PareditSmartJumpClosing(0)<cr>
-
-  " And the inspect mapping.
-  au FileType clojure nmap <buffer> \i \di
-
-  " And REPL-toggling mapping.
-  " au FileType clojure nnoremap <buffer> \rr :call SlimvToggleRepl()<cr>
-
-  " Indent top-level form.
-  au FileType clojure nmap <buffer> <localleader>= mz99[(v%='z
-augroup END
-
-" }}}
-" Clojurescript {{{
-
-augroup ft_clojurescript
-  au!
-
-  au BufNewFile,BufRead *.cljs set filetype=clojurescript
-  au FileType clojurescript call TurnOnClojureFolding()
-
-  " Indent top-level form.
-  au FileType clojurescript nmap <buffer> <localleader>= v((((((((((((=%
-augroup END
-
-" }}}
-" Confluence {{{
-
-augroup ft_c
-  au!
-
-  au BufRead,BufNewFile *.confluencewiki setlocal filetype=confluencewiki
-
-  " Wiki pages should be soft-wrapped.
-  au FileType confluencewiki setlocal wrap linebreak nolist
-augroup END
-
-" }}}
-" Cram {{{
-
-let cram_fold=1
-
-augroup ft_cram
-  au!
-
-  au BufNewFile,BufRead *.t set filetype=cram
-  au Syntax cram setlocal foldlevel=1
-  au FileType cram nnoremap <buffer> <localleader>ee :e<cr>
-augroup END
-
-" }}}
 " CSS and LessCSS {{{
 
 augroup ft_css
@@ -826,69 +616,15 @@ augroup ft_django
 augroup END
 
 " }}}
-" Firefox {{{
-
-augroup ft_firefox
-  au!
-  au BufRead,BufNewFile ~/Library/Caches/*.html setlocal buftype=nofile
-augroup END
-
-" }}}
-" Fish {{{
-
-augroup ft_fish
-  au!
-
-  au BufNewFile,BufRead *.fish setlocal filetype=fish
-
-  au FileType fish setlocal foldmethod=marker foldmarker={{{,}}}
-augroup END
-
-" }}}
-" Haskell {{{
-
-augroup ft_haskell
-  au!
-  au BufEnter *.hs compiler ghc
-augroup END
-
-" }}}
 " HTML, Django, Jinja, Dram {{{
 
-let g:html_indent_tags = ['p', 'li']
+" The base set, just add li and p
+let g:html_indent_tags = 'a\|abbr\|acronym\|address\|b\|bdo\|big\|blockquote\|button\|caption\|center\|cite\|code\|colgroup\|del\|dfn\|dir\|div\|dl\|em\|fieldset\|font\|form\|frameset\|h1\|h2\|h3\|h4\|h5\|h6\|i\|iframe\|ins\|kbd\|label\|legend\|map\|menu\|noframes\|noscript\|object\|ol\|optgroup\|q\|s\|samp\|script\|select\|small\|span\|strong\|style\|sub\|sup\|table\|textarea\|title\|tt\|u\|ul\|var\|body\|head\|html\|tbody\|th\|td\|tr\|tfoot\|thead\|li\|p'
 
 augroup ft_html
   au!
 
-  au BufNewFile,BufRead *.html setlocal filetype=htmldjango
-  au BufNewFile,BufRead *.dram setlocal filetype=htmldjango
-
-  au FileType html,jinja,htmldjango setlocal foldmethod=manual
-
-  " Use <localleader>f to fold the current tag.
-  au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>f Vatzf
-
-  " Use <localleader>t to fold the current templatetag.
-  au FileType html,jinja,htmldjango nmap <buffer> <localleader>t viikojozf
-
-  " Indent tag
-  au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>= Vat=
-
-  " Django tags
-  au FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
-
-  " Django variables
-  au FileType jinja,htmldjango inoremap <buffer> <c-b> {{<space><space>}}<left><left><left>
-augroup END
-
-" }}}
-" Java {{{
-
-augroup ft_java
-  au!
-
-  au FileType java setlocal foldmethod=marker
-  au FileType java setlocal foldmarker={,}
+  au FileType html,htmldjango setlocal foldmethod=indent
 augroup END
 
 " }}}
@@ -899,10 +635,6 @@ augroup ft_javascript
 
   au FileType javascript setlocal foldmethod=marker
   au FileType javascript setlocal foldmarker={,}
-
-  " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-  " positioned inside of them AND the following code doesn't get unfolded.
-  au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 augroup END
 
 " }}}
@@ -912,35 +644,6 @@ augroup json_autocmd
   au!
   au BufEnter *.json setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=0
   au BufEnter *.json setlocal foldmethod=marker foldmarker={,}
-augroup END
-
-" }}}
-" Lisp {{{
-
-augroup ft_lisp
-  au!
-  au FileType lisp call TurnOnLispFolding()
-  " au FileType lisp nnoremap <buffer> <localleader>ee mz99[(va("ry:call Send_to_Tmux(@r)<cr>
-  " au FileType lisp nnoremap <buffer> <localleader>ee mz99[(:call SlimvEvalExp()<cr>`z
-
-  " Fix the eval mappings.
-  au FileType lisp nnoremap <buffer> <localleader>ef :call SlimvEvalExp()<cr>
-  au FileType lisp nnoremap <buffer> <localleader>ee :call SlimvEvalDefun()<cr>
-
-  au FileType lisp nnoremap <buffer> <localleader>tt mz0l99[(vab"ry:call Send_to_Tmux(@r)<cr>`z
-  au FileType lisp nnoremap <buffer> <localleader>tb mzggVG"ry:call Send_to_Tmux(@r)<cr>`z
-
-  " Indent top-level form.
-  au FileType lisp nmap <buffer> <localleader>= mz99[(v%='z
-augroup END
-
-" }}}
-" Mail {{{
-
-augroup ft_mail
-  au!
-
-  au Filetype mail setlocal spell
 augroup END
 
 " }}}
@@ -958,26 +661,6 @@ augroup ft_markdown
 augroup END
 
 " }}}
-" Mercurial {{{
-
-augroup ft_mercurial
-  au!
-
-  au BufNewFile,BufRead *hg-editor-*.txt setlocal filetype=hgcommit
-augroup END
-
-" }}}
-" Mutt {{{
-
-augroup ft_muttrc
-  au!
-
-  au BufRead,BufNewFile *.muttrc set ft=muttrc
-
-  au FileType muttrc setlocal foldmethod=marker foldmarker={{{,}}}
-augroup END
-
-" }}}
 " Nginx {{{
 
 augroup ft_nginx
@@ -988,35 +671,6 @@ augroup ft_nginx
   au FileType nginx set foldmethod=marker foldmarker={,} expandtab
   au FileType nginx set shiftwidth=4 softtabstop=4
   au FileType nginx set omnifunc=syntaxcomplete#Complete commentstring=#%s
-augroup END
-
-" }}}
-" OrgMode {{{
-
-augroup ft_org
-  au!
-
-  au Filetype org nmap <buffer> Q vahjgq
-  au Filetype org setlocal nolist
-augroup END
-
-" }}}
-" Pentadactyl {{{
-
-augroup ft_pentadactyl
-  au!
-  au BufNewFile,BufRead .pentadactylrc set filetype=pentadactyl
-  au BufNewFile,BufRead ~/Library/Caches/TemporaryItems/pentadactyl-*.tmp set nolist wrap linebreak columns=100 colorcolumn=0
-augroup END
-
-" }}}
-" Puppet {{{
-
-augroup ft_puppet
-  au!
-
-  au Filetype puppet setlocal foldmethod=marker
-  au Filetype puppet setlocal foldmarker={,}
 augroup END
 
 " }}}
@@ -1075,26 +729,6 @@ augroup END
 augroup pythonfold_reloader
   au!
   au BufWritePost pythonfold.vim so %
-augroup END
-
-" }}}
-" ReStructuredText {{{
-
-augroup ft_rest
-  au!
-
-  au Filetype rst nnoremap <buffer> <localleader>1 yypVr=:redraw<cr>
-  au Filetype rst nnoremap <buffer> <localleader>2 yypVr-:redraw<cr>
-  au Filetype rst nnoremap <buffer> <localleader>3 yypVr~:redraw<cr>
-  au Filetype rst nnoremap <buffer> <localleader>4 yypVr`:redraw<cr>
-augroup END
-
-" }}}
-" Ruby {{{
-
-augroup ft_ruby
-  au!
-  au Filetype ruby setlocal foldmethod=syntax
 augroup END
 
 " }}}
@@ -1175,11 +809,12 @@ nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <A-d> :CtrlP<cr>
 nnoremap <Leader>q :CtrlP<cr>
 nnoremap <Leader>a :CtrlPBuffer<cr>
+nnoremap <Leader>z :CtrlPTag<cr>
 nnoremap <Leader>Q :CtrlPReload<cr>
 
 " }}}
 " Fugitive {{{
-"
+
 fun! s:gm(short, cmd, ...)  " git_map
   let silent = a:cmd =~ '\w$' ? '<silent>' : ''
   let cr = a:cmd =~ '\w$' ? '<cr>' : ''
@@ -1211,16 +846,6 @@ call s:gm('ga',  'Gwrite')
 call s:gm('gm',  'Gmove ')
 
 " }}}
-" Gundo {{{
-
-nnoremap <F5> :GundoToggle<CR>
-
-let g:gundo_debug = 1
-let g:gundo_preview_bottom = 1
-let g:gundo_tree_statusline = "Gundo"
-let g:gundo_preview_statusline = "Gundo Preview"
-
-" }}}
 " NERD Tree {{{
 
 noremap  <F2> :NERDTreeToggle<cr>
@@ -1234,7 +859,7 @@ augroup ps_nerdtree
 augroup END
 
 let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+let NERDTreeIgnore = ['\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
           \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
           \ '.*\.o$', 'db.db', 'tags.bak']
 
@@ -1260,7 +885,7 @@ let g:reinhardt_mapkey = "r"
 " Sparkup {{{
 
 " let g:sparkupExecuteMapping = '<C-E>'
-let g:sparkupNextMapping = '<C-Q>'
+let g:sparkupNextMapping = '<F13>'
 
 "}}}
 " Syntastic {{{
@@ -1277,7 +902,7 @@ let g:syntastic_python_checker = 'flake8'
 
 " The retard that set C-C as default for SQL completion should get his face
 " caved in.
-let g:ftplugin_sql_omni_key = '<C-Q>'
+let g:ftplugin_sql_omni_key = '<F13>'
 
 " }}}
 " surround {{{
@@ -1647,23 +1272,15 @@ nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
 " Environments (GUI/Console) {{{
 
 if has('gui_running')
-  " GUI Vim
-
-  set guifont=Inconsolata\ 13
-
   " Remove all the UI cruft
   set guioptions=cagit  " Disable graphical elements
-
-  highlight SpellBad term=underline gui=undercurl guisp=Orange
+  set guifont=Inconsolata\ 13
 
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
   set guicursor+=v:block-vCursor-blinkon0
   set guicursor+=i-ci:ver20-iCursor
 else
-  " Console Vim
-  " For me, this means iTerm2, possibly through tmux
-
   " Mouse support
   set mouse=a
 endif
