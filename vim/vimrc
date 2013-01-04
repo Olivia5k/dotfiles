@@ -1078,14 +1078,6 @@ augroup pythonfold_reloader
 augroup END
 
 " }}}
-" QuickFix {{{
-
-augroup ft_quickfix
-  au!
-  au Filetype qf setlocal colorcolumn=0 nolist nowrap tw=0
-augroup END
-
-" }}}
 " ReStructuredText {{{
 
 augroup ft_rest
@@ -1116,10 +1108,18 @@ augroup ft_help
   au!
 
   au FileType help setlocal textwidth=78
-  au FileType help nnoremap <buffer> <Enter> <C-]>
+  au FileType help nnoremap <buffer> <cr> <C-]>
   au FileType help nnoremap <buffer> q :q<cr>
   au FileType help nnoremap <buffer> <c-c> :q<cr>
   au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+augroup END
+
+augroup ft_quickfix
+  au!
+
+  " Disable any mapping of enter in quickfix buffers
+  au Filetype qf nnoremap <cr> <cr>
+  au Filetype qf setlocal colorcolumn=0 nolist nowrap tw=0
 augroup END
 
 augroup ft_vim
