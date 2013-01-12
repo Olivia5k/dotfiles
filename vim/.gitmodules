@@ -110,3 +110,6 @@
 [submodule "bundle/snakecharmer"]
 	path = bundle/snakecharmer
 	url = https://github.com/thiderman/vim-snakecharmer.git
+[submodule "bundle/delimitmate"]
+	path = bundle/delimitmate
+	url = git://github.com/Raimondi/delimitMate.git
