@@ -6,10 +6,6 @@
 " This file was respectfully stolen from Steve Losh. It has been modified to
 " contain some of the configs I had, but 90% of the file is still in the magic.
 
-" For now. Endwise and smartinput clash on imap <cr>. Rather, smartinput
-" refuses, since endwise was there first.
-let g:loaded_endwise = 1
-
 " Preamble {{{
 
 filetype off
