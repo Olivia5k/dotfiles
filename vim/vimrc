@@ -689,7 +689,7 @@ augroup END
 " Python {{{
 
 " Just add one shiftwidth when indenting python
-let g:pyindent_open_paren = &sw
+let g:pyindent_open_paren = 4
 
 function! PySwitchDef(l1, l2)
   let q = "[\"']"
@@ -894,6 +894,11 @@ let g:Powerline_colorscheme = 'badwolf'
 let g:reinhardt_mapkey = "r"
 
 " }}}
+" Snakecharmer {{{
+
+let g:snakecharm_sort_imports = 1
+
+" }}}
 " Sparkup {{{
 
 " let g:sparkupExecuteMapping = '<C-E>'
@@ -908,6 +913,7 @@ let g:syntastic_disabled_filetypes = ['html', 'rst', 'css']
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 let g:syntastic_javascript_jslint_conf = "--maxerr 1000 --white --undef --nomen --regexp --plusplus --bitwise --newcap --sloppy --vars --continue"
 let g:syntastic_python_checker = 'flake8'
+let g:syntastic_python_checker_args = '--ignore=E501'  " Ignore line too long
 
 " }}}
 " SQL {{{
