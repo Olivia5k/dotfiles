@@ -471,13 +471,13 @@ alias -g 2N="2> /dev/null"
 # }}}
 # infect {{{
 
-function update() {
-  if [[ ! -f $HOME/.infect ]]; then
-  cd -q $(<$HOME/.infect)
-  ./infect
-  cd -q -
+function infect() {
+  if [[ -f $HOME/.infect ]]; then
+    cd -q $(<$HOME/.infect)
+    ./infect $*
+    cd -q -
   else
-  zerror "Infect file missing."
+    zerror "Infect file missing."
   fi
 }
 
