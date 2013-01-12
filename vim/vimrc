@@ -35,11 +35,15 @@ set ttyfast
 set ruler
 set backspace=indent,eol,start
 set nonumber
-set norelativenumber
+if exists('+relativenumber')
+  set norelativenumber
+endif
 set laststatus=2
 set history=1000
-set undofile
-set undoreload=10000
+if exists('+undofile')
+  set undofile
+  set undoreload=10000
+endif
 set list
 set listchars=tab:▸\ ,trail:¬,extends:❯,precedes:❮
 " set shell=/bin/bash\ --login
@@ -171,8 +175,13 @@ set softtabstop=2
 set expandtab
 set nowrap
 set textwidth=80
-set formatoptions=qrn1tcoj
-set colorcolumn=+1
+set formatoptions=qrn1tco
+if v:version >= 703
+  set formatoptions+=j
+endif
+if exists('+colorcolumn')
+  set colorcolumn=+1
+endif
 
 " }}}
 " Backups {{{
@@ -181,7 +190,9 @@ set backup            " enable backups
 set noswapfile          " It's 2012, Vim.
 
 set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
-set undodir=~/.cache/vim/undo//   " undo files
+if exists('+undodir')
+  set undodir=~/.cache/vim/undo//   " undo files
+endif
 set backupdir=~/.cache/vim/backup// " backups
 set directory=~/.cache/vim/swap//   " swap files
 
