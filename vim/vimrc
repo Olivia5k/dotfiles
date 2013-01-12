@@ -209,6 +209,7 @@ syntax on
 set background=dark
 let g:badwolf_tabline = 2
 let g:badwolf_html_link_underline = 0
+let g:badwold_darkgutter = 1
 colorscheme badwolf
 
 " Reload the colorscheme whenever we write the file.
