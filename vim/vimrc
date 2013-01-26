@@ -112,6 +112,9 @@ augroup autosave
   au CursorHoldI * call AutoSave()
 augroup END
 
+" Let's not, for now.
+let g:no_autosave = 1
+
 " }}}
 " Kill trailing whitespace {{{
 
