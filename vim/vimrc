@@ -407,7 +407,7 @@ set gdefault
 
 set scrolloff=3
 set sidescroll=1
-set sidescrolloff=10
+set sidescrolloff=2
 
 set virtualedit+=block
 
