@@ -1,65 +1,62 @@
 ! urxvt
-*.scrollBar:               false
-*.saveLines:               100
-*.urgentOnBell:            true
-*.perl-ext-common:         default,matcher,url-select,bell-command
-*.perl-ext:                searchable-scrollback<M-o>
-*.urlLauncher:             /home/daethorian/bin/www
-*.matcher.button:          1
-*.matcher.pattern.1:       \\bwww\\.[\\w-]+\\.[\\w./?&@#-åäöÅÄÖ]*[\\w/-]
-*.meta8:                   false
-*.underlineURLs:           true
-*.transparent:             false
-!*.shading:                 10
-!*.fading:                  30
-*.bell-command:            /home/daethorian/bin/slig
-*.keysym.M-u:              perl:url-select:select_next
+URxvt.scrollBar: false
+URxvt.saveLines: 100
+URxvt.urgentOnBell: true
+URxvt.perl-ext: default,url-select,matcher,searchable-scrollback<M-o>
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: www
+URxvt.url-select.underline: true
+URxvt.underlineURLs: true
+URxvt.transparent: false
+URxvt.shading: 0
+URxvt.fading: 20
+URxvt.bell-command: slig
 
-*.font:                    xft:inconsolata:pixelsize=14
-*.boldFont:                xft:inconsolata:bold:pixelsize=14
-!*.font:                    xft:montecarlo:pixelsize=11
-!*.boldFont:                xft:montecarlo:bold:pixelsize=11
-
-Xft.dpi:                   75.0
+! fonts
+*.font: xft:inconsolata:pixelsize=14
+*.boldFont: xft:inconsolata:bold:pixelsize=14
+! *.font: xft:montecarlo:pixelsize=11
+! *.boldFont: xft:montecarlo:bold:pixelsize=11
+Xft.dpi: 75.0
 
 ! XLock
-XLock.fpsfont:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.font:                -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.planfont:            -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.fontset:             -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.planfontset:         -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.messagefont:         -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.fpsfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.font: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.planfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.fontset: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.planfontset: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
+XLock.messagefont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
 XLock.username:
-XLock.password:            Password:
+XLock.password: Password:
 XLock.info:
-XLock.validate:            Validating login...
-XLock.invalid:             Invalid login
-XLock.icongeometry:        28x28
-XLock.mode:                blank
-XLock.description:         false
-XLock.echokeys:            True
-XLock.echokey:             *
-XLock.mousemotion:         True
-XLock.showdate:            True
-XLock.usefirst:            True
-!
+XLock.validate: Validating login...
+XLock.invalid: Invalid login
+XLock.icongeometry: 28x28
+XLock.mode: blank
+XLock.description: false
+XLock.echokeys: True
+XLock.echokey: *
+XLock.mousemotion: True
+XLock.showdate: True
+XLock.usefirst: True
+
 ! Colorscheme (unnamed)
-*foreground:   #dcdccc
-*background:   #121212
-*color0:       #333333
-*color1:       #8e2b2e
-*color2:       #45702c
-*color3:       #986f43
-*color4:       #25717a
-*color5:       #875C8D
-*color6:       #32a78a
-*color7:       #888888
-*color8:       #555555
-*color9:       #ff464b
-*color10:      #9dbf60
-*color11:      #e2a564
-*color12:      #5495DC
-*color13:      #E41F66
-*color14:      #41dbb5
-*color15:      #ffffff
+*foreground: #dbdbdb
+*background: #111117
+*color0: #222229
+*color1: #8e2b2e
+*color2: #45702c
+*color3: #986f43
+*color4: #25717a
+*color5: #875C8D
+*color6: #32a78a
+*color7: #888888
+*color8: #555555
+*color9: #ff464b
+*color10: #9dbf60
+*color11: #e2a564
+*color12: #5495DC
+*color13: #E41F66
+*color14: #41dbb5
+*color15: #ffffff
 ! vim: ft=xdefaults
