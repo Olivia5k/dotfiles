@@ -37,10 +37,9 @@
 [core]
 	editor = vim
 	excludesfile = ~/.cvsignore
-[github]
-	user = daethorian
-	token = b407302dc11a9512cb33e619c8df199b
 [init]
 	templatedir = ~/.git_template
 [alias]
 	ctags = !.git/hooks/ctags
+[push]
+	default = simple
