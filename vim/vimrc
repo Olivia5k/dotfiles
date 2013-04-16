@@ -8,6 +8,8 @@
 
 " Preamble {{{
 
+let g:pathogen_disabled = ['vimwiki']
+
 filetype off
 call pathogen#infect()
 filetype plugin indent on
@@ -956,7 +958,7 @@ vmap <C-k> [egv
 " }}}
 " vimwiki {{{
 
-let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}, {'path': '~/etc/vim/bundle/reinhardt/vimwiki', 'path_html': '~/.local/share/vimwiki/html'}]
+let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
 let g:vimwiki_folding = 1
 
 " }}}
