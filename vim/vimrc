@@ -777,6 +777,15 @@ augroup ft_vim
 augroup END
 
 " }}}
+" Xresources {{{
+
+augroup ft_xresources
+  au!
+
+  au Filetype xdefaults set commentstring=!%s
+augroup END
+
+" }}}
 " XML {{{
 
 " Try to properly format an XML file. Will break if there are syntax errors
