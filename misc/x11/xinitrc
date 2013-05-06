@@ -1,5 +1,6 @@
 setxkbmap q6 &
 xset r rate 330 45 &
+xset -b
 xrdb ~/.Xresources
 
 exec xsetroot -cursor_name left_ptr &
