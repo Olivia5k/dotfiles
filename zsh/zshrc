@@ -31,7 +31,7 @@ export EDITOR="vim"
 export VISUAL="vim"
 export MAIL="$HOME/var/mail"
 export HOMEBIN="$HOME/.local/bin"
-local _PATH="$HOME/bin:$HOMEBIN"
+local _PATH="$HOME/bin:$HOMEBIN:$HOME/.gem/ruby/1.9.1/bin"
 
 # If $_PATH is not in $PATH, add it, but only once.
 if ! [[ $PATH =~ "$_PATH" ]] ; then
