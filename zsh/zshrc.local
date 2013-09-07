@@ -1,0 +1,795 @@
+# zshrc by Lowe Thiderman (lowe.thiderman@gmail.com)
+# Released under the WTFPL (http://sam.zoy.org/wtfpl/).
+# https://github.com/thiderman/conf-zsh
+
+# Colors {{{
+c=()
+if [[ $TCOLORS = 256 ]] || true; then
+  c+="%F{237}"     # 1.  Prompt decoration
+  c+="%F{143}"     # 2.  Hostname
+  c+="%F{160}"     # 3.  Hostname root
+  c+="%F{067}"     # 4.  Directory
+  c+="%F{096}"     # 5.  Directory non-multi
+  c+="%F{196}"     # 6.  Error
+  c+="%F{184}"     # 7.  Jobs
+  c+="%F{067}"     # 8.  Clock
+  c+="%F{195}"     # 9.  Mail
+  c+="%F{062}"     # 10. Battery percent
+  c+="%F{063}"     # 11. Battery timeleft
+  c+="%F{196}"     # 12. TMOUT
+  c+="%F{066}"     # 13. CVS System
+  c+="%F{214}"     # 14. CVS Repo
+  c+="%F{083}"     # 15. CVS Clean
+  c+="%F{160}"     # 16. CVS Unstaged
+  c+="%F{095}"     # 17. CVS Action
+  c+="%F{202}"     # 18. CVS Staged / Debug
+  c+="%F{120}"     # 19. Enabled / Success
+  c+="%F{240}"     # 20. Disabled
+  c+="%F{067}"     # 21. Doc: Function
+  c+="%F{240}"     # 22. Doc: Undocumented
+  c+="%F{148}"     # 23. Doc: File
+  c+="%F{048}"     # 24. Comp: Descriptions
+  c+="%F{067}"     # 25. Comp: Directories
+  c+="%F{196}"     # 26. Comp: Corrections
+  c+="%F{045}"     # 27. IP Adress
+  c+="%F{123}"     # 28. CVS Super repo
+else
+  c+="%F{black}"   # 1.  Prompt decoration
+  c+="%F{green}"   # 2.  Hostname
+  c+="%F{red}"     # 3.  Hostname root
+  c+="%F{blue}"    # 4.  Directory
+  c+="%F{red}"     # 5.  Directory non-multi
+  c+="%F{red}"     # 6.  Error
+  c+="%F{yellow}"  # 7.  Jobs
+  c+="%F{cyan}"    # 8.  Clock
+  c+="%F{red}"     # 9.  Mail
+  c+="%F{yellow}"  # 10. Battery percent
+  c+="%F{magenta}"   # 11. Battery timeleft
+  c+="%F{red}"     # 12. TMOUT
+  c+="%F{yellow}"  # 13. CVS System
+  c+="%F{yellow}"  # 14. CVS Repo
+  c+="%F{green}"   # 15. CVS Clean
+  c+="%F{red}"     # 16. CVS Unstaged
+  c+="%F{cyan}"    # 17. CVS Action
+  c+="%F{cyan}"    # 18. Debug
+  c+="%F{green}"   # 19. Enabled / Success
+  c+="%F{red}"     # 20. Disabled
+  c+="%F{blue}"    # 21. Doc: Function
+  c+="%F{white}"   # 22. Doc: Undocumented
+  c+="%F{red}"     # 23. Doc: File
+  c+="%F{green}"   # 24. Comp: Descriptions
+  c+="%F{blue}"    # 25. Comp: Directories
+  c+="%F{red}"     # 26. Comp: Corrections
+  c+="%F{cyan}"    # 27. IP Adress
+  c+="%F{cyan}"    # 28. CVS Super repo
+fi
+
+export c
+# }}}
+# External modules {{{
+
+# zsh-filedb. Quickfast!
+source $ZSHCONFDIR/modules/filedb/zsys.zsh
+
+
+if [[ $(echotc Co) = 256 ]]; then
+  # Shell syntax highlighting, in realtime.
+  # source $ZSHCONFDIR/modules/syntax/zsh-syntax-highlighting-filetypes.zsh
+  source $ZSHCONFDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  # Really extensive LS_COLORS.
+  eval $(dircolors -b $ZSHCONFDIR/modules/LS_COLORS/LS_COLORS)
+fi
+
+export ZSH_HIGHLIGHT_STYLES[alias]='fg=87,bold'
+export ZSH_HIGHLIGHT_STYLES[command]='fg=103,bold'
+export ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=103,bold'
+export ZSH_HIGHLIGHT_STYLES[precommand]='fg=110,bold'
+export ZSH_HIGHLIGHT_STYLES[builtin]='fg=65,bold'
+export ZSH_HIGHLIGHT_STYLES[function]='fg=215,bold'
+export ZSH_HIGHLIGHT_STYLES[path]='fg=68,bold'
+export ZSH_HIGHLIGHT_STYLES[assign]='fg=43'
+
+export ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=87'
+export ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=132'
+export ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=107,bold'
+export ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=107,bold'
+
+
+# }}}
+# Basic configuration {{{
+
+# ls {{{
+
+# export LSOPTS='--color=auto --group-directories-first -hv'
+
+# ls="ls $LSOPTS"
+alias l="ls -l"
+
+# alias ls="$ls"
+# alias la="$ls -A"
+# alias lal="$ls -Al"
+
+# }}}
+# aliases {{{
+
+alias zz="source $ZSHRC"
+
+export GREPOPTS='--color=auto'
+alias grep="grep $GREPOPTS"
+alias :q="exit"
+alias bell='echo -en "\007"'
+alias pg="ping google.com -c 3"
+
+# X11 specific aliases
+if [[ -n "$DISPLAY" ]] ; then
+  # Sets your keyboard to be snappier. Very recommended.
+  alias xr='xset r rate 330 45 && echo 330/45'
+
+  # Sets custom keymaps of both qwerty and dvorak
+  alias xa='setxkbmap a6'
+  alias xq='setxkbmap q6'
+  alias aoeu="xq"
+  alias asdf="xa"
+fi
+
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[d" insert-sudo
+
+# }}}
+# # completion {{{
+
+# zstyle :compinstall filename '~/.zshrc'
+
+# #autoload -Uz compinit
+# #compinit -d $COMPDUMP
+
+# zstyle ':completion:*' completer _complete _match _approximate
+# zstyle ':completion:*:match:*' original only
+# zstyle ':completion:*:approximate:*' max-errors 2 numeric
+# zstyle ':completion:*:descriptions' format "%B${c[24]}%d%f%b:"
+# zstyle ':completion:*:directories' format "%B${c[25]}%d%f%b:"
+# zstyle ':completion:*:corrections' format "%B${c[26]}%d%b%f:"
+# zstyle ':completion:*:warnings' format "%B${c[26]}No matches for%b%f: %d"
+# zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*:manuals' separate-sections true
+# zstyle ':completion:*:manuals.(^1*)' insert-sections true
+# zstyle ':completion:*' menu select
+# zstyle ':completion:*' verbose yes
+# zstyle ':completion:*' use-cache on
+# zstyle ':completion:*' cache-path /tmp/.$USER.zshcompcache
+# zstyle ':completion:*' hosts off
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# # tab completion for PID :D
+# zstyle ':completion:*:*:kill:*' menu yes select
+# zstyle ':completion:*:kill:*' force-list always
+
+# zstyle ':completion:*:*:psg:*' menu yes select
+# zstyle ':completion:*:psg:*' force-list always
+
+# # Make cd not select parent dir
+# zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# # }}}
+# chpwd {{{
+
+# sshfs {{{
+function __autosshfs_mount() {
+  if [[ $PWD = $2 ]] && [[ ! -d "$3" ]]; then
+    dir=$2:t
+    echo "sshfs-automount: $dir"
+
+    cd -q ..
+    sshfs $1 $2 -o allow_other
+    cd $2
+    export AUTO_SSHFS="$2" \
+           AUTO_SSHFS_NAME="$dir"
+  fi
+}
+
+function _autosshfs() {
+  ssh="$HOME/ssh"
+  nl="$ssh/ninjaloot"
+  wrz="$ssh/warez"
+
+  # Check with trailing slash so that we only match things actually below it
+  if [[ $PWD =~ $ssh/ ]] && [[ -z "$AUTO_SSHFS" ]]; then
+    # In ssh dir and nothing mounted. Do stuff!
+    __autosshfs_mount nl: $nl $nl/etc
+    __autosshfs_mount nl:/warez $wrz $wrz/mp3
+
+  elif [[ ! $PWD =~ $ssh/ ]] && [[ -n "$AUTO_SSHFS" ]]; then
+    # No longer in ssh - unmount the mounted one
+    echo "sshfs-unmount: $AUTO_SSHFS_NAME"
+
+    fusermount -u $AUTO_SSHFS
+    export AUTO_SSHFS="" \
+           AUTO_SSHFS_NAME=""
+  fi
+}
+
+# }}}
+# virtualenv {{{
+
+# Auto source/unsource of virtualenvs
+function _autovenv() {
+  cur=${1:-$PWD}
+  f="bin/activate"
+
+  # Find upwards and look for a $f. If it is found, source it.
+  until [[ -z "$cur" ]]; do
+    if [[ -f "$cur/$f" ]]; then
+      if [[ -z "$VIRTUAL_ENV" ]]; then
+        source $cur/$f
+        export VENV_PROMPT="%B${c[24]}venv${c[1]}:"
+      fi
+      return
+    fi
+    cur=${cur%/*}
+  done
+
+  # If set and no longer inside a virtualenv, deactivate it.
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    export VENV_PROMPT=''
+    deactivate
+  fi
+}
+_autovenv
+
+# }}}
+
+function chpwd() {
+  if [[ -z "$ZSH_NO_CHPWD" ]]; then
+    ls
+  fi
+
+  _autovenv
+  _autosshfs
+}
+
+# }}}
+# global aliases {{{
+
+alias -g J="| python -m json.tool"
+alias -g JC="| python -m json.tool | pygmentize -l json"
+alias -g G="| grep -i"
+alias -g M="| most"
+alias -g L="| less"
+alias -g X="| xargs"
+alias -g H="| head"
+alias -g T="| tail"
+alias -g S="| sort"
+alias -g SU='| sort -u'
+alias -g SN='| sort -n'
+alias -g SNR='| sort -nr'
+alias -g W="| wc -l"
+alias -g E="&| exit"
+alias -g EE="&& exit"
+alias -g N="&> /dev/null"
+alias -g 1N="1> /dev/null"
+alias -g 2N="2> /dev/null"
+
+# }}}
+# navigation {{{
+
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+
+function rationalise-dot() {
+  local reply REPLY REPLY2
+  if [[ $_IS_PASTING = 1 ]]; then
+    zle self-insert
+    return
+  fi
+  #local MATCH
+  if [[ $LBUFFER =~ '(^|/| |  |'$'\n''|\||;|&)\.\.$' ]]; then
+    LBUFFER+=/
+    zle self-insert
+    zle self-insert
+
+    split-shell-arguments
+    (( REPLY -= 1 ))  # The actual $REPLY is whitespace. See doc for ssa.
+    zle -M ${reply[$REPLY]:a}
+  else
+    zle self-insert
+  fi
+}
+
+zle -N rationalise-dot
+bindkey . rationalise-dot
+# without this, typing a . aborts incremental history search
+bindkey -M isearch . self-insert
+
+function mkcd() {
+  mkdir -p $1
+  cd $1
+}
+
+function cd () {
+  local opt=""
+  if [[ ${+2} = 0 ]]; then
+    if [[ -f $1 ]]; then
+      builtin cd $opt $1:h
+    else
+      if ! builtin cd $opt $1 && [[ $#@ -eq 1 && ! -d $1 ]]; then
+        echo -En "cd: $1 doesn't exist, do you want to create it? [y/N] "
+        read -sq && mkcd $1
+      fi
+    fi
+  else
+    if [[ -z $3 ]]; then
+      builtin cd $opt "$1" "$2"
+    else
+      echo cd: too many arguments
+    fi
+  fi
+}
+
+# Greh; this only works on very recent zshs! Check if chpwd_recent_dirs
+# actually is loadable!
+a=( ${^fpath}/chpwd_recent_dirs(N) )
+if (( $#a > 0 )); then
+  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+
+  alias cdl="cdr -l"
+
+  zstyle ':completion:*:*:cdr:*:*' menu selection
+  zstyle ':chpwd:*' recent-dirs-file $XDG_DATA_HOME/zsh/cdr
+  zstyle ':chpwd:*' recent-dirs-max 21
+fi
+
+zle -N _inline-updir
+zle -N _inline-back
+
+# ZLE hax0r navigation
+function _inline-updir() {
+  pushd -q ..
+  precmd
+  zle .reset-prompt
+}
+function _inline-back() {
+  if ! popd -q; then
+    zle -M 'Directory stack empty'
+    sleep 0.5
+  fi
+  precmd
+  zle .reset-prompt
+}
+
+bindkey "^[h" _inline-updir
+bindkey "^[l" _inline-back
+
+# }}}
+# search {{{
+
+function _clearbelowprompt() {
+  zle -M ""
+}
+
+function _show_surroundings() {
+  (( $LINES < 5 )) && { zle -M ""; return }
+  local bound line
+  typeset -a output
+  typeset -A star
+  bound=${NUMERIC:-$(( LINES < 10 ? 1 : LINES / 3 ))}
+  star[$HISTNO]="*"
+  for ((i = HISTNO - $bound; i < HISTNO + $bound && i < HISTCMD; i++)); do
+    line="${${:-$star[$i]$i: $history[$i]}[1,COLUMNS-1]}"
+    while (( ${(m)#line} > COLUMNS-1 )); do
+    line[-1]=
+    #for broken zsh#line=$line[1,-2]
+    done
+    output=( $line $output )
+  done
+  zle -M ${(pj:\n:)output}
+}
+zle -N zle-isearch-update _show_surroundings
+zle -N zle-isearch-exit _clearbelowprompt
+
+# }}}
+
+# }}}
+# Application specific {{{
+
+# find {{{
+
+function f() {
+  find 2>/dev/null | grep -is "$1"
+}
+
+function fd() {
+  find 2>/dev/null -type d | grep -is "$1"
+}
+
+# Global grep. Searches files for content.
+function gg() {
+  grep "$*" * -RIins
+}
+
+# Global grep extended. Searches files for content with real regular expressions.
+function gge() {
+  grep "$*" * -ERIins
+}
+
+# Same as above, but does not print the matching line. Useful when searching
+# through files with criminally long lines.
+function ggl() {
+  grep "$*" * -RlIis
+}
+
+# Same as above, but instead of printing the files, open them in your editor
+function eggl() {
+  if [[ $EDITOR = $(which vim) ]] ; then
+    $EDITOR -p $(ggl $*)
+  else
+    $EDITOR $(ggl $*)
+  fi
+}
+
+# }}}
+# git {{{
+
+# Committing / General
+alias ga='git add'
+alias gs='git status'
+alias gss='git status --short'
+alias s='gss'
+alias gc='git commit'
+alias gca='gc --all'
+alias gp='git push'
+
+alias gu="git pull"
+
+alias gpp='git push origin'
+alias guu='git pull origin'
+
+# Branching (only really useful with -v, really)
+alias gb='git branch -v'
+alias gba='git branch -av'
+alias gbv='git branch -vv'
+alias gbav='git branch -avv'
+
+# Remotes
+alias gre='git remote -v'
+alias gra='git remote add'
+
+# Checkouting
+alias go='git checkout'
+alias goo='git checkout --ours'
+alias got='git checkout --theirs'
+
+# Stashing
+alias gt="git stash"
+alias gtl="git stash list"
+alias gtp="git stash pop"
+alias gts="git stash show"
+
+# Submodules
+alias gsa='git submodule add'
+alias gsi='git submodule init'
+alias gsu='git submodule update'
+alias gus='git pull && gsu'
+
+# Diffing
+alias gd='git diff'
+alias gdh='git diff HEAD'
+alias gdt='git difftool'
+
+# Merging
+alias gm="git merge"
+alias gmt="git mergetool"
+alias gls="git ls-files"
+alias glsu="git ls-files --unmerged"
+alias glsm="git ls-files --modified"
+alias glss="git ls-files --stage"
+alias glsd="git ls-files --deleted"
+
+# Logging
+alias gl='git log --abbrev-commit --decorate --pretty=oneline'
+alias gll='git log --abbrev-commit --decorate --stat'
+alias glg="gl --graph"
+alias gllg="gll --graph"
+alias glc="git shortlog --summary --numbered"
+alias glr="git reflog"
+
+alias gau='git update-index --assume-unchanged'
+
+# Relatively go up to a repository root
+function gr() {
+  cur=$PWD
+  found=false
+  is_in=false
+  if [[ -n "$1" ]]; then
+    msg="zle -M"
+  else
+    msg="echo"
+  fi
+
+  if [[ -r "$cur/.git" ]]; then
+    is_in=true
+    cur=${cur%/*}
+  fi
+
+  until [[ -z "$cur" ]]; do
+    if [[ -r "$cur/.git" ]]; then
+      found=true
+      break
+    fi
+    cur=${cur%/*}
+  done
+
+  if $found; then
+    if $is_in; then
+      ${(z)msg} "In submodule: going to superproject"
+    fi
+
+    [[ -n "$1" ]] && pushd -q $cur || cd $cur
+  elif [[ -d "$PWD/.git" ]]; then
+    ${(z)msg} "Already at project root"
+  else
+    ${(z)msg} "Error: Currently not in a git repository"
+  fi
+}
+
+zle -N _inline-gr
+function _inline-gr() {
+  gr 1
+  precmd
+  zle .reset-prompt
+}
+
+bindkey "^[r" _inline-gr
+
+function _find_git_root() {
+  # Helper that finds the real git root.
+  # Useful when relatively needing data from a new-style submodule.
+  cur=${1:-$PWD}
+  until [[ -z "$cur" ]]; do
+    if [[ -f "$cur/.git" ]]; then
+      # New-style submodules are files
+      rel=${${(s: :)"$(<$cur/.git)"}[2]}
+      if [[ "$rel" =~ "^../" ]]; then
+        # Relative relative! D:
+        combined="$cur/$rel"
+        git_root=$combined:A
+      else
+        # Absolute relative.
+        git_root=$rel
+      fi
+
+      break
+    elif [[ -d "$cur/.git" ]]; then
+      git_root="$cur/.git"
+      break
+    fi
+    cur=${cur%/*}
+  done
+
+  if [[ "$git_root" = "/" ]]; then
+    git_root=""
+  fi
+}
+
+# Set up hub as an alias for git if it is installed
+if [[ -x $commands[hub] ]]; then
+  alias git=hub
+  if type compdef >/dev/null; then
+    compdef hub=git
+  fi
+fi
+
+# }}}
+# herbstluftwm {{{
+
+alias hc="herbstclient"
+
+# }}}
+# mount / sshfs {{{
+
+alias mmu='mount /mnt/usb'
+alias muu='umount /mnt/usb'
+
+alias mmw='sshfs nl:/warez ~/ssh/warez -o allow_other'
+alias muw='fusermount -u ~/ssh/warez'
+alias mmn='sshfs nl: ~/ssh/ninjaloot'
+alias mun='fusermount -u ~/ssh/ninjaloot'
+
+alias cdn="cd ~/ssh/ninjaloot"
+alias cdw="cd ~/ssh/warez"
+
+# }}}
+# spotify  {{{
+
+# Uncomment these to use GitHub Enterprise instead of Gerrit.
+# Note that you need the ghe_repos.py script for this.
+# export SP_REPO_CMD="gherepo"
+# export SP_REPO_HOST="ghe.spotify.net"
+
+function spclone() {
+  host=${SP_REPO_HOST:-git.spotify.net}
+  repo=$1 ; shift
+
+  if [[ $host = "ghe.spotify.net" ]]; then
+    # If Github Enterprise, we need to use the git user for the clone
+    host=git@${host}
+  fi
+  git clone $host:$repo $*
+}
+
+function _repo_complete() {
+  local host file now cmd
+  host=${SP_REPO_HOST:-git.spotify.net}
+  file=${SP_REPO_FILE:-$HOME/.spclone_cache}
+  now=$(date +'%s')
+  cmd=${SP_REPO_CMD:-"ssh $host gerrit ls-projects"}
+
+  # Use a simple cache to speed things up.
+  # export SP_REPO_CACHE=0 to force refresh.
+  if [[ ! -f $file ]] || [[ $(($now - ${SP_REPO_CACHE:-0})) -gt 300 ]]; then
+    ${(z)cmd} 2> /dev/null > $file
+    export SP_REPO_CACHE=$now
+  fi
+
+  reply=($(<$file))
+}
+
+compctl -K _repo_complete spclone
+
+function sppip() {
+    pip install -i http://pypi.spotify.net/simple/ $*
+}
+
+# }}}
+
+# }}}
+# Prompt setup {{{
+
+for x in user at host path percent; do
+  zstyle ":prompt:grml:left:items:$x" post '%f%b'
+done
+
+for x in user at host; do
+  zstyle ":prompt:grml:left:items:$x" pre '%B%F{143}'
+done
+
+zstyle ':prompt:grml:left:items:path' pre '$VENV_PROMPT%B%F{68}'
+zstyle ':prompt:grml:left:items:path' token '%40<..<%1~%<< '
+zstyle ':prompt:grml:left:items:percent' pre "%B%F{245}"
+zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
+
+# # hax0r git prompt setup!
+# zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' unstagedstr "${c[16]}"
+zstyle ':vcs_info:*' stagedstr "${c[18]}"
+
+# zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+
+local gitformat="%B${c[14]}%r${c[1]}(%a${c[15]}%u%c%b%m${c[1]}) "
+zstyle ':vcs_info:git*' formats $gitformat
+zstyle ':vcs_info:git*' actionformats $gitformat
+
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash git-action
+
+ # Show remote ref name and number of commits ahead-of or behind
+function +vi-git-st() {
+  local str branch ahead behind remote
+
+  # Store the current branch name
+  branch=${hook_com[branch]}
+
+  # Are we on a remote-tracking branch?
+  remote=${$(git rev-parse --verify ${branch}@{upstream} \
+    --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+
+  if [[ -n ${remote} ]] ; then
+    str=${branch}
+
+    ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
+    behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
+
+    (( $ahead + $behind )) && str+="${c[1]}:"  # Dark colon if any
+    (( $ahead )) && str+="${c[15]}+${ahead}%f"  # Ahead
+    (( $ahead )) && (( $behind )) && str+="${c[1]}/"  # Dark slash
+    (( $behind )) && str+="${c[16]}-${behind}%f"  # Behind
+  else
+    # Just add a red colon to mark non-tracking branch
+    str="${branch}${c[16]}:"
+  fi
+
+  hook_com[branch]=$str
+}
+
+# Show count of stashed changes
+function +vi-git-stash() {
+  local -a stashes
+  local git_root
+
+  _find_git_root
+  if [[ -n "$git_root" ]] && [[ -s $git_root/refs/stash ]] ; then
+    stashes=$(git stash list 2>/dev/null | wc -l)
+    hook_com[misc]+="${c[1]}:${c[4]}${stashes}st${c[1]}"
+  fi
+}
+
+# Sexy hook to get purdy action messages
+function +vi-git-action() {
+  local s="${hook_com[action]}"
+  if [[ -n "$s" ]] ; then
+    hook_com[action]="${c[6]}omg ${s}!${c[1]}:"
+  fi
+}
+
+# function precmd() {
+#   if [[ $TERM != "linux" ]]; then
+#     # Print xterm title
+#     print -Pn "\e]0;%n@%m: %~\a"
+#   fi
+
+#   if [[ $PMODE -ge 2 ]]; then
+#     local u="%n@%m"
+#     local t=""
+#     if [[ -n "$TMOUT" ]] && [[ "$TMOUT" != 0 ]]; then
+#       local t="${c[12]}${TMOUT}s${c[1]}-" # Timeouting
+#     fi
+
+#     local e="%(?..${c[6]}$(echo -en "\007")%?${c[1]}-)" # Errors
+#     local j="%(1j.${c[7]}%jbg${c[1]}-.)" # Jobs
+
+#     local r1="%B%(#.${c[3]}%m.${c[2]}$u) ${c[4]}"
+
+#     vcs_info
+#     if [[ -n "${vcs_info_msg_0_}" ]]; then
+#       # Find the git root.
+#       local cur=$PWD
+#       until [[ -z "$cur" ]]; do
+#         # -r finds dirs and files. new-style submods are files.
+#         if [[ -r "$cur/.git" ]]; then
+#           break
+#         fi
+#         cur=${cur%/*}
+#       done
+
+#       local p=${${cur/$HOME/\~}:h}
+#       local git_root
+#       _find_git_root
+
+#       # If we are in a submodule, decorate the super repo
+#       if [[ "$cur" != "$git_root:h" ]]; then
+#         local super=${${git_root%/.git/*}##*/}
+#         p=${p/$super/${c[28]}${super}${c[4]}}
+#       fi
+
+#       if [[ -n "$VIRTUAL_ENV" ]] && [[ $PWD =~ $VIRTUAL_ENV ]]; then
+#         # If in virtualenv, mark that.
+#         r1+="${c[24]}env${c[1]}:${vcs_info_msg_0_}"
+#       else
+#         # Print in directory blue up until the repo.
+#         r1+="$p/${vcs_info_msg_0_}"
+#       fi
+#     else
+#       r1+="%~"
+#     fi
+
+#     local r2="${t}${j}${e}${c[1]}%B>%b%f "
+#   fi
+
+#   case $PMODE in
+#     0) ; PROMPT="%# "; ;;
+#     1) ; PROMPT="%B%(#.${c[3]}%m.${c[2]}%n@%m) ${c[4]}%~ %#%b%f " ; ;;
+#     *) ; PROMPT=$(print "$r1\n$r2") ; ;;
+#   esac
+# }
+
+# }}}
+
+local USERFILE="$ZSHCONFDIR/local.zsh"
+if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
+  source $USERFILE
+fi
+
+# vim: ft=zsh fdm=marker fmr={{{,}}}

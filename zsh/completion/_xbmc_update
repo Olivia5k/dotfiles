@@ -1,4 +1,0 @@
-#compdef xbmc_update
-
-_arguments -S \
-    '::directory:_path_files -/ -W /warez/'
