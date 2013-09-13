@@ -9,12 +9,15 @@
 SELF=$0:a
 
 INFECT_HOST="http://infect.ninjaloot.se"
-INFECT_DIR="$HOME/etc"
+INFECT_DIR="$HOME/.local/share/infect"
 INFECT_WEB_DIR="$HOME/var/srv/infect"
+INFECT_REMOTE_WEB_DIR="nl:var/srv/infect"
 INFECT_BACKUP="backup"
 INFECT_RSYNC_EXCLUDE=".git* .hg* .svn* tmp/ $INFECT_BACKUP/"
-INFECT_RC_FILE=$HOME/.infect
+INFECT_RC_FILE=$INFECT_DIR/infect.rc
 INFECT_REPO_FILE=.local
+
+mkdir -p $INFECT_DIR
 
 # }}}
 # Install {{{
@@ -24,16 +27,19 @@ function infect_install() {
   typeset -A dest
   typeset -A force
 
-  local dir=${1:-$PWD}
+  pushd $INFECT_DIR
+  # local dir=${1:-$PWD}
+  local dir=$PWD
   echo $dir:a > $INFECT_RC_FILE
+
   source $dir/*.src
 
   # Create symlinks for applications found on the system
   iecho "Installing symbolic links"
   for app in ${(ko)apps}; do
-    if [[ -x $commands[$app] ]] || [[ -n "$force[$app]" ]]; then
+    # if [[ -x $commands[$app] ]] || [[ -n "$force[$app]" ]]; then
       infect_symlink ${(z)${apps[$app]}}
-    fi
+    # fi
   done
 
   # If post_infect_install is a function, run it.
@@ -41,6 +47,8 @@ function infect_install() {
   case $res in
     *': function')  post_infect_install;;
   esac
+
+  popd
 }
 
 function infect_symlink() {
@@ -62,14 +70,12 @@ function infect_symlink() {
     if [[ -L $dst ]]; then
       unlink $dst
     elif [[ -f $dst ]] || [[ -d $dst ]]; then
-      if [[ ! -d $backup ]]; then
-        mkdir -p $backup
-      fi
+      mkdir -p $backup
       mv $dst $backup
       iecho "Backed up original %F{green}${dst}%f"
     fi
 
-    mkdir -p $dst:h &> /dev/null
+    mkdir -p $dst:h
     ln -s $src:a $dst:a
     iecho "%F{green}$1%F{white} -> %F{blue}${dst}"
 
@@ -85,9 +91,11 @@ function infect_deploy() {
   local dest=${2:-${INFECT_WEB_DIR}}
   local current="current.tgz"
   local file="$(date +"%Y.%m.%d").tgz"
+  local stage="stage"
 
   iecho "Deploying to %F{blue}$dest%f..."
   if [[ ! -d $dest ]]; then
+    iecho "Creating"
     # Create the directory or crash.
     if ! mkdir -p $dest; then
       iecho "Error: Could not create destination directory. Aborting deploy." red
@@ -111,16 +119,23 @@ function infect_deploy() {
   done
 
   iecho "Rsyncing..."
-  rsync $src ./stage -a ${(z)exc} || return 1
+  rsync $src ./$stage -a ${(z)exc} || return 1
+  cd $stage
 
-  # This here with getting a sane structure in tarballs...
-  cd stage
+  # Oh, and replace all symbolic links with their actual targets.
+  iecho "Hardening symbolic links..."
+  for link in **/*(@); do
+    target=$(readlink -f $link)
+    unlink $link
+    cp -r $target $link
+  done
+
   iecho "Compressing..."
-  tar czf $file * || return 1
+  tar czf ./$file * || return 1
   mv $file ..
 
   cd ..
-  rm -r stage
+  rm -r $stage
 
   if [[ -L "$current" ]]; then
     iecho "Unlinking old current..."
@@ -129,6 +144,9 @@ function infect_deploy() {
 
   iecho "Linking new current..."
   ln -s $file $current
+
+  iecho "Rsyncing to remote..."
+  rsync -a ./ $INFECT_REMOTE_WEB_DIR || return 1
 
   iecho "Deploy complete. %F{red}<3%f"
 }
@@ -145,6 +163,8 @@ function infect_update() {
     local dir=$(<$INFECT_RC_FILE)
     iecho "Going to %F{blue}$dir%f..."
     cd $dir/..
+  else
+    cd $INFECT_DIR/..
   fi
 
   # Download and extract the tar file
@@ -170,14 +190,14 @@ function infect_update() {
     cd $target
 
     iecho "Downloading %F{cyan}$repo%f master zip file..."
-    curl --silent https://nodeload.github.com/$repo/zip/master -O || return 1
+    curl https://github.com/$repo/archive/master.zip -LO || return 1
 
     iecho "Unzipping..."
     unzip -qq master || return 1
 
     iecho "Mutating..."
-    rsync -r ./conf-local-master/* . || return 1
-    rm -r master conf-local-master
+    rsync -ru --links ./conf-local-master/* . || return 1
+    rm -r master.zip conf-local-master
 
     cd ..
   fi
@@ -191,7 +211,7 @@ function infect_update() {
   fi
 
   infect_install $target || return 1
-  iecho "Infection complete. %F{red}<3%f"
+  iecho "Infection complete. %F{red}<3%f" white 0
 }
 
 # }}}
@@ -243,7 +263,9 @@ function _unlink() {
 
 function iecho() {
   local color=${2:-white}
-  print -P "%B%F{black}-> %F{${color}}${1}%f%b"
+  if [[ -n "$INFECT_VERBOSE" ]] || [[ -n "$2" ]]; then
+    print -P "%B%F{black}-> %F{${color}}${1}%f%b"
+  fi
 }
 
 # }}}
@@ -252,7 +274,13 @@ function iecho() {
 
 arg=$1
 if [[ -n "$1" ]]; then
+  export INFECT_VERBOSE="<3"
   shift
+else
+  # If run without arguments, download latest and run that.
+  iecho "Downloading lastest version..." white 0
+  curl --silent $INFECT_HOST | zsh -s - 'update' || exit 1
+  exit 0
 fi
 
 case $arg in
@@ -260,10 +288,15 @@ case $arg in
     infect_install $*;;
 
   deploy)
+    export INFECT_VERBOSE="<3"
     infect_deploy $*;;
 
   uninstall)
     infect_uninstall $*;;
+
+  update)
+    export INFECT_VERBOSE=""
+    infect_update;;
 
   *)
     infect_update $arg;;
