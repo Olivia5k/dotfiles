@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+# mux-or-raise
+# Uses i3 and tries to raise a given tmux session (remote or local). If it
+# isn't found, it will be started.
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+
+if [[ -z "$1" ]]; then
+  echo "Arguments required. See the script plz."
+  exit 1
+fi
+
+sess=$1  # Session name
+shift
+
+[[ -n "$1" ]] && host="$1" || host="$HOST"  # Hostname to check for
+title="${sess}@${host}"
+
+# Try to get focus. Do not care whether it works or not
+# i3-msg "[title=\"$title\"] focus" &> /dev/null
+hlwmraise $title
+
+# If the session is not running in a terminal, start it
+if [[ $(ps ax | grep "mux $sess" -c) -lt 3 ]] ; then
+  term="urxvt -name $title"
+
+  # f="$HOME/.cache/mor_extra"
+  # if [[ -f $f ]] ; then
+  #   term="$term $(<$f)"
+  # fi
+
+  if [[ "$host" = "$HOST" ]]; then
+    ${(z)term} -e mux $sess
+  else
+    ${(z)term} -e ssh $host -t bin/mux $sess
+  fi
+fi

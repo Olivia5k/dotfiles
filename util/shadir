@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+sha=$(echo $1 | shasum | cut -d\  -f1)
+mkdir $sha && touch $sha/$1

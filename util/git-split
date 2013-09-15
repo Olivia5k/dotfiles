@@ -1,0 +1,41 @@
+#!/bin/zsh
+
+# Rewrite a git repository to make all of its subdirectories be submodules
+# instead.
+
+# Inspired by http://stackoverflow.com/questions/359424/detach-subdirectory-into-separate-git-repository
+
+if [[ -z "$1" ]]; then
+    echo "Needs a repository as first argument"
+    exit 1
+fi
+
+if [[ ! -d "$1/.git" ]]; then
+    echo "$1 does not appear to be a git reposoitory"
+    exit 1
+fi
+
+repo=$1
+repo_name=$(basename $1)
+copy="$PWD/${repo_name}-submodules"
+
+#cd $(dirname $repo)
+mkdir $copy
+cd $copy
+
+for d in $repo/*(/) ; do
+    dir=$(basename $d)
+    echo "doing $dir"
+
+    git clone --no-hardlinks $repo ./$dir
+    cd $dir
+
+    git filter-branch --subdirectory-filter $dir HEAD -- --all
+    git reset --hard
+    git gc --aggressive
+    git prune
+    git remote rm origin
+
+    echo "going back to $copy"
+    cd $copy
+done

@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+mini='-fn xft:montecarlo:pixelsize=11 -fb xft:montecarlo:bold:pixelsize=11'
+fn="$HOME/.cache/mor_extra"
+
+if [[ -f $fn ]] ; then
+  rm $fn
+  notify-send "Font restored"
+else
+  echo $mini > $fn
+  notify-send "Font set to mini"
+fi

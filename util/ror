@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+# run-or-raise for i3/hlwm
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+# WTFPL
+
+if [[ -z "$3" ]]; then
+    echo "Arguments required. See the script plz."
+    exit 1
+fi
+
+grep=$1
+class=$2
+executable=$3
+# title=$4
+
+if [[ $(ps ax | grep "$grep" -c) -lt 3 ]] ; then
+    exec ${(z)executable} &|
+fi
+
+hlwmraise $class
+
+# msg="class=\"$class\""
+# if [[ -n "$title" ]] ; then
+#     msg+=" title=\"$title\""
+# fi
+
+# i3-msg "[$msg] focus"

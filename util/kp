@@ -1,0 +1,16 @@
+#!/bin/zsh
+port=${1:-8000}
+sig=${2:-9}
+
+d="[[:digit:]]"
+b="[[:blank:]]"
+
+pid=$(netstat -apn 2> /dev/null | grep ":${port}${b}" | grep -Eo "$d+/")
+pid=${pid%%/}
+
+if [[ -z "$pid" ]] ; then
+  echo "No process found at $port"
+  exit 1
+fi
+
+kill -$sig $pid

@@ -1,0 +1,61 @@
+#!/bin/zsh
+# dmenu generic command parser
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+# WTFPL
+
+# TODO: Write usage
+
+if [[ -z "$1" ]]; then
+    echo "Error: Arguments required. Please see documentation in script."
+    exit
+fi
+
+if [[ -n "$2" ]]; then
+    cmd="$2"
+else
+    cmd="echo %q"
+fi
+
+source $XDG_DATA_HOME/dmenu/dmenurc
+
+if [[ "$1" = "-" ]]; then
+    # Stdin! Make an array for storage
+    args=()
+
+    while read stdin; do
+        # Store every item
+        args+="$stdin"
+    done
+
+    # Join into string, separated by \n
+    data=${(F)args}
+
+    if [[ -n "$3" ]]; then
+        DMENU+=" $3"
+    fi
+    cmd='echo $data'
+else
+    cache="$XDG_CACHE_HOME/dmenu/$1"
+    if [[ ! -f $cache ]]; then
+        touch $cache
+    fi
+    cmd='cat $cache'
+fi
+
+# (z) splits the string into shell grammar
+ret=$(eval $cmd | sort | uniq -c | sort -nr | tr -s " " \
+  | cut -d" " -f3,4,5,6,7,8,9 | ${(z)DMENU:-dmenu -i})
+if [[ -z "$ret" ]]; then
+    exit 1
+fi
+
+# If not stdin
+if [[ "$1" != "-" ]]; then
+    echo $ret >> $cache
+fi
+
+if [[ -n "$2" ]] ; then
+    eval $(printf $2 $ret)
+else
+    echo $ret
+fi
