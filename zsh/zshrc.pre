@@ -33,4 +33,6 @@ if ! [[ $PATH =~ "$_PATH" ]] ; then
   export PATH=$_PATH:$PATH
 fi
 
+setopt promptsubst
+
 zstyle ':completion:*' hosts off
