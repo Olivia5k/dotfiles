@@ -1,7 +1,8 @@
 #!/bin/zsh
 
 apps[git]="misc/gitconfig"
-apps[i3]="misc/i3.conf"
+apps[i3]="misc/x11/i3.conf"
+apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
 apps[luakit]="misc/luakit/"
 apps[most]="misc/mostrc"
 apps[mplayer]="misc/mplayer"
@@ -14,7 +15,8 @@ apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
 dest[misc/luakit/]="${XDG_CONFIG_HOME:-$HOME/.config}/luakit"
-dest[misc/i3.conf]="$HOME/.i3/config"
+dest[misc/x11/i3.conf]="$HOME/.i3/config"
+dest[misc/x11/herbstluftwm.conf]="$HOME/.config/herbstluftwm/autostart"
 dest[zsh/grml.zsh]="$HOME/.zshrc"
 
 force[terminfo]=true
