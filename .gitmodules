@@ -10,3 +10,6 @@
 [submodule "tmux"]
 	path = tmux
 	url = https://github.com/thiderman/conf-tmux.git
+[submodule "bin"]
+	path = bin
+	url = git@github.com:thiderman/util.git
