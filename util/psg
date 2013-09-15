@@ -1,0 +1,2 @@
+#!/bin/zsh
+ps haux | grep -i $1 | grep -Ev '(grep)' | grep -i $1

@@ -1,0 +1,23 @@
+#!/bin/zsh
+if [[ -z "$1" ]]; then
+  echo "Error: fielnaem pls"
+  return 1
+fi
+
+if [[ ! -f "$1" ]]; then
+  echo "Error: $1: no such file"
+  return 127
+fi
+
+d="/srv/dump"
+url="http://dump.ninjaloot.se"
+if [[ -f "$d/$1" ]]; then
+  echo "Error: $1 already exists at $url/$1."
+  return 2
+fi
+
+cp $1 $d
+echo $url/$1
+if [[ -n "$DISPLAY" ]]; then
+  echo $url/$1 | xclip
+fi

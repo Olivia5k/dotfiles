@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+# pkill storm &> /dev/null
+source ~/git/storm/bin/activate
+storm

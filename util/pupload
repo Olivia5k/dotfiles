@@ -1,0 +1,32 @@
+#!/bin/bash
+# Written by Lowe Thiderman (thiderman@spotify.com)
+
+if [[ ! -f Modulefile ]] ; then
+  echo 'Error: No modulefile in current dir. Aborting.'
+  exit 1
+fi
+
+repo='nl'
+repo_dest='tmp/pupload'
+environment=$(echo 'thiderman/puppet-test' | sed "s/\W/_/g")
+cd pkg
+
+function upload() {
+  package=$1
+  username=$(echo $package | cut -d- -f1)
+  module=$(echo $package | cut -d- -f2)
+  dest_dir="$repo_dest/$environment/$username/$module"
+
+  echo "Uploading $package to $repo:$dest_dir"
+
+  # One trick connection to upload and create dest dir in one shot
+  cat $package | ssh $repo "mkdir -p $dest_dir ; cat > $dest_dir/$package"
+  if [[ $? != 0 ]] ; then
+    echo 'Transfer failed. Aborting.'
+    exit 1
+  fi
+}
+
+for package in *.tar.gz; do
+  upload $package
+done

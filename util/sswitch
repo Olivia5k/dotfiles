@@ -1,0 +1,26 @@
+#!/bin/zsh
+# xrandr screen switch and rotator
+
+d="[[:digit:]]"
+int="LVDS1"
+ext=${1:-DP2}
+
+function reset() {
+    xrandr --output $1 --auto
+    xrandr --output $2 --off
+
+    xset r rate 330 45
+    km
+    wp
+    killall keynav ; keynav &> /dev/null &|
+    run_storm
+
+    # herbst y u do this
+    herbstclient move_monitor 0 $(xrandr | grep "*" | grep -oE '[0-9]+x[0-9]+')
+}
+
+if xrandr | grep -E "$int connected $d+x$d+\+$d+\+$d+"; then
+    reset $ext $int
+else
+    reset $int $ext
+fi

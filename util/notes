@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+cd ~/.local/share/vimwiki/main
+vim index.wiki

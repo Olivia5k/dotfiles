@@ -1,0 +1,7 @@
+#!/bin/zsh
+# dmenu ssh tmux terminal spawner
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+grep -Ei "^host " $HOME/.ssh/config | sed -r "s/host //i" \
+    | ~/bin/dmenu_any - "urxvt -e ssh %q -t bin/mux main"

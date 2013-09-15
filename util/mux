@@ -1,0 +1,20 @@
+#!/bin/zsh
+# tmux session manager for smooth remote management.
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+if [[ -z "$1" ]]; then
+    echo "Error: No session name given. Terminating."
+    sleep 2
+    exit 1
+fi
+
+# Attach if it exists, create it if it doesn't.
+if tmux ls | grep -E "^$1:" &> /dev/null; then
+    cmd="attach -d -t"
+else
+    cmd="new-session -s"
+fi
+
+# The LANG part is for letting tmux know that it actually can UTF8.
+LANG="en_US.utf8" tmux ${(z)cmd} $1

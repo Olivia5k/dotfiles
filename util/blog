@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+root="$HOME/git/thiderman"
+title=$*
+slug=$(echo $title | tr '[A-Z]' '[a-z]' | sed -e 's/\s\+/-/g')
+date=$(date +'%Y-%m-%d')
+file="${date}-${slug}.markdown"
+pushd $root/_posts
+
+if [[ ! -f "$file" ]]; then
+  echo "---
+layout: post
+title: $title
+category: post
+---
+
+" > $file
+fi
+
+vim $file -c 'normal! Gi'
+popd
