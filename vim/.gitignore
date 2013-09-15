@@ -1,3 +1,4 @@
 .netrwhist
 local.vim
 tmp
+bundle/
