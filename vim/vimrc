@@ -23,6 +23,7 @@ Bundle 'gmarik/vundle'
 " Colors
 Bundle 'thiderman/jellybeans.vim'
 Bundle 'thiderman/neverland-vim-theme'
+Bundle 'endel/vim-github-colorscheme.git'
 
 " UI and navigation
 Bundle 'bling/vim-airline'
