@@ -8,7 +8,7 @@ URxvt.url-select.launcher: www
 URxvt.url-select.underline: true
 URxvt.underlineURLs: true
 URxvt.transparent: false
-URxvt.shading: 0
+URxvt.shading: 10
 URxvt.fading: 20
 URxvt.bell-command: slig
 
@@ -16,13 +16,15 @@ URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-Down: perl:font-size:decglobal
+URxvt.font-size.step:  4
 
 ! fonts
 *.font: xft:inconsolata:pixelsize=14
 *.boldFont: xft:inconsolata:bold:pixelsize=14
 ! *.font: xft:montecarlo:pixelsize=11
 ! *.boldFont: xft:montecarlo:bold:pixelsize=11
-Xft.dpi: 75.0
+Xft.dpi: 100.0
+emacs.font:Monospace 12
 
 ! XLock
 XLock.fpsfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
@@ -47,7 +49,7 @@ XLock.usefirst: True
 
 ! Colorscheme (unnamed)
 *foreground: #dbdbdb
-*background: #111117
+*background: #151517
 *color0: #222229
 *color1: #8e2b2e
 *color2: #45702c
