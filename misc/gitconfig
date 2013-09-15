@@ -41,5 +41,6 @@
 	templatedir = ~/.git_template
 [alias]
 	ctags = !.git/hooks/ctags
+	rms = "!f(){ git rm --cached \"$1\";rm -r \"$1\";git config -f .gitmodules --remove-section \"submodule.$1\";git config -f .git/config --remove-section \"submodule.$1\";git add .gitmodules; }; f"
 [push]
 	default = simple
