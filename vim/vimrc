@@ -107,7 +107,7 @@ set shiftround
 set title
 set linebreak
 set dictionary=/usr/share/dict/words
-set spellfile=~/.vim/custom-dictionary.utf-8.add
+set spellfile=~/.vim/spell/custom-dictionary.utf-8.add
 if exists('+colorcolumn')
   set colorcolumn=+1
 endif
