@@ -849,6 +849,11 @@ augroup pythonfold_reloader
 augroup END
 
 " }}}
+" Puppet {{{
+
+au! BufRead,BufNewFile *.pp setfiletype puppet
+
+" }}}
 " Vim {{{
 
 function! HelpExpand()
