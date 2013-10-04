@@ -807,8 +807,8 @@ augroup ft_python
     \     '\.exception(': '.debug(',
     \   },
     \   {
-    \     '\(not \)\@!in': 'not in',
-    \     'not in': 'in',
+    \     '\(not \)\@!in\>': 'not in',
+    \     'not in\>': 'in',
     \   },
     \   {
     \     '\<\(if\|and\|or\|assert\|is\)\( not\)\@!': '\1 not',
