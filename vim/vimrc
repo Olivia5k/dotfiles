@@ -1441,7 +1441,7 @@ nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
 if has('gui_running')
   " Remove all the UI cruft
   set guioptions=cagit  " Disable graphical elements
-  set guifont=Inconsolata\ 10
+  set guifont=Inconsolata\ 13
 
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
