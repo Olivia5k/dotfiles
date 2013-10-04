@@ -113,6 +113,8 @@ alias l="ls -l"
 # }}}
 # aliases {{{
 
+unalias ag
+
 alias zz="source $ZSHRC"
 
 export GREPOPTS='--color=auto'
@@ -138,7 +140,7 @@ zle -N insert-sudo insert_sudo
 bindkey "^[d" insert-sudo
 
 # }}}
-# # completion {{{
+# completion {{{
 
 # zstyle :compinstall filename '~/.zshrc'
 
@@ -173,7 +175,7 @@ bindkey "^[d" insert-sudo
 # # Make cd not select parent dir
 # zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-# # }}}
+# }}}
 # chpwd {{{
 
 # sshfs {{{
@@ -240,6 +242,33 @@ function _autovenv() {
 _autovenv
 
 # }}}
+# workgit {{{
+
+# Set work email as user.email and copy the fucking Gerrit hook into place
+function _autoworkgit() {
+  gerrit="$XDG_DATA_HOME/gerrit/commit-msg"
+  hook=".git/hooks/commit-msg"
+
+  if [[ -z "$WORK_EMAIL" ]] || [[ -z "$WORK_DIR" ]]; then
+    return
+  fi
+
+  if [[ -n "$WORK_EMAIL" ]] && [[ $PWD =~ $WORK_DIR/ ]] && [[ -r .git ]]; then
+    if ! git config user.email | grep "$WORK_EMAIL" &> /dev/null; then
+      print -P '%F{71}%BAuto%b%f: Set email to work email'
+      git config user.email "$WORK_EMAIL"
+    fi
+
+    # XXX: Will not work with new-style submodules. Fak u submodules.
+    if [[ ! -f $hook ]] && [[ -f $gerrit ]]; then
+      print -P '%F{71}%BAuto%b%f: fak u gerrit'
+      cp --preserve=all $gerrit $hook
+    fi
+  fi
+}
+_autovenv
+
+# }}}
 
 function chpwd() {
   if [[ -z "$ZSH_NO_CHPWD" ]]; then
@@ -248,6 +277,7 @@ function chpwd() {
 
   _autovenv
   _autosshfs
+  _autoworkgit
 }
 
 # }}}
