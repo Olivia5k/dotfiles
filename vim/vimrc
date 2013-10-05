@@ -450,7 +450,20 @@ set sidescrolloff=2
 
 set virtualedit+=block
 
-noremap <silent> <leader><space> :noh<cr>:call clearmatches()<cr>:ccl<cr>:lcl<cr>
+function! Clear()
+  " noh can't be in here because that's how noh works
+  call clearmatches()
+
+  " Close all kinds of extra windows
+  cclose
+  lclose
+  pclose
+
+  " Also clear the message area
+  echo
+endfunction
+
+noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
 
 runtime macros/matchit.vim
 " map <tab> %
