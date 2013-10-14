@@ -29,6 +29,7 @@ Bundle 'endel/vim-github-colorscheme.git'
 Bundle 'bling/vim-airline'
 Bundle 'gregsexton/MatchTag'
 Bundle 'kien/ctrlp.vim'
+Bundle 'thiderman/ctrlp-project'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -951,8 +952,8 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_reversed = 1
 let g:ctrlp_split_window = 0
 let g:ctrlp_max_height = 20
-let g:ctrlp_extensions = ['tag']
-let g:ctrlp_custom_ignore = '\v[\/]\.\?(git|hg|svn|lib|build|)'
+let g:ctrlp_extensions = ['tag', 'project']
+let g:ctrlp_custom_ignore = '\v[\/]\.\?(git|hg|svn|lib|build|dist)'
 
 let g:ctrlp_prompt_mappings = {
 \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
@@ -962,12 +963,27 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleFocus()':    ['<c-tab>'],
 \ }
 
+let g:ctrlp_project_roots = ['~/spotify', '~/etc']
+
 nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <A-d> :CtrlP<cr>
 nnoremap <Leader>q :CtrlP<cr>
 nnoremap <Leader>a :CtrlPBuffer<cr>
-nnoremap <Leader>z :CtrlPTag<cr>
+nnoremap <Leader>z :CtrlPProject<cr>
 nnoremap <Leader>Q :CtrlPReload<cr>
+
+" From ctrlp documentation
+function! s:setcwd()
+  let cph = expand('%:p:h', 1)
+  if cph =~ '^.\+://' | retu | en
+  for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
+    let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
+    if wd != '' | let &acd = 0 | brea | en
+  endfo
+  exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
+endfunction
+
+autocmd BufEnter * call s:setcwd()
 
 " }}}
 " Expand region {{{
@@ -1445,6 +1461,10 @@ let g:guifont_save = &guifont
 nmap <silent> <c-up> :<C-U>call GuiFont(1)<cr>
 nmap <silent> <c-down> :<C-U>call GuiFont(-1)<cr>
 nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
+
+" }}}
+" Project selector {{{
+
 
 " }}}
 
