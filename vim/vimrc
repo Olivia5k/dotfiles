@@ -1127,8 +1127,29 @@ vmap <C-k> [egv
 " }}}
 " vimwiki {{{
 
-let g:vimwiki_list = [{'path': '~/.local/share/vimwiki/main/', 'path_html': '~/.local/share/vimwiki/html'}]
+let g:vimwiki_list = [
+  \ {
+  \    'path': '~/.local/share/vimwiki/main/',
+  \    'path_html': '~/.local/share/vimwiki/html'
+  \ }
+  \ ]
 let g:vimwiki_folding = 1
+
+function! ProjectTodo()
+  " Save, close and clear message buffer if we are already in a vimwiki buffer
+  if &ft == 'vimwiki'
+    update
+    bdelete
+    echo
+    return
+  endif
+
+  let dir = expand(g:vimwiki_list[0]['path'])
+  let file = dir . fnamemodify(getcwd(), ':t') . '.wiki'
+  split `=file`
+endfunction
+
+nmap <silent> <A-s> :call ProjectTodo()<cr>
 
 " }}}
 " XPTemplate {{{
@@ -1461,10 +1482,6 @@ let g:guifont_save = &guifont
 nmap <silent> <c-up> :<C-U>call GuiFont(1)<cr>
 nmap <silent> <c-down> :<C-U>call GuiFont(-1)<cr>
 nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
-
-" }}}
-" Project selector {{{
-
 
 " }}}
 
