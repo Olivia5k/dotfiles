@@ -116,6 +116,7 @@ alias l="ls -l"
 unalias ag
 
 alias zz="source $ZSHRC"
+alias sp="python setup.py"
 
 export GREPOPTS='--color=auto'
 alias grep="grep $GREPOPTS"

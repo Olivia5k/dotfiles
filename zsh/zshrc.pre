@@ -35,4 +35,5 @@ fi
 
 setopt promptsubst
 
+fpath=($ZSHCONFDIR/modules/zsh-completions/src $fpath)
 zstyle ':completion:*' hosts off
