@@ -375,11 +375,12 @@ fi
 
 zle -N _inline-updir
 zle -N _inline-back
+zle -N _inline-ls
+zle -N _inline-dirs
 
 # ZLE hax0r navigation
 function _inline-updir() {
   pushd -q ..
-  precmd
   zle .reset-prompt
 }
 function _inline-back() {
@@ -387,11 +388,22 @@ function _inline-back() {
     zle -M 'Directory stack empty'
     sleep 0.5
   fi
-  precmd
+  zle .reset-prompt
+}
+function _inline-ls() {
+  echo
+  ls
+  zle .reset-prompt
+}
+function _inline-dirs() {
+  echo
+  dirs -pv
   zle .reset-prompt
 }
 
 bindkey "^[h" _inline-updir
+bindkey "^[j" _inline-ls
+bindkey "^[k" _inline-dirs
 bindkey "^[l" _inline-back
 
 # }}}
@@ -528,6 +540,17 @@ alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
+
+
+# I would very much like this one to not print a new prompt, but oh well.
+zle -N _inline-gs
+bindkey "^[s" _inline-gs
+function _inline-gs() {
+  echo
+  git status -s
+  zle .reset-prompt
+}
+
 
 # Relatively go up to a repository root
 function gr() {
