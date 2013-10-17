@@ -130,45 +130,6 @@ set backupskip=/tmp/*,/private/tmp/*"
 set complete=.,w,b,u,t
 set completeopt=longest,menuone,preview
 
-" Save when losing focus
-au FocusLost * :silent! wall
-
-" Resize splits when the window is resized
-au VimResized * :wincmd =
-
-" }}}
-" cpoptions+=J, dammit {{{
-
-" Something occasionally removes this.  If I manage to find it I'm going to
-" comment out the line and replace all its characters with 'FUCK'.
-augroup twospace
-  au!
-  au BufRead * :set cpoptions+=J
-augroup END
-
-" }}}
-" Autosave {{{
-
-" Save the file on delays. Can be toggled by letting/unletting g:no_autosave
-function! AutoSave()
-  if exists('g:no_autosave') || &modified == 0
-    return
-  endif
-
-  " call KillTrailingWhitespace()
-  silent! wa
-endfunction
-
-augroup autosave
-  au!
-  au InsertLeave * call AutoSave()
-  au CursorHold * call AutoSave()
-  au CursorHoldI * call AutoSave()
-augroup END
-
-" Let's not, for now.
-let g:no_autosave = 1
-
 " }}}
 " Kill trailing whitespace {{{
 
@@ -288,44 +249,17 @@ nnoremap M K
 " Toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
 
-" Sort lines
-" nnoremap <leader>s vip:!sort<cr>
-" vnoremap <leader>s :!sort<cr>
-
-" Tabs
-nnoremap <leader>( :tabprev<cr>
-nnoremap <leader>) :tabnext<cr>
-
 " I constantly hit "u" in visual mode when I mean to "y". Use "gu" for those rare occasions.
 " From https://github.com/henrik/dotfiles/blob/master/vim/config/mappings.vim
 vnoremap u <nop>
 vnoremap gu u
 
-" Highlight Group(s)
-nnoremap <F8> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" Clean trailing whitespace
-nnoremap <leader>w mz:%s/\s\+$//<cr>:let @/=''<cr>`z
-
-" Send visual selection to gist.github.com as a private, filetyped Gist
-" Requires the gist command line too (brew install gist)
-" vnoremap <leader>G :w !gist -p -t %:e \| pbcopy<cr>
-" vnoremap <leader>UG :w !gist -p \| pbcopy<cr>
-
 " Insert the directory of the current buffer in command line mode
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-
-" Panic Button
-nnoremap <f9> mzggg?G`z
 
 " Emacs bindings in command line mode
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
-
-" Diffoff
-nnoremap <leader>D :diffoff!<cr>
 
 " Formatting, TextMate-style
 nnoremap Q gqip
@@ -340,13 +274,6 @@ nnoremap J mzJ`z
 " Split line (sister to [J]oin lines)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
 nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
-
-" HTML tag closing
-inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>a
-
-" Source
-vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
 
 " Reselect the visuals when indenting. Borks slightly with undoing, but
 " you'll get used to it.
@@ -389,9 +316,7 @@ nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " Insert Mode Completion {{{
 
-inoremap <c-f> <c-x><c-f>
 inoremap <c-]> <c-x><c-]>
-
 
 " }}}
 " Quick split {{{
@@ -467,21 +392,15 @@ endfunction
 noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
 
 runtime macros/matchit.vim
-" map <tab> %
-" unmap [%
-" unmap ]%
 
 " Made D behave
 nnoremap D d$
-
 
 " Don't move on *
 nnoremap * *<c-o>
 
 " Use enter to do c-] but open it in a new split.
 nnoremap <cr> <c-]>zvzz
-" nnoremap <bs> gd
-" nnoremap <c-cr> <c-w>v<c-]>zvzz
 
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
@@ -628,39 +547,6 @@ augroup ft_css
   au Filetype less,css setlocal foldmarker={,}
   au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
   au Filetype less,css setlocal iskeyword+=-
-
-  " Use <leader>S to sort properties.  Turns this:
-  "
-  "   p {
-  "     width: 200px;
-  "     height: 100px;
-  "     background: red;
-  "
-  "     ...
-  "   }
-  "
-  " into this:
-
-  "   p {
-  "     background: red;
-  "     height: 100px;
-  "     width: 200px;
-  "
-  "     ...
-  "   }
-  au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-augroup END
-
-" }}}
-" Django {{{
-
-augroup ft_django
-  au!
-
-  au BufNewFile,BufRead urls.py       setlocal nowrap
-  au BufNewFile,BufRead urls.py       normal! zR
-  au BufNewFile,BufRead dashboard.py    normal! zR
-  au BufNewFile,BufRead local_settings.py normal! zR
 augroup END
 
 " }}}
@@ -797,8 +683,8 @@ fun! PythonSearchKeyword(...)
   return search(pt, flags)
 endfun
 
-nmap <silent> H :call PythonSearchKeyword('b')<cr>
-nmap <silent> L :call PythonSearchKeyword()<cr>
+nmap <silent> ( :call PythonSearchKeyword('b')<cr>
+nmap <silent> ) :call PythonSearchKeyword()<cr>
 
 " }}}
 
@@ -966,7 +852,7 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_project_roots = ['~/spotify', '~/etc']
 
 nnoremap <leader>. :CtrlPTag<cr>
-nnoremap <A-d> :CtrlP<cr>
+nnoremap <A-q> :CtrlP<cr>
 nnoremap <Leader>q :CtrlP<cr>
 nnoremap <Leader>a :CtrlPBuffer<cr>
 nnoremap <Leader>z :CtrlPProject<cr>
@@ -988,8 +874,8 @@ autocmd BufEnter * call s:setcwd()
 " }}}
 " Expand region {{{
 
-" map L <Plug>(expand_region_expand)
-" map H <Plug>(expand_region_shrink)
+map L <Plug>(expand_region_expand)
+map H <Plug>(expand_region_shrink)
 
 let g:expand_region_text_objects = {
       \ 'iw'  :0,
@@ -1167,102 +1053,6 @@ let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 " }}}
 
 " }}}
-" Text objects {{{
-
-" Shortcut for [] {{{
-
-onoremap ir i[
-onoremap ar a[
-vnoremap ir i[
-vnoremap ar a[
-
-" }}}
-" Next and Last {{{
-"
-" Motion for "next/last object".  "Last" here means "previous", not "final".
-" Unfortunately the "p" motion was already taken for paragraphs.
-"
-" Next acts on the next object of the given type in the current line, last acts
-" on the previous object of the given type in the current line.
-"
-" Currently only works for (, [, {, b, r, B, ', and ".
-"
-" Some examples (C marks cursor positions, V means visually selected):
-"
-" din'  -> delete in next single quotes        foo = bar('spam')
-"                            C
-"                            foo = bar('')
-"                                C
-"
-" canb  -> change around next parens           foo = bar('spam')
-"                            C
-"                            foo = bar
-"                                 C
-"
-" vil"  -> select inside last double quotes      print "hello ", name
-"                                    C
-"                            print "hello ", name
-"                               VVVVVV
-
-onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-
-onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-
-function! s:NextTextObject(motion, dir)
-  let c = nr2char(getchar())
-
-  if c ==# "b"
-    let c = "("
-  elseif c ==# "B"
-    let c = "{"
-  elseif c ==# "r"
-    let c = "["
-  endif
-
-  exe "normal! ".a:dir.c."v".a:motion.c
-endfunction
-
-" }}}
-" Numbers {{{
-
-" Motion for numbers.  Great for CSS.  Lets you do things like this:
-"
-" margin-top: 200px; -> daN -> margin-top: px;
-"        ^              ^
-" TODO: Handle floats.
-
-onoremap N :<c-u>call <SID>NumberTextObject(0)<cr>
-xnoremap N :<c-u>call <SID>NumberTextObject(0)<cr>
-onoremap aN :<c-u>call <SID>NumberTextObject(1)<cr>
-xnoremap aN :<c-u>call <SID>NumberTextObject(1)<cr>
-onoremap iN :<c-u>call <SID>NumberTextObject(1)<cr>
-xnoremap iN :<c-u>call <SID>NumberTextObject(1)<cr>
-
-function! s:NumberTextObject(whole)
-  normal! v
-
-  while getline('.')[col('.')] =~# '\v[0-9]'
-    normal! l
-  endwhile
-
-  if a:whole
-    normal! o
-
-    while col('.') > 1 && getline('.')[col('.') - 2] =~# '\v[0-9]'
-      normal! h
-    endwhile
-  endif
-endfunction
-
-" }}}
-
-" }}}
 " Mini-plugins {{{
 " Stuff that should probably be broken out into plugins, but hasn't proved to be
 " worth the time to do so just yet.
@@ -1276,53 +1066,6 @@ function! SynStack()
 endfunc
 
 nnoremap <F7> :call SynStack()<CR>
-
-" }}}
-" Diffwhite Toggle {{{
-
-set diffopt-=iwhite
-let g:diffwhitespaceon = 0
-function! ToggleDiffWhitespace()
-  if g:diffwhitespaceon
-    set diffopt-=iwhite
-    let g:diffwhitespaceon = 0
-  else
-    set diffopt+=iwhite
-    let g:diffwhitespaceon = 1
-  endif
-  diffupdate
-endfunc
-
-nnoremap <leader>dw :call ToggleDiffWhitespace()<CR>
-
-" }}}
-" Error Toggles {{{
-
-command! ErrorsToggle call ErrorsToggle()
-function! ErrorsToggle() " {{{
-  if exists("w:is_error_window")
-  unlet w:is_error_window
-  exec "q"
-  else
-  exec "Errors"
-  lopen
-  let w:is_error_window = 1
-  endif
-endfunction " }}}
-
-command! -bang -nargs=? QFixToggle call QFixToggle(<bang>0)
-function! QFixToggle(forced) " {{{
-  if exists("g:qfix_win") && a:forced == 0
-  cclose
-  unlet g:qfix_win
-  else
-  copen 10
-  let g:qfix_win = bufnr("$")
-  endif
-endfunction " }}}
-
-nmap <silent> <f3> :ErrorsToggle<cr>
-nmap <silent> <f4> :QFixToggle<cr>
 
 " }}}
 " Ack motions {{{
@@ -1361,56 +1104,6 @@ function! s:AckMotion(type) abort
 
   let @@ = reg_save
 endfunction
-
-" }}}
-" Indent Guides {{{
-
-let g:indentguides_state = 0
-function! IndentGuides() " {{{
-  if g:indentguides_state
-    let g:indentguides_state = 0
-    2match None
-  else
-    let g:indentguides_state = 1
-    execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
-  endif
-endfunction " }}}
-hi def IndentGuides guibg=#303030
-nnoremap <leader>I :call IndentGuides()<cr>
-
-" }}}
-" Block Colors {{{
-
-let g:blockcolor_state = 0
-function! BlockColor() " {{{
-  if g:blockcolor_state
-    let g:blockcolor_state = 0
-    call matchdelete(77881)
-    call matchdelete(77882)
-    call matchdelete(77883)
-    call matchdelete(77884)
-    call matchdelete(77885)
-    call matchdelete(77886)
-  else
-    let g:blockcolor_state = 1
-    " TODO: Make a loop that respects &sw
-    call matchadd("BlockColor1", '^ \{4}.*', 1, 77881)
-    call matchadd("BlockColor2", '^ \{8}.*', 2, 77882)
-    call matchadd("BlockColor3", '^ \{12}.*', 3, 77883)
-    call matchadd("BlockColor4", '^ \{16}.*', 4, 77884)
-    call matchadd("BlockColor5", '^ \{20}.*', 5, 77885)
-    call matchadd("BlockColor6", '^ \{24}.*', 6, 77886)
-  endif
-endfunction " }}}
-" Default highlights {{{
-hi def BlockColor1 guibg=#222222 ctermbg=234
-hi def BlockColor2 guibg=#2a2a2a ctermbg=235
-hi def BlockColor3 guibg=#353535 ctermbg=236
-hi def BlockColor4 guibg=#3d3d3d ctermbg=237
-hi def BlockColor5 guibg=#444444 ctermbg=238
-hi def BlockColor6 guibg=#4a4a4a ctermbg=239
-" }}}
-nnoremap <leader>B :call BlockColor()<cr>
 
 " }}}
 " Highlight Word {{{
