@@ -24,4 +24,8 @@ force[terminfo]=true
 function post_infect_install() {
   # These directories are required for the applications to work correctly
   mkdir -p $HOME/{.cache/vim/{backup,undo,swap},.logs,.local/{bin,logs,share/zsh}} &> /dev/null
+
+  if [[ $(git --version | grep 1.7 -c) = 1 ]]; then
+    sed -i ~/.gitconfig -e "s/\[push\]//g" -e "s/\tdefault = simple//"
+  fi
 }
