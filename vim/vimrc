@@ -1177,6 +1177,18 @@ nmap <silent> <c-down> :<C-U>call GuiFont(-1)<cr>
 nmap <silent> <c-left> :<C-U>call GuiFont(0)<cr>
 
 " }}}
+" Jekyll post {{{
+
+let g:jekyll_root = expand("~/git/thiderman/_posts")
+
+function! JekyllPost(slug)
+  let fn = g:jekyll_root.'/'.strftime('%Y-%m-%d').'-'.a:slug.'.markdown'
+  edit `=fn`
+endfunction
+
+command! -nargs=1 Blog :call JekyllPost(<q-args>)
+
+" }}}
 
 " }}}
 " Environments (GUI/Console) {{{
