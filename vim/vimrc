@@ -1189,6 +1189,15 @@ endfunction
 command! -nargs=1 Blog :call JekyllPost(<q-args>)
 
 " }}}
+" Project mux {{{
+
+function! Mor()
+  silent! exec '!mor ' . fnamemodify(getcwd(), ':t') . '&|'
+endfunction
+
+map <A-a> :call Mor()<cr>
+
+" }}}
 
 " }}}
 " Environments (GUI/Console) {{{
