@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+winids=(${(f)"$(xwininfo -tree -root | grep $1 | tr -s ' ' | cut -d" " -f2)"})
+for winid in $winids ; do
+  herbstclient raise $winid && herbstclient jumpto $winid
+  if [[ $? == 0 ]] ; then
+    break
+  fi
+done

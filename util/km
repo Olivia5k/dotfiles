@@ -1,0 +1,2 @@
+#!/bin/zsh
+setxkbmap ${1:-qwerty-a6-us}

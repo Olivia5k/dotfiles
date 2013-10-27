@@ -1,0 +1,36 @@
+#!/bin/zsh
+
+on="%F{120}"
+off="%F{240}"
+addr="%F{045}"
+
+for i in $(ifconfig -a | grep -Eo "^[a-z0-9]+"); do
+  ifdata=$(ifconfig $i)
+
+  ip=$(echo $ifdata | grep -Eo "inet (addr:)?[0-9.]* " | grep -Eo "([0-9]+\.?){4}")
+  ip6=$(echo $ifdata | grep -Eo "inet6 (addr:)? [a-f0-9:/]* " | grep -Eo "[a-f0-9:/]+ $")
+
+  if [[ -n "$ip" ]] ; then
+    s="${on}%B${i}%b%f: ${addr}%B${ip}%b%f"
+    if [[ -n "$ip6" ]] ; then
+      s+=" and ${addr}%B${ip6}%b%f"
+    fi
+    print -P $s
+  else
+    print -P "${off}%B${i}%b%f"
+  fi
+done
+
+# Thank you Loopia! \o/
+pub=$(curl http://dns.loopia.se/checkip/checkip.php 2> /dev/null | grep -Eo "([0-9]+\.?){4}")
+
+if [[ -n "$pub" ]] ; then
+  print -P "${on}%BPublic%b%f: ${addr}%B${pub}%b%f"
+else
+  print -P "${off}%BPublic%b%f"
+fi
+
+avahi=$(ps aux | grep "avahi-daemon: running" | grep -Eo "\[.*\]" | tr -d "[]")
+if [[ -n "$avahi" ]] ; then
+  print -P "${on}%BAvahi%b%f: ${addr}%B${avahi}%b%f"
+fi

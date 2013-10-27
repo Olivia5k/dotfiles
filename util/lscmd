@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+if [[ -n "$1" ]] ; then
+  local count=$1
+else
+  local count=25
+fi
+
+cat $LOGS/zsh.history.log |
+perl -pe 's/^: [0-9]+:[0-9]+;\s*//' |
+sort |
+uniq -c |
+sort -n -k1 |
+tail -$count |
+tac

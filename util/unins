@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+f=$HOMEBIN/$(basename $1)
+if [[ -L $f ]] ; then
+  print -P "Uninstalling %B${c[19]}$(basename $1)%f%b."
+  unlink $f
+else
+  zerror "$(basename $f) is not installed"
+fi

@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+# Disable the sounds if the blocking file is found.
+if [[ -f $XDG_CACHE_HOME/no_slig ]]; then
+    exit 1
+fi
+
+sounds=($XDG_DATA_HOME/slig/enabled/*)
+aplay $sounds[$RANDOM%$#sounds+1]

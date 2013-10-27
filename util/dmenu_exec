@@ -1,0 +1,8 @@
+#!/bin/zsh
+# dmenu application launcher. Uses defaulted options.
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+source $XDG_DATA_HOME/dmenu/dmenurc
+
+/usr/bin/dmenu_run ${(z)DMENU_OPTIONS}

@@ -1,0 +1,181 @@
+#!/bin/zsh
+
+setopt null_glob  # Takes care of failing globs without breaking loops
+
+typeset -a REPO_ROOTS
+typeset -a REPOS
+typeset -a IGNORED_REPOS
+
+CUR=$PWD
+REPO_ROOTS=($HOME/git)
+IGNORED_REPOS=(vim-scripts)
+
+TOTAL_BEHIND=0
+BEHIND_REPOS=0
+
+function show_help()
+
+    echo "git-overlord: Simple bulk operations for multiple repositories"
+    echo
+    echo "Runs commands over multiple repositories. Useful to keep check over"
+    echo "which of your cloned repos have updates that can be pulled from source."
+    echo
+    echo "Usage:"
+    echo "  overlord fetch"
+    echo "  Runs a git fetch in all repositories and submodules found"
+    echo
+    echo "  overlord fetch"
+    echo "  Runs a git fetch in all repositories and submodules found"
+    echo
+    echo "  overlord fetch"
+    echo "  Runs a git fetch in all repositories and submodules found"
+    echo
+    echo "  overlord fetch"
+    echo "  Runs a git fetch in all repositories and submodules found"
+    echo
+
+
+function parse_repo()
+
+    local d
+
+    # Loop all arguments
+    until [[ -z "$1" ]]; ;do
+        # Loop the directory and all it's children
+        for d in $1 $1/*(/); do
+            # Check if the current dir is a repo
+            if [[ -d $d/.git ]]; then
+                REPOS+=($d)
+
+                # Check if the repo has submodules
+                if [[ -f $d/.gitmodules ]]; then
+                    parse_gitmodules $d
+                fi
+
+            # Don't recurse check if we are the full argument. Men have died
+            # that way.
+            elif [[ "$1" != "$d" ]] ; then
+                # Check if the tail of the current repo is in the list of
+                # ignored repos. If it is, well... ignore it.
+                if [[ $IGNORED_REPOS[(i)$d:t] -le $#IGNORED_REPOS ]]; then
+                    # echo ignoring $d
+                    continue
+                fi
+                # Check if the repo is a bare repo. If not, assume that it
+                # contains more repositories and call self recursively.
+                if ! is_bare_repo $d; then
+                    parse_repo $d
+                fi
+            fi
+        done
+
+        shift
+    done
+
+
+function parse_gitmodules()
+
+    local mod
+    for line in $(f)"$(< $1/.gitmodules)"; do
+        if [[ $line[1,10] = "[submodule" ]]; then
+            # Strip down to just the actual path
+            mod=$$line##\[submodule \"%%\"\]
+            # Parse it!
+            parse_repo $1/$mod
+        fi
+    done
+
+
+function is_bare_repo()
+
+    local n
+    local is_bare=0
+    for n in branches hooks info objects refs ; do
+        if [[ ! -d $1/$n ]]; then
+            is_bare=1
+            break
+        fi
+    done
+
+    return $is_bare
+
+
+function fetch_all()
+
+    for repo in $REPOS; do
+        cd $repo
+        upstream=""
+
+        upstream=$$(git rev-parse --verify $b@upstream \
+            --symbolic-full-name 2>/dev/null)/refs\/remotes\/
+
+        if [[ -n "$upstream" ]]; then
+            echo $repo
+            git fetch
+        else
+            echo no upstream for $repo
+        fi
+    done
+    cd $CUR  # Return to wherever you were
+
+
+function show_behind()
+
+    # Join the commits in rev-list into an array and count the number of items
+    # in it minus one. The result is the number of commits behind the upstream.
+    a=$(($#$(f)"$(git rev-list HEAD..$b@upstream 2>/dev/null)" - 1))
+
+    if [[ $a -gt 0 ]]; then
+        BEHIND_REPOS=$(( BEHIND_REPOS + 1 ))
+
+        if [[ -z "$1" ]]; then
+            echo $repo $a
+        fi
+    fi
+
+    TOTAL_BEHIND=$(( TOTAL_BEHIND + a ))
+
+
+function upstream_filter()
+
+    cmd=$1
+    show_errors=$+2
+
+    for repo in $REPOS; do
+        cd $repo
+        upstream=$$(git rev-parse --verify $b@upstream \
+            --symbolic-full-name 2>/dev/null)/refs\/remotes\/
+
+        if [[ -n "$upstream" ]]; then
+            eval $cmd
+
+        elif [[ $show_errors == 1 ]]; then
+            echo "no upstream for $repo"
+        fi
+    done
+    cd $CUR  # Return to wherever you were
+
+
+
+# Set all the repos. Always needed.
+for dir in $REPO_ROOTS; do
+    parse_repo $dir
+done
+
+case $1 in
+    fetch)
+        upstream_filter 'git fetch';;
+    pull)
+        upstream_filter 'git pull';;
+    show)
+        upstream_filter 'show_behind';;
+    stats)
+        upstream_filter 'show_behind silent'
+        echo $#REPOS $BEHIND_REPOS $TOTAL_BEHIND
+        ;;
+    --)
+        shift
+        upstream_filter "$*";;
+    *)
+        show_help ;;
+esac

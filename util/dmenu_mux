@@ -1,0 +1,14 @@
+#!/bin/zsh
+# dmenu remote tmux session manager. watup
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+if [[ -n "$1" ]]; then
+    name=" -name $1"
+else
+    name=""
+fi
+
+# Only grab sessions that are running
+ssh nl tmux ls | grep -Eo "^[^:]+" | \
+    ~/bin/dmenu_any - "urxvt$name -e ssh nl -t ~/bin/mux %q"

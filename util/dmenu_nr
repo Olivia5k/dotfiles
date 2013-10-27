@@ -1,0 +1,6 @@
+#!/bin/bash
+# dmenu netcfg switcher
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+dmenu_any "nr" "echo %q > /tmp/nr"

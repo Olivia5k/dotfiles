@@ -1,0 +1,15 @@
+#!/bin/zsh
+# dmenu generic command parser
+# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# WTFPL
+
+ret=$(
+    mpc --format "%position%) %artist% #[%album%#] - %title%" playlist \
+    | ~/bin/dmenu_any - "echo %q | grep -Eo '^[[:digit:]]+'" "-l 10"
+)
+
+# Only do this if something actually returned. If not, paused would start again
+# since $ret would be empty
+if [[ -n "$ret" ]] ; then
+    mpc -q play $ret
+fi
