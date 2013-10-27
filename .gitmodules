@@ -1,0 +1,15 @@
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = git://github.com/gmarik/vundle.git
+[submodule "zsh/modules/LS_COLORS"]
+	path = zsh/modules/LS_COLORS
+	url = git://github.com/trapd00r/LS_COLORS.git
+[submodule "zsh/modules/filedb"]
+	path = zsh/modules/filedb
+	url = git://github.com/thiderman/zsh-filedb.git
+[submodule "zsh/modules/zsh-syntax-highlighting"]
+	path = zsh/modules/zsh-syntax-highlighting
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/modules/zsh-completions"]
+	path = zsh/modules/zsh-completions
+	url = git://github.com/zsh-users/zsh-completions.git
