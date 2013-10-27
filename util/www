@@ -61,7 +61,10 @@ def main():
 
         # If no protocol, add http
         if not re.search(r'[a-z]{2,}://', url):
-            url = 'http://%s' % url
+            if 'spotify.net' in url:
+                url = 'https://%s' % url
+            else:
+                url = 'http://%s' % url
 
     if url:
         browser(url)
