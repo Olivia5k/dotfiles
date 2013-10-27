@@ -1,0 +1,45 @@
+# User specific pre-configuration {{{
+local USERPREFILE="$ZSHCONFDIR/local.zsh.pre"
+if [[ -f $USERPREFILE ]] || [[ -L $USERPREFILE ]] ; then
+  source $USERPREFILE
+fi
+
+# zsh configuration directory; dynamically found
+export ZSHRC="$HOME/.zshrc"
+export ZSHCONFDIR=$ZSHRC:A:h
+
+# The XDG standard is indeed quite exquisite.
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share/:/usr/local/share/}
+export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+
+export LOGS="$HOME/.logs"
+export HISTFILE="$LOGS/.zsh_history"
+export HISTSIZE=100000
+export SAVEHIST=100000
+
+# Self compiled libraries
+export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
+
+export EDITOR="vim"
+export VISUAL="vim"
+export MAIL="$HOME/var/mail"
+export HOMEBIN="$HOME/.local/bin"
+local _PATH="$XDG_DATA_HOME/infect/bin:$HOMEBIN:$HOME/.gem/ruby/2.0.0/bin"
+local _PATH="$_PATH:/usr/share/perl5/site_perl/auto/share/dist/Cope"
+
+# Prevent trailing singlequotes to break the command lines! :D
+setopt sunkeyboardhack
+export KEYBOARD_HACK="'"
+
+# If $_PATH is not in $PATH, add it, but only once.
+if ! [[ $PATH =~ "$_PATH" ]] ; then
+  export PATH=$_PATH:$PATH
+fi
+
+setopt promptsubst
+
+fpath=($ZSHCONFDIR/modules/zsh-completions/src $fpath)
+zstyle ':completion:*' hosts off

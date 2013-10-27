@@ -2,15 +2,6 @@
 # Released under the WTFPL (http://sam.zoy.org/wtfpl/).
 # https://github.com/daethorian/conf-zsh
 
-# User specific pre-configuration {{{
-
-local USERPREFILE="$ZSHCONFDIR/local.zsh.pre"
-if [[ -f $USERPREFILE ]] || [[ -L $USERPREFILE ]] ; then
-  source $USERPREFILE
-fi
-
-# }}}
-
 # Variables and initialization {{{
 
 # zsh configuration directory; dynamically found

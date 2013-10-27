@@ -1,9 +1,12 @@
 [submodule "modules/LS_COLORS"]
 	path = modules/LS_COLORS
 	url = git://github.com/trapd00r/LS_COLORS.git
-[submodule "modules/syntax"]
-	path = modules/syntax
-	url = https://github.com/trapd00r/zsh-syntax-highlighting-filetypes.git
 [submodule "modules/filedb"]
 	path = modules/filedb
 	url = git://github.com/thiderman/zsh-filedb.git
+[submodule "modules/zsh-syntax-highlighting"]
+	path = modules/zsh-syntax-highlighting
+	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "modules/zsh-completions"]
+	path = modules/zsh-completions
+	url = git://github.com/zsh-users/zsh-completions.git
