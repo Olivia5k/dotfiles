@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+p=""
+if [[ -n "$1" ]]; then
+  p=",/warez/$1"
+fi
+
+url="http://sexbmc.local:1337/xbmcCmds/xbmcHttp?"
+url+="command=ExecBuiltIn&parameter=XBMC.updatelibrary(video${p})"
+
+curl --user xbmc:penis $url

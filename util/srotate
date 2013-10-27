@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+output=(${(s: :)"$(xrandr | grep LVDS1)"})
+x=${${(s:x:)output[3]}[1]}
+mode=${output[4]}
+
+if [[ "$x" = "1024" ]]; then
+    rot="right"
+    inv="0 1"
+    axes="1"
+    orient="3"
+elif [[ "$mode" = "right" ]] ; then
+    rot="left"
+    inv="1 0"
+    axes="1"
+    orient="1"
+else
+    rot="normal"
+    inv="0 0"
+    axes="0"
+    orient="0"
+fi
+
+xrandr --output LVDS1 --rotate $rot
+xinput set-prop "11" "Evdev Axis Inversion" ${(z)inv}
+xinput set-prop "11" "Evdev Axes Swap" $axes
+
+if synclient | grep Orientation &> /dev/null; then
+    synclient Orientation=$orient
+fi
+
+pkill dzen ; dzentinel &|

@@ -1,0 +1,111 @@
+#!/bin/zsh
+
+# Automatic screenshot grabber.
+# Some time ago, I met with my family. We were being nostalgic and looking
+# through some old photo albums when a thought occurred to me. Being a geek, my
+# photo isn't taken a lot these days. In a couple of years, there will not be
+# enough photos of me to fill a photo album. Figuring this wasn't really about
+# to change, I came up with an idea.
+#
+# I work a lot with my computer(s), and I spend most of my time around them. I
+# take some screenshots, but they are unfortunately increasingly rare. The idea
+# I had was simple: I should capture random screenshots documenting the flow of
+# my days. I also figured that the best screenshots might have something in
+# common with the best photographs: they are spontaneous and unprepared.
+#
+# This script will run in the background and take screenshots. When a shot is
+# taken, it waits for a while (defaulting to somewhere between one and three
+# hours) and then takes another one. If your screen locker is running or if you
+# haven't changed anything since the last shot (determined by counting CPU
+# interrupts from your keyboard and mouse) the script will not take a shot,
+# pause for five minutes and then try again.
+#
+# The end result of having this script in the background will be a series of
+# screenshots documenting the evolution of your computer, and will serve as a
+# base for a photo album of your digital life.
+#
+# As a last note: The default behaviour of the included screenshot script is to
+# upload the shot to a server where it is publicly available. For privacy
+# reasons, that would be incredibly stupid for the automatic shooter to do,
+# since the shots could depict you having sexy tiems on Youporn, you writing
+# Twilight fanfiction or something really serious, such as working on
+# proprietary corporate code. The auto shooter will still upload the shots to
+# your server, but to a different directory. Make sure that that directory is
+# only accessible by you, so that you can filter out the shots before showing
+# them to anyone.
+#
+#
+# Should be set up as a cron job run every five minutes so that it is started
+# automatically when booting up or if it should unexpectedly crash.
+#
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+# Licensed under the WTFPL.
+
+i="/proc/interrupts"
+d="[[:digit:]]\+"
+
+locker="xlock"
+kb_id=" 16:"
+m_id=" 23:"
+
+kb_cur=0
+m_cur=0
+
+# The diffs are set to 1 initially to trick the script to a shot when started
+kb_diff=1
+m_diff=1
+
+high=10800
+low=3600
+interval=300
+
+while :; do
+    # Parse interrupt lines and store the data in arrays split on newlines
+    kb=(${(f)"$(< $i | grep $kb_id | grep -o "$d")"})
+    m=(${(f)"$(< $i | grep $m_id | grep -o "$d")"})
+
+    kb_new=0
+    m_new=0
+
+    # Calculate the total numbers
+    for x in {2..5} ; do
+        kb_new=$(( kb_new + ${kb[$x]} ))
+        m_new=$(( m_new + ${m[$x]} ))
+    done
+
+    # Only do the diffing if we didn't just start it
+    if [[ $kb_cur != 0 ]]; then
+        kb_diff=$(( kb_cur - kb_new ))
+    fi
+
+    if [[ $m_cur != 0 ]]; then
+        m_diff=$(( m_cur - m_new ))
+    fi
+
+    kb_cur=$kb_new
+    m_cur=$m_new
+
+    # Check if the screen locker is running
+    lockrun=$(pidof $locker)
+
+    echo
+
+    sleep=$interval
+    if [[ $(( kb_diff + m_diff )) = 0 ]]; then
+        # Nothing happened
+        echo no diff
+    elif [[ -n "$lockrun" ]] ; then
+        # The locker was running.
+        echo locked
+    else
+        # Something differs and is visible! Take the shot!
+        echo took shot
+        ss auto
+
+        # Shot was taken! Sleep randomly between high and low
+        sleep=$(( (RANDOM % (high - low )) + low  ))
+    fi
+
+    echo sleeping $sleep
+    sleep $sleep
+done

@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+pushd $HOME/git/thiderman
+jekyll build
+luakit http://localhost/posts/$1/
+# hlwmraise '("luakit" "luakit")'
+popd

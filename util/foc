@@ -1,0 +1,2 @@
+#!/bin/zsh
+herbstclient focus_monitor 0 && herbstclient use $1
