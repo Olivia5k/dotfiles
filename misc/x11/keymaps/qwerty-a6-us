@@ -1,0 +1,64 @@
+partial alphanumeric_keys
+xkb_symbols "q6" {
+    include "se(basic)"
+
+    key <ESC>  { [ Escape                                         ] };
+    key <CAPS> { [ Control_R                                            ] };
+    key <LWIN> { [ Super_L                                           ] };
+    key <RWIN> { [ Super_R                                           ] };
+    key <LSGT> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
+    key <MENU> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
+
+    key <TLDE> { [ grave,      asciitilde    ] };
+    key <AE01> { [ 1,          exclam        ] };
+    key <AE02> { [ 2,          at            ] };
+    key <AE03> { [ 3,          numbersign, 3 ] };
+    key <AE04> { [ 4,          dollar        ] };
+    key <AE05> { [ 5,          percent       ] };
+    key <AE06> { [ 6,          asciicircum   ] };
+    key <AE07> { [ 7,          ampersand     ] };
+    key <AE08> { [ 8,          asterisk      ] };
+    key <AE09> { [ 9,          parenleft     ] };
+    key <AE10> { [ 0,          parenright    ] };
+    key <AE11> { [ minus,      underscore    ] };
+    key <AE12> { [ equal,      plus,       plusminus,           notsign ]    };
+
+    key <AD01> { [ q,          Q,          parenleft,           none ] };
+    key <AD02> { [ w,          W,          parenright,          none ] };
+    key <AD03> { [ e,          E,          bracketleft,         none ] };
+    key <AD04> { [ r,          R,          bracketright,        none ] };
+    key <AD05> { [ t,          T,          dollar,              none ] };
+    key <AD06> { [ y,          Y,          quotedbl,            none ] };
+    key <AD07> { [ u,          U,          quotedbl,            none ] };
+    key <AD08> { [ i,          I,          apostrophe,          none ] };
+    key <AD09> { [ o,          O,          less,                none ] };
+    key <AD10> { [ p,          P,          greater,             none ] };
+    key <AD11> { [ bracketleft,braceleft,  aring,               Aring ] };
+    key <AD12> { [ bracketright,braceright,dead_tilde,          asciicircum ] };
+
+    key <AC01> { [ a,          A,          asciicircum,         none ] };
+    key <AC02> { [ s,          S,          dollar,              none ] };
+    key <AC03> { [ d,          D,          braceleft,           none ] };
+    key <AC04> { [ f,          F,          braceright,          none ] };
+    key <AC05> { [ g,          G,          bar,                 none ] };
+    key <AC06> { [ h,          H,          percent,             none ] };
+    key <AC07> { [ j,          J,          slash,               none ] };
+    key <AC08> { [ k,          K,          asciitilde,          none ] };
+    key <AC09> { [ l,          L,          bar,                 none ] };
+    key <AC10> { [ semicolon,  colon,      odiaeresis,          Odiaeresis ] };
+    key <AC11> { [ apostrophe, quotedbl,   adiaeresis,          Adiaeresis ] };
+
+    key <AB01> { [ z,          Z,          semicolon,           none ] };
+    key <AB02> { [ x,          X,          slash,               none ] };
+    key <AB03> { [ c,          C,          ampersand,           none ] };
+    key <AB04> { [ v,          V,          exclam,              none ] };
+    key <AB05> { [ b,          B,          backslash,           none ] };
+    key <AB06> { [ n,          N,          percent,             none ] };
+    key <AB07> { [ m,          M,          mu,                  none ] };
+    key <AB08> { [ comma,      less,       lstroke,             none ] };
+    key <AB09> { [ period,     greater,    leftdoublequotemark, none ] };
+    key <AB10> { [ slash,      question,   guillemotleft,       none ] };
+
+    key <BKSL> { [ backslash,  bar,        asterisk,            none ] };
+};
+// vim: ft=xkb et
