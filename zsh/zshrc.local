@@ -113,7 +113,10 @@ alias l="ls -l"
 # }}}
 # aliases {{{
 
-unalias ag
+alias ag > /dev/null
+if [[ $? == 0 ]] ; then
+  unalias ag
+fi
 
 alias zz="source $ZSHRC"
 alias sp="python setup.py"
