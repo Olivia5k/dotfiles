@@ -113,8 +113,7 @@ alias l="ls -l"
 # }}}
 # aliases {{{
 
-alias ag > /dev/null
-if [[ $? == 0 ]] ; then
+if alias ag &> /dev/null ; then
   unalias ag
 fi
 
