@@ -1,0 +1,46 @@
+[user]
+	email = lowe.thiderman@gmail.com
+	name = Lowe Thiderman
+[color]
+	ui = auto
+
+[color "diff"]
+	plain = normal
+	meta = bold
+	frag = cyan
+	old = bold red
+	new = bold green
+	commit = bold yellow
+	whitespace = normal red
+[color "branch"]
+	current = bold green
+	local = normal
+	remote = bold red
+	plain = normal
+[color "status"]
+	header = normal
+	added = cyan
+	updated = bold green
+	changed = bold red
+	untracked = bold magenta
+	nobranch = bold red
+[color "grep"]
+	match = bold magenta
+[color "interactive"]
+	prompt = normal
+	header = normal
+	help = yellow
+	error = bold red
+
+[diff]
+	tool = vimdiff
+[core]
+	editor = vim
+	excludesfile = ~/.cvsignore
+[init]
+	templatedir = ~/.git_template
+[alias]
+	ctags = !.git/hooks/ctags
+	rms = "!f(){ git rm --cached \"$1\";rm -r \"$1\";git config -f .gitmodules --remove-section \"submodule.$1\";git config -f .git/config --remove-section \"submodule.$1\";git add .gitmodules; }; f"
+[push]
+	default = simple
