@@ -1,3 +1,9 @@
+# User specific pre-configuration {{{
+local USERPREFILE="$ZSHCONFDIR/local.zsh.pre"
+if [[ -f $USERPREFILE ]] || [[ -L $USERPREFILE ]] ; then
+  source $USERPREFILE
+fi
+
 # zsh configuration directory; dynamically found
 export ZSHRC="$HOME/.zshrc"
 export ZSHCONFDIR=$ZSHRC:A:h
