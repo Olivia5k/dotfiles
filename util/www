@@ -18,7 +18,7 @@ ENGINES = {
 
 def browser(url):
     #print(BROWSER, url)
-    sub.Popen(['/home/thiderman/.local/share/infect/bin/hlwmraise', '("luakit" "luakit")'])
+    sub.Popen(['hlwmraise', '("luakit" "luakit")'])
     sub.Popen([BROWSER, url], stdout=sub.PIPE, stderr=sub.PIPE)
 
 
