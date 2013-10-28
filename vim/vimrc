@@ -46,6 +46,7 @@ Bundle 'thiderman/nginx-vim-syntax'
 Bundle 'rodjek/vim-puppet'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
+Bundle 'tpope/vim-classpath'
 
 " Editing and misc
 Bundle 'AndrewRadev/switch.vim'
@@ -784,6 +785,7 @@ augroup ft_vim
 
   " If on real vimrc, source it upon save
   au BufWritePost *vimrc* let fn = expand("<afile>:p") | if fn !~ '://' | source `=fn` | endif
+
   au FileType vim setlocal foldmethod=marker
   au FileType vim nnoremap <buffer> <silent> <bs> :call HelpExpand()<cr>
 augroup END
@@ -849,10 +851,17 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleFocus()':    ['<c-tab>'],
 \ }
 
-let g:ctrlp_project_roots = ['~/spotify', '~/etc']
+" let g:ctrlp_project_roots = ['~/spotify', '~/etc']
+let g:ctrlp_projects = {
+      \ '~/spotify': 1,
+      \ '~/etc': 2,
+      \ '~/git': 10,
+      \ '~/.vim/bundle': 9000,
+      \ }
 
 nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <A-q> :CtrlP<cr>
+nnoremap <A-p> :CtrlPProject<cr>
 nnoremap <Leader>q :CtrlP<cr>
 nnoremap <Leader>a :CtrlPBuffer<cr>
 nnoremap <Leader>z :CtrlPProject<cr>
@@ -1205,7 +1214,7 @@ map <A-a> :call Mor()<cr>
 if has('gui_running')
   " Remove all the UI cruft
   set guioptions=cagit  " Disable graphical elements
-  set guifont=Inconsolata\ 13
+  set guifont=Inconsolata\ 10
 
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
