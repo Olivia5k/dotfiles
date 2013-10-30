@@ -608,7 +608,7 @@ augroup END
 fun! AutoBlog(file)
   let file = substitute(a:file, '^\d\d\d\d-\d\d-\d\d-', '', '')
   let file = substitute(file, '\.markdown$', '', '')
-  exec "silent !/home/thiderman/.local/share/infect/bin/autoblog ".file." &> /dev/null &"
+  exec "silent !autoblog ".file." &> /dev/null &"
 endfun
 
 augroup ft_blog
