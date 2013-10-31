@@ -16,7 +16,7 @@ function reset() {
     km
     wp
     killall keynav ; keynav &> /dev/null &|
-    run_storm
+    run_storm &> /dev/null &|
 }
 
 if xrandr | grep -E "$int connected $d+x$d+\+$d+\+$d+"; then
