@@ -1,6 +1,6 @@
 #!/bin/zsh
 # dmenu generic command parser
-# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
 ret=$(

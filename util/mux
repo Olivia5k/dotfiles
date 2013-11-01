@@ -1,6 +1,6 @@
 #!/bin/zsh
 # tmux session manager for smooth remote management.
-# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
 if [[ -z "$1" ]]; then

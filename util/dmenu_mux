@@ -1,6 +1,6 @@
 #!/bin/zsh
 # dmenu remote tmux session manager. watup
-# Written by Lowe Thiderman (daethorian@ninjaloot.se)
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
 if [[ -n "$1" ]]; then
