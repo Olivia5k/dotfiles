@@ -2,7 +2,7 @@
 
 # Lol screenshooter with dzen2-xft reporting
 # Uploads to local server and feeds URL to clipboard. Whatup.
-# Written by Lowe Thiderman (daethorian@gmail.com)
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # Licensed under the WTFPL.
 
 remote=true
