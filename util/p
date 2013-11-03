@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+ping ${1:-google.com} -c 3
