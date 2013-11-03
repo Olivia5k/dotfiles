@@ -46,23 +46,24 @@ if [[ $(echotc Co) = 256 ]]; then
   # source $ZSHCONFDIR/modules/syntax/zsh-syntax-highlighting-filetypes.zsh
   source $ZSHCONFDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+  export ZSH_HIGHLIGHT_STYLES[alias]='fg=87,bold'
+  export ZSH_HIGHLIGHT_STYLES[command]='fg=103,bold'
+  export ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=103,bold'
+  export ZSH_HIGHLIGHT_STYLES[precommand]='fg=110,bold'
+  export ZSH_HIGHLIGHT_STYLES[builtin]='fg=65,bold'
+  export ZSH_HIGHLIGHT_STYLES[function]='fg=215,bold'
+  export ZSH_HIGHLIGHT_STYLES[path]='fg=68,bold'
+  export ZSH_HIGHLIGHT_STYLES[assign]='fg=43'
+
+  export ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=87'
+  export ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=132'
+  export ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=107,bold'
+  export ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=107,bold'
+
   # Really extensive LS_COLORS.
   eval $(dircolors -b $ZSHCONFDIR/modules/LS_COLORS/LS_COLORS)
 fi
 
-export ZSH_HIGHLIGHT_STYLES[alias]='fg=87,bold'
-export ZSH_HIGHLIGHT_STYLES[command]='fg=103,bold'
-export ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=103,bold'
-export ZSH_HIGHLIGHT_STYLES[precommand]='fg=110,bold'
-export ZSH_HIGHLIGHT_STYLES[builtin]='fg=65,bold'
-export ZSH_HIGHLIGHT_STYLES[function]='fg=215,bold'
-export ZSH_HIGHLIGHT_STYLES[path]='fg=68,bold'
-export ZSH_HIGHLIGHT_STYLES[assign]='fg=43'
-
-export ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=87'
-export ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=132'
-export ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=107,bold'
-export ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=107,bold'
 
 
 # }}}
