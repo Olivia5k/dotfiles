@@ -1,26 +1,23 @@
 #!/bin/zsh
 # xrandr screen switch and rotator
 
-d="[[:digit:]]"
-int="LVDS1"
-ext=${1:-DP2}
+out=$(xrandr)
+other=$(echo $out | grep " connected (" | cut -d" " -f1)
+current=$(echo $out | grep -e " connected [0-9]" | cut -d" " -f1)
 
-function reset() {
-    xrandr --output $1 --auto
-    xrandr --output $2 --off
-
-    # herbst y u do this
-    herbstclient move_monitor 0 $(xrandr | grep "*" | grep -oE '[0-9]+x[0-9]+')
-
-    xset r rate 330 45
-    km
-    wp
-    killall keynav ; keynav &> /dev/null &|
-    run_storm &> /dev/null &|
-}
-
-if xrandr | grep -E "$int connected $d+x$d+\+$d+\+$d+"; then
-    reset $ext $int
-else
-    reset $int $ext
+if [[ -z "$other" ]]; then
+  echo "No other non-disconnected screen. Doing nothing."
+  exit 0
 fi
+
+xrandr --output $other --auto
+xrandr --output $current --off
+
+# herbst y u do this
+herbstclient move_monitor 0 $(xrandr | grep "*" | grep -oE '[0-9]+x[0-9]+')
+
+km
+wp
+
+killall keynav; keynav &> /dev/null &|
+killall storm; run_storm &> /dev/null &|
