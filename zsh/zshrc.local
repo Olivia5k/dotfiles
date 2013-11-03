@@ -126,18 +126,6 @@ alias :q="exit"
 alias bell='echo -en "\007"'
 alias pg="ping google.com -c 3"
 
-# X11 specific aliases
-if [[ -n "$DISPLAY" ]] ; then
-  # Sets your keyboard to be snappier. Very recommended.
-  alias xr='xset r rate 330 45 && echo 330/45'
-
-  # Sets custom keymaps of both qwerty and dvorak
-  alias xa='setxkbmap a6'
-  alias xq='setxkbmap q6'
-  alias aoeu="xq"
-  alias asdf="xa"
-fi
-
 insert_sudo () { zle beginning-of-line; zle -U "sudo " }
 zle -N insert-sudo insert_sudo
 bindkey "^[d" insert-sudo
