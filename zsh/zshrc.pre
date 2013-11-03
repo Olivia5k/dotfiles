@@ -39,6 +39,9 @@ if ! [[ $PATH =~ "$_PATH" ]] ; then
   export PATH=$_PATH:$PATH
 fi
 
+# Don't you ever touch my prompties <3
+export VIRTUAL_ENV_DISABLE_PROMPT="yes"
+
 setopt promptsubst
 
 fpath=($ZSHCONFDIR/modules/zsh-completions/src $fpath)
