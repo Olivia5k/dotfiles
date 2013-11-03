@@ -186,7 +186,6 @@ function _autoworkgit() {
     fi
   fi
 }
-_autovenv
 
 # }}}
 
@@ -300,14 +299,14 @@ zle -N _inline-dirs
 # ZLE hax0r navigation
 function _inline-updir() {
   pushd -q ..
-  zle .reset-prompt
+  _inline-precmd
 }
 function _inline-back() {
   if ! popd -q; then
     zle -M 'Directory stack empty'
     sleep 0.5
   fi
-  zle .reset-prompt
+  _inline-precmd
 }
 function _inline-ls() {
   echo
@@ -319,6 +318,13 @@ function _inline-dirs() {
   dirs -pv
   zle .reset-prompt
 }
+
+function _inline-precmd() {
+  _autovenv
+  _find_git_root
+  zle .reset-prompt
+}
+
 
 bindkey "^[h" _inline-updir
 bindkey "^[j" _inline-ls
@@ -629,20 +635,22 @@ for x in user at host; do
   zstyle ":prompt:grml:left:items:$x" pre '%B%F{143}'
 done
 
-zstyle ':prompt:grml:left:items:path' pre '$VENV_PROMPT%B%F{68}'
-zstyle ':prompt:grml:left:items:path' token '%40<..<%1~%<< '
-zstyle ':prompt:grml:left:items:percent' pre "%B%F{245}"
+zstyle ':prompt:grml:left:items:path' pre '%B%F{68}'
+zstyle ':prompt:grml:left:items:path' token '%40<..<%~%<< '
+zstyle ':prompt:grml:left:items:percent' pre "%B%F{238}$prompt_newline"
+zstyle ':prompt:grml:left:items:percent' token "> "
+zstyle ':prompt:grml:left:items:vcs' pre '$VENV_PROMPT'
 zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
 
-# # hax0r git prompt setup!
-# zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' unstagedstr "${c[16]}"
-zstyle ':vcs_info:*' stagedstr "${c[18]}"
+# The zsh linters will give a random error on this if the ${c part is in the
+# zstyle command. No idea why, but wth.
+zstyle ':vcs_info:*' unstagedstr "%F{160}" # ${c[16]}
+zstyle ':vcs_info:*' stagedstr "%F{202}" # ${c[18]}
 
 # zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
-local gitformat="%B${c[14]}%r${c[1]}(%a${c[15]}%u%c%b%m${c[1]}) "
+local gitformat="%B%F{214}%r%F{237}(%a%F{083}%u%c%b%m%F{237}) " # 14, 15
 zstyle ':vcs_info:git*' formats $gitformat
 zstyle ':vcs_info:git*' actionformats $gitformat
 
