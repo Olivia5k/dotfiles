@@ -420,6 +420,11 @@ alias gb='git branch -v'
 alias gba='git branch -av'
 alias gbv='git branch -vv'
 alias gbav='git branch -avv'
+alias gsb='git show-branch'
+
+# Fetching
+alias gf='git fetch'
+alias gfa='git fetch -a'
 
 # Remotes
 alias gre='git remote -v'
