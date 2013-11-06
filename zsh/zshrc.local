@@ -404,22 +404,17 @@ function eggl() {
 # Committing / General
 alias ga='git add'
 alias gs='git status'
-alias gss='git status --short'
-alias s='gss'
+alias s='git status --short'
 alias gc='git commit'
-alias gca='gc --all'
+alias gca='gc --amend'
 alias gp='git push'
 
 alias gu="git pull"
-
-alias gpp='git push origin'
-alias guu='git pull origin'
 
 # Branching (only really useful with -v, really)
 alias gb='git branch -v'
 alias gba='git branch -av'
 alias gbv='git branch -vv'
-alias gbav='git branch -avv'
 alias gsb='git show-branch'
 
 # Fetching
@@ -439,22 +434,18 @@ alias got='git checkout --theirs'
 alias gt="git stash"
 alias gtl="git stash list"
 alias gtp="git stash pop"
-alias gts="git stash show"
 
 # Submodules
 alias gsa='git submodule add'
-alias gsi='git submodule init'
+alias gsi='git submodule update --init'
 alias gsu='git submodule update'
-alias gus='git pull && gsu'
 
 # Diffing
 alias gd='git diff'
 alias gdh='git diff HEAD'
-alias gdt='git difftool'
 
 # Merging
 alias gm="git merge"
-alias gmt="git mergetool"
 alias gls="git ls-files"
 alias glsu="git ls-files --unmerged"
 alias glsm="git ls-files --modified"
