@@ -451,6 +451,7 @@ alias glsu="git ls-files --unmerged"
 alias glsm="git ls-files --modified"
 alias glss="git ls-files --stage"
 alias glsd="git ls-files --deleted"
+alias grb='git rebase'
 
 # Logging
 alias gl='git log --abbrev-commit --decorate --pretty=oneline'
