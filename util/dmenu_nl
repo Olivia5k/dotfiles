@@ -1,6 +1,0 @@
-#!/bin/zsh
-# dmenu remote tmux session manager. watup
-# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
-# WTFPL
-
-dmenu_any "nl" "urxvt -e ssh nl -t .local/bin/mux %q"
