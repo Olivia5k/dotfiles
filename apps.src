@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-apps[git]="misc/gitconfig"
+apps[git]="misc/gitconfig misc/git_template"
 apps[i3]="misc/x11/i3.conf"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
 apps[luakit]="misc/luakit/"

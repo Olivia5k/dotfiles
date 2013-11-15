@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+PATH="/usr/local/bin:$PATH"
+trap "rm -f .git/tags.$$" EXIT
+ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --python-kinds=-iv --languages=-javascript,sql,html
+# Remove python variables
+# \v^[^\t ]+\t[^\t ]+.py\t.+\t[vi]>
+sed -i -E -e '/^[^	]+	[^	]+.py	[^	]+	v(	|$)/d' .git/tags.$$
+mv .git/tags.$$ .git/tags

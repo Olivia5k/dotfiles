@@ -1,0 +1,91 @@
+#!/bin/bash
+
+pp_lint_opts="--fail-on-warnings"
+pp_lint_opts="$pp_lint_opts --no-inherits_across_namespaces-check"
+pp_lint_opts="$pp_lint_opts --no-documentation-check"
+pp_lint_opts="$pp_lint_opts --no-80chars-check"
+pp_lint_opts="$pp_lint_opts --no-class_parameter_defaults-check"
+pp_lint_opts="$pp_lint_opts --no-class_inherits_from_params_class-check"
+
+validate_pp() {
+    path=$1
+
+    if ! puppet parser validate $path; then
+        return 1
+    fi
+
+    if ! puppet-lint $pp_lint_opts $path; then
+        return 1
+    fi
+
+    return 0
+}
+
+validate_erb() {
+    path=$1
+
+    # Check ERB template syntax
+    # -P : ignore lines which start with "%"
+    if ! erb -P -x -T - $path | ruby -c -; then
+        return 1
+    fi
+
+    return 0
+}
+
+status_code=0
+output=$(mktemp /tmp/output.XXXXXX)
+
+if git rev-parse --quiet --verify HEAD > /dev/null
+then
+    against=HEAD
+else
+    # Initial commit: diff against an empty tree object
+    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+# Get list of new/modified manifest and template files to check (in git index)
+while read path
+do
+    # Don't check empty files
+    if [[ $(git cat-file -s :0:$path) -le 0 ]]
+    then
+        continue
+    fi
+
+    file_ok=0
+    rm -f $output
+
+    case $path in
+    *.pp)
+        if ! validate_pp $path >$output 2>&1; then
+            file_ok=1
+        else
+            echo "pre-commit: $path: OK"
+        fi
+        ;;
+    *.erb)
+        if ! validate_erb $path >$output 2>&1; then
+            file_ok=1
+        else
+            echo "pre-commit: $path: OK"
+        fi
+    esac
+
+    if [ $file_ok -ne 0 ]
+    then
+        echo "pre-commit: $path: FAILED"
+        cat $output
+        status_code=1
+    fi
+done < <(git diff-index --diff-filter=AM --name-only --cached $against)
+
+rm -f $output
+
+if [ $status_code -ne 0 ]
+then
+    echo "pre-commit: Syntax errors found, aborting commit."
+    exit 1
+fi
+
+exit 0
