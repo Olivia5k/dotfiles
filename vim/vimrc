@@ -563,6 +563,14 @@ augroup ft_html
 augroup END
 
 " }}}
+" git {{{
+
+augroup git_autocmd
+  au!
+  au BufRead,BufNewFile *gitconfig set ft=gitconfig
+augroup END
+
+" }}}
 " Javascript {{{
 
 augroup ft_javaish
