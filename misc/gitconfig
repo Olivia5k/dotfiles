@@ -1,46 +1,79 @@
 [user]
-	email = lowe.thiderman@gmail.com
-	name = Lowe Thiderman
+  email = lowe.thiderman@gmail.com
+  name = Lowe Thiderman
 [color]
-	ui = auto
+  ui = auto
 
 [color "diff"]
-	plain = normal
-	meta = bold
-	frag = cyan
-	old = bold red
-	new = bold green
-	commit = bold yellow
-	whitespace = normal red
+  plain = normal
+  meta = bold
+  frag = cyan
+  old = bold red
+  new = bold green
+  commit = bold yellow
+  whitespace = normal red
 [color "branch"]
-	current = bold green
-	local = normal
-	remote = bold red
-	plain = normal
+  current = bold green
+  local = normal
+  remote = bold red
+  plain = normal
 [color "status"]
-	header = normal
-	added = cyan
-	updated = bold green
-	changed = bold red
-	untracked = bold magenta
-	nobranch = bold red
+  header = normal
+  added = cyan
+  updated = bold green
+  changed = bold red
+  untracked = bold magenta
+  nobranch = bold red
 [color "grep"]
-	match = bold magenta
+  match = bold magenta
 [color "interactive"]
-	prompt = normal
-	header = normal
-	help = yellow
-	error = bold red
+  prompt = normal
+  header = normal
+  help = yellow
+  error = bold red
 
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 [core]
-	editor = vim
-	excludesfile = ~/.cvsignore
+  editor = vim
+  excludesfile = ~/.cvsignore
 [init]
-	templatedir = ~/.git_template
+  templatedir = ~/.git_template
 [alias]
-	ctags = !.git/hooks/ctags
-	rms = "!f(){ git rm --cached \"$1\";rm -r \"$1\";git config -f .gitmodules --remove-section \"submodule.$1\";git config -f .git/config --remove-section \"submodule.$1\";git add .gitmodules; }; f"
+  st          = status
+  ci          = commit
+  ca          = commit --amend
+  br          = branch -avv
+  co          = checkout
+  who         = shortlog -s --
+  lg          = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold cyan)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2         = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lgc         = log ORIG_HEAD.. --stat --no-merges
+  lgp         = log --pretty=format:'%Cred%h%Creset -- %cn, %cr\t%Cgreen%s%Creset'
+  staged      = diff --cached
+  wdiff       = diff --color-words
+  ignored     = ls-files --others
+  oneline     = log --oneline --decorate
+  changes     = diff --name-status -r
+  wdiff       = diff --color-words
+  wlog        = log -p --word-diff=color
+  mnc         = merge --no-commit
+  tags        = for-each-ref --sort='*authordate' --format='%(tag)' refs/tags
+  unpushed    = cherry -v
+  whatrelease = name-rev --name-only
+  contains    = branch --contains
+  repourl     = config --get remote.origin.url
+  undo        = reset --soft HEAD^
+  shallow     = clone --depth=1
+
+  # Stuff longer than 80 chars; put in separate scripts in ~/.git_template
+  authors     = !.git/bin/authors
+  branch-age  = !.git/bin/branch-age
+  brlog       = !.git/bin/brlog
+  ctags       = !.git/hooks/ctags
+  draft       = !.git/bin/gerrit drafts
+  review      = !.git/bin/gerrit for
+  rms         = !.git/bin/rms
+
 [push]
-	default = simple
+  default = simple
