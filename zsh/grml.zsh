@@ -992,11 +992,10 @@ zle -N accept-line
 zle -N Accept-Line
 zle -N Accept-Line-HandleContext
 
-# power completion - abbreviation expansion
 # power completion / abbreviation expansion / buffer expansion
 # see http://zshwiki.org/home/examples/zleiab for details
 # less risky than the global aliases but powerful as well
-# just type the abbreviation key and afterwards ',.' to expand it
+# just type the abbreviation key and afterwards 'ctrl-x .' to expand it
 declare -A abk
 setopt extendedglob
 setopt interactivecomments
@@ -1408,7 +1407,7 @@ bind2maps emacs             -- Right  forward-char
 bind2maps       viins vicmd -- Right  vi-forward-char
 bind2maps       viins vicmd -- Right  vi-forward-char
 #k# Display list of abbreviations that expand when followed by ,.
-bind2maps emacs viins       -- -s ',.' zleiab
+bind2maps emacs viins       -- -s '^x.' zleiab
 bind2maps emacs viins       -- -s '^xb' help-show-abk
 bind2maps emacs viins       -- -s '^xM' inplaceMkDirs
 #k# display help for keybindings and ZLE
@@ -1906,6 +1905,14 @@ grml_prompt_token_default=(
     vcs               '0'
 )
 
+function grml_theme_has_token () {
+    if (( ARGC != 1 )); then
+        printf 'usage: grml_theme_has_token <name>\n'
+        return 1
+    fi
+    (( ${+grml_prompt_token_default[$1]} ))
+}
+
 function GRML_theme_add_token_usage () {
     cat <<__EOF__
   Usage: grml_theme_add_token <name> [-f|-i] <token/function> [<pre> <post>]
@@ -1926,6 +1933,11 @@ function GRML_theme_add_token_usage () {
     The functions are called with one argument: the token's new name. The
     return value is expected in the \$REPLY parameter. The use of these
     options is mutually exclusive.
+
+    There is a utility function \`grml_theme_has_token', which you can use
+    to test if a token exists before trying to add it. This can be a guard
+    for situations in which a \`grml_theme_add_token' call may happen more
+    than once.
 
   Example:
 
@@ -1990,7 +2002,7 @@ grml_theme_add_token: <pre> and <post> need to by specified _both_!\n\n'
         shift 2
     fi
 
-    if (( ${+grml_prompt_token_default[$name]} )); then
+    if grml_theme_has_token $name; then
         printf '
 grml_theme_add_token: Token `%s'\'' exists! Giving up!\n\n' $name
         GRML_theme_add_token_usage
