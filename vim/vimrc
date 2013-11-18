@@ -386,6 +386,10 @@ function! Clear()
   lclose
   pclose
 
+  " Clear the auto lists
+  sign unplace *
+  call setqflist([], {})
+
   " Also clear the message area
   echo
 endfunction
