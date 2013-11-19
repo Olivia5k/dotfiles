@@ -5,7 +5,7 @@ concern [vim][vim], [zsh][zsh] and [tmux][tmux], but also contain haxings for
 [git][git], some general tiling window manager setups, and finally some
 generally helpful scripts.
 
-Please see the directories in this repository for specic READMEs for them.
+Please see the directories in this repository for specific READMEs for them.
 
 ![wow screenshot](http://i.imgur.com/X1WN9rK.png)
 
