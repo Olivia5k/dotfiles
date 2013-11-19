@@ -1,10 +1,13 @@
 " .vimrc
-" Author: Steve Losh <steve@stevelosh.com>
-" Modifier: Lowe Thiderman <lowe.thiderman@gmail.com>
+" Author: Lowe Thiderman <lowe.thiderman@gmail.com>
+" Credit: Steve Losh <steve@stevelosh.com>
+" Source: https://github.com/thiderman/dotfiles
 " Source: http://bitbucket.org/sjl/dotfiles/src/tip/vim/
 "
-" This file was respectfully stolen from Steve Losh. It has been modified to
-" contain some of the configs I had, but 90% of the file is still in the magic.
+" This file was once borrowed from Steve Losh. It has been modified to
+" contain most of the configs I had. Since borrowing, I've also cleared a lot
+" of stuff that simply was of no use to me. I don't think our versions would
+" merge cleanly today.
 
 " Preamble {{{
 
@@ -466,7 +469,7 @@ set foldlevelstart=100
 " Space to toggle folds.
 nnoremap <Space> za
 nnoremap <C-Space> zM
-nnoremap <S-Space> zO
+nnoremap <S-Space> zA
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
@@ -944,7 +947,7 @@ call s:gm('ga',  'Gwrite')
 call s:gm('gm',  'Gmove ')
 
 " }}}
-" NERD Tree {{{
+" NERDTree {{{
 
 noremap  <F2> :NERDTreeToggle<cr>
 inoremap <F2> <esc>:NERDTreeToggle<cr>
@@ -993,8 +996,8 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_disabled_filetypes = ['html', 'rst', 'css', 'zsh']
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 let g:syntastic_javascript_checker = "jshint"
-let g:syntastic_python_checker_args = '--ignore=E501'  " Ignore line too long
-let g:syntastic_puppet_lint_arguments = '--no-80chars-check --no-documentation'  " Ignore line too long
+" let g:syntastic_python_checker_args = '--ignore=E501'  " Ignore line too long
+" let g:syntastic_puppet_lint_arguments = '--no-80chars-check --no-documentation'  " Ignore line too long
 
 " }}}
 " Switch {{{
@@ -1004,8 +1007,6 @@ nnoremap <silent> - :Switch<cr>
 " }}}
 " SQL {{{
 
-" The retard that set C-C as default for SQL completion should get his face
-" caved in.
 let g:ftplugin_sql_omni_key = '<F13>'
 
 " }}}
@@ -1013,7 +1014,6 @@ let g:ftplugin_sql_omni_key = '<F13>'
 
 " While I love surround.vim, the s/S confusion in visual mode does not
 " really tickle my fancy. To make up for this, these mappings happened.
-" vmap " S"
 
 vmap ' S'
 vmap ( S)
