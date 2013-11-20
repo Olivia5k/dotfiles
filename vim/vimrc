@@ -893,7 +893,10 @@ function! s:setcwd()
   exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
 endfunction
 
-autocmd BufEnter * call s:setcwd()
+augroup ctrlp_setcwd
+  au!
+  autocmd BufEnter * call s:setcwd()
+augroup END
 
 " }}}
 " Expand region {{{
@@ -927,15 +930,10 @@ call s:gm('gi',  'Git ')
 call s:gm('ge',  'Gedit')
 call s:gm('gb',  'Gblame')
 call s:gm('gc',  'Gcommit')
-" call s:gm('gdd', 'Gdiff ')
-" call s:gm('gdc', 'Gdiff')
-" call s:gm('gdh', 'Gdiff HEAD')
 
-" Check previous revisions of current file; git log
 call s:gm('gle', 'Extradite')
-call s:gm('gll', 'Glog')
+call s:gm('gll', 'Gitv')
 call s:gm('glo', 'Glog ')
-call s:gm('go',  'Gcheckout ')
 call s:gm('gpp', 'Git push origin ')
 call s:gm('guu', 'Git pull --no-edit origin')
 call s:gm('gre', 'Gread ')
@@ -943,7 +941,6 @@ call s:gm('grr', 'Gremove ')
 
 call s:gm('gs',  'Gstatus', '<c-n>')
 call s:gm('gw',  'Gwrite')
-call s:gm('ga',  'Gwrite')
 call s:gm('gm',  'Gmove ')
 
 " }}}
@@ -1057,6 +1054,7 @@ function! ProjectTodo()
 endfunction
 
 nmap <silent> <A-s> :call ProjectTodo()<cr>
+nmap <silent> <leader>s :call ProjectTodo()<cr>
 
 " }}}
 " XPTemplate {{{
