@@ -544,6 +544,18 @@ set foldtext=FoldWithLines()
 " }}}
 " Filetype-specific {{{
 
+" conf {{{
+
+augroup ft_conf
+  au!
+
+  au BufNewFile,BufRead *.conf setlocal filetype=conf
+
+  au Filetype conf setlocal foldmethod=marker
+  au Filetype conf setlocal foldmarker={{{,}}}
+augroup END
+
+" }}}
 " CSS and LessCSS {{{
 
 augroup ft_css
