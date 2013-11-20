@@ -127,3 +127,12 @@ pytest
 coveragepy
 py
 teardown
+fullscreen
+hostname
+statusbar
+powerline
+scrollback
+sudo
+manpage
+htop
+evar
