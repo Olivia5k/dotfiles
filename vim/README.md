@@ -25,6 +25,9 @@ A few things will happen automagically:
 * [syntastic][syntastic] will check your file's syntax upon buffer write.
 * Trailing whitespace, including dangling lines, will be deleted upon buffer
   write.
+* Some mappings will reselect visual mode: `<` and `>` for indenting, and
+  `<a-j>`/`<c-j>` or `<a-k>``<c-k>` for bubbling up and down, courtesy of
+  [vim-unimpaired][unimpaired].
 * Upon opening a buffer, it's `cwd` will be set to the corresponding VCS root.
   Non-VCS:d files will just be left alone with their current `pwd`.
 
@@ -148,8 +151,8 @@ a time based all this off of.
 <!--- Yay tabularize -->
 [airline]:      https://github.com/bling/vim-airline
 [coverage]:     https://github.com/alfredodeza/coveragepy.vim
-[ctrlp]:        https://github.com/kien/ctrlp.vim
 [ctrlp-project]:https://github.com/thiderman/ctrlp-project
+[ctrlp]:        https://github.com/kien/ctrlp.vim
 [delimitmate]:  https://github.com/Raimondi/delimitMate
 [endwise]:      https://github.com/tpope/vim-endwise
 [extradite]:    https://github.com/int3/vim-extradite
@@ -165,6 +168,7 @@ a time based all this off of.
 [snakecharmer]: https://github.com/thiderman/vim-snakecharmer
 [switch]:       https://github.com/AndrewRadev/switch.vim
 [syntastic]:    https://github.com/scrooloose/syntastic
+[unimpaired]:   https://github.com/tpope/vim-unimpaired
 [vimwiki]:      https://github.com/vim-scripts/vimwiki
 [vundle]:       https://github.com/gmarik/vundle
 [sjl]:          http://stevelosh.com/
