@@ -14,7 +14,7 @@ A complete list of plugins included can be found at the top of the vimrc file.
 Plugins are managed using [vundle][vundle].
 
 
-## Automagic
+### Automagic
 
 A few things will happen automagically:
 
@@ -41,7 +41,7 @@ with a tmux session set to the current project name. Use this for
 terminal-related things to your project.
 
 
-## Folds
+### Folds
 
 As might be evident from the screenshot, I fucking love folds. They are the
 best thing ever for navigating code, and it always bothers me that so few
@@ -53,7 +53,7 @@ If you're not already abusing folds, you really really should. They are better
 for navigation then tags are.
 
 
-## Python
+### Python
 
 This vim setup mostly sees Python, but no Python IDE features are to be found.
 I've tried using [python-mode][python-mode] a couple of times but I only get
@@ -77,8 +77,7 @@ Lastly, I use the excellent little [switch.vim][switch] plugin to enable the
 * True | False
 * == | !=
 * in | not in
-* setUp | tearDown *(unittest/nose style)*
-* setup_ | teardown_ *(py.test style)*
+* setup | teardown
 * def function(self) | def function()
 * if/and/or/assert/is | if/and/or/assert/is not
 * Looping between logging.x methods (debug, info, warning, etc)
@@ -86,7 +85,7 @@ Lastly, I use the excellent little [switch.vim][switch] plugin to enable the
 It might look weird at first glance, but they are all pretty useful.
 
 
-## Git
+### Git
 
 I use git for everything, so I naturally spend some time with
 [vim-fugitive][fugitive]. 90% of my git workflow is from inside of vim. To
@@ -108,7 +107,27 @@ repo ([gitv][gitv]) or for a single file ([vim-extradite][extradite]).
 * `gle`: `:Extradite`
 
 
-## Interface
+### Navigation
+
+I use the wonderful [ctrlp.vim][ctrlp] for navigating files, buffer and tags.
+It can be invoked via `<a-q>` (or `<leader>q`), which is quick and nice for the
+hand. `<leader>a` can be used to browse buffers. I have no special
+configurations or mappings other than an increased default height.
+
+I also wrote [ctrlp-project][ctrlp-project] to navigate on a higher level. When
+invoked (`<a-p>` or `<leader>z`) it will show a ctrlp selector listing all git
+projects (and their submodules) within a set of predefined locations (`~/code`,
+`~/git` etc). When a project is selected, a normal ctrlp will be spawned with
+that project's root as starting point, allowing you to select a file to start
+from.
+
+Splits can be traversed with the common `<c-hjkl>` combo. New splits can be
+created with `<c-z>` (horizontal) and `<c-s>` (vertical). The latter will
+probably not work in your terminal.
+
+Oh, and I kill windows so often I have mapped `K` to do so.
+
+### Interface
 
 The colorscheme in use is a slightly modified version of
 [jellybeans.vim][jelly] that has more bolding emphasis and some color tweaks.
@@ -120,7 +139,7 @@ Also present for lighter use is the [github][github] colorscheme. I use it when
 presenting something where a dark colorscheme simply does not work.
 
 
-## ...and some thanks
+### ...and some thanks
 
 ...and finally, a hat tip to [Steve Losh][sjl] for making the vimrc I once upon
 a time based all this off of.
@@ -129,6 +148,8 @@ a time based all this off of.
 <!--- Yay tabularize -->
 [airline]:      https://github.com/bling/vim-airline
 [coverage]:     https://github.com/alfredodeza/coveragepy.vim
+[ctrlp]:        https://github.com/kien/ctrlp.vim
+[ctrlp-project]:https://github.com/thiderman/ctrlp-project
 [delimitmate]:  https://github.com/Raimondi/delimitMate
 [endwise]:      https://github.com/tpope/vim-endwise
 [extradite]:    https://github.com/int3/vim-extradite
