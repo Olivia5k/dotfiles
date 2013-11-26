@@ -1200,6 +1200,8 @@ function! GuiFont(size)
 
   wincmd =
   redraw!
+
+  echo "Fontsize: " . (size + a:size)
 endfunction
 
 let g:guifont_save = &guifont
