@@ -61,7 +61,9 @@ if [[ $(echotc Co) = 256 ]]; then
   export ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=107,bold'
 
   # Really extensive LS_COLORS.
-  eval $(dircolors -b $ZSHCONFDIR/modules/LS_COLORS/LS_COLORS)
+  if (( $+commands[dircolors] )) ; then
+    eval $(dircolors -b $ZSHCONFDIR/modules/LS_COLORS/LS_COLORS)
+  fi
 fi
 
 
