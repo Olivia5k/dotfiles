@@ -372,8 +372,8 @@ function abs-previous-word () {
 
 zle -N abs-previous-word
 zle -N dirname-previous-word
-bindkey '^[w' abs-previous-word
-bindkey '^[q' dirname-previous-word
+bindkey '^[s' abs-previous-word
+bindkey '^[d' dirname-previous-word
 
 # Edit current commandline with actual editor
 autoload -U   edit-command-line
@@ -462,15 +462,6 @@ alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
-
-# I would very much like this one to not print a new prompt, but oh well.
-zle -N _inline-gs
-bindkey "^[s" _inline-gs
-function _inline-gs() {
-  echo
-  git status -s
-  zle .reset-prompt
-}
 
 # Relatively go up to a repository root
 function gr() {
