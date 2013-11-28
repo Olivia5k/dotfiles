@@ -40,10 +40,8 @@ export c
 # zsh-filedb. Quickfast!
 source $ZSHCONFDIR/modules/filedb/zsys.zsh
 
-
 if [[ $(echotc Co) = 256 ]]; then
   # Shell syntax highlighting, in realtime.
-  # source $ZSHCONFDIR/modules/syntax/zsh-syntax-highlighting-filetypes.zsh
   source $ZSHCONFDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
   export ZSH_HIGHLIGHT_STYLES[alias]='fg=87,bold'
@@ -66,8 +64,6 @@ if [[ $(echotc Co) = 256 ]]; then
   fi
 fi
 
-
-
 # }}}
 # Basic configuration {{{
 
@@ -86,15 +82,16 @@ alias ls='ls -lbhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
 # }}}
 # aliases {{{
 
-if alias ag &> /dev/null ; then
+# grml sets ag to be aliased to "sudo apt-get". This is annoying when you want
+# to use the silver searcher, whose binary is called, you guessed it, ag.
+if alias ag &> /dev/null; then
   unalias ag
 fi
 
 alias zz="source $ZSHRC"
 alias sp="python setup.py"
+alias hc="herbstclient"
 
-export GREPOPTS='--color=auto'
-alias grep="grep $GREPOPTS"
 alias :q="exit"
 alias bell='echo -en "\007"'
 
@@ -227,8 +224,7 @@ alias -g 2N="2> /dev/null"
 # }}}
 # navigation {{{
 
-bindkey '^[[A' history-beginning-search-backward
-bindkey '^[[B' history-beginning-search-forward
+autoload -U split-shell-arguments
 
 function rationalise-dot() {
   local reply REPLY REPLY2
@@ -255,11 +251,9 @@ bindkey . rationalise-dot
 # without this, typing a . aborts incremental history search
 bindkey -M isearch . self-insert
 
-function mkcd() {
-  mkdir -p $1
-  cd $1
-}
-
+# 1. Normal cd
+# 2. Create a directory if it doesn't exist
+# 3. If target is a file, go to parent directory
 function cd () {
   local opt=""
   if [[ ${+2} = 0 ]]; then
@@ -347,7 +341,7 @@ function _show_surroundings() {
   typeset -a output
   typeset -A star
   bound=${NUMERIC:-$(( LINES < 10 ? 1 : LINES / 3 ))}
-  star[$HISTNO]="*"
+  star[$HISTNO]="* "
   for ((i = HISTNO - $bound; i < HISTNO + $bound && i < HISTCMD; i++)); do
     line="${${:-$star[$i]$i: $history[$i]}[1,COLUMNS-1]}"
     while (( ${(m)#line} > COLUMNS-1 )); do
@@ -378,27 +372,7 @@ function fd() {
 
 # Global grep. Searches files for content.
 function gg() {
-  grep "$*" * -RIins
-}
-
-# Global grep extended. Searches files for content with real regular expressions.
-function gge() {
   grep "$*" * -ERIins
-}
-
-# Same as above, but does not print the matching line. Useful when searching
-# through files with criminally long lines.
-function ggl() {
-  grep "$*" * -RlIis
-}
-
-# Same as above, but instead of printing the files, open them in your editor
-function eggl() {
-  if [[ $EDITOR = $(which vim) ]] ; then
-    $EDITOR -p $(ggl $*)
-  else
-    $EDITOR $(ggl $*)
-  fi
 }
 
 # }}}
@@ -457,15 +431,12 @@ alias glsd="git ls-files --deleted"
 alias grb='git rebase'
 
 # Logging
-alias gl='git log --abbrev-commit --decorate --pretty=oneline'
+alias gl='git lg'
 alias gll='git log --abbrev-commit --decorate --stat'
-alias glg="gl --graph"
-alias gllg="gll --graph"
 alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
-
 
 # I would very much like this one to not print a new prompt, but oh well.
 zle -N _inline-gs
@@ -475,7 +446,6 @@ function _inline-gs() {
   git status -s
   zle .reset-prompt
 }
-
 
 # Relatively go up to a repository root
 function gr() {
@@ -514,15 +484,6 @@ function gr() {
   fi
 }
 
-zle -N _inline-gr
-function _inline-gr() {
-  gr 1
-  precmd
-  zle .reset-prompt
-}
-
-bindkey "^[r" _inline-gr
-
 function _find_git_root() {
   # Helper that finds the real git root.
   # Useful when relatively needing data from a new-style submodule.
@@ -554,31 +515,12 @@ function _find_git_root() {
 }
 
 # Set up hub as an alias for git if it is installed
-if [[ -x $commands[hub] ]]; then
+if (( $+commands[hub] )) ; then
   alias git=hub
   if type compdef >/dev/null; then
     compdef hub=git
   fi
 fi
-
-# }}}
-# herbstluftwm {{{
-
-alias hc="herbstclient"
-
-# }}}
-# mount / sshfs {{{
-
-alias mmu='mount /mnt/usb'
-alias muu='umount /mnt/usb'
-
-alias mmw='sshfs nl:/warez ~/ssh/warez -o allow_other'
-alias muw='fusermount -u ~/ssh/warez'
-alias mmn='sshfs nl: ~/ssh/ninjaloot'
-alias mun='fusermount -u ~/ssh/ninjaloot'
-
-alias cdn="cd ~/ssh/ninjaloot"
-alias cdw="cd ~/ssh/warez"
 
 # }}}
 # spotify  {{{
@@ -705,67 +647,6 @@ function +vi-git-action() {
   fi
 }
 
-# function precmd() {
-#   if [[ $TERM != "linux" ]]; then
-#     # Print xterm title
-#     print -Pn "\e]0;%n@%m: %~\a"
-#   fi
-
-#   if [[ $PMODE -ge 2 ]]; then
-#     local u="%n@%m"
-#     local t=""
-#     if [[ -n "$TMOUT" ]] && [[ "$TMOUT" != 0 ]]; then
-#       local t="${c[12]}${TMOUT}s${c[1]}-" # Timeouting
-#     fi
-
-#     local e="%(?..${c[6]}$(echo -en "\007")%?${c[1]}-)" # Errors
-#     local j="%(1j.${c[7]}%jbg${c[1]}-.)" # Jobs
-
-#     local r1="%B%(#.${c[3]}%m.${c[2]}$u) ${c[4]}"
-
-#     vcs_info
-#     if [[ -n "${vcs_info_msg_0_}" ]]; then
-#       # Find the git root.
-#       local cur=$PWD
-#       until [[ -z "$cur" ]]; do
-#         # -r finds dirs and files. new-style submods are files.
-#         if [[ -r "$cur/.git" ]]; then
-#           break
-#         fi
-#         cur=${cur%/*}
-#       done
-
-#       local p=${${cur/$HOME/\~}:h}
-#       local git_root
-#       _find_git_root
-
-#       # If we are in a submodule, decorate the super repo
-#       if [[ "$cur" != "$git_root:h" ]]; then
-#         local super=${${git_root%/.git/*}##*/}
-#         p=${p/$super/${c[28]}${super}${c[4]}}
-#       fi
-
-#       if [[ -n "$VIRTUAL_ENV" ]] && [[ $PWD =~ $VIRTUAL_ENV ]]; then
-#         # If in virtualenv, mark that.
-#         r1+="${c[24]}env${c[1]}:${vcs_info_msg_0_}"
-#       else
-#         # Print in directory blue up until the repo.
-#         r1+="$p/${vcs_info_msg_0_}"
-#       fi
-#     else
-#       r1+="%~"
-#     fi
-
-#     local r2="${t}${j}${e}${c[1]}%B>%b%f "
-#   fi
-
-#   case $PMODE in
-#     0) ; PROMPT="%# "; ;;
-#     1) ; PROMPT="%B%(#.${c[3]}%m.${c[2]}%n@%m) ${c[4]}%~ %#%b%f " ; ;;
-#     *) ; PROMPT=$(print "$r1\n$r2") ; ;;
-#   esac
-# }
-
 # }}}
 
 local USERFILE="$ZSHCONFDIR/local.zsh"
@@ -773,6 +654,7 @@ if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
   source $USERFILE
 fi
 
+# wow such shibe. https://github.com/thiderman/doge
 if (( $+commands[doge] )) ; then
   doge
 fi
