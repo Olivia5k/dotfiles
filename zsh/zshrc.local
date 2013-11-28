@@ -356,6 +356,31 @@ zle -N zle-isearch-update _show_surroundings
 zle -N zle-isearch-exit _clearbelowprompt
 
 # }}}
+# zle hax {{{
+
+# alt-q to back one step in a path
+function dirname-previous-word () {
+  autoload -U modify-current-argument
+  modify-current-argument '${ARG:h}'
+}
+
+# alt-w to make an arguments path be absolute. Will resolve symlinks.
+function abs-previous-word () {
+  autoload -U modify-current-argument
+  modify-current-argument '${ARG:A}'
+}
+
+zle -N abs-previous-word
+zle -N dirname-previous-word
+bindkey '^[w' abs-previous-word
+bindkey '^[q' dirname-previous-word
+
+# Edit current commandline with actual editor
+autoload -U   edit-command-line
+zle -N        edit-command-line
+bindkey '^[e' edit-command-line
+
+# }}}
 
 # }}}
 # Application specific {{{
