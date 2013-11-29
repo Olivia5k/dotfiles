@@ -69,15 +69,8 @@ fi
 
 # ls {{{
 
-# export LSOPTS='--color=auto --group-directories-first -hv'
-
-# ls="ls $LSOPTS"
-alias l='ls -bhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
+alias l='command ls -bhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
 alias ls='ls -lbhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
-
-# alias ls="$ls"
-# alias la="$ls -A"
-# alias lal="$ls -Al"
 
 # }}}
 # aliases {{{
