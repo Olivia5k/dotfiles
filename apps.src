@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# Applications to install configurations for. If the keys are available as
+# executable files on your path, they will be symlinked. If not, they will be
+# skipped.
 apps[git]="misc/gitconfig misc/git_template"
 apps[i3]="misc/x11/i3.conf"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
@@ -13,14 +16,21 @@ apps[vim]="vim vim/vimrc misc/gtkrc-2.0"
 apps[x11]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 
+# By default, all the files and directories specified above will be linked as
+# into $HOME with a dot prepended. This array specifies different paths. The
+# keys are the names relative to the infect root and the values are the final
+# actual destinations.
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
 dest[misc/luakit/]="${XDG_CONFIG_HOME:-$HOME/.config}/luakit"
 dest[misc/x11/i3.conf]="$HOME/.i3/config"
-dest[misc/x11/herbstluftwm.conf]="$HOME/.config/herbstluftwm/autostart"
+dest[misc/x11/herbstluftwm.conf]="${XDG_CONFIG_HOME:-$HOME/.config}/herbstluftwm/autostart"
 dest[zsh/grml.zsh]="$HOME/.zshrc"
 
+# If a key is present here, it will always be installed regardless if the
+# application binary is found or not.
 force[terminfo]=true
 
+# This function will run after infect is done.
 function post_infect_install() {
   # These directories are required for the applications to work correctly
   mkdir -p $HOME/{.cache/vim/{backup,undo,swap},.logs,.local/{bin,logs,share/zsh}} &> /dev/null
