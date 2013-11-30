@@ -37,9 +37,9 @@ function infect_install() {
   # Create symlinks for applications found on the system
   iecho "Installing symbolic links"
   for app in ${(ko)apps}; do
-    # if [[ -x $commands[$app] ]] || [[ -n "$force[$app]" ]]; then
+    if [[ -x $commands[$app] ]] || [[ -n "$force[$app]" ]]; then
       infect_symlink ${(z)${apps[$app]}}
-    # fi
+    fi
   done
 
   # If post_infect_install is a function, run it.
