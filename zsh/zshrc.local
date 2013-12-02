@@ -159,24 +159,29 @@ _autovenv
 
 # Set work email as user.email and copy the fucking Gerrit hook into place
 function _autoworkgit() {
-  gerrit="$HOME/.git_template/gerritplsgodie/commit-msg"
-  hook=".git/hooks/commit-msg"
+  local gerrit="$HOME/.git_template/gerritplsgodie/commit-msg"
+  local hook=".git/hooks/commit-msg"
+  local auto='%F{71}%BAuto%b%f'
 
-  if [[ -z "$WORK_EMAIL" ]] || [[ -z "$WORK_DIR" ]]; then
+  # If this is not a git repo or the conditions are not set up, bail
+  if [[ -z "$WORK_EMAIL" ]] || [[ -z "$WORK_REMOTE" ]] || [[ ! -r .git ]]; then
     return
   fi
 
-  if [[ -n "$WORK_EMAIL" ]] && [[ $PWD =~ $WORK_DIR/ ]] && [[ -r .git ]]; then
-    if ! git config user.email | grep "$WORK_EMAIL" &> /dev/null; then
-      print -P '%F{71}%BAuto%b%f: Set email to work email'
-      git config user.email "$WORK_EMAIL"
-    fi
+  # If the origin remote does not point to the $WORK_REMOTE, bail
+  if [[ ! $(git config remote.origin.url) =~ ${WORK_REMOTE}: ]]; then
+    return
+  fi
 
-    # XXX: Will not work with new-style submodules. Fak u submodules.
-    if [[ ! -f $hook ]] && [[ -f $gerrit ]]; then
-      print -P '%F{71}%BAuto%b%f: fak u gerrit'
-      cp --preserve=all $gerrit $hook
-    fi
+  if ! git config user.email | grep "$WORK_EMAIL" &> /dev/null; then
+    print -P "$auto: Set email to work email"
+    git config user.email "$WORK_EMAIL"
+  fi
+
+  # XXX: Will not work with new-style submodules. Fak u submodules.
+  if [[ ! -f $hook ]] && [[ -f $gerrit ]]; then
+    print -P "$auto: fak u gerrit"
+    cp --preserve=all $gerrit $hook
   fi
 }
 
