@@ -159,7 +159,7 @@ _autovenv
 
 # Set work email as user.email and copy the fucking Gerrit hook into place
 function _autoworkgit() {
-  gerrit="$XDG_DATA_HOME/gerrit/commit-msg"
+  gerrit="$HOME/.git_template/gerritplsgodie/commit-msg"
   hook=".git/hooks/commit-msg"
 
   if [[ -z "$WORK_EMAIL" ]] || [[ -z "$WORK_DIR" ]]; then
