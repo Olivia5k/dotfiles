@@ -780,7 +780,9 @@ augroup END
 " }}}
 " Puppet {{{
 
-au! BufRead,BufNewFile *.pp setfiletype puppet
+" Because of a vim error, probably.
+" https://github.com/rodjek/vim-puppet/issues/29
+let g:ft_ignore_pat = '*.pp$'
 
 " }}}
 " Vim {{{
