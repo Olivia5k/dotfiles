@@ -1238,9 +1238,13 @@ map <A-a> :call Mor()<cr>
 " Environments (GUI/Console) {{{
 
 if has('gui_running')
-  " Remove all the UI cruft
-  set guioptions=cagit  " Disable graphical elements
-  set guifont=Inconsolata\ 10
+  " Only do these on startup. It's annoying when you've changed it and it
+  " resets just because you save this very file.
+  if has('vim_starting')
+    " Remove all the UI cruft
+    set guioptions=cagit  " Disable graphical elements
+    set guifont=Inconsolata\ 10
+  endif
 
   " Different cursors for different modes.
   set guicursor=n-c:block-Cursor-blinkon0
