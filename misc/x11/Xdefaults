@@ -16,7 +16,7 @@ URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-Down: perl:font-size:decglobal
-URxvt.font-size.step:  4
+URxvt.font-size.step:  2
 
 ! fonts
 *.font: xft:inconsolata:pixelsize=18
