@@ -49,7 +49,6 @@ Bundle 'thiderman/nginx-vim-syntax'
 Bundle 'rodjek/vim-puppet'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
-Bundle 'tpope/vim-classpath'
 
 " Editing and misc
 Bundle 'AndrewRadev/switch.vim'
