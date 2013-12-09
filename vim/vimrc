@@ -894,11 +894,7 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleFocus()':    ['<c-tab>'],
 \ }
 
-let g:ctrlp_projects = [
-      \ '~/spotify',
-      \ '~/git',
-      \ '~/.vim/bundle',
-      \ ]
+let g:ctrlp_projects = ['~/spotify', '~/git', '~/.vim/bundle']
 
 nnoremap <silent> <leader>. :CtrlPTag<cr>
 nnoremap <silent> <A-q> :CtrlP<cr>
