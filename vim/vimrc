@@ -894,20 +894,18 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleFocus()':    ['<c-tab>'],
 \ }
 
-" let g:ctrlp_project_roots = ['~/spotify', '~/etc']
-let g:ctrlp_projects = {
-      \ '~/spotify': 1,
-      \ '~/etc': 2,
-      \ '~/git': 10,
-      \ '~/.vim/bundle': 9000,
-      \ }
+let g:ctrlp_projects = [
+      \ '~/spotify',
+      \ '~/git',
+      \ '~/.vim/bundle',
+      \ ]
 
 nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <A-q> :CtrlP<cr>
 nnoremap <A-p> :CtrlPProject<cr>
 nnoremap <Leader>q :CtrlP<cr>
 nnoremap <Leader>a :CtrlPBuffer<cr>
-nnoremap <Leader>z :CtrlPProject<cr>
+nnoremap <Leader>p :CtrlPProject<cr>
 nnoremap <Leader>Q :CtrlPReload<cr>
 
 " From ctrlp documentation
