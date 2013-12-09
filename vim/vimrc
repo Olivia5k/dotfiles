@@ -811,7 +811,6 @@ augroup ft_help
   au FileType help nnoremap <buffer> <cr> <C-]>
   au FileType help nnoremap <buffer> q :q<cr>
   au FileType help nnoremap <buffer> <c-c> :q<cr>
-  au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 augroup END
 
 augroup ft_quickfix
