@@ -225,16 +225,30 @@ let maplocalleader = "\\"
 " }}}
 " Color scheme {{{
 
-augroup color_bolder
-  au!
-
-  autocmd ColorScheme * runtime plugin/bold.vim
-augroup end
-
 syntax on
 set background=dark
 colorscheme jellybeans
-runtime plugin/bold.vim
+
+function! BoldlyGo()
+  let groups = [
+    \ 'Function', 'PreProc', 'Statement', 'String', 'Number', 'Special',
+    \ 'Comment', 'Identifier'
+    \ ]
+
+  for group in groups
+    exec "hi ".group." cterm=bold gui=bold"
+  endfor
+endfunction
+
+" Run this everytime this file is sourced
+call BoldlyGo()
+
+" And also whenever you switch color schemes
+augroup color_bolder
+  au!
+
+  autocmd ColorScheme * call BoldlyGo()
+augroup end
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
