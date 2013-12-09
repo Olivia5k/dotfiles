@@ -77,7 +77,7 @@ Bundle 'drmingdrmer/xptemplate'
 " Basic settings {{{
 
 set encoding=utf-8
-set modelines=5
+set modelines=0
 set autoindent
 set showmode
 set showcmd
