@@ -911,6 +911,27 @@ function! s:setcwd()
     if wd != '' | let &acd = 0 | brea | en
   endfo
   exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
+  call s:autovenv()
+endfunction
+
+function! s:autovenv()
+  " Auto virtualenv helper. Not from ctrlp documentation.
+  " This is pretty much needed to get the pytest vim plugin to able to run from
+  " inside of a virtualenv. Note that this will not change the PYTHONPATH, it
+  " will only set $VIRTUAL_ENV and change the $PATH. If you need full
+  " virtualenv integration, look into jmcantrell/vim-virtualenv.
+  if filereadable(getcwd() . '/bin/activate')
+    let $VIRTUAL_ENV = getcwd()
+    let bin = $VIRTUAL_ENV . '/bin:'
+    if $PATH !~ bin
+      let $PATH = bin . $PATH
+    endif
+  else
+    if $VIRTUAL_ENV != ''
+      let $PATH = substitute($PATH, $VIRTUAL_ENV . '/bin:', '', 'g')
+      let $VIRTUAL_ENV = ''
+    endif
+  endif
 endfunction
 
 augroup ctrlp_setcwd
