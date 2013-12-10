@@ -736,6 +736,7 @@ augroup ft_python
   au Filetype python syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
+  au FileType python setlocal formatexpr=
 
   au FileType python let b:switch_custom_definitions =
     \ [
