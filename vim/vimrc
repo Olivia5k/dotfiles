@@ -375,6 +375,15 @@ nmap <leader>e :CtrlP %%<cr>
 " }}}
 
 " }}}
+" Abbreviations {{{
+
+iabbrev eq ==
+iabbrev ne !=
+iabbrev lt <=
+iabbrev gt >=
+iabbrev hr =>
+
+" }}}
 " Searching and movement {{{
 
 " Use sane regexes.
