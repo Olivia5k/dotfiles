@@ -171,6 +171,7 @@ set wildignore+=*.pyc,*__pycache__*                    " Python byte code
 set wildignore+=*.egg-info*                            " Python package data
 set wildignore+=*.orig                                 " Merge resolution files
 set wildignore+=bin,build,lib,share,man
+set wildignore+=*test*/__init__.py
 
 " }}}
 " Line Return {{{
