@@ -19,15 +19,19 @@ time.time()
 XPT now " datetime.datetime.now
 datetime.datetime.now()
 
-XPT doc " Triple-quoted docstring
+XPT docstring " Triple-quoted docstring
 """
-`docstring^
+`cursor^
 
 """
-`^
+
+..XPT
 
 XPT ipdb " import ipdb
 import ipdb ; ipdb.set_trace()
+
+XPT pdb " import pdb
+import pdb ; pdb.set_trace()
 
 XPT . " self.
 self.
@@ -35,47 +39,27 @@ self.
 XPT s " self
 self
 
+XPT a " assert
+assert `^
+
 XPT test
 def test_`function^(self):
-    """
-    `docstring^
+    `cursor^
 
-    """
+XPT setup
+def setup_`method^(self`, method^):
+    `cursor^
 
+XPT teardown
+def teardown_`method^(self`, method^):
     `cursor^
 
 
-XPT ae " self.assertEqual
-self.assertEqual(`first^, `second^)
+XPT raises wrap=job " with pytest.raises\()
+with pytest.raises(`Exception^) as exc:
+    `job^
 
-XPT at " self.assertTrue
-self.assertTrue(`object^)
+XPT join
+os.path.join(`^)
 
-XPT af " self.assertFalse
-self.assertFalse(`object^)
-
-XPT ar " self.assertRaises
-self.assertRaises(`Exception^, `method^`, `*args?^`, `**kwargs?^)
-
-XPT as " Assert json success
-self.assertTrue(j['success'])
-
-XPT asf " Assert json failure
-self.assertFalse(j['success'])
-
-XPT cg " self.client.get
-response = self.client.get(`url^, `get^)
-
-XPT cp " self.client.post
-response = self.client.post(`url^, `post^)
-
-" cl is already taken by the class snippet
-XPT login " self.client.login
-self.client.login(username=`self.user.username^, password="nicke1")
-
-XPT rj " Parse response to json
-self.assertEqual(response.status_code, 200)
-j = json.loads(response.content)
-
-
-..XPT
+XPT wit
