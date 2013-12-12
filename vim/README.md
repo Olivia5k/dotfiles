@@ -31,7 +31,7 @@ A few things will happen automagically:
 * Upon opening a buffer, it's `cwd` will be set to the corresponding VCS root.
   Non-VCS:d files will just be left alone with their current `pwd`.
 
-The last one is important because it enables two cool mini-plugins to use the
+The last one is important because it enables three cool mini-plugins to use the
 `cwd` as base for input:
 
 `<a-s>` (or `<leader>s`) will open a new [vimwiki][vimwiki] split based on the
@@ -42,6 +42,9 @@ Invoking the mapping again will save and close the buffer.
 this repository) for the current project name. This will net you a new terminal
 with a tmux session set to the current project name. Use this for
 terminal-related things to your project.
+
+If a [virtualenv][virtualenv] is found, it's path is added to `$PATH`
+automatically.
 
 
 ### Abbreviations
@@ -79,6 +82,10 @@ frustrated by how insanely slow it makes vim be. I also found that I disabled
 mostly everything it does except [ropevim][ropevim] for tag navigation, and
 I simply use a [sane tag setup][effortless] for that instead.
 
+vim has very good builtin omnicompletion for Python. Run `<c-x><c-o>` in insert
+mode and you'll start it. When you browse the completions, documentation for
+the function will appear in a preview window.
+
 I have written my own folding for Python: [vim-snakecharmer][snakecharmer]. It
 is smarter than indent fold and knows about imports, classes, methods,
 functions, different blocks and multiline expressions. It also knows about
@@ -88,6 +95,18 @@ decorators and comments, and only shows the line actually relevant, such as the
 I run tests with [pytest.vim][pytest] and check them with
 [coveragepy.vim][coverage]. For non-py.test projects I usually run `nosetests`
 inside of a [kicker][kicker] instance.
+
+pytest.vim will run the test you are editing (the closest `def` above the
+cursor) automatically when you save the test buffer. The following mappings are
+available in Python test files:
+
+* `ch`: `:Pytest previous`
+* `cj`: `:Pytest previous && :Pytest next` (jump to current error)
+* `ck`: `:Pytest error`
+* `cl`: `:Pytest next`
+* `cs`: `:Pytest session`
+* `cm`: `:Pytest method`
+* `cf`: `:Pytest file`
 
 Lastly, I use the excellent little [switch.vim][switch] plugin to enable the
 `-` key to do switching of keywords and statements. They map:
@@ -188,3 +207,4 @@ a time based all this off of.
 [vundle]:       https://github.com/gmarik/vundle
 [sjl]:          http://stevelosh.com/
 [effortless]:   http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+[virtualenv]:   http://www.virtualenv.org/en/latest/
