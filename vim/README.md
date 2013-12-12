@@ -192,10 +192,10 @@ a time based all this off of.
 [extradite]:    https://github.com/int3/vim-extradite
 [fugitive]:     https://github.com/tpope/vim-fugitive
 [github]:       https://github.com/endel/vim-github-colorscheme
-[gitv]:         https://github.com/gregsexton/MatchTag
 [gitv]:         https://github.com/gregsexton/gitv
 [jelly]:        https://github.com/nanotech/jellybeans.vim
 [kicker]:       https://github.com/alloy/kicker
+[matchtag]:     https://github.com/gregsexton/MatchTag
 [pytest]:       https://github.com/alfredodeza/pytest.vim
 [python-mode]:  https://github.com/klen/python-mode
 [ropevim]:      https://github.com/sontek/rope-vim
