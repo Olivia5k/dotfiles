@@ -111,15 +111,15 @@ available in Python test files:
 Lastly, I use the excellent little [switch.vim][switch] plugin to enable the
 `-` key to do switching of keywords and statements. They map:
 
-* True | False
-* == | !=
-* in | not in
-* setup | teardown
-* def function(self) | def function()
-* if/and/or/assert/is | if/and/or/assert/is not
-* Looping between logging.x methods (debug, info, warning, etc)
+* `True` | `False`
+* `==` | `!=`
+* `in` | `not in`
+* `setup` | `teardown`
+* `def function(self)` | `def function()`
+* `if/and/or/assert/is` | `if/and/or/assert/is not`
+* Looping between `logging.x` methods (`debug`, `info`, `warning`, etc)
 
-It might look weird at first glance, but they are all pretty useful.
+It might look weird at first glance, but they are all very useful.
 
 
 ### Git
