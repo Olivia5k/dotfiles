@@ -36,10 +36,10 @@ import pdb ; pdb.set_trace()
 XPT . " self.
 self.
 
-XPT s " self
+XPT self " self
 self
 
-XPT a " assert
+XPT assert " assert
 assert `^
 
 XPT test
@@ -61,5 +61,3 @@ with pytest.raises(`Exception^) as exc:
 
 XPT join
 os.path.join(`^)
-
-XPT wit
