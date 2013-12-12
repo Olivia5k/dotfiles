@@ -377,6 +377,8 @@ nmap <leader>e :CtrlP %%<cr>
 " }}}
 " Abbreviations {{{
 
+" Common programming symbol pairs that are just simpler to write
+" alphanumerical. Write these and then space for abbreviation magic!
 iabbrev eq ==
 iabbrev ne !=
 iabbrev lt <=

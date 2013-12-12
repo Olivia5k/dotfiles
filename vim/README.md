@@ -44,6 +44,21 @@ with a tmux session set to the current project name. Use this for
 terminal-related things to your project.
 
 
+### Abbreviations
+
+For convenience, a couple of abbreviations are included for common programming
+symbol pairs. Some of them are easier and quicker to write in alphabetic form
+rather than mucking around with shifted special characters. Just write the key
+and then press `<space>` to activate the abbreviations.
+
+* `eq`: `==`
+* `ne`: `!=`
+* `lt`: `<=`
+* `gt`: `>=`
+* `pe`: `+=` (`me` was not included since it's a common word)
+* `hr`: `=>` (hashrocket!)
+
+
 ### Folds
 
 As might be evident from the screenshot, I fucking love folds. They are the
