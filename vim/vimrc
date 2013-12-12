@@ -381,6 +381,7 @@ iabbrev eq ==
 iabbrev ne !=
 iabbrev lt <=
 iabbrev gt >=
+iabbrev pe +=
 iabbrev hr =>
 
 " }}}
