@@ -48,22 +48,22 @@ XLock.showdate: True
 XLock.usefirst: True
 
 ! Colorscheme (unnamed)
-*foreground: #dbdbdb
-*background: #151517
-*color0: #222229
-*color1: #8e2b2e
-*color2: #45702c
-*color3: #986f43
-*color4: #25717a
-*color5: #875C8D
-*color6: #32a78a
-*color7: #888888
-*color8: #555555
-*color9: #ff464b
-*color10: #9dbf60
-*color11: #e2a564
-*color12: #5495DC
-*color13: #E41F66
-*color14: #41dbb5
-*color15: #ffffff
+URxvt.*foreground: #dbdbdb
+URxvt.*background: #151517
+URxvt.*color0: #222229
+URxvt.*color1: #8e2b2e
+URxvt.*color2: #45702c
+URxvt.*color3: #986f43
+URxvt.*color4: #25717a
+URxvt.*color5: #875C8D
+URxvt.*color6: #32a78a
+URxvt.*color7: #888888
+URxvt.*color8: #555555
+URxvt.*color9: #ff464b
+URxvt.*color10: #9dbf60
+URxvt.*color11: #e2a564
+URxvt.*color12: #5495DC
+URxvt.*color13: #E41F66
+URxvt.*color14: #41dbb5
+URxvt.*color15: #ffffff
 ! vim: ft=xdefaults
