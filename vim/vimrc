@@ -919,6 +919,7 @@ let g:ctrlp_projects = ['~/spotify', '~/git', '~/.vim/bundle']
 
 nnoremap <silent> <leader>. :CtrlPTag<cr>
 nnoremap <silent> <A-q> :CtrlP<cr>
+nnoremap <silent> <A-a> :CtrlPBuffer<cr>
 nnoremap <silent> <A-p> :CtrlPProject<cr>
 nnoremap <silent> <Leader>q :CtrlP<cr>
 nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
@@ -1319,7 +1320,7 @@ function! Mor()
   silent! exec '!mor ' . fnamemodify(getcwd(), ':t') . '&|'
 endfunction
 
-map <A-a> :call Mor()<cr>
+map <A-t> :call Mor()<cr>
 
 " }}}
 
