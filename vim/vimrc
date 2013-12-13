@@ -757,6 +757,7 @@ augroup ft_python
 
   au FileType python setlocal define=^\s*\\(def\\\\|class\\)
   au Filetype python syn keyword Special self
+  au BufEnter *.py syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
   au FileType python setlocal formatexpr=
