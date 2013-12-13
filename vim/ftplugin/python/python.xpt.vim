@@ -59,5 +59,11 @@ XPT raises wrap=job " with pytest.raises\()
 with pytest.raises(`Exception^) as exc:
     `job^
 
-XPT join
-os.path.join(`^)
+XPT join wrap=job
+os.path.join(`job^)
+
+XPT mp
+@mock.patch(`^)
+
+XPT mpo
+@mock.patch.object(`^)
