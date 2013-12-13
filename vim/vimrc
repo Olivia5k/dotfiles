@@ -1150,7 +1150,7 @@ function! ProjectTodo(...)
     return
   endif
 
-  let project = a:0 ? a:1 : fprojectmodify(getcwd(), ':t')
+  let project = a:0 ? a:1 : fnamemodify(getcwd(), ':t')
   let dir = expand(g:vimwiki_list[0]['path'])
   let file = dir . project . '.wiki'
   split `=file`
