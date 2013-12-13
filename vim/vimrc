@@ -427,6 +427,7 @@ function! Clear()
   " Clear the auto lists
   sign unplace *
   call setqflist([], {})
+  call ToggleCoverage(1)
 
   " Also clear the message area
   echo
@@ -1067,6 +1068,19 @@ endfunction
 
 function! s:pytest_automethod()
   exe 'Pytest method'
+endfunction
+
+" Related; toggle coverage
+nmap <silent> <leader>c :call ToggleCoverage()<cr>
+nmap <silent> <a-c> :call ToggleCoverage()<cr>
+
+function! ToggleCoverage(...)
+  if a:0 || exists("g:coveragepy_is_displaying") && g:coveragepy_is_displaying
+    exe "Coveragepy noshow"
+    let g:coveragepy_is_displaying = 0
+  else
+    exe "Coveragepy show"
+  endif
 endfunction
 
 " }}}
