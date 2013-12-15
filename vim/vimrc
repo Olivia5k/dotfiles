@@ -966,6 +966,14 @@ augroup ctrlp_setcwd
 augroup END
 
 " }}}
+" Endwise {{{
+
+" For whatever reason, delimitmate and endwise are clashing for me. Just set
+" the enter binding here instead.
+imap <C-X><CR> <Plug>delimitMateCR<Plug>AlwaysEnd
+imap <CR>      <Plug>delimitMateCR<Plug>DiscretionaryEnd
+
+" }}}
 " Expand region {{{
 
 map L <Plug>(expand_region_expand)
