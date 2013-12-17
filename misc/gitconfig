@@ -74,5 +74,7 @@
   review      = !.git/bin/gerrit for
   rms         = !.git/bin/rms
 
+  cr          = codereview
+
 [push]
   default = simple
