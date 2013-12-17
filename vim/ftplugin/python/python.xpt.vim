@@ -78,3 +78,6 @@ XPT mpo  " @mock.patch.object
 
 XPT nc " # pragma: nocover
 # pragma: nocover
+
+XPT staticmethod
+staticmethod
