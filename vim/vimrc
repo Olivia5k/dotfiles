@@ -697,7 +697,7 @@ augroup END
 " Python {{{
 
 " Just add one shiftwidth when indenting python
- let g:pyindent_open_paren = 0
+ let g:pyindent_open_paren = 4
 
 
 " Switchdef {{{
@@ -760,7 +760,7 @@ augroup ft_python
   au BufEnter *.py syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
-  au FileType python setlocal formatexpr=
+  " au FileType python setlocal formatexpr=
 
   au FileType python let b:switch_custom_definitions =
     \ [
