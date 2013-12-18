@@ -333,6 +333,9 @@ nnoremap <leader>i :set list!<cr>
 " Unfuck my screen
 nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 
+" vim, I know.
+nmap <silent> <c-c> :echo<cr>
+
 " Insert Mode Completion {{{
 
 inoremap <c-]> <c-x><c-]>
