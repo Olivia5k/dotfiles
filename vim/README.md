@@ -1,6 +1,6 @@
 # vim
 
-![wow screenshot](http://i.imgur.com/A8W8dYz.pngckk)
+![wow screenshot](http://i.imgur.com/A8W8dYz.png)
 
 Screenshot of a gvim session editing my dotfiles (because let's face it, that's
 like 90% of what I do). Configuration is fully compatible with terminal vim,
