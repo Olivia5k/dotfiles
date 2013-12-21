@@ -55,12 +55,8 @@ XPT test
 def test_`function^(self):
     `cursor^
 
-XPT setup
-def setup_`method^(self`, method^):
-    `cursor^
-
-XPT teardown
-def teardown_`method^(self`, method^):
+XPT pytest
+def `setup^_`method^(self`, method^):
     `cursor^
 
 XPT raises wrap=job " with pytest.raises\()
@@ -81,3 +77,28 @@ XPT nc " # pragma: nocover
 
 XPT staticmethod
 staticmethod
+
+XPT setup " setup\(
+setup(
+    name='`project^',
+    version='`0.0.1^',
+    author='`$author^',
+    author_email='`$email^',
+    url='https://github.com/`username^/`project^',
+    description='`description^',
+    long_description=open('`README.md^').read(),
+    package_dir={'': 'src'},
+    packages=find_packages('src'),
+    zip_safe=`False^,
+    install_requires=install_requires,
+    license='`MIT^',
+    include_package_data=`True^,
+    entry_points={
+        'console_scripts': [
+            '`project^ = `project^.`core:main^',
+        ],
+    },
+    classifiers=[
+        `cursor^
+    ],
+)
