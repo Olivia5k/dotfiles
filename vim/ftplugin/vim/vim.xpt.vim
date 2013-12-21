@@ -19,3 +19,9 @@ XPT augroup wrap
 augroup `name^
 `$SPindent`cursor^
 augroup END
+
+XPT line
+let line = getline('.')
+
+XPT fnm
+fnamemodify(`cursor^)
