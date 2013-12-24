@@ -17,6 +17,7 @@ endfunction
 
 XPT augroup wrap
 augroup `name^
+`$SPindent^au!
 `$SPindent`cursor^
 augroup END
 
