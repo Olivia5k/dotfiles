@@ -860,6 +860,7 @@ augroup ft_vim
   au BufWritePost *vimrc* let fn = expand("<afile>:p") | if fn !~ '://' | source `=fn` | endif
 
   au FileType vim setlocal foldmethod=marker
+  au FileType vim setlocal omnifunc=syntaxcomplete#Complete
   au FileType vim nnoremap <buffer> <silent> <bs> :call HelpExpand()<cr>
 augroup END
 
