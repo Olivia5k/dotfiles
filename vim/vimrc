@@ -872,6 +872,7 @@ augroup ft_xresources
   au!
 
   au BufNewFile,BufRead *Xdefaults,*Xresources setlocal filetype=xdefaults
+  au BufWritePost *Xdefaults,*Xresources exe "silent !xrdb -merge " expand("<afile>:p")
   au Filetype xdefaults set commentstring=!%s
 augroup END
 
