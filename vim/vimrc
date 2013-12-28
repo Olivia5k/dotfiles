@@ -445,8 +445,8 @@ noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
 
 runtime macros/matchit.vim
 
-" Made D behave
-nnoremap D d$
+" Made Y behave
+nnoremap Y y$
 
 " Don't move on *
 nnoremap * *<c-o>
