@@ -391,6 +391,7 @@ iabbrev lt <=
 iabbrev gt >=
 iabbrev pe +=
 iabbrev hr =>
+iabbrev ghurl https://github.com/
 
 " }}}
 " Searching and movement {{{
