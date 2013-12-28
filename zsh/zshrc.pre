@@ -46,3 +46,45 @@ setopt promptsubst
 
 fpath=($ZSHCONFDIR/modules/zsh-completions/src $fpath)
 zstyle ':completion:*' hosts off
+
+# }}}
+# Automatic Python completion {{{
+
+# https://pypi.python.org/pypi/genzshcomp
+# If you have this installed, it can generate completion for Python programs
+# that use argparse or optparse.
+# Set $PYTHON_ZSH_COMP="app1 app2 etc" in $USERFILE and it will be applied
+# automatically.
+
+function _genzshcomp_load() {
+  comp=$ZSHCONFDIR/comp
+  fpath=($comp $fpath)
+  apps=(${(z)PYTHON_ZSH_COMP:-pep8 genzshcomp})
+
+  mkdir -p $comp
+  for app in $apps; do
+    target=$comp/_$app
+
+    if ! (($+commands[$app])) || [[ -f $target ]] ; then
+      continue
+    fi
+
+    $app --help | genzshcomp > $target
+
+    if [[ -n "$1" ]]; then
+      echo "$app reloaded"
+    fi
+  done
+}
+
+if (( $+commands[genzshcomp] )) && [[ -n "$PYTHON_ZSH_COMP" ]]; then
+  _genzshcomp_load
+fi
+
+# Run this to refresh all the completions.
+function genzshcomp_reload() {
+  for f in $ZSHCONFDIR/comp/* ; do rm $f ; done
+  _genzshcomp_load verbose
+}
+
+# }}}
