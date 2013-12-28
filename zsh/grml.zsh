@@ -1072,6 +1072,7 @@ sudo-command-line() {
         BUFFER="sudo $BUFFER"
         CURSOR=$(( CURSOR+5 ))
     fi
+    _zsh_highlight
 }
 zle -N sudo-command-line
 
