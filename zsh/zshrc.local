@@ -378,6 +378,18 @@ autoload -U   edit-command-line
 zle -N        edit-command-line
 bindkey '^[e' edit-command-line
 
+# Use kicker as a Ctrl-O operator
+kicker-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER != kicker\ * ]]; then
+        BUFFER="kicker -ce \"$BUFFER\""
+        CURSOR=$(( CURSOR+12 ))
+    fi
+    _zsh_highlight
+}
+zle -N kicker-command-line
+bindkey '^Ok' kicker-command-line
+
 # }}}
 
 # }}}
