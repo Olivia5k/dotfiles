@@ -24,7 +24,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Colors
-Bundle 'thiderman/jellybeans.vim'
+Bundle 'nanotech/jellybeans.vim'
 Bundle 'thiderman/neverland-vim-theme'
 Bundle 'endel/vim-github-colorscheme.git'
 
@@ -228,6 +228,40 @@ let maplocalleader = "\\"
 " }}}
 " Color scheme {{{
 
+" Jellybeans overrides
+let g:jellybeans_background_color = "151517"
+
+let g:jellybeans_overrides = {
+\    'ColorColumn': {
+\              'guifg': '', 'guibg': '333333',
+\              'ctermfg': '', 'ctermbg': 250,
+\              'attr': 'bold' },
+\    'MatchParen': {
+\              'guifg': 'db1515', 'guibg': '000000',
+\              'ctermfg': '', 'ctermbg': "DarkCyan",
+\              'attr': 'bold' },
+\    'Visual': {
+\              'guifg': '', 'guibg': '333333',
+\              'ctermfg': '', 'ctermbg': "233",
+\              'attr': '' },
+\    'VisualNOS': {
+\              'guifg': '', 'guibg': '333333',
+\              'ctermfg': '', 'ctermbg': "233",
+\              'attr': '' },
+\    'Cursor': {
+\              'guifg': '000000', 'guibg': 'b0d0f0',
+\              'ctermfg': '', 'ctermbg': "233",
+\              'attr': '' },
+\    'vCursor': {
+\              'guifg': '000000', 'guibg': 'b0d0f0',
+\              'ctermfg': '', 'ctermbg': "233",
+\              'attr': '' },
+\    'iCursor': {
+\              'guifg': '000000', 'guibg': 'b0d0f0',
+\              'ctermfg': '', 'ctermbg': "233",
+\              'attr': 'bold' },
+\}
+
 syntax on
 set background=dark
 colorscheme jellybeans
@@ -254,6 +288,7 @@ augroup color_bolder
 augroup end
 
 " Highlight VCS conflict markers
+" TODO: Fix so they work
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " }}}
