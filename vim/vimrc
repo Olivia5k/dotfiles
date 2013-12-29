@@ -1219,10 +1219,10 @@ let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 " Show the stack of syntax hilighting classes affecting whatever is under the
 " cursor.
 function! SynStack()
-  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
+  return join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
 endfunc
 
-nnoremap <F7> :call SynStack()<CR>
+nnoremap <F7> :echo SynStack()<CR>
 
 " }}}
 " Ack motions {{{
