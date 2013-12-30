@@ -1248,17 +1248,6 @@ let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 " Stuff that should probably be broken out into plugins, but hasn't proved to be
 " worth the time to do so just yet.
 
-" Synstack {{{
-
-" Show the stack of syntax hilighting classes affecting whatever is under the
-" cursor.
-function! SynStack()
-  return join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
-endfunc
-
-nnoremap <F7> :echo SynStack()<CR>
-
-" }}}
 " Ack motions {{{
 
 " Motions to Ack for things.  Works with pretty much everything, including:
