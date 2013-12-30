@@ -285,8 +285,10 @@ augroup color_bolder
 augroup end
 
 " Highlight VCS conflict markers
-" TODO: Fix so they work
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+augroup color_vcs
+  au!
+  au BufNewFile,BufRead * match Special /^\(<\|=\|>\)\{7\}\([^=].\+\)\?$/
+augroup END
 
 " }}}
 
