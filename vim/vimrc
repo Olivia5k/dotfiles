@@ -1138,16 +1138,6 @@ function! ToggleCoverage(...)
 endfunction
 
 " }}}
-" Reinhardt {{{
-
-let g:reinhardt_mapkey = "r"
-
-" }}}
-" Snakecharmer {{{
-
-let g:snakecharm_sort_imports = 1
-
-" }}}
 " Sparkup {{{
 
 " let g:sparkupExecuteMapping = '<C-E>'
