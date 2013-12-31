@@ -317,7 +317,7 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 
-" Formatting, TextMate-style
+" Formatting
 nnoremap Q gqip
 vnoremap Q gq
 
@@ -354,18 +354,11 @@ command! -bang WA wa<bang>
 command! -bang Wq wq<bang>
 command! -bang WQ wq<bang>
 
-" I suck at typing.
-nnoremap <localleader>= ==
-vnoremap - =
-
 " Toggle paste
 " For some reason pastetoggle doesn't redraw the screen (thus the status bar
 " doesn't change) while :set paste! does, so I use that instead.
 " set pastetoggle=<F6>
 nnoremap <silent> <F6> :set paste!<cr>
-
-" Toggle [i]nvisible characters
-nnoremap <leader>i :set list!<cr>
 
 " Unfuck my screen
 nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
