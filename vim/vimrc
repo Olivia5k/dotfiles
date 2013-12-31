@@ -373,6 +373,11 @@ nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 " vim, I know.
 nmap <silent> <c-c> :echo<cr>
 
+" Try to properly format an XML file. Will break if there are syntax errors
+" in the file.
+" Not filetype specific, since it is useful in HTML and others as well.
+nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
+
 " Insert Mode Completion {{{
 
 inoremap <c-]> <c-x><c-]>
@@ -909,14 +914,6 @@ augroup ft_xresources
   au BufWritePost *Xdefaults,*Xresources exe "silent !xrdb -merge " expand("<afile>:p")
   au Filetype xdefaults set commentstring=!%s
 augroup END
-
-" }}}
-" XML {{{
-
-" Try to properly format an XML file. Will break if there are syntax errors
-" in the file.
-" Not filetype specific, since it is useful in HTML and others as well.
-nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 
 " }}}
 
