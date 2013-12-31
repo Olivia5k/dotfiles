@@ -1140,21 +1140,17 @@ endfunction
 " }}}
 " Sparkup {{{
 
-" let g:sparkupExecuteMapping = '<C-E>'
 let g:sparkupNextMapping = '<F13>'
 
 "}}}
 " Syntastic {{{
 
 let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_disabled_filetypes = ['html', 'rst', 'css', 'zsh']
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 let g:syntastic_javascript_checker = "jshint"
-" let g:syntastic_python_checker_args = '--ignore=E501'  " Ignore line too long
-" let g:syntastic_puppet_lint_arguments = '--no-80chars-check --no-documentation'  " Ignore line too long
 
 " }}}
 " Switch {{{
@@ -1221,7 +1217,6 @@ command! -nargs=? ProjectTodo :call ProjectTodo(<q-args>)
 " }}}
 " XPTemplate {{{
 
-" let g:xptemplate_snippet_folders=['$HOME/.vim/xpt']
 let g:xptemplate_brace_complete = 0  " Other plugins does this way better
 let g:xptemplate_key = '<Tab>'  " Main snippet key
 let g:xptemplate_key_pum_only = '<C-F>'  " Popup key
