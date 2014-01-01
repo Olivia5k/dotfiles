@@ -211,7 +211,7 @@ endif
 " Backups {{{
 
 set backup            " enable backups
-set noswapfile          " It's 2013, Vim.
+set noswapfile          " It's 2014, Vim.
 
 set viminfo='100,<50,s10,h,!,n~/.cache/vim/viminfo
 if exists('+undodir')
@@ -508,7 +508,7 @@ nnoremap gI `.
 
 " Directional Keys {{{
 
-" It's 2013.
+" It's 2014.
 noremap j gj
 noremap k gk
 noremap gj j
