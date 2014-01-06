@@ -296,6 +296,8 @@ augroup END
 " }}}
 " Convenience mappings {{{
 
+" Misc maps {{{
+
 " Kill window
 nnoremap K :q<cr>
 
@@ -371,6 +373,8 @@ nmap <silent> <c-c> :echo<cr>
 " Not filetype specific, since it is useful in HTML and others as well.
 nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 
+
+" }}}
 " Insert Mode Completion {{{
 
 inoremap <c-]> <c-x><c-]>
