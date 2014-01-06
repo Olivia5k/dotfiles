@@ -407,11 +407,6 @@ nmap dn ]c
 nmap dN [c
 
 " }}}
-" Quick editing {{{
-
-nmap <leader>e :CtrlP %%<cr>
-
-" }}}
 
 " }}}
 " Abbreviations {{{
@@ -957,10 +952,12 @@ let g:ctrlp_projects = ['~/spotify', '~/git', '~/.vim/bundle']
 nnoremap <silent> <leader>. :CtrlPTag<cr>
 nnoremap <silent> <A-q> :CtrlP<cr>
 nnoremap <silent> <A-a> :CtrlPBuffer<cr>
+nmap     <silent> <A-e> :CtrlP %%<cr>
 nnoremap <silent> <A-p> :CtrlPProject<cr>
 nnoremap <silent> <Leader>q :CtrlP<cr>
 nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
 nnoremap <silent> <Leader>p :CtrlPProject<cr>
+nmap     <silent> <leader>e :CtrlP %%<cr>
 nnoremap <silent> <Leader>Q :CtrlPReload<cr>
 
 " From ctrlp documentation
