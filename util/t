@@ -1,7 +1,12 @@
 #!/bin/zsh
 
-if [[ -n $commands[py.test] ]]; then
-  py.test test $@
+if (( $+commands[py.test] )); then
+  # If there is coverage and we can guess the source code dir, add coverage
+  if (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
+    cov="--cov=$PWD:t"
+  fi
+
+  py.test test $cov $@
 else
   nosetests $@
 fi
