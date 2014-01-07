@@ -52,6 +52,7 @@ Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
 Bundle 'thiderman/vim-troves'
 Bundle 'chrisbra/csv.vim'
+Bundle 'mattn/emmet-vim'
 
 " Editing and misc
 Bundle 'AndrewRadev/switch.vim'
