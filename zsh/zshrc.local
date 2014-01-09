@@ -473,6 +473,12 @@ alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
 
+# wow
+alias wow="git status"
+alias such="git"
+alias very="git"
+alias so="git"
+
 # Relatively go up to a repository root
 function gr() {
   cur=$PWD
