@@ -44,7 +44,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT="yes"
 
 setopt promptsubst
 
-fpath=($ZSHCONFDIR/modules/zsh-completions/src $fpath)
+fpath=($ZSHCONFDIR/comp $ZSHCONFDIR/modules/zsh-completions/src $fpath)
 zstyle ':completion:*' hosts off
 
 # }}}
@@ -58,7 +58,6 @@ zstyle ':completion:*' hosts off
 
 function _genzshcomp_load() {
   comp=$ZSHCONFDIR/comp
-  fpath=($comp $fpath)
   apps=(${(z)PYTHON_ZSH_COMP:-pep8 genzshcomp})
 
   mkdir -p $comp
