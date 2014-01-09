@@ -43,14 +43,17 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
 Bundle 'int3/vim-extradite'
 
-" Filetype specific
+" Python
 Bundle 'alfredodeza/coveragepy.vim'
 Bundle 'alfredodeza/pytest.vim'
-Bundle 'evanmiller/nginx-vim-syntax'
-Bundle 'rodjek/vim-puppet'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
 Bundle 'thiderman/vim-troves'
+
+" Misc filetypes
+Bundle 'VimClojure'
+Bundle 'evanmiller/nginx-vim-syntax'
+Bundle 'rodjek/vim-puppet'
 Bundle 'chrisbra/csv.vim'
 Bundle 'mattn/emmet-vim'
 
