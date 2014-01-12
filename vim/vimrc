@@ -144,19 +144,16 @@ set completeopt=longest,menuone,preview
 " }}}
 " Kill trailing whitespace {{{
 
-function! KillTrailingWhitespace(...)
+function! KillTrailingWhitespace()
   let pos=getpos('.')
   silent! %s/\s\+$//e
-  if a:0
-    " If arguments are given, kill trailing lines at the bottom of the file
-    silent! %s/\v\n+%$//e
-  endif
+  silent! %s/\v\n+%$//e
   call setpos('.',pos)
 endfunction
 
 augroup trailing
   au!
-  au BufWritePre * call KillTrailingWhitespace(1)
+  au BufWritePre * call KillTrailingWhitespace()
 augroup END
 
 " }}}
