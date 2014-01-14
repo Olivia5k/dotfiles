@@ -3,6 +3,7 @@
 # Applications to install configurations for. If the keys are available as
 # executable files on your path, they will be symlinked. If not, they will be
 # skipped.
+apps[emacs]="emacs.d"
 apps[git]="misc/gitconfig misc/git_template"
 apps[i3]="misc/x11/i3.conf"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
