@@ -163,20 +163,16 @@ set wildmenu
 set wildmode=longest:full
 
 set wildignore+=.hg,.git,.svn                          " Version control
-set wildignore+=*.aux,*.out,*.toc                      " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.xbm   " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest       " compiled object files
 set wildignore+=*.spl                                  " compiled spelling word lists
 set wildignore+=*.sw?                                  " Vim swap files
 set wildignore+=*.DS_Store                             " OSX bullshit
-set wildignore+=*.luac                                 " Lua byte code
-set wildignore+=migrations                             " Django migrations
 set wildignore+=*.mo                                   " Django i18n
 set wildignore+=*.pyc,*__pycache__*                    " Python byte code
 set wildignore+=*.egg-info*                            " Python package data
-set wildignore+=*.orig                                 " Merge resolution files
-set wildignore+=bin,build,lib,share,man
-set wildignore+=*test*/__init__.py
+set wildignore+=bin,build,lib,share,man                " Python venv files
+set wildignore+=*test*/__init__.py                     " Python test inits
 
 " }}}
 " Line Return {{{
