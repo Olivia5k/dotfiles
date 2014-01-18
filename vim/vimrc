@@ -642,18 +642,6 @@ augroup ft_css
 augroup END
 
 " }}}
-" HTML, Django, Jinja, Dram {{{
-
-" The base set, just add li and p
-let g:html_indent_tags = 'a\|abbr\|acronym\|address\|b\|bdo\|big\|blockquote\|button\|caption\|center\|cite\|code\|colgroup\|del\|dfn\|dir\|div\|dl\|em\|fieldset\|font\|form\|frameset\|h1\|h2\|h3\|h4\|h5\|h6\|i\|iframe\|ins\|kbd\|label\|legend\|map\|menu\|noframes\|noscript\|object\|ol\|optgroup\|q\|s\|samp\|script\|select\|small\|span\|strong\|style\|sub\|sup\|table\|textarea\|title\|tt\|u\|ul\|var\|body\|head\|html\|tbody\|th\|td\|tr\|tfoot\|thead\|li\|p'
-
-augroup ft_html
-  au!
-
-  au FileType html,htmldjango setlocal foldmethod=indent
-augroup END
-
-" }}}
 " git {{{
 
 augroup git_autocmd
