@@ -650,7 +650,7 @@ augroup git_autocmd
 augroup END
 
 " }}}
-" Javascript {{{
+" Javascript, JSON {{{
 
 augroup ft_javaish
   au!
@@ -658,9 +658,6 @@ augroup ft_javaish
   au FileType javascript,java setlocal foldmethod=marker foldmarker={,}
   au FileType javascript,java setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=0
 augroup END
-
-" }}}
-" JSON {{{
 
 augroup json_autocmd
   au!
