@@ -1217,31 +1217,34 @@ let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
 " Note: If the text covered by a motion contains a newline it won't work.  Ack
 " searches line-by-line.
 
-let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
+" Only do this if we actually have the silver searcher
+if executable('ag')
+  let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
 
-nnoremap <silent> <leader>A :set opfunc=<SID>AckMotion<CR>g@
-xnoremap <silent> <leader>A :<C-U>call <SID>AckMotion(visualmode())<CR>
+  nnoremap <silent> <leader>A :set opfunc=<SID>AckMotion<CR>g@
+  xnoremap <silent> <leader>A :<C-U>call <SID>AckMotion(visualmode())<CR>
 
-nnoremap <bs> :Ack! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <bs> :<C-U>call <SID>AckMotion(visualmode())<CR>
+  nnoremap <bs> :Ack! '\b<c-r><c-w>\b'<cr>
+  xnoremap <silent> <bs> :<C-U>call <SID>AckMotion(visualmode())<CR>
 
-function! s:CopyMotionForType(type)
-  if a:type ==# 'v'
-    silent execute "normal! `<" . a:type . "`>y"
-  elseif a:type ==# 'char'
-    silent execute "normal! `[v`]y"
-  endif
-endfunction
+  function! s:CopyMotionForType(type)
+    if a:type ==# 'v'
+      silent execute "normal! `<" . a:type . "`>y"
+    elseif a:type ==# 'char'
+      silent execute "normal! `[v`]y"
+    endif
+  endfunction
 
-function! s:AckMotion(type) abort
-  let reg_save = @@
+  function! s:AckMotion(type) abort
+    let reg_save = @@
 
-  call s:CopyMotionForType(a:type)
+    call s:CopyMotionForType(a:type)
 
-  execute "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
+    execute "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
 
-  let @@ = reg_save
-endfunction
+    let @@ = reg_save
+  endfunction
+endif
 
 " }}}
 " Highlight Word {{{
