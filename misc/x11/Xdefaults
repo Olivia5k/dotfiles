@@ -10,7 +10,7 @@ URxvt.underlineURLs: true
 URxvt.transparent: false
 URxvt.shading: 10
 URxvt.fading: 20
-URxvt.bell-command: slig
+URxvt.iso14755: false
 
 URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
