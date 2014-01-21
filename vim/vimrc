@@ -1187,6 +1187,21 @@ nmap <silent> <A-s> :call ProjectTodo()<cr>
 nmap <silent> <leader>s :call ProjectTodo()<cr>
 command! -nargs=? ProjectTodo :call ProjectTodo(<q-args>)
 
+function! Diary()
+  let root = expand(g:vimwiki_list[0]['path']) . 'diary/'
+  let file = root . strftime('%Y-%m-%d.wiki')
+
+  " If no previous entry exists, grab the list from the last one.
+  if !filereadable(file)
+    call writefile(readfile(split(globpath(root, '2*'), '\n')[-1]), file)
+  endif
+
+  edit `=file`
+endfunction
+
+nmap <silent> <leader>w<space> :call Diary()<cr>
+command! -nargs=0 Diary :call Diary()
+
 " }}}
 " XPTemplate {{{
 
