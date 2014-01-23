@@ -1,4 +1,0 @@
-macro index,pager I '<shell-escape> fetchmail <enter>n'
-macro attach W <save-entry><kill-line>/home/daethorian/tmp/attachments/
-macro attach E <save-entry><kill-line>/home/daethorian/tmp/attachments/<enter>
-macro index,pager \eh "T.*\n;WN$" "Mark all messages as read"
