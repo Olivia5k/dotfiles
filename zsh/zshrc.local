@@ -168,18 +168,19 @@ function _autoworkgit() {
     return
   fi
 
+  local remote=$(git config remote.origin.url)
   # If the origin remote does not point to the $WORK_REMOTE, bail
-  if [[ ! $(git config remote.origin.url) =~ ${WORK_REMOTE}: ]]; then
+  if [[ ! $remote =~ $WORK_REMOTE ]]; then
     return
   fi
 
-  if ! git config user.email | grep "$WORK_EMAIL" &> /dev/null; then
+  if [[ ! $(git config user.email) =~ $WORK_EMAIL ]]; then
     print -P "$auto: Set email to work email"
     git config user.email "$WORK_EMAIL"
   fi
 
   # XXX: Will not work with new-style submodules. Fak u submodules.
-  if [[ ! -f $hook ]] && [[ -f $gerrit ]]; then
+  if [[ ! -f $hook ]] && [[ -f $gerrit ]] && [[ ! $remote =~ 'ghe' ]]; then
     print -P "$auto: fak u gerrit"
     cp -p $gerrit $hook
   fi
