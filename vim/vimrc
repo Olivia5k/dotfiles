@@ -370,6 +370,9 @@ nmap <silent> <c-c> :echo<cr>
 " Not filetype specific, since it is useful in HTML and others as well.
 nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
 
+" I do this wayyy to often
+nmap <silent> <leader>t :set textwidth=79<cr>
+
 
 " }}}
 " Insert Mode Completion {{{
