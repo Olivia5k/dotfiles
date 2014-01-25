@@ -79,6 +79,8 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'drmingdrmer/xptemplate'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
 
 " }}}
 " Basic options {{{
