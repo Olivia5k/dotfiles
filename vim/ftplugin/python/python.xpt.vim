@@ -102,3 +102,7 @@ setup(
         `cursor^
     ],
 )
+
+XPT st " pytest.set_trace\()
+import pytest
+pytest.set_trace()
