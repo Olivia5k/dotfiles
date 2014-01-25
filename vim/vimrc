@@ -49,6 +49,8 @@ Bundle 'alfredodeza/pytest.vim'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
 Bundle 'thiderman/vim-troves'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'jmcantrell/vim-virtualenv'
 
 " Misc filetypes
 Bundle 'VimClojure'
