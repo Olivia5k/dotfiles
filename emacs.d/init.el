@@ -172,6 +172,29 @@
 (define-key global-map (kbd "C-%") 'goto-match-paren)
 (define-key global-map (kbd "C-c c") 'my-duplicate-line)
 
+;; Set custom theme path
+(setq custom-theme-directory (concat user-emacs-directory "themes"))
+
+(dolist
+    (path (directory-files custom-theme-directory t "\\w+"))
+  (when (file-directory-p path)
+    (add-to-list 'custom-theme-load-path path)))
+
+(set-default-font "Inconsolata-12")
+(load-theme 'ujelly t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("167cbb16e26a66da3d77f308e78f428e41b1a5a404e3a82fa44666fcf201cb8a" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; End:
