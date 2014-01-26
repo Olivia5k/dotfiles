@@ -431,6 +431,7 @@ iabbrev hr =>
 
 iabbrev req request
 iabbrev resp response
+iabbrev rv return_value =
 
 " }}}
 " Searching and movement {{{
