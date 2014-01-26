@@ -428,6 +428,9 @@ iabbrev gt >=
 iabbrev pe +=
 iabbrev hr =>
 
+iabbrev req request
+iabbrev resp response
+
 " }}}
 " Searching and movement {{{
 
