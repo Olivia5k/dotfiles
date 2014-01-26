@@ -175,7 +175,7 @@ set wildignore+=*.sw?                                  " Vim swap files
 set wildignore+=*.DS_Store                             " OSX bullshit
 set wildignore+=*.mo                                   " Django i18n
 set wildignore+=*.pyc,*__pycache__*                    " Python byte code
-set wildignore+=*.egg-info*                            " Python package data
+set wildignore+=*.egg-info*,*.egg                      " Python package data
 set wildignore+=bin,build,lib,share,man                " Python venv files
 set wildignore+=*test*/__init__.py                     " Python test inits
 
