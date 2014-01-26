@@ -32,6 +32,7 @@ Bundle 'endel/vim-github-colorscheme.git'
 Bundle 'bling/vim-airline'
 Bundle 'gregsexton/MatchTag'
 Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'thiderman/ctrlp-project'
 Bundle 'thiderman/vim-syntaxjump'
 Bundle 'majutsushi/tagbar'
@@ -1119,6 +1120,23 @@ function! ToggleCoverage(...)
     exe "Coveragepy show"
   endif
 endfunction
+
+" }}}
+" Rainbow Parentheses {{{
+
+let g:rbpt_colorpairs = [
+    \ ['darkgray',    '#444444'],
+    \ ['darkgreen',   '#555555'],
+    \ ['brown',       '#777777'],
+    \ ['Darkblue',    '#999999'],
+    \ ]
+
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 " }}}
 " Sparkup {{{
