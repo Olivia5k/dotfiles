@@ -45,13 +45,11 @@ Bundle 'gregsexton/gitv'
 Bundle 'int3/vim-extradite'
 
 " Python
-Bundle 'alfredodeza/coveragepy.vim'
-Bundle 'alfredodeza/pytest.vim'
+" Bundle 'alfredodeza/coveragepy.vim'
+" Bundle 'alfredodeza/pytest.vim'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
 Bundle 'thiderman/vim-troves'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'jmcantrell/vim-virtualenv'
 
 " Misc filetypes
 Bundle 'VimClojure'
@@ -1080,9 +1078,9 @@ let NERDTreeMapJumpFirstChild = 'gK'
 augroup pytest
   au!
 
-  au BufEnter * call s:pytest_setup()
+  " au BufEnter * call s:pytest_setup()
   au FileType pytest set nolist tw=0
-  au BufWritePost *test/*test_*.py call s:pytest_automethod()
+  " au BufWritePost *test/*test_*.py call s:pytest_automethod()
 augroup END
 
 " Setup some py.test specific settings and mappings for Python test files.
