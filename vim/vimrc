@@ -821,6 +821,7 @@ augroup ft_python
     \   ['setUp', 'tearDown'],
     \   ['setup_', 'teardown_'],
     \   ['@patch', '@patch.object'],
+    \   ['request', 'response'],
     \   {
     \     '\(^\s*except \S\+\):': '\1 as exc:',
     \     '\(^\s*except \S\+\) as \(\S*\):': '\1:',
