@@ -1,12 +1,13 @@
 #!/bin/zsh
 
+clear
 if (( $+commands[py.test] )); then
   # If there is coverage and we can guess the source code dir, add coverage
   if (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
-    cov="--cov=$PWD:t"
+    cov="--cov=$PWD:t --cov-report=term-missing"
   fi
 
-  py.test test $cov $@
+  py.test test ${(z)cov} --tb=short --color=yes $@
 else
   nosetests $@
 fi
