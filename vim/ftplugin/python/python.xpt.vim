@@ -106,3 +106,9 @@ setup(
 XPT st " pytest.set_trace\()
 import pytest
 pytest.set_trace()
+
+XPT xfail " @pytest.mark.xfail
+@pytest.mark.xfail
+
+XPT mm " MagicMock\()
+MagicMock()
