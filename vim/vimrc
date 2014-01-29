@@ -1158,6 +1158,7 @@ let g:syntastic_javascript_checker = "jshint"
 " Switch {{{
 
 nnoremap <silent> - :Switch<cr>
+nnoremap <silent> <a-w> :Switch<cr>
 
 " }}}
 " SQL {{{
