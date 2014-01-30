@@ -112,3 +112,6 @@ XPT xfail " @pytest.mark.xfail
 
 XPT mm " MagicMock\()
 MagicMock()
+
+XPT cow " assert_called_once_with
+assert_called_once_with
