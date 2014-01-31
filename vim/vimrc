@@ -748,6 +748,53 @@ nmap <silent> ( :call PythonSearchKeyword('b')<cr>
 nmap <silent> ) :call PythonSearchKeyword()<cr>
 
 " }}}
+" py.test switches {{{
+
+" Note: These are all to be used with util/t found in this same dotfiles repo
+
+function! PytestSwitch(...)
+  echohl PreProc | echon 'Pytest' | echohl None | echon ": "
+  let dir = getcwd() . '/.git/pytest-toggles'
+  let target = a:0 ? a:1 : ""
+  let file = dir . '/' . target
+
+  if !isdirectory(dir)
+    call mkdir(dir)
+  endif
+
+  " No arguments, print current
+  if target == ""
+    let list = split(globpath(dir, '**/*'), '\n')
+    echon join(map(list, 'fnamemodify(v:val, ":t")'), ", ")
+    return
+  endif
+
+  if filereadable(file) && len(a:000) == 1
+    " File exists and no arg was passed; kill the switch
+    call delete(file)
+    echohl Constant
+    echon 'Disabled '
+    echon target
+  else
+    " New switch! Write the rest of the args list into it
+    call writefile(a:000[1:], file, "b")
+    echohl String
+    echon 'Enabled ' . target
+
+    if len(a:000) > 1
+      echon  ' as ' . a:2
+    endif
+  endif
+
+  echohl None
+  " Retrigger the tests running in kicker
+  silent exe "!touch setup.py"
+endfunction
+
+command! -nargs=* PytestSwitch :call PytestSwitch(<f-args>)
+command! -nargs=* PS :call PytestSwitch(<f-args>)
+
+" }}}
 
 augroup ft_python
   au!
