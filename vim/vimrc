@@ -732,42 +732,6 @@ augroup END
 " Just add one shiftwidth when indenting python
  let g:pyindent_open_paren = 4
 
-
-" Switchdef {{{
-
-function! PySwitchDef(l1, l2)
-  let q = "[\"']"
-  let obj = '\(\w\+\)\>=\(.\+\)$'
-  let dict = q.'\(\w\+\)' .q.':\s\+\(.\+\)$'
-
-  let lines = getline(a:l1, a:l2)
-  let processed = []
-
-  for line in lines
-    let changed = 0
-
-    if match(line, obj) != -1
-      let line = substitute(line, obj, '"\1": \2', '')
-      let changed = 1
-    elseif match(line, dict) != -1
-      let line = substitute(line, dict, '\1=\2', '')
-      let changed = 1
-    endif
-
-    if changed && match(line, ',$') == -1
-      let line = line . ','
-    endif
-
-    let processed = add(processed, line)
-  endfor
-
-  call setline(a:l1, processed)
-endfunction
-
-command! -range -nargs=0 PySwitchDef :call PySwitchDef(<line1>, <line2>)
-nmap <silent> <leader>d :PySwitchDef<cr>
-vmap <silent> <leader>d :PySwitchDef<cr>gv
-" }}}
 " next-keyword {{{
 
 fun! PythonSearchKeyword(...)
