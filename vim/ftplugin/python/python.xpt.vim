@@ -45,18 +45,18 @@ import pdb ; pdb.set_trace()
 XPT . " self.
 self.
 
-XPT self " self
+XPT s " self
 self
 
-XPT assert " assert
+XPT a " assert
 assert `^
 
 XPT test
 def test_`function^(self):
     `cursor^
 
-XPT pytest
-def `setup^_`method^(self`, method^):
+XPT setup
+def setup_method(self, method):
     `cursor^
 
 XPT raises wrap=job " with pytest.raises\()
@@ -66,19 +66,13 @@ with pytest.raises(`Exception^) as exc:
 XPT join wrap=job " os.path.join\()
 os.path.join(`job^)
 
-XPT mp  " @mock.patch
-@mock.patch(`^)
-
-XPT mpo  " @mock.patch.object
-@mock.patch.object(`^)
-
 XPT nc " # pragma: nocover
 # pragma: nocover
 
 XPT staticmethod
 staticmethod
 
-XPT setup " setup\(
+XPT package " setup\(
 setup(
     name='`project^',
     version='`0.0.1^',
@@ -113,5 +107,23 @@ XPT xfail " @pytest.mark.xfail
 XPT mm " MagicMock\()
 MagicMock()
 
+XPT imm " from mock import MagicMock
+from mock import MagicMock
+
 XPT cow " assert_called_once_with
 assert_called_once_with
+
+XPT cal " call_args_list
+call_args_list
+
+XPT @p " @patch\()
+@patch('`object^')
+
+XPT @po " @patch.object\()
+@patch(`object^, '`member^')
+
+XPT T " True
+True
+
+XPT F " False
+False
