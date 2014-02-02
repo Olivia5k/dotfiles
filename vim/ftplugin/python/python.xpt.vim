@@ -127,3 +127,6 @@ True
 
 XPT F " False
 False
+
+XPT isub " import subprocess as sub
+import subprocess as sub
