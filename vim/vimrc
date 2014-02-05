@@ -45,8 +45,6 @@ Bundle 'gregsexton/gitv'
 Bundle 'int3/vim-extradite'
 
 " Python
-" Bundle 'alfredodeza/coveragepy.vim'
-" Bundle 'alfredodeza/pytest.vim'
 Bundle 'thiderman/vim-snakecharmer'
 Bundle 'thiderman/vim-snakeskin'
 Bundle 'thiderman/vim-troves'
@@ -1083,56 +1081,6 @@ let NERDTreeDirArrows = 1
 let NERDChristmasTree = 1
 let NERDTreeChDirMode = 2
 let NERDTreeMapJumpFirstChild = 'gK'
-
-" }}}
-" Pytest {{{
-
-augroup pytest
-  au!
-
-  " au BufEnter * call s:pytest_setup()
-  au FileType pytest set nolist tw=0
-  " au BufWritePost *test/*test_*.py call s:pytest_automethod()
-augroup END
-
-" Setup some py.test specific settings and mappings for Python test files.
-function! s:pytest_setup()
-  if expand('<afile>') !~ 'test/.*test_.*\.py$' && &ft !~ 'pytest'
-    " Reset cmdheight and abort. See below.
-    set cmdheight=1
-    return
-  endif
-
-  " This is semi-silly, but it is the only way I've found to make sure that the
-  " green bar does not cause a confirm prompt. With this, we can run an
-  " auto-tester upon saving of file.
-  set cmdheight=2
-
-  nmap <silent><buffer> ch :Pytest previous<cr>
-  nmap <silent><buffer> cj :Pytest next<cr>:Pytest previous<cr>
-  nmap <silent><buffer> ck :Pytest error<cr>
-  nmap <silent><buffer> cl :Pytest next<cr>
-  nmap <silent><buffer> cs :Pytest session<cr>
-  nmap <silent><buffer> cm :Pytest method<cr>
-  nmap <silent><buffer> cf :Pytest file<cr>
-endfunction
-
-function! s:pytest_automethod()
-  exe 'Pytest method'
-endfunction
-
-" Related; toggle coverage
-nmap <silent> <leader>c :call ToggleCoverage()<cr>
-nmap <silent> <a-c> :call ToggleCoverage()<cr>
-
-function! ToggleCoverage(...)
-  if a:0 || exists("g:coveragepy_is_displaying") && g:coveragepy_is_displaying
-    exe "Coveragepy noshow"
-    let g:coveragepy_is_displaying = 0
-  else
-    exe "Coveragepy show"
-  endif
-endfunction
 
 " }}}
 " Rainbow Parentheses {{{
