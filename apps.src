@@ -4,6 +4,7 @@
 # executable files on your path, they will be symlinked. If not, they will be
 # skipped.
 apps[emacs]="emacs.d"
+apps[gem]="misc/gemrc"
 apps[git]="misc/gitconfig misc/git_template"
 apps[i3]="misc/x11/i3.conf"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
