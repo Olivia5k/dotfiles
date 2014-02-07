@@ -28,9 +28,14 @@ export VISUAL="vim"
 export MAIL="$HOME/var/mail"
 export HOMEBIN="$HOME/.local/bin"
 export GOPATH="$HOME/var/go"
-local _PATH="$XDG_DATA_HOME/infect/util:$HOMEBIN:$HOME/.gem/ruby/2.0.0/bin"
+local _PATH="$XDG_DATA_HOME/infect/util:$HOMEBIN"
 local _PATH="$_PATH:/usr/share/perl5/vendor_perl/auto/share/dist/Cope"
 local _PATH="$_PATH:$GOPATH/bin"
+
+# No cool globs yet...
+for ruby in $(ls -rd $HOME/.gem/ruby/*/bin); do
+  local _PATH="$_PATH:$ruby"
+done
 
 # Prevent trailing backslash to break the command lines! :D
 setopt sunkeyboardhack
