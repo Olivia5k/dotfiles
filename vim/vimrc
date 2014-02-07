@@ -748,6 +748,7 @@ nmap <silent> ) :call PythonSearchKeyword()<cr>
 " }}}
 " py.test switches {{{
 
+" TODO: Make own plugin
 " Note: These are all to be used with util/t found in this same dotfiles repo
 
 function! PytestSwitch(...)
@@ -762,8 +763,7 @@ function! PytestSwitch(...)
 
   " No arguments, print current
   if target == ""
-    let list = split(globpath(dir, '**/*'), '\n')
-    echon join(map(list, 'fnamemodify(v:val, ":t")'), ", ")
+    echon PytestCurrent()
     return
   endif
 
@@ -789,8 +789,42 @@ function! PytestSwitch(...)
   silent exe "!touch setup.py"
 endfunction
 
-command! -nargs=* PytestSwitch :call PytestSwitch(<f-args>)
-command! -nargs=* PS :call PytestSwitch(<f-args>)
+function! PytestCurrent()
+  let dir = getcwd() . '/.git/pytest-toggles'
+  if !isdirectory(dir)
+    return ''
+  endif
+  let list = split(globpath(dir, '**/*'), '\n')
+  return join(map(list, 'fnamemodify(v:val, ":t")'), ", ")
+endfunction
+
+let g:pytest_cache = []
+function! PytestComplete(a,l,p)
+  let pt = getcwd() . '/bin/py.test'
+  if !filereadable(pt)
+    return []
+  endif
+
+  if g:pytest_cache != []
+    let args = g:pytest_cache
+  else
+    let help = split(system(pt .' --help'), '\n')
+    let help = filter(help, 'v:val =~ "^  -"')
+    " TODO: Args with multiple forms
+    let help = map(help, 'substitute(v:val, "^  --\\?\\([-a-z]*\\).*", "\\1", "")')
+    let args = sort(help)
+    let g:pytest_cache = args
+  endif
+
+  return filter(copy(args), 'v:val =~ "^'.a:a.'"')
+endfunction
+
+command! -nargs=* -complete=customlist,PytestComplete PytestSwitch :call PytestSwitch(<f-args>)
+command! -nargs=* -complete=customlist,PytestComplete PS :call PytestSwitch(<f-args>)
+
+if exists('*airline#extensions#pytest#get_current')
+  let g:airline_section_y = '%= %{airline#util#wrap(airline#extensions#pytest#get_current(),0)}'
+endif
 
 " }}}
 
