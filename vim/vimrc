@@ -1366,6 +1366,21 @@ endfunction
 command! -nargs=1 Blog :call JekyllPost(<q-args>)
 
 " }}}
+" Directory creator {{{
+
+augroup dir_create
+  au!
+  au BufWritePre,FileWritePre * call Cdir()
+augroup END
+
+function Cdir()
+  let dir = expand('<afile>:p:h')
+  if !isdirectory(dir)
+    call mkdir(dir, 'p')
+  endif
+endfunction
+
+" }}}
 " Project mux {{{
 
 function! Mor()
