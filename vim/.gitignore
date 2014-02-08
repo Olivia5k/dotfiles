@@ -2,3 +2,4 @@
 local.vim
 tmp
 bundle/
+spell/*.spl
