@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+if [[ -n $(psg trayer) ]]; then
+  killall trayer
+else
+  trayer &|
+fi
