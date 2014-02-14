@@ -1371,7 +1371,7 @@ augroup dir_create
   au BufWritePre,FileWritePre * call Cdir()
 augroup END
 
-function Cdir()
+function! Cdir()
   let dir = expand('<afile>:p:h')
   if !isdirectory(dir)
     call mkdir(dir, 'p')
