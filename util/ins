@@ -8,7 +8,7 @@ if [[ -f $f ]] && [[ -x $f ]] ; then
     local target=$(basename $1)
   fi
 
-  if ! has $target ; then
+  if ! (( $+commands[$target] )) ; then
     print -P "Installing %B${c[19]}$(basename $1)%f%b as %B${c[19]}${target}%f%b"
     ln -s $f $HOMEBIN/$target
   else
