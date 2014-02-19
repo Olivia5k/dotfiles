@@ -88,6 +88,10 @@ alias hc="herbstclient"
 alias :q="exit"
 alias bell='echo -en "\007"'
 
+alias spa="sudo sppuppet agent -t"
+alias sps="sudo sppuppet status"
+alias spcb="sudo sppuppet change-branch"
+
 # }}}
 # chpwd {{{
 
