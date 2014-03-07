@@ -1122,6 +1122,11 @@ let NERDTreeChDirMode = 2
 let NERDTreeMapJumpFirstChild = 'gK'
 
 " }}}
+" Projectile {{{
+
+nmap <silent> <c-w>a :AV<cr>
+
+" }}}
 " Rainbow Parentheses {{{
 
 let g:rbpt_colorpairs = [
