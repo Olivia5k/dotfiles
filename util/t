@@ -29,7 +29,9 @@ if (( $+commands[py.test] )); then
 
   # If there is coverage and we can guess the source code dir, add coverage
   if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
-    opts+=" --cov=$PWD:t --cov-report=term-missing"
+    if [[ ! $opts =~ '-x' ]]; then
+      opts+=" --cov=$PWD:t --cov-report=term-missing"
+    fi
   fi
 
   py.test test ${(z)opts} --color=yes $@
