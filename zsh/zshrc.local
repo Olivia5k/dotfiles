@@ -92,6 +92,8 @@ alias spa="sudo sppuppet agent -t"
 alias sps="sudo sppuppet status"
 alias spcb="sudo sppuppet change-branch"
 
+alias j='ssh j'
+
 # }}}
 # chpwd {{{
 
