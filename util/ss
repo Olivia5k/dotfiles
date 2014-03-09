@@ -34,6 +34,15 @@ else
     echo -n $url | xclip
 fi
 
+if ! (( $+commands[scrot] )) ; then
+  for x in {1..$msg_timeout} ; do
+      echo " ^fg(#720000)scrot not installed"
+      sleep 1
+  done | dzen2 -fn $font -sa l -bg $bgc -x -$w -y 19 -w $w -e $e
+  exit 1
+fi
+
+mkdir -p $localpath
 scrot $localpath/$date.png
 
 if $remote; then
