@@ -1098,6 +1098,12 @@ call s:gm('gs',  'Gstatus', '<c-n>')
 call s:gm('gw',  'Gwrite')
 call s:gm('gm',  'Gmove ')
 
+" Also jdaddy, shut up
+if maparg('gwaj') != ''
+  unmap gwaj
+  unmap gwij
+endif
+
 " }}}
 " NERDTree {{{
 
