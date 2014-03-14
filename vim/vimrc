@@ -1132,6 +1132,7 @@ let NERDTreeMapJumpFirstChild = 'gK'
 " Projectile {{{
 
 nmap <silent> <c-w>a :AV<cr>
+nmap <silent> <c-w>A :AS<cr>
 
 " }}}
 " Rainbow Parentheses {{{
