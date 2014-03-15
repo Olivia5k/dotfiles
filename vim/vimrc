@@ -62,7 +62,6 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'godlygeek/tabular'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'mileszs/ack.vim'
-Bundle 'terryma/vim-expand-region'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
@@ -1052,24 +1051,6 @@ augroup END
 " the enter binding here instead.
 imap <C-X><CR> <Plug>delimitMateCR<Plug>AlwaysEnd
 imap <CR>      <Plug>delimitMateCR<Plug>DiscretionaryEnd
-
-" }}}
-" Expand region {{{
-
-map L <Plug>(expand_region_expand)
-map H <Plug>(expand_region_shrink)
-
-let g:expand_region_text_objects = {
-      \ 'iw'  :0,
-      \ 'iW'  :0,
-      \ 'i"'  :0,
-      \ 'i''' :0,
-      \ 'i]'  :1,
-      \ 'ib'  :1,
-      \ 'iB'  :1,
-      \ 'ip'  :0,
-      \ 'ii'  :1,
-      \ }
 
 " }}}
 " Fugitive {{{
