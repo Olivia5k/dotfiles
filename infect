@@ -120,7 +120,8 @@ function infect_deploy() {
   done
 
   iecho "Rsyncing..."
-  rsync -a $src ./$stage ${(z)exc} || return 1
+  mkdir -p ./$stage
+  rsync -a $src/* $src/.* ./$stage/infect/ ${(z)exc} || return 1
   cd $stage
 
   # Oh, and replace all symbolic links with their actual targets.
