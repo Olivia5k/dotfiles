@@ -33,9 +33,11 @@ local _PATH="$_PATH:/usr/share/perl5/vendor_perl/auto/share/dist/Cope"
 local _PATH="$_PATH:$GOPATH/bin"
 
 # No cool globs yet...
-for ruby in $(ls -rd $HOME/.gem/ruby/*/bin); do
-  local _PATH="$_PATH:$ruby"
-done
+if [[ -d "$HOME/.gem/ruby/" ]]; then
+  for ruby in $(ls -rd $HOME/.gem/ruby/*/bin); do
+    local _PATH="$_PATH:$ruby"
+  done
+fi
 
 # Prevent trailing backslash to break the command lines! :D
 setopt sunkeyboardhack
