@@ -88,6 +88,7 @@ function infect_symlink() {
 
 function infect_deploy() {
   local src=${1:-${INFECT_DIR}}
+  local src=$src:A
   local dest=${2:-${INFECT_WEB_DIR}}
   local current="current.tgz"
   local file="$(date +"%Y.%m.%d").tgz"
@@ -119,11 +120,12 @@ function infect_deploy() {
   done
 
   iecho "Rsyncing..."
-  rsync $src ./$stage -a ${(z)exc} || return 1
+  rsync -a $src ./$stage ${(z)exc} || return 1
   cd $stage
 
   # Oh, and replace all symbolic links with their actual targets.
   iecho "Hardening symbolic links..."
+  setopt nullglob
   for link in **/*(@); do
     target=$(readlink_f $link)
     unlink $link
