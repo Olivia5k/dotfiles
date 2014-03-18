@@ -130,3 +130,6 @@ False
 
 XPT isub " import subprocess as sub
 import subprocess as sub
+
+XPT rx " raise Exception\()
+raise Exception(`^)
