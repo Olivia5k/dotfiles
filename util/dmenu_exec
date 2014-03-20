@@ -3,6 +3,6 @@
 # Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
-source $XDG_DATA_HOME/dmenu/dmenurc
+source $XDG_CONFIG_HOME/dmux/dmuxrc
 
-/usr/bin/dmenu_run ${(z)DMENU_OPTIONS}
+/usr/bin/dmenu_run ${(z)DMENU_OPTS}
