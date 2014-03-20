@@ -185,8 +185,13 @@ function _autoworkgit() {
     git config user.email "$WORK_EMAIL"
   fi
 
-  # XXX: Will not work with new-style submodules. Fak u submodules.
-  if [[ ! -f $hook ]] && [[ -f $gerrit ]] && [[ ! $remote =~ 'ghe' ]]; then
+  if [[ $remote =~ 'ghe' ]]; then
+    if [[ ! $(git config hub.host) =~ $WORK_REMOTE ]]; then
+      print -P "$auto: yay ghe"
+      git config hub.host ghe.spotify.net
+    fi
+  elif [[ ! -f $hook ]] && [[ -f $gerrit ]] && ; then
+    # XXX: Will not work with new-style submodules. Fak u submodules.
     print -P "$auto: fak u gerrit"
     cp -p $gerrit $hook
   fi
@@ -567,7 +572,7 @@ fi
 # Uncomment these to use GitHub Enterprise instead of Gerrit.
 # Note that you need the ghe_repos.py script for this.
 # export SP_REPO_CMD="gherepo"
-# export SP_REPO_HOST="ghe.spotify.net"
+export SP_REPO_HOST="ghe.spotify.net"
 
 function spclone() {
   host=${SP_REPO_HOST:-git.spotify.net}
