@@ -3,18 +3,13 @@
 # Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
-if [[ -z "$1" ]]; then
-    echo "Error: No session name given. Terminating."
-    sleep 2
-    exit 1
-fi
-
+sess=${1:-main}
 # Attach if it exists, create it if it doesn't.
-if tmux ls | grep -E "^$1:" &> /dev/null; then
+if tmux ls | grep -E "^$sess:" &> /dev/null; then
     cmd="attach -d -t"
 else
     cmd="new-session -s"
 fi
 
 # The LANG part is for letting tmux know that it actually can UTF8.
-LANG="en_US.utf8" tmux ${(z)cmd} $1
+LANG="en_US.utf8" tmux ${(z)cmd} $sess
