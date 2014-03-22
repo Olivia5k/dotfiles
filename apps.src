@@ -35,9 +35,10 @@ force[terminfo]=true
 # This function will run after infect is done.
 function post_infect_install() {
   # These directories are required for the applications to work correctly
-  mkdir -p $HOME/.cache/vim/{backup,undo,swap}
-  mkdir -p $HOME/.logs
-  mkdir -p $HOME/.local/{bin,logs,share/zsh}
+  mkdir -p \
+    $HOME/.cache/vim/{backup,undo,swap} \
+    $HOME/.logs \
+    $HOME/.local/{bin,logs,share/zsh}
 
   if [[ $(git --version | grep 1.7 -c) = 1 ]]; then
     ext=""
