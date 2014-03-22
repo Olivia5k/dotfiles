@@ -1,0 +1,30 @@
+#!/bin/zsh
+
+# Stupid package manager wrapper
+
+function pkg_install() {
+  if (( $+commands[pacman] )); then
+    sudo pacman -S $*
+  elif (( $+commands[apt-get] )); then
+    sudo apt-get install $*
+  fi
+}
+
+function pkg_remove() {
+  if (( $+commands[pacman] )); then
+    sudo pacman -Rdns $*
+  elif (( $+commands[apt-get] )); then
+    sudo apt-get remove --purge $*
+  fi
+}
+
+action=$1 ; shift
+case $action in
+  install | remove)
+    pkg_$action $*
+  ;;
+
+  *)
+    echo "lel/10"
+  ;;
+esac
