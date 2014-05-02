@@ -10,6 +10,7 @@ if (( $+commands[py.test] )); then
   dir="$PWD/.git/pytest-toggles"
   for file in $dir/* ; do
     t=$file:t
+    # If the file has contents, the switch has a value
     if [[ $(wc -m $file | cut -d\  -f1) -gt 0 ]] ; then
       val="'$(<$file)'"
       if [[ $t =~ '^.$' ]]; then
