@@ -12,7 +12,7 @@ if (( $+commands[py.test] )); then
   for file in $dir/* ; do
     t=$file:t
     if [[ $(wc -m $file | cut -d\  -f1) -gt 0 ]] ; then
-      val="\"$(<$file)\""
+      val="'$(<$file)'"
       if [[ $t =~ '^.$' ]]; then
         opts+=" -$t=$val"
       else
@@ -34,9 +34,13 @@ if (( $+commands[py.test] )); then
 
   # If there is coverage and we can guess the source code dir, add coverage
   if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
-    if [[ ! $opts =~ '-x' ]]; then
+    if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
       opts+=" --cov=$PWD:t --cov-report=term-missing"
     fi
+  fi
+
+  if [[ $opts =~ '-v' ]]; then
+    echo py.test test ${(z)opts} --color=yes $@
   fi
 
   py.test test ${(z)opts} --color=yes $@

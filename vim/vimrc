@@ -837,6 +837,8 @@ augroup ft_python
   au FileType python nn S ebiself.<esc>l
   " au FileType python setlocal formatexpr=
 
+  " Switch {{{
+
   au FileType python let b:switch_custom_definitions =
     \ [
     \   {
@@ -884,6 +886,25 @@ augroup ft_python
     \     '\(^\s*\)\(\S\+\)\s*=\s*\(.*\)$': "\\1'\\2': \\3,",
     \   },
     \ ]
+
+  " }}}
+  " Sharpshooter {{{
+
+  function! Sharpshooter()
+    silent update
+
+    let fn = expand('%')
+    let skin = SnakeskinParse(fn)
+    let pos = skin.position()
+
+    if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
+      call PytestSwitch('k', join(pos, ' and '))
+    endif
+  endfunction
+
+  au BufEnter *.py nn <cr> :call Sharpshooter()<cr>
+
+  " }}}
 
 augroup END
 
