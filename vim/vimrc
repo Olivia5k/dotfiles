@@ -750,10 +750,14 @@ nmap <silent> ) :call PythonSearchKeyword()<cr>
 " Note: These are all to be used with util/t found in this same dotfiles repo
 
 function! PytestSwitch(...)
-  echohl PreProc | echon 'Pytest' | echohl None | echon ": "
+  let print = a:0 > 2 ? a:3 : 1
   let dir = getcwd() . '/.git/pytest-toggles'
   let target = a:0 ? a:1 : ""
   let file = dir . '/' . target
+
+  if print
+    echohl PreProc | echon 'Pytest' | echohl None | echon ": "
+  endif
 
   if !isdirectory(dir)
     call mkdir(dir)
@@ -761,30 +765,39 @@ function! PytestSwitch(...)
 
   " No arguments, print current
   if target == ""
-    echon PytestCurrent()
+    if print
+      echon PytestCurrent()
+    endif
     return
   endif
 
   if filereadable(file) && len(a:000) == 1
     " File exists and no arg was passed; kill the switch
     call delete(file)
-    echohl Constant
-    echon 'Disabled '
-    echon target
+    if print
+      echohl Constant
+      echon 'Disabled '
+      echon target
+    endif
   else
     " New switch! Write the rest of the args list into it
-    call writefile(a:000[1:], file, "b")
-    echohl String
-    echon 'Enabled ' . target
+    call writefile(a:000[1:1], file, "b")
 
-    if len(a:000) > 1
-      echon  ' as ' . a:2
+    if print
+      echohl String
+      echon 'Enabled ' . target
+      if a:0 > 1
+        echon  ' as ' . a:2
+      endif
     endif
   endif
 
-  echohl None
-  " Retrigger the tests running in kicker
-  silent exe "!touch setup.py"
+  if print
+    echohl None
+  endif
+
+  " Retrigger the tests
+  silent exe "!tmux send-keys -t alt:0.0 t C-m"
 endfunction
 
 function! PytestCurrent()
@@ -834,6 +847,7 @@ augroup ft_python
   au BufEnter *.py syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
+  " TODO: Expand into an un-self:er as well.
   au FileType python nn S ebiself.<esc>l
   " au FileType python setlocal formatexpr=
 
@@ -898,7 +912,7 @@ augroup ft_python
     let pos = skin.position()
 
     if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
-      call PytestSwitch('k', join(pos, ' and '))
+      call PytestSwitch('k', join(pos, ' and '), 1)
     endif
   endfunction
 
