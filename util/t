@@ -12,7 +12,12 @@ if (( $+commands[py.test] )); then
   for file in $dir/* ; do
     t=$file:t
     if [[ $(wc -m $file | cut -d\  -f1) -gt 0 ]] ; then
-      opts+=" --$t=$(<$file)"
+      val="\"$(<$file)\""
+      if [[ $t =~ '^.$' ]]; then
+        opts+=" -$t=$val"
+      else
+        opts+=" --$t=$val"
+      fi
     else
       if [[ $t =~ '^.$' ]]; then
         opts+=" -$t"
