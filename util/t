@@ -6,7 +6,6 @@ clear
 if (( $+commands[py.test] )); then
   opts=""
 
-
   # If there are toggle opts from vim, try to access them.
   dir="$PWD/.git/pytest-toggles"
   for file in $dir/* ; do
@@ -34,6 +33,7 @@ if (( $+commands[py.test] )); then
 
   # If there is coverage and we can guess the source code dir, add coverage
   if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
+    # If we are not running all the tests, disable coverage
     if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
       opts+=" --cov=$PWD:t --cov-report=term-missing"
     fi
@@ -43,7 +43,7 @@ if (( $+commands[py.test] )); then
     echo py.test test ${(z)opts} --color=yes $@
   fi
 
-  py.test test ${(z)opts} --color=yes $@
+  py.test test ${(Q)${(z)opts}} --color=yes $@
 else
   nosetests $@
 fi
