@@ -797,7 +797,9 @@ function! PytestSwitch(...)
   endif
 
   " Retrigger the tests
-  silent exe "!tmux send-keys -t alt:0.0 t C-m"
+  " TODO: Find out how to write to the tmux socket rather than executing
+  " something in the background.
+  silent !tmux send-keys -t alt:0.0 t C-m
 endfunction
 
 function! PytestCurrent()
@@ -912,12 +914,12 @@ augroup ft_python
     let pos = skin.position()
 
     if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
-      call PytestSwitch('k', join(pos, ' and '), 1)
+      call PytestSwitch('k', join(pos, ' and '), 0)
       call HiInterestingWord(2, pos[1])
     endif
   endfunction
 
-  au BufEnter *.py nn <cr> :call Sharpshooter()<cr>
+  au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
 
   " }}}
 
