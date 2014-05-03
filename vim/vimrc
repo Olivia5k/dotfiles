@@ -907,14 +907,23 @@ augroup ft_python
   " Sharpshooter {{{
 
   function! Sharpshooter()
+    " TODO: Set file rather than using test/
+    " TODO: Execution from outside of test files
+    " TODO: Running all tests
+
+    " Save the file so that we are sure it is up to date.
     silent update
 
     let fn = expand('%')
     let skin = SnakeskinParse(fn)
     let pos = skin.position()
 
+    " Check if the current function follows the default py.test pattern.
     if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
+      " If it does, store it as the only test to execute...
       call PytestSwitch('k', join(pos, ' and '), 0)
+
+      " ...and highlight the name in the buffer.
       call HiInterestingWord(2, pos[1])
     endif
   endfunction
