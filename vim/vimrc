@@ -263,7 +263,7 @@ let g:jellybeans_overrides = {
 
 syntax on
 set background=dark
-colorscheme github
+colorscheme jellybeans
 
 function! BoldlyGo()
   let groups = [
