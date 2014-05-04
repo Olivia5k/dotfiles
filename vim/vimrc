@@ -141,6 +141,28 @@ set complete=.,w,b,u,t
 set completeopt=longest,menuone,preview
 
 " }}}
+" Autosave {{{
+
+" Save the file on delays. Can be toggled by letting/unletting g:no_autosave
+function! AutoSave()
+  if exists('g:no_autosave') && g:no_autosave == 1 || &modified == 0
+    return
+  endif
+
+  silent! wa
+endfunction
+
+augroup autosave
+  au!
+  au InsertLeave * call AutoSave()
+  au CursorHold * call AutoSave()
+  au CursorHoldI * call AutoSave()
+augroup END
+
+" Let's not, for now.
+let g:no_autosave = 0
+
+" }}}
 " Kill trailing whitespace {{{
 
 function! KillTrailingWhitespace()
