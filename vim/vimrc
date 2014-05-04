@@ -772,12 +772,10 @@ nmap <silent> ) :call PythonSearchKeyword()<cr>
 " TODO: Make own plugin
 " Note: These are all to be used with util/t found in this same dotfiles repo
 
-let g:pytest_fifo = "~/.vim/cache/pytest.fifo"
-
 function! PytestSwitch(...)
   let print = a:0 > 2 ? a:3 : 1
   let runit = a:0 > 3 ? a:4 : 1
-  let dir = getcwd() . '/.git/pytest-toggles'
+  let dir = getcwd() . '/.git/sharpshooter'
   let target = a:0 ? a:1 : ""
   let file = dir . '/' . target
 
@@ -829,12 +827,12 @@ function! PytestSwitch(...)
 endfunction
 
 function! PytestRun()
-  let fn = getcwd() . '/.git/pytest.fifo'
+  let fn = getcwd() . '/.git/sharpshooter.fifo'
   call writefile(['bang bang'], fn)
 endfunction
 
 function! PytestCurrent()
-  let dir = getcwd() . '/.git/pytest-toggles'
+  let dir = getcwd() . '/.git/sharpshooter'
   if !isdirectory(dir)
     return ''
   endif

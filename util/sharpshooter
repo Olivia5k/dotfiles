@@ -7,7 +7,7 @@ function run() {
   opts=""
 
   # If there are toggle opts from vim, try to access them.
-  dir="$PWD/.git/pytest-toggles"
+  dir="$PWD/.git/sharpshooter"
   for file in $dir/* ; do
     t=$file:t
 
