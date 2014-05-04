@@ -772,6 +772,8 @@ nmap <silent> ) :call PythonSearchKeyword()<cr>
 " TODO: Make own plugin
 " Note: These are all to be used with util/t found in this same dotfiles repo
 
+let g:pytest_fifo = "~/.vim/cache/pytest.fifo"
+
 function! PytestSwitch(...)
   let print = a:0 > 2 ? a:3 : 1
   let runit = a:0 > 3 ? a:4 : 1
@@ -827,10 +829,8 @@ function! PytestSwitch(...)
 endfunction
 
 function! PytestRun()
-  " TODO: Find out how to write to the tmux socket rather than executing
-  " something in the background.
-  " TODO: Make target pane configurable
-  silent !tmux send-keys -t alt:0.0 t C-m
+  let fn = getcwd() . '/.git/pytest.fifo'
+  call writefile(['bang bang'], fn)
 endfunction
 
 function! PytestCurrent()
