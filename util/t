@@ -1,8 +1,10 @@
 #!/bin/zsh
+clear
 
 setopt nullglob
 
-clear
+target=${1:-test/} ; shift
+
 if (( $+commands[py.test] )); then
   opts=""
 
@@ -41,10 +43,10 @@ if (( $+commands[py.test] )); then
   fi
 
   if [[ $opts =~ '-v' ]]; then
-    echo py.test test ${(z)opts} --color=yes $@
+    echo py.test $target ${(z)opts} --color=yes $@
   fi
 
-  py.test test ${(Q)${(z)opts}} --color=yes $@
+  py.test $target ${(Q)${(z)opts}} --color=yes $@
 else
   nosetests $@
 fi
