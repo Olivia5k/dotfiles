@@ -3,7 +3,10 @@ clear
 
 setopt nullglob
 
-target=${1:-test/} ; shift
+target='test/'
+if [[ -n "$1" ]]; then
+  target=$1; shift
+fi
 
 if (( $+commands[py.test] )); then
   opts=""
