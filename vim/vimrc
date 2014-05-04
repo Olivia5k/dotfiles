@@ -149,6 +149,7 @@ function! AutoSave()
     return
   endif
 
+  call KillTrailingWhitespace()
   silent! wa
 endfunction
 
@@ -156,7 +157,7 @@ augroup autosave
   au!
   au InsertLeave * call AutoSave()
   au CursorHold * call AutoSave()
-  au CursorHoldI * call AutoSave()
+  " au CursorHoldI * call AutoSave()
 augroup END
 
 " Let's not, for now.
