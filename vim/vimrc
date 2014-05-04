@@ -773,6 +773,7 @@ nmap <silent> ) :call PythonSearchKeyword()<cr>
 
 function! PytestSwitch(...)
   let print = a:0 > 2 ? a:3 : 1
+  let runit = a:0 > 3 ? a:4 : 1
   let dir = getcwd() . '/.git/pytest-toggles'
   let target = a:0 ? a:1 : ""
   let file = dir . '/' . target
@@ -819,7 +820,9 @@ function! PytestSwitch(...)
   endif
 
   " Retrigger the tests
-  call PytestRun()
+  if runit == 1
+    call PytestRun()
+  endif
 endfunction
 
 function! PytestRun()
@@ -948,10 +951,11 @@ augroup ft_python
     " Check if the current function follows the default py.test pattern.
     if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
       " If it does, store it as the only test to execute...
-      call PytestSwitch('k', join(pos, ' and '), 0)
+      call PytestSwitch('k', join(pos, ' and '), 0, 0)
+      call PytestSwitch('file', fn, 0, 1)
 
       " ...and highlight the name in the buffer.
-      call HiInterestingWord(2, pos[1])
+      call HiInterestingWord(1, pos[1])
     endif
   endfunction
 
