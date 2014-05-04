@@ -871,6 +871,36 @@ if exists('*airline#extensions#pytest#get_current')
 endif
 
 " }}}
+" Sharpshooter {{{
+
+function! Sharpshooter()
+  " TODO: Execution from outside of test files
+  " TODO: Running all tests
+
+  " Save the file so that we are sure it is up to date.
+  silent update
+
+  let fn = expand('%')
+  if fn =~ 'test/.*'
+    let pos = SnakeskinParse(fn).position()
+
+    " Check if the current function follows the default py.test pattern.
+    if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
+      " If it does, store it as the only test to execute...
+      call PytestSwitch('k', join(pos, ' and '), 0, 0)
+      call PytestSwitch('file', fn, 0, 1)
+
+      " ...and highlight the name in the buffer.
+      call HiInterestingWord(1, pos[1])
+      return
+    endif
+  endif
+
+  " If we're not setting a new test, just execute the last set one
+  call PytestRun()
+endfunction
+
+" }}}
 
 augroup ft_python
   au!
@@ -883,6 +913,8 @@ augroup ft_python
   " TODO: Expand into an un-self:er as well.
   au FileType python nn S ebiself.<esc>l
   " au FileType python setlocal formatexpr=
+
+  au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
 
   " Switch {{{
 
@@ -935,44 +967,7 @@ augroup ft_python
     \ ]
 
   " }}}
-  " Sharpshooter {{{
 
-  function! Sharpshooter()
-    " TODO: Execution from outside of test files
-    " TODO: Running all tests
-
-    " Save the file so that we are sure it is up to date.
-    silent update
-
-    let fn = expand('%')
-    if fn =~ 'test/.*'
-      let pos = SnakeskinParse(fn).position()
-
-      " Check if the current function follows the default py.test pattern.
-      if pos != [] && pos[0] =~ '^Test' && pos[1] =~ '^test_'
-        " If it does, store it as the only test to execute...
-        call PytestSwitch('k', join(pos, ' and '), 0, 0)
-        call PytestSwitch('file', fn, 0, 1)
-
-        " ...and highlight the name in the buffer.
-        call HiInterestingWord(1, pos[1])
-        return
-      endif
-    endif
-
-    " If we're not setting a new test, just execute the last set one
-    call PytestRun()
-  endfunction
-
-  au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
-
-  " }}}
-
-augroup END
-
-augroup pythonfold_reloader
-  au!
-  au BufWritePost pythonfold.vim so %
 augroup END
 
 " }}}
