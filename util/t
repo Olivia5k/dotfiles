@@ -8,54 +8,50 @@ if [[ -n "$1" ]]; then
   target=$1; shift
 fi
 
-if (( $+commands[py.test] )); then
-  opts=""
+opts=""
 
-  # If there are toggle opts from vim, try to access them.
-  dir="$PWD/.git/pytest-toggles"
-  for file in $dir/* ; do
-    t=$file:t
+# If there are toggle opts from vim, try to access them.
+dir="$PWD/.git/pytest-toggles"
+for file in $dir/* ; do
+  t=$file:t
 
-    if [[ $t == 'file' ]]; then
-      target=$(<$file)
-      continue
-    fi
+  if [[ $t == 'file' ]]; then
+    target=$(<$file)
+    continue
+  fi
 
-    # If the file has contents, the switch has a value
-    if [[ $(wc -m $file | cut -d\  -f1) -gt 0 ]] ; then
-      val="'$(<$file)'"
-      if [[ $t =~ '^.$' ]]; then
-        opts+=" -$t=$val"
-      else
-        opts+=" --$t=$val"
-      fi
+  # If the file has contents, the switch has a value
+  if [[ $(wc -m $file | cut -d\  -f1) -gt 0 ]] ; then
+    val="'$(<$file)'"
+    if [[ $t =~ '^.$' ]]; then
+      opts+=" -$t=$val"
     else
-      if [[ $t =~ '^.$' ]]; then
-        opts+=" -$t"
-      else
-        opts+=" --$t"
-      fi
+      opts+=" --$t=$val"
     fi
-  done
-
-  # If no other traceback reporting is set, use short
-  if [[ ! -f $dir/tb ]] ; then
-    opts+=" --tb=short"
-  fi
-
-  # If there is coverage and we can guess the source code dir, add coverage
-  if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
-    # If we are not running all the tests, disable coverage
-    if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
-      opts+=" --cov=$PWD:t --cov-report=term-missing"
+  else
+    if [[ $t =~ '^.$' ]]; then
+      opts+=" -$t"
+    else
+      opts+=" --$t"
     fi
   fi
+done
 
-  if [[ $opts =~ '-v' ]]; then
-    echo py.test $target ${(z)opts} --color=yes $@
-  fi
-
-  py.test $target ${(Q)${(z)opts}} --color=yes $@
-else
-  nosetests $@
+# If no other traceback reporting is set, use short
+if [[ ! -f $dir/tb ]] ; then
+  opts+=" --tb=short"
 fi
+
+# If there is coverage and we can guess the source code dir, add coverage
+if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
+  # If we are not running all the tests, disable coverage
+  if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
+    opts+=" --cov=$PWD:t --cov-report=term-missing"
+  fi
+fi
+
+if [[ $opts =~ '-v' ]]; then
+  echo py.test $target ${(z)opts} --color=yes $@
+fi
+
+py.test $target ${(Q)${(z)opts}} --color=yes $@
