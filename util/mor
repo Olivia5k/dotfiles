@@ -32,6 +32,6 @@ if [[ $(ps ax | grep "mux $sess" -c) -lt 3 ]] ; then
   if [[ "$host" = "$HOST" ]]; then
     ${(z)term} -e mux $sess
   else
-    ${(z)term} -e ssh $host -t bin/mux $sess
+    ${(z)term} -e ssh $host -t .local/share/infect/util/mux $sess
   fi
 fi
