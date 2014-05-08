@@ -898,6 +898,16 @@ function! Sharpshooter()
   call PytestRun()
 endfunction
 
+function! Scattershooter()
+  let dir = getcwd() . '/.git/sharpshooter'
+  for fn in [dir.'/k', dir.'/file']
+    if filereadable(fn)
+      call delete(fn)
+    endif
+  endfor
+  call PytestRun()
+endfunction
+
 " }}}
 
 augroup ft_python
@@ -913,6 +923,7 @@ augroup ft_python
   " au FileType python setlocal formatexpr=
 
   au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
+  au BufEnter *.py nn <silent> <a-d> :call Scattershooter()<cr>
 
   " Switch {{{
 

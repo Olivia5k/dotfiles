@@ -5,6 +5,7 @@ setopt nullglob
 function run() {
   clear
   opts=""
+  target='test/'
 
   # If there are toggle opts from vim, try to access them.
   dir="$PWD/.git/sharpshooter"
