@@ -871,6 +871,7 @@ endif
 " }}}
 " Sharpshooter {{{
 
+" Run one test and one test only
 function! Sharpshooter()
   " TODO: Execution from outside of test files
   " TODO: Running all tests
@@ -898,6 +899,7 @@ function! Sharpshooter()
   call PytestRun()
 endfunction
 
+" Run all tests, disabling anything set by Sharpshooter().
 function! Scattershooter()
   let dir = getcwd() . '/.git/sharpshooter'
   for fn in [dir.'/k', dir.'/file']
@@ -906,6 +908,50 @@ function! Scattershooter()
     endif
   endfor
   call PytestRun()
+endfunction
+
+" Navigate to a test, creating a stub test class if it does not exist.
+function! Sniper()
+  " TODO: Fix case of util functions outside of classes
+  " TODO: Fix case when not under method
+  let fn = expand('%')
+  if fn =~ 'test/'
+    return
+  endif
+
+  " module/(file).py
+  let test = 'test/test_' . fnamemodify(expand('%s'), ':t')
+  let pos = SnakeskinParse(fn).position()
+
+  only
+  execute "vsplit" test
+
+  if pos[1] =~ '_'
+    " Move from snake_case to CamelCase.
+    " http://vim.wikia.com/wiki/Converting_variables_to_or_from_camel_case
+    let pat = '\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)'
+  else
+    " Just capitalize the first letter
+    let pat = '^\(.\)\(.*\)'
+  endif
+  let method = substitute(pos[1], pat , '\u\1\2', 'g')
+
+  let class = 'Test' . pos[0] . method
+  let clspos = search(class, 'cw')
+
+  if clspos == 0
+    " Class not found. Append it to the end of the file!
+    let lines = ['', '', 'class '.class.'(object):', '    pass']
+    call append(line('$'), lines)
+
+    " Land on the last "pass"
+    let pos = getpos('.')
+    let pos[1] = line('$')
+    let pos[2] = 5
+    call setpos('.', pos)
+  endif
+
+  normal z.
 endfunction
 
 " }}}
@@ -924,6 +970,7 @@ augroup ft_python
 
   au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
   au BufEnter *.py nn <silent> <a-d> :call Scattershooter()<cr>
+  au BufEnter *.py nn <silent> <a-w> :call Sniper()<cr>
 
   " Switch {{{
 
