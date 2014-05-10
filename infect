@@ -305,7 +305,7 @@ if [[ -n "$1" ]]; then
   shift
 else
   # If run without arguments, download latest and run that.
-  iecho "Downloading lastest version..." white 0
+  iecho "Downloading latest version..." white 0
   curl --silent $INFECT_HOST | zsh -s - 'update' || exit 1
   exit 0
 fi
