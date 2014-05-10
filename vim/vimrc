@@ -922,26 +922,35 @@ function! Sniper()
   " module/(file).py
   let test = 'test/test_' . fnamemodify(expand('%s'), ':t')
   let pos = SnakeskinParse(fn).position()
+  let prefix = '^class '
+
+  if len(pos) == 2
+    " Class and method
+    let first = pos[0]
+    let s = substitute(substitute(pos[1], '_\+', '_', 'g'), '_$', '', '')
+    let second = s:camelize(s)
+
+    let targets = [first . second, first]
+  elseif len(pos) == 1
+    " Just one class or method
+    let first = s:camelize(pos[0])
+    let targets = [first]
+  endif
 
   only
   execute "vsplit" test
 
-  if pos[1] =~ '_'
-    " Move from snake_case to CamelCase.
-    " http://vim.wikia.com/wiki/Converting_variables_to_or_from_camel_case
-    let pat = '\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)'
-  else
-    " Just capitalize the first letter
-    let pat = '^\(.\)\(.*\)'
-  endif
-  let method = substitute(pos[1], pat , '\u\1\2', 'g')
-
-  let class = 'Test' . pos[0] . method
-  let clspos = search(class, 'cw')
+  for target in targets
+    let match = "class Test".target."(.*:$"
+    let clspos = search(match, 'cw')
+    if clspos != 0
+      break
+    endif
+  endfor
 
   if clspos == 0
     " Class not found. Append it to the end of the file!
-    let lines = ['', '', 'class '.class.'(object):', '    pass']
+    let lines = ['', '', 'class Test'.targets[0].'(object):', '    pass']
     call append(line('$'), lines)
 
     " Land on the last "pass"
@@ -952,6 +961,18 @@ function! Sniper()
   endif
 
   normal z.
+endfunction
+
+function! s:camelize(s)
+  if a:s =~ '_'
+    " Move from snake_case to CamelCase.
+    " http://vim.wikia.com/wiki/Converting_variables_to_or_from_camel_case
+    let pat = '\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)'
+  else
+    " Just capitalize the first letter
+    let pat = '^\(.\)\(.*\)'
+  endif
+  return substitute(a:s, pat , '\u\1\2', 'g')
 endfunction
 
 " }}}
