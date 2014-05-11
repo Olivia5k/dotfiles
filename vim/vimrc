@@ -960,7 +960,9 @@ function! Sniper()
     call setpos('.', pos)
   endif
 
-  normal z.
+  normal zt
+  normal zM
+  normal zA
 endfunction
 
 function! s:camelize(s)
@@ -991,7 +993,7 @@ augroup ft_python
 
   au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
   au BufEnter *.py nn <silent> <a-d> :call Scattershooter()<cr>
-  au BufEnter *.py nn <silent> <a-w> :call Sniper()<cr>
+  au BufEnter *.py nn <silent> <a-s> :call Sniper()<cr>
 
   " Switch {{{
 
@@ -1352,8 +1354,8 @@ function! ProjectTodo(...)
   split `=file`
 endfunction
 
-nmap <silent> <A-s> :call ProjectTodo()<cr>
-nmap <silent> <leader>s :call ProjectTodo()<cr>
+nmap <silent> <A-t> :call ProjectTodo()<cr>
+nmap <silent> <leader>t :call ProjectTodo()<cr>
 command! -nargs=? ProjectTodo :call ProjectTodo(<q-args>)
 
 function! Diary()
