@@ -2222,12 +2222,7 @@ function grml_vcs_to_screen_title () {
         if [[ -n ${vcs_info_msg_1_} ]] ; then
             ESC_print ${vcs_info_msg_1_}
         else
-          if [[ "$PWD" == "$HOME" ]]; then
-            local msg="~"
-          else
-            local msg=$PWD:t
-          fi
-
+          local msg=$(print -P '%1~')
           local git_root; _find_git_root
 
           if [[ -n "$git_root" ]]; then
