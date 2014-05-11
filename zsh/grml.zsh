@@ -2222,7 +2222,23 @@ function grml_vcs_to_screen_title () {
         if [[ -n ${vcs_info_msg_1_} ]] ; then
             ESC_print ${vcs_info_msg_1_}
         else
-            ESC_print "zsh"
+          if [[ "$PWD" == "$HOME" ]]; then
+            local msg="~"
+          else
+            local msg=$PWD:t
+          fi
+
+          local git_root; _find_git_root
+
+          if [[ -n "$git_root" ]]; then
+            msg=#$git_root:h:t
+          fi
+
+          if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
+            msg="${msg}@$(print -P '%m')"
+          fi
+
+          ESC_print $msg
         fi
     fi
 }
