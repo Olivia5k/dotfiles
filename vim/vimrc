@@ -1543,7 +1543,8 @@ function! Mor()
   silent! exec '!mor ' . fnamemodify(getcwd(), ':t') . '&|'
 endfunction
 
-map <A-t> :call Mor()<cr>
+nmap <silent> <A-m> :call Mor()<cr>
+nmap <silent> <leader>m :call Mor()<cr>
 
 " }}}
 
