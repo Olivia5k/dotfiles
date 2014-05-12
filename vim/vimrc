@@ -1305,11 +1305,6 @@ nnoremap <silent> - :Switch<cr>
 nnoremap <silent> <a-w> :Switch<cr>
 
 " }}}
-" SQL {{{
-
-let g:ftplugin_sql_omni_key = '<F13>'
-
-" }}}
 " surround {{{
 
 " While I love surround.vim, the s/S confusion in visual mode does not
