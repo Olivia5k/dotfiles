@@ -104,23 +104,23 @@ pytest.set_trace()
 XPT xfail " @pytest.mark.xfail
 @pytest.mark.xfail
 
-XPT mm " MagicMock\()
-MagicMock()
+XPT mm " mock.MagicMock\()
+mock.MagicMock()
 
 XPT imm " from mock import MagicMock
 from mock import MagicMock
 
-XPT cow " assert_called_once_with
-assert_called_once_with
+XPT cow " mock.assert_called_once_with\(...)
+`mock^.assert_called_once_with(`args^)
 
-XPT cal " call_args_list
-call_args_list
+XPT cc " assert obj.call_count == x
+assert `mock^.call_count == `0^
 
-XPT @p " @patch\()
-@patch('`object^')
+XPT @p " @mock.patch\()
+@mock.patch('`object^')
 
-XPT @po " @patch.object\()
-@patch(`object^, '`member^')
+XPT @po " @mock.patch.object\()
+@mock.patch(`object^, '`member^')
 
 XPT T " True
 True
@@ -131,5 +131,5 @@ False
 XPT isub " import subprocess as sub
 import subprocess as sub
 
-XPT rx " raise Exception\()
-raise Exception(`^)
+XPT rx " raise Exception\(...)
+raise `Exception^(`args^)
