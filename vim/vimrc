@@ -151,7 +151,6 @@ function! AutoSave()
 
   call KillTrailingWhitespace()
   silent! wa
-  doau BufWritePost
 endfunction
 
 augroup autosave
@@ -830,6 +829,7 @@ endfunction
 function! PytestRun()
   let fn = getcwd() . '/.git/sharpshooter.fifo'
   call writefile(['bang bang'], fn)
+  doau BufWritePost
 endfunction
 
 function! PytestCurrent()
