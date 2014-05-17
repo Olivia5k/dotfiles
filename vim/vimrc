@@ -922,7 +922,6 @@ function! Sniper()
   " module/(file).py
   let test = 'test/test_' . fnamemodify(expand('%s'), ':t')
   let pos = SnakeskinParse(fn).position()
-  let prefix = '^class '
 
   if len(pos) == 2
     " Class and method
@@ -941,21 +940,41 @@ function! Sniper()
   execute "vsplit" test
 
   for target in targets
-    let match = "class Test".target."(.*:$"
-    let clspos = search(match, 'cw')
+    let clspos = search("class Test".target."(.*:$", 'cw')
     if clspos != 0
       break
     endif
   endfor
 
   if clspos == 0
-    " Class not found. Append it to the end of the file!
-    let lines = ['', '', 'class Test'.targets[0].'(object):', '    pass']
-    call append(line('$'), lines)
+    " Class not found. Append it to the end of the file, or below the closest
+    " related test class!
+    let lines = ['class Test'.targets[0].'(object):', '    pass']
+
+    " Go to end of file and search upward for Test<Class>
+    normal G
+    let otherpos = search("class Test".pos[0], 'cb')
+    let nextpos = search("^class Test", 'W')
+
+    if otherpos != 0 && nextpos != 0
+      " There are already test for the class, and this is not the last one;
+      " insert the new class after the last test of this class.
+      let lnr = nextpos - 1
+      let lines = lines + ['', '']
+      let add = 1
+    else
+      " There are no test for this class, or it's the last group of tests.
+      " Append at the end of the file..
+      let lnr = line('$')
+      let lines = ['', ''] + lines
+      let add = 5
+    endif
+
+    call append(lnr, lines)
 
     " Land on the last "pass"
     let pos = getpos('.')
-    let pos[1] = line('$')
+    let pos[1] = lnr + add
     let pos[2] = 5
     call setpos('.', pos)
   endif
