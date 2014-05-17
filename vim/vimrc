@@ -902,6 +902,7 @@ endfunction
 
 " Run all tests, disabling anything set by Sharpshooter().
 function! Scattershooter()
+  call clearmatches()
   let dir = getcwd() . '/.git/sharpshooter'
   for fn in [dir.'/k', dir.'/file']
     if filereadable(fn)
