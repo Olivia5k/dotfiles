@@ -368,13 +368,13 @@ zle -N zle-isearch-exit _clearbelowprompt
 # }}}
 # zle hax {{{
 
-# alt-q to back one step in a path
+# Back one step in a path
 function dirname-previous-word () {
   autoload -U modify-current-argument
   modify-current-argument '${ARG:h}'
 }
 
-# alt-w to make an arguments path be absolute. Will resolve symlinks.
+# Make an arguments path be absolute. Will resolve symlinks.
 function abs-previous-word () {
   autoload -U modify-current-argument
   modify-current-argument '${ARG:A}'
@@ -402,6 +402,17 @@ kicker-command-line() {
 zle -N kicker-command-line
 bindkey '^Ok' kicker-command-line
 
+# Use selecta to go to a dir
+selecta-command-line() {
+  cd $(fd | selecta)
+  clear
+
+  # TODO: Learn how to retrigger so that git prompt is re-added
+  zle .reset-prompt
+}
+zle -N selecta-command-line
+bindkey '^[c' selecta-command-line
+
 # }}}
 
 # }}}
@@ -414,7 +425,7 @@ function f() {
 }
 
 function fd() {
-  find 2>/dev/null -type d | grep -is "$1"
+  find 2>/dev/null -type d | grep -v '\.git' | grep -is "$1"
 }
 
 # Global grep. Searches files for content.
