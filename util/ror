@@ -17,4 +17,4 @@ if [[ $(ps ax | grep "$grep" | grep -vEc '(xwininfo|grep)') -lt 3 ]] ; then
   exec ${(z)executable} &|
 fi
 
-hlwmraise $class
+wmraise $class

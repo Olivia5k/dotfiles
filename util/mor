@@ -17,8 +17,7 @@ shift
 title="${sess}@${host}"
 
 # Try to get focus. Do not care whether it works or not
-# i3-msg "[title=\"$title\"] focus" &> /dev/null
-hlwmraise $title
+wmraise $title
 
 # If the session is not running in a terminal, start it
 if [[ $(ps ax | grep "mux $sess" -c) -lt 3 ]] ; then
