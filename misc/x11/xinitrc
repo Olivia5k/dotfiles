@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 km &
 xset r rate 330 45 &
 xset -b
@@ -7,9 +9,10 @@ exec nm-applet &
 exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 1 -root &
 exec keynav &
-wp &
+# wp &
 gnome-keyring --start &
 
 
-# exec i3 -V &> $HOME/.logs/i3.log
-exec herbstluftwm --locked &> $HOME/.logs/hlwm.log
+export XORG_WM="i3"
+exec i3 -V &> $HOME/.logs/i3.log
+# exec herbstluftwm --locked &> $HOME/.logs/hlwm.log
