@@ -98,20 +98,19 @@ setup(
 )
 
 XPT st " pytest.set_trace\()
-import pytest
-pytest.set_trace()
+import pytest ; pytest.set_trace()
 
 XPT xfail " @pytest.mark.xfail
 @pytest.mark.xfail
 
-XPT mm " mock.MagicMock\()
-mock.MagicMock()
+XPT m " mock.Mock\(..)
+mock.Mock(`args?^)
 
-XPT im " import mock
-import mock
+XPT mm " mock.MagicMock\(..)
+mock.MagicMock(`args?^)
 
-XPT cow " mock.assert_called_once_with\(...)
-`mock^.assert_called_once_with(`args^)
+XPT cow " mock.assert_called_once_with\(..)
+`mock^.assert_called_once_with(`args?^)
 
 XPT cal " assert mock.call_args_list == list
 assert `mock^.call_args_list == `calls^
@@ -119,10 +118,10 @@ assert `mock^.call_args_list == `calls^
 XPT cc " assert obj.call_count == x
 assert `mock^.call_count == `0^
 
-XPT @p " @mock.patch\()
+XPT @p " @mock.patch\(..)
 @mock.patch('`object^')
 
-XPT @po " @mock.patch.object\()
+XPT @po " @mock.patch.object\(.., ..)
 @mock.patch(`object^, '`member^')
 
 XPT T " True
@@ -131,8 +130,5 @@ True
 XPT F " False
 False
 
-XPT isub " import subprocess as sub
-import subprocess as sub
-
-XPT rx " raise Exception\(...)
-raise `Exception^(`args^)
+XPT rx " raise Exception\(..)
+raise `Exception^(`args?^)
