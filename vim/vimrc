@@ -247,7 +247,8 @@ set directory=~/.cache/vim/swap//   " swap files
 " }}}
 " Leader {{{
 
-let mapleader = ","
+" Vim, damnit, Why not <space>?
+let mapleader = " "
 let maplocalleader = "\\"
 
 " }}}
@@ -570,9 +571,9 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 set foldlevelstart=100
 
 " Space to toggle folds.
-nnoremap <Space> za
-nnoremap <C-Space> zM
-nnoremap <S-Space> zA
+" nnoremap <Space> za
+" nnoremap <C-Space> zM
+" nnoremap <S-Space> zA
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
