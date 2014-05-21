@@ -414,6 +414,12 @@ zle -N selecta-command-line
 bindkey '^[c' selecta-command-line
 
 # }}}
+# terminal settings {{{
+
+# Disable Ctrl-q/s flow control.
+stty -ixon
+
+# }}}
 
 # }}}
 # Application specific {{{
