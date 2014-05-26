@@ -30,7 +30,6 @@ press `Enter`.
 ### Windows
 
 * `c`: Create a new window
-* `C`: Create a new window as root (via sudo)
 * `M-hl`: Move windows forward or backward
 * `M-w`: Force kill a window
 
