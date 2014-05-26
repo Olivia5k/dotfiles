@@ -47,8 +47,8 @@ press `Enter`.
 
 ### Panes
 
-* `s`: Split vertically
-* `z`: Split horizontally
+* `s`: Split vertically (will retain $PWD for the split)
+* `z`: Split horizontally (see above)
 * `M-p`: Force kill a pane
 
 * `hjkl`: Browse between panes
