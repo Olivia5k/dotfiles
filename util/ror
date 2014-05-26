@@ -18,3 +18,7 @@ if [[ $(ps ax | grep "$grep" | grep -vEc '(xwininfo|grep)') -lt 3 ]] ; then
 fi
 
 wmraise $class
+
+if [[ -n "$4" ]]; then
+  xdotool key $4
+fi
