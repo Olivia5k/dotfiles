@@ -145,7 +145,7 @@ set completeopt=longest,menuone,preview
 
 " Save the file on delays. Can be toggled by letting/unletting g:no_autosave
 function! AutoSave()
-  if exists('b:autosave') && b:autosave == 1 || &modified == 0
+  if exists('b:autosave') && b:autosave != 1 || &modified == 0
     return
   endif
 
