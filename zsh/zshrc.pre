@@ -56,6 +56,10 @@ setopt promptsubst
 fpath=($ZSHCONFDIR/comp $ZSHCONFDIR/modules/zsh-completions/src $fpath)
 zstyle ':completion:*' hosts off
 
+if (( $+commands[sshmux] )); then
+  export SSHMUX_CMD="i3-msg workspace 5: sshmux && urxvt -e sshmux %q"
+fi
+
 # }}}
 # Automatic Python completion {{{
 
