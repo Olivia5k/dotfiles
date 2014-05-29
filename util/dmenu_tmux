@@ -1,0 +1,8 @@
+#!/bin/zsh
+# Select a tmux session running in a terminal
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+#
+source ${XDG_CONFIG_HOME:-$HOME/.config}/dmux/dmuxrc
+
+xwininfo -root -tree | grep -i urxvt | cut -d" " -f10 | tr -d '":' \
+  | dmenu_any "tmux" "i3-msg '[title=\"%q\"] focus'" -
