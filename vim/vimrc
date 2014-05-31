@@ -1386,7 +1386,7 @@ let g:vimwiki_list = [
   \    'path_html': '~/.local/share/vimwiki/html'
   \ }
   \ ]
-let g:vimwiki_folding = 1
+let g:vimwiki_folding = 'syntax'
 
 function! ProjectTodo(...)
   " Save, close and clear message buffer if we are already in a vimwiki buffer
