@@ -1107,9 +1107,8 @@ augroup END
 let g:ft_ignore_pat = '*.pp$'
 augroup puppet_ftdetect_omfg
   au!
-  au BufRead,BufNewFile *.pp setfiletype puppet
+  au BufRead,BufNewFile *.pp set ft=puppet
 augroup END
-
 
 " }}}
 " Vim {{{
