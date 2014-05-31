@@ -1186,7 +1186,7 @@ vmap <bar> \\\
 
 let g:ctrlp_dont_split = 'NERD_tree_2'
 let g:ctrlp_jump_to_buffer = 0
-let g:ctrlp_map = '<leader>q'
+let g:ctrlp_map = '<F3>'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_reversed = 1
 let g:ctrlp_split_window = 0
@@ -1205,12 +1205,21 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_projects = [
       \ '~/spotify', '~/git', '~/.vim/bundle', '~/var/http/talks']
 
+function! MaybeCtrlP()
+  if getcwd() == expand('$HOME')
+    CtrlPProject
+  else
+    CtrlP
+  endif
+endfunction
+
 nnoremap <silent> <leader>. :CtrlPTag<cr>
-nnoremap <silent> <A-q> :CtrlP<cr>
+nnoremap <silent> <A-q> :call MaybeCtrlP()<cr>
 nnoremap <silent> <A-a> :CtrlPBuffer<cr>
 nmap     <silent> <A-e> :CtrlP %%<cr>
 nnoremap <silent> <A-p> :CtrlPProject<cr>
-nnoremap <silent> <Leader>q :CtrlP<cr>
+
+nnoremap <silent> <Leader>q :call MaybeCtrlP()<cr>
 nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
 nnoremap <silent> <Leader>p :CtrlPProject<cr>
 nmap     <silent> <leader>e :CtrlP %%<cr>
