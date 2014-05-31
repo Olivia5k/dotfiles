@@ -18,64 +18,81 @@ filetype plugin indent on
 " }}}
 " Plugins {{{
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set nomore
 
-Bundle 'gmarik/vundle'
+fun! SetupVAM()
+  let c = get(g:, 'vim_addon_manager', {})
+  let g:vim_addon_manager = c
+  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
+  " most used options you may want to use:
+  " let c.log_to_buf = 1
+  let c.auto_install = 1
+  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
+    execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '
+        \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
+  endif
+  call vam#ActivateAddons([], {'auto_install' : 1})
+endfun
+
+call SetupVAM()
 
 " Colors
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'thiderman/neverland-vim-theme'
-Bundle 'endel/vim-github-colorscheme.git'
+VAMActivate github:nanotech/jellybeans.vim
+VAMActivate github:thiderman/neverland-vim-theme
+VAMActivate github:endel/vim-github-colorscheme.git
 
 " UI and navigation
-Bundle 'bling/vim-airline'
-Bundle 'gregsexton/MatchTag'
-Bundle 'kien/ctrlp.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'thiderman/ctrlp-project'
-Bundle 'thiderman/vim-syntaxjump'
-Bundle 'majutsushi/tagbar'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
+VAMActivate github:bling/vim-airline
+VAMActivate github:gregsexton/MatchTag
+VAMActivate github:kien/ctrlp.vim
+VAMActivate github:kien/rainbow_parentheses.vim
+VAMActivate github:thiderman/ctrlp-project
+VAMActivate github:thiderman/vim-syntaxjump
+VAMActivate github:majutsushi/tagbar
+VAMActivate github:scrooloose/nerdtree
+VAMActivate github:scrooloose/syntastic
 
 " Git
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
-Bundle 'int3/vim-extradite'
+VAMActivate github:tpope/vim-fugitive
+VAMActivate github:gregsexton/gitv
+VAMActivate github:int3/vim-extradite
 
 " Python
-Bundle 'thiderman/vim-snakecharmer'
-Bundle 'thiderman/vim-snakeskin'
-Bundle 'thiderman/vim-troves'
+VAMActivate github:thiderman/vim-snakecharmer
+VAMActivate github:thiderman/vim-snakeskin
+VAMActivate github:thiderman/vim-troves
 
 " Misc filetypes
-Bundle 'VimClojure'
-Bundle 'evanmiller/nginx-vim-syntax'
-Bundle 'rodjek/vim-puppet'
-Bundle 'chrisbra/csv.vim'
-Bundle 'mattn/emmet-vim'
+VAMActivate github:vim-scripts/VimClojure
+VAMActivate github:evanmiller/nginx-vim-syntax
+VAMActivate github:rodjek/vim-puppet
+VAMActivate github:chrisbra/csv.vim
+VAMActivate github:mattn/emmet-vim
+VAMActivate github:PotatoesMaster/i3-vim-syntax
 
 " Editing and misc
-Bundle 'AndrewRadev/switch.vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'godlygeek/tabular'
-Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'mileszs/ack.vim'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-jdaddy'
-Bundle 'tpope/vim-projectile'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-scriptease'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-scripts/argtextobj.vim'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'drmingdrmer/xptemplate'
+VAMActivate github:AndrewRadev/switch.vim
+VAMActivate github:Raimondi/delimitMate
+VAMActivate github:godlygeek/tabular
+VAMActivate github:michaeljsmith/vim-indent-object
+VAMActivate github:mileszs/ack.vim
+VAMActivate github:terryma/vim-multiple-cursors
+VAMActivate github:tpope/vim-abolish
+VAMActivate github:tpope/vim-commentary
+VAMActivate github:tpope/vim-endwise
+VAMActivate github:tpope/vim-eunuch
+VAMActivate github:tpope/vim-jdaddy
+VAMActivate github:tpope/vim-projectile
+VAMActivate github:tpope/vim-repeat
+VAMActivate github:tpope/vim-scriptease
+VAMActivate github:tpope/vim-surround
+VAMActivate github:tpope/vim-unimpaired
+VAMActivate github:vim-scripts/argtextobj.vim
+VAMActivate github:vim-scripts/vimwiki
+VAMActivate github:drmingdrmer/xptemplate
+
+set more
 
 " }}}
 " Basic options {{{
