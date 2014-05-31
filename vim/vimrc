@@ -77,6 +77,8 @@ VAMActivate github:Raimondi/delimitMate
 VAMActivate github:godlygeek/tabular
 VAMActivate github:michaeljsmith/vim-indent-object
 VAMActivate github:mileszs/ack.vim
+VAMActivate github:kurkale6ka/vim-swap
+VAMActivate github:kurkale6ka/vim-pairs
 VAMActivate github:terryma/vim-multiple-cursors
 VAMActivate github:tpope/vim-abolish
 VAMActivate github:tpope/vim-commentary
@@ -1369,11 +1371,17 @@ vmap { S}
 " }}}
 " unimpaired {{{
 
+" gvim only alt-bindings
 nmap <A-j> ]e
 nmap <A-k> [e
 vmap <A-j> ]egv
 vmap <A-k> [egv
 
+" Terminal binds. A bit clunky, but hey
+nmap zj ]e
+nmap zk [e
+vmap zj ]egv
+vmap zk [egv
 vmap <C-j> ]egv
 vmap <C-k> [egv
 
