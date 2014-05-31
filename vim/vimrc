@@ -62,6 +62,7 @@ VAMActivate github:int3/vim-extradite
 VAMActivate github:thiderman/vim-snakecharmer
 VAMActivate github:thiderman/vim-snakeskin
 VAMActivate github:thiderman/vim-troves
+VAMActivate github:alfredodeza/coveragepy.vim
 
 " Misc filetypes
 VAMActivate github:vim-scripts/VimClojure
