@@ -61,7 +61,7 @@ bindsym Mod4+2 workspace 2: dev
 bindsym Mod4+3 workspace 3: irc
 bindsym Mod4+4 workspace 4: main
 bindsym Mod4+5 workspace 5: sshmux
-bindsym Mod4+6 workspace 6: misc
+bindsym Mod4+6 workspace 6: todo
 bindsym Mod4+7 workspace 7: misc
 bindsym Mod4+8 workspace 8: spotify
 bindsym Mod4+9 workspace 9: vpn
@@ -108,6 +108,7 @@ bindcode Mod4+Control+36 exec dmenu_sshmux  # Mod4+Ctrl+Enter
 bindsym Mod4+a exec mor alt
 bindsym Mod4+d exec mor dev
 bindsym Mod4+i exec mor irc dragonisle
+bindsym Mod4+t exec mor todo
 bindsym Mod4+m exec dmenu_tmux
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
