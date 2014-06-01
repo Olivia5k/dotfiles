@@ -116,10 +116,10 @@ bindsym Mod4+s exec ror "spotify" "Linux Preview" "spotify"
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
 
-# Volume mods
-bindsym Mod4+z exec amixer set Master toggle
-bindsym Mod4+Mod1+h exec amixer set PCM 10-
-bindsym Mod4+Mod1+l exec amixer set PCM 10+
+# Volume mods (yaourt -S pulseaudio-ctl)
+bindsym Mod4+z exec pulseaudio-ctl mute
+bindsym Mod4+Mod1+h exec pulseaudio-ctl down
+bindsym Mod4+Mod1+l exec pulseaudio-ctl up
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
