@@ -112,6 +112,7 @@ bindsym Mod4+m exec dmenu_tmux
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+s exec ror "spotify" "Linux Preview" "spotify"
+bindsym Mod4+Mod1+s exec ror "forticlientsslvpn" "forticlientsslvpn" "sudo forticlientsslvpn"
 
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
