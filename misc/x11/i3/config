@@ -165,12 +165,13 @@ set $urgent #942C2C
 set $indicator #979876
 set $gray #f6f6f6
 set $dark #707070
+set $background #101010
 
 client.focused          $active $active $gray $indicator
-client.focused_inactive $semiactive $semiactive $gray #484e50
+client.focused_inactive $semiactive $semiactive $gray $inactive
 client.unfocused        $inactive $inactive $dark $inactive
-client.urgent           $urgent $urgent $gray #900000
-client.background       #101010
+client.urgent           $urgent $urgent $gray $inactive
+client.background       $background
 
 # Yo gimme bar
 bar {
