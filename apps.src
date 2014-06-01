@@ -6,7 +6,7 @@
 apps[emacs]="emacs.d"
 apps[gem]="misc/gemrc"
 apps[git]="misc/gitconfig misc/git_template"
-apps[i3]="misc/x11/i3.conf"
+apps[i3]="misc/x11/i3/config"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
 apps[luakit]="misc/luakit/"
 apps[most]="misc/mostrc"
@@ -24,7 +24,7 @@ apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 # actual destinations.
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
 dest[misc/luakit/]="${XDG_CONFIG_HOME:-$HOME/.config}/luakit"
-dest[misc/x11/i3.conf]="$HOME/.i3/config"
+dest[misc/x11/i3/config]="$HOME/.i3/config"
 dest[misc/x11/herbstluftwm.conf]="${XDG_CONFIG_HOME:-$HOME/.config}/herbstluftwm/autostart"
 dest[zsh/grml.zsh]="$HOME/.zshrc"
 
