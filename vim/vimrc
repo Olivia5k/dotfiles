@@ -1438,7 +1438,7 @@ function! Diary()
   edit `=file`
 endfunction
 
-nmap <silent> <leader>w<space> :call Diary()<cr>
+nmap <silent> <leader>wg :call Diary()<cr>
 command! -nargs=0 Diary :call Diary()
 
 " }}}
