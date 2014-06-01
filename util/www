@@ -10,7 +10,7 @@ import subprocess as sub
 def browser(url):
     # sub.Popen(['wmraise', '("Navigator" "Firefox")'])
     # sub.Popen(['firefox', url], stdout=sub.PIPE, stderr=sub.PIPE)
-    sub.Popen(['wmraise', '("chromium" "Chromium")'])
+    sub.Popen(['wmraise', 'Chromium'])
     sub.Popen(['chromium', url], stdout=sub.PIPE, stderr=sub.PIPE)
 
 
