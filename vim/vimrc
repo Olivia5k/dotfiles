@@ -34,67 +34,67 @@ fun! SetupVAM()
     call system(cmd)
   endif
   call vam#ActivateAddons([], {'auto_install' : 1})
+
+  " Colors
+  VAMActivate github:nanotech/jellybeans.vim
+  VAMActivate github:thiderman/neverland-vim-theme
+  VAMActivate github:endel/vim-github-colorscheme.git
+
+  " UI and navigation
+  VAMActivate github:bling/vim-airline
+  VAMActivate github:gregsexton/MatchTag
+  VAMActivate github:kien/ctrlp.vim
+  VAMActivate github:kien/rainbow_parentheses.vim
+  VAMActivate github:thiderman/ctrlp-project
+  VAMActivate github:thiderman/vim-syntaxjump
+  VAMActivate github:majutsushi/tagbar
+  VAMActivate github:scrooloose/nerdtree
+  VAMActivate github:scrooloose/syntastic
+
+  " Git
+  VAMActivate github:tpope/vim-fugitive
+  VAMActivate github:gregsexton/gitv
+  VAMActivate github:int3/vim-extradite
+
+  " Python
+  VAMActivate github:thiderman/vim-snakecharmer
+  VAMActivate github:thiderman/vim-snakeskin
+  VAMActivate github:thiderman/vim-troves
+  VAMActivate github:alfredodeza/coveragepy.vim
+
+  " Misc filetypes
+  VAMActivate github:vim-scripts/VimClojure
+  VAMActivate github:evanmiller/nginx-vim-syntax
+  VAMActivate github:rodjek/vim-puppet
+  VAMActivate github:chrisbra/csv.vim
+  VAMActivate github:mattn/emmet-vim
+  VAMActivate github:PotatoesMaster/i3-vim-syntax
+
+  " Editing and misc
+  VAMActivate github:AndrewRadev/switch.vim
+  VAMActivate github:Raimondi/delimitMate
+  VAMActivate github:godlygeek/tabular
+  VAMActivate github:michaeljsmith/vim-indent-object
+  VAMActivate github:mileszs/ack.vim
+  VAMActivate github:kurkale6ka/vim-swap
+  VAMActivate github:kurkale6ka/vim-pairs
+  VAMActivate github:terryma/vim-multiple-cursors
+  VAMActivate github:tpope/vim-abolish
+  VAMActivate github:tpope/vim-commentary
+  VAMActivate github:tpope/vim-endwise
+  VAMActivate github:tpope/vim-eunuch
+  VAMActivate github:tpope/vim-jdaddy
+  VAMActivate github:tpope/vim-projectile
+  VAMActivate github:tpope/vim-repeat
+  VAMActivate github:tpope/vim-scriptease
+  VAMActivate github:tpope/vim-surround
+  VAMActivate github:tpope/vim-unimpaired
+  VAMActivate github:vim-scripts/argtextobj.vim
+  VAMActivate github:vim-scripts/vimwiki
+  VAMActivate github:drmingdrmer/xptemplate
 endfun
 
-call SetupVAM()
-
-" Colors
-VAMActivate github:nanotech/jellybeans.vim
-VAMActivate github:thiderman/neverland-vim-theme
-VAMActivate github:endel/vim-github-colorscheme.git
-
-" UI and navigation
-VAMActivate github:bling/vim-airline
-VAMActivate github:gregsexton/MatchTag
-VAMActivate github:kien/ctrlp.vim
-VAMActivate github:kien/rainbow_parentheses.vim
-VAMActivate github:thiderman/ctrlp-project
-VAMActivate github:thiderman/vim-syntaxjump
-VAMActivate github:majutsushi/tagbar
-VAMActivate github:scrooloose/nerdtree
-VAMActivate github:scrooloose/syntastic
-
-" Git
-VAMActivate github:tpope/vim-fugitive
-VAMActivate github:gregsexton/gitv
-VAMActivate github:int3/vim-extradite
-
-" Python
-VAMActivate github:thiderman/vim-snakecharmer
-VAMActivate github:thiderman/vim-snakeskin
-VAMActivate github:thiderman/vim-troves
-VAMActivate github:alfredodeza/coveragepy.vim
-
-" Misc filetypes
-VAMActivate github:vim-scripts/VimClojure
-VAMActivate github:evanmiller/nginx-vim-syntax
-VAMActivate github:rodjek/vim-puppet
-VAMActivate github:chrisbra/csv.vim
-VAMActivate github:mattn/emmet-vim
-VAMActivate github:PotatoesMaster/i3-vim-syntax
-
-" Editing and misc
-VAMActivate github:AndrewRadev/switch.vim
-VAMActivate github:Raimondi/delimitMate
-VAMActivate github:godlygeek/tabular
-VAMActivate github:michaeljsmith/vim-indent-object
-VAMActivate github:mileszs/ack.vim
-VAMActivate github:kurkale6ka/vim-swap
-VAMActivate github:kurkale6ka/vim-pairs
-VAMActivate github:terryma/vim-multiple-cursors
-VAMActivate github:tpope/vim-abolish
-VAMActivate github:tpope/vim-commentary
-VAMActivate github:tpope/vim-endwise
-VAMActivate github:tpope/vim-eunuch
-VAMActivate github:tpope/vim-jdaddy
-VAMActivate github:tpope/vim-projectile
-VAMActivate github:tpope/vim-repeat
-VAMActivate github:tpope/vim-scriptease
-VAMActivate github:tpope/vim-surround
-VAMActivate github:tpope/vim-unimpaired
-VAMActivate github:vim-scripts/argtextobj.vim
-VAMActivate github:vim-scripts/vimwiki
-VAMActivate github:drmingdrmer/xptemplate
+silent call SetupVAM()
 
 set more
 
