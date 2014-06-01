@@ -23,11 +23,6 @@ wmraise $title
 if [[ $(ps ax | grep "mux $sess" -c) -lt 3 ]] ; then
   term="urxvt -name $title"
 
-  # f="$HOME/.cache/mor_extra"
-  # if [[ -f $f ]] ; then
-  #   term="$term $(<$f)"
-  # fi
-
   if [[ "$host" = "$HOST" ]]; then
     ${(z)term} -e mux $sess
   else
