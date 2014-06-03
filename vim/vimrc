@@ -1161,6 +1161,26 @@ augroup ft_xresources
 augroup END
 
 " }}}
+" zsh {{{
+
+" Automatically add zsh ft and shebang when making tool scripts
+function! AutoUtil(fn)
+  if a:fn =~ '\.'
+    " Abort if there seems there is an extension
+    return
+  endif
+
+  setl ft=zsh
+  call append(0, ['#!/bin/zsh', '', ''])
+endfunction
+
+augroup ft_zshutil
+  au!
+
+  au BufNewFile */util/*,*/tools/* call AutoUtil(expand("<afile>:p:t"))
+augroup END
+
+" }}}
 
 " }}}
 " Plugin settings {{{
