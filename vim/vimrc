@@ -1171,7 +1171,7 @@ function! AutoUtil(fn)
   endif
 
   setl ft=zsh
-  call append(0, ['#!/bin/zsh', '', ''])
+  call append(0, ['#!/bin/zsh'])
 endfunction
 
 augroup ft_zshutil
