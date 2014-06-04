@@ -72,7 +72,7 @@ bindsym Mod4+Shift+2 move workspace 2: dev
 bindsym Mod4+Shift+3 move workspace 3: irc
 bindsym Mod4+Shift+4 move workspace 4: main
 bindsym Mod4+Shift+5 move workspace 5: sshmux
-bindsym Mod4+Shift+6 move workspace 6: gimp
+bindsym Mod4+Shift+6 move workspace 6: todo
 bindsym Mod4+Shift+7 move workspace 7: misc
 bindsym Mod4+Shift+8 move workspace 8: spotify
 bindsym Mod4+Shift+9 move workspace 9: vpn
