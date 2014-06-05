@@ -9,12 +9,11 @@ exec xsetroot -cursor_name left_ptr &
 exec unclutter -idle 1 -root &
 exec keynav &
 
-# Only start the keyring if it is installed
 (( $+commands[gnome-keyring])) && gnome-keyring --start &
+(( $+commands[start-pulseaudio-x11])) && start-pulseaudio-x11 &
 
 # Only do wallpapers if we have one
 [[ -r "$HOME/.local/wallpaper" ]] && wp &
-
 
 export XORG_WM="i3"
 exec i3 -V &> $HOME/.logs/i3.log
