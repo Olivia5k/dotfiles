@@ -14,8 +14,8 @@ for_window [class="(?i)zathura"] move container to workspace pdf; workspace pdf
 for_window [class="xpdf"] move container to workspace pdf; workspace pdf
 for_window [class="gimp"] move container to workspace gimp; workspace gimp
 
-# Toggle tiling/floating of the current window (Mod4+Shift+Space)
-bindcode Mod4+Shift+65 floating toggle
+# Toggle tiling/floating of the current window (Mod4+M)
+bindsym Mod4+M floating toggle
 
 # Go into the tiling layer / floating layer, depending on whether
 # the current window is tiling / floating (Mod4+Mod1+f)
@@ -101,6 +101,7 @@ bindsym Mod4+Mod1+r mode "resize"
 
 # dmenu hax.
 bindcode Mod4+65 exec dmenu_www             # Mod4+Space
+bindcode Mod4+Shift+65 exec dmenu_tmux      # Mod4+Shift+Space
 bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
 bindcode Mod4+Control+36 exec dmenu_sshmux  # Mod4+Ctrl+Enter
 
@@ -109,7 +110,6 @@ bindsym Mod4+a exec mor alt
 bindsym Mod4+d exec mor dev
 bindsym Mod4+i exec mor irc dragonisle
 bindsym Mod4+t exec mor todo
-bindsym Mod4+m exec dmenu_tmux
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+s exec ror "spotify" "Linux Preview" "spotify"
