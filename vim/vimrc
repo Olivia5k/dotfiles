@@ -1044,7 +1044,6 @@ augroup ft_python
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
   " TODO: Expand into an un-self:er as well.
   au FileType python nn S ebiself.<esc>l
-  " au FileType python setlocal formatexpr=
 
   au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
   au BufEnter *.py nn <silent> <a-d> :call Scattershooter()<cr>
