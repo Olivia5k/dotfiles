@@ -251,9 +251,10 @@ set expandtab
 set nowrap
 set textwidth=79
 set formatoptions=qrn1tco
-if v:version >= 703
+try
   set formatoptions+=j
-endif
+catch /.*/
+endtry
 if exists('+colorcolumn')
   set colorcolumn=+1
 endif
