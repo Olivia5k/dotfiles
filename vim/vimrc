@@ -1106,12 +1106,9 @@ augroup END
 " }}}
 " Puppet {{{
 
-" Because of a vim error, probably.
-" https://github.com/rodjek/vim-puppet/issues/29
-let g:ft_ignore_pat = '*.pp$'
-augroup puppet_ftdetect_omfg
+augroup ft_puppet
   au!
-  au BufRead,BufNewFile *.pp set ft=puppet
+  au BufEnter *.pp set commentstring=#%s
 augroup END
 
 " }}}
