@@ -1,0 +1,2 @@
+#!/bin/zsh
+PASSWORD_STORE_DIR="$HOME/spotify/cia-password-store" pass $*
