@@ -785,22 +785,6 @@ augroup END
 " Just add one shiftwidth when indenting python
  let g:pyindent_open_paren = 4
 
-" next-keyword {{{
-
-fun! PythonSearchKeyword(...)
-  let flags = a:0 ? a:1 : ''
-  let python_keys = ["assert", "break", "continue", "del", "exec", "global",
-        \ "nonlocal", "pass", "print", "return", "with", "yield", "class", "def",
-        \ "elif", "else", "if", "for", "while",
-        \ "except", "finally", "raise", "try", "from", "import"]
-  let pt = '\v^\s*\zs('.join(python_keys, '|').')'
-  return search(pt, flags)
-endfun
-
-nmap <silent> ( :call PythonSearchKeyword('b')<cr>
-nmap <silent> ) :call PythonSearchKeyword()<cr>
-
-" }}}
 " py.test switches {{{
 
 " TODO: Make own plugin
