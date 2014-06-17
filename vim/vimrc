@@ -1018,6 +1018,14 @@ endfunction
 
 " }}}
 
+function! PythonSelfToggle()
+    let def = {
+    \  'self\.\(\w\+\)\>': '\1',
+    \ '\(self\.\)\@!\(\w\+\)\>': 'self.\2',
+    \ }
+  call switch#Switch([def])
+endfunction
+
 augroup ft_python
   au!
 
@@ -1026,8 +1034,7 @@ augroup ft_python
   au BufEnter *.py syn keyword Special self
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
-  " TODO: Expand into an un-self:er as well.
-  au FileType python nn S ebiself.<esc>l
+  au FileType python nn <silent> S :call PythonSelfToggle()<cr>
 
   au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
   au BufEnter *.py nn <silent> <a-d> :call Scattershooter()<cr>
