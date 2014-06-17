@@ -8,7 +8,7 @@
 
 SELF=$0:a
 
-INFECT_HOST="http://infect.ninjaloot.se"
+INFECT_HOST="https://etc.ninjaloot.se"
 INFECT_DIR="$HOME/.local/share/infect"
 INFECT_WEB_DIR="$HOME/var/srv/infect"
 INFECT_REMOTE_WEB_DIR="nl:var/srv/infect"
@@ -196,7 +196,7 @@ function infect_update() {
 
   # Download and extract the tar file
   iecho "Downloading..."
-  curl --silent $INFECT_HOST/$file -O || return 1
+  curl -k --silent $INFECT_HOST/$file -O || return 1
 
   iecho "Extracting..."
   tar xzf $file || return 1
@@ -306,7 +306,7 @@ if [[ -n "$1" ]]; then
 else
   # If run without arguments, download latest and run that.
   iecho "Downloading latest version..." white 0
-  curl --silent $INFECT_HOST | zsh -s - 'update' || exit 1
+  curl -k --silent $INFECT_HOST | zsh -s - 'update' || exit 1
   exit 0
 fi
 
