@@ -721,7 +721,7 @@ augroup ft_javaish
   au!
 
   au FileType javascript,java setlocal foldmethod=marker foldmarker={,}
-  au FileType javascript,java setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=0
+  au FileType javascript,java setlocal shiftwidth=2 softtabstop=2 expandtab textwidth=0
 augroup END
 
 augroup json_autocmd
