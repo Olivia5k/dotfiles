@@ -13,7 +13,7 @@ INFECT_DIR="$HOME/.local/share/infect"
 INFECT_WEB_DIR="$HOME/var/srv/infect"
 INFECT_REMOTE_WEB_DIR="nl:var/srv/infect"
 INFECT_BACKUP="backup"
-INFECT_RSYNC_EXCLUDE=".git* .hg* .svn* tmp/ $INFECT_BACKUP/"
+INFECT_RSYNC_EXCLUDE="*/local.* .git* .hg* .svn* tmp/ $INFECT_BACKUP/"
 INFECT_RC_FILE=$INFECT_DIR/infect.rc
 INFECT_REPO_FILE=.local
 
