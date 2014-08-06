@@ -2,7 +2,7 @@ XPTemplate priority=personal
 
 XPTvar $PYTHON_EXP_SYM ' as '
 XPTvar $PYTHON_DOC_MARK '"""'
-XPTvar $SParg      ' '
+XPTvar $SParg      ''
 
 
 XPT di " dict construct
