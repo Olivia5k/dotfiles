@@ -89,10 +89,10 @@ bindcode Mod4+Mod1+Control+36 exec urxvt
 bindsym Mod4+r kill
 
 mode "resize" {
-    bindsym h resize shrink width 3 px or 3 ppt
-    bindsym j resize grow height 3 px or 3 ppt
-    bindsym k resize shrink height 3 px or 3 ppt
-    bindsym l resize grow width 3 px or 3 ppt
+    bindsym h resize shrink width 1 px or 1 ppt
+    bindsym j resize grow height 1 px or 1 ppt
+    bindsym k resize shrink height 1 px or 1 ppt
+    bindsym l resize grow width 1 px or 1 ppt
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
