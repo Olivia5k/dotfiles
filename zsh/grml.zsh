@@ -2209,33 +2209,17 @@ function info_print () {
 function grml_reset_screen_title () {
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
-    [[ ${NOTITLE:-} -gt 0 ]] && return 0
-    case $TERM in
-        (xterm*|rxvt*)
-            set_title ${(%):-"%n@%m: %~"}
-            ;;
-    esac
+    ESC_print ${(%):-"%m"}
 }
 
 function grml_vcs_to_screen_title () {
-    if [[ $TERM == screen* ]] ; then
-        if [[ -n ${vcs_info_msg_1_} ]] ; then
-            ESC_print ${vcs_info_msg_1_}
-        else
-          local msg=$(print -P '%1~')
-          local git_root; _find_git_root
-
-          if [[ -n "$git_root" ]]; then
-            msg=#$git_root:h:t
-          fi
-
-          if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
-            msg="${msg}@$(print -P '%m')"
-          fi
-
-          ESC_print $msg
-        fi
+  if [[ $TERM == screen* ]] ; then
+    if [[ -n ${vcs_info_msg_1_} ]] ; then
+      ESC_print ${vcs_info_msg_1_}
+    else
+      ESC_print $(print -P '%m')
     fi
+  fi
 }
 
 function grml_maintain_name () {
@@ -2250,7 +2234,7 @@ function grml_cmd_to_screen_title () {
     # machine set screen window title if running in a screen
     if [[ "$TERM" == screen* ]] ; then
         local CMD="${1[(wr)^(*=*|sudo|ssh|-*)]}$NAME"
-        ESC_print ${CMD}
+        ESC_print "${CMD}@$(print -P '%m')"
     fi
 }
 
@@ -2265,7 +2249,7 @@ function grml_control_xterm_title () {
 zrcautoload add-zsh-hook || add-zsh-hook () { :; }
 if [[ $NOPRECMD -eq 0 ]]; then
     add-zsh-hook precmd grml_reset_screen_title
-    add-zsh-hook precmd grml_vcs_to_screen_title
+    # add-zsh-hook precmd grml_vcs_to_screen_title
     add-zsh-hook preexec grml_maintain_name
     add-zsh-hook preexec grml_cmd_to_screen_title
     if [[ $NOTITLE -eq 0 ]]; then
