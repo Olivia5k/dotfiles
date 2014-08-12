@@ -3,3 +3,4 @@ vim/.netrwhist
 *.log
 old-configs-backup
 local
+util/*quake*
