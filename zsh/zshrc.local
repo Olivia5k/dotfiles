@@ -648,6 +648,14 @@ function sppip() {
 }
 
 # }}}
+# tmux {{{
+
+# Load remote configuration if hostname matches pods
+if [[ "$HOST" =~ "^(lon|sto|sjc|ash|aws)" ]] && [[ -n "$TMUX" ]]; then
+  tmux -q source-file $XDG_DATA_HOME/infect/tmux/remote.conf
+fi
+
+# }}}
 
 # }}}
 # Prompt setup {{{
