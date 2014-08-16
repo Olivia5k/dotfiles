@@ -69,8 +69,15 @@ fi
 
 # ls {{{
 
-alias l='command ls -bhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
-alias ls='ls -lbhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
+if [[ $OSTYPE != darwin* ]]; then
+  ls_options+=( --group-directories-first )
+fi
+
+alias l='command ls -bhv '${ls_options:+"${ls_options[*]}"}
+alias ls='ls -lbhv '${ls_options:+"${ls_options[*]}"}
+
+# alias l='command ls -bhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
+# alias ls='ls -lbhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
 
 # }}}
 # aliases {{{
