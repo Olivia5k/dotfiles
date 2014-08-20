@@ -69,6 +69,7 @@ fun! SetupVAM()
   VAMActivate github:chrisbra/csv.vim
   VAMActivate github:mattn/emmet-vim
   VAMActivate github:PotatoesMaster/i3-vim-syntax
+  VAMActivate github:zaiste/tmux.vim
 
   " Editing and misc
   VAMActivate github:AndrewRadev/switch.vim
