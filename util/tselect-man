@@ -1,0 +1,6 @@
+#!/bin/zsh
+#
+ret=$(man -k . | selecta | cut -d" " -f1)
+if [[ -n "$ret" ]]; then
+  tmux neww -n "man ${ret}" "man ${ret}"
+fi
