@@ -651,8 +651,8 @@ function sppip() {
 # tmux {{{
 
 # Load remote configuration if hostname matches pods
-if [[ "$HOST" =~ "^(lon|sto|sjc|ash|aws)" ]] && [[ -n "$TMUX" ]]; then
-  tmux -q source-file $XDG_DATA_HOME/infect/tmux/remote.conf
+if [[ "$HOST" =~ "^(lon|sto|sjc|ash|aws|pod)" ]] && [[ -n "$TMUX" ]]; then
+  tmux source-file $XDG_DATA_HOME/infect/tmux/remote.conf &> /dev/null &|
 fi
 
 # }}}
