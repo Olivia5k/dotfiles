@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+DMENU='selecta' SSHMUX_CMD='tmux neww -n %q "ssh %q"' dmenu_sshmux

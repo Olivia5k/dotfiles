@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+ret=$(print -rl -- ${(ko)commands} | selecta)
+if [[ -n "$ret" ]]; then
+  tmux neww -n "${ret}" "${ret}"
+fi
