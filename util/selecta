@@ -264,6 +264,7 @@ class Score
 
       # Normalize vs. the length of the choice, penalizing longer strings.
       score / choice.length
+      score
     end
 
     # Find the length of the shortest substring matching the given characters.
