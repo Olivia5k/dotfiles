@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-z &
+keyboard-setup &
 xset -b
 xrdb ~/.Xresources
 
