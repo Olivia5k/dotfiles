@@ -51,7 +51,10 @@ function run() {
     echo py.test $target ${(z)opts} --color=yes $@
   fi
 
-  py.test $target ${(Q)${(z)opts}} --color=yes $@
+  if ! py.test $target ${(Q)${(z)opts}} --color=yes $@ ; then
+    # Do a bell echo
+    echo -en "\007"
+  fi
 }
 
 if [[ "$1" == "start" ]]; then
