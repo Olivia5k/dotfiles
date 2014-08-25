@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+wmraise main@$HOST
+tmux select-window -t $1

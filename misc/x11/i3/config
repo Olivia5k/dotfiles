@@ -107,8 +107,9 @@ bindcode Mod4+Control+36 exec dmenu_sshmux  # Mod4+Ctrl+Enter
 
 # Run-or-raisers
 bindsym Mod4+a exec mor alt
-bindsym Mod4+d exec mor dev
-bindsym Mod4+i exec mor irc dragonisle
+bindsym Mod4+d exec muxfocus 2
+bindsym Mod4+i exec muxfocus 1
+# bindsym Mod4+i exec mor irc dragonisle
 bindsym Mod4+t exec mor todo
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
