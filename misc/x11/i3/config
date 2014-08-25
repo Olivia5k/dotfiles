@@ -106,7 +106,7 @@ bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
 bindcode Mod4+Control+36 exec dmenu_sshmux  # Mod4+Ctrl+Enter
 
 # Run-or-raisers
-bindsym Mod4+a exec mor alt
+bindsym Mod4+a exec sharpfocus
 bindsym Mod4+d exec muxfocus 2
 bindsym Mod4+i exec muxfocus 1
 # bindsym Mod4+i exec mor irc dragonisle
