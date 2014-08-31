@@ -3,4 +3,4 @@
 # Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
 
-dmenu_any "www" "www %s"
+dmenu_any "www" "www %q"
