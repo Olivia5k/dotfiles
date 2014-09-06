@@ -15,7 +15,7 @@ bindsym Mod4+Control+h exec tmux resize-pane -L
 bindsym Mod4+Control+j exec tmux resize-pane -D
 bindsym Mod4+Control+k exec tmux resize-pane -U
 bindsym Mod4+Control+l exec tmux resize-pane -R
-bindsym Mod4+f fullscreen
+bindsym Mod4+f exec tmux resize-pane -Z
 
 # Move (Mod4+Shift+hjkl)
 bindsym Mod4+Shift+h exec tmux swap-window -t :-
