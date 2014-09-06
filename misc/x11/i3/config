@@ -1,81 +1,41 @@
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# font -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-# font -*-montecarlo-*-*-*-*-16-*-*-*-*-*-*-*
-# font -*-inconsolata-*-*-*-*-*-*-*-*-*-*-*-*
 font pango: inconsolata 14px
 
-# Use Mouse+Mod4 to drag floating windows to their wanted position
-floating_modifier Mod4
-
-# Window assignments
-for_window [title="^Spotify Premium.*"] move container to workspace 8: spotify; workspace 8: spotify
-for_window [class="(?i)forticlient"] move container to workspace 9: vpn; workspace 9: vpn; floating enable
-for_window [class="(?i)zathura"] move container to workspace pdf; workspace pdf
-for_window [class="xpdf"] move container to workspace pdf; workspace pdf
-for_window [class="gimp"] move container to workspace gimp; workspace gimp
-
-# Toggle tiling/floating of the current window (Mod4+M)
-bindsym Mod4+M floating toggle
-
-# Go into the tiling layer / floating layer, depending on whether
-# the current window is tiling / floating (Mod4+Mod1+f)
-bindsym Mod4+Mod1+f focus mode_toggle
-
 # Focus (Mod4+hjkl)
-bindsym Mod4+h focus left
-bindsym Mod4+j focus down
-bindsym Mod4+k focus up
-bindsym Mod4+l focus right
-bindsym Mod4+u focus parent
-bindsym Mod4+b focus child
+bindsym Mod4+h exec tmux select-pane -L
+bindsym Mod4+j exec tmux select-pane -D
+bindsym Mod4+k exec tmux select-pane -U
+bindsym Mod4+l exec tmux select-pane -R
 
 # Splitting
-bindsym Mod4+Control+z split vertical
-bindsym Mod4+Control+s split horizontal
+bindsym Mod4+z exec tmux split-window -v -c '#{pane_current_path}'
+bindsym Mod4+s exec tmux split-window -h -c '#{pane_current_path}'
 
-# Snap (Mod4+Control+hjkl)
-bindsym Mod4+Control+h layout stacking
-bindsym Mod4+Control+j layout default
-bindsym Mod4+Control+k layout tabbed
+# Resizing (Mod4+Control+hjkl)
+bindsym Mod4+Control+h exec tmux resize-pane -L
+bindsym Mod4+Control+j exec tmux resize-pane -D
+bindsym Mod4+Control+k exec tmux resize-pane -U
+bindsym Mod4+Control+l exec tmux resize-pane -R
 bindsym Mod4+f fullscreen
 
 # Move (Mod4+Shift+hjkl)
-bindsym Mod4+Shift+h move left
-bindsym Mod4+Shift+j move down
-bindsym Mod4+Shift+k move up
-bindsym Mod4+Shift+l move right
+bindsym Mod4+Shift+h exec tmux swap-window -t :-
+bindsym Mod4+Shift+j exec tmux swap-pane -D
+bindsym Mod4+Shift+k exec tmux swap-pane -U
+bindsym Mod4+Shift+l exec tmux swap-window -t :+
 
-# Move Container (Mod4+Control+Shift+hjkl)
-bindsym Mod4+Control+Shift+h focus parent; move left
-bindsym Mod4+Control+Shift+j focus parent; move down
-bindsym Mod4+Control+Shift+k focus parent; move up
-bindsym Mod4+Control+Shift+l focus parent; move right
+# Windows (Mod4+\d)
+bindsym Mod4+1 exec tmux select-window -t 1
+bindsym Mod4+2 exec tmux select-window -t 2
+bindsym Mod4+3 exec tmux select-window -t 3
+bindsym Mod4+4 exec tmux select-window -t 4
+bindsym Mod4+5 exec tmux select-window -t 5
+bindsym Mod4+6 exec tmux select-window -t 6
+bindsym Mod4+7 exec tmux select-window -t 7
+bindsym Mod4+8 exec tmux select-window -t 8
+bindsym Mod4+9 exec tmux select-window -t 9
 
-# Relative workspace switch (Mod4+Mod1+hl)
-#bindsym Mod4+Mod1+43 workspace prev
-#bindsym Mod4+Mod1+46 workspace next
-
-# Workspaces (Mod4+\d)
-bindsym Mod4+1 workspace 1: www
-bindsym Mod4+2 workspace 2: dev
-bindsym Mod4+3 workspace 3: irc
-bindsym Mod4+4 workspace 4: main
-bindsym Mod4+5 workspace 5: sshmux
-bindsym Mod4+6 workspace 6: todo
-bindsym Mod4+7 workspace 7: misc
-bindsym Mod4+8 workspace 8: spotify
-bindsym Mod4+9 workspace 9: vpn
-
-# Move to Workspaces
-bindsym Mod4+Shift+1 move workspace 1: www
-bindsym Mod4+Shift+2 move workspace 2: dev
-bindsym Mod4+Shift+3 move workspace 3: irc
-bindsym Mod4+Shift+4 move workspace 4: main
-bindsym Mod4+Shift+5 move workspace 5: sshmux
-bindsym Mod4+Shift+6 move workspace 6: todo
-bindsym Mod4+Shift+7 move workspace 7: misc
-bindsym Mod4+Shift+8 move workspace 8: spotify
-bindsym Mod4+Shift+9 move workspace 9: vpn
+bindsym Mod4+Mod1+h exec tmux select-window -t :-
+bindsym Mod4+Mod1+l exec tmux select-window -t :+
 
 # Assigning
 assign [class="float"] ~
@@ -88,41 +48,25 @@ bindcode Mod4+Mod1+Control+36 exec urxvt
 # Mod4+Mod1+k kills the current client
 bindsym Mod4+r kill
 
-mode "resize" {
-    bindsym h resize shrink width 1 px or 1 ppt
-    bindsym j resize grow height 1 px or 1 ppt
-    bindsym k resize shrink height 1 px or 1 ppt
-    bindsym l resize grow width 1 px or 1 ppt
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym Mod4+Mod1+r mode "resize"
-
 # dmenu hax.
 bindcode Mod4+65 exec dmenu_www             # Mod4+Space
-bindcode Mod4+Shift+65 exec dmenu_tmux      # Mod4+Shift+Space
 bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
-bindcode Mod4+Control+36 exec dmenu_sshmux  # Mod4+Ctrl+Enter
 
 # Run-or-raisers
 bindsym Mod4+a exec sharpfocus
 bindsym Mod4+d exec muxfocus 2
 bindsym Mod4+i exec muxfocus 1
-# bindsym Mod4+i exec mor irc dragonisle
-bindsym Mod4+t exec mor todo
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
-bindsym Mod4+s exec ror "spotify" "Linux Preview" "spotify"
-bindsym Mod4+Mod1+s exec ror "forticlientsslvpn" "forticlientsslvpn" "sudo forticlientsslvpn"
+bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
 
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
 
 # Volume mods (yaourt -S pulseaudio-ctl)
-bindsym Mod4+z exec pulseaudio-ctl mute
-bindsym Mod4+Mod1+h exec pulseaudio-ctl down
-bindsym Mod4+Mod1+l exec pulseaudio-ctl up
+# bindsym Mod4+z exec pulseaudio-ctl mute
+bindsym Mod4+Mod1+j exec pulseaudio-ctl down
+bindsym Mod4+Mod1+k exec pulseaudio-ctl up
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
@@ -154,40 +98,6 @@ focus_follows_mouse no
 # (i3-wsbar) or i3-msg (can be used to "remote-control" i3) to work.
 ipc-socket ~/.local/share/i3/ipc.sock
 
-# accually borders plx
-new_window pixel 2
-workspace_layout tabbed
-
-set $active #47628f
-set $inactive #333333
-set $semiactive #414957
-set $urgent #942C2C
-set $indicator #979876
-set $gray #f6f6f6
-set $dark #707070
-set $background #101010
-
-client.focused          $active $active $gray $indicator
-client.focused_inactive $semiactive $semiactive $gray $inactive
-client.unfocused        $inactive $inactive $dark $inactive
-client.urgent           $urgent $urgent $gray $inactive
-client.background       $background
-
-# Yo gimme bar
-bar {
-    i3bar_command i3bar
-    status_command ~/.i3/conky
-    position bottom
-    mode dock
-
-    colors {
-        background $inactive
-        statusline $gray
-        separator $dark
-
-        focused_workspace  $active $active $gray
-        active_workspace   $inactive $inactive $gray
-        inactive_workspace $inactive $inactive $dark
-        urgent_workspace   $urgent $urgent $gray
-    }
-}
+# no borders plx
+new_window none
+workspace_layout default
