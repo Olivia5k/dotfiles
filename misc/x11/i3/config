@@ -66,7 +66,6 @@ bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
 
 # Volume mods (yaourt -S pulseaudio-ctl)
-# bindsym Mod4+z exec pulseaudio-ctl mute
 bindsym Mod4+n exec pulseaudio-ctl down
 bindsym Mod4+m exec pulseaudio-ctl up
 
@@ -81,17 +80,13 @@ bindsym Mod4+Mod1+7 exec xbacklight -set 70
 bindsym Mod4+Mod1+8 exec xbacklight -set 80
 bindsym Mod4+Mod1+9 exec xbacklight -set 90
 
-# Lolz screenshot
+# Lolz screenshot and etc
 bindsym Mod4+p exec ss
+bindsym Mod4+t exec toggle-tray
 
-# Mod4+Control+e exits i3
-bind Mod4+Control+26 exit
-
-# Mod4+Mod1+Control+r restarts i3 inplace
-bindsym Mod4+Mod1+Control+r restart
-
-# Mod4+Control+r reloads the configuration
+bindsym Mod4+Control+e exit
 bindsym Mod4+Control+r reload
+bindsym Mod4+Mod1+Control+r restart
 
 # Haha, no.
 focus_follows_mouse no
