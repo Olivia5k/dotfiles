@@ -35,6 +35,8 @@ bindsym Mod4+8 exec tmux select-window -t 8
 bindsym Mod4+9 exec tmux select-window -t 9
 
 bindsym Mod4+Mod1+h exec tmux select-window -t :-
+bindsym Mod4+Mod1+j exec trotate-session -1
+bindsym Mod4+Mod1+k exec trotate-session 1
 bindsym Mod4+Mod1+l exec tmux select-window -t :+
 
 # Assigning
@@ -65,8 +67,8 @@ bindcode Mod4+Mod1+22 exec sswitch
 
 # Volume mods (yaourt -S pulseaudio-ctl)
 # bindsym Mod4+z exec pulseaudio-ctl mute
-bindsym Mod4+Mod1+j exec pulseaudio-ctl down
-bindsym Mod4+Mod1+k exec pulseaudio-ctl up
+bindsym Mod4+n exec pulseaudio-ctl down
+bindsym Mod4+m exec pulseaudio-ctl up
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
