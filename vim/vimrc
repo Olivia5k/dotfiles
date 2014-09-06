@@ -1037,7 +1037,7 @@ augroup ft_python
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
   au FileType python nn <silent> S :call PythonSelfToggle()<cr>
 
-  au BufEnter *.py nn <silent> <cr> :call Sharpshooter()<cr>
+  au BufEnter *.py nn <buffer> <silent> <cr> :call Sharpshooter()<cr>
   au BufEnter *.py nn <silent> <leader>d :call Scattershooter()<cr>
   au BufEnter *.py nn <silent> <leader>s :call Sniper()<cr>
 
