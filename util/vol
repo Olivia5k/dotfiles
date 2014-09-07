@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+pulseaudio-ctl $1
+ret=$(pulseaudio-ctl | grep "Volume level" | cut -d" " -f8 \
+  | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g")
+tmux display-message "Volume: ${ret}%"

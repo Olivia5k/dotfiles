@@ -66,8 +66,8 @@ bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
 
 # Volume mods (yaourt -S pulseaudio-ctl)
-bindsym Mod4+n exec pulseaudio-ctl down
-bindsym Mod4+m exec pulseaudio-ctl up
+bindsym Mod4+n exec vol down
+bindsym Mod4+m exec vol up
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
