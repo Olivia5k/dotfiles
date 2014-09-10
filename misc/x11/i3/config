@@ -1,5 +1,9 @@
 font pango: inconsolata 14px
 
+for_window [title=".*Chromium.*"] move container to workspace www; workspace www
+for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
+for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
+
 # Focus (Mod4+hjkl)
 bindsym Mod4+h exec tmux select-pane -L
 bindsym Mod4+j exec tmux select-pane -D
