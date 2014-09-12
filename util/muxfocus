@@ -3,3 +3,4 @@
 tmux switch-client -t main
 wmraise main@$HOST
 tmux select-window -t $1
+tmux select-pane -t 0
