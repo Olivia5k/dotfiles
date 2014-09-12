@@ -94,6 +94,7 @@ bindsym Mod4+Mod1+Control+r restart
 
 # Haha, no.
 focus_follows_mouse no
+workspace_layout stacking
 
 # The IPC interface allows programs like an external workspace bar
 # (i3-wsbar) or i3-msg (can be used to "remote-control" i3) to work.
