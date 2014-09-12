@@ -2,7 +2,7 @@
 
 file=$XDG_CACHE_HOME/sharpfocus
 wmraise main@$HOST
-tmux select-window main:2
+tmux select-window -t main:2
 
 if [[ $(tmux display -p '#P') == 2 ]]; then
   # Already on alternate terminal, kill it and go back
@@ -14,3 +14,6 @@ elif [[ $(tmux display -p '#{window_panes}') == 2 ]] ; then
 else
   tmux select-pane -t 2
 fi
+
+tmux rename-window dev
+sleep 0.5 && tmux rename-window dev
