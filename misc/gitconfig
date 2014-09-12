@@ -46,7 +46,8 @@
   br          = branch -avv
   co          = checkout
   who         = shortlog -s --
-  lg          = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold cyan)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  lg          = log --abbrev-commit --decorate --date=relative --format=format:'%C(bold 239)%h%C(reset) %C(bold 103)%an%C(reset)%C(auto)%d%C(reset) %s%C(reset) %C(bold black)(%ar)%C(reset) '
+  lgg         = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold 239)%h%C(reset) %C(bold 103)%an%C(reset)%C(auto)%d%C(reset) %s%C(reset) %C(bold black)(%ar)%C(reset) '
   lgc         = log ORIG_HEAD.. --stat --no-merges
   lgp         = log --pretty=format:'%Cred%h%Creset -- %cn, %cr\t%Cgreen%s%Creset'
   staged      = diff --cached

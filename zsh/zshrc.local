@@ -523,6 +523,7 @@ alias grb='git rebase'
 
 # Logging
 alias gl='git lg'
+alias glg='git lgg'
 alias gll='git log --abbrev-commit --decorate --stat'
 alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
