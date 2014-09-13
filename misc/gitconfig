@@ -74,6 +74,7 @@
   draft       = !.git/bin/gerrit drafts
   review      = !.git/bin/gerrit for
   rms         = !.git/bin/rms
+  verbs       = !.git/bin/verbs
 
   cr          = codereview
 
