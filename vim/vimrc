@@ -228,6 +228,8 @@ set wildignore+=*.pyc,*__pycache__*                    " Python byte code
 set wildignore+=*.egg-info*,*.egg                      " Python package data
 set wildignore+=bin,build,lib,share,man                " Python venv files
 set wildignore+=*__init__.py                           " Python inits
+set wildignore+=*.db                                   " SQLite3
+set wildignore+=*logs/*,*dist/*                         " ...
 
 " }}}
 " Line Return {{{
