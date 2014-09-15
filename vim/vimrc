@@ -227,7 +227,7 @@ set wildignore+=*.mo                                   " Django i18n
 set wildignore+=*.pyc,*__pycache__*                    " Python byte code
 set wildignore+=*.egg-info*,*.egg                      " Python package data
 set wildignore+=bin,build,lib,share,man                " Python venv files
-set wildignore+=*test*/__init__.py                     " Python test inits
+set wildignore+=*__init__.py                           " Python inits
 
 " }}}
 " Line Return {{{
