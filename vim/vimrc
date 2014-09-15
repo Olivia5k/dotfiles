@@ -941,7 +941,6 @@ function! Sniper()
   endif
 
   " module/(file).py
-  let test = 'test/test_' . fnamemodify(expand('%s'), ':t')
   let pos = SnakeskinParse(fn).position()
 
   if len(pos) == 2
@@ -958,7 +957,7 @@ function! Sniper()
   endif
 
   only
-  execute "vsplit" test
+  execute "AV"
 
   for target in targets
     let clspos = search("class Test".target."(.*:$", 'cw')
