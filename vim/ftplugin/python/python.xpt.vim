@@ -104,10 +104,10 @@ XPT xfail " @pytest.mark.xfail
 @pytest.mark.xfail
 
 XPT m " mock.Mock\(..)
-mock.Mock(`args?^)
+mock.Mock()
 
 XPT mm " mock.MagicMock\(..)
-mock.MagicMock(`args?^)
+mock.MagicMock()
 
 XPT cow " mock.assert_called_once_with\(..)
 `mock^.assert_called_once_with(`args?^)
