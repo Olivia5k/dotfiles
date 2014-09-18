@@ -947,7 +947,7 @@ function! Sniper()
 
   if len(pos) == 2
     " Class and method
-    let first = pos[0]
+    let first = s:camelize(pos[0])
     let s = substitute(substitute(pos[1], '_\+', '_', 'g'), '_$', '', '')
     let second = s:camelize(s)
 
