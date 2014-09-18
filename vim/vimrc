@@ -85,7 +85,7 @@ fun! SetupVAM()
   VAMActivate github:tpope/vim-endwise
   VAMActivate github:tpope/vim-eunuch
   VAMActivate github:tpope/vim-jdaddy
-  VAMActivate github:tpope/vim-projectile
+  VAMActivate github:tpope/vim-projectionist
   VAMActivate github:tpope/vim-repeat
   VAMActivate github:tpope/vim-scriptease
   VAMActivate github:tpope/vim-surround
@@ -982,8 +982,17 @@ function! Sniper()
       " There are already test for the class, and this is not the last one;
       " insert the new class after the last test of this class.
       let lnr = nextpos - 1
-      let lines = lines + ['', '']
       let add = 1
+
+      " Also, check if the previous test class inherited from something else.
+      " If that was the case, snatch that!
+      let match = matchlist(getline(search('^class', 'bn')), '.*(\(.\w\+\))')
+      if match[1] != ''
+        let lines[0] = substitute(lines[0], '(.\w\+)', '('.match[1].')', '')
+      endif
+
+      " Finally, set what is to be appended
+      let lines = lines + ['', '']
     else
       " There are no test for this class, or it's the last group of tests.
       " Append at the end of the file..
