@@ -894,7 +894,7 @@ endif
 " Sharpshooter {{{
 
 " Run one test and one test only
-function! Sharpshooter()
+function! Sharpshooter() " {{{
   " TODO: Execution from outside of test files
   " TODO: Running all tests
 
@@ -919,10 +919,10 @@ function! Sharpshooter()
 
   " If we're not setting a new test, just execute the last set one
   call PytestRun()
-endfunction
+endfunction " }}}
 
 " Run all tests, disabling anything set by Sharpshooter().
-function! Scattershooter()
+function! Scattershooter() " {{{
   call clearmatches()
   let dir = getcwd() . '/.git/sharpshooter'
   for fn in [dir.'/k', dir.'/file']
@@ -931,10 +931,10 @@ function! Scattershooter()
     endif
   endfor
   call PytestRun()
-endfunction
+endfunction " }}}
 
 " Navigate to a test, creating a stub test class if it does not exist.
-function! Sniper()
+function! Sniper() " {{{
   " TODO: Fix case of util functions outside of classes
   " TODO: Fix case when not under method
   let fn = expand('%')
@@ -1013,7 +1013,58 @@ function! Sniper()
   normal zt
   normal zM
   normal zA
-endfunction
+endfunction " }}}
+
+function! Medic(shift) " {{{
+  echohl Statement
+  echon 'Medic'
+  echohl None
+  echon ': '
+
+  let file = '.git/sharpshooter.index'
+
+  if !filereadable(file)
+    echohl Identifier
+    echon 'No sharpshooter index file.'
+    return
+  endif
+
+  let index = 0
+  let lines = readfile(file)
+
+  if len(lines) == 0
+    echohl Identifier
+    echon 'No errors'
+    return
+  endif
+
+  let shift = lines[-1]
+  if shift =~ '\d'
+    let lines = lines[0:-2]
+    let shift += a:shift
+    let index = shift % len(lines)
+  endif
+
+  let line = lines[index]
+  let spl = split(line, '\.')
+  silent exe 'tag' spl[0]
+  call search(spl[1] . '(')
+  call writefile(lines + [index], file)
+
+  normal zM
+  normal zA
+  normal zz
+
+  echohl Number
+  echon index(lines, line) + 1
+  echon '/'
+  echon len(lines)
+  echohl None
+  echon ' - '
+  echohl Function
+  echon spl[0] . '.' . spl[1]
+  echohl None
+endfunction " }}}
 
 function! s:camelize(s)
   if a:s =~ '_'
@@ -1047,9 +1098,11 @@ augroup ft_python
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
   au FileType python nn <silent> S :call PythonSelfToggle()<cr>
 
-  au BufEnter *.py nn <buffer> <silent> <cr> :call Sharpshooter()<cr>
-  au BufEnter *.py nn <silent> <leader>d :call Scattershooter()<cr>
-  au BufEnter *.py nn <silent> <leader>s :call Sniper()<cr>
+  au BufEnter *.py nn <buffer><silent> <cr> :call Sharpshooter()<cr>
+  au BufEnter *.py nn <buffer><silent> <leader>d :call Scattershooter()<cr>
+  au BufEnter *.py nn <buffer><silent> <leader>s :call Sniper()<cr>
+  au BufEnter *.py nn <buffer><silent> <leader>j :call Medic(1)<cr>
+  au BufEnter *.py nn <buffer><silent> <leader>k :call Medic(-1)<cr>
 
   " Switch {{{
 

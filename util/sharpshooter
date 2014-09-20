@@ -9,6 +9,7 @@ function run() {
 
   # If there are toggle opts from vim, try to access them.
   dir="$PWD/.git/sharpshooter"
+  log="${dir}.log"
   for file in $dir/* ; do
     t=$file:t
 
@@ -51,10 +52,10 @@ function run() {
     echo py.test $target ${(z)opts} --color=yes $@
   fi
 
-  if ! py.test $target ${(Q)${(z)opts}} --color=yes $@ ; then
-    # Do a bell echo
-    echo -en "\007"
-  fi
+  py.test $target ${(Q)${(z)opts}} --color=yes $@ | tee $log
+
+  # Store test failures in a separate file
+  grep '_ Test' $log | cut -d" " -f2 > $PWD/.git/sharpshooter.index
 }
 
 if [[ "$1" == "start" ]]; then
