@@ -3,6 +3,7 @@ font pango: inconsolata 14px
 for_window [title=".*Chromium.*"] move container to workspace www; workspace www
 for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
 for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
+for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h exec tmux select-pane -L
@@ -65,6 +66,7 @@ bindsym Mod4+i exec muxfocus 1
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
+bindsym Mod4+g exec ror "gimp" "gimp" "gimp"
 
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
