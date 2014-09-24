@@ -4,7 +4,7 @@ setopt nullglob
 
 function run() {
   clear
-  opts=""
+  opts=" --color=yes"
   target='test/'
 
   # If there are toggle opts from vim, try to access them.
@@ -35,6 +35,8 @@ function run() {
     fi
   done
 
+  opts+=" --result-log=${log}"
+
   # If no other traceback reporting is set, use short
   if [[ ! -f $dir/tb ]] ; then
     opts+=" --tb=short"
@@ -49,13 +51,10 @@ function run() {
   fi
 
   if [[ $opts =~ '-v' ]]; then
-    echo py.test $target ${(z)opts} --color=yes $@
+    echo py.test $target ${(z)opts}
   fi
 
-  py.test $target ${(Q)${(z)opts}} --color=yes $@ | tee $log
-
-  # Store test failures in a separate file
-  grep '_ Test' $log | cut -d" " -f2 > $PWD/.git/sharpshooter.index
+  py.test $target ${(Q)${(z)opts}}
 }
 
 if [[ "$1" == "start" ]]; then

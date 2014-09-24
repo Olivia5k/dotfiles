@@ -1021,20 +1021,22 @@ function! Medic(shift) " {{{
   echohl None
   echon ': '
 
-  let file = '.git/sharpshooter.index'
+  let file = '.git/sharpshooter.log'
 
   if !filereadable(file)
     echohl Identifier
-    echon 'No sharpshooter index file.'
+    echon 'No sharpshooter log file.'
+    echohl None
     return
   endif
 
   let index = 0
-  let lines = readfile(file)
+  let lines = filter(readfile(file), 'v:val =~ "^[^. ]"')
 
   if len(lines) == 0
     echohl Identifier
     echon 'No errors'
+    echohl None
     return
   endif
 
@@ -1046,14 +1048,12 @@ function! Medic(shift) " {{{
   endif
 
   let line = lines[index]
-  let spl = split(line, '\.')
-  silent exe 'tag' spl[0]
-  call search(spl[1] . '(')
+  let spl = split(line, '::')
+  silent exe 'edit' split(spl[0], ' ')[1]
+  call search(spl[3] . '(')
   call writefile(lines + [index], file)
 
-  normal zM
-  normal zA
-  normal zz
+  normal zMzAzz
 
   echohl Number
   echon index(lines, line) + 1
