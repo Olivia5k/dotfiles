@@ -13,7 +13,7 @@ fi
 sess=$1  # Session name
 shift
 
-[[ -n "$1" ]] && host="$1" || host="$HOST"  # Hostname to check for
+[[ -n "$1" ]] && host="$1" || host="dragonisle"  # Hostname to check for
 title="${sess}@${host}"
 
 # Try to get focus. Do not care whether it works or not
