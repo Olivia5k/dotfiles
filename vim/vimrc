@@ -392,7 +392,7 @@ nnoremap J mzJ`z
 
 " Split line (sister to [J]oin lines)
 " The normal use of S is covered by cc, so don't worry about shadowing it.
-nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+" nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 
 " Reselect the visuals when indenting. Borks slightly with undoing, but
 " you'll get used to it.
@@ -1370,6 +1370,8 @@ call s:gm('grr', 'Gremove ')
 call s:gm('gs',  'Gstatus', '<c-n>')
 call s:gm('gw',  'Gwrite')
 call s:gm('gm',  'Gmove ')
+
+nmap <silent> gd <c-w>o:Gdiff<cr>
 
 " Also jdaddy, shut up
 if maparg('gwaj') != ''
