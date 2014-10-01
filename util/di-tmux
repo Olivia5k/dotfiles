@@ -1,8 +1,8 @@
 #!/bin/zsh
 # For select hosts, run all tmux commands remotely
 
-cmd="tmux"
 if [[ $HOST == "justitia" ]]; then
-  cmd="ssh dragonisle -t LANG=en_US.utf8 tmux"
+  ssh dragonisle -t LANG=en_US.utf8 tmux ${(zqqqq)*} 2> /dev/null
+else
+  tmux ${(z)*}
 fi
-${(z)cmd} ${(zqqqq)*} 2> /dev/null
