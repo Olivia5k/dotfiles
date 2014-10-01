@@ -11,5 +11,4 @@ else
     cmd="new-session -s"
 fi
 
-# The LANG part is for letting tmux know that it actually can UTF8.
-LANG="en_US.utf8" tmux ${(z)cmd} $sess
+di-tmux ${(z)cmd} $sess

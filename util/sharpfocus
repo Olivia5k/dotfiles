@@ -1,20 +1,19 @@
 #!/bin/zsh
 
-file=$XDG_CACHE_HOME/sharpfocus
 wmraise main@$HOST
-tmux select-window -t main:2
+di-tmux select-window -t main:2
 
-if [[ $(tmux display -p '#P') == 2 ]]; then
+if [[ $(di-tmux display -p '#P') == 2 ]]; then
   # Already on alternate terminal, kill it and go back
-  tmux kill-pane
-  tmux select-pane -t 0
-  tmux send-keys space d
-elif [[ $(tmux display -p '#{window_panes}') == 2 ]] ; then
-  tmux select-pane -t 1
-  tmux split-window -v -c '#{pane_current_path}' -p 90
+  di-tmux kill-pane
+  di-tmux select-pane -t 0
+  di-tmux send-keys space d
+elif [[ $(di-tmux display -p '#{window_panes}') == 2 ]] ; then
+  di-tmux select-pane -t 1
+  di-tmux split-window -v -c '#{pane_current_path}' -p 90
 else
-  tmux select-pane -t 2
+  di-tmux select-pane -t 2
 fi
 
-tmux rename-window dev
-sleep 0.5 && tmux rename-window dev
+di-tmux rename-window dev
+sleep 0.5 && di-tmux rename-window dev

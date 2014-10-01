@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-tmux switch-client -t main
-wmraise main@$HOST
-tmux select-window -t $1
-tmux select-pane -t 0
+di-tmux switch-client -t main
+wmraise main@
+di-tmux select-window -t $1
+di-tmux select-pane -t 0
 
 if [[ $1 = 2 ]]; then
   name="dev"
@@ -12,5 +12,5 @@ elif [[ $1 = 1 ]]; then
 fi
 
 if [[ -n "$name" ]]; then
-  tmux rename-window $name
+  di-tmux rename-window $name
 fi

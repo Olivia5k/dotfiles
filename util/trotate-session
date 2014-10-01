@@ -5,10 +5,10 @@ import subprocess as s
 
 # This is the least Pythonic code of all time! Yeah!
 if __name__ == "__main__":
-    p = s.Popen('tmux ls'.split(), stdout=s.PIPE, stderr=s.PIPE)
+    p = s.Popen('di-tmux ls'.split(), stdout=s.PIPE, stderr=s.PIPE)
     r = list(filter(None, p.stdout.read().decode().split('\n')))
     for l in r:
         if l.endswith('(attached)'):
             break
     target = r[(r.index(l) + int(sys.argv[1])) % len(r)].split(':')[0]
-    s.Popen('tmux switch-client -t'.split() + [target]).wait()
+    s.Popen('di-tmux switch-client -t'.split() + [target]).wait()

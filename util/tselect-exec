@@ -2,5 +2,5 @@
 
 ret=$(print -rl -- ${(ko)commands} | selecta)
 if [[ -n "$ret" ]]; then
-  tmux neww -n "${ret}" "${ret}"
+  di-tmux neww -n "${ret}" "${ret}"
 fi

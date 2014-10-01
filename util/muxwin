@@ -2,4 +2,4 @@
 
 # Run this to spawn a new terminal inside the main session!
 mor main
-tmux neww -t main
+di-tmux neww -t main
