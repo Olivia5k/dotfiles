@@ -522,7 +522,12 @@ alias glsd="git ls-files --deleted"
 alias grb='git rebase'
 
 # Logging
-alias gl='git lg'
+if (( $+commands[tig] )) ; then
+  alias gl='tig'
+else
+  alias gl='git lg'
+fi
+
 alias glg='git lgg'
 alias gll='git log --abbrev-commit --decorate --stat'
 alias glc="git shortlog --summary --numbered"
