@@ -1386,13 +1386,19 @@ endfunction
 " }}}
 " Commentary {{{
 
-" Backslash is horrible on swedish layouts. ö is not.
-nmap ö \\\
-vmap ö \\\
+nmap \ gcc
+vmap \ gc
+vmap <bar> gc
+nmap <bar> gcap
 
-" Sometimes, we're in a us layout
-nmap <bar> \\\
-vmap <bar> \\\
+" Unmap the \\ bindings so that \ is the terminating map
+try
+  unmap \\u
+  unmap \\\
+  unmap \\
+catch /.*/
+endtry
+
 
 " }}}
 " Ctrl-P {{{
@@ -1496,7 +1502,6 @@ endfunction
 call s:gm('gi',  'Git ')
 call s:gm('ge',  'Gedit')
 call s:gm('gb',  'Gblame')
-call s:gm('gc',  'Gcommit')
 
 call s:gm('gle', 'Extradite')
 call s:gm('gll', 'Gitv')
