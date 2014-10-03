@@ -61,6 +61,7 @@ fun! SetupVAM()
   VAMActivate github:thiderman/vim-snakeskin
   VAMActivate github:thiderman/vim-troves
   VAMActivate github:alfredodeza/coveragepy.vim
+  VAMActivate github:hdima/python-syntax
 
   " Misc filetypes
   VAMActivate github:vim-scripts/VimClojure
