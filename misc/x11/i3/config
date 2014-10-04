@@ -39,6 +39,8 @@ bindsym Mod4+7 exec di-tmux select-window -t 7
 bindsym Mod4+8 exec di-tmux select-window -t 8
 bindsym Mod4+9 exec di-tmux select-window -t 9
 
+bindcode Mod4+59 exec di-tmux last-window
+
 bindsym Mod4+Mod1+h exec di-tmux select-window -t :-
 bindsym Mod4+Mod1+j exec trotate-session -1
 bindsym Mod4+Mod1+k exec trotate-session 1
