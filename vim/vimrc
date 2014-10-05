@@ -329,7 +329,7 @@ colorscheme jellybeans
 function! BoldlyGo()
   let groups = [
     \ 'Function', 'PreProc', 'Statement', 'String', 'Number', 'Special',
-    \ 'Comment', 'Identifier'
+    \ 'Comment'
     \ ]
 
   for group in groups
