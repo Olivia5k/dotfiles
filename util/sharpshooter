@@ -46,7 +46,7 @@ function run() {
   if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
     # If we are not running all the tests, disable coverage
     if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
-      opts+=" --cov=$PWD:t --cov-report=term-missing"
+      opts+=" --cov=$PWD:t --cov-report=term-missing -k 'not Integration'"
     fi
   fi
 
