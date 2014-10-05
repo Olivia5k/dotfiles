@@ -306,7 +306,7 @@ let g:jellybeans_overrides = {
 \'vCursor':     {'guifg': '000000', 'guibg': 'b0d0f0', 'ctermbg': "233"},
 \'iCursor':     {'guifg': '000000', 'guibg': 'b0d0f0', 'ctermbg': "233", 'attr': 'bold'},
 \
-\'Constant':    {'guifg': '5faf5f', 'ctermfg': '71'},
+\'Constant':    {'guifg': 'ff8700', 'ctermfg': '71'},
 \'Delimiter':   {'guifg': '668799', 'ctermfg': 'Grey'},
 \'DiffAdd':     {'guifg': 'd2ebbe', 'guibg': '437019', 'ctermfg': 'White', 'ctermbg': 'DarkGreen'},
 \'DiffChange':  {'guibg': '2b5b77', 'ctermfg': 'White', 'ctermbg': 'DarkBlue'},
