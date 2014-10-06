@@ -445,7 +445,7 @@ inoremap <c-]> <c-x><c-]>
 " Quick split {{{
 
 nmap <c-z> :sp<cr>
-nmap <c-s> :vsp<cr>
+" nmap <c-s> :vsp<cr>
 nmap <c-q> :q<cr>
 
 " }}}
@@ -486,9 +486,21 @@ iabbrev gt >=
 iabbrev pe +=
 iabbrev hr =>
 
-iabbrev req request
-iabbrev resp response
-iabbrev rv return_value
+function! EatChar(pat)
+  let c = nr2char(getchar(0))
+  return (c =~ a:pat) ? '' : c
+endfunction
+
+function! MakeSpacelessIabbrev(from, to)
+  execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+
+call MakeSpacelessIabbrev('rv', 'return_value')
+call MakeSpacelessIabbrev('goc', 'get_or_create')
+call MakeSpacelessIabbrev('cow', 'assert_called_once_with')
+call MakeSpacelessIabbrev('cc', 'call_count')
+call MakeSpacelessIabbrev('rq', 'request')
+call MakeSpacelessIabbrev('rs', 'response')
 
 " }}}
 " Searching and movement {{{
