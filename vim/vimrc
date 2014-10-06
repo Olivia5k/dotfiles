@@ -619,11 +619,6 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
 set foldlevelstart=100
 
-" Space to toggle folds.
-" nnoremap <Space> za
-" nnoremap <C-Space> zM
-" nnoremap <S-Space> zA
-
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
 nnoremap zO zCzO
@@ -633,6 +628,10 @@ nnoremap zO zCzO
 " accidentally hit zE while going for zR so many times that this is actually
 " warranted.
 nmap zE :echo "Don't do that."<cr>
+
+" Why have I been doing zR and zM for all these years?
+nmap zr zRzz
+nmap zm zMzz
 
 nmap <leader>fm :set foldmethod=marker<cr>
 nmap <leader>fi :set foldmethod=indent<cr>
