@@ -2,14 +2,16 @@
 
 setopt nullglob
 
+root="$PWD/.git/snakecharmer"
+dir="$root/switches/"
+log="$root/snaketest.log"
+fifo="$root/fifo"
+
 function run() {
   clear
-  opts=" --color=yes"
+  opts=" --color=yes --result-log=${log}"
   target='test/'
 
-  # If there are toggle opts from vim, try to access them.
-  dir="$PWD/.git/sharpshooter"
-  log="${dir}.log"
   for file in $dir/* ; do
     t=$file:t
 
@@ -35,8 +37,6 @@ function run() {
     fi
   done
 
-  opts+=" --result-log=${log}"
-
   # If no other traceback reporting is set, use short
   if [[ ! -f $dir/tb ]] ; then
     opts+=" --tb=short"
@@ -46,7 +46,7 @@ function run() {
   if [[ ! -f $dir/cov ]] && (( $+commands[coverage] )) && [[ -d $PWD/$PWD:t ]]; then
     # If we are not running all the tests, disable coverage
     if [[ ! $opts =~ '-x' ]] && [[ ! $opts =~ '-k' ]]; then
-      opts+=" --cov=$PWD:t --cov-report=term-missing -k 'not Integration'"
+      opts+=" --cov=$PWD:t --cov-report=term-missing"
     fi
   fi
 
@@ -57,18 +57,21 @@ function run() {
   py.test $target ${(Q)${(z)opts}}
 }
 
-if [[ "$1" == "start" ]]; then
-  fifo="$PWD/.git/sharpshooter.fifo"
-  if [[ ! -p $fifo ]]; then
-    mkfifo $fifo
-  fi
-
-  tail -f $fifo | while read line ; do run ; done
-else
-  target='test/'
-  if [[ -n "$1" ]]; then
-    target=$1; shift
-  fi
-
-  run
+if (( ! $+commands[py.test] )) ; then
+  print -P "%F{red}%BError%b%f: py.test not found. Did you virtualenv?"
+  exit 1
 fi
+
+if [[ ! -p $fifo ]]; then
+  mkfifo $fifo
+fi
+
+print -P "Listening on %F{magenta}%B${fifo}%b%f..."
+
+tail -f $fifo | while read line ; do
+  if [[ $line == 'run' ]]; then
+    run
+  else
+    break
+  fi
+done
