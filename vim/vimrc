@@ -71,6 +71,7 @@ fun! SetupVAM()
   VAMActivate github:mattn/emmet-vim
   VAMActivate github:PotatoesMaster/i3-vim-syntax
   VAMActivate github:zaiste/tmux.vim
+  VAMActivate github:elzr/vim-json
 
   " Editing and misc
   VAMActivate github:AndrewRadev/switch.vim
@@ -80,6 +81,7 @@ fun! SetupVAM()
   VAMActivate github:mileszs/ack.vim
   VAMActivate github:kurkale6ka/vim-swap
   VAMActivate github:kurkale6ka/vim-pairs
+  VAMActivate github:maxbrunsfeld/vim-yankstack
   VAMActivate github:terryma/vim-multiple-cursors
   VAMActivate github:tpope/vim-abolish
   VAMActivate github:tpope/vim-commentary
@@ -1690,6 +1692,12 @@ let g:xptemplate_nav_next = '<C-J>'  " Next key
 let g:xptemplate_goback = '<C-K>'  " Prev key
 let g:xptemplate_to_right = '<C-L>'  " Exit key
 let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
+
+" }}}
+" yankstack {{{
+
+nmap <leader>z <Plug>yankstack_substitute_older_paste
+nmap <leader>Z <Plug>yankstack_substitute_newer_paste
 
 " }}}
 
