@@ -452,6 +452,9 @@ endfunction " }}}
 
 " Misc maps {{{
 
+" I really don't understand why people love these so much.
+nmap q <nop>
+
 " Toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
 
