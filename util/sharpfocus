@@ -7,7 +7,7 @@ if [[ $(di-tmux display -p '#P') == 2 ]]; then
   # Already on alternate terminal, kill it and go back
   di-tmux kill-pane
   di-tmux select-pane -t 0
-  di-tmux send-keys space d
+  di-tmux send-keys enter
 elif [[ $(di-tmux display -p '#{window_panes}') == 2 ]] ; then
   di-tmux select-pane -t 1
   di-tmux split-window -v -c '#{pane_current_path}' -p 90
