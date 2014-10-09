@@ -358,6 +358,48 @@ augroup END
 " }}}
 
 " }}}
+" Utility functions {{{
+
+function! DisabledMapping(map)
+  echohl Identifier
+  echon 'Warning'
+  echon ': '
+  echohl Special
+  echon a:map
+  echohl None
+  echon ' is a disabled mapping.'
+  echohl None
+endfunction
+
+function! Clear()
+  " noh can't be in here because that's how noh works
+  call clearmatches()
+
+  " Close all kinds of extra windows
+  cclose
+  lclose
+  pclose
+
+  " Close non-vim extra windows as well.
+  let win = bufwinnr(bufname('%'))
+  let bn = bufnr(bufname('%'))
+  windo if index(['pytest', 'vimwiki'], &ft) != -1 | bd | endif
+  if bufexists(bn)
+    exe win . "wincmd w"
+  endif
+
+  " Clear the auto lists
+  sign unplace *
+  call setqflist([], {})
+  if exists('*ToggleCoverage')
+    call ToggleCoverage(1)
+  endif
+
+  " Also clear the message area
+  echo
+endfunction
+
+" }}}
 " Convenience mappings {{{
 
 " Misc maps {{{
@@ -524,34 +566,6 @@ set sidescrolloff=2
 
 set virtualedit+=block
 
-function! Clear()
-  " noh can't be in here because that's how noh works
-  call clearmatches()
-
-  " Close all kinds of extra windows
-  cclose
-  lclose
-  pclose
-
-  " Close non-vim extra windows as well.
-  let win = bufwinnr(bufname('%'))
-  let bn = bufnr(bufname('%'))
-  windo if index(['pytest', 'vimwiki'], &ft) != -1 | bd | endif
-  if bufexists(bn)
-    exe win . "wincmd w"
-  endif
-
-  " Clear the auto lists
-  sign unplace *
-  call setqflist([], {})
-  if exists('*ToggleCoverage')
-    call ToggleCoverage(1)
-  endif
-
-  " Also clear the message area
-  echo
-endfunction
-
 noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
 
 runtime macros/matchit.vim
@@ -619,21 +633,22 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " }}}
 " Folding {{{
 
-set foldlevelstart=100
+" Start with an overview
+set foldlevelstart=0
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
 nnoremap zO zCzO
 
-" This fucker will destroy all your foldmarkers. That's a real bummer if you're
-" in C, Javascript or CSS where your markers are actual parts of the code. I've
-" accidentally hit zE while going for zR so many times that this is actually
-" warranted.
-nmap zE :echo "Don't do that."<cr>
+" why does this exist
+nmap zE :call DisabledMapping('zE')<cr>
 
 " Why have I been doing zR and zM for all these years?
-nmap zr zRzz
-nmap zm zMzz
+nnoremap zr zRzz
+nnoremap zm zMzz
+
+nmap zR :call DisabledMapping('zR')<cr>
+nmap zM :call DisabledMapping('zM')<cr>
 
 nmap <leader>fm :set foldmethod=marker<cr>
 nmap <leader>fi :set foldmethod=indent<cr>
