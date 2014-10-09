@@ -35,12 +35,12 @@ fun! SetupVAM()
   endif
   call vam#ActivateAddons([], {'auto_install' : 1})
 
-  " Colors
+  " Colors {{{
   VAMActivate github:nanotech/jellybeans.vim
   VAMActivate github:thiderman/neverland-vim-theme
   VAMActivate github:endel/vim-github-colorscheme.git
-
-  " UI and navigation
+  " }}}
+  " UI and navigation {{{
   VAMActivate github:itchyny/lightline.vim
   VAMActivate github:gregsexton/MatchTag
   VAMActivate github:kien/ctrlp.vim
@@ -50,20 +50,20 @@ fun! SetupVAM()
   VAMActivate github:majutsushi/tagbar
   VAMActivate github:scrooloose/nerdtree
   VAMActivate github:scrooloose/syntastic
-
-  " Git
+  " }}}
+  " Git {{{
   VAMActivate github:tpope/vim-fugitive
   VAMActivate github:gregsexton/gitv
   VAMActivate github:int3/vim-extradite
-
-  " Python
+  " }}}
+  " Python {{{
   VAMActivate github:thiderman/vim-snakecharmer
   VAMActivate github:thiderman/vim-snakeskin
   VAMActivate github:thiderman/vim-troves
   VAMActivate github:alfredodeza/coveragepy.vim
   VAMActivate github:hdima/python-syntax
-
-  " Misc filetypes
+  " }}}
+  " Misc filetypes {{{
   VAMActivate github:vim-scripts/VimClojure
   VAMActivate github:evanmiller/nginx-vim-syntax
   VAMActivate github:rodjek/vim-puppet
@@ -72,8 +72,8 @@ fun! SetupVAM()
   VAMActivate github:PotatoesMaster/i3-vim-syntax
   VAMActivate github:zaiste/tmux.vim
   VAMActivate github:elzr/vim-json
-
-  " Editing and misc
+  " }}}
+  " Editing and misc {{{
   VAMActivate github:AndrewRadev/switch.vim
   VAMActivate github:Raimondi/delimitMate
   VAMActivate github:godlygeek/tabular
@@ -96,9 +96,16 @@ fun! SetupVAM()
   VAMActivate github:vim-scripts/argtextobj.vim
   VAMActivate github:vim-scripts/vimwiki
   VAMActivate github:drmingdrmer/xptemplate
+  " }}}
 endfun
 
+" Silently install VAM stuff. This makes it possible to make a silent vim
+" install from puppet or similar. If not silent, there will be an "Press ENTER
+" to continue" prompt due to output.
 silent call SetupVAM()
+
+" The classic one!
+runtime macros/matchit.vim
 
 set more
 
@@ -284,6 +291,22 @@ set backupdir=~/.cache/vim/backup// " backups
 set directory=~/.cache/vim/swap//   " swap files
 
 " }}}
+" Searching {{{
+
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
+set hlsearch
+set gdefault
+
+set scrolloff=3
+set sidescroll=1
+set sidescrolloff=2
+
+set virtualedit+=block
+
+" }}}
 " Leader {{{
 
 " Vim, damnit, Why not <space>?
@@ -360,7 +383,7 @@ augroup END
 " }}}
 " Utility functions {{{
 
-function! DisabledMapping(map)
+function! DisabledMapping(map) " {{{
   echohl Identifier
   echon 'Warning'
   echon ': '
@@ -369,9 +392,8 @@ function! DisabledMapping(map)
   echohl None
   echon ' is a disabled mapping.'
   echohl None
-endfunction
-
-function! Clear()
+endfunction " }}}
+function! Clear() " {{{
   " noh can't be in here because that's how noh works
   call clearmatches()
 
@@ -397,33 +419,25 @@ function! Clear()
 
   " Also clear the message area
   echo
-endfunction
+endfunction " }}}
 
 " }}}
 " Convenience mappings {{{
 
 " Misc maps {{{
 
-" Kill window
-nnoremap K :q<cr>
-
-" Man
-nnoremap M K
-
 " Toggle line numbers
 nnoremap <leader>n :setlocal number!<cr>
-
-" I constantly hit "u" in visual mode when I mean to "y". Use "gu" for those rare occasions.
-" From https://github.com/henrik/dotfiles/blob/master/vim/config/mappings.vim
-vnoremap u <nop>
-vnoremap gu u
 
 " Insert the directory of the current buffer in command line mode
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-" Emacs bindings in command line mode
+" Readline bindings in command line mode
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
+
+" Clear the screen
+noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
 
 " Formatting
 nnoremap Q gqip
@@ -432,24 +446,13 @@ vnoremap Q gq
 " Easier linewise reselection
 nnoremap <leader>V V`]
 
-" Keep the cursor in place while joining lines
-nnoremap J mzJ`z
-
-" Split line (sister to [J]oin lines)
-" The normal use of S is covered by cc, so don't worry about shadowing it.
-" nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+" Normalization
+nnoremap Y y$
 
 " Reselect the visuals when indenting. Borks slightly with undoing, but
 " you'll get used to it.
 vnoremap < <gv
 vnoremap > >gv
-
-" Easier escaping!
-inoremap jj <ESC>
-inoremap jk <ESC>
-
-" Sudo to write
-cnoremap w!! w !sudo tee % >/dev/null
 
 " Typos
 command! -bang E e<bang>
@@ -465,7 +468,6 @@ command! -bang WQ wq<bang>
 " Toggle paste
 " For some reason pastetoggle doesn't redraw the screen (thus the status bar
 " doesn't change) while :set paste! does, so I use that instead.
-" set pastetoggle=<F6>
 nnoremap <silent> <F6> :set paste!<cr>
 
 " Unfuck my screen
@@ -473,12 +475,6 @@ nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 
 " vim, I know.
 nmap <silent> <c-c> :echo<cr>
-
-" Try to properly format an XML file. Will break if there are syntax errors
-" in the file.
-" Not filetype specific, since it is useful in HTML and others as well.
-nmap <Leader>ix :%s/>/>\r/<cr>:%s/</\r</<cr>gg=G:g/^$/d<cr>
-
 
 " }}}
 " Insert Mode Completion {{{
@@ -489,7 +485,6 @@ inoremap <c-]> <c-x><c-]>
 " Quick split {{{
 
 nmap <c-z> :sp<cr>
-" nmap <c-s> :vsp<cr>
 nmap <c-q> :q<cr>
 
 " }}}
@@ -521,6 +516,8 @@ nmap dN [c
 " }}}
 " Abbreviations {{{
 
+" Symbols {{{
+
 " Common programming symbol pairs that are just simpler to write
 " alphanumerical. Write these and then space for abbreviation magic!
 iabbrev eq ==
@@ -529,6 +526,9 @@ iabbrev lt <=
 iabbrev gt >=
 iabbrev pe +=
 iabbrev hr =>
+
+" }}}
+" Spaceless {{{
 
 function! EatChar(pat)
   let c = nr2char(getchar(0))
@@ -547,36 +547,16 @@ call MakeSpacelessIabbrev('rq', 'request')
 call MakeSpacelessIabbrev('rs', 'response')
 
 " }}}
+
+" }}}
 " Searching and movement {{{
 
-" Use sane regexes.
-nnoremap / /\v
-vnoremap / /\v
+" Mappings {{{
 
-set ignorecase
-set smartcase
-set incsearch
-set showmatch
-set hlsearch
-set gdefault
-
-set scrolloff=3
-set sidescroll=1
-set sidescrolloff=2
-
-set virtualedit+=block
-
-noremap <silent> <leader><space> :noh<cr>:call Clear()<cr>
-
-runtime macros/matchit.vim
-
-" Made Y behave
-nnoremap Y y$
-
-" Don't move on *
+" Don't move on initial *
 nnoremap * *<c-o>
 
-" Use enter to do c-] but open it in a new split.
+" Use enter to do browse to tags
 nnoremap <cr> <c-]>zvzz
 
 " Keep search matches in the middle of the window.
@@ -584,21 +564,9 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Same when jumping around
-nnoremap g; g;zz
-nnoremap g, g,zz
 nnoremap <c-o> <c-o>zz
 
-" Easier to type, and I never use the default behavior.
-vnoremap L g_
-
-" Heresy
-inoremap <c-a> <esc>I
-inoremap <c-e> <esc>A
-
-" gi already moves to "last place you exited insert mode", so we'll map gI to
-" something similar: move to last change
-nnoremap gI `.
-
+" }}}
 " Directional Keys {{{
 
 " It's 2014.
@@ -633,6 +601,8 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " }}}
 " Folding {{{
 
+" Mappings {{{
+
 " Start with an overview
 set foldlevelstart=0
 
@@ -653,7 +623,10 @@ nmap zM :call DisabledMapping('zM')<cr>
 nmap <leader>fm :set foldmethod=marker<cr>
 nmap <leader>fi :set foldmethod=indent<cr>
 nmap <leader>fx :set foldmethod=expr<cr>
-nmap <leader>fp :set foldmethod=expr foldexpr=ParagraphFold\(v:lnum\)<cr>
+
+
+" }}}
+" Paragraph folding {{{
 
 function! ParagraphFold(lnum)
   " See examples at :he fold-expr
@@ -663,6 +636,11 @@ function! ParagraphFold(lnum)
     return 1
   endif
 endfunction
+
+nmap <leader>fp :set foldmethod=expr foldexpr=ParagraphFold\(v:lnum\)<cr>
+
+" }}}
+" Foldtext {{{
 
 function! FoldWithLines()
   " Folding function that puts the line counter indication at &tw if &tw is set
@@ -709,6 +687,8 @@ function! FoldWithLines()
 endfunction
 
 set foldtext=FoldWithLines()
+
+" }}}
 
 " }}}
 " Filetype-specific {{{
@@ -1419,8 +1399,6 @@ nmap <leader>Z <Plug>yankstack_substitute_newer_paste
 
 " }}}
 " Mini-plugins {{{
-" Stuff that should probably be broken out into plugins, but hasn't proved to be
-" worth the time to do so just yet.
 
 " Ack motions {{{
 
@@ -1565,16 +1543,6 @@ function! Cdir()
     call mkdir(dir, 'p')
   endif
 endfunction
-
-" }}}
-" Project mux {{{
-
-function! Mor()
-  silent! exec '!mor ' . fnamemodify(getcwd(), ':t') . '&|'
-endfunction
-
-nmap <silent> <A-m> :call Mor()<cr>
-nmap <silent> <leader>m :call Mor()<cr>
 
 " }}}
 
