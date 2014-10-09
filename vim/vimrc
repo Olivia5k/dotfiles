@@ -32,6 +32,7 @@ let s:addons += [
   \ 'kien/rainbow_parentheses.vim',
   \ 'thiderman/ctrlp-project',
   \ 'thiderman/vim-syntaxjump',
+  \ 'thiderman/vim-coward',
   \ 'majutsushi/tagbar',
   \ 'scrooloose/nerdtree',
   \ 'scrooloose/syntastic',
@@ -1182,54 +1183,17 @@ function! MaybeCtrlP()
   endif
 endfunction
 
-nnoremap <silent> <leader>. :CtrlPTag<cr>
 nnoremap <silent> <A-q> :call MaybeCtrlP()<cr>
 nnoremap <silent> <A-a> :CtrlPBuffer<cr>
 nmap     <silent> <A-e> :CtrlP %%<cr>
 nnoremap <silent> <A-p> :CtrlPProject<cr>
 
+nnoremap <silent> <leader>t :CtrlPTag<cr>
 nnoremap <silent> <Leader>q :call MaybeCtrlP()<cr>
 nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
 nnoremap <silent> <Leader>p :CtrlPProject<cr>
 nmap     <silent> <leader>e :CtrlP %%<cr>
 nnoremap <silent> <Leader>Q :CtrlPReload<cr>
-
-" From ctrlp documentation
-function! s:setcwd()
-  let cph = expand('%:p:h', 1)
-  if cph =~ '^.\+://' | retu | en
-  for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
-    let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
-    if wd != '' | let &acd = 0 | brea | en
-  endfo
-  exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
-  call s:autovenv()
-endfunction
-
-function! s:autovenv()
-  " Auto virtualenv helper. Not from ctrlp documentation.
-  " This is pretty much needed to get the pytest vim plugin to able to run from
-  " inside of a virtualenv. Note that this will not change the PYTHONPATH, it
-  " will only set $VIRTUAL_ENV and change the $PATH. If you need full
-  " virtualenv integration, look into jmcantrell/vim-virtualenv.
-  if filereadable(getcwd() . '/bin/activate')
-    let $VIRTUAL_ENV = getcwd()
-    let bin = $VIRTUAL_ENV . '/bin:'
-    if $PATH !~ bin
-      let $PATH = bin . $PATH
-    endif
-  else
-    if $VIRTUAL_ENV != ''
-      let $PATH = substitute($PATH, $VIRTUAL_ENV . '/bin:', '', 'g')
-      let $VIRTUAL_ENV = ''
-    endif
-  endif
-endfunction
-
-augroup ctrlp_setcwd
-  au!
-  autocmd BufEnter * call s:setcwd()
-augroup END
 
 " }}}
 " Endwise {{{
@@ -1392,7 +1356,7 @@ function! ProjectTodo(...)
 endfunction
 
 nmap <silent> <A-t> :call ProjectTodo()<cr>
-nmap <silent> <leader>t :call ProjectTodo()<cr>
+" nmap <silent> <leader>t :call ProjectTodo()<cr>
 command! -nargs=? ProjectTodo :call ProjectTodo(<q-args>)
 
 function! Diary()
