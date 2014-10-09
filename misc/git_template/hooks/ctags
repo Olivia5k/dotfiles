@@ -1,9 +1,20 @@
-#!/bin/sh
+#!/bin/zsh
 set -e
 PATH="/usr/local/bin:$PATH"
 trap "rm -f .git/tags.$$" EXIT
-ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --python-kinds=-iv --languages=-javascript,sql,html
+
+# Use git ls-files to figure out what to make tags out of. This makes sure that
+# you don't accidentally include libs, eggs, virtualenvs etc.
+ctags --tag-relative -f.git/tags.$$ --python-kinds=-iv $(git ls-files)
+
 # Remove python variables
 # \v^[^\t ]+\t[^\t ]+.py\t.+\t[vi]>
 sed -i -E -e '/^[^	]+	[^	]+.py	[^	]+	v(	|$)/d' .git/tags.$$
+
+# Also pytest methods
+sed -i -E -e '/(setup|teardown)_(method|module)/d' .git/tags.$$
+
+# Also magic methods
+sed -i -E -e '/__[a-z_]+__/d' .git/tags.$$
+
 mv .git/tags.$$ .git/tags
