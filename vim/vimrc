@@ -1,13 +1,7 @@
-" .vimrc
 " Author: Lowe Thiderman <lowe.thiderman@gmail.com>
 " Credit: Steve Losh <steve@stevelosh.com>
 " Source: https://github.com/thiderman/dotfiles
 " Source: http://bitbucket.org/sjl/dotfiles/src/tip/vim/
-"
-" This file was once borrowed from Steve Losh. It has been modified to
-" contain most of the configs I had. Since borrowing, I've also cleared a lot
-" of stuff that simply was of no use to me. I don't think our versions would
-" merge cleanly today.
 
 " Preamble {{{
 
@@ -18,11 +12,105 @@ filetype plugin indent on
 " }}}
 " Plugins {{{
 
-set nomore
+let s:addons = []
+
+" Colors {{{
+
+let s:addons += [
+  \ 'nanotech/jellybeans.vim',
+  \ 'thiderman/neverland-vim-theme',
+  \ 'endel/vim-github-colorscheme.git',
+\ ]
+
+" }}}
+" UI and navigation {{{
+
+let s:addons += [
+  \ 'itchyny/lightline.vim',
+  \ 'gregsexton/MatchTag',
+  \ 'kien/ctrlp.vim',
+  \ 'kien/rainbow_parentheses.vim',
+  \ 'thiderman/ctrlp-project',
+  \ 'thiderman/vim-syntaxjump',
+  \ 'majutsushi/tagbar',
+  \ 'scrooloose/nerdtree',
+  \ 'scrooloose/syntastic',
+\ ]
+
+" }}}
+" Git {{{
+
+let s:addons += [
+  \ 'tpope/vim-fugitive',
+  \ 'gregsexton/gitv',
+  \ 'int3/vim-extradite',
+\ ]
+
+" }}}
+" Python {{{
+
+let s:addons += [
+  \ 'thiderman/vim-snakecharmer',
+  \ 'thiderman/vim-snakeskin',
+  \ 'thiderman/vim-troves',
+  \ 'alfredodeza/coveragepy.vim',
+  \ 'hdima/python-syntax',
+\ ]
+
+" }}}
+" Misc filetypes {{{
+
+let s:addons += [
+  \ 'vim-scripts/VimClojure',
+  \ 'evanmiller/nginx-vim-syntax',
+  \ 'rodjek/vim-puppet',
+  \ 'chrisbra/csv.vim',
+  \ 'mattn/emmet-vim',
+  \ 'PotatoesMaster/i3-vim-syntax',
+  \ 'zaiste/tmux.vim',
+  \ 'elzr/vim-json',
+\ ]
+
+" }}}
+" Editing and misc {{{
+
+let s:addons += [
+  \ 'AndrewRadev/switch.vim',
+  \ 'Raimondi/delimitMate',
+  \ 'godlygeek/tabular',
+  \ 'michaeljsmith/vim-indent-object',
+  \ 'mileszs/ack.vim',
+  \ 'kurkale6ka/vim-swap',
+  \ 'kurkale6ka/vim-pairs',
+  \ 'maxbrunsfeld/vim-yankstack',
+  \ 'terryma/vim-multiple-cursors',
+  \ 'tpope/vim-abolish',
+  \ 'tpope/vim-commentary',
+  \ 'tpope/vim-endwise',
+  \ 'tpope/vim-eunuch',
+  \ 'tpope/vim-jdaddy',
+  \ 'tpope/vim-projectionist',
+  \ 'tpope/vim-repeat',
+  \ 'tpope/vim-scriptease',
+  \ 'tpope/vim-surround',
+  \ 'tpope/vim-unimpaired',
+  \ 'vim-scripts/argtextobj.vim',
+  \ 'vim-scripts/vimwiki',
+  \ 'drmingdrmer/xptemplate',
+\ ]
+
+" }}}
+
+" Initialization {{{
+
+let s:addons = map(s:addons, '"github:".v:val')
 
 let g:vim_addon_manager = {'shell_commands_run_method': 'system'}
 
-fun! SetupVAM()
+" Use VAM. It's not my favorite and its documentation is pretty much
+" unreadable, but it is declarative and this works flawlessly on a new clone
+" without needing submodules or any such trickery.
+fun! SetupVAM(addons)
   let c = get(g:, 'vim_addon_manager', {})
   let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
   let c.log_to_buf = 0
@@ -33,81 +121,19 @@ fun! SetupVAM()
     let cmd .= shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
     call system(cmd)
   endif
-  call vam#ActivateAddons([], {'auto_install' : 1})
-
-  " Colors {{{
-  VAMActivate github:nanotech/jellybeans.vim
-  VAMActivate github:thiderman/neverland-vim-theme
-  VAMActivate github:endel/vim-github-colorscheme.git
-  " }}}
-  " UI and navigation {{{
-  VAMActivate github:itchyny/lightline.vim
-  VAMActivate github:gregsexton/MatchTag
-  VAMActivate github:kien/ctrlp.vim
-  VAMActivate github:kien/rainbow_parentheses.vim
-  VAMActivate github:thiderman/ctrlp-project
-  VAMActivate github:thiderman/vim-syntaxjump
-  VAMActivate github:majutsushi/tagbar
-  VAMActivate github:scrooloose/nerdtree
-  VAMActivate github:scrooloose/syntastic
-  " }}}
-  " Git {{{
-  VAMActivate github:tpope/vim-fugitive
-  VAMActivate github:gregsexton/gitv
-  VAMActivate github:int3/vim-extradite
-  " }}}
-  " Python {{{
-  VAMActivate github:thiderman/vim-snakecharmer
-  VAMActivate github:thiderman/vim-snakeskin
-  VAMActivate github:thiderman/vim-troves
-  VAMActivate github:alfredodeza/coveragepy.vim
-  VAMActivate github:hdima/python-syntax
-  " }}}
-  " Misc filetypes {{{
-  VAMActivate github:vim-scripts/VimClojure
-  VAMActivate github:evanmiller/nginx-vim-syntax
-  VAMActivate github:rodjek/vim-puppet
-  VAMActivate github:chrisbra/csv.vim
-  VAMActivate github:mattn/emmet-vim
-  VAMActivate github:PotatoesMaster/i3-vim-syntax
-  VAMActivate github:zaiste/tmux.vim
-  VAMActivate github:elzr/vim-json
-  " }}}
-  " Editing and misc {{{
-  VAMActivate github:AndrewRadev/switch.vim
-  VAMActivate github:Raimondi/delimitMate
-  VAMActivate github:godlygeek/tabular
-  VAMActivate github:michaeljsmith/vim-indent-object
-  VAMActivate github:mileszs/ack.vim
-  VAMActivate github:kurkale6ka/vim-swap
-  VAMActivate github:kurkale6ka/vim-pairs
-  VAMActivate github:maxbrunsfeld/vim-yankstack
-  VAMActivate github:terryma/vim-multiple-cursors
-  VAMActivate github:tpope/vim-abolish
-  VAMActivate github:tpope/vim-commentary
-  VAMActivate github:tpope/vim-endwise
-  VAMActivate github:tpope/vim-eunuch
-  VAMActivate github:tpope/vim-jdaddy
-  VAMActivate github:tpope/vim-projectionist
-  VAMActivate github:tpope/vim-repeat
-  VAMActivate github:tpope/vim-scriptease
-  VAMActivate github:tpope/vim-surround
-  VAMActivate github:tpope/vim-unimpaired
-  VAMActivate github:vim-scripts/argtextobj.vim
-  VAMActivate github:vim-scripts/vimwiki
-  VAMActivate github:drmingdrmer/xptemplate
-  " }}}
+  call vam#ActivateAddons(a:addons, {'auto_install' : 1})
 endfun
 
 " Silently install VAM stuff. This makes it possible to make a silent vim
 " install from puppet or similar. If not silent, there will be an "Press ENTER
-" to continue" prompt due to output.
-silent call SetupVAM()
+" to continue" prompt due to output, and this breaks automatic installs.
+set nomore
+silent call SetupVAM(s:addons)
+set more
 
 " The classic one!
 runtime macros/matchit.vim
-
-set more
+" }}}
 
 " }}}
 " Basic options {{{
