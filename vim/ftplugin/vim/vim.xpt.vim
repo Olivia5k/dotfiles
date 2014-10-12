@@ -11,9 +11,9 @@ XPT section wrap " Section header
 ..XPT
 
 XPT fun wrap " fun! ..(..) .. endfunction
-function! `name^`$SPfun^(`:_args:^)
+function! `name^`$SPfun^(`:_args:^) " {{{
 `$SPindent`cursor^
-endfunction
+endfunction " }}}
 
 XPT augroup wrap
 augroup `name^
