@@ -634,7 +634,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " Mappings {{{
 
 " Start with an overview
-set foldlevelstart=0
+set foldlevelstart=100
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
 " cursor happens to be.
@@ -925,8 +925,6 @@ augroup ft_help
 
   au FileType help setlocal textwidth=78
   au FileType help nnoremap <buffer> <cr> <C-]>
-  au FileType help nnoremap <buffer> q :q<cr>
-  au FileType help nnoremap <buffer> <c-c> :q<cr>
 augroup END
 
 augroup ft_quickfix
