@@ -8,10 +8,15 @@ if [[ $(di-tmux display -p '#P') == 2 ]]; then
   di-tmux kill-pane
   di-tmux select-pane -t 0
   di-tmux send-keys enter
+elif [[ $(di-tmux display -p '#{window_panes}') == 1 ]] ; then
+  # Just one window - split unto the main alternate
+  di-tmux split-window -h -c '#{pane_current_path}' -p 35
 elif [[ $(di-tmux display -p '#{window_panes}') == 2 ]] ; then
+  # One alternate pane, split to the next one.
   di-tmux select-pane -t 1
   di-tmux split-window -v -c '#{pane_current_path}' -p 90
 else
+  # Focus the secondary alternate pane
   di-tmux select-pane -t 2
 fi
 
