@@ -1012,12 +1012,12 @@ let g:lightline = {
       \   ]
       \ },
       \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode',
+      \   'fugitive': 'LLFugitive',
+      \   'filename': 'LLFilename',
+      \   'fileformat': 'LLFileformat',
+      \   'filetype': 'LLFiletype',
+      \   'fileencoding': 'LLFileencoding',
+      \   'mode': 'LLMode',
       \   'ctrlpmark': 'CtrlPMark',
       \ },
       \ 'component_expand': {
@@ -1031,30 +1031,26 @@ let g:lightline = {
       \ 'subseparator': {'left': '│', 'right': '│'}
       \ }
 
-function! MyModified()
+function! LLModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! MyReadonly()
+function! LLReadonly()
   return &ft !~? 'help' && &readonly ? 'RO' : ''
 endfunction
 
-function! MyFilename()
+function! LLFilename()
   let fname = expand('%')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ &ft == 'qf' ? get(w:, 'quickfix_title', 'Quickfix') :
+        \ ('' != LLReadonly() ? LLReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+        \ ('' != LLModified() ? ' ' . LLModified() : '')
 endfunction
 
-function! MyFugitive()
+function! LLFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if exists('*fugitive#head')
       let mark = ''  " edit here for cool mark
       let _ = fugitive#head()
       return strlen(_) ? mark._ : ''
@@ -1064,28 +1060,25 @@ function! MyFugitive()
   return ''
 endfunction
 
-function! MyFileformat()
+function! LLFileformat()
   return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
-function! MyFiletype()
+function! LLFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
-function! MyFileencoding()
+function! LLFileencoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
-function! MyMode()
+function! LLMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
         \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
         \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
@@ -1127,6 +1120,7 @@ augroup AutoSyntastic
   autocmd!
   autocmd BufWritePost *.c,*.cpp,*.py call s:syntastic()
 augroup END
+
 function! s:syntastic()
   SyntasticCheck
   call lightline#update()
