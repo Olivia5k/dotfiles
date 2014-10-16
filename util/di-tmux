@@ -2,7 +2,7 @@
 # For select hosts, run all tmux commands remotely
 
 if [[ $HOST == "justitia" ]]; then
-  ssh dragonisle -t LANG=en_US.utf8 tmux ${(zqqqq)*} 2> /dev/null
+  ssh dragonisle -t LANG=en_US.utf8 tmux ${(zqqqq)*}
 else
-  tmux ${(z)*}
+  tmux $*
 fi
