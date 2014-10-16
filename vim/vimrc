@@ -90,7 +90,6 @@ let s:addons += [
   \ 'tpope/vim-commentary',
   \ 'tpope/vim-endwise',
   \ 'tpope/vim-eunuch',
-  \ 'tpope/vim-jdaddy',
   \ 'tpope/vim-projectionist',
   \ 'tpope/vim-repeat',
   \ 'tpope/vim-scriptease',
@@ -1091,12 +1090,6 @@ call s:gm('gw',  'Gwrite')
 call s:gm('gm',  'Gmove ')
 
 nmap <silent> gd <c-w>o:Gdiff<cr>
-
-" Also jdaddy, shut up
-if maparg('gwaj') != ''
-  unmap gwaj
-  unmap gwij
-endif
 
 " }}}
 " Lightline {{{
