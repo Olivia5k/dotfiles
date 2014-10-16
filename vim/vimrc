@@ -917,7 +917,12 @@ augroup END
 " Vim {{{
 
 function! HelpExpand()
-  exec "help" expand('<cword>')
+  try
+    let word = expand('<cword>')
+    exec "help" word
+  catch /.*/
+    echo "No help for" word
+  endtry
 endfunction
 
 augroup ft_help
