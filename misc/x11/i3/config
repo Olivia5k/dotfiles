@@ -1,7 +1,7 @@
 font pango: inconsolata 14px
 
 for_window [title=".*Chromium.*"] move container to workspace www; workspace www
-for_window [title="^main@.*"] move container to workspace di-tmux; workspace di-tmux
+for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
 for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 
@@ -27,6 +27,13 @@ bindsym Mod4+Shift+h exec di-tmux swap-window -t :-
 bindsym Mod4+Shift+j exec di-tmux swap-pane -D
 bindsym Mod4+Shift+k exec di-tmux swap-pane -U
 bindsym Mod4+Shift+l exec di-tmux swap-window -t :+
+
+# Workspaces (Mod4+F\d)
+bindcode Mod4+67 workspace www
+bindcode Mod4+68 workspace tmux
+bindcode Mod4+69 workspace spotify
+bindcode Mod4+70 workspace gimp
+bindcode Mod4+71 workspace misc
 
 # Windows (Mod4+\d)
 bindsym Mod4+1 exec di-tmux select-window -t 1
