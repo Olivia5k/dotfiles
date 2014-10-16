@@ -30,6 +30,7 @@ let s:addons += [
   \ 'gregsexton/MatchTag',
   \ 'kien/ctrlp.vim',
   \ 'kien/rainbow_parentheses.vim',
+  \ 'sjl/gundo.vim',
   \ 'thiderman/ctrlp-project',
   \ 'thiderman/vim-syntaxjump',
   \ 'thiderman/vim-coward',
@@ -995,6 +996,109 @@ let g:airline_right_sep = ''
 let g:airline_fugitive_prefix = ''
 
 " }}}
+" Commentary {{{
+
+nmap \ gcc
+vmap \ gc
+vmap <bar> gc
+nmap <bar> gcap
+
+" Unmap the \\ bindings so that \ is the terminating map
+try
+  unmap \\u
+  unmap \\\
+  unmap \\
+catch /.*/
+endtry
+
+
+" }}}
+" Ctrl-P {{{
+
+let g:ctrlp_dont_split = 'NERD_tree_2'
+let g:ctrlp_jump_to_buffer = 0
+let g:ctrlp_map = '<F3>'
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_reversed = 1
+let g:ctrlp_split_window = 0
+let g:ctrlp_max_height = 20
+let g:ctrlp_extensions = ['tag', 'project']
+let g:ctrlp_custom_ignore = '\v[\/]\.\?(git|hg|svn|lib|build|dist)'
+
+let g:ctrlp_prompt_mappings = {
+\ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
+\ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
+\ 'PrtHistory(-1)':     ['<c-n>'],
+\ 'PrtHistory(1)':    ['<c-p>'],
+\ 'ToggleFocus()':    ['<c-tab>'],
+\ }
+
+let g:ctrlp_projects = [
+      \ '~/spotify', '~/git', '~/.vim/bundle', '~/var/http/talks']
+
+function! MaybeCtrlP()
+  if getcwd() == expand('$HOME')
+    CtrlPProject
+  else
+    CtrlP
+  endif
+endfunction
+
+nnoremap <silent> <A-q> :call MaybeCtrlP()<cr>
+nnoremap <silent> <A-a> :CtrlPBuffer<cr>
+nmap     <silent> <A-e> :CtrlP %%<cr>
+nnoremap <silent> <A-p> :CtrlPProject<cr>
+
+nnoremap <silent> <leader>t :CtrlPTag<cr>
+nnoremap <silent> <Leader>q :call MaybeCtrlP()<cr>
+nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
+nnoremap <silent> <Leader>p :CtrlPProject<cr>
+nmap     <silent> <leader>e :CtrlP %%<cr>
+nnoremap <silent> <Leader>Q :CtrlPReload<cr>
+
+" }}}
+" Endwise {{{
+
+" For whatever reason, delimitmate and endwise are clashing for me. Just set
+" the enter binding here instead.
+imap <C-X><CR> <Plug>delimitMateCR<Plug>AlwaysEnd
+imap <CR>      <Plug>delimitMateCR<Plug>DiscretionaryEnd
+
+" }}}
+" Fugitive {{{
+
+fun! s:gm(short, cmd, ...)  " git_map
+  let silent = a:cmd =~ '\w$' ? '<silent>' : ''
+  let cr = a:cmd =~ '\w$' ? '<cr>' : ''
+  let extra = a:0 ? a:1 : ''
+  exec "nmap" silent a:short ":" . a:cmd . cr . extra
+endfunction
+
+call s:gm('gi',  'Git ')
+call s:gm('ge',  'Gedit')
+call s:gm('gb',  'Gblame')
+
+call s:gm('gle', 'Extradite')
+call s:gm('gll', 'Gitv')
+call s:gm('glo', 'Glog ')
+call s:gm('gpp', 'Git push origin ')
+call s:gm('guu', 'Git pull --no-edit origin')
+call s:gm('gre', 'Gread ')
+call s:gm('grr', 'Gremove ')
+
+call s:gm('gs',  'Gstatus', '<c-n>')
+call s:gm('gw',  'Gwrite')
+call s:gm('gm',  'Gmove ')
+
+nmap <silent> gd <c-w>o:Gdiff<cr>
+
+" Also jdaddy, shut up
+if maparg('gwaj') != ''
+  unmap gwaj
+  unmap gwij
+endif
+
+" }}}
 " Lightline {{{
 
 let g:lightline = {
@@ -1125,109 +1229,6 @@ function! s:syntastic()
   SyntasticCheck
   call lightline#update()
 endfunction
-
-" }}}
-" Commentary {{{
-
-nmap \ gcc
-vmap \ gc
-vmap <bar> gc
-nmap <bar> gcap
-
-" Unmap the \\ bindings so that \ is the terminating map
-try
-  unmap \\u
-  unmap \\\
-  unmap \\
-catch /.*/
-endtry
-
-
-" }}}
-" Ctrl-P {{{
-
-let g:ctrlp_dont_split = 'NERD_tree_2'
-let g:ctrlp_jump_to_buffer = 0
-let g:ctrlp_map = '<F3>'
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window_reversed = 1
-let g:ctrlp_split_window = 0
-let g:ctrlp_max_height = 20
-let g:ctrlp_extensions = ['tag', 'project']
-let g:ctrlp_custom_ignore = '\v[\/]\.\?(git|hg|svn|lib|build|dist)'
-
-let g:ctrlp_prompt_mappings = {
-\ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
-\ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
-\ 'PrtHistory(-1)':     ['<c-n>'],
-\ 'PrtHistory(1)':    ['<c-p>'],
-\ 'ToggleFocus()':    ['<c-tab>'],
-\ }
-
-let g:ctrlp_projects = [
-      \ '~/spotify', '~/git', '~/.vim/bundle', '~/var/http/talks']
-
-function! MaybeCtrlP()
-  if getcwd() == expand('$HOME')
-    CtrlPProject
-  else
-    CtrlP
-  endif
-endfunction
-
-nnoremap <silent> <A-q> :call MaybeCtrlP()<cr>
-nnoremap <silent> <A-a> :CtrlPBuffer<cr>
-nmap     <silent> <A-e> :CtrlP %%<cr>
-nnoremap <silent> <A-p> :CtrlPProject<cr>
-
-nnoremap <silent> <leader>t :CtrlPTag<cr>
-nnoremap <silent> <Leader>q :call MaybeCtrlP()<cr>
-nnoremap <silent> <Leader>a :CtrlPBuffer<cr>
-nnoremap <silent> <Leader>p :CtrlPProject<cr>
-nmap     <silent> <leader>e :CtrlP %%<cr>
-nnoremap <silent> <Leader>Q :CtrlPReload<cr>
-
-" }}}
-" Endwise {{{
-
-" For whatever reason, delimitmate and endwise are clashing for me. Just set
-" the enter binding here instead.
-imap <C-X><CR> <Plug>delimitMateCR<Plug>AlwaysEnd
-imap <CR>      <Plug>delimitMateCR<Plug>DiscretionaryEnd
-
-" }}}
-" Fugitive {{{
-
-fun! s:gm(short, cmd, ...)  " git_map
-  let silent = a:cmd =~ '\w$' ? '<silent>' : ''
-  let cr = a:cmd =~ '\w$' ? '<cr>' : ''
-  let extra = a:0 ? a:1 : ''
-  exec "nmap" silent a:short ":" . a:cmd . cr . extra
-endfunction
-
-call s:gm('gi',  'Git ')
-call s:gm('ge',  'Gedit')
-call s:gm('gb',  'Gblame')
-
-call s:gm('gle', 'Extradite')
-call s:gm('gll', 'Gitv')
-call s:gm('glo', 'Glog ')
-call s:gm('gpp', 'Git push origin ')
-call s:gm('guu', 'Git pull --no-edit origin')
-call s:gm('gre', 'Gread ')
-call s:gm('grr', 'Gremove ')
-
-call s:gm('gs',  'Gstatus', '<c-n>')
-call s:gm('gw',  'Gwrite')
-call s:gm('gm',  'Gmove ')
-
-nmap <silent> gd <c-w>o:Gdiff<cr>
-
-" Also jdaddy, shut up
-if maparg('gwaj') != ''
-  unmap gwaj
-  unmap gwij
-endif
 
 " }}}
 " NERDTree {{{
