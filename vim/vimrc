@@ -1092,6 +1092,11 @@ call s:gm('gm',  'Gmove ')
 nmap <silent> gd <c-w>o:Gdiff<cr>
 
 " }}}
+" Gundo {{{
+
+nmap <leader>g :GundoToggle<cr>
+
+" }}}
 " Lightline {{{
 
 let g:lightline = {
