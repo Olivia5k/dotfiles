@@ -1147,6 +1147,7 @@ function! LLFilename()
   let fname = expand('%')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ &ft == 'qf' ? get(w:, 'quickfix_title', 'Quickfix') :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
         \ ('' != LLReadonly() ? LLReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != LLModified() ? ' ' . LLModified() : '')
