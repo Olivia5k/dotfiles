@@ -28,12 +28,17 @@ bindsym Mod4+Shift+j exec di-tmux swap-pane -D
 bindsym Mod4+Shift+k exec di-tmux swap-pane -U
 bindsym Mod4+Shift+l exec di-tmux swap-window -t :+
 
-# Workspaces (Mod4+F\d)
+# Workspaces (Mod4+F1-F5)
 bindcode Mod4+67 workspace www
 bindcode Mod4+68 workspace tmux
 bindcode Mod4+69 workspace spotify
 bindcode Mod4+70 workspace gimp
 bindcode Mod4+71 workspace misc
+
+# Workspace layouts (Mod4+F9-F11)
+bindcode Mod4+75 layout tabbed
+bindcode Mod4+76 layout default
+bindcode Mod4+77 layout stacking
 
 # Windows (Mod4+\d)
 bindsym Mod4+1 exec di-tmux select-window -t 1
