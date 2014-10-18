@@ -35,10 +35,23 @@ bindcode Mod4+69 workspace spotify
 bindcode Mod4+70 workspace gimp
 bindcode Mod4+71 workspace misc
 
+# Workspace moving (Mod4+Shift+F1-F5)
+bindcode Mod4+Shift+67 move container to workspace www
+bindcode Mod4+Shift+68 move container to workspace tmux
+bindcode Mod4+Shift+69 move container to workspace spotify
+bindcode Mod4+Shift+70 move container to workspace gimp
+bindcode Mod4+Shift+71 move container to workspace misc
+
 # Workspace layouts (Mod4+F9-F11)
 bindcode Mod4+75 layout tabbed
 bindcode Mod4+76 layout default
 bindcode Mod4+77 layout stacking
+
+# Resizing (Mod4+Arrows)
+bindsym Mod4+Left  resize shrink width 10 px or 10 ppt
+bindsym Mod4+Down  resize grow height 10 px or 10 ppt
+bindsym Mod4+Up    resize shrink height 10 px or 10 ppt
+bindsym Mod4+Right resize grow width 10 px or 10 ppt
 
 # Windows (Mod4+\d)
 bindsym Mod4+1 exec di-tmux select-window -t 1
