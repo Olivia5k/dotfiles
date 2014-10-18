@@ -20,7 +20,10 @@ bindsym Mod4+Control+h exec di-tmux resize-pane -L
 bindsym Mod4+Control+j exec di-tmux resize-pane -D
 bindsym Mod4+Control+k exec di-tmux resize-pane -U
 bindsym Mod4+Control+l exec di-tmux resize-pane -R
+
+# Fullscreening
 bindsym Mod4+f exec di-tmux resize-pane -Z
+bindsym Mod4+Mod1+f fullscreen
 
 # Move (Mod4+Shift+hjkl)
 bindsym Mod4+Shift+h exec di-tmux swap-window -t :-
