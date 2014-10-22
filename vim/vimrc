@@ -1087,6 +1087,11 @@ imap <C-X><CR> <Plug>delimitMateCR<Plug>AlwaysEnd
 imap <CR>      <Plug>delimitMateCR<Plug>DiscretionaryEnd
 
 " }}}
+" Delimitmate {{{
+
+let delimitMate_expand_space = 1
+
+" }}}
 " Fugitive {{{
 
 fun! s:gm(short, cmd, ...)  " git_map
