@@ -204,34 +204,39 @@ set completeopt=longest,menuone,preview
 " }}}
 " Autosave {{{
 
-" Save the file on delays. Can be toggled by letting/unletting g:no_autosave
+" Save the file on delays or when exiting insert mode. Is automatically
+" disabled for files not under git version control.
 function! AutoSave()
+  " We are not in git or the file is not modified. Do nothing.
   if exists('b:autosave') && b:autosave != 1 || &modified == 0
     return
   endif
 
-  call KillTrailingWhitespace()
-  silent! wa
+  " We generally always want to run the BufWritePre. Only skip it if it is set
+  " and set to zero.
+  if !exists('b:autosave_bufwritepre') || b:autosave_bufwritepre != 0
+    doau BufWritePre
+  endif
+
+  " Actually save the file! Will do nothing if the buffer has not file
+  " allocated yet.
+  silent! write
+
+  " We don't always want to do the BufWritePost since it would clobber test
+  " runners, linters or whatever. However, sometimes we actually do want it,
+  " and for those times we specify this!
+  if exists('b:autosave_bufwritepost') && b:autosave_bufwritepost == 1
+    doau BufWritePost
+  endif
 endfunction
 
 function! SetAutoSave()
-  let b:autosave = 0
-
-  " Only set autosave if we are in a git repo
-  let fn = expand('%:p:h')
-  while fn != '/'
-    if isdirectory(fn . '/.git')
-      let b:autosave = 1
-      break
-    endif
-    let fn = fnamemodify(fn, ':h')
-  endwhile
+  let b:autosave = finddir('.git', expand('%:p:h') . ';') != ""
 endfunction
 
 augroup autosave
   au!
-  au InsertLeave * call AutoSave()
-  au CursorHold * call AutoSave()
+  au InsertLeave,CursorHold,BufLeave * call AutoSave()
   au BufEnter,BufAdd * call SetAutoSave()
 augroup END
 
