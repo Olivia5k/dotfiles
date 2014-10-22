@@ -868,7 +868,7 @@ augroup ft_python
 
   au Filetype python setlocal sts=4 sw=4
   au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
-  au FileType python nn <silent> S :call PythonSelfToggle()<cr>
+  au FileType python nn <silent><buffer> S :call PythonSelfToggle()<cr>
 
   " Switch {{{
 
