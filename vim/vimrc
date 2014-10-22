@@ -313,11 +313,6 @@ if exists('+colorcolumn')
   set colorcolumn=+1
 endif
 
-augroup auto_textwidth
-  au!
-  au BufEnter * setl textwidth=79
-augroup END
-
 " }}}
 " Backups {{{
 
@@ -768,6 +763,14 @@ augroup END
 augroup ft_git
   au!
   au BufRead,BufNewFile *gitconfig set ft=gitconfig
+augroup END
+
+" }}}
+" HTML {{{
+
+augroup ft_html
+  au!
+  au FileType html,htmldjango setlocal tw=0
 augroup END
 
 " }}}
