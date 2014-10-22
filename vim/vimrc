@@ -244,9 +244,16 @@ augroup END
 " Kill trailing whitespace {{{
 
 function! KillTrailingWhitespace()
-  let pos=getpos('.')
+  " Set the position. Default is that the cursor will be placed on any match.
+  let pos = getpos('.')
+
+  " Remove trailing whitespace from any row. Ingore all errors.
   silent! %s/\s\+$//e
+
+  " Remove trailing lines. Ignore all errors.
   silent! %s/\v\n+%$//e
+
+  " Reset to the original position.
   call setpos('.',pos)
 endfunction
 
