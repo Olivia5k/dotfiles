@@ -151,7 +151,7 @@ set showcmd
 set hidden
 set novisualbell
 set t_vb=
-set updatetime=1000
+set updatetime=500
 set ttyfast
 set ruler
 set backspace=indent,eol,start
