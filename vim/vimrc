@@ -70,6 +70,7 @@ let s:addons += [
   \ 'mattn/emmet-vim',
   \ 'PotatoesMaster/i3-vim-syntax',
   \ 'zaiste/tmux.vim',
+  \ 'chrisyip/Better-CSS-Syntax-for-Vim',
   \ 'elzr/vim-json',
 \ ]
 
@@ -778,7 +779,7 @@ augroup END
 augroup ft_markdown
   au!
 
-  au BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
 
   " Use <localleader>1/2/3 to add headings.
   au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=:redraw<cr>
