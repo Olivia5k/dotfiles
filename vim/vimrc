@@ -89,6 +89,7 @@ let s:addons += [
   \ 'terryma/vim-multiple-cursors',
   \ 'tpope/vim-abolish',
   \ 'tpope/vim-commentary',
+  \ 'tpope/vim-dispatch',
   \ 'tpope/vim-endwise',
   \ 'tpope/vim-eunuch',
   \ 'tpope/vim-projectionist',
