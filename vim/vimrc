@@ -842,12 +842,48 @@ augroup END
 " }}}
 " Python {{{
 
+" Settings {{{
+
 " Just add one shiftwidth when indenting python
 let g:pyindent_open_paren = 4
+
+augroup ft_python_settings
+  au!
+
+  " PEP8-style indenting.
+  au Filetype python setl softtabstop=4 shiftwidth=4 expandtab
+
+  " Snakecharmer folding
+  " TODO: Actually set inside of snakecharmer
+  au FileType python setl foldmethod=expr foldexpr=PythonFold\(v:lnum\)
+
+  " Run syntastic checks automatically after autosave.
+  au FileType python let b:autosave_bufwritepost = 1
+augroup END
+
+" }}}
+" Syntax {{{
 
 " Give me ALL the syntax! |o/
 let g:python_highlight_all = 1
 let g:python_highlight_builtins = 1
+
+augroup ft_python_syntax
+  au!
+
+  " Highlight self. How is this not the default?
+  au BufEnter *.py syn keyword Special self
+
+  " Special highlight for "return_value", the special part of mocks. This
+  " separates it from the rest and makes it easier to see what is going on.
+  au BufEnter *.py syn keyword Delimiter return_value
+
+  " Dots and commas are delimiters - highlight them as such.
+  au BufEnter *.py syn match Delimiter '[.,]'
+augroup END
+
+" }}}
+" Switch {{{
 
 function! PythonSelfToggle()
     let def = {
@@ -857,20 +893,10 @@ function! PythonSelfToggle()
   call switch#Switch([def])
 endfunction
 
-augroup ft_python
+augroup ft_python_switch
   au!
 
-  au BufEnter *.py syn keyword Special self
-  au BufEnter *.py syn keyword Delimiter return_value
-  au BufEnter *.py syn match Delimiter '[.,]'
-
-  au Filetype python setlocal sts=4 sw=4
-  au FileType python setlocal foldmethod=expr foldexpr=PythonFold\(v:lnum\)
-  au FileType python let b:autosave_bufwritepost = 1
   au FileType python nn <silent><buffer> S :call PythonSelfToggle()<cr>
-
-  " Switch {{{
-
   au FileType python let b:switch_custom_definitions =
     \ [
     \   {
@@ -918,9 +944,9 @@ augroup ft_python
     \     '\(^\s*\)\(\S\+\)\s*=\s*\(.*\)$': "\\1'\\2': \\3,",
     \   },
     \ ]
-
-  " }}}
 augroup END
+
+" }}}
 
 " }}}
 " Puppet {{{
