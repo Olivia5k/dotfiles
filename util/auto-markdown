@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+d=".git/markdown"
+
+mkdir -p $d/$1:h
+markdown $1 > $d/$1

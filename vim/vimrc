@@ -777,17 +777,18 @@ augroup END
 " }}}
 " Markdown {{{
 
+function! MarkdownPreview()
+  exec 'pedit!' '.git/markdown/' . expand('%')
+endfunction
+
 augroup ft_markdown
   au!
 
+  au BufWritePost *.md,*.markdown silent Dispatch! auto-markdown %
   au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
-
-  " Use <localleader>1/2/3 to add headings.
-  au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=:redraw<cr>
-  au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-:redraw<cr>
-  au Filetype markdown nnoremap <buffer> <localleader>3 mzI###<space>`zllll <ESC>
+  au BufNewFile,BufRead *.md,*.markdown let b:autosave_bufwritepost = 1
+  au Filetype markdown nnoremap <silent><buffer> <cr> :call MarkdownPreview()<cr>
 augroup END
-
 
 " }}}
 " Mail {{{
