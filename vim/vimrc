@@ -765,7 +765,7 @@ augroup END
 " }}}
 " git {{{
 
-augroup git_autocmd
+augroup ft_git
   au!
   au BufRead,BufNewFile *gitconfig set ft=gitconfig
 augroup END
@@ -780,7 +780,7 @@ augroup ft_javaish
   au FileType javascript,java setlocal shiftwidth=2 softtabstop=2 expandtab textwidth=0
 augroup END
 
-augroup json_autocmd
+augroup ft_json
   au!
   au BufEnter *.json setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=0
   au BufEnter *.json setlocal foldmethod=marker foldmarker={,}
