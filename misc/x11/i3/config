@@ -4,6 +4,7 @@ for_window [title=".*Chromium.*"] move container to workspace www; workspace www
 for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
 for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
+for_window [class="Keepassx"] move container to workspace pass; workspace pass
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h exec di-tmux select-pane -L
@@ -97,6 +98,7 @@ bindsym Mod4+i exec muxfocus 1
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
 bindsym Mod4+g exec ror "gimp" "gimp" "gimp"
+bindsym Mod4+x exec ror "keepassx" "Keepassx" "keepassx" "class"
 
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
