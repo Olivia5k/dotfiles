@@ -9,5 +9,7 @@ if [[ $XORG_WM = 'hlwm' ]]; then
     fi
   done
 elif [[ $XORG_WM = 'i3' ]]; then
-  i3-msg "[title=\"$1\"] focus" &> /dev/null
+  # Use "title" as the default matcher, but provide for ability to change it
+  # with $2.
+  i3-msg "[${2:-title}=\"$1\"] focus" &> /dev/null
 fi

@@ -17,8 +17,7 @@ if [[ $(ps ax | grep "$grep" | grep -vEc '(xwininfo|grep)') -lt 3 ]] ; then
   exec ${(z)executable} &|
 fi
 
-wmraise $class
-
-if [[ -n "$4" ]]; then
-  xdotool key $4
-fi
+# There used to be other handling of $4 with xdotool. Found no traces of it in
+# i3 though, so it was removed. Now it is sent to i3msg as the kind used for
+# matching.
+wmraise $class $4
