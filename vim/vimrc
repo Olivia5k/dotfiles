@@ -826,7 +826,7 @@ endfun
 augroup ft_blog
   au!
 
-  au BufWritePost *_posts/* call AutoBlog(expand("<afile>:p:t"))
+  " au BufWritePost *_posts/* call AutoBlog(expand("<afile>:p:t"))
 augroup END
 
 " }}}
@@ -861,7 +861,7 @@ augroup ft_python_settings
   au FileType python setl foldmethod=expr foldexpr=PythonFold\(v:lnum\)
 
   " Run syntastic checks automatically after autosave.
-  au FileType python let b:autosave_bufwritepost = 1
+  au FileType python let b:autosave_bufwritepost = 0
 augroup END
 
 " }}}
