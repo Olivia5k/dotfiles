@@ -11,10 +11,10 @@ if [[ $HOST = "dragonisle" ]] ; then
 fi
 
 date=$(date +'%Y%m%d.%H%M%S')
-user="daethorian"
+user="thiderman"
 server="ninjaloot.se"
 localpath="$HOME/var/img/ss/dated"
-remotepath="var/http/ninjaloot/ss/"
+remotepath="/srv/ninjaloot/ss/"
 url="http://shot.$server/$date.png"
 msg_timeout=3
 
