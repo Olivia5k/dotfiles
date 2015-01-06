@@ -69,6 +69,7 @@ let s:addons += [
   \ 'chrisbra/csv.vim',
   \ 'mattn/emmet-vim',
   \ 'PotatoesMaster/i3-vim-syntax',
+  \ 'tpope/vim-markdown',
   \ 'zaiste/tmux.vim',
   \ 'chrisyip/Better-CSS-Syntax-for-Vim',
   \ 'elzr/vim-json',
@@ -792,6 +793,8 @@ augroup END
 " }}}
 " Markdown {{{
 
+let g:markdown_folding = 1
+
 function! MarkdownPreview()
   exec 'pedit!' '.git/markdown/' . expand('%')
 endfunction
@@ -799,8 +802,8 @@ endfunction
 augroup ft_markdown
   au!
 
-  au BufWritePost *.md,*.markdown silent Dispatch! auto-markdown %
-  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
+  " au BufWritePost *.md,*.markdown silent Dispatch! auto-markdown %
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown conceallevel=2
   au BufNewFile,BufRead *.md,*.markdown let b:autosave_bufwritepost = 1
   au Filetype markdown nnoremap <silent><buffer> <cr> :call MarkdownPreview()<cr>
 augroup END
