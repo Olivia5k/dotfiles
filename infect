@@ -130,7 +130,7 @@ function infect_deploy() {
   for link in **/*(@); do
     target=$(readlink_f $link)
     unlink $link
-    cp -r $target $link
+    rsync -a $target $link ${(z)exc} || return 1
   done
 
   iecho "Compressing..."
