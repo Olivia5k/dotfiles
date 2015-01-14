@@ -516,6 +516,11 @@ nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
 " vim, I know.
 nmap <silent> <c-c> :echo<cr>
 
+" Let's stop using C-c to exit insert mode.
+imap <c-c> <nop>
+imap jk <esc>
+imap jj <esc>
+
 " }}}
 " Insert Mode Completion {{{
 
