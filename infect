@@ -148,8 +148,8 @@ function infect_deploy() {
   iecho "Linking new current..."
   ln -s $file $current
 
-  # iecho "Rsyncing to remote..."
-  # rsync -a ./ $INFECT_REMOTE_WEB_DIR || return 1
+  iecho "Rsyncing to remote..."
+  rsync -a ./ $INFECT_REMOTE_WEB_DIR || return 1
 
   iecho "Deploy complete. %F{red}<3%f"
 }
