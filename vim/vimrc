@@ -18,7 +18,6 @@ let s:addons = []
 
 let s:addons += [
   \ 'nanotech/jellybeans.vim',
-  \ 'thiderman/neverland-vim-theme',
   \ 'endel/vim-github-colorscheme.git',
 \ ]
 
@@ -29,8 +28,6 @@ let s:addons += [
   \ 'itchyny/lightline.vim',
   \ 'gregsexton/MatchTag',
   \ 'kien/ctrlp.vim',
-  \ 'kien/rainbow_parentheses.vim',
-  \ 'sjl/gundo.vim',
   \ 'thiderman/ctrlp-project',
   \ 'thiderman/vim-syntaxjump',
   \ 'thiderman/vim-coward',
@@ -45,7 +42,6 @@ let s:addons += [
 let s:addons += [
   \ 'tpope/vim-fugitive',
   \ 'gregsexton/gitv',
-  \ 'int3/vim-extradite',
 \ ]
 
 " }}}
@@ -55,8 +51,7 @@ let s:addons += [
   \ 'thiderman/vim-snakecharmer',
   \ 'thiderman/vim-snakeskin',
   \ 'thiderman/vim-troves',
-  \ 'alfredodeza/coveragepy.vim',
-  \ 'hdima/python-syntax',
+  \ 'thiderman/python-syntax',
 \ ]
 
 " }}}
@@ -100,7 +95,6 @@ let s:addons += [
   \ 'tpope/vim-unimpaired',
   \ 'vim-scripts/argtextobj.vim',
   \ 'vim-scripts/vimwiki',
-  \ 'drmingdrmer/xptemplate',
 \ ]
 
 " }}}
@@ -1339,23 +1333,6 @@ let NERDTreeMapJumpFirstChild = 'gK'
 
 nmap <silent> <c-w>a :AV<cr>
 nmap <silent> <c-w>A :AS<cr>
-
-" }}}
-" Rainbow Parentheses {{{
-
-let g:rbpt_colorpairs = [
-    \ ['darkgray',    '#444444'],
-    \ ['darkgreen',   '#555555'],
-    \ ['brown',       '#777777'],
-    \ ['Darkblue',    '#999999'],
-    \ ]
-
-let g:rbpt_loadcmd_toggle = 0
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " }}}
 " Syntastic {{{
