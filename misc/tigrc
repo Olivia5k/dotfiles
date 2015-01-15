@@ -1,0 +1,15 @@
+bind status N !@git add -N %(file) (might be useful if you want to add-patch a newly created file)
+bind main I !git rebase -i %(commit)
+bind main R !git revert %(commit)
+bind refs n !git branch "%(prompt Enter branch name: )"
+bind generic T !git notes edit %(commit)
+bind generic C !git commit -v
+bind generic + !git commit --amend
+bind stash D !git stash drop %(stash)
+bind stash A !git stash apply %(stash)
+bind status S !git stash save --keep-index %(prompt)
+bind status D !rm %(file)
+bind main T !@git tag %(prompt) %(commit)
+bind status P !git push origin
+bind status P !git add --patch %(file)
+bind generic B @sh -c "chromium 'https://'$(git remote -v | grep -Eo 'github.com[:/][^.]+' | head -1 | tr : /)'/commit/%(commit)'"
