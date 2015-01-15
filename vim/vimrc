@@ -1425,18 +1425,6 @@ nmap <silent> <leader>wg :call Diary()<cr>
 command! -nargs=0 Diary :call Diary()
 
 " }}}
-" XPTemplate {{{
-
-let g:xptemplate_brace_complete = 0  " Other plugins does this way better
-let g:xptemplate_key = '<Tab>'  " Main snippet key
-let g:xptemplate_key_pum_only = '<C-F>'  " Popup key
-let g:xptemplate_nav_cancel = '<C-D>'  " Cancel key
-let g:xptemplate_nav_next = '<C-J>'  " Next key
-let g:xptemplate_goback = '<C-K>'  " Prev key
-let g:xptemplate_to_right = '<C-L>'  " Exit key
-let g:xptemplate_pum_tab_nav = 1  " Tab navigation in popup menu
-
-" }}}
 " yankstack {{{
 
 nmap <leader>z <Plug>yankstack_substitute_older_paste
