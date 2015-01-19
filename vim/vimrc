@@ -512,6 +512,8 @@ nmap <silent> <c-c> :echo<cr>
 imap <c-c> <nop>
 imap jk <esc>
 imap jj <esc>
+vmap jk <esc>
+vmap jj <esc>
 
 " }}}
 " Insert Mode Completion {{{
