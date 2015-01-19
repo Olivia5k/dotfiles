@@ -58,11 +58,9 @@ let s:addons += [
 " Misc filetypes {{{
 
 let s:addons += [
-  \ 'vim-scripts/VimClojure',
   \ 'evanmiller/nginx-vim-syntax',
   \ 'rodjek/vim-puppet',
   \ 'chrisbra/csv.vim',
-  \ 'mattn/emmet-vim',
   \ 'PotatoesMaster/i3-vim-syntax',
   \ 'tpope/vim-markdown',
   \ 'zaiste/tmux.vim',
