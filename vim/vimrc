@@ -69,6 +69,15 @@ let s:addons += [
 \ ]
 
 " }}}
+" Completion and snippets {{{
+
+let s:addons += [
+  \ 'SirVer/UltiSnips',
+  \ 'honza/vim-snippets',
+  \ 'Valloric/YouCompleteMe',
+\ ]
+
+" }}}
 " Editing and misc {{{
 
 let s:addons += [
@@ -1361,6 +1370,15 @@ vmap ' S'
 vmap ( S)
 vmap [ S]
 vmap { S}
+
+" }}}
+" UltiSnips {{{
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-f>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+inoremap <c-x><c-k> <c-x><c-k>
 
 " }}}
 " unimpaired {{{
