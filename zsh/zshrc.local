@@ -427,7 +427,7 @@ bindkey '^[c' selecta-command-line
 
 # Use selecta to go to a project
 selecta_project() {
-  local ret=$(l -d $HOME/{git,spotify}/*(/) | sed -e "s;^${HOME}/;;" | selecta)
+  local ret=$(l -d $HOME/{git,spotify}/*(-/) | sed -e "s;^${HOME}/;;" | selecta)
 
   if [[ -n "$ret" ]]; then
     cd $HOME/$ret
