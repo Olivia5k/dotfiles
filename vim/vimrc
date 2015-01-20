@@ -878,8 +878,8 @@ augroup END
 augroup ft_python_snakecharmer
   au!
 
-  au CursorMovedI,CursorMoved *.py call SnakeArgs()
-  au CursorMovedI,CursorMoved *.py call SnakeMockArgs()
+  " au CursorMovedI,CursorMoved *.py call SnakeArgs()
+  " au CursorMovedI,CursorMoved *.py call SnakeMockArgs()
 augroup END
 
 " }}}
