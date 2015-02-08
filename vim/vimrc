@@ -1389,10 +1389,10 @@ vmap <A-j> ]egv
 vmap <A-k> [egv
 
 " Terminal binds. A bit clunky, but hey
-nmap zj ]e
-nmap zk [e
-vmap zj ]egv
-vmap zk [egv
+" nmap zj ]e
+" nmap zk [e
+" vmap zj ]egv
+" vmap zk [egv
 vmap <C-j> ]egv
 vmap <C-k> [egv
 
