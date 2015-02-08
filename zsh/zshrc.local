@@ -494,9 +494,11 @@ alias gre='git remote -v'
 alias gra='git remote add'
 
 # Checkouting
-alias go='git checkout'
-alias goo='git checkout --ours'
-alias got='git checkout --theirs'
+if ! (( $+commands[go] )) ; then
+  alias go='git checkout'
+  alias goo='git checkout --ours'
+  alias got='git checkout --theirs'
+fi
 
 # Stashing
 alias gt="git stash"
