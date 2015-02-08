@@ -1375,10 +1375,9 @@ vmap { S}
 " }}}
 " UltiSnips {{{
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-f>"
-let g:UltiSnipsJumpForwardTrigger="<c-l>"
-let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+let g:UltiSnipsExpandTrigger = '<C-f>'
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 inoremap <c-x><c-k> <c-x><c-k>
 
 " }}}
