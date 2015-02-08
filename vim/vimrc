@@ -1111,7 +1111,8 @@ let g:ctrlp_prompt_mappings = {
 \ }
 
 let g:ctrlp_projects = [
-      \ '~/spotify', '~/git', '~/.vim/bundle', '~/var/http/talks']
+      \ '~/spotify', '~/git', '~/.vim/bundle', '~/var/http/talks',
+      \ '~/var/go/src/github.com/thiderman']
 
 function! MaybeCtrlP()
   if getcwd() == expand('$HOME')
