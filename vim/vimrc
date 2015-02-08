@@ -59,6 +59,7 @@ let s:addons += [
 " Misc filetypes {{{
 
 let s:addons += [
+  \ 'fatih/vim-go',
   \ 'evanmiller/nginx-vim-syntax',
   \ 'rodjek/vim-puppet',
   \ 'chrisbra/csv.vim',
