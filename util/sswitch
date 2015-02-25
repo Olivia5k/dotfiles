@@ -13,11 +13,7 @@ fi
 xrandr --output $other --auto
 xrandr --output $current --off
 
-# herbst y u do this
-herbstclient move_monitor 0 $(xrandr | grep "*" | grep -oE '[0-9]+x[0-9]+')
-
 keyboard-setup
 wp
 
 killall keynav; keynav &> /dev/null &|
-killall storm; run_storm &> /dev/null &|
