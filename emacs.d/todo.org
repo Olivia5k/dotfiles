@@ -1,0 +1,36 @@
+* Main items
+** TODO Rainbow delimeters
+** Emacs server mode
+** Set up magit
+** Popping (bubbling) lines
+** Better syntax highlighting for elisp
+** Set up projectile
+** Set up worthwhile org bindings
+** Autosave in projects
+** Opening lines
+**** C-o for below
+**** C-O for above
+** Go through dotfiles
+**** jeekl
+**** dialelo
+** Whitespace
+**** Kill trailing whitespace on save
+**** Kill trailing lines on save
+
+* Python
+** python-goto-or-add-docstring
+** python-goto-or-add-test
+**** Also add reversal
+** pytest integration
+**** Background color for running tests
+**** Auto run of current test
+**** 
+** Next/prev method
+
+* Appearances
+** Improve the smart-mode-line
+** 
+
+* Integration
+** Make Win- keys to special things if we are current workspace
+** 
