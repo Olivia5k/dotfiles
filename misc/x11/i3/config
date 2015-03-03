@@ -5,6 +5,7 @@ for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
 for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 for_window [class="Keepassx"] move container to workspace pass; workspace pass
+for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h exec di-tmux select-pane -L
@@ -38,6 +39,7 @@ bindcode Mod4+68 workspace tmux
 bindcode Mod4+69 workspace spotify
 bindcode Mod4+70 workspace gimp
 bindcode Mod4+71 workspace misc
+bindcode Mod4+72 workspace emacs
 
 # Workspace moving (Mod4+Shift+F1-F5)
 bindcode Mod4+Shift+67 move container to workspace www
@@ -45,6 +47,7 @@ bindcode Mod4+Shift+68 move container to workspace tmux
 bindcode Mod4+Shift+69 move container to workspace spotify
 bindcode Mod4+Shift+70 move container to workspace gimp
 bindcode Mod4+Shift+71 move container to workspace misc
+bindcode Mod4+Shift+72 move container to workspace emacs
 
 # Workspace layouts (Mod4+F9-F11)
 bindcode Mod4+75 layout tabbed
@@ -94,6 +97,7 @@ bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
 bindsym Mod4+a exec sharpfocus
 bindsym Mod4+d exec muxfocus 2
 bindsym Mod4+i exec muxfocus 1
+bindsym Mod4+e exec ror "emacs" "emacs" "emacs"
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
