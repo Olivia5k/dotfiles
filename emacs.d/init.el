@@ -1,44 +1,22 @@
 ;;; minimal configuration file for emacs as system default editor
-;;; https://github.com/vderyagin/minimal-emacs-config
 
-(fset 'yes-or-no-p 'y-or-n-p)
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(mouse-wheel-mode -1)
+(require 'packages)
+(require 'options)
+(require 'editing)
+(require 'interface)
+(require 'magit)
 
-(setq inhibit-startup-screen t
-      initial-scratch-message ";; *scratch*\n\n")
+(global-set-key (kbd "C-c C-e") 'eval-buffer)
 
-(setq backup-inhibited t
-      auto-save-default nil)
-
-(setq echo-keystrokes 0.4
-      debug-on-error nil
-      stack-trace-on-error nil
-      standard-indent 4
-      tab-always-indent 'complete
-      grep-scroll-output t)
-
-(setq-default comment-column 42
-              fill-column 78
-              indent-tabs-mode nil
-              tab-width 4
-              word-wrap t)
-
-(show-paren-mode t)
+(global-set-key (kbd "<escape>")      'keyboard-escape-quit)
+(global-set-key (kbd "C-x f") 'fiplr-find-file)
 
 
-(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-(add-to-list 'auto-mode-alist '("^/tmp/zshec" . sh-mode))
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
-(setq sh-basic-offset 2)
-
-(eval-after-load 'sh-script
-  '(progn
-    (define-key sh-mode-map (kbd "M-l") nil)
-    (define-key sh-mode-map (kbd "<f9>") 'executable-interpret)
-    (define-key sh-mode-map (kbd "<RET>") 'reindent-then-newline-and-indent)))
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -53,7 +31,8 @@
       ido-max-prospects 15
       ido-confirm-unique-completion t
       ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
-                        " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
+                        " [No match]" " [Matched]" " [Not readable]"
+                        " [Too big]" " [Confirm]"))
 
 (require 'ido)
 (ido-mode t)
@@ -69,7 +48,6 @@
                             (delete-file (concat buffer-file-name "c")))))))
 
 (define-key global-map (kbd "M-g") 'goto-line)
-(define-key global-map (kbd "M-?") 'hippie-expand)
 
 (define-key global-map (kbd "C-<f5>")
   (lambda ()
@@ -109,68 +87,7 @@
 (define-key global-map (kbd "M-=") 'balance-windows)
 
 
-(defun my-duplicate-line (&optional commentfirst)
-  "comment line at point; if COMMENTFIRST is non-nil, comment the original"
-  (interactive "P")
-  (beginning-of-line)
-  (push-mark)
-  (end-of-line)
-  (let ((str (buffer-substring (region-beginning) (region-end))))
-    (when commentfirst
-      (comment-region (region-beginning) (region-end)))
-    (insert
-     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
-    (forward-line -1)))
 
-(defun rename-file-and-buffer ()
-  "Renames current buffer and file it is visiting."
-  (interactive)
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (message "Buffer '%s' is not visiting a file!" name)
-        (let ((new-name (read-file-name "New name: " filename)))
-          (cond ((get-buffer new-name)
-                 (message "A buffer named '%s' already exists!" new-name))
-                (t
-                 (rename-file name new-name 1)
-                 (rename-buffer new-name)
-                 (set-visited-file-name new-name)
-                 (set-buffer-modified-p nil)))))))
-
-(defun comment-or-uncomment-current-line-or-region ()
-  "Comments or uncomments current current line or whole lines in region."
-  (interactive)
-  (save-excursion
-    (let (min max)
-      (if (and transient-mark-mode mark-active)
-          (setq min (region-beginning) max (region-end))
-          (setq min (point) max (point)))
-      (comment-or-uncomment-region
-       (progn (goto-char min) (line-beginning-position))
-       (progn (goto-char max) (line-end-position))))))
-
-(defun goto-match-paren (arg)
-  "Go to the matching parenthesis if on parenthesis. Else go to the
-   opening parenthesis one level up."
-  (interactive "p")
-  (cond ((looking-at "\\s\(") (forward-list 1))
-        (t
-         (backward-char 1)
-         (cond ((looking-at "\\s\)")
-                (forward-char 1) (backward-list 1))
-               (t
-                (while (not (looking-at "\\s("))
-                  (backward-char 1)
-                  (cond ((looking-at "\\s\)")
-                         (message "->> )")
-                         (forward-char 1)
-                         (backward-list 1)
-                         (backward-char 1)))))))))
-
-(define-key global-map (kbd "C-c ;") 'comment-or-uncomment-current-line-or-region)
-(define-key global-map (kbd "C-%") 'goto-match-paren)
-(define-key global-map (kbd "C-c c") 'my-duplicate-line)
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
@@ -182,19 +99,3 @@
 
 (set-default-font "Inconsolata-12")
 (load-theme 'ujelly t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("167cbb16e26a66da3d77f308e78f428e41b1a5a404e3a82fa44666fcf201cb8a" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-;; Local Variables:
-;; no-byte-compile: t
-;; End:
