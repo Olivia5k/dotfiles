@@ -14,6 +14,8 @@
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
 
 
+(setq debug-on-error t)
+
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
@@ -97,5 +99,19 @@
   (when (file-directory-p path)
     (add-to-list 'custom-theme-load-path path)))
 
-(set-default-font "Inconsolata-12")
+(set-default-font "Inconsolata-18")
 (load-theme 'ujelly t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (discover-my-major yasnippet yaml-mode ssh-config-mode smex smart-mode-line rainbow-mode rainbow-identifiers rainbow-delimiters python-environment puppet-mode projectile paredit paradox otp nginx-mode morlock markdown-mode magit js2-mode ioccur ido-vertical-mode ido-ubiquitous httpcode htmlize gitignore-mode gitconfig-mode gist fringe-helper flycheck flx-ido fill-column-indicator expand-region epc dockerfile-mode diminish csv-mode crontab-mode buffer-move browse-kill-ring auto-complete ack-and-a-half ace-jump-mode ac-dabbrev))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
