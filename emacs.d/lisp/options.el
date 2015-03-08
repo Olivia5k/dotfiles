@@ -27,5 +27,6 @@
               word-wrap t)
 
 (show-paren-mode t)
+(global-auto-revert-mode t)
 
 (provide 'options)
