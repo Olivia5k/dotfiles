@@ -11,7 +11,7 @@
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
 
 (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
-(global-set-key (kbd "C-x f") 'fiplr-find-file)
+(global-set-key (kbd "C-x f") 'projectile-find-file)
 
 
 (setq debug-on-error t)
