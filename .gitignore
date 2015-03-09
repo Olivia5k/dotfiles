@@ -4,3 +4,4 @@ vim/.netrwhist
 old-configs-backup
 local
 util/*quake*
+/emacs.d/url/
