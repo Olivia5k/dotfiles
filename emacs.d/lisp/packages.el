@@ -42,6 +42,8 @@
     git-commit-mode
     gitconfig-mode
     gitignore-mode
+    helm
+    helm-projectile
     htmlize
     httpcode
     ido-ubiquitous
