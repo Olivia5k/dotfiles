@@ -1,19 +1,19 @@
 * Main items
-** TODO Rainbow delimeters
+** DONE Raibow delimeters
 ** Emacs server mode
-** Set up magit
+** DONE Set up magit
 ** Popping (bubbling) lines
-** Better syntax highlighting for elisp
-** Set up projectile
+** DONE Better syntax highlighting for elisp
+** DONE Set up projectile
 ** Set up worthwhile org bindings
-** Autosave in projects
+** DONE Autosave in projects
 ** Opening lines
 **** C-o for below
 **** C-O for above
 ** Go through dotfiles
 **** jeekl
 **** dialelo
-** Whitespace
+** DONE Whitespace
 **** Kill trailing whitespace on save
 **** Kill trailing lines on save
 
@@ -24,8 +24,10 @@
 ** pytest integration
 **** Background color for running tests
 **** Auto run of current test
-**** 
+**** Browsing errors
+***** With helm!
 ** Next/prev method
+** python-toggle-pragma-nocover
 
 * Appearances
 ** Improve the smart-mode-line
