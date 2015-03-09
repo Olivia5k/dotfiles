@@ -20,6 +20,7 @@
 (fci-mode 1)
 (setq fci-rule-width 1)
 (setq fci-rule-color "#444444")
+(add-hook 'after-change-major-mode-hook 'fci-mode)
 
 
 (setq ediff-diff-options "-w")
