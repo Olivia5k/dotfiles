@@ -19,10 +19,6 @@
 (setq url-http-attempt-keepalives nil)
 
 
-
-
-
-
 (defvar elpa-packages
   '(ac-dabbrev
     ace-jump-mode
