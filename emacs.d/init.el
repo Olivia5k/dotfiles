@@ -4,12 +4,12 @@
 
 (require 'packages)
 (require 'options)
-(require 'editing)
 (require 'interface)
 (require 'magit)
+(require 'pytest)
+(require 'window-management)
 
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
-
 (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
 (global-set-key (kbd "C-x f") 'projectile-find-file)
 
