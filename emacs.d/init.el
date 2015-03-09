@@ -99,7 +99,7 @@
   (when (file-directory-p path)
     (add-to-list 'custom-theme-load-path path)))
 
-(set-default-font "Inconsolata-18")
+(set-default-font "Inconsolata-16")
 (load-theme 'ujelly t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
