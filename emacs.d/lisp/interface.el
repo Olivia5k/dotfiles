@@ -27,5 +27,6 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
+(add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 
 (provide 'interface)
