@@ -19,6 +19,9 @@
 
 * Python
 ** python-goto-or-add-docstring
+** python-goto-failing-test
+**** Direct browse if just one
+**** helm select if not <3
 ** python-goto-or-add-test
 **** Also add reversal
 ** pytest integration
@@ -28,6 +31,7 @@
 ***** With helm!
 ** Next/prev method
 ** python-toggle-pragma-nocover
+** semantic mode
 
 * Appearances
 ** Improve the smart-mode-line
