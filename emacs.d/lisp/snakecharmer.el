@@ -25,6 +25,21 @@
   (previous-line 3)
   (indent-for-tab-command))
 
+(defun snake-toggle-nocover ()
+  "Toggle a '# pragma: nocover' comment at the end of the current line"
+  (interactive)
+  (let ((token "  # pragma: nocover"))
+    (save-excursion
+      (end-of-line)
+      ; Inelegance galore. <3
+      (backward-word 2)
+      (backward-char 4)
+      (if (looking-at token)
+          (kill-line)
+        (progn
+          (end-of-line)
+          (insert token))))))
+  
 ;(define-key python-mode (kbd "C-c d") 'python-goto-or-add-docstring)
 
 (provide 'snakecharmer)
