@@ -81,7 +81,7 @@
 
 (defun run-pytest (&optional tests flags)
   "run pytest"
-  (virtualenv-hack-dir-local-variables)
+  ;(virtualenv-hack-dir-local-variables)
   (let* ((pytest (pytest-find-test-runner))
          (where (pytest-find-project-root))
          (tnames (if tests (mapconcat (lambda (test) (substring test (string-width where)))
