@@ -8,7 +8,19 @@
   (if (looking-at "\"\"\"")
       (next-line)
     (progn
-      (insert "\"\"\"\n%s\n\n\"\"\"\n\n"))))
+      (previous-line)
+      (end-of-line)
+      (newline-and-indent)
+      (insert "\"\"\"")
+      (newline-and-indent)
+      (insert "")
+      (newline-and-indent)
+      (newline-and-indent)
+      (insert "\"\"\"")
+      (newline-and-indent)
+      (previous-line 3)
+      (indent-for-tab-command)
+      )))
 
 ;(define-key python-mode (kbd "C-c d") 'python-goto-or-add-docstring)
 
