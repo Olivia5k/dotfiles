@@ -9,18 +9,21 @@
       (next-line)
     (progn
       (previous-line)
-      (end-of-line)
-      (newline-and-indent)
-      (insert "\"\"\"")
-      (newline-and-indent)
-      (insert "")
-      (newline-and-indent)
-      (newline-and-indent)
-      (insert "\"\"\"")
-      (newline-and-indent)
-      (previous-line 3)
-      (indent-for-tab-command)
-      )))
+      (snake-create-docstring))))
+
+(defun snake-create-docstring ()
+  "Insert an indented docstring under the current line."
+  (end-of-line)
+  (newline-and-indent)
+  (insert "\"\"\"")
+  (newline-and-indent)
+  (insert "")
+  (newline-and-indent)
+  (newline-and-indent)
+  (insert "\"\"\"")
+  (newline-and-indent)
+  (previous-line 3)
+  (indent-for-tab-command))
 
 ;(define-key python-mode (kbd "C-c d") 'python-goto-or-add-docstring)
 
