@@ -35,7 +35,7 @@
 
 * Appearances
 ** Improve the smart-mode-line
-** 
+** https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
 
 * Integration
 ** Make Win- keys to special things if we are current workspace
