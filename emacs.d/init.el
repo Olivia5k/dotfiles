@@ -158,8 +158,6 @@
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
-(setq projectile-completion-system 'helm)
-
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
@@ -218,6 +216,7 @@
 ;;; Projectile
 (require 'projectile)
 (projectile-global-mode)
+(setq projectile-completion-system 'helm)
 
 ;;; Smart mode line
 (require 'smart-mode-line)
