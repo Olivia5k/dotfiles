@@ -1,19 +1,13 @@
 * Main items
-** DONE Raibow delimeters
 ** Emacs server mode
-** DONE Set up magit
 ** Popping (bubbling) lines
-** DONE Better syntax highlighting for elisp
-** DONE Set up projectile
 ** Set up worthwhile org bindings
-** DONE Autosave in projects
 ** Opening lines
 **** C-o for below
 **** C-O for above
 ** Go through dotfiles
 **** jeekl
 **** dialelo
-** DONE Whitespace
 **** Kill trailing whitespace on save
 **** Kill trailing lines on save
 
