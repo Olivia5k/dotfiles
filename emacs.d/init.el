@@ -5,13 +5,12 @@
 (require 'packages)
 (require 'options)
 (require 'interface)
-(require 'magit)
+(require 'local-magit)
 (require 'pytest)
 (require 'window-management)
 
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
 (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
-
 
 (setq debug-on-error t)
 
@@ -102,9 +101,6 @@
 (define-key global-map (kbd "M-3") 'split-window-horizontally)
 (define-key global-map (kbd "M-4") 'kill-buffer-and-window)
 (define-key global-map (kbd "M-=") 'balance-windows)
-
-
-
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
