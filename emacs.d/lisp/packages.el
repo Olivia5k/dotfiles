@@ -18,7 +18,6 @@
 ;; required because of a package.el bug
 (setq url-http-attempt-keepalives nil)
 
-
 (defvar elpa-packages
   '(ac-dabbrev
     ace-jump-mode
@@ -44,6 +43,7 @@
     gitignore-mode
     helm
     helm-projectile
+    helm-swoop
     htmlize
     httpcode
     ido-ubiquitous
@@ -68,8 +68,10 @@
     smart-mode-line
     smex
     ssh-config-mode
+    virtualenvwrapper
     yaml-mode
-    yasnippet)
+    yasnippet
+    zenburn)
   "A list of packages to ensure are installed at launch.")
 
 
