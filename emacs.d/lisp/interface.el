@@ -3,6 +3,7 @@
 
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-set-key (kbd "C-x f") 'projectile-find-file) ; Until helm-projectile doesn't crash
+(global-set-key (kbd "M-q") 'helm-mini)
 (global-unset-key (kbd "C-x c"))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -22,8 +23,8 @@
 
 (helm-mode 1)
 
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini) ;; I do this way too much...
+(global-set-key (kbd "m-x") 'helm-m-x)
+(global-set-key (kbd "c-x b") 'helm-mini) ;; i do this way too much...
 
 (require 'projectile)
 (projectile-global-mode)
@@ -39,9 +40,8 @@
 (require 'fill-column-indicator)
 (fci-mode 1)
 (setq fci-rule-width 1)
-(setq fci-rule-color "#444444")
+(setq fci-rule-color "#000000")
 (add-hook 'after-change-major-mode-hook 'fci-mode)
-
 
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
@@ -120,7 +120,7 @@
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
 
-(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-c g") 'goto-line)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
 (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
