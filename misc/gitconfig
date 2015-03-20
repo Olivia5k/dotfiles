@@ -79,4 +79,4 @@
   cr          = codereview
 
 [push]
-  default = simple
+	default = tracking
