@@ -5,3 +5,4 @@ old-configs-backup
 local
 util/*quake*
 /emacs.d/url/
+/emacs.d/semanticdb/
