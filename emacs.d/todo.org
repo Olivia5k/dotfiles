@@ -2,9 +2,6 @@
 ** Emacs server mode
 ** Popping (bubbling) lines
 ** Set up worthwhile org bindings
-** Opening lines
-**** DONE C-o for below
-**** C-O for above
 ** Go through dotfiles
 **** jeekl
 **** dialelo
@@ -13,16 +10,18 @@
 
 * Python
 ** python-goto-or-add-docstring
-** python-goto-failing-test
-**** Direct browse if just one
-**** helm select if not <3
 ** python-goto-or-add-test
 **** Also add reversal
 ** pytest integration
 **** Background color for running tests
-**** Auto run of current test
+**** python-run-test
+**** python-run-test-all
+**** python-goto-test
+If standing in Python code, switch from `code.py` to `test_code.py`
+
 **** Browsing errors
-***** With helm!
+***** Direct browse if just one
+***** helm select if not <3
 ** Next/prev method
 ** python-toggle-pragma-nocover
 ** semantic mode
