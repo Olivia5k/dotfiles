@@ -403,6 +403,12 @@
       (switch-to-buffer buf)
       (insert content))))
 
+;; Org buffer go
+(define-key global-map (kbd "<f4>")
+  (lambda ()
+    (interactive)
+    (find-file (concat user-emacs-directory "todo.org"))))
+
 ;;; Backups
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
