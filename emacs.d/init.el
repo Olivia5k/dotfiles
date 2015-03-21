@@ -58,7 +58,6 @@
     magit
     markdown-mode
     melpa
-    morlock
     nginx-mode
     otp
     paradox
