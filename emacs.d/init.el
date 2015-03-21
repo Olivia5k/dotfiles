@@ -419,12 +419,32 @@
       auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
       )
 
+;;; Window management
 (define-key global-map (kbd "M-0") 'delete-window)
 (define-key global-map (kbd "M-1") 'delete-other-windows)
 (define-key global-map (kbd "M-2") 'split-window-vertically)
 (define-key global-map (kbd "M-3") 'split-window-horizontally)
 (define-key global-map (kbd "M-4") 'kill-buffer-and-window)
 (define-key global-map (kbd "M-=") 'balance-windows)
+
+(global-set-key (kbd "C-x h") 'windmove-left)
+(global-set-key (kbd "C-x j") 'windmove-down)
+(global-set-key (kbd "C-x k") 'windmove-up)
+(global-set-key (kbd "C-x l") 'windmove-right)
+
+(global-set-key (kbd "C-x C-j")
+                (lambda ()
+                  (interactive)
+                  (split-window-below)
+                  (windmove-down)))
+
+(global-set-key (kbd "C-x C-l")
+                (lambda ()
+                  (interactive)
+                  (split-window-right)
+                  (windmove-right)))
+
+(global-set-key (kbd "C-q") 'delete-window)
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
