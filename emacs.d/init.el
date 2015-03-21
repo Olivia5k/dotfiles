@@ -290,10 +290,12 @@
       (next-line)
     (move-end-of-line nil)))
 
-(defun insertline-and-move-to-line ()
+(defun insertline-and-move-to-line (&optional up)
   "Insert an empty line after the current line and positon
   the curson at its beginning, according to the current mode."
   (interactive)
+  (if up
+      (previous-line))
   (move-end-of-line nil)
   (open-line 1)
   (forward-line 1)
@@ -314,6 +316,9 @@
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
 (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
+(global-set-key (kbd "C-M-o") (lambda ()
+                                (interactive)
+                                (insertline-and-move-to-line t)))
 
 (global-set-key (kbd "M-j")
                 (lambda ()
