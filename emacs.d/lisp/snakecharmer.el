@@ -1,9 +1,13 @@
+(defun python-goto-above-class-or-function ()
+  "Do a backwards motion towards the above function or class definition"
+  (re-search-backward
+   "^\\( *\\)\\(class\\|def\\) \\([a-zA-Z0-9_]+\\)" nil t))
+
 (defun snake-goto-or-add-docstring (&optional flags)
   "Go to the docstring for the current class or function. Create it if it does
    not already exist."
   (interactive)
-  (re-search-backward
-   "^\\( *\\)\\(class\\|def\\) \\([a-zA-Z0-9_]+\\)" nil t)
+  (python-goto-above-class-or-function)
   (forward-to-indentation 1)
   (if (looking-at "\"\"\"")
       (next-line)
@@ -39,7 +43,23 @@
         (progn
           (end-of-line)
           (insert token))))))
-  
-;(define-key python-mode (kbd "C-c d") 'python-goto-or-add-docstring)
+
+(defun snake-get-position ()
+  "Return a list with the the parent functions and/or classes above point"
+  (interactive)
+  (save-excursion
+    (python-goto-above-class-or-function)
+    (message "%s hehe" (match-data 2))))
+
+(defvar snakecharmer-map (make-sparse-keymap)
+  "snakecharmer keymap")
+
+(define-key snakecharmer-map
+  (kbd "C-c d") 'snake-goto-or-add-docstring)
+(define-key snakecharmer-map
+  (kbd "C-c n") 'snake-toggle-nocover)
+
+(define-minor-mode snakecharmer-mode
+  "Snakecharmer mode mode" nil " charm" snakecharmer-map)
 
 (provide 'snakecharmer)
