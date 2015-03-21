@@ -97,6 +97,7 @@
 
 ;;; Options and settings
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq-default indicate-empty-lines t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
