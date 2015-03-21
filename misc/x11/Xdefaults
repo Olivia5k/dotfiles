@@ -69,3 +69,4 @@ URxvt.color15: #ffffff
 
 !emacs
 emacs.Background: #151515
+emacs.Foreground: #ffffff
