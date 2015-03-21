@@ -30,12 +30,15 @@
   (indent-for-tab-command))
 
 (defun snake-toggle-nocover ()
-  "Toggle a '# pragma: nocover' comment at the end of the current line"
+  "Toggle a '# pragma: nocover' comment on the current block"
   (interactive)
   (let ((token "  # pragma: nocover"))
     (save-excursion
       (end-of-line)
-      ; Inelegance galore. <3
+      (if (not (looking-at-p ":$"))
+          (progn
+            (re-search-backward (format ":\\(%s\\)\?$" token) nil t)
+            (end-of-line)))
       (backward-word 2)
       (backward-char 4)
       (if (looking-at token)
