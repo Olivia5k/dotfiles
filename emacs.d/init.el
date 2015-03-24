@@ -350,6 +350,9 @@
 (require 'pytest)
 (require 'snakecharmer)
 
+;;; Elisp
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+
 ;;; Misc options
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
 (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
