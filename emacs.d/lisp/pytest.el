@@ -187,23 +187,22 @@ case. This requires pytest >= 1.2."
        ((equal inner-obj outer-obj) (format "::%s" outer-obj))
        (t (format "::%s::%s" outer-obj inner-obj))))))
 
-(defun inner-testable ()
-  "Finds the function name for pytest-one"
+(defun find-testable (rxp)
   (save-excursion
-    (re-search-backward
-     "^ \\{0,4\\}\\(class\\|def\\)[ \t]+\\([a-zA-Z0-9_]+\\)" nil t)
-    (buffer-substring-no-properties (match-beginning 2) (match-end 2))))
-
-(defun outer-testable ()
-  "Finds the class for the pytest-one"
-  (save-excursion
-    (re-search-backward
-     "^\\(class\\|def\\)[ \t]+\\([a-zA-Z0-9_]+\\)" nil t)
+    (re-search-backward rxp nil t)
     (let ((result
-            (buffer-substring-no-properties (match-beginning 2) (match-end 2))))
+           (buffer-substring-no-properties (match-beginning 2) (match-end 2))))
       (cons
        (buffer-substring-no-properties (match-beginning 1) (match-end 1))
        result))))
+
+(defun inner-testable ()
+  "Finds the function name for pytest-one"
+   (find-testable "^ \\{0,4\\}\\(class\\|def\\)[ \t]+\\([a-zA-Z0-9_]+\\)"))
+
+(defun outer-testable ()
+  "Finds the class for the pytest-one"
+  (find-testable "^\\(class\\|def\\)[ \t]+\\([a-zA-Z0-9_]+\\)"))
 
 (defun pytest-find-project-root (&optional dirname)
   (let ((dn
