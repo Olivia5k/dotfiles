@@ -289,8 +289,8 @@
 (defun move-end-of-line-or-next-line ()
   (interactive)
   (if (eolp)
-      (next-line)
-    (move-end-of-line nil)))
+      (next-line))
+    (move-end-of-line nil))
 
 (defun insertline-and-move-to-line (&optional up)
   "Insert an empty line after the current line and positon
