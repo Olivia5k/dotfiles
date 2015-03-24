@@ -69,6 +69,7 @@
     smart-mode-line
     smex
     ssh-config-mode
+    string-inf
     virtualenvwrapper
     yaml-mode
     yasnippet

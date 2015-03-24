@@ -1,3 +1,6 @@
+(require 'pytest)
+(require 'string-inflection)
+
 (defun python-goto-above-class-or-function ()
   "Do a backwards motion towards the above function or class definition"
   (re-search-backward
@@ -49,20 +52,46 @@
 
 (defun snake-get-position ()
   "Return a list with the the parent functions and/or classes above point"
+  (let ((outer (outer-testable))
+        (inner (inner-testable)))
+    (list outer inner)))
+  
+(defun snake-goto-test ()
+  "Based on the current function and class, goto to the test class in the
+   corresponding test file.
+
+   If the test class does not exist, it will be created. If the implementation
+   class has previous tests, preserve the ancestor class of those previous tests."
+
   (interactive)
-  (save-excursion
-    (python-goto-above-class-or-function)
-    (message "%s hehe" (match-data 2))))
+  (let* ((declares (snake-get-position))
+         (cls (cdr (car declares)))
+         (func (cdr (nth 1 declares)))
+         (testcls
+          (format "Test%s%s" ((string-inflection-camelcase-function cls)
+                              (string-inflection-camelcase-function func)))))
+    (message testcls)))
+
+(defun snake-sync-arguments ()
+  "Modify or arrange the arguments for the current function.
+
+  If the function is a test, check if there are @mock.patch() decorators and
+  change the arguments to the function to reflect the injected mocks.
+  If the function is an __init__, make sure that all arguments are assigned
+  as `self.arg = arg`")
 
 (defvar snakecharmer-map (make-sparse-keymap)
   "snakecharmer keymap")
-
 (define-key snakecharmer-map
   (kbd "C-c d") 'snake-goto-or-add-docstring)
 (define-key snakecharmer-map
   (kbd "C-c n") 'snake-toggle-nocover)
+(define-key snakecharmer-map
+  (kbd "M-RET") 'snake-goto-test)
 
 (define-minor-mode snakecharmer-mode
   "Snakecharmer mode mode" nil " charm" snakecharmer-map)
+
+(add-hook 'python-mode-hook 'snakecharmer-mode)
 
 (provide 'snakecharmer)
