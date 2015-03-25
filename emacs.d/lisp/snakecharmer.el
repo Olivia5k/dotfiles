@@ -49,12 +49,6 @@
         (progn
           (end-of-line)
           (insert token))))))
-
-(defun snake-get-position ()
-  "Return a list with the the parent functions and/or classes above point"
-  (let ((outer (outer-testable))
-        (inner (inner-testable)))
-    (list outer inner)))
   
 (defun snake-goto-test ()
   "Based on the current function and class, goto to the test class in the
@@ -64,13 +58,13 @@
    class has previous tests, preserve the ancestor class of those previous tests."
 
   (interactive)
-  (let* ((declares (snake-get-position))
-         (cls (cdr (car declares)))
-         (func (cdr (nth 1 declares)))
-         (testcls
-          (format "Test%s%s" ((string-inflection-camelcase-function cls)
-                              (string-inflection-camelcase-function func)))))
-    (message testcls)))
+  (message (format "%s" (snake-get-current-test-items))))
+
+(defun snake-get-current-test-items ()
+  "Get the current class and function definition as if they were items of a
+   test definition"
+  (list (string-inflection-camelcase-function (cdr (outer-testable)))
+        (string-inflection-camelcase-function (cdr (inner-testable)))))
 
 (defun snake-sync-arguments ()
   "Modify or arrange the arguments for the current function.
