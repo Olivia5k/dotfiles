@@ -63,8 +63,9 @@
 (defun snake-get-current-test-items ()
   "Get the current class and function definition as if they were items of a
    test definition"
-  (list (string-inflection-camelcase-function (cdr (outer-testable)))
-        (string-inflection-camelcase-function (cdr (inner-testable)))))
+  (mapcar 'string-inflection-camelcase-function
+          (list (cdr (outer-testable))
+                (cdr (inner-testable)))))
 
 (defun snake-sync-arguments ()
   "Modify or arrange the arguments for the current function.
