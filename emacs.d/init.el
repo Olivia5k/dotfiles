@@ -443,17 +443,22 @@
 (global-set-key (kbd "C-x k") 'windmove-up)
 (global-set-key (kbd "C-x l") 'windmove-right)
 
+(defun split-to-prev-buffer (split move)
+  "Split a window, go to it, and go to the previous buffer."
+  (interactive)
+  (funcall split)
+  (funcall move)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
 (global-set-key (kbd "C-x C-j")
                 (lambda ()
                   (interactive)
-                  (split-window-below)
-                  (windmove-down)))
+                  (split-to-prev-buffer 'split-window-below 'windmove-down)))
 
 (global-set-key (kbd "C-x C-l")
                 (lambda ()
                   (interactive)
-                  (split-window-right)
-                  (windmove-right)))
+                  (split-to-prev-buffer 'split-window-right 'windmove-right)))
 
 (global-set-key (kbd "C-q") 'delete-window)
 
