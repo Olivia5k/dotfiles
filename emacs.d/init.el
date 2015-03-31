@@ -282,11 +282,11 @@
 
 (defun back-to-indentation-or-beginning ()
   "Go to first non whitespace character on a line, or if already on the first
-  non whitespace character, go to the beginning of the line."
+  non whitespace character, go to the beginning of the previous line."
   (interactive)
   (if (= (point) (save-excursion (back-to-indentation) (point)))
-      (beginning-of-line)
-    (back-to-indentation)))
+      (previous-line))
+  (back-to-indentation))
 
 (defun move-end-of-line-or-next-line ()
   (interactive)
@@ -317,7 +317,7 @@
     (linum-mode -1)))
 
 (global-set-key (kbd "C-c g") 'goto-line)
-(global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
+(global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
 (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
 (global-set-key (kbd "C-M-o") (lambda ()
