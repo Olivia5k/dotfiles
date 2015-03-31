@@ -67,6 +67,7 @@
     rainbow-identifiers
     rainbow-mode
     rich-minority
+    s
     smart-mode-line
     smex
     ssh-config-mode
