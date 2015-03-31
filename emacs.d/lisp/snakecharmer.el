@@ -1,5 +1,7 @@
 (require 'pytest)
 (require 'string-inflection)
+(require 's)
+(require 'dash)
 
 (defun python-goto-above-class-or-function ()
   "Do a backwards motion towards the above function or class definition"
@@ -49,7 +51,7 @@
         (progn
           (end-of-line)
           (insert token))))))
-  
+
 (defun snake-goto-test ()
   "Based on the current function and class, goto to the test class in the
    corresponding test file.
@@ -58,7 +60,8 @@
    class has previous tests, preserve the ancestor class of those previous tests."
 
   (interactive)
-  (message (format "%s" (snake-get-current-test-items))))
+  (progn
+    (find-file (snake-alternate-file))))
 
 (defun snake-get-current-test-items ()
   "Get the current class and function definition as if they were items of a
@@ -66,6 +69,25 @@
   (mapcar 'string-inflection-camelcase-function
           (list (cdr (outer-testable))
                 (cdr (inner-testable)))))
+
+(defun snake-alternate-file ()
+  "If in application code, get the name of the corresponding test file and vice
+   versa."
+  (let* ((root (pytest-find-project-root))
+         (file (s-chop-prefix root (buffer-file-name)))
+         (parts (s-split "/" file)))
+    (file-truename
+     (s-join "/"
+             (if (s-prefix? "test/" file)
+                 (append                ; In test file - get path to code
+                  (list root)
+                  (last (s-split "/" root) 2)
+                  (butlast (cdr parts))
+                  (list (s-chop-prefix "test_" (car (last parts)))))
+               (append                  ; In the code - get path to test file
+                (list root "test")
+                (butlast (cdr parts))
+                (list (concat "test_" (car (last parts))))))))))
 
 (defun snake-sync-arguments ()
   "Modify or arrange the arguments for the current function.
