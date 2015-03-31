@@ -215,7 +215,7 @@ case. This requires pytest >= 1.2."
              (file-name-directory (directory-file-name dn)))))))
 
 (defun pytest-project-root (dirname)
-  (reduce '(lambda (x y) (or x y))
+  (cl-reduce '(lambda (x y) (or x y))
           (mapcar (lambda (d) (member d (directory-files dirname)))
                   pytest-project-root-files)))
 
