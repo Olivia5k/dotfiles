@@ -225,6 +225,7 @@
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x C-z") 'undo)
+(global-set-key (kbd "C-M-z") 'undo)
 
 ;;; FCI
 (require 'fill-column-indicator)
