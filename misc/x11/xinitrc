@@ -10,7 +10,7 @@ exec unclutter -idle 1 -root &
 exec keynav &
 
 (( $+commands[gnome-keyring])) && gnome-keyring --start &
-(( $+commands[start-pulseaudio-x11])) && start-pulseaudio-x11 &
+start-pulseaudio-x11 &
 
 # Only do wallpapers if we have one
 [[ -r "$HOME/.local/wallpaper" ]] && wp &
