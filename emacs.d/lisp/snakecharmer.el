@@ -107,21 +107,25 @@
          (prefix (concat "class Test" class))
          (current-class (cdr (outer-testable)))
          (found nil))
-    (if (s-equals? (format "Test%s" class) current-class)
-        (message "Current class, doing nothing")
-      (beginning-of-buffer)
-      (while (and (not (= (point) (point-max))) (not found))
-        (if (s-prefix?
-             prefix
-             (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
-            ;; Line found and scrolling will stop on the target line
-            (setq found t)
-          (forward-line 1)))
-      (if (not found)
-          (message "Create class")))))
+    (if (not (s-equals? (format "Test%s" class) current-class))
+        (progn
+          (beginning-of-buffer)
+          (while (and (not found) (not (= (point) (point-max))))
+            (if (s-prefix?
+                 prefix
+                 (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
+                ;; Line found and scrolling will stop on the target line
+                (setq found t)
+              (forward-line 1)))
+          (if (not found)
+              (snake-create-test class))))))
 
-(defun snake-create-test (classes)
-  "Create a new test at the bottom of the file")
+(defun snake-create-test (class)
+  "Create a new test at the bottom of the current file."
+  (end-of-buffer)
+  (insert (format "\n\nclass Test%s(object):\n    " class))
+  (end-of-buffer)
+  (end-of-line))
 
 (defun snake-sync-arguments ()
   "Modify or arrange the arguments for the current function.
@@ -130,6 +134,9 @@
   change the arguments to the function to reflect the injected mocks.
   If the function is an __init__, make sure that all arguments are assigned
   as `self.arg = arg`")
+
+(defun snake-goto-or-add-setup-method ()
+  "Add a `def setup_method()` for the current test class")
 
 (defvar snakecharmer-map (make-sparse-keymap)
   "snakecharmer keymap")
