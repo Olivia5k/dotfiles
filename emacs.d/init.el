@@ -52,6 +52,7 @@
     ido-vertical-mode
     ioccur
     js2-mode
+    key-chord
     magit
     markdown-mode
     melpa
@@ -429,6 +430,17 @@
       auto-save-timeout 2               ; number of seconds idle time before auto-save (default: 30)
       auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
       )
+
+;;; Movement key-chords
+(require 'key-chord)
+
+(key-chord-define-global "jj" 'ace-jump-word-mode)
+(key-chord-define-global "jl" 'ace-jump-line-mode)
+(key-chord-define-global "jk" 'ace-jump-char-mode)
+(key-chord-define-global "uu" 'undo-tree-visualize)
+(key-chord-define-global "xx" 'execute-extended-command)
+(key-chord-define-global "yy" 'browse-kill-ring)
+(key-chord-mode 1)
 
 ;;; Window management
 (define-key global-map (kbd "M-0") 'delete-window)
