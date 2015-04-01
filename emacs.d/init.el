@@ -308,7 +308,7 @@
     (end-of-line)
     (kill-ring-save)))
 
-(defun back-to-indentation-or-beginning ()
+(defun back-to-indentation-or-previous-line ()
   "Go to first non whitespace character on a line, or if already on the first
   non whitespace character, go to the beginning of the previous line."
   (interactive)
