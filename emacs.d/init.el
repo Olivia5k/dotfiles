@@ -249,11 +249,11 @@
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
-(sml/apply-theme 'dark)
+(sml/apply-theme 'respectful)
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x C-z") 'undo)
-(global-set-key (kbd "C-M-z") 'undo)
+(global-set-key (kbd "C-M-z") 'redo)
 
 ;;; FCI
 (require 'fill-column-indicator)
@@ -292,11 +292,14 @@
       (goto-char (+ origin (* (length region) arg) arg)))))
 
 (global-set-key (kbd "C-d") 'duplicate-current-line-or-region)
+(global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
 
 (global-set-key (kbd "M-k")
                 (lambda ()
                   (interactive)
                   (beginning-of-line)
+                  (if (eq (point) (point-max))
+                      (previous-line))
                   (kill-line 1)
                   (back-to-indentation)))
 
