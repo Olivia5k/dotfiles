@@ -54,6 +54,7 @@
     js2-mode
     key-chord
     magit
+    magit-gh-pulls
     markdown-mode
     melpa
     nginx-mode
