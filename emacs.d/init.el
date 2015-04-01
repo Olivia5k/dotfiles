@@ -443,6 +443,10 @@
     (interactive)
     (find-file (concat user-emacs-directory "todo.org"))))
 
+;; discover-my-major pls
+(define-key global-map (kbd "<f1>") 'discover-my-major)
+
+
 ;;; Backups
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
