@@ -429,8 +429,30 @@
                         (if (file-exists-p (concat buffer-file-name "c"))
                             (delete-file (concat buffer-file-name "c")))))))
 
+;; discover-my-major pls
+(define-key global-map (kbd "<f1>") 'discover-my-major)
+
+;; Go to a certain file. If already in it, go back.
+(defun th-toggle-file (path)
+ (let ((file (file-truename path)))
+   (if (s-equals? file buffer-file-name)
+       (previous-buffer)
+     (find-file file))))
+
+;; init.el is love, init.el is life
+(define-key global-map (kbd "<f2>")
+  (lambda ()
+    (interactive)
+    (th-toggle-file (concat user-emacs-directory "init.el"))))
+
+;; Org mode switch!
+(define-key global-map (kbd "<f3>")
+  (lambda ()
+    (interactive)
+    (th-toggle-file (concat user-emacs-directory "todo.org"))))
+
 ;; Scratch buffer go
-(define-key global-map (kbd "C-<f5>")
+(define-key global-map (kbd "<f4>")
   (lambda ()
     (interactive)
     (let ((content initial-scratch-message)
@@ -439,16 +461,6 @@
         (setq content ""))
       (switch-to-buffer buf)
       (insert content))))
-
-;; Org buffer go
-(define-key global-map (kbd "<f4>")
-  (lambda ()
-    (interactive)
-    (find-file (concat user-emacs-directory "todo.org"))))
-
-;; discover-my-major pls
-(define-key global-map (kbd "<f1>") 'discover-my-major)
-
 
 ;;; Backups
 (defvar --backup-directory (concat user-emacs-directory "backups"))
