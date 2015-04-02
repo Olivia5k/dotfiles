@@ -99,6 +99,7 @@
 
 
 ;;; Options and settings
+(require 's)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default indicate-empty-lines t)
 
@@ -244,6 +245,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
+(setq projectile-mode-line nil)
 
 ;;; Smart mode line
 (require 'smart-mode-line)
@@ -262,13 +264,17 @@
 (setq fci-rule-color "#000000")
 (add-hook 'after-change-major-mode-hook 'fci-mode)
 
+(auto-fill-mode 1)
+(set-fill-column 79)
+
 ;;; ediff
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-;;; Rainbows <3
+;;; Rainbows and docs <3
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 ;;; Editor macros
 (defun duplicate-current-line-or-region (arg)
