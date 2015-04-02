@@ -1,6 +1,6 @@
 * Main items
 ** Emacs server mode
-** Popping (bubbling) lines
+** Setup spelling
 ** Set up worthwhile org bindings
 ** Go through dotfiles
 **** jeekl
@@ -9,8 +9,7 @@
 **** Kill trailing lines on save
 
 * Python
-** python-goto-or-add-docstring
-** python-goto-or-add-test
+** DONE python-goto-or-add-test
 **** Also add reversal
 ** pytest integration
 **** Background color for running tests
@@ -26,6 +25,3 @@ If standing in Python code, switch from `code.py` to `test_code.py`
 ** python-toggle-pragma-nocover
 ** semantic mode
 
-* Appearances
-** Improve the smart-mode-line
-** https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
