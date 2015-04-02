@@ -545,7 +545,11 @@
   `((paredit-mode . " ()")
     (eldoc-mode . "")
     (abbrev-mode . "")
+    (auto-fill-mode "")
+    (helm-mode "")
+    (magit-auto-revert-mode "")
     (undo-tree-mode " ⎌")
+
     ;; Major modes
     (help-mode . "？")
     (fundamental-mode . "∅")
