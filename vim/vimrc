@@ -76,7 +76,6 @@ let s:addons += [
 let s:addons += [
   \ 'SirVer/UltiSnips',
   \ 'honza/vim-snippets',
-  \ 'Valloric/YouCompleteMe',
 \ ]
 
 " }}}
