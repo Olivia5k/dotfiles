@@ -543,7 +543,7 @@
 
 ;;; Appearances
 (set-default-font "Inconsolata-12")
-(load-theme 'zenburn t)
+(load-theme 'ujelly t)
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist
