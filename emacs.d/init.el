@@ -319,17 +319,22 @@
 
 (defun back-to-indentation-or-previous-line ()
   "Go to first non whitespace character on a line, or if already on the first
-  non whitespace character, go to the beginning of the previous line."
+  non whitespace character, go to the beginning of the previous non-blank line."
   (interactive)
   (if (= (point) (save-excursion (back-to-indentation) (point)))
       (previous-line))
+  (if (and (eolp) (bolp))
+      (back-to-indentation-or-previous-line))
   (back-to-indentation))
 
 (defun move-end-of-line-or-next-line ()
   (interactive)
   (if (eolp)
-      (next-line))
-    (move-end-of-line nil))
+      (progn
+        (next-line)
+        (if (bolp)
+            (move-end-of-line-or-next-line))))
+  (move-end-of-line nil))
 
 (defun insertline-and-move-to-line (&optional up)
   "Insert an empty line after the current line and positon
