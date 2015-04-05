@@ -440,14 +440,23 @@
                         (if (file-exists-p (concat buffer-file-name "c"))
                             (delete-file (concat buffer-file-name "c")))))))
 
+;;; <f> bindings
+
 ;; discover-my-major pls
-(define-key global-map (kbd "<f1>") 'discover-my-major)
+(define-key global-map (kbd "<f1>")
+  (lambda ()
+    (interactive)
+    (if (s-prefix? "*makey-key" (buffer-name))
+        (kill-buffer-and-window)
+      (discover-my-major t))))
 
 ;; Go to a certain file. If already in it, go back.
 (defun th-toggle-file (path)
  (let ((file (file-truename path)))
    (if (s-equals? file buffer-file-name)
-       (previous-buffer)
+       (progn
+         (save-buffer)
+         (previous-buffer))
      (find-file file))))
 
 ;; init.el is love, init.el is life
