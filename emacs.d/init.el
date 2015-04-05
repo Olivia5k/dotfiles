@@ -73,6 +73,7 @@
     ssh-config-mode
     string-inf
     virtualenvwrapper
+    xkcd
     yaml-mode
     yasnippet
     zenburn)
