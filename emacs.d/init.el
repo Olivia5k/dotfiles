@@ -201,6 +201,7 @@
 
 ;; Change the keybinds to whatever you like :)
 (global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "C-s") 'helm-swoop)
 (global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
 (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
 (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
@@ -236,6 +237,10 @@
 ;; Optional face for line numbers
 ;; Face name is `helm-swoop-line-number-face`
 (setq helm-swoop-use-line-number-face t)
+
+;; disable pre-input
+(setq helm-swoop-pre-input-function
+      (lambda () ""))
 
 (helm-mode 1)
 
