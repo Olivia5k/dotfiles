@@ -36,9 +36,9 @@ If standing in Python code, switch from `code.py` to `test_code.py`
 ** semantic mode
 
 * Colors
-** darker gutter
+** DONE darker gutter
 ** sml darkness
-** general boldness
+** DONE general boldness
 ** no right gutter
-** lighter bg?
+** DONE lighter bg?
 ** prefix-less swoop instead of C-s
