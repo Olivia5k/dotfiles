@@ -555,6 +555,11 @@
 (set-default-font "Inconsolata-12")
 (load-theme 'ujelly t)
 
+(mapc
+ (lambda (face)
+   (set-face-attribute face nil :underline nil))
+ (face-list))
+
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist
   `((paredit-mode . " ()")
