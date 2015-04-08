@@ -251,8 +251,9 @@
 ;;; Smart mode line
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
+(sml/apply-theme 'ujelly)
 (sml/setup)
-(sml/apply-theme 'respectful)
+
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x C-z") 'undo)
