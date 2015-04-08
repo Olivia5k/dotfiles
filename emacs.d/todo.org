@@ -2,6 +2,16 @@
 ** Emacs server mode
 ** Setup spelling
 ** Set up worthwhile org bindings
+** Delete trailing whitespace on save.........
+** Stack Exchange
+** Per-project orgmode
+** Close current help window
+** git-gutter always
+** emmet always for css
+** HTML tag management
+*** kill tag on C-k
+*** re-indent and format before buffer
+** Remove underline in colorscheme
 ** Go through dotfiles
 **** jeekl
 **** dialelo
@@ -25,3 +35,10 @@ If standing in Python code, switch from `code.py` to `test_code.py`
 ** python-toggle-pragma-nocover
 ** semantic mode
 
+* Colors
+** darker gutter
+** sml darkness
+** general boldness
+** no right gutter
+** lighter bg?
+** prefix-less swoop instead of C-s
