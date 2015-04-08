@@ -8,3 +8,4 @@ util/*quake*
 /emacs.d/semanticdb/
 /emacs.d/.#recentf
 /emacs.d/xkcd/
+/emacs.d/.mc-lists.el
