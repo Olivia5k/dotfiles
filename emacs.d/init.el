@@ -522,6 +522,17 @@
       auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
       )
 
+;;; Save hooks
+
+(add-hook 'before-save-hook
+          (lambda ()
+            (save-excursion
+              (save-restriction
+                (delete-trailing-whitespace)
+                (widen)
+                (goto-char (point-max))
+                (delete-blank-lines)))))
+
 ;;; Movement key-chords
 (require 'key-chord)
 
