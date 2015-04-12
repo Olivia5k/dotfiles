@@ -2,23 +2,16 @@
 ** Emacs server mode
 ** Setup spelling
 ** Set up worthwhile org bindings
-** Delete trailing whitespace on save.........
-** Stack Exchange
 ** Per-project orgmode
+** electric pair always
 ** Close current help window
-** git-gutter always
-** emmet always for css
 ** HTML tag management
-*** kill tag on C-k
-*** re-indent and format before buffer
-** Remove underline in colorscheme
-** Go through dotfiles
-**** jeekl
-**** dialelo
-**** Kill trailing whitespace on save
-**** Kill trailing lines on save
+**** kill tag on C-k
+**** re-indent and format before buffer
+** Wrap window movement commands
 
 * Python
+** DONE python-toggle-pragma-nocover
 ** DONE python-goto-or-add-test
 **** Also add reversal
 ** pytest integration
@@ -26,19 +19,17 @@
 **** python-run-test
 **** python-run-test-all
 **** python-goto-test
-If standing in Python code, switch from `code.py` to `test_code.py`
-
+**** If standing in Python code, switch from `code.py` to `test_code.py`
 **** Browsing errors
 ***** Direct browse if just one
 ***** helm select if not <3
-** Next/prev method
-** python-toggle-pragma-nocover
 ** semantic mode
 
-* Colors
-** DONE darker gutter
-** sml darkness
-** DONE general boldness
-** no right gutter
-** DONE lighter bg?
-** prefix-less swoop instead of C-s
+* New modes
+** Stack Exchange
+** popwin
+** jira mode
+
+** Go through dotfiles
+**** jeekl
+**** dialelo
