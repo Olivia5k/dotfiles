@@ -573,7 +573,9 @@
 ;;; Appearances
 (set-default-font "Inconsolata-12")
 (load-theme 'ujelly t)
+
 (set-fringe-mode '(1 . 0))
+(setq scroll-step 10)
 
 (mapc
  (lambda (face)
