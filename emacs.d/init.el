@@ -602,16 +602,13 @@
     (helm-mode "")
     (magit-auto-revert-mode "")
     (undo-tree-mode " ⎌")
-    (global-git-gutter-mode "")
+    (git-gutter-mode "")
 
     ;; Major modes
-    (help-mode . "？")
-    (fundamental-mode . "∅")
-    (lisp-interaction-mode . "λ")
+    (help-mode . "")
+    (fundamental-mode . "0")
     (python-mode . "py")
-    (cider-mode . "clj")
-    (emacs-lisp-mode . "EL")
-    (mu4e-headers-mode . "✉")))
+    (emacs-lisp-mode . "λ")))
 
 (defun clean-mode-line ()
   (interactive)
