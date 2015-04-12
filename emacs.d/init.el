@@ -399,8 +399,7 @@
 (require 'magit)
 (global-set-key (kbd "M-g") 'magit-status)
 
-(setq magit-save-some-buffers 'dontask
-      )
+(setq magit-save-some-buffers 'dontask)
 
 (defadvice magit-status (around magit-fullscreen activate)
   (window-configuration-to-register :magit-fullscreen)
