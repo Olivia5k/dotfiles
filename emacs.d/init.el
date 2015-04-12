@@ -262,10 +262,11 @@
 (sml/apply-theme 'ujelly)
 (sml/setup)
 
-
-(global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-x C-z") 'undo)
-(global-set-key (kbd "C-M-z") 'redo)
+;;; undo tree
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-x C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-M-z") 'undo-tree-redo)
+(global-undo-tree-mode +1)
 
 ;;; FCI
 (require 'fill-column-indicator)
