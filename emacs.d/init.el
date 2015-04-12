@@ -1,6 +1,7 @@
 ;; init.el - where it all begins
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(setq custom-theme-directory (concat user-emacs-directory "themes"))
 
 ;;; Package configuration
 (require 'package)
@@ -563,9 +564,6 @@
                   (split-to-prev-buffer 'split-window-right 'windmove-right)))
 
 (global-set-key (kbd "C-q") 'delete-window)
-
-;; Set custom theme path
-(setq custom-theme-directory (concat user-emacs-directory "themes"))
 
 (dolist
     (path (directory-files custom-theme-directory t "\\w+"))
