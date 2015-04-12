@@ -271,7 +271,7 @@
 (require 'fill-column-indicator)
 (fci-mode 1)
 (setq fci-rule-width 1)
-(setq fci-rule-color "#000000")
+(setq fci-rule-color "#404049")
 (add-hook 'after-change-major-mode-hook 'fci-mode)
 
 (auto-fill-mode 1)
