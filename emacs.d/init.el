@@ -32,6 +32,7 @@
     diminish
     discover-my-major
     dockerfile-mode
+    emmet
     epl
     expand-region
     fill-column-indicator
@@ -285,6 +286,13 @@
 (global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
 (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+
+;;; emmet
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(add-hook 'emmet-mode-hook
+          (lambda ()
+            (setq emmet-indentation 2))) ;; indent 2 spaces.
 
 ;;; Rainbows and docs <3
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
