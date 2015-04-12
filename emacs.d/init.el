@@ -41,6 +41,7 @@
     fringe-helper
     gist
     git-commit-mode
+    git-gutter
     gitconfig-mode
     gitignore-mode
     helm
@@ -278,6 +279,12 @@
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;;; git-gutter
+(global-git-gutter-mode +1)
+(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
 
 ;;; Rainbows and docs <3
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
@@ -576,6 +583,7 @@
     (helm-mode "")
     (magit-auto-revert-mode "")
     (undo-tree-mode " ⎌")
+    (global-git-gutter-mode "")
 
     ;; Major modes
     (help-mode . "？")
