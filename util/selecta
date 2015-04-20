@@ -19,6 +19,8 @@ end
 
 require "optparse"
 require "io/console"
+require "io/wait"
+require "set"
 
 KEY_CTRL_C = ?\C-c
 KEY_CTRL_N = ?\C-n
@@ -31,29 +33,52 @@ KEY_CTRL_M = ?\C-m
 KEY_DELETE = 127.chr # Equivalent to ?\C-?
 
 class Selecta
-  VERSION = [0, 0, 2]
+  VERSION = [0, 0, 6]
 
   def main
     # We have to parse options before setting up the screen or trying to read
     # the input in case the user did '-h', an invalid option, etc. and we need
     # to terminate.
     options = Configuration.parse_options(ARGV)
+    input_lines = $stdin.readlines
 
     search = Screen.with_screen do |screen, tty|
-      config = Configuration.from_inputs($stdin.readlines, options, screen.height)
+      config = Configuration.from_inputs(input_lines, options, screen.height)
       run_in_screen(config, screen, tty)
     end
 
     unless search.selection == Search::NoSelection
       puts search.selection
     end
-  rescue ScreenValidator::NotATTY
+  rescue Screen::NotATTY
     $stderr.puts(
       "Can't get a working TTY. Selecta requires an ANSI-compatible terminal.")
+    exit(1)
+  rescue Abort
+    # We were aborted via ^C.
+    #
+    # If we didn't mess with the TTY configuration at all, then ^C would send
+    # SIGINT to the entire process group. That would terminate both Selecta and
+    # anything piped into or out of it. Because Selecta puts the terminal in
+    # raw mode, that doesn't happen; instead, we detect the ^C as normal input
+    # and raise Abort, which leads here.
+    #
+    # To make pipelines involving Selecta behave as people expect, we send
+    # SIGINT to our own process group, which should exactly match what termios
+    # would do to us if the terminal weren't in raw mode. "Should!" <- Remove
+    # those scare quotes if ten years pass without this breaking!
+    #
+    # The SIGINT will cause Ruby to raise Interrupt, so we also have to handle
+    # that here.
+    begin
+      Process.kill("INT", -Process.getpgrp)
+    rescue Interrupt
+      exit(1)
+    end
   end
 
   def run_in_screen(config, screen, tty)
-    search = Search.blank(config)
+    search = Search.from_config(config)
 
     # We emit the number of lines we'll use later so we don't clobber whatever
     # was already on the screen.
@@ -72,13 +97,36 @@ class Selecta
   def ui_event_loop(search, screen, tty)
     while not search.done?
       Renderer.render!(search, screen)
-      search = handle_key(search, tty.get_char)
+      search = handle_keys(search, tty)
     end
     search
   end
 
+  def handle_keys(search, tty)
+    new_query_chars = ""
+
+    # Read through all of the buffered input characters. Process control
+    # characters immediately. Save any query characters to be processed
+    # together at the end, since there's no reason to process intermediate
+    # results when there are more characters already buffered.
+    tty.get_available_input.chars.each do |char|
+      is_query_char = !!(char =~ /[[:print:]]/)
+      if is_query_char
+        new_query_chars << char
+      else
+        search = handle_control_character(search, char)
+      end
+    end
+
+    if new_query_chars.empty?
+      search
+    else
+      search.append_search_string(new_query_chars)
+    end
+  end
+
   # On each keystroke, generate a new search object
-  def handle_key(search, key)
+  def handle_control_character(search, key)
     case key
 
     when KEY_CTRL_N then search.down
@@ -89,13 +137,14 @@ class Selecta
     when KEY_CTRL_H, KEY_DELETE then search.backspace
 
     when ?\r, KEY_CTRL_J, KEY_CTRL_M then search.done
-    when KEY_CTRL_C then raise SystemExit
 
-    when /[[:print:]]/ then search.append_search_string(key.chr)
+    when KEY_CTRL_C then raise Abort
 
     else search
     end
   end
+
+  class Abort < RuntimeError; end
 end
 
 class Configuration < Struct.new(:visible_choices, :initial_search, :choices)
@@ -161,34 +210,62 @@ class Configuration < Struct.new(:visible_choices, :initial_search, :choices)
       # fixes this. I don't understand why. I found it via:
       #
       # http://stackoverflow.com/questions/2982677/ruby-1-9-invalid-byte-sequence-in-utf-8
-      utf16 = choice.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-      utf16.encode('UTF-8', 'UTF-16')
-    end.map(&:strip)
+      if choice.valid_encoding?
+        choice
+      else
+        utf16 = choice.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+        utf16.encode('UTF-8', 'UTF-16')
+      end.strip
+    end
   end
 end
 
 class Search
-  attr_reader :choices, :index, :query, :config
+  attr_reader :index, :query, :config, :original_matches, :all_matches, :best_matches
 
   def initialize(vars)
-    @vars = vars
     @config = vars.fetch(:config)
-    @choices = vars.fetch(:choices)
     @index = vars.fetch(:index)
     @query = vars.fetch(:query)
     @done = vars.fetch(:done)
+    @original_matches = vars.fetch(:original_matches)
+    @all_matches = vars.fetch(:all_matches)
+    @best_matches = vars.fetch(:best_matches)
+    @vars = vars
   end
 
-  def self.blank(config)
-    new(:config => config,
-        :choices => config.choices,
-        :index => 0,
-        :query => config.initial_search,
-        :done => false)
+  def self.from_config(config)
+    trivial_matches = config.choices.reject(&:empty?).map do |choice|
+      Match.trivial(choice)
+    end
+
+    search = new(:config => config,
+                 :index => 0,
+                 :query => "",
+                 :done => false,
+                 :original_matches => trivial_matches,
+                 :all_matches => trivial_matches,
+                 :best_matches => trivial_matches)
+
+    if config.initial_search.empty?
+      search
+    else
+      search.append_search_string(config.initial_search)
+    end
   end
 
-  def merge(vars)
-    Search.new(@vars.merge(vars))
+  # Construct a new Search by merging in a hash of changes.
+  def merge(changes)
+    vars = @vars.merge(changes)
+
+    # If the query changed, throw away the old matches so that new ones will be
+    # computed.
+    matches_are_stale = vars.fetch(:query) != @query
+    if matches_are_stale
+      vars = vars.reject { |key| key == :matches }
+    end
+
+    Search.new(vars)
   end
 
   def done?
@@ -196,138 +273,271 @@ class Search
   end
 
   def selection
-    matches.fetch(@index) { NoSelection }
+    if @aborted
+      NoSelection
+    else
+      match = best_matches.fetch(@index) { NoSelection }
+      if match == NoSelection
+        match
+      else
+        match.original_choice
+      end
+    end
   end
 
   def down
-    index = [@index + 1, matches.count - 1, config.visible_choices - 1].min
-    merge(:index => index)
+    move_cursor(1)
   end
 
   def up
-    merge(:index => [@index - 1, 0].max)
+    move_cursor(-1)
+  end
+
+  def max_visible_choices
+    [@config.visible_choices, all_matches.count].min
   end
 
   def append_search_string(string)
     merge(:index => 0,
           :query => @query + string)
+    .recompute_matches(all_matches)
   end
 
   def backspace
     merge(:index => 0,
           :query => @query[0...-1])
+    .recompute_matches
   end
 
   def clear_query
     merge(:index => 0,
           :query => "")
+    .recompute_matches
   end
 
   def delete_word
     merge(:index => 0,
           :query => @query.sub(/[^ ]* *$/, ""))
-  end
-
-  def matches
-    @choices.map do |choice|
-      [choice, Score.score(choice, query)]
-    end.select do |choice, score|
-      score > 0.0
-    end.sort_by do |choice, score|
-      -score
-    end.map do |choice, score|
-      choice
-    end
+    .recompute_matches
   end
 
   def done
     merge(:done => true)
   end
 
+  def abort
+    merge(:aborted => true)
+  end
+
+  def recompute_matches(previous_matches=self.original_matches)
+    if self.query.empty?
+      merge(:all_matches => original_matches,
+            :best_matches => original_matches)
+    else
+      all_matches = recompute_all_matches(previous_matches)
+      best_matches = recompute_best_matches(all_matches)
+      merge(:all_matches => all_matches, :best_matches => best_matches)
+    end
+  end
+
+  private
+
+  def recompute_all_matches(previous_matches)
+    query = self.query.downcase
+    query_chars = query.chars.to_a
+
+    matches = previous_matches.map do |match|
+      choice = match.choice
+      score, range = Score.score(choice, query_chars)
+      range ? match.refine(score, range) : nil
+    end.compact
+  end
+
+  def recompute_best_matches(all_matches)
+    return [] if all_matches.empty?
+
+    count = [@config.visible_choices, all_matches.count].min
+    matches = []
+
+    best_score = all_matches.min_by(&:score).score
+
+    # Consider matches, beginning with the best-scoring. A match always ranks
+    # higher than other matches with worse scores. However, the ranking between
+    # matches of the same score depends on other factors, so we always have to
+    # consider all matches of a given score.
+    (best_score..Float::INFINITY).each do |score|
+      matches += all_matches.select { |match| match.score == score }
+      # Stop if we have enough matches.
+      return sub_sort_matches(matches)[0, count] if matches.length >= count
+    end
+  end
+
+  def sub_sort_matches(matches)
+    matches.sort_by do |match|
+      [match.score, match.matching_range.count, match.choice.length]
+    end
+  end
+
+  def move_cursor(direction)
+    if max_visible_choices > 0
+      index = (@index + direction) % max_visible_choices
+      merge(:index => index)
+    else
+      self
+    end
+  end
+
   class NoSelection; end
+end
+
+class Match < Struct.new(:original_choice, :choice, :score, :matching_range)
+  def self.trivial(choice)
+    empty_range = (0...0)
+    new(choice, choice.downcase, 0, empty_range)
+  end
+
+  def to_text
+    if matching_range.none?
+      Text[original_choice]
+    else
+      before = original_choice[0...matching_range.begin]
+      matching = original_choice[matching_range.begin..matching_range.end]
+      after = original_choice[(matching_range.end + 1)..-1]
+      Text[before, :red, matching, :default, after]
+    end
+  end
+
+  def refine(score, range)
+    Match.new(original_choice, choice, score, range)
+  end
 end
 
 class Score
   class << self
-    def score(choice, query)
-      return 1.0 if query.length == 0
-      return 0.0 if choice.length == 0
+    # A word boundary character is any ASCII character that's not alphanumeric.
+    # This isn't strictly correct: characters like ZERO WIDTH NON-JOINER,
+    # non-Latin punctuation, etc. will be incorrectly treated as non-boundary
+    # characters. This is necessary for performance: even building a Set of
+    # boundary characters based only on the input text is prohibitively slow (2-3
+    # seconds for 80,000 input paths on a 2014 MacBook Pro).
+    BOUNDARY_CHARS = (0..127).map(&:chr).select do |char|
+      char !~ /[A-Za-z0-9_]/
+    end.to_set
 
-      choice = choice.downcase
-      query = query.downcase
+    def score(string, query_chars)
+      first_char, *rest = query_chars
 
-      match_length = compute_match_length(choice, query.each_char.to_a)
-      return 0.0 unless match_length
+      # Keep track of the best match that we've seen. This is uglier than
+      # building a list of matches and then sorting them, but it's faster.
+      best_score = Float::INFINITY
+      best_range = nil
 
-      # Penalize longer matches.
-      score = query.length.to_f / match_length.to_f
+      # Iterate over each instance of the first query character. E.g., if we're
+      # querying the string "axbx" for "x", we'll start at index 1 and index 3.
+      each_index_of_char_in_string(string, first_char) do |first_index|
+        score = 1
 
-      # Normalize vs. the length of the choice, penalizing longer strings.
-      score / choice.length
-      score
-    end
+        # Find the best score starting at this index.
+        score, last_index = find_end_of_match(string, rest, score, first_index)
 
-    # Find the length of the shortest substring matching the given characters.
-    def compute_match_length(string, chars)
-      first_char, *rest = chars
-      first_indexes = find_char_in_string(string, first_char)
-
-      first_indexes.map do |first_index|
-        last_index = find_end_of_match(string, rest, first_index)
-        if last_index
-          last_index - first_index + 1
-        else
-          nil
+        # Did we do better than we have for the best starting point so far?
+        if last_index && score < best_score
+          best_score = score
+          best_range = (first_index..last_index)
         end
-      end.compact.min
+      end
+
+      [best_score, best_range]
     end
 
     # Find all occurrences of the character in the string, returning their indexes.
-    def find_char_in_string(string, char)
+    def each_index_of_char_in_string(string, char)
       index = 0
-      indexes = []
       while index
         index = string.index(char, index)
         if index
-          indexes << index
+          yield index
           index += 1
         end
       end
-      indexes
     end
 
     # Find each of the characters in the string, moving strictly left to right.
-    def find_end_of_match(string, chars, first_index)
+    def find_end_of_match(string, chars, score, first_index)
       last_index = first_index
+
+      # Remember the type of the last character match for special scoring.
+      last_type = nil
+
       chars.each do |this_char|
+        # Where's the next occurrence of this character? The optimal algorithm
+        # would consider all instances of query character, but that's slower
+        # than this eager method.
         index = string.index(this_char, last_index + 1)
-        return nil unless index
+
+        # This character doesn't occur in the string, so this can't be a match.
+        return [nil, nil] unless index
+
+        if index == last_index + 1
+          # This matching character immediately follows the last matching
+          # character. The first two sequential characters score; subsequent
+          # ones don't.
+          if last_type != :sequential
+            last_type = :sequential
+            score += 1
+          end
+        # This character follows a boundary character.
+        elsif BOUNDARY_CHARS.include?(string[index - 1])
+          if last_type != :boundary
+            last_type = :boundary
+            score += 1
+          end
+        # This character isn't special.
+        else
+          last_type = :normal
+          score += index - last_index
+        end
+
         last_index = index
       end
-      last_index
+
+      [score, last_index]
     end
   end
 end
 
-class Renderer < Struct.new(:search, :screen)
+class Renderer < Struct.new(:search)
   def self.render!(search, screen)
-    rendered = Renderer.new(search, screen).render
+    rendered = Renderer.new(search).render
     start_line = screen.height - search.config.visible_choices - 1
     screen.with_cursor_hidden do
       screen.write_lines(start_line, rendered.choices)
-      screen.move_cursor(start_line, rendered.search_line.length)
+      screen.move_cursor(start_line, 0)
+      screen.write_line(start_line, rendered.search_line)
     end
   end
 
   def render
-    search_line = "> " + search.query
-    matches = search.matches
-    unless matches.empty?
-      matches[search.index] = Text[:inverse, matches.fetch(search.index), :reset]
+    search_line = "#{match_count_label} > " + search.query
+
+    matches = search.best_matches
+    matches = matches.each_with_index.map do |match, index|
+      if index == search.index
+        Text[:inverse] + match.to_text + Text[:reset]
+      else
+        match.to_text
+      end
     end
     matches = correct_match_count(matches)
     lines = [search_line] + matches
     Rendered.new(lines, search_line)
+  end
+
+  def match_count_label
+    choice_count = search.original_matches.length
+    max_label_width = choice_count.to_s.length
+    match_count = search.all_matches.count
+    match_count.to_s.rjust(max_label_width)
   end
 
   def correct_match_count(matches)
@@ -338,6 +548,14 @@ class Renderer < Struct.new(:search, :screen)
 
   class Rendered < Struct.new(:choices, :search_line)
   end
+
+  private
+
+  def replace_array_element(array, index, new_value)
+    array = array.dup
+    array[index] = new_value
+    array
+  end
 end
 
 class Screen
@@ -346,7 +564,7 @@ class Screen
       screen = self.new(tty)
       screen.configure_tty
       begin
-        ScreenValidator.raise_unless_screen_is_valid(screen.height)
+        raise NotATTY if screen.height == 0
         yield screen, tty
       ensure
         screen.restore_tty
@@ -355,20 +573,19 @@ class Screen
     end
   end
 
-  attr_reader :tty, :ansi
+  class NotATTY < RuntimeError; end
+
+  attr_reader :tty
 
   def initialize(tty)
     @tty = tty
-    @ansi = ANSI.new(tty.out_file)
     @original_stty_state = tty.stty("-g")
   end
 
-
   def configure_tty
-    # raw: Disable input and output processing
-    # -echo: Don't echo keys back
-    # cbreak: Set up lots of standard stuff, including INTR signal on ^C
-    tty.stty("raw -echo cbreak")
+    # -echo: terminal doesn't echo typed characters back to the terminal
+    # -icanon: terminal doesn't  interpret special characters (like backspace)
+    tty.stty("raw -echo -icanon")
   end
 
   def restore_tty
@@ -386,29 +603,24 @@ class Screen
   end
 
   def with_cursor_hidden(&block)
-    ansi.hide_cursor!
+    write_bytes(ANSI.hide_cursor)
     begin
       block.call
     ensure
-      ansi.show_cursor!
+      write_bytes(ANSI.show_cursor)
     end
   end
 
   def height
-    size[0]
+    tty.winsize[0]
   end
 
   def width
-    size[1]
-  end
-
-  def size
-    height, width = tty.winsize
-    [height, width]
+    tty.winsize[1]
   end
 
   def move_cursor(line, column)
-    ansi.setpos!(line, column)
+    write_bytes(ANSI.setpos(line, column))
   end
 
   def write_line(line, text)
@@ -428,47 +640,51 @@ class Screen
 
   def write_unrestricted(line, column, text)
     text = Text[:default, text] unless text.is_a? Text
-    write_text_object(line, column,text)
+    write_text_object(line, column, text)
   end
 
   def write_text_object(line, column, text)
     # Blank the line before drawing to it
-    ansi.setpos!(line, 0)
-    ansi.addstr!(" " * width)
+    write_bytes(ANSI.setpos(line, 0))
+    write_bytes(" " * width)
 
     text.components.each do |component|
       if component.is_a? String
-        ansi.setpos!(line, column)
+        write_bytes(ANSI.setpos(line, column))
         # Don't draw off the edge of the screen.
         #   - width - 1 is the last column we have (zero-indexed)
         #   - subtract the current column from that to get the number of
         #   columns we have left.
         chars_to_draw = [0, width - 1 - column].max
-        component = component[0..chars_to_draw]
-        ansi.addstr!(component)
+        component = expand_tabs(component)[0..chars_to_draw]
+        write_bytes(component)
         column += component.length
       elsif component == :inverse
-        ansi.inverse!
+        write_bytes(ANSI.inverse)
       elsif component == :reset
-        ansi.reset!
+        write_bytes(ANSI.reset)
       else
         if component =~ /_/
           fg, bg = component.to_s.split(/_/).map(&:to_sym)
         else
           fg, bg = component, :default
         end
-        ansi.color!(fg, bg)
+        write_bytes(ANSI.color(fg, bg))
       end
     end
   end
-end
 
-class ScreenValidator
-  def self.raise_unless_screen_is_valid(screen_height)
-    raise NotATTY if screen_height == 0
+  def expand_tabs(string)
+    # Modified from http://markmail.org/message/avdjw34ahxi447qk
+    tab_width = 8
+    string.gsub(/([^\t\n]*)\t/) do
+      $1 + " " * (tab_width - ($1.size % tab_width))
+    end
   end
 
-  class NotATTY < RuntimeError; end
+  def write_bytes(bytes)
+    tty.console_file.write(bytes)
+  end
 end
 
 class Text
@@ -494,110 +710,93 @@ end
 class ANSI
   ESC = 27.chr
 
-  attr_reader :file
+  class << self
+    def escape(sequence)
+      ESC + "[" + sequence
+    end
 
-  def initialize(file)
-    @file = file
-  end
+    def clear
+      escape "2J"
+    end
 
-  def escape(sequence)
-    ESC + "[" + sequence
-  end
+    def hide_cursor
+      escape "?25l"
+    end
 
-  def clear
-    escape "2J"
-  end
+    def show_cursor
+      escape "?25h"
+    end
 
-  def hide_cursor
-    escape "?25l"
-  end
+    def setpos(line, column)
+      escape "#{line + 1};#{column + 1}H"
+    end
 
-  def show_cursor
-    escape "?25h"
-  end
+    def color(fg, bg=:default)
+      fg_codes = {
+        :black => 30,
+        :red => 31,
+        :green => 32,
+        :yellow => 33,
+        :blue => 34,
+        :magenta => 35,
+        :cyan => 36,
+        :white => 37,
+        :default => 39,
+      }
+      bg_codes = {
+        :black => 40,
+        :red => 41,
+        :green => 42,
+        :yellow => 43,
+        :blue => 44,
+        :magenta => 45,
+        :cyan => 46,
+        :white => 47,
+        :default => 49,
+      }
+      fg_code = fg_codes.fetch(fg)
+      bg_code = bg_codes.fetch(bg)
+      escape "#{fg_code};#{bg_code}m"
+    end
 
-  def setpos(line, column)
-    escape "#{line + 1};#{column + 1}H"
-  end
+    def inverse
+      escape("7m")
+    end
 
-  def addstr(str)
-    str
-  end
-
-  def color(fg, bg=:default)
-    fg_codes = {
-      :black => 30,
-      :red => 31,
-      :green => 32,
-      :yellow => 33,
-      :blue => 34,
-      :magenta => 35,
-      :cyan => 36,
-      :white => 37,
-      :default => 39,
-    }
-    bg_codes = {
-      :black => 40,
-      :red => 41,
-      :green => 42,
-      :yellow => 43,
-      :blue => 44,
-      :magenta => 45,
-      :cyan => 46,
-      :white => 47,
-      :default => 49,
-    }
-    fg_code = fg_codes.fetch(fg)
-    bg_code = bg_codes.fetch(bg)
-    escape "#{fg_code};#{bg_code}m"
-  end
-
-  def inverse
-    escape("7m")
-  end
-
-  def reset
-    escape("0m")
-  end
-
-  def clear!(*args); write clear(*args); end
-  def setpos!(*args); write setpos(*args); end
-  def addstr!(*args); write addstr(*args); end
-  def color!(*args); write color(*args); end
-  def inverse!(*args); write inverse(*args); end
-  def reset!(*args); write reset(*args); end
-  def hide_cursor!(*args); write hide_cursor(*args); end
-  def show_cursor!(*args); write show_cursor(*args); end
-
-  def write(bytes)
-    file.write(bytes)
+    def reset
+      escape("0m")
+    end
   end
 end
 
-class TTY < Struct.new(:in_file, :out_file)
+class TTY < Struct.new(:console_file)
   def self.with_tty(&block)
-    File.open("/dev/tty", "r") do |in_file|
-      File.open("/dev/tty", "w") do |out_file|
-        tty = TTY.new(in_file, out_file)
-        block.call(tty)
-      end
-    end
+    # Selecta reads data from stdin and writes it to stdout, so we can't draw
+    # UI and receive keystrokes through them. Fortunately, all modern
+    # Unix-likes provide /dev/tty, which IO.console gives us.
+    console_file = IO.console
+    tty = TTY.new(console_file)
+    block.call(tty)
   end
 
-  def get_char
-    in_file.getc
+  def get_available_input
+    input = console_file.getc
+    while console_file.ready?
+      input += console_file.getc
+    end
+    input
   end
 
   def puts
-    out_file.puts
+    console_file.puts
   end
 
   def winsize
-    out_file.winsize
+    console_file.winsize
   end
 
   def stty(args)
-    command("stty #{args}")
+    command("stty #{args}").strip
   end
 
   private
@@ -615,11 +814,5 @@ class TTY < Struct.new(:in_file, :out_file)
 end
 
 if $0 == __FILE__
-  begin
-    Selecta.new.main
-  rescue Interrupt
-    exit(1)
-  rescue SystemExit
-    exit(0)
-  end
+  Selecta.new.main
 end
