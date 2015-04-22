@@ -557,23 +557,24 @@
 (global-set-key (kbd "C-x j") 'windmove-down)
 (global-set-key (kbd "C-x k") 'windmove-up)
 (global-set-key (kbd "C-x l") 'windmove-right)
+(global-set-key (kbd "s-h") 'windmove-left)
+(global-set-key (kbd "s-j") 'windmove-down)
+(global-set-key (kbd "s-k") 'windmove-up)
+(global-set-key (kbd "s-l") 'windmove-right)
 
-(defun split-to-prev-buffer (split move)
-  "Split a window, go to it, and go to the previous buffer."
-  (interactive)
-  (funcall split)
-  (funcall move)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-(global-set-key (kbd "C-x C-j")
+(global-set-key (kbd "s-z")
                 (lambda ()
                   (interactive)
-                  (split-to-prev-buffer 'split-window-below 'windmove-down)))
+                  (split-window-below)
+                  (windmove-down)
+                  (projectile-find-file)))
 
-(global-set-key (kbd "C-x C-l")
+(global-set-key (kbd "s-s")
                 (lambda ()
                   (interactive)
-                  (split-to-prev-buffer 'split-window-right 'windmove-right)))
+                  (split-window-right)
+                  (windmove-right)
+                  (projectile-find-file)))
 
 (global-set-key (kbd "C-q") 'delete-window)
 
