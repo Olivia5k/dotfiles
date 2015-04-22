@@ -288,6 +288,8 @@
 (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
 
+(setq git-gutter:update-interval 1)
+
 ;;; emmet
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
