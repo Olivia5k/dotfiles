@@ -582,7 +582,7 @@
     (add-to-list 'custom-theme-load-path path)))
 
 ;;; Appearances
-(set-default-font "Inconsolata-12")
+(set-default-font "Inconsolata-10")
 (load-theme 'ujelly t)
 
 (set-fringe-mode '(1 . 0))
