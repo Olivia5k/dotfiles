@@ -149,6 +149,7 @@
               word-wrap t)
 
 (show-paren-mode t)
+(electric-pair-mode t)
 (global-auto-revert-mode t)
 
 ;;; Helm
