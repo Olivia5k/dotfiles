@@ -4,11 +4,13 @@
 ** Set up worthwhile org bindings
 ** Per-project orgmode
 ** electric pair always
+** New binding for ace-jump
 ** Close current help window
 ** HTML tag management
 **** kill tag on C-k
 **** re-indent and format before buffer
 ** Wrap window movement commands
+** Fix fringe color again
 
 * Python
 ** DONE python-toggle-pragma-nocover
@@ -33,3 +35,6 @@
 ** Go through dotfiles
 **** jeekl
 **** dialelo
+** anaconda-mode
+** jedi
+** guide-key
