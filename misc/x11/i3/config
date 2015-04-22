@@ -8,30 +8,30 @@ for_window [class="Keepassx"] move container to workspace pass; workspace pass
 for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
 
 # Focus (Mod4+hjkl)
-bindsym Mod4+h exec di-tmux select-pane -L
-bindsym Mod4+j exec di-tmux select-pane -D
-bindsym Mod4+k exec di-tmux select-pane -U
-bindsym Mod4+l exec di-tmux select-pane -R
+# bindsym Mod4+h exec di-tmux select-pane -L
+# bindsym Mod4+j exec di-tmux select-pane -D
+# bindsym Mod4+k exec di-tmux select-pane -U
+# bindsym Mod4+l exec di-tmux select-pane -R
 
 # Splitting
-bindsym Mod4+z exec di-tmux split-window -v -c '#{pane_current_path}'
-bindsym Mod4+s exec di-tmux split-window -h -c '#{pane_current_path}'
+# bindsym Mod4+z exec di-tmux split-window -v -c '#{pane_current_path}'
+# bindsym Mod4+s exec di-tmux split-window -h -c '#{pane_current_path}'
 
 # Resizing (Mod4+Control+hjkl)
-bindsym Mod4+Control+h exec di-tmux resize-pane -L
-bindsym Mod4+Control+j exec di-tmux resize-pane -D
-bindsym Mod4+Control+k exec di-tmux resize-pane -U
-bindsym Mod4+Control+l exec di-tmux resize-pane -R
+# bindsym Mod4+Control+h exec di-tmux resize-pane -L
+# bindsym Mod4+Control+j exec di-tmux resize-pane -D
+# bindsym Mod4+Control+k exec di-tmux resize-pane -U
+# bindsym Mod4+Control+l exec di-tmux resize-pane -R
 
 # Fullscreening
-bindsym Mod4+f exec di-tmux resize-pane -Z
-bindsym Mod4+Mod1+f fullscreen
+# bindsym Mod4+f exec di-tmux resize-pane -Z
+# bindsym Mod4+Mod1+f fullscreen
 
 # Move (Mod4+Shift+hjkl)
-bindsym Mod4+Shift+h exec di-tmux swap-window -t :-
-bindsym Mod4+Shift+j exec di-tmux swap-pane -D
-bindsym Mod4+Shift+k exec di-tmux swap-pane -U
-bindsym Mod4+Shift+l exec di-tmux swap-window -t :+
+# bindsym Mod4+Shift+h exec di-tmux swap-window -t :-
+# bindsym Mod4+Shift+j exec di-tmux swap-pane -D
+# bindsym Mod4+Shift+k exec di-tmux swap-pane -U
+# bindsym Mod4+Shift+l exec di-tmux swap-window -t :+
 
 # Workspaces (Mod4+F1-F5)
 bindcode Mod4+67 workspace www
@@ -61,22 +61,22 @@ bindsym Mod4+Up    resize shrink height 10 px or 10 ppt
 bindsym Mod4+Right resize grow width 10 px or 10 ppt
 
 # Windows (Mod4+\d)
-bindsym Mod4+1 exec di-tmux select-window -t 1
-bindsym Mod4+2 exec di-tmux select-window -t 2
-bindsym Mod4+3 exec di-tmux select-window -t 3
-bindsym Mod4+4 exec di-tmux select-window -t 4
-bindsym Mod4+5 exec di-tmux select-window -t 5
-bindsym Mod4+6 exec di-tmux select-window -t 6
-bindsym Mod4+7 exec di-tmux select-window -t 7
-bindsym Mod4+8 exec di-tmux select-window -t 8
-bindsym Mod4+9 exec di-tmux select-window -t 9
+# bindsym Mod4+1 exec di-tmux select-window -t 1
+# bindsym Mod4+2 exec di-tmux select-window -t 2
+# bindsym Mod4+3 exec di-tmux select-window -t 3
+# bindsym Mod4+4 exec di-tmux select-window -t 4
+# bindsym Mod4+5 exec di-tmux select-window -t 5
+# bindsym Mod4+6 exec di-tmux select-window -t 6
+# bindsym Mod4+7 exec di-tmux select-window -t 7
+# bindsym Mod4+8 exec di-tmux select-window -t 8
+# bindsym Mod4+9 exec di-tmux select-window -t 9
 
 bindcode Mod4+59 exec di-tmux last-window
 
-bindsym Mod4+Mod1+h exec di-tmux select-window -t :-
-bindsym Mod4+Mod1+j exec trotate-session -1
-bindsym Mod4+Mod1+k exec trotate-session 1
-bindsym Mod4+Mod1+l exec di-tmux select-window -t :+
+# bindsym Mod4+Mod1+h exec di-tmux select-window -t :-
+# bindsym Mod4+Mod1+j exec trotate-session -1
+# bindsym Mod4+Mod1+k exec trotate-session 1
+# bindsym Mod4+Mod1+l exec di-tmux select-window -t :+
 
 # Assigning
 assign [class="float"] ~
@@ -87,30 +87,30 @@ bindcode Mod4+Mod1+36 exec muxwin
 bindcode Mod4+Mod1+Control+36 exec urxvt
 
 # Mod4+Mod1+k kills the current client
-bindsym Mod4+r kill
+# bindsym Mod4+r kill
 
 # dmenu hax.
 bindcode Mod4+65 exec dmenu_www             # Mod4+Space
 bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
 
 # Run-or-raisers
-bindsym Mod4+a exec sharpfocus
-#bindsym Mod4+d exec muxfocus 2
-bindsym Mod4+i exec muxfocus 1
-bindsym Mod4+e exec ror "emacs" "emacs" "emacs"
+# bindsym Mod4+a exec sharpfocus
+# bindsym Mod4+d exec muxfocus 2
+# bindsym Mod4+i exec muxfocus 1
+# bindsym Mod4+e exec ror "emacs" "emacs" "emacs"
 bindsym Mod4+d exec ror "emacs" "emacs" "emacs"
 
 bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
 bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
-bindsym Mod4+g exec ror "gimp" "gimp" "gimp"
+# bindsym Mod4+g exec ror "gimp" "gimp" "gimp"
 bindsym Mod4+x exec ror "keepassx" "Keepassx" "keepassx" "class"
 
 bindcode Mod4+22 exec xlock
 bindcode Mod4+Mod1+22 exec sswitch
 
 # Volume mods (yaourt -S pulseaudio-ctl)
-bindsym Mod4+n exec vol down
-bindsym Mod4+m exec vol up
+# bindsym Mod4+n exec vol down
+# bindsym Mod4+m exec vol up
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
