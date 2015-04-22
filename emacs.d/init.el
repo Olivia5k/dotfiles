@@ -132,7 +132,7 @@
 (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
-(setq auto-save-interval 1
+(setq auto-save-interval 0
       auto-save-timeout 1)
 
 (setq echo-keystrokes 0.4
