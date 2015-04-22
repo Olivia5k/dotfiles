@@ -97,8 +97,8 @@
   (interactive)
   (package-show-package-list
    (remove-if-not (lambda (x) (and (not (memq x elpa-packages))
-                            (not (package-built-in-p x))
-                            (package-installed-p x)))
+                                   (not (package-built-in-p x))
+                                   (package-installed-p x)))
                   (mapcar 'car package-archive-contents))))
 
 
