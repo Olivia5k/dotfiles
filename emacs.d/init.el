@@ -157,6 +157,7 @@
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-set-key (kbd "C-x f") 'projectile-find-file) ; Until helm-projectile doesn't crash
 (global-set-key (kbd "M-q") 'helm-mini)
+(global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
 (global-unset-key (kbd "C-x c"))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -203,9 +204,7 @@
 (require 'helm-swoop)
 
 ;; Change the keybinds to whatever you like :)
-(global-set-key (kbd "M-i") 'helm-swoop)
 (global-set-key (kbd "C-s") 'helm-swoop)
-(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
 (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
 (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
 
