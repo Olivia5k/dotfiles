@@ -608,7 +608,7 @@
     (help-mode . "")
     (fundamental-mode . "0")
     (python-mode . "py")
-    (emacs-lisp-mode . "λ")))
+    (emacs-lisp-mode . "el")))
 
 (defun clean-mode-line ()
   (interactive)
