@@ -567,6 +567,8 @@
 (global-set-key (kbd "s-k") 'windmove-up)
 (global-set-key (kbd "s-l") 'windmove-right)
 
+(global-set-key (kbd "s-f") 'delete-other-windows)
+
 (global-set-key (kbd "s-z")
                 (lambda ()
                   (interactive)
