@@ -25,6 +25,7 @@
   '(ac-dabbrev
     ace-jump-mode
     ack-and-a-half
+    anaconda-mode
     browse-kill-ring
     buffer-move
     crontab-mode
@@ -417,6 +418,9 @@
 ;;; Python
 (require 'pytest)
 (require 'snakecharmer)
+
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'eldoc-mode)
 
 ;;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
