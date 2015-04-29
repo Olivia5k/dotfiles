@@ -422,6 +422,7 @@
 
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'eldoc-mode)
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 ;;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
