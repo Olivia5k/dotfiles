@@ -11,6 +11,7 @@
 **** re-indent and format before buffer
 ** Wrap window movement commands
 ** Fix fringe color again
+** Fix C-M-o on top row
 
 * Python
 ** DONE python-toggle-pragma-nocover
