@@ -66,6 +66,7 @@
     paradox
     paredit
     pkg-info
+    popwin
     projectile
     puppet-mode
     rainbow-delimiters
@@ -151,6 +152,10 @@
 (show-paren-mode t)
 (electric-pair-mode t)
 (global-auto-revert-mode t)
+
+;;; popwin
+(require 'popwin)
+(popwin-mode 1)
 
 ;;; Helm
 (require 'helm)
