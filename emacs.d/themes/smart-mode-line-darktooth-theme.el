@@ -2,9 +2,9 @@
 
 (custom-theme-set-faces
  'smart-mode-line-darktooth
- '(mode-line-buffer-id ((t :inherit sml/filename :foreground nil :background "#282828")))
- '(mode-line-inactive ((t :foreground "gray60" :background "#202020" :inverse-video nil)))
- '(mode-line     ((t :foreground "gray60" :background "#303030" :inverse-video nil)))
+ '(mode-line-buffer-id ((t :inherit sml/filename :foreground nil :background "#504945")))
+ '(mode-line-inactive ((t :foreground "gray60" :background "#000000" :inverse-video nil)))
+ '(mode-line     ((t :foreground "gray60" :background "#3c3836" :inverse-video nil)))
  '(sml/global    ((t :foreground "gray50" :inverse-video nil)))
  '(sml/modes     ((t :inherit sml/global :foreground "White")))
  '(sml/filename  ((t :inherit sml/global :foreground "#EBDBB2" :weight bold)))

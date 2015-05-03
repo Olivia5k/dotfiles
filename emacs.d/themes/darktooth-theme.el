@@ -93,7 +93,7 @@
 
    `(mode-line                                 ((t (:foreground ,darktooth-light1 :background ,darktooth-dark0_hard :box nil ))))
    `(mode-line-inactive                        ((t (:foreground ,darktooth-light4 :background ,darktooth-dark2 :box nil ))))
-   `(fringe                                    ((t ( :background ,darktooth-dark0 ))))
+   `(fringe                                    ((t ( :background ,darktooth-dark1 ))))
    `(linum                                     ((t (:foreground ,darktooth-dark4 ))))
    `(hl-line                                   ((t ( :background ,darktooth-dark1 ))))
    `(region                                    ((t ( :background ,darktooth-dark1 ))))
