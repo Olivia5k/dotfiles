@@ -265,7 +265,7 @@
 ;;; Smart mode line
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
-(sml/apply-theme 'darktooth)
+(sml/apply-theme 'ujelly)
 (sml/setup)
 
 ;;; undo tree
@@ -598,7 +598,7 @@
 
 ;;; Appearances
 (set-default-font "Inconsolata-10")
-(load-theme 'darktooth t)
+(load-theme 'ujelly t)
 
 (set-fringe-mode '(1 . 0))
 (setq scroll-step 10)
