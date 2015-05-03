@@ -76,7 +76,7 @@
   "The name of the py.test executable")
 (put 'pytest-global-name 'safe-local-variable 'stringp)
 
-(defcustom pytest-cmd-flags "-x"
+(defcustom pytest-cmd-flags "-x --color=yes --result-log=pytest.log"
   "These are the flags passed to the pytest runner")
 
 (defun run-pytest (&optional tests flags)
@@ -153,7 +153,7 @@ file/dir"
 ;;; Utility functions
 (defun pytest-find-test-runner ()
   (let ((result
-     (reduce '(lambda (x y) (or x y))
+     (cl-reduce '(lambda (x y) (or x y))
          (mapcar 'pytest-find-test-runner-names pytest-project-names))))
     (if result
     result
