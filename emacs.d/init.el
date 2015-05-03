@@ -429,18 +429,31 @@
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
+(global-set-key (kbd "C-c C-n") 'flycheck-next-error)
+(global-set-key (kbd "C-c C-p") 'flycheck-previous-error)
+(global-set-key (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
+(global-set-key (kbd "C-c C-SPC")
+                (lambda ()
+                  (interactive)
+                  (let ((name "*Flycheck errors*"))
+                    (if (get-buffer name)
+                        (kill-buffer name)
+                      (flycheck-list-errors)))))
+
 ;;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 
 ;;; Misc options
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
-(global-set-key (kbd "<escape>")      'keyboard-escape-quit)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (setq debug-on-error t)
 
 ;; expand-region
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-M-=") 'er/contract-region)
 
 
 ;;; uniquify
