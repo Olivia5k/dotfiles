@@ -593,14 +593,14 @@
                   (interactive)
                   (split-window-below)
                   (windmove-down)
-                  (projectile-find-file)))
+                  (helm-mini)))
 
 (global-set-key (kbd "s-s")
                 (lambda ()
                   (interactive)
                   (split-window-right)
                   (windmove-right)
-                  (projectile-find-file)))
+                  (helm-mini)))
 
 (global-set-key (kbd "C-q") 'delete-window)
 
