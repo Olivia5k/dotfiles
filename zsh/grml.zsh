@@ -2207,6 +2207,7 @@ function info_print () {
 }
 
 function grml_reset_screen_title () {
+    return
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
     ESC_print ${(%):-"%m"}
@@ -2232,6 +2233,7 @@ function grml_maintain_name () {
 function grml_cmd_to_screen_title () {
     # get the name of the program currently running and hostname of local
     # machine set screen window title if running in a screen
+    return
     if [[ "$TERM" == screen* ]] ; then
         local CMD="${1[(wr)^(*=*|sudo|ssh|-*)]}$NAME"
         ESC_print "${CMD}@$(print -P '%m')"
@@ -2239,6 +2241,7 @@ function grml_cmd_to_screen_title () {
 }
 
 function grml_control_xterm_title () {
+    return
     case $TERM in
         (xterm*|rxvt*)
             set_title "${(%):-"%n@%m:"}" "$1"
