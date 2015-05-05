@@ -55,20 +55,22 @@
           (insert token))))))
 
 (defun snake-toggle-self ()
-  "Toggle 'self.' on the current symbol."
+  "Toggle 'self.' on the current symbol. If on a line with def, toggle as first argument."
   (interactive)
   (save-excursion
     (let ((symbol (symbol-at-point)))
-      (if symbol
-          (if (s-equals? symbol "self")
-              (snake-remove-self)
-            (forward-char)
-            (backward-word)
-            (if (looking-back "self\.")
-                (progn
-                  (backward-word)
-                  (snake-remove-self))
-              (insert "self.")))))))
+      (if (looking-back "^\s\+def .*")
+          (snake-toggle-def-self)
+        (if symbol
+            (if (s-equals? symbol "self")
+                (snake-remove-self)
+              (forward-char)
+              (backward-word)
+              (if (looking-back "self\.")
+                  (progn
+                    (backward-word)
+                    (snake-remove-self))
+                (insert "self."))))))))
 
 (defun snake-remove-self ()
   "Remove 'self. from current symbol"
@@ -76,6 +78,19 @@
       (backward-word))
   (kill-word 1)
   (delete-char 1))
+
+(defun snake-toggle-def-self ()
+  "Toggle 'self' as the first argument to the function defined on the current line"
+  (beginning-of-line)
+  (re-search-forward "(" nil t)
+  (if (looking-at "self")
+      (progn
+        (delete-char 4)
+        (if (looking-at ", ")
+            (delete-char 2)))
+    (if (looking-at ")")
+        (insert "self")
+      (insert "self, "))))
 
 (defun snake-goto-test ()
   "Based on the current function and class, goto to the test class in the
