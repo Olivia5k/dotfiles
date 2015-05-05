@@ -1,4 +1,5 @@
 (require 'pytest)
+(require 'filenotify)
 (require 'string-inflection)
 (require 's)
 (require 'dash)
@@ -63,11 +64,21 @@
   (let* ((classes (snake-get-current-test-items))
          (other-file (snake-alternate-file))
          (line))
+    (delete-other-windows)
+    (split-window-right)
+    (windmove-right)
     (find-file other-file)
     (if (s-contains? "test_" other-file)
         (snake-goto-or-create-test classes)
-      ())
+      (snake-run-single-test))
     (recenter)))
+
+(defun snake-run-single-test ()
+  "Execute the test the point is currently at."
+
+  (let* ((class (cdr (outer-testable)))
+         (func (cdr (inner-testable))))
+    (message (concat class func))))
 
 (defun snake-get-current-test-items ()
   "Get the current class and function definition as if they were items of a
@@ -108,17 +119,8 @@
          (current-class (cdr (outer-testable)))
          (found nil))
     (if (not (s-equals? (format "Test%s" class) current-class))
-        (progn
-          (beginning-of-buffer)
-          (while (and (not found) (not (= (point) (point-max))))
-            (if (s-prefix?
-                 prefix
-                 (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
-                ;; Line found and scrolling will stop on the target line
-                (setq found t)
-              (forward-line 1)))
-          (if (not found)
-              (snake-create-test class))))))
+        (if (not (snake-line-starting-with prefix))
+            (snake-create-test class)))))
 
 (defun snake-create-test (class)
   "Create a new test at the bottom of the current file."
@@ -126,6 +128,22 @@
   (insert (format "\n\nclass Test%s(object):\n    " class))
   (end-of-buffer)
   (end-of-line))
+
+(defun snake-line-starting-with (prefix)
+  "Find a line starting with `prefix` in the current buffer. If found, set
+   point to beginning of that line.
+
+   Returns `t` if found, `nil` if not."
+  (let ((found nil))
+    (beginning-of-buffer)
+    (while (and (not found) (not (= (point) (point-max))))
+      (if (s-prefix?
+           prefix
+           (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
+          ;; Line found and scrolling will stop on the target line
+          (setq found t)
+        (forward-line 1)))
+    found))
 
 (defun snake-sync-arguments ()
   "Modify or arrange the arguments for the current function.
@@ -138,6 +156,51 @@
 (defun snake-goto-or-add-setup-method ()
   "Add a `def setup_method()` for the current test class")
 
+;;; File watching
+(defun snake-logfile-callback (event)
+  "Parse the logfile and decorate buffers accordingly.
+
+This will read the results from the pytest-results.log file and add markers
+denoting success or failure to the tests that have been run."
+  (save-excursion
+    (find-file (nth 3 event))
+    (beginning-of-buffer)
+    (cl-loop until (eobp) do (snake-parse-result-line) (forward-line 1))))
+
+(defun snake-decorate-test (file class func status)
+  ""
+
+  (find-file (format "/home/thiderman/git/piper/%s" file))
+  (beginning-of-buffer)
+  (re-search-forward (format "^class %s(" class) nil t)
+  (re-search-forward (format "^    def \\(%s\\)(" func) nil t)
+
+  (put-text-property
+   (match-beginning 1) (match-end 1)
+   'font-lock-face `((:background ,(if (s-equals? status ".")
+                             "#007200" "#720000"))))
+  (message (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
+
+(defun snake-parse-result-line (line)
+  ""
+  (let* ((spl (s-split " " line))
+         (status (car spl))
+         (data (s-split "::" (cadr spl)))
+         (file (nth 0 data))
+         (class (nth 1 data))
+         (func (nth 3 data)))
+    (if (s-equals? status ".")
+        (snake-decorate-test file class func status)
+      (snake-decorate-test file class func status))))
+
+(defun snake-watch-logfile ()
+  "Watch a pytest results file for a project and register the updater callback
+to it."
+  (file-notify-add-watch
+   ; TODO: Not hardcode, lel
+   "/home/thiderman/git/piper/pytest-results.log"
+   '(change attribute-change) 'snake-logfile-callback))
+
 (defvar snakecharmer-map (make-sparse-keymap)
   "snakecharmer keymap")
 (define-key snakecharmer-map
@@ -148,7 +211,7 @@
   (kbd "M-RET") 'snake-goto-test)
 
 (define-minor-mode snakecharmer-mode
-  "Snakecharmer mode mode" nil " charm" snakecharmer-map)
+  "Snakecharmer mode mode" nil " snake" snakecharmer-map)
 
 (add-hook 'python-mode-hook 'snakecharmer-mode)
 
