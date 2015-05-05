@@ -31,7 +31,7 @@
   (newline-and-indent)
   (newline-and-indent)
   (insert "\"\"\"")
-  (newline-and-indent)
+  (newline)
   (previous-line 3)
   (indent-for-tab-command))
 
