@@ -369,14 +369,16 @@
   (move-end-of-line nil))
 
 (defun insertline-and-move-to-line (&optional up)
-  "Insert an empty line after the current line and positon
-  the cursor at its beginning, according to the current mode."
+  "Insert a newline, either below or above depending on `up`. Indent accordingly."
   (interactive)
+  (beginning-of-line)
   (if up
-      (previous-line))
-  (move-end-of-line nil)
-  (open-line 1)
-  (forward-line 1)
+      (progn
+        (newline)
+        (forward-line -1))
+    (move-end-of-line nil)
+    (open-line 1)
+    (forward-line 1))
   (indent-according-to-mode))
 
 (global-set-key [remap goto-line] 'goto-line-with-feedback)
