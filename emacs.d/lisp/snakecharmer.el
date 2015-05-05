@@ -4,7 +4,8 @@
 (require 's)
 (require 'dash)
 
-(defun python-goto-above-class-or-function ()
+
+(defun snake-goto-above-class-or-function ()
   "Do a backwards motion towards the above function or class definition"
   (re-search-backward
    "^\\( *\\)\\(class\\|def\\) \\([a-zA-Z0-9_]+\\)" nil t))
@@ -52,6 +53,29 @@
         (progn
           (end-of-line)
           (insert token))))))
+
+(defun snake-toggle-self ()
+  "Toggle 'self.' on the current symbol."
+  (interactive)
+  (save-excursion
+    (let ((symbol (symbol-at-point)))
+      (if symbol
+          (if (s-equals? symbol "self")
+              (snake-remove-self)
+            (forward-char)
+            (backward-word)
+            (if (looking-back "self\.")
+                (progn
+                  (backward-word)
+                  (snake-remove-self))
+              (insert "self.")))))))
+
+(defun snake-remove-self ()
+  "Remove 'self. from current symbol"
+  (if (looking-back "\\w")
+      (backward-word))
+  (kill-word 1)
+  (delete-char 1))
 
 (defun snake-goto-test ()
   "Based on the current function and class, goto to the test class in the
@@ -209,6 +233,8 @@ to it."
   (kbd "C-c n") 'snake-toggle-nocover)
 (define-key snakecharmer-map
   (kbd "M-RET") 'snake-goto-test)
+(define-key snakecharmer-map
+  (kbd "M-s") 'snake-toggle-self)
 
 (define-minor-mode snakecharmer-mode
   "Snakecharmer mode mode" nil " snake" snakecharmer-map)
