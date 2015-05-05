@@ -370,7 +370,7 @@
 
 (defun insertline-and-move-to-line (&optional up)
   "Insert an empty line after the current line and positon
-  the curson at its beginning, according to the current mode."
+  the cursor at its beginning, according to the current mode."
   (interactive)
   (if up
       (previous-line))
@@ -408,6 +408,7 @@
 (global-set-key (kbd "M-g") 'magit-status)
 
 (setq magit-save-some-buffers 'dontask)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 (defadvice magit-status (around magit-fullscreen activate)
   (window-configuration-to-register :magit-fullscreen)
