@@ -240,6 +240,18 @@ to it."
    "/home/thiderman/git/piper/pytest-results.log"
    '(change attribute-change) 'snake-logfile-callback))
 
+;;; Utility functions
+(defun snake-find-root (&optional dirname)
+  "Find the root of the project, based on where setup.py is. "
+  (let ((dn
+         (if dirname
+             dirname
+           (file-name-directory buffer-file-name))))
+    (cond ((file-exists-p (concat dn "/setup.py")) (expand-file-name dn))
+          ((equal (expand-file-name dn) "/") nil)
+          (t (snake-find-root
+              (file-name-directory (directory-file-name dn)))))))
+
 (defvar snakecharmer-map (make-sparse-keymap)
   "snakecharmer keymap")
 (define-key snakecharmer-map
@@ -252,7 +264,8 @@ to it."
   (kbd "M-s") 'snake-toggle-self)
 
 (define-minor-mode snakecharmer-mode
-  "Snakecharmer mode mode" nil " snake" snakecharmer-map)
+  "Snakecharmer mode mode" nil " snake" snakecharmer-map
+  (cd (snake-find-root)))
 
 (add-hook 'python-mode-hook 'snakecharmer-mode)
 
