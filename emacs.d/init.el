@@ -594,10 +594,16 @@
 (global-set-key (kbd "C-x j") 'windmove-down)
 (global-set-key (kbd "C-x k") 'windmove-up)
 (global-set-key (kbd "C-x l") 'windmove-right)
+
 (global-set-key (kbd "s-h") 'windmove-left)
 (global-set-key (kbd "s-j") 'windmove-down)
 (global-set-key (kbd "s-k") 'windmove-up)
 (global-set-key (kbd "s-l") 'windmove-right)
+
+(global-set-key (kbd "s-M-h") 'buf-move-left)
+(global-set-key (kbd "s-M-j") 'buf-move-down)
+(global-set-key (kbd "s-M-k") 'buf-move-up)
+(global-set-key (kbd "s-M-l") 'buf-move-right)
 
 (global-set-key (kbd "s-f") 'delete-other-windows)
 
