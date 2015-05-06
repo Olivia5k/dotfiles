@@ -401,6 +401,8 @@
                                 (interactive)
                                 (insertline-and-move-to-line t)))
 
+(global-set-key (kbd "C-r") 'vr/replace)
+
 (global-set-key (kbd "M-j")
                 (lambda ()
                   (interactive)
