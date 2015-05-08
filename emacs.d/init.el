@@ -446,6 +446,9 @@
                         (kill-buffer name)
                       (flycheck-list-errors)))))
 
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+
 ;;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
