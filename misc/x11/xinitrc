@@ -15,6 +15,7 @@ start-pulseaudio-x11 &
 # Only do wallpapers if we have one
 [[ -r "$HOME/.local/wallpaper" ]] && wp &
 
-export XORG_WM="hlwm"
-# exec i3 -V &> $HOME/.logs/i3.log
-exec herbstluftwm --locked &> $HOME/.logs/hlwm.log
+# export XORG_WM="hlwm"
+# exec herbstluftwm --locked &> $HOME/.logs/hlwm.log
+export XORG_WM="i3"
+exec i3 -V &> $HOME/.logs/i3.log
