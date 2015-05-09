@@ -24,7 +24,6 @@ URxvt.font-size.step:  2
 ! *.font: xft:montecarlo:pixelsize=11
 ! *.boldFont: xft:montecarlo:bold:pixelsize=11
 Xft.dpi: 100.0
-emacs.font:Monospace 12
 
 ! XLock
 XLock.fpsfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
