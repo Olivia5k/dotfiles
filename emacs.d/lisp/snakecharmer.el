@@ -14,7 +14,7 @@
   "Go to the docstring for the current class or function. Create it if it does
    not already exist."
   (interactive)
-  (python-goto-above-class-or-function)
+  (snake-goto-above-class-or-function)
   (forward-to-indentation 1)
   (if (looking-at "\"\"\"")
       (next-line)
