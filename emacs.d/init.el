@@ -154,6 +154,7 @@
 (show-paren-mode t)
 (electric-pair-mode t)
 (global-auto-revert-mode t)
+(auto-fill-mode t)
 
 ;;; popwin
 (require 'popwin)
