@@ -79,6 +79,7 @@
     ssh-config-mode
     string-inf
     virtualenvwrapper
+    wrap-region
     xkcd
     yaml-mode
     yasnippet
