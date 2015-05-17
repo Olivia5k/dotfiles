@@ -9,7 +9,7 @@ URxvt.url-select.underline: true
 URxvt.underlineURLs: true
 URxvt.transparent: false
 URxvt.shading: 10
-URxvt.fading: 20
+URxvt.fading: 50
 URxvt.iso14755: false
 
 URxvt.keysym.C-Up:     perl:font-size:increase
