@@ -494,8 +494,8 @@
                         " [Too big]" " [Confirm]"))
 
 (require 'ido)
-(ido-mode t)
-(ido-everywhere t)
+;; (ido-mode t)
+;; (ido-everywhere t)
 
 ;; pls no .elc
 (add-hook 'emacs-lisp-mode-hook
