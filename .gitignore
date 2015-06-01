@@ -9,3 +9,5 @@ util/*quake*
 /emacs.d/.#recentf
 /emacs.d/xkcd/
 /emacs.d/.mc-lists.el
+/emacs.d/.python-environments/
+/emacs.d/ac-comphist.dat
