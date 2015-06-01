@@ -8,10 +8,10 @@ for_window [class="Keepassx"] move container to workspace pass; workspace pass
 for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
 
 # Focus (Mod4+hjkl)
-# bindsym Mod4+h exec di-tmux select-pane -L
-# bindsym Mod4+j exec di-tmux select-pane -D
-# bindsym Mod4+k exec di-tmux select-pane -U
-# bindsym Mod4+l exec di-tmux select-pane -R
+bindsym Mod4+Left focus left
+bindsym Mod4+Up focus up
+bindsym Mod4+Down focus down
+bindsym Mod4+Right focus right
 
 # Splitting
 # bindsym Mod4+z exec di-tmux split-window -v -c '#{pane_current_path}'
@@ -28,10 +28,10 @@ for_window [class=".*emacs.*"] move container to workspace emacs; workspace emac
 # bindsym Mod4+Mod1+f fullscreen
 
 # Move (Mod4+Shift+hjkl)
-# bindsym Mod4+Shift+h exec di-tmux swap-window -t :-
-# bindsym Mod4+Shift+j exec di-tmux swap-pane -D
-# bindsym Mod4+Shift+k exec di-tmux swap-pane -U
-# bindsym Mod4+Shift+l exec di-tmux swap-window -t :+
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Right move right
 
 # Workspaces (Mod4+F1-F5)
 bindcode Mod4+67 workspace www
@@ -55,10 +55,10 @@ bindcode Mod4+76 layout default
 bindcode Mod4+77 layout stacking
 
 # Resizing (Mod4+Arrows)
-bindsym Mod4+Left  resize shrink width 10 px or 10 ppt
-bindsym Mod4+Down  resize grow height 10 px or 10 ppt
-bindsym Mod4+Up    resize shrink height 10 px or 10 ppt
-bindsym Mod4+Right resize grow width 10 px or 10 ppt
+bindsym Mod4+Mod1+Left  resize shrink width 10 px or 10 ppt
+bindsym Mod4+Mod1+Down  resize grow height 10 px or 10 ppt
+bindsym Mod4+Mod1+Up    resize shrink height 10 px or 10 ppt
+bindsym Mod4+Mod1+Right resize grow width 10 px or 10 ppt
 
 # Windows (Mod4+\d)
 # bindsym Mod4+1 exec di-tmux select-window -t 1
@@ -140,5 +140,5 @@ workspace_layout stacking
 ipc-socket ~/.local/share/i3/ipc.sock
 
 # no borders plx
-new_window none
+new_window pixel 2
 workspace_layout default
