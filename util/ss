@@ -6,7 +6,7 @@
 # Licensed under the WTFPL.
 
 remote=true
-if [[ $HOST = "dragonisle" ]] ; then
+if [[ $HOST = "nopls" ]] ; then
     remote=false
 fi
 
