@@ -458,6 +458,7 @@
 ;;; Misc options
 (global-set-key (kbd "C-c C-e") 'eval-buffer)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-unset-key (kbd "C-x C-c"))
 
 (setq debug-on-error t)
 
