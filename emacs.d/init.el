@@ -395,7 +395,7 @@
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
 
-(global-set-key (kbd "C-c g") 'goto-line)
+(global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
 (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
