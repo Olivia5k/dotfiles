@@ -1,8 +1,9 @@
 font pango: inconsolata 14px
 
 for_window [title=".*Chromium.*"] move container to workspace www; workspace www
+for_window [title=".*Firefox.*"] move container to workspace www; workspace www
 for_window [title="^main@.*"] move container to workspace tmux; workspace tmux
-for_window [title="^Spotify Premium.*"] move container to workspace spotify; workspace spotify
+for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 for_window [class="Keepassx"] move container to workspace pass; workspace pass
 for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
@@ -100,8 +101,9 @@ bindcode Mod4+Control+65 exec dmenu_exec -z # Mod4+Ctrl+Space
 # bindsym Mod4+e exec ror "emacs" "emacs" "emacs"
 bindsym Mod4+d exec ror "emacs" "emacs" "emacs"
 
-bindsym Mod4+q exec ror "chromium" "Chromium" "chromium"
-bindsym Mod4+Mod1+s exec ror "spotify" "Linux Preview" "spotify"
+bindsym Mod4+Mod1+q exec ror "chromium" "Chromium" "chromium"
+bindsym Mod4+q exec ror "firefox" "Firefox" "firefox"
+bindsym Mod4+Mod1+s exec ror "spotify" '"Spotify": ("spotify" "Spotify")' "spotify"
 # bindsym Mod4+g exec ror "gimp" "gimp" "gimp"
 bindsym Mod4+x exec ror "keepassx" "Keepassx" "keepassx" "class"
 
