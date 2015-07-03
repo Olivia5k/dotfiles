@@ -584,6 +584,18 @@
 (key-chord-define-global "jl" 'ace-jump-line-mode)
 (key-chord-define-global "jk" 'ace-jump-char-mode)
 (key-chord-define-global "uu" 'undo-tree-visualize)
+(defun th-split-window (vertical &optional helming)
+  "Split a window and go to it, optionally open helm-mini."
+  (if vertical
+      (progn
+        (split-window-vertically)
+        (windmove-down))
+    (progn
+      (split-window-horizontally)
+      (windmove-right)))
+  (if helming
+      (helm-mini)))
+
 (key-chord-define-global "xx" 'execute-extended-command)
 (key-chord-define-global "yy" 'browse-kill-ring)
 (key-chord-mode 1)
@@ -591,10 +603,21 @@
 ;;; Window management
 (define-key global-map (kbd "M-0") 'delete-window)
 (define-key global-map (kbd "M-1") 'delete-other-windows)
-(define-key global-map (kbd "M-2") 'split-window-vertically)
-(define-key global-map (kbd "M-3") 'split-window-horizontally)
+(define-key global-map (kbd "M-2") (lambda ()
+                                     (interactive)
+                                     (th-split-window t t)))
+(define-key global-map (kbd "M-3") (lambda ()
+                                     (interactive)
+                                     (th-split-window nil t)))
 (define-key global-map (kbd "M-4") 'kill-buffer-and-window)
 (define-key global-map (kbd "M-=") 'balance-windows)
+
+(define-key global-map (kbd "C-M-2") (lambda ()
+                                       (interactive)
+                                       (th-split-window t)))
+(define-key global-map (kbd "C-M-3") (lambda ()
+                                       (interactive)
+                                       (th-split-window nil)))
 
 (global-set-key (kbd "C-x h") 'windmove-left)
 (global-set-key (kbd "C-x j") 'windmove-down)
@@ -612,21 +635,6 @@
 (global-set-key (kbd "s-M-l") 'buf-move-right)
 
 (global-set-key (kbd "s-f") 'delete-other-windows)
-
-(global-set-key (kbd "s-z")
-                (lambda ()
-                  (interactive)
-                  (split-window-below)
-                  (windmove-down)
-                  (helm-mini)))
-
-(global-set-key (kbd "s-s")
-                (lambda ()
-                  (interactive)
-                  (split-window-right)
-                  (windmove-right)
-                  (helm-mini)))
-
 (global-set-key (kbd "C-q") 'delete-window)
 
 (dolist
