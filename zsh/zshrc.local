@@ -149,15 +149,27 @@ function _autosshfs() {
 
 # Auto source/unsource of virtualenvs
 function _autovenv() {
-  cur=${1:-$PWD}
-  f="bin/activate"
+  local cur=${1:-$PWD}
+  local f="bin/activate"
+  local auto='%F{71}%BAuto%b%f'
+
+  # If there should be a virtualenv but there is none yet, create it.
+  if [[ -f "$cur/setup.py" ]] && [[ -f "$cur/requirements.txt" ]] ; then
+    if [[ ! -f "$cur/$f" ]] ; then
+      virtualenv .
+      source bin/activate
+      pip install -r requirements.txt
+      python setup.py develop
+    fi
+  fi
 
   # Find upwards and look for a $f. If it is found, source it.
   until [[ -z "$cur" ]]; do
     if [[ -f "$cur/$f" ]]; then
-      if [[ -z "$VIRTUAL_ENV" ]]; then
+      if [[ -z "$VIRTUAL_ENV" ]] || [[ "$VIRTUAL_ENV" != "$cur" ]]; then
         source $cur/$f
         export VENV_PROMPT="%B${c[24]}venv${c[1]}:"
+        print -P "$auto: Setting venv for %B${c[4]}${cur}$b"
       fi
       return
     fi
