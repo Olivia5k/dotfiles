@@ -402,6 +402,21 @@
                                 (interactive)
                                 (insertline-and-move-to-line t)))
 
+(defun forward-word-to-beginning (&optional n)
+  "Move point forward n words and place cursor at the beginning."
+  (interactive "p")
+  (let (myword)
+    (setq myword
+      (if (and transient-mark-mode mark-active)
+        (buffer-substring-no-properties (region-beginning) (region-end))
+        (thing-at-point 'symbol)))
+    (if (not (eq myword nil))
+      (forward-word n))
+    (forward-word n)
+    (backward-word n)))
+
+(global-set-key (kbd "M-f") 'forward-word-to-beginning)
+
 (global-set-key (kbd "C-r") 'vr/replace)
 
 (global-set-key (kbd "M-j")
