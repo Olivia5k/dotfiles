@@ -148,7 +148,7 @@
 (setq-default comment-column 42
               fill-column 78
               indent-tabs-mode nil
-              tab-width 4
+              tab-width 2
               word-wrap t)
 
 (show-paren-mode t)
