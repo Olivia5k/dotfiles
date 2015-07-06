@@ -119,7 +119,7 @@
       initial-scratch-message ";; *scratch*\n\n")
 
 (setq backup-inhibited t
-      auto-save-default t)
+      auto-save-default nil)
 
 (setq backup-by-copying t)
 
