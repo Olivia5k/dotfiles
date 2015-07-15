@@ -165,7 +165,7 @@
 (require 'helm-config)
 
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-set-key (kbd "C-x f") 'projectile-find-file) ; Until helm-projectile doesn't crash
+(global-set-key (kbd "C-x f") 'helm-projectile)
 (global-set-key (kbd "M-q") 'helm-mini)
 (global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
 (global-unset-key (kbd "C-x c"))
@@ -609,7 +609,7 @@
       (split-window-horizontally)
       (windmove-right)))
   (if helming
-      (helm-mini)))
+      (helm-projectile)))
 
 (define-key global-map (kbd "M-0") 'delete-window)
 (define-key global-map (kbd "M-1") 'delete-other-windows)
