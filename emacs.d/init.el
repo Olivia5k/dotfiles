@@ -50,6 +50,7 @@
     gitconfig-mode
     gitignore-mode
     helm
+    helm-ag
     helm-projectile
     helm-swoop
     htmlize
