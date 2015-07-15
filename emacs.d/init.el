@@ -59,6 +59,7 @@
     ido-vertical-mode
     ioccur
     js2-mode
+    lispy
     magit
     magit-gh-pulls
     markdown-mode
