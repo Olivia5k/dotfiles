@@ -45,6 +45,8 @@
     gist
     git-commit-mode
     git-gutter
+    git-messenger
+    git-timemachine
     gitconfig-mode
     gitignore-mode
     helm
