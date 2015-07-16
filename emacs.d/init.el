@@ -508,7 +508,7 @@
 (global-unset-key (kbd "C-x C-c"))
 (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
 
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;; expand-region
 (require 'expand-region)
