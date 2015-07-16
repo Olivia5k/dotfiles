@@ -490,7 +490,7 @@
 
 ;;; Elisp
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
+(add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 
 ;;; Misc options
 (defun eval-buffer-or-region (point mark)
