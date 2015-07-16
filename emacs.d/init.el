@@ -520,6 +520,7 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-unset-key (kbd "C-x C-c"))
+(global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
 
 (setq debug-on-error t)
 
