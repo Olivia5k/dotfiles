@@ -507,7 +507,17 @@
 (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 
 ;;; Misc options
-(global-set-key (kbd "C-c C-e") 'eval-buffer)
+(defun eval-buffer-or-region (point mark)
+  (interactive "r")
+  (if (region-active-p)
+      (progn
+        (eval-region point mark)
+        (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
+        (message "Region eval:ed"))
+    (eval-buffer)))
+
+(define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-unset-key (kbd "C-x C-c"))
 
