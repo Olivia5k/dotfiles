@@ -12,3 +12,4 @@ util/*quake*
 /emacs.d/.python-environments/
 /emacs.d/ac-comphist.dat
 /emacs.d/network-security.data
+/emacs.d/custom.el

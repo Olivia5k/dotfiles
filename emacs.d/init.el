@@ -745,17 +745,5 @@
 (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 ;;; why custom why
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (discover-my-major yasnippet yaml-mode ssh-config-mode smart-mode-line rainbow-mode rainbow-identifiers rainbow-delimiters python-environment puppet-mode projectile paredit paradox otp nginx-mode morlock markdown-mode magit js2-mode ioccur ido-vertical-mode ido-ubiquitous httpcode htmlize gitignore-mode gitconfig-mode gist fringe-helper flycheck flx-ido fill-column-indicator expand-region epc dockerfile-mode diminish csv-mode crontab-mode buffer-move browse-kill-ring auto-complete ack-and-a-half ace-jump-mode ac-dabbrev))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
