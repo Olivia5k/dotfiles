@@ -461,19 +461,23 @@
 
 (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
 
-
 ;;; Python
-(require 'pytest)
+(require 'python)
 (require 'snakecharmer)
 
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
-(global-set-key (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
+(define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook 'flycheck-first-error)))
 
 ;;; Flycheck
-(global-set-key (kbd "C-c C-n") 'flycheck-next-error)
-(global-set-key (kbd "C-c C-p") 'flycheck-previous-error)
+(require 'flycheck)
+(global-set-key (kbd "C-x C-n") 'flycheck-next-error)
+(global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
 (global-set-key (kbd "C-c C-SPC")
                 (lambda ()
                   (interactive)
