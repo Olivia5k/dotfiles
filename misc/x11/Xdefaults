@@ -70,4 +70,4 @@ URxvt.color15: #ffffff
 emacs.Background: #111117
 emacs.Foreground: #dcdccc
 emacs.FontBackend: xft
-emacs.Font: Inconsolata-10
+emacs.Font: Inconsolata-14
