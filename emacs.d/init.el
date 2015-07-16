@@ -484,16 +484,19 @@
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'eldoc-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
+(global-set-key (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
 
+;;; Flycheck
 (global-set-key (kbd "C-c C-n") 'flycheck-next-error)
 (global-set-key (kbd "C-c C-p") 'flycheck-previous-error)
-(global-set-key (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
 (global-set-key (kbd "C-c C-SPC")
                 (lambda ()
                   (interactive)
                   (let ((name "*Flycheck errors*"))
                     (if (get-buffer name)
-                        (kill-buffer name)
+                        (progn
+                          (kill-buffer name)
+                          (message "Killed buffer"))
                       (flycheck-list-errors)))))
 
 (with-eval-after-load 'flycheck
