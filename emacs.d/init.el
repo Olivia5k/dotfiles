@@ -45,7 +45,6 @@
     fringe-helper
     gist
     git-commit-mode
-    git-gutter
     git-messenger
     git-timemachine
     gitconfig-mode
@@ -319,14 +318,6 @@
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;;; git-gutter
-(global-git-gutter-mode +1)
-(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
-(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
-(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-
-(setq git-gutter:update-interval 1)
 
 ;;; emmet
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
@@ -717,7 +708,6 @@
     (helm-mode "")
     (magit-auto-revert-mode "")
     (undo-tree-mode " ⎌")
-    (git-gutter-mode "")
 
     ;; Major modes
     (help-mode . "")
