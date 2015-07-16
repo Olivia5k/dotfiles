@@ -22,8 +22,7 @@
 (setq url-http-attempt-keepalives nil)
 
 (defvar elpa-packages
-  '(ac-dabbrev
-    ace-jump-mode
+  '(ace-jump-mode
     ack-and-a-half
     anaconda-mode
     browse-kill-ring
