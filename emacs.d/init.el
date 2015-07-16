@@ -51,8 +51,9 @@
     gitconfig-mode
     gitignore-mode
     helm
-    helm-c-yasnippet
     helm-ag
+    helm-c-yasnippet
+    helm-descbinds
     helm-projectile
     helm-swoop
     htmlize
@@ -189,17 +190,14 @@
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
       helm-ff-file-name-history-use-recentf t)
 
-;; helm-lean
 ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
-(setq helm-display-header-line nil) ;; t by default
-(set-face-attribute 'helm-source-header nil :height 0.1)
 (helm-autoresize-mode 1)
 (setq helm-autoresize-max-height 30)
 (setq helm-autoresize-min-height 30)
 
-(defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
-(defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
-(defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
+;; (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
+;; (defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
+;; (defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
 
 (defun helm-toggle-header-line ()
   (if (> (length helm-sources) 1)
@@ -219,7 +217,6 @@
 ;; helm-swoop
 (require 'helm-swoop)
 
-;; Change the keybinds to whatever you like :)
 (global-set-key (kbd "C-s") 'helm-swoop)
 (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
 (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
@@ -228,8 +225,6 @@
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
 ;; From helm-swoop to helm-multi-swoop-all
 (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-;; When doing evil-search, hand the word over to helm-swoop
-;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
 
 ;; Move up and down like isearch
 (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
