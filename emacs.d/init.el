@@ -9,7 +9,6 @@
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-(require 'package)
 (eval-after-load "package"
   '(progn
      (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
@@ -295,7 +294,7 @@
 ;;; Smart mode line
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
-(sml/apply-theme 'ujelly)
+(sml/apply-theme 'darktooth)
 (sml/setup)
 
 ;;; undo tree
@@ -687,17 +686,14 @@
 
 ;;; Appearances
 (set-default-font "Inconsolata-14")
-(load-theme 'ujelly t)
+(load-theme 'darktooth t)
 
-(set-fringe-mode '(1 . 0))
+(global-linum-mode 1)
+(setq linum-format " %3d ")
+(fringe-mode 12)
 (setq scroll-step 10)
 
 (setq tty-color-mode 256)
-
-(mapc
- (lambda (face)
-   (set-face-attribute face nil :underline nil))
- (face-list))
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist

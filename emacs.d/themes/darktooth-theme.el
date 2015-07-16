@@ -94,7 +94,7 @@
    `(mode-line                                 ((t (:foreground ,darktooth-light1 :background ,darktooth-dark0_hard :box nil ))))
    `(mode-line-inactive                        ((t (:foreground ,darktooth-light4 :background ,darktooth-dark2 :box nil ))))
    `(fringe                                    ((t ( :background ,darktooth-dark1 ))))
-   `(linum                                     ((t (:foreground ,darktooth-dark4 ))))
+   `(linum                                     ((t ( :background ,darktooth-dark0_hard :foreground ,darktooth-dark4 nil))))
    `(hl-line                                   ((t ( :background ,darktooth-dark1 ))))
    `(region                                    ((t ( :background ,darktooth-dark1 ))))
    `(secondary-selection                       ((t ( :background ,darktooth-dark_blue ))))
@@ -321,7 +321,7 @@
    `(helm-selection                            ((t (:foreground ,darktooth-white :background ,darktooth-dark2 ))))
    `(helm-selection-line                       ((t (:foreground ,darktooth-white :background ,darktooth-dark2 ))))
    `(helm-separator                            ((t (:foreground ,darktooth-faded_red ))))
-   `(helm-source-header                        ((t (:foreground ,darktooth-light2 ))))
+   `(helm-source-header                        ((t (:foreground ,darktooth-light2 :background ,darktooth-black :bold t))))
    `(helm-visible-mark                         ((t (:foreground ,darktooth-black :background ,darktooth-light3 ))))
 
    ;; Term
