@@ -27,6 +27,8 @@
     anaconda-mode
     browse-kill-ring
     buffer-move
+    company
+    company-go
     crontab-mode
     csv-mode
     dash
@@ -49,6 +51,7 @@
     gitconfig-mode
     gitignore-mode
     helm
+    helm-c-yasnippet
     helm-ag
     helm-projectile
     helm-swoop
@@ -267,6 +270,33 @@
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (setq projectile-mode-line nil)
+
+;;; yas
+(require 'yasnippet)
+(require 'helm-c-yasnippet)
+(setq helm-yas-space-match-any-greedy t) ;[default: nil]
+(global-set-key (kbd "C-.") 'helm-yas-complete)
+(yas-global-mode 1)
+
+;;; Autocompletion
+(require 'company)
+(require 'company-go)
+
+(setq company-tooltip-limit 20)                      ; bigger popup window
+(setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+(setq company-echo-delay 0)                          ; remove annoying blinking
+(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+
+;;; golang
+(require 'go-mode)
+
+(defun th-go-hook ()
+  (add-hook 'before-save-hook 'gofmt-before-save)
+
+  (local-set-key (kbd "C-c i") 'go-goto-imports)
+  (local-set-key (kbd "C-c C-i") 'go-remove-unused-imports))
+
+(add-hook 'go-mode-hook 'th-go-hook)
 
 ;;; Smart mode line
 (require 'smart-mode-line)
