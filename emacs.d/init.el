@@ -403,17 +403,6 @@
     (forward-line 1))
   (indent-according-to-mode))
 
-(global-set-key [remap goto-line] 'goto-line-with-feedback)
-
-(defun goto-line-with-feedback ()
-  "Show line numbers temporarily, while prompting for the line number input"
-  (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
-
 (global-set-key (kbd "C-x g") 'goto-line)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
