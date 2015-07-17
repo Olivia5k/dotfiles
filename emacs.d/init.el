@@ -48,6 +48,7 @@
     git-timemachine
     gitconfig-mode
     gitignore-mode
+    go-mode
     helm
     helm-ag
     helm-c-yasnippet
