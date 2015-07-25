@@ -3,20 +3,18 @@
 #+AUTHOR: Lowe Thiderman
 #+EMAIL: lowe.thiderman@gmail.com
 
+* Introduction
+This is my emax setup. It's a constant work in progress. The current setup is
+like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an elisp file
+that is compiled upon startup. org-mode was chose since it helps organize the
+file, gives nice folding, and sets up for writing inline documentation.
+
+If only I was not one of those so very fond of tinkering and dotfiling, I
+might've actually gotten things done. That would have been something, right?
+
+* Package configuration
 #+begin_src emacs-lisp
-  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
-  ;;; Appearances
-  (setq custom-theme-directory (concat user-emacs-directory "themes"))
-  (dolist
-      (path (directory-files custom-theme-directory t "\\w+"))
-    (when (file-directory-p path)
-      (add-to-list 'custom-theme-load-path path)))
-
-  (set-default-font "Inconsolata-11")
-  (load-theme 'darktooth t)
-
-  ;;; Package configuration
   (require 'package)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.org/packages/") t)
@@ -126,7 +124,23 @@
                     (mapcar 'car package-archive-contents))))
 
 
-  ;;; Options and settings
+#+end_src
+** Appearances
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+  (setq custom-theme-directory (concat user-emacs-directory "themes"))
+  (dolist
+      (path (directory-files custom-theme-directory t "\\w+"))
+    (when (file-directory-p path)
+      (add-to-list 'custom-theme-load-path path)))
+
+  (set-default-font "Inconsolata-11")
+  (load-theme 'darktooth t)
+
+#+end_src
+** Options and settings
+#+begin_src emacs-lisp
+
   (require 's)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indicate-empty-lines t)
@@ -177,11 +191,17 @@
   (global-auto-revert-mode t)
   (auto-fill-mode t)
 
-  ;;; popwin
+#+end_src
+** popwin
+#+begin_src emacs-lisp
+
   (require 'popwin)
   (popwin-mode 1)
 
-  ;;; Commenting code
+#+end_src
+** Commenting code
+#+begin_src emacs-lisp
+
   (defun comment-eclipse ()
     (interactive)
     (let ((start (line-beginning-position))
@@ -199,7 +219,10 @@
 
   (global-set-key (kbd "M-;") 'comment-eclipse)
 
-  ;;; Helm
+#+end_src
+** Helm
+#+begin_src emacs-lisp
+
   (require 'helm)
   (require 'helm-config)
 
@@ -301,13 +324,19 @@
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x b") 'helm-mini)
 
-  ;;; Projectile
+#+end_src
+** Projectile
+#+begin_src emacs-lisp
+
   (require 'projectile)
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
   (setq projectile-mode-line nil)
 
-  ;;; yas
+#+end_src
+** yas
+#+begin_src emacs-lisp
+
   (require 'yasnippet)
   (require 'helm-c-yasnippet)
   (setq helm-yas-space-match-any-greedy t) ;[default: nil]
@@ -317,7 +346,10 @@
   (add-hook 'markdown-mode 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode)
 
-  ;;; Autocompletion
+#+end_src
+** Autocompletion
+#+begin_src emacs-lisp
+
   (require 'company)
   (require 'company-go)
   ;; helm-dash
@@ -335,7 +367,10 @@
   (setq company-echo-delay 0)                          ; remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
-  ;;; golang
+#+end_src
+** golang
+#+begin_src emacs-lisp
+
   (require 'go-mode)
 
   (defun th-go-hook ()
@@ -351,39 +386,60 @@
   (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
   (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
 
-  ;;; Smart mode line
+#+end_src
+** Smart mode line
+#+begin_src emacs-lisp
+
   (require 'smart-mode-line)
   (setq sml/no-confirm-load-theme t)
   (sml/apply-theme 'darktooth)
   (sml/setup)
 
-  ;;; undo tree
+#+end_src
+** undo tree
+#+begin_src emacs-lisp
+
   (global-set-key (kbd "C-z") 'undo-tree-undo)
   (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
   (global-set-key (kbd "C-M-z") 'undo-tree-redo)
   (global-undo-tree-mode +1)
 
-  ;;; fill mode
+#+end_src
+** fill mode
+#+begin_src emacs-lisp
+
   (auto-fill-mode 1)
   (set-fill-column 79)
 
-  ;;; ediff
+#+end_src
+** ediff
+#+begin_src emacs-lisp
+
   (setq ediff-diff-options "-w")
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-  ;;; emmet
+#+end_src
+** emmet
+#+begin_src emacs-lisp
+
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
   (add-hook 'emmet-mode-hook
             (lambda ()
               (setq emmet-indentation 2))) ;; indent 2 spaces.
 
-  ;;; Rainbows and docs <3
+#+end_src
+** Rainbows and docs <3
+#+begin_src emacs-lisp
+
   (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
-  ;;; Editor macros
+#+end_src
+** Editor macros
+#+begin_src emacs-lisp
+
   (defun duplicate-current-line-or-region (arg)
     "Duplicates the current line or region ARG times.
      If there's no region, the current line will be duplicated. However, if
@@ -486,7 +542,10 @@
                     (interactive)
                     (join-line -1)))
 
-  ;;; magit
+#+end_src
+** magit
+#+begin_src emacs-lisp
+
   (require 'magit)
   (global-set-key (kbd "C-M-i") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
@@ -506,14 +565,20 @@
   (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
   (define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
 
-  ;;; org mode
+#+end_src
+** org mode
+#+begin_src emacs-lisp
+
   (require 'org)
   ;; active Babel languages
   (org-babel-do-load-languages
    'org-babel-load-languages
    '( (emacs-lisp . t)))
 
-  ;;; Python
+#+end_src
+** Python
+#+begin_src emacs-lisp
+
   (require 'python)
   (require 'snakecharmer)
 
@@ -526,7 +591,10 @@
             (lambda ()
               (add-hook 'after-save-hook 'flycheck-first-error)))
 
-  ;;; Flycheck
+#+end_src
+** Flycheck
+#+begin_src emacs-lisp
+
   (require 'flycheck)
   (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
   (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
@@ -543,11 +611,17 @@
   (with-eval-after-load 'flycheck
     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
-  ;;; Elisp
+#+end_src
+** Elisp
+#+begin_src emacs-lisp
+
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 
-  ;;; Misc options
+#+end_src
+** Misc options
+#+begin_src emacs-lisp
+
   (defun eval-buffer-or-region (point mark)
     (interactive "r")
     (if (region-active-p)
@@ -582,7 +656,10 @@
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
-  ;;; uniquify
+#+end_src
+** uniquify
+#+begin_src emacs-lisp
+
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
 
@@ -595,7 +672,10 @@
                           (if (file-exists-p (concat buffer-file-name "c"))
                               (delete-file (concat buffer-file-name "c")))))))
 
-  ;;; <f> bindings
+#+end_src
+** <f> bindings
+#+begin_src emacs-lisp
+
 
   ;; discover-my-major pls
   (define-key global-map (kbd "<f1>")
@@ -637,7 +717,10 @@
         (switch-to-buffer buf)
         (insert content))))
 
-  ;;; Backups
+#+end_src
+** Backups
+#+begin_src emacs-lisp
+
   (defvar --backup-directory (concat user-emacs-directory "backups"))
   (if (not (file-exists-p --backup-directory))
           (make-directory --backup-directory t))
@@ -654,7 +737,10 @@
         auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
         )
 
-  ;;; Save hooks
+#+end_src
+** Save hooks
+#+begin_src emacs-lisp
+
 
   (add-hook 'before-save-hook
             (lambda ()
@@ -665,13 +751,22 @@
                   (goto-char (point-max))
                   (delete-blank-lines)))))
 
-  ;;; Ace jump
+#+end_src
+** Ace jump
+#+begin_src emacs-lisp
+
   (define-key global-map (kbd "C-;") 'ace-jump-word-mode)
 
-  ;;; Kill ring
+#+end_src
+** Kill ring
+#+begin_src emacs-lisp
+
   (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
 
-  ;;; Window management
+#+end_src
+** Window management
+#+begin_src emacs-lisp
+
   (defun th-split-window (vertical &optional helming)
     "Split a window and go to it, optionally open helm-mini."
     (if vertical
@@ -773,9 +868,13 @@
 
   (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
-  ;;; why custom why
+#+end_src
+** why custom why
+#+begin_src emacs-lisp
+
   (setq custom-file "~/.emacs.d/custom.el")
   (unless (file-exists-p custom-file)
     (with-temp-buffer (write-file custom-file)))
   (load custom-file)
+
 #+end_src
