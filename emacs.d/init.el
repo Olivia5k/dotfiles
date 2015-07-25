@@ -76,6 +76,9 @@
     melpa
     multiple-cursors
     nginx-mode
+    org-bullets
+    org-fstree
+    org-jekyll
     otp
     paradox
     paredit
@@ -262,6 +265,15 @@
 (setq helm-swoop-pre-input-function
       (lambda () ""))
 
+;; helm-dash
+(require 'helm-dash)
+(setq helm-dash-browser-func 'eww)
+
+;; Helm grep
+(if (executable-find "ag")
+    (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
+  (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
+
 (helm-mode 1)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -283,6 +295,15 @@
 ;;; Autocompletion
 (require 'company)
 (require 'company-go)
+;; helm-dash
+(require 'helm-dash)
+(setq helm-dash-browser-func 'eww)
+
+;; Helm grep
+(if (executable-find "ag")
+    (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
+  (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
+
 
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
