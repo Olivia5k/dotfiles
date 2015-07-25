@@ -333,11 +333,16 @@
 
 (defun th-go-hook ()
   (add-hook 'before-save-hook 'gofmt-before-save)
+  (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode)
 
-  (local-set-key (kbd "C-c i") 'go-goto-imports)
-  (local-set-key (kbd "C-c C-i") 'go-remove-unused-imports))
+  (helm-dash-activate-docset 'Go))
+
 
 (add-hook 'go-mode-hook 'th-go-hook)
+
+(define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
+(define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
 
 ;;; Smart mode line
 (require 'smart-mode-line)
