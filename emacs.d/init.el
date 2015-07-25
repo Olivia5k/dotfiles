@@ -30,7 +30,6 @@
 
 (defvar elpa-packages
   '(ace-jump-mode
-    ack-and-a-half
     anaconda-mode
     browse-kill-ring
     buffer-move
