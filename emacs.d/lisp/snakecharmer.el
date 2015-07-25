@@ -3,6 +3,7 @@
 (require 'string-inflection)
 (require 's)
 (require 'dash)
+(require 'async)
 
 
 (defun snake-goto-above-class-or-function ()
@@ -115,9 +116,19 @@
 (defun snake-run-single-test ()
   "Execute the test the point is currently at."
 
-  (let* ((class (cdr (outer-testable)))
-         (func (cdr (inner-testable))))
-    (message (concat class func))))
+  (interactive)
+  (let ((class (cdr (outer-testable)))
+         (func (cdr (inner-testable)))
+         (fn (buffer-file-name)))
+    (snake-exec-test (s-join "::" (list fn class func)))))
+
+(defun snake-exec-test (&rest args)
+  (cd (snake-find-root))
+  (let* ((base "bin/py.test --result-log=pytest-results.log")
+         (extra (s-join " " args))
+         (cmd (s-join " " (list base extra))))
+    (async-start
+     (shell-command (format "%s &> /dev/null &" cmd) nil nil))))
 
 (defun snake-get-current-test-items ()
   "Get the current class and function definition as if they were items of a
@@ -164,7 +175,7 @@
 (defun snake-create-test (class)
   "Create a new test at the bottom of the current file."
   (end-of-buffer)
-  (insert (format "\n\nclass Test%s(object):\n    " class))
+  (insert (format "\n\nclass Test%s:\n    " class))
   (end-of-buffer)
   (end-of-line))
 
@@ -196,41 +207,47 @@
   "Add a `def setup_method()` for the current test class")
 
 ;;; File watching
-(defun snake-logfile-callback (event)
+(defun snake-logfile-callback (filename)
   "Parse the logfile and decorate buffers accordingly.
 
 This will read the results from the pytest-results.log file and add markers
 denoting success or failure to the tests that have been run."
-  (save-excursion
-    (find-file (nth 3 event))
-    (beginning-of-buffer)
-    (cl-loop until (eobp) do (snake-parse-result-line) (forward-line 1))))
+  (find-file-read-only filename)
+  (beginning-of-buffer)
+  (cl-loop until (eobp) do
+           (snake-parse-result-line
+            (buffer-substring-no-properties
+             (line-beginning-position)
+             (line-end-position)))
+           (forward-line 1)))
 
 (defun snake-decorate-test (file class func status)
   ""
 
-  (find-file (format "/home/thiderman/git/piper/%s" file))
-  (beginning-of-buffer)
-  (re-search-forward (format "^class %s(" class) nil t)
-  (re-search-forward (format "^    def \\(%s\\)(" func) nil t)
+  (save-excursion
+    (find-file (format "/home/thiderman/git/piper/%s" file))
+    (beginning-of-buffer)
+    (re-search-forward (format "^class %s(" class) nil t)
+    (re-search-forward (format "^    def \\(%s\\)(" func) nil t)
 
-  (put-text-property
-   (match-beginning 1) (match-end 1)
-   'font-lock-face `((:background ,(if (s-equals? status ".")
-                             "#007200" "#720000"))))
-  (message (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
+    (put-text-property
+     (match-beginning 1) (match-end 1)
+     'font-lock-face `((:foreground ,(if (s-equals? status ".")
+                                         "#a7ff85" "#ff8585"))))))
 
 (defun snake-parse-result-line (line)
   ""
-  (let* ((spl (s-split " " line))
-         (status (car spl))
-         (data (s-split "::" (cadr spl)))
-         (file (nth 0 data))
-         (class (nth 1 data))
-         (func (nth 3 data)))
-    (if (s-equals? status ".")
-        (snake-decorate-test file class func status)
-      (snake-decorate-test file class func status))))
+
+  (if (not (s-starts-with? " " line))
+      (let* ((spl (s-split " " line))
+             (status (car spl))
+             (data (s-split "::" (cadr spl)))
+             (file (nth 0 data))
+             (class (nth 1 data))
+             (func (nth 3 data)))
+        (if (s-equals? status ".")
+            (snake-decorate-test file class func status)
+          (snake-decorate-test file class func status)))))
 
 (defun snake-watch-logfile ()
   "Watch a pytest results file for a project and register the updater callback
@@ -238,7 +255,8 @@ to it."
   (file-notify-add-watch
    ; TODO: Not hardcode, lel
    "/home/thiderman/git/piper/pytest-results.log"
-   '(change attribute-change) 'snake-logfile-callback))
+   '(change attribute-change) (lambda (event)
+                                (snake-logfile-callback (nth 3 event)))))
 
 ;;; Utility functions
 (defun snake-find-root (&optional dirname)
@@ -261,10 +279,16 @@ to it."
 (define-key snakecharmer-map
   (kbd "M-RET") 'snake-goto-test)
 (define-key snakecharmer-map
+  (kbd "C-c C-c") 'snake-run-single-test)
+(define-key snakecharmer-map
   (kbd "M-s") 'snake-toggle-self)
 
+(global-set-key (kbd "C-c <C-return>") (lambda ()
+                       (interactive)
+                       (snake-logfile-callback "/home/thiderman/git/piper/pytest-results.log")))
+
 (define-minor-mode snakecharmer-mode
-  "Snakecharmer mode mode" nil " snake" snakecharmer-map
+  "Snakecharmer mode" nil " snake" snakecharmer-map
   (cd (snake-find-root)))
 
 (add-hook 'python-mode-hook 'snakecharmer-mode)
