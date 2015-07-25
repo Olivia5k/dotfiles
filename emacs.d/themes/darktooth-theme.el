@@ -216,7 +216,7 @@
    `(magit-diff-merge-proposed          ((t (:background ,darktooth-dark_green))))
    `(magit-diff-merge-separator         ((t (:foreground ,darktooth-neutral_orange))))
    `(magit-diff-none                    ((t (:foreground ,darktooth-medium))))
-   `(magit-item-highlight               ((t (:background ,darktooth-dark1 :weigpht normal))))
+   `(magit-item-highlight               ((t (:background ,darktooth-dark0_hard :weigpht normal))))
    `(magit-item-mark                    ((t (:background ,darktooth-dark0))))
    `(magit-key-mode-args-face           ((t (:foreground ,darktooth-light4))))
    `(magit-key-mode-button-face         ((t (:foreground ,darktooth-neutral_orange :weight bold))))
