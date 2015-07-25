@@ -539,8 +539,10 @@
       (progn
         (eval-region point mark)
         (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
-        (message "Region eval:ed"))
-    (eval-buffer)))
+        (message "Region eval"))
+    (progn
+      (eval-buffer)
+      (message "Buffer eval"))))
 
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
 
