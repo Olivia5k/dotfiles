@@ -93,6 +93,7 @@
     smart-mode-line
     ssh-config-mode
     string-inf
+    transpose-frame
     virtualenvwrapper
     wrap-region
     xkcd
