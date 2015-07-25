@@ -528,25 +528,6 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-
-;;; ido settings
-(setq ido-create-new-buffer 'always
-      ido-default-buffer-method 'selected-window
-      ido-case-fold t
-      ido-enable-last-directory-history nil
-      ido-use-filename-at-point nil
-      ido-use-url-at-point nil
-      ido-enable-flex-matching t
-      ido-max-prospects 15
-      ido-confirm-unique-completion t
-      ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
-                        " [No match]" " [Matched]" " [Not readable]"
-                        " [Too big]" " [Confirm]"))
-
-(require 'ido)
-;; (ido-mode t)
-;; (ido-everywhere t)
-
 ;; pls no .elc
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
