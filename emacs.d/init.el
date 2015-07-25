@@ -333,13 +333,7 @@
 (global-set-key (kbd "C-M-z") 'undo-tree-redo)
 (global-undo-tree-mode +1)
 
-;;; FCI
-(require 'fill-column-indicator)
-(fci-mode 1)
-(setq fci-rule-width 1)
-(setq fci-rule-color "#404049")
-(add-hook 'after-change-major-mode-hook 'fci-mode)
-
+;;; fill mode
 (auto-fill-mode 1)
 (set-fill-column 79)
 
