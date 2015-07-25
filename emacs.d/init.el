@@ -552,6 +552,8 @@
 
 (setq debug-on-error nil)
 
+(add-hook 'prog-mode-hook 'semantic-mode)
+
 ;; expand-region
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
