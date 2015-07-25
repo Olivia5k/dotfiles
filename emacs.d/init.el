@@ -308,7 +308,10 @@
 (require 'helm-c-yasnippet)
 (setq helm-yas-space-match-any-greedy t) ;[default: nil]
 (global-set-key (kbd "C-.") 'helm-yas-complete)
-(yas-global-mode 1)
+
+(add-hook 'prog-mode-hook 'yas-minor-mode)
+(add-hook 'markdown-mode 'yas-minor-mode)
+(add-hook 'org-mode-hook 'yas-minor-mode)
 
 ;;; Autocompletion
 (require 'company)
