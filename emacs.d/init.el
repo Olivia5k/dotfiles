@@ -705,17 +705,24 @@
 (global-set-key (kbd "s-f") 'delete-other-windows)
 (global-set-key (kbd "C-q") 'delete-window)
 
-(dolist
-    (path (directory-files custom-theme-directory t "\\w+"))
-  (when (file-directory-p path)
-    (add-to-list 'custom-theme-load-path path)))
-
-;;; Appearances
-(set-default-font "Inconsolata-14")
-(load-theme 'darktooth t)
-
-(global-linum-mode 1)
+;; Linum
+(global-linum-mode 0)
 (setq linum-format " %3d ")
+
+(defvar th-linum-modes
+  '(eshell-mode wl-summary-mode compilation-mode org-mode
+                dired-mode doc-view-mode image-mode))
+
+(defun th-linum-filter ()
+  "Disable linum-mode if the file mode is in the defined list"
+
+  (unless (or
+           (-contains? th-linum-modes major-mode)
+           (string-match "*" (buffer-name)))
+    (linum-mode 1)))
+
+(add-hook 'find-file-hook 'th-linum-filter)
+
 (fringe-mode 12)
 (setq scroll-step 10)
 
