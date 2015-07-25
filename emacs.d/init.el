@@ -3,6 +3,15 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
+;;; Appearances
+(dolist
+    (path (directory-files custom-theme-directory t "\\w+"))
+  (when (file-directory-p path)
+    (add-to-list 'custom-theme-load-path path)))
+
+(set-default-font "Inconsolata-11")
+(load-theme 'darktooth t)
+
 ;;; Package configuration
 (require 'package)
 (add-to-list 'package-archives
@@ -16,9 +25,8 @@
      (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))))
 
-(package-initialize)
 ;; required because of a package.el bug
-(setq url-http-attempt-keepalives nil)
+;(setq url-http-attempt-keepalives nil)
 
 (defvar elpa-packages
   '(ace-jump-mode
