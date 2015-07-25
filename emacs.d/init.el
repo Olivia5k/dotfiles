@@ -426,7 +426,7 @@
     (forward-line 1))
   (indent-according-to-mode))
 
-(global-set-key (kbd "C-x g") 'goto-line)
+(global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
 (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
 (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
@@ -458,7 +458,8 @@
 
 ;;; magit
 (require 'magit)
-(global-set-key (kbd "M-g") 'magit-status)
+(global-set-key (kbd "C-M-i") 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (setq magit-save-some-buffers 'dontask)
 (setq magit-last-seen-setup-instructions "1.4.0")
