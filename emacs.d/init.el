@@ -500,6 +500,14 @@
   (jump-to-register :magit-fullscreen))
 
 (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
+(define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
+
+;;; org mode
+(require 'org)
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '( (emacs-lisp . t)))
 
 ;;; Python
 (require 'python)
