@@ -654,7 +654,7 @@
 (define-key global-map (kbd "C-;") 'ace-jump-word-mode)
 
 ;;; Kill ring
-(define-key global-map (kbd "C-x y") 'browse-kill-ring)
+(define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
 
 ;;; Window management
 (defun th-split-window (vertical &optional helming)
