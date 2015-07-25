@@ -111,6 +111,7 @@
    `(font-lock-variable-name-face              ((t (:foreground ,darktooth-aquamarine4 ))))
    `(font-lock-type-face                       ((t (:foreground ,darktooth-lightblue4 ))))
    `(font-lock-warning-face                    ((t (:foreground ,darktooth-neutral_red :bold t ))))
+   `(vertical-border                           ((t (:foreground ,darktooth-black :bold t ))))
 
    ;; whitespace-mode
    `(whitespace-space                          ((t (:foreground ,darktooth-dark4 :background ,darktooth-dark0 ))))
