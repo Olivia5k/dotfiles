@@ -695,9 +695,10 @@ Note that C-j will preview the file without closing the helm buffer.
         )
 #+end_src
 ** Window management
+*** Emacs-like
 #+begin_src emacs-lisp
   (defun th-split-window (vertical &optional helming)
-    "Split a window and go to it, optionally open helm-mini."
+    "Split a window and go to it, optionally open helm-projectile."
     (if vertical
         (progn
           (split-window-vertically)
@@ -716,8 +717,6 @@ Note that C-j will preview the file without closing the helm buffer.
   (define-key global-map (kbd "M-3") (lambda ()
                                        (interactive)
                                        (th-split-window nil t)))
-  (define-key global-map (kbd "M-4") 'kill-buffer-and-window)
-  (define-key global-map (kbd "M-=") 'balance-windows)
 
   (define-key global-map (kbd "C-M-2") (lambda ()
                                          (interactive)
@@ -725,7 +724,9 @@ Note that C-j will preview the file without closing the helm buffer.
   (define-key global-map (kbd "C-M-3") (lambda ()
                                          (interactive)
                                          (th-split-window nil)))
-
+#+end_src
+*** vim-like
+#+begin_src emacs-lisp
   (global-set-key (kbd "C-x h") 'windmove-left)
   (global-set-key (kbd "C-x j") 'windmove-down)
   (global-set-key (kbd "C-x k") 'windmove-up)
@@ -742,9 +743,9 @@ Note that C-j will preview the file without closing the helm buffer.
   (global-set-key (kbd "s-M-l") 'buf-move-right)
 
   (global-set-key (kbd "s-f") 'delete-other-windows)
-  (global-set-key (kbd "C-q") 'delete-window)
-
-  ;; Linum
+#+end_src
+** Linum
+#+begin_src emacs-lisp
   (global-linum-mode 0)
   (setq linum-format " %3d ")
 
