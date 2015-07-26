@@ -141,11 +141,6 @@ Defines the packages to be installed.
   (set-default-font "Inconsolata-11")
   (load-theme 'darktooth t)
 #+end_src
-** popwin
-#+begin_src emacs-lisp
-  (require 'popwin)
-  (popwin-mode 1)
-#+end_src
 ** Helm
 
 [[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of emacs.
@@ -276,6 +271,7 @@ under git.
 #+begin_src emacs-lisp
   (require 'projectile)
   (projectile-global-mode)
+
   (setq projectile-completion-system 'helm)
   (setq projectile-mode-line nil)
 #+end_src
@@ -283,8 +279,14 @@ under git.
 #+begin_src emacs-lisp
   (require 'smart-mode-line)
   (setq sml/no-confirm-load-theme t)
+
   (sml/apply-theme 'darktooth)
   (sml/setup)
+#+end_src
+** popwin
+#+begin_src emacs-lisp
+  (require 'popwin)
+  (popwin-mode 1)
 #+end_src
 * Editing
 ** undo tree
