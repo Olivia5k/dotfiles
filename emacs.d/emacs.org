@@ -262,6 +262,8 @@ Uses ag if available, but falls back to grep if not.
 Only available when projectile is active, e.g. when you are editing files
 under git.
 
+Note that C-j will preview the file without closing the helm buffer.
+
 #+begin_src emacs-lisp
   (if (executable-find "ag")
       (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
