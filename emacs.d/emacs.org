@@ -13,6 +13,10 @@ file, gives nice folding, and sets up for writing inline documentation.
 If only I was not one of those so very fond of tinkering and dotfiling, I
 might've actually gotten things done. That would have been something, right?
 
+* Common Lisp
+#+begin_src emacs-lisp
+(require 'cl)
+#+end_src
 * Package configuration
 ** Path configuration
 #+begin_src emacs-lisp
@@ -566,6 +570,82 @@ Note that C-j will preview the file without closing the helm buffer.
   (add-hook 'prog-mode-hook 'semantic-mode)
 #+end_src
 * Minor modes and utilities
+** Buffer toggles
+
+F1: Show `discover-my-major`. Kill it if in it.
+F2: Open this file
+F3: Open main org file
+F4: Scratch buffer
+F5: Toggle debug mode
+
+*** Functions
+#+begin_src emacs-lisp
+  (defun th-toggle-buffer (func name &optional kill-window)
+    "Toggle or destroy a buffer, depending on if it exists or not.
+
+    The `func` argument should be a callable that toggles the buffer.
+    The `name` argument is a substring of the buffer that should be matched."
+    (interactive)
+    (let ((done nil))
+      (loop for buffer being the buffers
+            do (let ((bname (buffer-name buffer)))
+                 (when (s-contains? name bname)
+                   (if kill-window
+                       (progn
+                         (select-window (get-buffer-window buffer))
+                         (kill-buffer-and-window)
+                         (message "Killed %s" bname))
+                     (progn
+                       (kill-buffer buffer)
+                       (message "%s toggled away" bname)))
+                   (setq done t))))
+      (unless done
+        (funcall func))))
+
+  (defun th-toggle-file (path)
+    (let ((file (file-truename path)))
+      (if (s-equals? file buffer-file-name)
+          (progn
+            (save-buffer)
+            (previous-buffer))
+        (find-file file))))
+#+end_src
+*** Keymaps
+#+begin_src emacs-lisp
+  (define-key global-map (kbd "<f1>")
+    (lambda ()
+      (interactive)
+      (th-toggle-buffer (lambda () (discover-my-major t)) "makey" t)))
+
+  (define-key global-map (kbd "<f2>")
+    (lambda ()
+      (interactive)
+      (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+
+  (define-key global-map (kbd "<f3>")
+    (lambda ()
+      (interactive)
+      (th-toggle-file (concat user-emacs-directory "todo.org"))))
+
+  (define-key global-map (kbd "<f4>")
+    (lambda ()
+      (interactive)
+      (let ((content initial-scratch-message)
+            (buf "*scratch*"))
+        (when (get-buffer buf)
+          (setq content ""))
+        (switch-to-buffer buf)
+        (insert content))))
+
+  (define-key global-map (kbd "<f5>")
+    (lambda ()
+      (interactive)
+      (let ((doe t))
+        (if debug-on-error
+            (setq doe nil))
+        (setq debug-on-error doe)
+        (message "debug-on-error set to %s" doe))))
+#+end_src
 ** magit
 #+begin_src emacs-lisp
   (require 'magit)
@@ -586,6 +666,7 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
   (define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
+
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
@@ -595,12 +676,7 @@ Note that C-j will preview the file without closing the helm buffer.
   (global-set-key (kbd "C-c C-SPC")
                   (lambda ()
                     (interactive)
-                    (let ((name "*Flycheck errors*"))
-                      (if (get-buffer name)
-                          (progn
-                            (kill-buffer name)
-                            (message "Killed buffer"))
-                        (flycheck-list-errors)))))
+                    (th-toggle-buffer 'flycheck-list-errors "*Flycheck errors*")))
 
   (with-eval-after-load 'flycheck
     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
@@ -822,48 +898,6 @@ Note that C-j will preview the file without closing the helm buffer.
 #+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
-#+end_src
-** <f> bindings
-#+begin_src emacs-lisp
-  ;; discover-my-major pls
-  (define-key global-map (kbd "<f1>")
-    (lambda ()
-      (interactive)
-      (if (s-prefix? "*makey-key" (buffer-name))
-          (kill-buffer-and-window)
-        (discover-my-major t))))
-
-  ;; Go to a certain file. If already in it, go back.
-  (defun th-toggle-file (path)
-   (let ((file (file-truename path)))
-     (if (s-equals? file buffer-file-name)
-         (progn
-           (save-buffer)
-           (previous-buffer))
-       (find-file file))))
-
-  ;; init.el is love, init.el is life
-  (define-key global-map (kbd "<f2>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file (concat user-emacs-directory "init.el"))))
-
-  ;; Org mode switch!
-  (define-key global-map (kbd "<f3>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file (concat user-emacs-directory "todo.org"))))
-
-  ;; Scratch buffer go
-  (define-key global-map (kbd "<f4>")
-    (lambda ()
-      (interactive)
-      (let ((content initial-scratch-message)
-            (buf "*scratch*"))
-        (when (get-buffer buf)
-          (setq content ""))
-        (switch-to-buffer buf)
-        (insert content))))
 #+end_src
 ** custom
 
