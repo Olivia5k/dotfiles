@@ -4,6 +4,7 @@
 #+EMAIL: lowe.thiderman@gmail.com
 
 * Introduction
+
 This is my emax setup. It's a constant work in progress. The current setup is
 like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an elisp file
 that is compiled upon startup. org-mode was chose since it helps organize the
@@ -13,6 +14,21 @@ If only I was not one of those so very fond of tinkering and dotfiling, I
 might've actually gotten things done. That would have been something, right?
 
 * Package configuration
+** Path configuration
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+  (setq custom-theme-directory (concat user-emacs-directory "themes"))
+
+  (dolist
+      (path (directory-files custom-theme-directory t "\\w+"))
+    (when (file-directory-p path)
+      (add-to-list 'custom-theme-load-path path)))
+#+end_src
+** Preamble and setup
+
+Sets up the repositories to get packages from. Extra and more frequently
+updated repositories outside of MELPA are added. Order matters.
+
 #+begin_src emacs-lisp
 
   (require 'package)
@@ -30,8 +46,15 @@ might've actually gotten things done. That would have been something, right?
   ;; required because of a package.el bug
   ;(setq url-http-attempt-keepalives nil)
 
+#+end_src
+** Packages
+
+Defines the packages to be installed.
+
+#+begin_src emacs_lisp
   (defvar elpa-packages
-    '(ace-jump-mode
+    '(
+      ace-jump-mode
       anaconda-mode
       browse-kill-ring
       buffer-move
@@ -102,8 +125,10 @@ might've actually gotten things done. That would have been something, right?
       yaml-mode
       yasnippet
       zenburn)
-    "A list of packages to ensure are installed at launch.")
-
+    "A list of packages to be installed at launch.")
+#+end_src
+** Actual package installation
+#+begin_src emacs-lisp
   (when (not package-archive-contents)
     (package-refresh-contents))
 
@@ -111,85 +136,13 @@ might've actually gotten things done. That would have been something, right?
     (when (and (not (package-installed-p pkg))
              (assoc pkg package-archive-contents))
       (package-install pkg)))
-
-  (defun package-list-unaccounted-packages ()
-    "Like `package-list-packages', but shows only the packages that
-    are installed and are not in `elpa-packages'.  Useful for
-    cleaning out unwanted packages."
-    (interactive)
-    (package-show-package-list
-     (remove-if-not (lambda (x) (and (not (memq x elpa-packages))
-                                     (not (package-built-in-p x))
-                                     (package-installed-p x)))
-                    (mapcar 'car package-archive-contents))))
-
-
 #+end_src
-** Appearances
+* Interface
+** Appearance
 #+begin_src emacs-lisp
-  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
-  (setq custom-theme-directory (concat user-emacs-directory "themes"))
-  (dolist
-      (path (directory-files custom-theme-directory t "\\w+"))
-    (when (file-directory-p path)
-      (add-to-list 'custom-theme-load-path path)))
 
   (set-default-font "Inconsolata-11")
   (load-theme 'darktooth t)
-
-#+end_src
-** Options and settings
-#+begin_src emacs-lisp
-
-  (require 's)
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (setq-default indicate-empty-lines t)
-
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (mouse-wheel-mode -1)
-  (scroll-bar-mode -1)
-
-  (setq inhibit-startup-screen t
-        initial-scratch-message ";; *scratch*\n\n")
-
-  (setq backup-inhibited t
-        auto-save-default nil)
-
-  (setq backup-by-copying t)
-
-  ;; Save all tempfiles in $TMPDIR/emacs$UID/
-  (defconst emacs-tmp-dir
-    (format "/tmp/emacs-%s/" (user-uid)))
-  (make-directory emacs-tmp-dir t)
-  (setq backup-directory-alist
-        `((".*" . ,emacs-tmp-dir)))
-  (setq auto-save-file-name-transforms
-        `((".*" ,emacs-tmp-dir t)))
-  (setq temporary-file-directory emacs-tmp-dir)
-
-  (setq auto-save-list-file-prefix
-        emacs-tmp-dir)
-
-  (setq auto-save-interval 0
-        auto-save-timeout 1)
-
-  (setq echo-keystrokes 0.4
-        stack-trace-on-error nil
-        standard-indent 4
-        tab-always-indent 'complete
-        grep-scroll-output t)
-
-  (setq-default comment-column 42
-                fill-column 78
-                indent-tabs-mode nil
-                tab-width 2
-                word-wrap t)
-
-  (show-paren-mode t)
-  (electric-pair-mode t)
-  (global-auto-revert-mode t)
-  (auto-fill-mode t)
 
 #+end_src
 ** popwin
@@ -197,27 +150,6 @@ might've actually gotten things done. That would have been something, right?
 
   (require 'popwin)
   (popwin-mode 1)
-
-#+end_src
-** Commenting code
-#+begin_src emacs-lisp
-
-  (defun comment-eclipse ()
-    (interactive)
-    (let ((start (line-beginning-position))
-          (end (line-end-position)))
-      (when (region-active-p)
-        (setq start (save-excursion
-                      (goto-char (region-beginning))
-                      (beginning-of-line)
-                      (point))
-              end (save-excursion
-                    (goto-char (region-end))
-                    (end-of-line)
-                    (point))))
-      (comment-or-uncomment-region start end)))
-
-  (global-set-key (kbd "M-;") 'comment-eclipse)
 
 #+end_src
 ** Helm
@@ -334,59 +266,6 @@ might've actually gotten things done. That would have been something, right?
   (setq projectile-mode-line nil)
 
 #+end_src
-** yas
-#+begin_src emacs-lisp
-
-  (require 'yasnippet)
-  (require 'helm-c-yasnippet)
-  (setq helm-yas-space-match-any-greedy t) ;[default: nil]
-  (global-set-key (kbd "C-.") 'helm-yas-complete)
-
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'markdown-mode 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
-
-#+end_src
-** Autocompletion
-#+begin_src emacs-lisp
-
-  (require 'company)
-  (require 'company-go)
-  ;; helm-dash
-  (require 'helm-dash)
-  (setq helm-dash-browser-func 'eww)
-
-  ;; Helm grep
-  (if (executable-find "ag")
-      (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
-    (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
-
-
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-
-#+end_src
-** golang
-#+begin_src emacs-lisp
-
-  (require 'go-mode)
-
-  (defun th-go-hook ()
-    (add-hook 'before-save-hook 'gofmt-before-save)
-    (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode)
-
-    (helm-dash-activate-docset 'Go))
-
-
-  (add-hook 'go-mode-hook 'th-go-hook)
-
-  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
-  (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
-
-#+end_src
 ** Smart mode line
 #+begin_src emacs-lisp
 
@@ -396,6 +275,7 @@ might've actually gotten things done. That would have been something, right?
   (sml/setup)
 
 #+end_src
+* Editing
 ** undo tree
 #+begin_src emacs-lisp
 
@@ -412,29 +292,63 @@ might've actually gotten things done. That would have been something, right?
   (set-fill-column 79)
 
 #+end_src
-** ediff
+** yas
 #+begin_src emacs-lisp
 
-  (setq ediff-diff-options "-w")
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (require 'yasnippet)
+  (require 'helm-c-yasnippet)
+  (setq helm-yas-space-match-any-greedy t) ;[default: nil]
+  (global-set-key (kbd "C-.") 'helm-yas-complete)
+
+  (add-hook 'prog-mode-hook 'yas-minor-mode)
+  (add-hook 'markdown-mode 'yas-minor-mode)
+  (add-hook 'org-mode-hook 'yas-minor-mode)
 
 #+end_src
-** emmet
+** Save hooks
 #+begin_src emacs-lisp
 
-  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-  (add-hook 'emmet-mode-hook
+  (add-hook 'before-save-hook
             (lambda ()
-              (setq emmet-indentation 2))) ;; indent 2 spaces.
+              (save-excursion
+                (save-restriction
+                  (delete-trailing-whitespace)
+                  (widen)
+                  (goto-char (point-max))
+                  (delete-blank-lines)))))
 
 #+end_src
-** Rainbows and docs <3
+** Commenting code
 #+begin_src emacs-lisp
 
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
-  (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+  (defun comment-eclipse ()
+    (interactive)
+    (let ((start (line-beginning-position))
+          (end (line-end-position)))
+      (when (region-active-p)
+        (setq start (save-excursion
+                      (goto-char (region-beginning))
+                      (beginning-of-line)
+                      (point))
+              end (save-excursion
+                    (goto-char (region-end))
+                    (end-of-line)
+                    (point))))
+      (comment-or-uncomment-region start end)))
+
+  (global-set-key (kbd "M-;") 'comment-eclipse)
+
+#+end_src
+** Autocompletion
+#+begin_src emacs-lisp
+
+  (require 'company)
+  (require 'company-go)
+
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
 #+end_src
 ** Editor macros
@@ -543,6 +457,111 @@ might've actually gotten things done. That would have been something, right?
                     (join-line -1)))
 
 #+end_src
+* Major modes
+** org
+#+begin_src emacs-lisp
+
+  (require 'org)
+  (eval-after-load "org"
+    '(progn
+       (require 'org-clock)
+       (require 'org-fstree)))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)))
+
+  (setq org-agenda-ndays 7)
+  (setq org-agenda-show-all-dates t)
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-fontify-emphasized-text t) ;; fontify *bold* _underline_ /italic/ and so on
+  (setq org-log-done t) ;;timestamp when switching from todo to done
+  (setq org-return-follows-link t)
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t)
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window)
+
+  ; When calculating percentages of checkboxes, count all boxes, not just
+  ; direct children
+  (setq org-hierarchical-checkbox-statistics t)
+
+#+end_src
+** Elisp
+#+begin_src emacs-lisp
+
+  (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
+
+  ;; pls no .elc
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (make-local-variable 'after-save-hook)
+              (add-hook 'after-save-hook
+                        (lambda ()
+                          (if (file-exists-p (concat buffer-file-name "c"))
+                              (delete-file (concat buffer-file-name "c")))))))
+
+  (defun eval-buffer-or-region (point mark)
+    (interactive "r")
+    (if (region-active-p)
+        (progn
+          (eval-region point mark)
+          (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
+          (message "Region eval"))
+      (progn
+        (eval-buffer)
+        (message "Buffer eval"))))
+
+  (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+
+#+end_src
+** Python
+#+begin_src emacs-lisp
+
+  (require 'python)
+  (require 'snakecharmer)
+
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
+
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook 'flycheck-first-error)))
+
+#+end_src
+** golang
+#+begin_src emacs-lisp
+
+  (require 'go-mode)
+
+  (defun th-go-hook ()
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (set (make-local-variable 'company-backends) '(company-go))
+                            (company-mode)
+
+    (helm-dash-activate-docset 'Go))
+
+
+  (add-hook 'go-mode-hook 'th-go-hook)
+
+  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
+  (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
+
+#+end_src
+** prog-mode
+#+begin_src emacs-lisp
+
+  (add-hook 'prog-mode-hook 'semantic-mode)
+
+#+end_src
+* Minor modes and utilities
 ** magit
 #+begin_src emacs-lisp
 
@@ -566,32 +585,6 @@ might've actually gotten things done. That would have been something, right?
   (define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
 
 #+end_src
-** org mode
-#+begin_src emacs-lisp
-
-  (require 'org)
-  ;; active Babel languages
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '( (emacs-lisp . t)))
-
-#+end_src
-** Python
-#+begin_src emacs-lisp
-
-  (require 'python)
-  (require 'snakecharmer)
-
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
-
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook 'flycheck-first-error)))
-
-#+end_src
 ** Flycheck
 #+begin_src emacs-lisp
 
@@ -612,110 +605,83 @@ might've actually gotten things done. That would have been something, right?
     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 #+end_src
-** Elisp
+** emmet
 #+begin_src emacs-lisp
 
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+  (add-hook 'emmet-mode-hook
+            (lambda ()
+              (setq emmet-indentation 2))) ;; indent 2 spaces.
 
 #+end_src
-** Misc options
+** ace-jump
 #+begin_src emacs-lisp
 
-  (defun eval-buffer-or-region (point mark)
-    (interactive "r")
-    (if (region-active-p)
-        (progn
-          (eval-region point mark)
-          (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
-          (message "Region eval"))
-      (progn
-        (eval-buffer)
-        (message "Buffer eval"))))
+  (define-key global-map (kbd "C-;") 'ace-jump-word-mode)
 
-  (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+#+end_src
+** Kill ring
+#+begin_src emacs-lisp
 
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-unset-key (kbd "C-x C-c"))
-  (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
+  (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
+
+#+end_src
+* Setup and options
+** Options and settings
+#+begin_src emacs-lisp
+
+  (require 's)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq-default indicate-empty-lines t)
 
   (setq debug-on-error nil)
 
-  (add-hook 'prog-mode-hook 'semantic-mode)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (mouse-wheel-mode -1)
+  (scroll-bar-mode -1)
 
-  ;; expand-region
-  (require 'expand-region)
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  (global-set-key (kbd "C-M-=") 'er/contract-region)
+  (setq inhibit-startup-screen t
+        initial-scratch-message ";; *scratch*\n\n")
 
-  ;; multiple-cursors
-  (require 'multiple-cursors)
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (setq backup-inhibited t
+        auto-save-default nil)
 
+  (setq backup-by-copying t)
 
-#+end_src
-** uniquify
-#+begin_src emacs-lisp
+  ;; Save all tempfiles in $TMPDIR/emacs$UID/
+  (defconst emacs-tmp-dir
+    (format "/tmp/emacs-%s/" (user-uid)))
+  (make-directory emacs-tmp-dir t)
+  (setq backup-directory-alist
+        `((".*" . ,emacs-tmp-dir)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,emacs-tmp-dir t)))
+  (setq temporary-file-directory emacs-tmp-dir)
 
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward)
+  (setq auto-save-list-file-prefix
+        emacs-tmp-dir)
 
-  ;; pls no .elc
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (make-local-variable 'after-save-hook)
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (if (file-exists-p (concat buffer-file-name "c"))
-                              (delete-file (concat buffer-file-name "c")))))))
+  (setq auto-save-interval 0
+        auto-save-timeout 1)
 
-#+end_src
-** <f> bindings
-#+begin_src emacs-lisp
+  (setq echo-keystrokes 0.4
+        stack-trace-on-error nil
+        standard-indent 4
+        tab-always-indent 'complete
+        grep-scroll-output t)
 
+  (setq-default comment-column 42
+                fill-column 78
+                indent-tabs-mode nil
+                tab-width 2
+                word-wrap t)
 
-  ;; discover-my-major pls
-  (define-key global-map (kbd "<f1>")
-    (lambda ()
-      (interactive)
-      (if (s-prefix? "*makey-key" (buffer-name))
-          (kill-buffer-and-window)
-        (discover-my-major t))))
-
-  ;; Go to a certain file. If already in it, go back.
-  (defun th-toggle-file (path)
-   (let ((file (file-truename path)))
-     (if (s-equals? file buffer-file-name)
-         (progn
-           (save-buffer)
-           (previous-buffer))
-       (find-file file))))
-
-  ;; init.el is love, init.el is life
-  (define-key global-map (kbd "<f2>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file (concat user-emacs-directory "init.el"))))
-
-  ;; Org mode switch!
-  (define-key global-map (kbd "<f3>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file (concat user-emacs-directory "todo.org"))))
-
-  ;; Scratch buffer go
-  (define-key global-map (kbd "<f4>")
-    (lambda ()
-      (interactive)
-      (let ((content initial-scratch-message)
-            (buf "*scratch*"))
-        (when (get-buffer buf)
-          (setq content ""))
-        (switch-to-buffer buf)
-        (insert content))))
+  (show-paren-mode t)
+  (electric-pair-mode t)
+  (global-auto-revert-mode t)
+  (auto-fill-mode t)
 
 #+end_src
 ** Backups
@@ -736,32 +702,6 @@ might've actually gotten things done. That would have been something, right?
         auto-save-timeout 2               ; number of seconds idle time before auto-save (default: 30)
         auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
         )
-
-#+end_src
-** Save hooks
-#+begin_src emacs-lisp
-
-
-  (add-hook 'before-save-hook
-            (lambda ()
-              (save-excursion
-                (save-restriction
-                  (delete-trailing-whitespace)
-                  (widen)
-                  (goto-char (point-max))
-                  (delete-blank-lines)))))
-
-#+end_src
-** Ace jump
-#+begin_src emacs-lisp
-
-  (define-key global-map (kbd "C-;") 'ace-jump-word-mode)
-
-#+end_src
-** Kill ring
-#+begin_src emacs-lisp
-
-  (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
 
 #+end_src
 ** Window management
@@ -869,7 +809,82 @@ might've actually gotten things done. That would have been something, right?
   (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 #+end_src
-** why custom why
+** Misc options
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-unset-key (kbd "C-x C-c"))
+  (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
+
+  ;; expand-region
+  (require 'expand-region)
+  (global-set-key (kbd "C-=") 'er/expand-region)
+  (global-set-key (kbd "C-M-=") 'er/contract-region)
+
+  ;; multiple-cursors
+  (require 'multiple-cursors)
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+
+#+end_src
+** uniquify
+#+begin_src emacs-lisp
+
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
+
+#+end_src
+** <f> bindings
+#+begin_src emacs-lisp
+
+  ;; discover-my-major pls
+  (define-key global-map (kbd "<f1>")
+    (lambda ()
+      (interactive)
+      (if (s-prefix? "*makey-key" (buffer-name))
+          (kill-buffer-and-window)
+        (discover-my-major t))))
+
+  ;; Go to a certain file. If already in it, go back.
+  (defun th-toggle-file (path)
+   (let ((file (file-truename path)))
+     (if (s-equals? file buffer-file-name)
+         (progn
+           (save-buffer)
+           (previous-buffer))
+       (find-file file))))
+
+  ;; init.el is love, init.el is life
+  (define-key global-map (kbd "<f2>")
+    (lambda ()
+      (interactive)
+      (th-toggle-file (concat user-emacs-directory "init.el"))))
+
+  ;; Org mode switch!
+  (define-key global-map (kbd "<f3>")
+    (lambda ()
+      (interactive)
+      (th-toggle-file (concat user-emacs-directory "todo.org"))))
+
+  ;; Scratch buffer go
+  (define-key global-map (kbd "<f4>")
+    (lambda ()
+      (interactive)
+      (let ((content initial-scratch-message)
+            (buf "*scratch*"))
+        (when (get-buffer buf)
+          (setq content ""))
+        (switch-to-buffer buf)
+        (insert content))))
+
+#+end_src
+** custom
+
+Does anyone even like custom? I find it incredibly annoying.
+
 #+begin_src emacs-lisp
 
   (setq custom-file "~/.emacs.d/custom.el")
