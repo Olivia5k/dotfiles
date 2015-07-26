@@ -352,7 +352,7 @@ under git.
   (setq company-echo-delay 0)                          ; remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 #+end_src
-** Editor macros
+** Line duplication
 #+begin_src emacs-lisp
   (defun duplicate-current-line-or-region (arg)
     "Duplicates the current line or region ARG times.
@@ -374,9 +374,10 @@ under git.
           (setq end (point)))
         (goto-char (+ origin (* (length region) arg) arg)))))
 
-  (global-set-key (kbd "C-d") 'duplicate-current-line-or-region)
   (global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
-
+#+end_src
+** Entire line operation
+#+begin_src emacs-lisp
   (global-set-key (kbd "M-k")
                   (lambda ()
                     (interactive)
@@ -393,7 +394,19 @@ under git.
       (set-mark-command)
       (end-of-line)
       (kill-ring-save)))
-
+#+end_src
+** Default keys
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-g") 'goto-line)
+  (global-set-key (kbd "C-r") 'vr/replace)
+  (global-set-key (kbd "M-j")
+                  (lambda ()
+                    (interactive)
+                    (join-line -1)))
+#+end_src
+** Enhanced default keybindings
+*** C-a
+#+begin_src emacs-lisp
   (defun back-to-indentation-or-previous-line ()
     "Go to first non whitespace character on a line, or if already on the first
     non whitespace character, go to the beginning of the previous non-blank line."
@@ -404,6 +417,10 @@ under git.
         (back-to-indentation-or-previous-line))
     (back-to-indentation))
 
+  (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
+#+end_src
+*** C-e
+#+begin_src emacs-lisp
   (defun move-end-of-line-or-next-line ()
     (interactive)
     (if (eolp)
@@ -413,6 +430,10 @@ under git.
               (move-end-of-line-or-next-line))))
     (move-end-of-line nil))
 
+  (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
+#+end_src
+*** C-o and C-M-o
+#+begin_src emacs-lisp
   (defun insertline-and-move-to-line (&optional up)
     "Insert a newline, either below or above depending on `up`. Indent accordingly."
     (interactive)
@@ -426,21 +447,20 @@ under git.
       (forward-line 1))
     (indent-according-to-mode))
 
-  (global-set-key (kbd "M-g") 'goto-line)
-  (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
-  (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
   (global-set-key (kbd "C-o") 'insertline-and-move-to-line)
   (global-set-key (kbd "C-M-o") (lambda ()
                                   (interactive)
                                   (insertline-and-move-to-line t)))
-
+#+end_src
+*** M-F
+#+begin_src emacs-lisp
   (defun forward-word-to-beginning (&optional n)
     "Move point forward n words and place cursor at the beginning."
     (interactive "p")
     (let (myword)
       (setq myword
         (if (and transient-mark-mode mark-active)
-          (buffer-substring-no-properties (region-beginning) (region-end))
+            (buffer-substring-no-properties (region-beginning) (region-end))
           (thing-at-point 'symbol)))
       (if (not (eq myword nil))
         (forward-word n))
@@ -448,13 +468,6 @@ under git.
       (backward-word n)))
 
   (global-set-key (kbd "M-f") 'forward-word-to-beginning)
-
-  (global-set-key (kbd "C-r") 'vr/replace)
-
-  (global-set-key (kbd "M-j")
-                  (lambda ()
-                    (interactive)
-                    (join-line -1)))
 #+end_src
 * Major modes
 ** org
