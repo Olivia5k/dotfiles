@@ -147,20 +147,46 @@ Defines the packages to be installed.
   (popwin-mode 1)
 #+end_src
 ** Helm
+
+[[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of emacs.
+It replaces ido, flex etc.
+
+It should be noted that the default fuzzy finding is slightly different from
+what you are probably used to. There are no implicit ".*" between all
+characters. You either add an explicit ".* " or (more commonly) you add a
+space. Adding a space will add a new filter to your already filtered matches,
+
+and it can be done multiple times.
+It seems difficult in the beginning, but once you get used to it the feature
+becomes natural and very powerful.
+
+*** Include helm
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-config)
 
-  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (helm-mode 1)
+#+end_src
+*** Keybindings
+#+begin_src emacs-lisp
+  ;; Main access
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
   (global-set-key (kbd "C-x f") 'helm-projectile)
-  (global-set-key (kbd "M-q") 'helm-mini)
+
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
   (global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
+
+  ;; The default binding is... pretty bad.
   (global-unset-key (kbd "C-x c"))
 
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-  (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+  (define-key helm-map (kbd "C-z") 'helm-select-action) ; list actions using C-z
 
+#+end_src
+*** Settings
+#+begin_src emacs-lisp
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t))
 
@@ -174,35 +200,24 @@ Defines the packages to be installed.
   (helm-autoresize-mode 1)
   (setq helm-autoresize-max-height 30)
   (setq helm-autoresize-min-height 30)
+#+end_src
+*** helm-swoop
 
-  ;; (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
-  ;; (defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
-  ;; (defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
+[[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing text
+inside of a single or multiple buffers.
 
-  (defun helm-toggle-header-line ()
-    (if (> (length helm-sources) 1)
-        (set-face-attribute 'helm-source-header
-                            nil
-                            :foreground helm-source-header-default-foreground
-                            :background helm-source-header-default-background
-                            :box helm-source-header-default-box
-                            :height 1.0)
-      (set-face-attribute 'helm-source-header
-                          nil
-                          :foreground (face-attribute 'helm-selection :background)
-                          :background (face-attribute 'helm-selection :background)
-                          :box nil
-                          :height 0.1)))
+One nice trick is to use helm-swoop to replace multiple occurances easily;
+Do a swoop, filter to the lines you want to change, and then to C-c C-e for
+edit mode. Once in there, do the usual (probably C-r) and then save that
+buffer. Boom!
 
-  ;; helm-swoop
+#+begin_src emacs-lisp
   (require 'helm-swoop)
 
   (global-set-key (kbd "C-s") 'helm-swoop)
   (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
   (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
 
-  ;; When doing isearch, hand the word over to helm-swoop
-  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
   ;; From helm-swoop to helm-multi-swoop-all
   (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
 
@@ -216,38 +231,46 @@ Defines the packages to be installed.
   (setq helm-multi-swoop-edit-save t)
 
   ;; If this value is t, split window inside the current window
-  (setq helm-swoop-split-with-multiple-windows nil)
+  (setq helm-swoop-split-with-multiple-windows t)
 
   ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
   (setq helm-swoop-split-direction 'split-window-vertically)
 
   ;; If nil, you can slightly boost invoke speed in exchange for text color
-  (setq helm-swoop-speed-or-color nil)
+  (setq helm-swoop-speed-or-color t)
 
-  ;; ;; Go to the opposite side of line from the end or beginning of line
+  ;; Go to the opposite side of line from the end or beginning of line
   (setq helm-swoop-move-to-line-cycle t)
 
   ;; Optional face for line numbers
   ;; Face name is `helm-swoop-line-number-face`
   (setq helm-swoop-use-line-number-face t)
 
-  ;; disable pre-input
+  ;; Disable pre-input
   (setq helm-swoop-pre-input-function
         (lambda () ""))
+#+end_src
+*** helm-dash
 
+[[https://github.com/areina/helm-dash][helm-dash]] is a helm-based interface to [[https://kapeli.com/dash][Dash]], the API documentation service.
+
+#+begin_src emacs-lisp
   ;; helm-dash
   (require 'helm-dash)
   (setq helm-dash-browser-func 'eww)
+#+end_src
+*** helm-grep
 
-  ;; Helm grep
+Use helm to grep for files in the current project.
+
+Uses ag if available, but falls back to grep if not.
+Only available when projectile is active, e.g. when you are editing files
+under git.
+
+#+begin_src emacs-lisp
   (if (executable-find "ag")
       (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
     (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
-
-  (helm-mode 1)
-
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp
