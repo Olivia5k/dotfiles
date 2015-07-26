@@ -30,7 +30,6 @@ Sets up the repositories to get packages from. Extra and more frequently
 updated repositories outside of MELPA are added. Order matters.
 
 #+begin_src emacs-lisp
-
   (require 'package)
   (add-to-list 'package-archives
                '("melpa" . "http://melpa.org/packages/") t)
@@ -45,7 +44,6 @@ updated repositories outside of MELPA are added. Order matters.
 
   ;; required because of a package.el bug
   ;(setq url-http-attempt-keepalives nil)
-
 #+end_src
 ** Packages
 
@@ -140,21 +138,16 @@ Defines the packages to be installed.
 * Interface
 ** Appearance
 #+begin_src emacs-lisp
-
   (set-default-font "Inconsolata-11")
   (load-theme 'darktooth t)
-
 #+end_src
 ** popwin
 #+begin_src emacs-lisp
-
   (require 'popwin)
   (popwin-mode 1)
-
 #+end_src
 ** Helm
 #+begin_src emacs-lisp
-
   (require 'helm)
   (require 'helm-config)
 
@@ -255,46 +248,36 @@ Defines the packages to be installed.
 
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x b") 'helm-mini)
-
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp
-
   (require 'projectile)
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
   (setq projectile-mode-line nil)
-
 #+end_src
 ** Smart mode line
 #+begin_src emacs-lisp
-
   (require 'smart-mode-line)
   (setq sml/no-confirm-load-theme t)
   (sml/apply-theme 'darktooth)
   (sml/setup)
-
 #+end_src
 * Editing
 ** undo tree
 #+begin_src emacs-lisp
-
   (global-set-key (kbd "C-z") 'undo-tree-undo)
   (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
   (global-set-key (kbd "C-M-z") 'undo-tree-redo)
   (global-undo-tree-mode +1)
-
 #+end_src
 ** fill mode
 #+begin_src emacs-lisp
-
   (auto-fill-mode 1)
   (set-fill-column 79)
-
 #+end_src
 ** yas
 #+begin_src emacs-lisp
-
   (require 'yasnippet)
   (require 'helm-c-yasnippet)
   (setq helm-yas-space-match-any-greedy t) ;[default: nil]
@@ -303,11 +286,9 @@ Defines the packages to be installed.
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (add-hook 'markdown-mode 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode)
-
 #+end_src
 ** Save hooks
 #+begin_src emacs-lisp
-
   (add-hook 'before-save-hook
             (lambda ()
               (save-excursion
@@ -316,11 +297,9 @@ Defines the packages to be installed.
                   (widen)
                   (goto-char (point-max))
                   (delete-blank-lines)))))
-
 #+end_src
 ** Commenting code
 #+begin_src emacs-lisp
-
   (defun comment-eclipse ()
     (interactive)
     (let ((start (line-beginning-position))
@@ -337,11 +316,9 @@ Defines the packages to be installed.
       (comment-or-uncomment-region start end)))
 
   (global-set-key (kbd "M-;") 'comment-eclipse)
-
 #+end_src
 ** Autocompletion
 #+begin_src emacs-lisp
-
   (require 'company)
   (require 'company-go)
 
@@ -349,11 +326,9 @@ Defines the packages to be installed.
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0)                          ; remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-
 #+end_src
 ** Editor macros
 #+begin_src emacs-lisp
-
   (defun duplicate-current-line-or-region (arg)
     "Duplicates the current line or region ARG times.
      If there's no region, the current line will be duplicated. However, if
@@ -455,12 +430,10 @@ Defines the packages to be installed.
                   (lambda ()
                     (interactive)
                     (join-line -1)))
-
 #+end_src
 * Major modes
 ** org
 #+begin_src emacs-lisp
-
   (require 'org)
   (eval-after-load "org"
     '(progn
@@ -487,11 +460,9 @@ Defines the packages to be installed.
   ; When calculating percentages of checkboxes, count all boxes, not just
   ; direct children
   (setq org-hierarchical-checkbox-statistics t)
-
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
-
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
@@ -518,11 +489,9 @@ Defines the packages to be installed.
         (message "Buffer eval"))))
 
   (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
-
 #+end_src
 ** Python
 #+begin_src emacs-lisp
-
   (require 'python)
   (require 'snakecharmer)
 
@@ -534,11 +503,9 @@ Defines the packages to be installed.
   (add-hook 'python-mode-hook
             (lambda ()
               (add-hook 'after-save-hook 'flycheck-first-error)))
-
 #+end_src
 ** golang
 #+begin_src emacs-lisp
-
   (require 'go-mode)
 
   (defun th-go-hook ()
@@ -553,18 +520,14 @@ Defines the packages to be installed.
 
   (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
   (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
-
 #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
-
   (add-hook 'prog-mode-hook 'semantic-mode)
-
 #+end_src
 * Minor modes and utilities
 ** magit
 #+begin_src emacs-lisp
-
   (require 'magit)
   (global-set-key (kbd "C-M-i") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
@@ -583,11 +546,9 @@ Defines the packages to be installed.
 
   (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
   (define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
-
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
-
   (require 'flycheck)
   (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
   (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
@@ -603,34 +564,26 @@ Defines the packages to be installed.
 
   (with-eval-after-load 'flycheck
     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-
 #+end_src
 ** emmet
 #+begin_src emacs-lisp
-
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
   (add-hook 'emmet-mode-hook
             (lambda ()
               (setq emmet-indentation 2))) ;; indent 2 spaces.
-
 #+end_src
 ** ace-jump
 #+begin_src emacs-lisp
-
   (define-key global-map (kbd "C-;") 'ace-jump-word-mode)
-
 #+end_src
 ** Kill ring
 #+begin_src emacs-lisp
-
   (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
-
 #+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
-
   (require 's)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indicate-empty-lines t)
@@ -682,11 +635,9 @@ Defines the packages to be installed.
   (electric-pair-mode t)
   (global-auto-revert-mode t)
   (auto-fill-mode t)
-
 #+end_src
 ** Backups
 #+begin_src emacs-lisp
-
   (defvar --backup-directory (concat user-emacs-directory "backups"))
   (if (not (file-exists-p --backup-directory))
           (make-directory --backup-directory t))
@@ -702,11 +653,9 @@ Defines the packages to be installed.
         auto-save-timeout 2               ; number of seconds idle time before auto-save (default: 30)
         auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
         )
-
 #+end_src
 ** Window management
 #+begin_src emacs-lisp
-
   (defun th-split-window (vertical &optional helming)
     "Split a window and go to it, optionally open helm-mini."
     (if vertical
@@ -807,11 +756,9 @@ Defines the packages to be installed.
                  (setq mode-name mode-str)))))
 
   (add-hook 'after-change-major-mode-hook 'clean-mode-line)
-
 #+end_src
 ** Misc options
 #+begin_src emacs-lisp
-
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (global-unset-key (kbd "C-x C-c"))
   (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
@@ -828,18 +775,14 @@ Defines the packages to be installed.
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-
 #+end_src
 ** uniquify
 #+begin_src emacs-lisp
-
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
-
 #+end_src
 ** <f> bindings
 #+begin_src emacs-lisp
-
   ;; discover-my-major pls
   (define-key global-map (kbd "<f1>")
     (lambda ()
@@ -879,17 +822,14 @@ Defines the packages to be installed.
           (setq content ""))
         (switch-to-buffer buf)
         (insert content))))
-
 #+end_src
 ** custom
 
 Does anyone even like custom? I find it incredibly annoying.
 
 #+begin_src emacs-lisp
-
   (setq custom-file "~/.emacs.d/custom.el")
   (unless (file-exists-p custom-file)
     (with-temp-buffer (write-file custom-file)))
   (load custom-file)
-
 #+end_src
