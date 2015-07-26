@@ -621,6 +621,20 @@ Note that C-j will preview the file without closing the helm buffer.
 #+begin_src emacs-lisp
   (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
 #+end_src
+** expand-region
+#+begin_src emacs-lisp
+  (require 'expand-region)
+  (global-set-key (kbd "C-=") 'er/expand-region)
+  (global-set-key (kbd "C-M-=") 'er/contract-region)
+#+end_src
+** multiple-cursors
+#+begin_src emacs-lisp
+  (require 'multiple-cursors)
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+ #+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
@@ -798,24 +812,11 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 #+end_src
-** Misc options
+** Aborting and stopping
 #+begin_src emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (global-unset-key (kbd "C-x C-c"))
   (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
-
-  ;; expand-region
-  (require 'expand-region)
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  (global-set-key (kbd "C-M-=") 'er/contract-region)
-
-  ;; multiple-cursors
-  (require 'multiple-cursors)
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
 #+end_src
 ** uniquify
 #+begin_src emacs-lisp
