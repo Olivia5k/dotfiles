@@ -27,3 +27,12 @@ vim. The window decorations are from [herbstluftwm][herbst], the terminal is
 [inconsolata]: http://www.levien.com/type/myfonts/inconsolata.html
 [vimreadme]: vim
 [tmuxreadme]: tmux
+
+
+## Quick Install of the Dotfiles
+
+Just open a terminal and run: 
+```
+git clone https://github.com/thiderman/dotfiles .local/share/infect --recurse-submodules
+.local/share/infect/infect install
+```
