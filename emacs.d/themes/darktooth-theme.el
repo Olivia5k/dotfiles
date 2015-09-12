@@ -285,6 +285,7 @@
    `(org-tag                                   ((t (:bold t :weight bold ))))
    `(org-time-grid                             ((t (:foreground ,darktooth-bright_orange ))))
    `(org-todo                                  ((t (:foreground ,darktooth-bright_red :weight bold :bold t ))))
+   `(org-todo-doing                            ((t (:foreground ,darktooth-bright_aqua :weight bold :bold t ))))
    `(org-upcoming-deadline                     ((t (:inherit font-lock-keyword-face ))))
    `(org-warning                               ((t (:foreground ,darktooth-bright_red :weight bold :underline nil :bold t ))))
    `(org-column                                ((t ( :background ,darktooth-dark0 ))))
