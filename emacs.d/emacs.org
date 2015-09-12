@@ -478,6 +478,7 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 * Major modes
 ** org
+*** Main setup
 #+begin_src emacs-lisp
   (require 'org)
   (eval-after-load "org"
@@ -489,12 +490,9 @@ Note that C-j will preview the file without closing the helm buffer.
    'org-babel-load-languages
    '((emacs-lisp . t)))
 
-  (setq org-agenda-ndays 7)
-  (setq org-agenda-show-all-dates t)
-  (setq org-agenda-start-on-weekday nil)
   (setq org-confirm-babel-evaluate nil)
+  (setq org-directory "~/org")
   (setq org-fontify-emphasized-text t) ;; fontify *bold* _underline_ /italic/ and so on
-  (setq org-log-done t) ;;timestamp when switching from todo to done
   (setq org-return-follows-link t)
   (setq org-special-ctrl-a/e t)
   (setq org-special-ctrl-k t)
@@ -505,6 +503,37 @@ Note that C-j will preview the file without closing the helm buffer.
   ; When calculating percentages of checkboxes, count all boxes, not just
   ; direct children
   (setq org-hierarchical-checkbox-statistics t)
+
+  (define-key org-mode-map (kbd "M-i") 'helm-org-headlines)
+#+end_src
+*** Agenda and todo
+#+begin_src emacs-lisp
+  (setq org-agenda-ndays 7)
+  (setq org-agenda-files '("~/org/"))
+  (setq org-agenda-show-all-dates t)
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-log-done t) ;;timestamp when switching from todo to done
+
+  (setq org-todo-keywords '("TODO" "DOING" "DONE"))
+  (setq org-todo-keyword-faces '(("DOING" . org-todo-doing)))
+
+  (global-set-key (kbd "C-x o") 'org-todo-list)
+
+  ;; TODO: Figure out why this does not work
+  (defun th-org-files ()
+    (mapcar (lambda (s) (s-chop-suffix ".org" s))
+            (directory-files "~/org/" nil ".*\\.org")))
+
+  (global-set-key (kbd "C-x C-o") (lambda ()
+                                    (interactive)
+                                    (find-file (format "~/org/%s.org"
+                                                (helm
+                                                 :sources `((name . "org-agenda files")
+                                                            (candidates . th-org-files))
+                                                 :prompt "Agenda file: "
+                                                 :buffer "*helm-org-agenda*")))))
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (define-key org-mode-map (kbd "M-t") 'org-todo)
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
