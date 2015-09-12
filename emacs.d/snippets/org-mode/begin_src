@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: begin_src
+# key: bs
+# binding: direct-keybinding
+# --
+#+begin_src ${0:emacs_lisp}
