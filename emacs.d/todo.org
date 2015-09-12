@@ -1,41 +1,29 @@
-* Main items
-** Emacs server mode
-** Setup spelling
-** Set up worthwhile org bindings
-** Per-project orgmode
-** electric pair always
-** New binding for ace-jump
-** Close current help window
-** HTML tag management
-**** kill tag on C-k
-**** re-indent and format before buffer
-** Wrap window movement commands
-** Fix fringe color again
-** Fix C-M-o on top row
+* Emacs setup
+** Configuration
+*** Emacs server mode
+*** Setup spelling
+*** Set up worthwhile org bindings
+*** Per-project orgmode
+*** electric pair always
+*** ace to ave
+**** DONE Install the new package
+     CLOSED: [2015-08-08 Sat 21:18]
+**** DONE New binding for ace-jump
+     CLOSED: [2015-08-08 Sat 21:18]
+**** DONE Kill keynav
+     CLOSED: [2015-08-08 Sat 20:57]
+** New modes
+*** https://www.reddit.com/r/emacs/comments/3ect2c/unknown_packages_that_deserve_to_be_discovered/
+*** Go through dotfiles
+***** jeekl
+***** dialelo
+** Package management
+*** Switch to whatever it was called
 
-* Python
-** DONE python-toggle-pragma-nocover
-** DONE python-goto-or-add-test
-**** Also add reversal
-** pytest integration
-**** Background color for running tests
-**** python-run-test
-**** python-run-test-all
-**** python-goto-test
-**** If standing in Python code, switch from `code.py` to `test_code.py`
-**** Browsing errors
-***** Direct browse if just one
-***** helm select if not <3
-** semantic mode
 
-* New modes
-** Stack Exchange
-** popwin
-** jira mode
-
-** Go through dotfiles
-**** jeekl
-**** dialelo
-** anaconda-mode
-** jedi
-** guide-key
+* Computer
+** Keymap
+*** Ctrl where the alts are
+*** Alt where Super is at
+*** Caps is super
+*** Super+åäö = åäö
