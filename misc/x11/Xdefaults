@@ -7,8 +7,8 @@ URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: www
 URxvt.url-select.underline: true
 URxvt.underlineURLs: true
-URxvt.transparent: false
-URxvt.shading: 10
+URxvt.transparent: true
+URxvt.shading: 20
 URxvt.fading: 25
 URxvt.iso14755: false
 
@@ -19,8 +19,8 @@ URxvt.keysym.C-S-Down: perl:font-size:decglobal
 URxvt.font-size.step:  2
 
 ! fonts
-*.font: xft:inconsolata:pixelsize=14
-*.boldFont: xft:inconsolata:bold:pixelsize=14
+*.font: xft:inconsolata:pixelsize=16
+*.boldFont: xft:inconsolata:bold:pixelsize=16
 ! *.font: xft:montecarlo:pixelsize=11
 ! *.boldFont: xft:montecarlo:bold:pixelsize=11
 Xft.dpi: 100.0
