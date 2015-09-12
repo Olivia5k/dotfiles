@@ -602,7 +602,7 @@ Note that C-j will preview the file without closing the helm buffer.
 * Minor modes and utilities
 ** Buffer toggles
 
-F1: Show `discover-my-major`. Kill it if in it.
+F1: `helm-descbinds`
 F2: Open this file
 F3: Open main org file
 F4: Scratch buffer
@@ -642,10 +642,7 @@ F5: Toggle debug mode
 #+end_src
 *** Keymaps
 #+begin_src emacs-lisp
-  (define-key global-map (kbd "<f1>")
-    (lambda ()
-      (interactive)
-      (th-toggle-buffer (lambda () (discover-my-major t)) "makey" t)))
+  (define-key global-map (kbd "<f1>") 'helm-descbinds)
 
   (define-key global-map (kbd "<f2>")
     (lambda ()
