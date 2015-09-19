@@ -57,6 +57,7 @@ Defines the packages to be installed.
   (defvar elpa-packages
     '(
       ace-jump-mode
+      adaptive-wrap
       anaconda-mode
       avy
       browse-kill-ring
