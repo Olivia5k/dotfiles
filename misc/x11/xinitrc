@@ -1,21 +1,17 @@
 #!/bin/zsh
+set -x
 
 keyboard-setup &
 xset -b
-xrdb ~/.Xresources
+wp &
+xrdb ~/.Xresources &
 
 exec nm-applet &
-exec xsetroot -cursor_name left_ptr &
-exec unclutter -idle 1 -root &
-exec keynav &
 
-(( $+commands[gnome-keyring])) && gnome-keyring --start &
-start-pulseaudio-x11 &
-
-# Only do wallpapers if we have one
-[[ -r "$HOME/.local/wallpaper" ]] && wp &
+exec emacs --daemon &
 
 # export XORG_WM="hlwm"
-# exec herbstluftwm --locked &> $HOME/.logs/hlwm.log
+# exec herbstluftwm --locked
+
 export XORG_WM="i3"
-exec i3 -V &> $HOME/.logs/i3.log
+exec i3
