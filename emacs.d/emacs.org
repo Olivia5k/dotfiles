@@ -690,25 +690,10 @@ F5: Toggle debug mode
 ** magit
 #+begin_src emacs-lisp
   (require 'magit)
-  (global-set-key (kbd "C-M-i") 'magit-status)
-  (global-set-key (kbd "<M-tab>") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
 
   (setq magit-save-some-buffers 'dontask)
   (setq magit-last-seen-setup-instructions "1.4.0")
-
-  (defadvice magit-status (around magit-fullscreen activate)
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
-
-  (defadvice magit-mode-quit-window (after magit-restore-screen activate)
-    "Restores the previous window configuration and kills the magit buffer"
-    (jump-to-register :magit-fullscreen))
-
-  (define-key magit-status-mode-map (kbd "q") 'magit-mode-quit-window)
-  (define-key magit-status-mode-map (kbd "C-M-i") 'magit-mode-quit-window)
-
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
