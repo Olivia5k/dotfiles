@@ -502,6 +502,9 @@ function +vi-git-action() {
   fi
 }
 
+# fzf for the win!
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 local USERFILE="$ZSHCONFDIR/local.zsh"
 if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
   source $USERFILE
