@@ -1,41 +1,4 @@
 # zshrc by Lowe Thiderman (lowe.thiderman@gmail.com)
-# Released under the WTFPL (http://sam.zoy.org/wtfpl/).
-# https://github.com/thiderman/conf-zsh
-
-# Colors {{{
-c=()
-c+="%F{237}"  # 1.  Prompt decoration
-c+="%F{143}"  # 2.  Hostname
-c+="%F{160}"  # 3.  Hostname root
-c+="%F{067}"  # 4.  Directory
-c+="%F{096}"  # 5.  Directory non-multi
-c+="%F{196}"  # 6.  Error
-c+="%F{184}"  # 7.  Jobs
-c+="%F{067}"  # 8.  Clock
-c+="%F{195}"  # 9.  Mail
-c+="%F{062}"  # 10. Battery percent
-c+="%F{063}"  # 11. Battery timeleft
-c+="%F{196}"  # 12. TMOUT
-c+="%F{066}"  # 13. CVS System
-c+="%F{214}"  # 14. CVS Repo
-c+="%F{083}"  # 15. CVS Clean
-c+="%F{160}"  # 16. CVS Unstaged
-c+="%F{095}"  # 17. CVS Action
-c+="%F{202}"  # 18. CVS Staged / Debug
-c+="%F{120}"  # 19. Enabled / Success
-c+="%F{240}"  # 20. Disabled
-c+="%F{067}"  # 21. Doc: Function
-c+="%F{240}"  # 22. Doc: Undocumented
-c+="%F{148}"  # 23. Doc: File
-c+="%F{048}"  # 24. Comp: Descriptions
-c+="%F{067}"  # 25. Comp: Directories
-c+="%F{196}"  # 26. Comp: Corrections
-c+="%F{045}"  # 27. IP Adress
-c+="%F{123}"  # 28. CVS Super repo
-
-export c
-# }}}
-# External modules {{{
 
 # zsh-filedb. Quickfast!
 source $ZSHCONFDIR/modules/filedb/zsys.zsh
@@ -64,23 +27,12 @@ if [[ $(echotc Co) = 256 ]]; then
   fi
 fi
 
-# }}}
-# Basic configuration {{{
-
-# ls {{{
-
 if [[ $OSTYPE != darwin* ]]; then
   ls_options+=( --group-directories-first )
 fi
 
 alias ls='command ls -bhv '${ls_options:+"${ls_options[*]}"}
 alias l='ls -lbhv '${ls_options:+"${ls_options[*]}"}
-
-# alias l='command ls -bhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
-# alias ls='ls -lbhv --group-directories-first '${ls_options:+"${ls_options[*]}"}
-
-# }}}
-# aliases {{{
 
 # grml sets ag to be aliased to "sudo apt-get". This is annoying when you want
 # to use the silver searcher, whose binary is called, you guessed it, ag.
@@ -95,57 +47,7 @@ alias hc="herbstclient"
 alias :q="exit"
 alias bell='echo -en "\007"'
 
-alias spa="sudo sppuppet agent -t"
-alias sps="sudo sppuppet status"
-alias spcb="sudo sppuppet change-branch"
-
-alias j='ssh j'
-if [[ "$HOST" = 'justitia' ]]; then
-  alias j='ssh nl -t ssh j'
-fi
-
 alias z=keyboard-setup
-
-# }}}
-# chpwd {{{
-
-# sshfs {{{
-function __autosshfs_mount() {
-  if [[ $PWD = $2 ]] && [[ ! -d "$3" ]]; then
-    dir=$2:t
-    echo "sshfs-automount: $dir"
-
-    cd -q ..
-    sshfs $1 $2 -o allow_other
-    cd $2
-    export AUTO_SSHFS="$2" \
-           AUTO_SSHFS_NAME="$dir"
-  fi
-}
-
-function _autosshfs() {
-  ssh="$HOME/ssh"
-  nl="$ssh/ninjaloot"
-  wrz="$ssh/warez"
-
-  # Check with trailing slash so that we only match things actually below it
-  if [[ $PWD =~ $ssh/ ]] && [[ -z "$AUTO_SSHFS" ]]; then
-    # In ssh dir and nothing mounted. Do stuff!
-    __autosshfs_mount nl: $nl $nl/etc
-    __autosshfs_mount nl:/warez $wrz $wrz/mp3
-
-  elif [[ ! $PWD =~ $ssh/ ]] && [[ -n "$AUTO_SSHFS" ]]; then
-    # No longer in ssh - unmount the mounted one
-    echo "sshfs-unmount: $AUTO_SSHFS_NAME"
-
-    fusermount -u $AUTO_SSHFS
-    export AUTO_SSHFS="" \
-           AUTO_SSHFS_NAME=""
-  fi
-}
-
-# }}}
-# virtualenv {{{
 
 # Auto source/unsource of virtualenvs
 function _autovenv() {
@@ -168,8 +70,8 @@ function _autovenv() {
     if [[ -f "$cur/$f" ]]; then
       if [[ -z "$VIRTUAL_ENV" ]] || [[ "$VIRTUAL_ENV" != "$cur" ]]; then
         source $cur/$f
-        export VENV_PROMPT="%B${c[24]}venv${c[1]}:"
-        print -P "$auto: Setting venv for %B${c[4]}${cur}$b"
+        export VENV_PROMPT="%B%F{048}venv%F{237}:"
+        print -P "$auto: Setting venv for %B%F{067}${cur}$b"
       fi
       return
     fi
@@ -184,13 +86,7 @@ function _autovenv() {
 }
 _autovenv
 
-# }}}
-# workgit {{{
-
-# Set work email as user.email and copy the fucking Gerrit hook into place
 function _autoworkgit() {
-  local gerrit="$HOME/.git_template/gerritplsgodie/commit-msg"
-  local hook=".git/hooks/commit-msg"
   local auto='%F{71}%BAuto%b%f'
 
   # If this is not a git repo or the conditions are not set up, bail
@@ -205,44 +101,20 @@ function _autoworkgit() {
   fi
 
   if [[ ! $(git config user.email) =~ $WORK_EMAIL ]]; then
-    print -P "$auto: Set email to work email"
+    print -P "$auto: Configured $WORK_EMAIL and hub host"
     git config user.email "$WORK_EMAIL"
-  fi
-
-  if [[ $remote =~ 'ghe' ]]; then
-    if [[ ! $(git config hub.host) =~ $WORK_REMOTE ]]; then
-      print -P "$auto: yay ghe"
-      git config hub.host ghe.spotify.net
-    fi
-  elif [[ ! -f $hook ]] && [[ -f $gerrit ]] && ; then
-    # XXX: Will not work with new-style submodules. Fak u submodules.
-    print -P "$auto: fak u gerrit"
-    cp -p $gerrit $hook
+    git config hub.host ghe.spotify.net
   fi
 }
-
-# }}}
 
 function chpwd() {
-  if [[ -z "$ZSH_NO_CHPWD" ]]; then
-    ls
-  fi
-
   _autovenv
-  _autosshfs
   _autoworkgit
 }
-
-# }}}
-# global aliases {{{
 
 alias -g J="| python -m json.tool"
 alias -g JC="| python -m json.tool | pygmentize -l json"
 alias -g G="| grep -i"
-alias -g M="| most"
-alias -g L="| less"
-alias -g X="| xargs"
-alias -g H="| head"
 alias -g T="| tail"
 alias -g S="| sort"
 alias -g SU='| sort -u'
@@ -254,9 +126,6 @@ alias -g EE="&& exit"
 alias -g N="&> /dev/null"
 alias -g 1N="1> /dev/null"
 alias -g 2N="2> /dev/null"
-
-# }}}
-# navigation {{{
 
 autoload -U split-shell-arguments
 
@@ -308,8 +177,6 @@ function cd () {
   fi
 }
 
-# Greh; this only works on very recent zshs! Check if chpwd_recent_dirs
-# actually is loadable!
 a=( ${^fpath}/chpwd_recent_dirs(N) )
 if (( $#a > 0 )); then
   autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -325,7 +192,7 @@ fi
 zle -N _inline-updir
 zle -N _inline-back
 zle -N _inline-ls
-zle -N _inline-dirs
+zle -N _inline-gs
 
 # ZLE hax0r navigation
 function _inline-updir() {
@@ -344,9 +211,9 @@ function _inline-ls() {
   ls
   zle .reset-prompt
 }
-function _inline-dirs() {
+function _inline-gs() {
   echo
-  dirs -pv
+  git status
   zle .reset-prompt
 }
 
@@ -359,38 +226,9 @@ function _inline-precmd() {
 
 bindkey "^[h" _inline-updir
 bindkey "^[j" _inline-ls
-bindkey "^[k" _inline-dirs
+bindkey "^[k" _inline-gs
 bindkey "^[l" _inline-back
-
-# }}}
-# search {{{
-
-function _clearbelowprompt() {
-  zle -M ""
-}
-
-function _show_surroundings() {
-  (( $LINES < 5 )) && { zle -M ""; return }
-  local bound line
-  typeset -a output
-  typeset -A star
-  bound=${NUMERIC:-$(( LINES < 10 ? 1 : LINES / 3 ))}
-  star[$HISTNO]="* "
-  for ((i = HISTNO - $bound; i < HISTNO + $bound && i < HISTCMD; i++)); do
-    line="${${:-$star[$i]$i: $history[$i]}[1,COLUMNS-1]}"
-    while (( ${(m)#line} > COLUMNS-1 )); do
-    line[-1]=
-    #for broken zsh#line=$line[1,-2]
-    done
-    output=( $line $output )
-  done
-  zle -M ${(pj:\n:)output}
-}
-zle -N zle-isearch-update _show_surroundings
-zle -N zle-isearch-exit _clearbelowprompt
-
-# }}}
-# zle hax {{{
+bindkey "^[s" _inline-gs
 
 # Back one step in a path
 function dirname-previous-word () {
@@ -406,7 +244,7 @@ function abs-previous-word () {
 
 zle -N abs-previous-word
 zle -N dirname-previous-word
-bindkey '^[s' abs-previous-word
+#bindkey '^[s' abs-previous-word
 bindkey '^[d' dirname-previous-word
 
 # Edit current commandline with actual editor
@@ -425,45 +263,10 @@ kicker-command-line() {
 }
 zle -N kicker-command-line
 bindkey '^Ok' kicker-command-line
-
-# Use selecta to go to a dir
-selecta-command-line() {
-  cd $(fd | selecta)
-  clear
-
-  # TODO: Learn how to retrigger so that git prompt is re-added
-  zle .reset-prompt
-}
-zle -N selecta-command-line
-bindkey '^[c' selecta-command-line
-
-# Use selecta to go to a project
-selecta_project() {
-  local ret=$(l -d $HOME/{git,spotify,var/go/src/github.com/thiderman}/*(-/) | sed -e "s;^${HOME}/;;" | selecta)
-
-  if [[ -n "$ret" ]]; then
-    cd $HOME/$ret
-    clear
-    ls
-  fi
-
-  zle .reset-prompt
-}
-zle -N selecta_project
-bindkey '^[p' selecta_project
-
-# }}}
-# terminal settings {{{
+bindkey '^s' sudo-command-line
 
 # Disable Ctrl-q/s flow control.
 stty -ixon
-
-# }}}
-
-# }}}
-# Application specific {{{
-
-# find {{{
 
 function f() {
   find 2>/dev/null | grep -is "$1"
@@ -478,9 +281,7 @@ function gg() {
   grep "$*" * -ERIins
 }
 
-# }}}
-# git {{{
-
+# Git setup
 # Committing / General
 alias ga='git add'
 alias gs='git status'
@@ -548,12 +349,6 @@ alias glc="git shortlog --summary --numbered"
 alias glr="git reflog"
 
 alias gau='git update-index --assume-unchanged'
-
-# wow
-alias wow="git status"
-alias such="git"
-alias very="git"
-alias so="git"
 
 # Relatively go up to a repository root
 function gr() {
@@ -630,61 +425,7 @@ if (( $+commands[hub] )) ; then
   fi
 fi
 
-# }}}
-# spotify  {{{
-
-# Uncomment these to use GitHub Enterprise instead of Gerrit.
-# Note that you need the ghe_repos.py script for this.
-# export SP_REPO_CMD="gherepo"
-export SP_REPO_HOST="ghe.spotify.net"
-
-function spclone() {
-  host=${SP_REPO_HOST:-git.spotify.net}
-  repo=$1 ; shift
-
-  if [[ $host = "ghe.spotify.net" ]]; then
-    # If Github Enterprise, we need to use the git user for the clone
-    host=git@${host}
-  fi
-  git clone $host:$repo $*
-}
-
-function _repo_complete() {
-  local host file now cmd
-  host=${SP_REPO_HOST:-git.spotify.net}
-  file=${SP_REPO_FILE:-$HOME/.spclone_cache}
-  now=$(date +'%s')
-  cmd=${SP_REPO_CMD:-"ssh $host gerrit ls-projects"}
-
-  # Use a simple cache to speed things up.
-  # export SP_REPO_CACHE=0 to force refresh.
-  if [[ ! -f $file ]] || [[ $(($now - ${SP_REPO_CACHE:-0})) -gt 300 ]]; then
-    ${(z)cmd} 2> /dev/null > $file
-    export SP_REPO_CACHE=$now
-  fi
-
-  reply=($(<$file))
-}
-
-compctl -K _repo_complete spclone
-
-function sppip() {
-    pip install -i http://pypi.spotify.net/simple/ $*
-}
-
-# }}}
-# tmux {{{
-
-# Load remote configuration if hostname matches pods
-if [[ "$HOST" =~ "^(lon|sto|sjc|ash|aws|pod)" ]] && [[ -n "$TMUX" ]]; then
-  tmux source-file $XDG_DATA_HOME/infect/tmux/remote.conf &> /dev/null &|
-fi
-
-# }}}
-
-# }}}
-# Prompt setup {{{
-
+# Make a neat prompt!
 for x in user at host path percent; do
   zstyle ":prompt:grml:left:items:$x" post '%f%b'
 done
@@ -695,20 +436,18 @@ done
 
 zstyle ':prompt:grml:left:items:path' pre '%B%F{68}'
 zstyle ':prompt:grml:left:items:path' token '%40<..<%~%<< '
-zstyle ':prompt:grml:left:items:percent' pre "%B%F{238}$prompt_newline"
-zstyle ':prompt:grml:left:items:percent' token "> "
+zstyle ':prompt:grml:left:items:percent' pre "%B%F{238}"
+#zstyle ':prompt:grml:left:items:percent' token "> "
 zstyle ':prompt:grml:left:items:vcs' pre '$VENV_PROMPT'
 zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
 
-# The zsh linters will give a random error on this if the ${c part is in the
-# zstyle command. No idea why, but wth.
-zstyle ':vcs_info:*' unstagedstr "%F{160}" # ${c[16]}
-zstyle ':vcs_info:*' stagedstr "%F{202}" # ${c[18]}
+zstyle ':vcs_info:*' unstagedstr "%F{160}"
+zstyle ':vcs_info:*' stagedstr "%F{202}"
 
 # zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 
-local gitformat="%B%F{214}%r%F{237}(%a%F{083}%u%c%b%m%F{237}) " # 14, 15
+local gitformat="%B%F{214}%r%F{237}(%a%F{083}%u%c%b%m%F{237}) "
 zstyle ':vcs_info:git*' formats $gitformat
 zstyle ':vcs_info:git*' actionformats $gitformat
 
@@ -731,13 +470,13 @@ function +vi-git-st() {
     ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
     behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
 
-    (( $ahead + $behind )) && str+="${c[1]}:"  # Dark colon if any
-    (( $ahead )) && str+="${c[15]}+${ahead}%f"  # Ahead
-    (( $ahead )) && (( $behind )) && str+="${c[1]}/"  # Dark slash
-    (( $behind )) && str+="${c[16]}-${behind}%f"  # Behind
+    (( $ahead + $behind )) && str+="%F{237}:"  # Dark colon if any
+    (( $ahead )) && str+="%F{083}+${ahead}%f"  # Ahead
+    (( $ahead )) && (( $behind )) && str+="%F{237}/"  # Dark slash
+    (( $behind )) && str+="%F{160}-${behind}%f"  # Behind
   else
     # Just add a red colon to mark non-tracking branch
-    str="${branch}${c[16]}:"
+    str="${branch}%F{160}:"
   fi
 
   hook_com[branch]=$str
@@ -751,7 +490,7 @@ function +vi-git-stash() {
   _find_git_root
   if [[ -n "$git_root" ]] && [[ -s $git_root/refs/stash ]] ; then
     stashes=$(git stash list 2>/dev/null | wc -l)
-    hook_com[misc]+="${c[1]}:${c[4]}${stashes}st${c[1]}"
+    hook_com[misc]+="%F{237}:%F{067}${stashes}st%F{237}"
   fi
 }
 
@@ -759,11 +498,9 @@ function +vi-git-stash() {
 function +vi-git-action() {
   local s="${hook_com[action]}"
   if [[ -n "$s" ]] ; then
-    hook_com[action]="${c[6]}omg ${s}!${c[1]}:"
+    hook_com[action]="%F{196}omg ${s}!%F{237}:"
   fi
 }
-
-# }}}
 
 local USERFILE="$ZSHCONFDIR/local.zsh"
 if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
@@ -774,5 +511,3 @@ fi
 if (( $+commands[doge] )) ; then
   doge
 fi
-
-# vim: ft=zsh fdm=marker fmr={{{,}}}
