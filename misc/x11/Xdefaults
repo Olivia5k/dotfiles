@@ -2,15 +2,16 @@
 URxvt.scrollBar: false
 URxvt.saveLines: 100
 URxvt.urgentOnBell: true
-URxvt.perl-ext: default,url-select,matcher,searchable-scrollback<M-o>,font-size
+URxvt.perl-ext: default,url-select,matcher,searchable-scrollback<F9>,font-size
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: www
 URxvt.url-select.underline: true
 URxvt.underlineURLs: true
 URxvt.transparent: true
 URxvt.shading: 20
-URxvt.fading: 25
+URxvt.fading: 0
 URxvt.iso14755: false
+URxvt.meta8: false
 
 URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
