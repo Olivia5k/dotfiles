@@ -735,8 +735,8 @@ F5: Toggle debug mode
 #+begin_src emacs-lisp
   (require 'multiple-cursors)
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-x C-l") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-x C-h") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
  #+end_src
 * Setup and options
