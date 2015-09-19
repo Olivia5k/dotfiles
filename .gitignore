@@ -4,6 +4,7 @@ vim/.netrwhist
 old-configs-backup
 local
 util/*quake*
+
 /emacs.d/url/
 /emacs.d/semanticdb/
 /emacs.d/.#recentf
@@ -14,3 +15,7 @@ util/*quake*
 /emacs.d/network-security.data
 /emacs.d/custom.el
 /emacs.d/emacs.el
+/emacs.d/snippets/core
+/emacs.d/recentf
+/emacs.d/helm-adaptive-history
+/emacs.d/anaconda-mode/
