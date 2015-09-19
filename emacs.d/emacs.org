@@ -513,10 +513,12 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq org-agenda-files '("~/org/"))
   (setq org-agenda-show-all-dates t)
   (setq org-agenda-start-on-weekday nil)
+  (setq org-archive-location "~/org/archive/%s::")
   (setq org-log-done t) ;;timestamp when switching from todo to done
 
-  (setq org-todo-keywords '("TODO" "DOING" "DONE"))
-  (setq org-todo-keyword-faces '(("DOING" . org-todo-doing)))
+  (setq org-todo-keywords '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+  (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
+                                 ("WAITING" . org-mode-line-clock)))
 
   (global-set-key (kbd "C-x o") 'org-todo-list)
 
@@ -534,7 +536,7 @@ Note that C-j will preview the file without closing the helm buffer.
                                                  :prompt "Agenda file: "
                                                  :buffer "*helm-org-agenda*")))))
   (global-set-key (kbd "C-c a") 'org-agenda)
-  (define-key org-mode-map (kbd "M-t") 'org-todo)
+  (define-key org-mode-map (kbd "C-RET") 'org-todo)
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
