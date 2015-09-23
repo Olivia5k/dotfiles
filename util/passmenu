@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+source $XDG_CONFIG_HOME/dmux/dmuxrc
+
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+files=($prefix/**/*.gpg)
+files=(${files[@]#"$prefix/"})
+files=(${files[@]%.gpg})
+
+password=$(print ${(F)files} | dmenu ${(z)DMENU_OPTS})
+
+[[ -z "$item" ]] && exit
+pass show -c "$item" 2>/dev/null
+if [[ $? == 0 ]] ; then
+    notify-send -t 1500 -u low "Password loaded" $item
+else
+    notify-send -t 3000 -u critical "Password failed"
+fi
