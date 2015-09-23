@@ -232,6 +232,18 @@ bindkey "^[k" _inline-gs
 bindkey "^[l" _inline-back
 bindkey "^[s" _inline-gs
 
+zle -N _inline-fzf-branch
+bindkey "^[o" _inline-fzf-branch
+function _inline-fzf-branch() {
+    local branches branch
+    branches=$(git branch --all | grep -v HEAD) &&
+        branch=$(echo "$branches" |
+                        fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+        echo && git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+    vcs_info
+    zle .reset-prompt
+}
+
 # Back one step in a path
 function dirname-previous-word () {
   autoload -U modify-current-argument
