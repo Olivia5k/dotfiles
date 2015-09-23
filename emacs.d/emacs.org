@@ -510,6 +510,8 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 *** Agenda and todo
 #+begin_src emacs-lisp
+  (global-set-key (kbd "C-c a") 'org-agenda)
+
   (setq org-agenda-ndays 7)
   (setq org-agenda-files '("~/org/"))
   (setq org-agenda-show-all-dates t)
@@ -523,21 +525,27 @@ Note that C-j will preview the file without closing the helm buffer.
 
   ;;(global-set-key (kbd "C-x o") 'org-todo-list)
 
-  ;; TODO: Figure out why this does not work
-  (defun th-org-files ()
+block
+  (defun th-helm-org-files ()
     (mapcar (lambda (s) (s-chop-suffix ".org" s))
             (directory-files "~/org/" nil ".*\\.org")))
 
-  (global-set-key (kbd "C-x C-o") (lambda ()
-                                    (interactive)
-                                    (find-file (format "~/org/%s.org"
-                                                (helm
-                                                 :sources `((name . "org-agenda files")
-                                                            (candidates . th-org-files))
-                                                 :prompt "Agenda file: "
-                                                 :buffer "*helm-org-agenda*")))))
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (define-key org-mode-map (kbd "C-RET") 'org-todo)
+  (defun th-helm-org-visit (file)
+    (find-file (format "~/org/%s.org" file)))
+
+  (defvar th-helm-org-sources
+    '((name . "org-agenda files")
+      (candidates . th-helm-org-files)
+      (action . th-helm-org-visit)))
+
+  (defun th-helm-org ()
+    (interactive)
+    (helm
+     :sources th-helm-org-sources
+     :prompt "Agenda file: "
+     :buffer "*helm-org-agenda*"))
+
+  (global-set-key (kbd "C-x C-o") 'th-helm-org)
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
