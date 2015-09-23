@@ -1,7 +1,5 @@
+#!/usr/bin/zsh
 # zshrc by Lowe Thiderman (lowe.thiderman@gmail.com)
-
-# zsh-filedb. Quickfast!
-source $ZSHCONFDIR/modules/filedb/zsys.zsh
 
 if [[ $(echotc Co) = 256 ]]; then
   # Shell syntax highlighting, in realtime.
