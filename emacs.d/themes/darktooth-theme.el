@@ -113,6 +113,13 @@
    `(font-lock-warning-face                    ((t (:foreground ,darktooth-neutral_red :bold t ))))
    `(vertical-border                           ((t (:foreground ,darktooth-black :bold t ))))
 
+   ;; avy
+   `(avy-background-face                       ((t (:foreground ,darktooth-dark3 ))))
+   `(avy-lead-face                             ((t (:background ,darktooth-bright_red :foreground ,darktooth-dark0_hard :weight bold ))))
+   `(avy-lead-face-0                           ((t (:background ,darktooth-bright_green :foreground ,darktooth-dark0_hard :weight bold ))))
+   `(avy-lead-face-1                           ((t (:background ,darktooth-bright_yellow :foreground ,darktooth-dark0_hard :weight bold ))))
+   `(avy-lead-face-2                           ((t (:background ,darktooth-bright_blue :foreground ,darktooth-dark0_hard :weight bold ))))
+
    ;; whitespace-mode
    `(whitespace-space                          ((t (:foreground ,darktooth-dark4 :background ,darktooth-dark0 ))))
    `(whitespace-hspace                         ((t (:foreground ,darktooth-dark4 :background ,darktooth-dark0 ))))
