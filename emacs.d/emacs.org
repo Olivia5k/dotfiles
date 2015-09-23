@@ -521,7 +521,7 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
                                  ("WAITING" . org-mode-line-clock)))
 
-  (global-set-key (kbd "C-x o") 'org-todo-list)
+  ;;(global-set-key (kbd "C-x o") 'org-todo-list)
 
   ;; TODO: Figure out why this does not work
   (defun th-org-files ()
