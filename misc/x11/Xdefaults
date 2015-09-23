@@ -8,7 +8,7 @@ URxvt.url-select.launcher: www
 URxvt.url-select.underline: true
 URxvt.underlineURLs: true
 URxvt.transparent: true
-URxvt.shading: 20
+URxvt.shading: 15
 URxvt.fading: 0
 URxvt.iso14755: false
 URxvt.meta8: false
@@ -22,34 +22,11 @@ URxvt.font-size.step:  2
 ! fonts
 *.font: xft:inconsolata:pixelsize=16
 *.boldFont: xft:inconsolata:bold:pixelsize=16
-! *.font: xft:montecarlo:pixelsize=11
-! *.boldFont: xft:montecarlo:bold:pixelsize=11
 Xft.dpi: 100.0
-
-! XLock
-XLock.fpsfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.font: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.planfont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.fontset: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.planfontset: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.messagefont: -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-*-*
-XLock.username:
-XLock.password: Password:
-XLock.info:
-XLock.validate: Validating login...
-XLock.invalid: Invalid login
-XLock.icongeometry: 28x28
-XLock.mode: blank
-XLock.description: false
-XLock.echokeys: True
-XLock.echokey: *
-XLock.mousemotion: True
-XLock.showdate: True
-XLock.usefirst: True
 
 ! Colorscheme (unnamed)
 URxvt.foreground: #dbdbdb
-URxvt.background: #151517
+URxvt.background: #151515
 URxvt.color0: #222229
 URxvt.color1: #8e2b2e
 URxvt.color2: #45702c
