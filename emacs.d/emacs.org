@@ -743,8 +743,8 @@ F5: Toggle debug mode
 ** expand-region
 #+begin_src emacs-lisp
   (require 'expand-region)
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  (global-set-key (kbd "C-M-=") 'er/contract-region)
+  (global-set-key (kbd "M-l") 'er/expand-region)
+  (global-set-key (kbd "C-M-l") 'er/contract-region)
 #+end_src
 ** multiple-cursors
 #+begin_src emacs-lisp
