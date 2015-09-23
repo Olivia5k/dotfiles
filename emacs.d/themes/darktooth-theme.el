@@ -171,6 +171,9 @@
    `(sp-show-pair-match-face                   ((t ( :background ,darktooth-dark2 )))) ;; Pair tags highlight
    `(sp-show-pair-mismatch-face                ((t ( :background ,darktooth-neutral_red )))) ;; Highlight for bracket without pair
 
+   ;; Flycheck
+   `(flycheck-warning                          ((t (:foreground ,darktooth-white :background ,darktooth-faded_red :box t :bold t :underline t ))))
+
    ;; elscreen
    `(elscreen-tab-background-face              ((t ( :background ,darktooth-dark0 :box nil )))) ;; Tab bar, not the tabs
    `(elscreen-tab-control-face                 ((t (:foreground ,darktooth-neutral_red :background ,darktooth-dark2 :box nil :underline nil )))) ;; The controls
@@ -316,7 +319,6 @@
    `(org-tag                                   ((t (:bold t :weight bold ))))
    `(org-time-grid                             ((t (:foreground ,darktooth-bright_orange ))))
    `(org-todo                                  ((t (:foreground ,darktooth-bright_red :weight bold :bold t ))))
-   `(org-todo-doing                            ((t (:foreground ,darktooth-bright_aqua :weight bold :bold t ))))
    `(org-upcoming-deadline                     ((t (:inherit font-lock-keyword-face ))))
    `(org-warning                               ((t (:foreground ,darktooth-bright_red :weight bold :underline nil :bold t ))))
    `(org-column                                ((t ( :background ,darktooth-dark0 ))))
