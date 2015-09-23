@@ -698,7 +698,8 @@ F5: Toggle debug mode
         (setq debug-on-error doe)
         (message "debug-on-error set to %s" doe))))
 #+end_src
-** magit
+** magit and git
+*** magit
 #+begin_src emacs-lisp
   (require 'magit)
   (global-set-key (kbd "C-x g") 'magit-status)
@@ -718,6 +719,10 @@ F5: Toggle debug mode
 
   (define-key magit-status-mode-map (kbd "q") 'magit-mode-bury-buffer)
   (define-key magit-status-mode-map (kbd "M-m") 'magit-mode-bury-buffer)
+#+end_src
+*** git
+#+begin_src emacs-lisp
+  (setq git-commit-summary-max-length 79)
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
