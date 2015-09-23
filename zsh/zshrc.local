@@ -507,6 +507,10 @@ function +vi-git-action() {
 # fzf for the win!
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# z is a pretty cool guy. eh jumps dirs and doesn't afraid of anything
+export _Z_CMD="j"
+[ -f ~/git/z/z.sh ] && source ~/git/z/z.sh
+
 local USERFILE="$ZSHCONFDIR/local.zsh"
 if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
   source $USERFILE
