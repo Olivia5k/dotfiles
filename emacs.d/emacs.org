@@ -146,7 +146,7 @@ Defines the packages to be installed.
 ** Appearance
 #+begin_src emacs-lisp
   (set-default-font "Inconsolata-11")
-  (load-theme 'darktooth t)
+  (load-theme 'ujelly t)
 #+end_src
 ** Helm
 
