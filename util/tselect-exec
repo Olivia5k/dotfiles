@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-ret=$(print -rl -- ${(ko)commands} | selecta)
+ret=$(print -rl -- ${(ko)commands} | fzf)
 if [[ -n "$ret" ]]; then
   di-tmux neww -n "${ret}" "${ret}"
 fi
