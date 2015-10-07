@@ -235,6 +235,10 @@ bindkey "^[s" _inline-gs
 zle -N _inline-fzf-branch
 bindkey "^[o" _inline-fzf-branch
 function _inline-fzf-branch() {
+    if ! git rev-parse --git-dir 2> /dev/null; then
+        zle -M "Not in a git repository"
+        return
+    fi
     local branches branch
     branches=$(git branch --all | grep -v HEAD) &&
         branch=$(echo "$branches" |
