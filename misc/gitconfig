@@ -32,10 +32,8 @@
   help = yellow
   error = bold red
 
-[diff]
-  tool = vimdiff
 [core]
-  editor = vim
+  editor = emacsclient -nw
   excludesfile = ~/.cvsignore
 [init]
   templatedir = ~/.git_template
