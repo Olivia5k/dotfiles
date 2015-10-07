@@ -1,0 +1,9 @@
+#!/bin/bash
+image=/tmp/screen.png
+
+scrot $image
+convert $image -modulate 100,33,100 -scale 10% -scale 1000% $image
+[[ -f $1 ]] && convert $image $1 -gravity SouthEast -composite -matte $image
+false && dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop
+i3lock -i $image
+rm $image

@@ -40,20 +40,20 @@ bindcode Mod4+77 layout stacking
 # Windows
 bindsym Mod4+q workspace www
 bindsym Mod4+w workspace org
-bindsym Mod4+e workspace misc
+bindsym Mod4+e workspace conf
 bindsym Mod4+r workspace spotify
 bindsym Mod4+a workspace tmux
 bindsym Mod4+s workspace social
-bindsym Mod4+d workspace emacs
+bindsym Mod4+d workspace dev
 
 # Moving windows
 bindsym Mod4+Shift+q move container to workspace www
 bindsym Mod4+Shift+w move container to workspace org
-bindsym Mod4+Shift+e move container to workspace misc
+bindsym Mod4+Shift+e move container to workspace conf
 bindsym Mod4+Shift+r move container to workspace spotify
 bindsym Mod4+Shift+a move container to workspace tmux
 bindsym Mod4+Shift+s move container to workspace social
-bindsym Mod4+Shift+d move container to workspace emacs
+bindsym Mod4+Shift+d move container to workspace dev
 
 # Applications
 bindcode Mod4+36 exec mor main
@@ -62,11 +62,14 @@ bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_exec -z
 bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw
 bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw ~/org/payments.org
+bindsym Mod4+Mod1+Control+d exec emacs-daemon
 bindsym Mod4+c exec chromium-browser
 
 # Locking and switching
-bindcode Mod4+22 exec i3lock -d -c 333333
+bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png
 bindcode Mod4+Mod1+22 exec sswitch
+bindsym Mod4+p exec passmenu
+bindsym Mod4+n exec n
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
@@ -79,9 +82,8 @@ bindsym Mod4+Mod1+7 exec xbacklight -set 70
 bindsym Mod4+Mod1+8 exec xbacklight -set 80
 bindsym Mod4+Mod1+9 exec xbacklight -set 90
 
-bindsym Mod4+p exec passmenu
+# i3 control
 bindsym Mod4+Control+k kill
-
 bindsym Mod4+Control+e exit
 bindsym Mod4+Control+r reload
 bindsym Mod4+Mod1+Control+r restart
