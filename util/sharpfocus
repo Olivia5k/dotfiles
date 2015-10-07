@@ -1,36 +1,36 @@
 #!/bin/zsh
 
 wmraise main@$HOST
-di-tmux select-window -t main:2
+tmux select-window -t main:2
 
 # Check to see if we should do a low split or a normal one
-if [[ $(di-tmux display -p '#{window_width}') -ge 160 ]]; then
+if [[ $(tmux display -p '#{window_width}') -ge 160 ]]; then
   wide=true
 else
   wide=false
 fi
 
-cur=$(di-tmux display -p '#P')
+cur=$(tmux display -p '#P')
 if [[ $cur == 2 ]] || ! $wide && [[ $cur == 1 ]]; then
   # Already on alternate terminal, kill it and go back
-  di-tmux kill-pane
-  di-tmux select-pane -t 0
+  tmux kill-pane
+  tmux select-pane -t 0
 
   # Send enter if we are in wide mode
-  $wide && di-tmux send-keys enter
-elif [[ $(di-tmux display -p '#{window_panes}') == 1 ]] ; then
+  $wide && tmux send-keys enter
+elif [[ $(tmux display -p '#{window_panes}') == 1 ]] ; then
   # Just one window - split unto the main alternate
   $wide && cmd="h" || cmd="v"
-  di-tmux split-window -$cmd -c '#{pane_current_path}' -p 35
-elif $wide && [[ $(di-tmux display -p '#{window_panes}') == 2 ]] ; then
+  tmux split-window -$cmd -c '#{pane_current_path}' -p 35
+elif $wide && [[ $(tmux display -p '#{window_panes}') == 2 ]] ; then
   # One alternate pane, split to the next one.
-  di-tmux select-pane -t 1
-  di-tmux split-window -v -c '#{pane_current_path}' -p 90
+  tmux select-pane -t 1
+  tmux split-window -v -c '#{pane_current_path}' -p 90
 else
   # Focus the alternate pane
   $wide && idx=2 || idx=1
-  di-tmux select-pane -t $idx
+  tmux select-pane -t $idx
 fi
 
-di-tmux rename-window dev
-sleep 0.5 && di-tmux rename-window dev
+tmux rename-window dev
+sleep 0.5 && tmux rename-window dev

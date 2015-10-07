@@ -1,8 +1,0 @@
-#!/bin/zsh
-# For select hosts, run all tmux commands remotely
-
-if [[ -n "$TMUX_THIN_CLIENT" ]]; then
-  ssh dragonisle -t LANG=en_US.utf8 tmux ${(zqqqq)*}
-else
-  tmux $*
-fi

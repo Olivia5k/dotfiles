@@ -11,4 +11,4 @@ else
     cmd="new-session -s"
 fi
 
-di-tmux ${(z)cmd} $sess
+tmux ${(z)cmd} $sess
