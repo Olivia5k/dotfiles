@@ -8,8 +8,8 @@ assign [class="float"] ~
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h focus left
-bindsym Mod4+j focus up
-bindsym Mod4+k focus down
+bindsym Mod4+j focus down
+bindsym Mod4+k focus up
 bindsym Mod4+l focus right
 
 # Splitting
@@ -18,17 +18,18 @@ bindsym Mod4+Mod1+s split h
 
 # Fullscreening
 bindsym Mod4+Mod1+f fullscreen
+bindcode Mod4+23 fullscreen
 
 # Resizing (Mod4+Alt+hjkl)
 bindsym Mod4+Mod1+h resize shrink width 10 px or 3 ppt
-bindsym Mod4+Mod1+j resize grow height 10 px or 3 ppt
-bindsym Mod4+Mod1+k resize shrink height 10 px or 3 ppt
+bindsym Mod4+Mod1+j resize shrink height 10 px or 3 ppt
+bindsym Mod4+Mod1+k resize grow height 10 px or 3 ppt
 bindsym Mod4+Mod1+l resize grow width 10 px or 3 ppt
 
 # Move (Mod4+Shift+hjkl)
 bindsym Mod4+Shift+h move left
-bindsym Mod4+Shift+j move up
-bindsym Mod4+Shift+k move down
+bindsym Mod4+Shift+j move down
+bindsym Mod4+Shift+k move up
 bindsym Mod4+Shift+l move right
 
 # Workspace layouts (Mod4+F9-F11)
