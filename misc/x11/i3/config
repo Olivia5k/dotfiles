@@ -68,6 +68,7 @@ bindsym Mod4+c exec chromium-browser
 # Locking and switching
 bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png
 bindcode Mod4+Mod1+22 exec sswitch
+bindcode Mod4+Mod1+Control+22 exec susp
 bindsym Mod4+p exec passmenu
 bindsym Mod4+n exec n
 
