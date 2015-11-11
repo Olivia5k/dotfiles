@@ -251,12 +251,6 @@ function _inline-fzf-branch() {
     zle .reset-prompt
 }
 
-# Back one step in a path
-function dirname-previous-word () {
-  autoload -U modify-current-argument
-  modify-current-argument '${ARG:h}'
-}
-
 # Make an arguments path be absolute. Will resolve symlinks.
 function abs-previous-word () {
   autoload -U modify-current-argument
@@ -266,7 +260,6 @@ function abs-previous-word () {
 zle -N abs-previous-word
 zle -N dirname-previous-word
 #bindkey '^[s' abs-previous-word
-bindkey '^[d' dirname-previous-word
 
 # Edit current commandline with actual editor
 autoload -U   edit-command-line
