@@ -38,6 +38,9 @@ if alias ag &> /dev/null; then
   unalias ag
 fi
 
+alias as="sudo apt-cache search"
+alias ai="sudo apt-get install"
+
 alias zz="source $ZSHRC"
 alias sp="python setup.py"
 alias hc="herbstclient"
