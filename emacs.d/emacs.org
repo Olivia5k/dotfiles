@@ -283,13 +283,10 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq projectile-completion-system 'helm)
   (setq projectile-mode-line nil)
 #+end_src
-** Smart mode line
+** spaceline
 #+begin_src emacs-lisp
-  (require 'smart-mode-line)
-  (setq sml/no-confirm-load-theme t)
-
-  (sml/apply-theme 'darktooth)
-  (sml/setup)
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme)
 #+end_src
 ** popwin
 #+begin_src emacs-lisp
