@@ -283,7 +283,16 @@ bindkey '^s' sudo-command-line
 stty -ixon
 
 function f() {
-  find 2>/dev/null | grep -is "$1"
+  if git rev-parse --git-dir &> /dev/null; then
+    # If inside of a repo, use git ls-files instead
+    if [[ -n "$1" ]]; then
+      git ls-files 2>/dev/null | grep -is "$1"
+    else
+      ls -1d ${(z)$(git ls-files 2>/dev/null)}
+    fi
+  else
+    ls -1d ${(z)$(find 2>/dev/null | grep -is "$1")}
+  fi
 }
 
 function fd() {
