@@ -1,5 +1,4 @@
 #+TITLE: init file for Emacs
-#+PROPERTY: tangle yes
 #+AUTHOR: Lowe Thiderman
 #+EMAIL: lowe.thiderman@gmail.com
 
