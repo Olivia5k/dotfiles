@@ -2,12 +2,12 @@ partial alphanumeric_keys
 xkb_symbols "q6" {
     include "se(basic)"
 
-    key <ESC>  { [ Escape                                         ] };
-    key <CAPS> { [ Control_R                                            ] };
-    key <LWIN> { [ Super_L                                           ] };
-    key <RWIN> { [ Super_R                                           ] };
-    key <LSGT> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
-    key <MENU> { [ ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift,ISO_Level3_Shift ]};
+    key <ESC>  { [ Escape    ] };
+    key <CAPS> { [ Control_R ] };
+    key <LWIN> { [ Super_L   ] };
+    key <RWIN> { [ Super_R   ] };
+    key <LSGT> { [ Hyper_L   ] };
+    key <MENU> { [ Hyper_L   ] };
 
     key <TLDE> { [ grave,      asciitilde    ] };
     key <AE01> { [ 1,          exclam        ] };
