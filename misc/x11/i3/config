@@ -110,5 +110,5 @@ bar {
 }
 
 # no borders plx
-new_window pixel 2
+new_window pixel 3
 workspace_layout default
