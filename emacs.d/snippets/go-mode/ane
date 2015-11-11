@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : assert.NotEqual()
+#key : ane
+#contributor : Lowe Thiderman
+# --
+assert.NotEqual(${1:first}, ${2:second})$0

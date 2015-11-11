@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+#name : base imports for test module
+#key : basetest
+#contributor : Lowe Thiderman
+# --
+package main
+
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
+$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : sprintf
+#key : s
+#contributor : Lowe Thiderman
+# --
+fmt.Sprintf("${1:format}", $0)

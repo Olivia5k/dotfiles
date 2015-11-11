@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : log.Print()
+#key : l
+#contributor : Lowe Thiderman
+# --
+log.Print($0)

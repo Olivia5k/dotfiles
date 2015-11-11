@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : fatal
+#key : f
+#contributor : Lowe Thiderman
+# --
+log.Fatal($0)

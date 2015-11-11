@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : assert.Equal()
+#key : ae
+#contributor : Lowe Thiderman
+# --
+assert.Equal(${1:first}, ${2:second})$0

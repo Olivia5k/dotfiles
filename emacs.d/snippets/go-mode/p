@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : fmt.Println()
+#key : p
+#contributor : Lowe Thiderman
+# --
+fmt.Println($0)
