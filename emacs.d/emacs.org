@@ -690,6 +690,8 @@ Note that C-j will preview the file without closing the helm buffer.
 ** prog-mode
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook 'semantic-mode)
+  (add-hook 'prog-mode-hook (lambda ()
+                              (auto-save-mode -1)))
 #+end_src
 * Minor modes and utilities
 ** Buffer toggles
