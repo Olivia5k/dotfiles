@@ -19,3 +19,4 @@ util/*quake*
 /emacs.d/recentf
 /emacs.d/helm-adaptive-history
 /emacs.d/anaconda-mode/
+/emacs.d/.org-id-locations
