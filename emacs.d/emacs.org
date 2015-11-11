@@ -313,8 +313,11 @@ Note that C-j will preview the file without closing the helm buffer.
 #+begin_src emacs-lisp
   (require 'yasnippet)
   (require 'helm-c-yasnippet)
+
+  ;; Without this, it doesn't load...
+  (yas-reload-all)
   (setq helm-yas-space-match-any-greedy t) ;[default: nil]
-  (global-set-key (kbd "C-.") 'helm-yas-complete)
+  (global-set-key (kbd "C-c h s") 'helm-yas-complete)
 
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (add-hook 'markdown-mode 'yas-minor-mode)
