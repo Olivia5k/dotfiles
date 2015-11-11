@@ -911,33 +911,18 @@ F5: Toggle debug mode
 ** Window management
 *** Emacs-like
 #+begin_src emacs-lisp
-  (defun th-split-window (vertical &optional helming)
-    "Split a window and go to it, optionally open helm-projectile."
-    (if vertical
-        (progn
-          (split-window-vertically)
-          (windmove-down))
-      (progn
-        (split-window-horizontally)
-        (windmove-right)))
-    (if helming
-        (helm-projectile)))
+  (define-key global-map (kbd "C-x 2")
+    (lambda ()
+      (interactive)
+      (split-window-vertically)
+      (windmove-down)))
 
-  (define-key global-map (kbd "M-0") 'delete-window)
-  (define-key global-map (kbd "M-1") 'delete-other-windows)
-  (define-key global-map (kbd "M-2") (lambda ()
-                                       (interactive)
-                                       (th-split-window t t)))
-  (define-key global-map (kbd "M-3") (lambda ()
-                                       (interactive)
-                                       (th-split-window nil t)))
+  (define-key global-map (kbd "C-x 3")
+    (lambda ()
+      (interactive)
+      (split-window-horizontally)
+      (windmove-right)))
 
-  (define-key global-map (kbd "C-M-2") (lambda ()
-                                         (interactive)
-                                         (th-split-window t)))
-  (define-key global-map (kbd "C-M-3") (lambda ()
-                                         (interactive)
-                                         (th-split-window nil)))
 #+end_src
 *** vim-like
 #+begin_src emacs-lisp
@@ -946,18 +931,16 @@ F5: Toggle debug mode
   (global-set-key (kbd "C-x k") 'windmove-up)
   (global-set-key (kbd "C-x l") 'windmove-right)
 
-  (global-set-key (kbd "s-h") 'windmove-left)
-  (global-set-key (kbd "s-j") 'windmove-down)
-  (global-set-key (kbd "s-k") 'windmove-up)
-  (global-set-key (kbd "s-l") 'windmove-right)
-
-  (global-set-key (kbd "s-M-h") 'buf-move-left)
-  (global-set-key (kbd "s-M-j") 'buf-move-down)
-  (global-set-key (kbd "s-M-k") 'buf-move-up)
-  (global-set-key (kbd "s-M-l") 'buf-move-right)
-
-  (global-set-key (kbd "s-f") 'delete-other-windows)
-  (global-set-key (kbd "C-q") 'delete-window)
+  (defun th-kill-window ()
+    "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
+    (interactive)
+    (if (and (one-window-p) (server-running-p))
+        (progn
+          (save-buffer)
+          (kill-buffer)
+          (delete-frame))
+      (delete-window)))
+  (global-set-key (kbd "C-q") 'th-kill-window)
 #+end_src
 ** Linum
 #+begin_src emacs-lisp
