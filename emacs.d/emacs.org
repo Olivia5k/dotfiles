@@ -965,22 +965,24 @@ F5: Toggle debug mode
   (setq scroll-step 10)
 
   (setq tty-color-mode 256)
-
+#+end_src
+** Clean mode line
+#+begin_src emacs-lisp
   ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
   (defvar mode-line-cleaner-alist
     `((paredit-mode . " ()")
       (eldoc-mode . "")
       (abbrev-mode . "")
-      (auto-fill-mode "")
+      (auto-fill-mode "af")
       (helm-mode "")
       (magit-auto-revert-mode "")
-      (undo-tree-mode " ⎌")
+      (undo-tree-mode "")
 
       ;; Major modes
       (help-mode . "")
       (fundamental-mode . "0")
-      (python-mode . "py")
-      (emacs-lisp-mode . "el")))
+      (python-mode . "Py")
+      (emacs-lisp-mode . "El")))
 
   (defun clean-mode-line ()
     (interactive)
