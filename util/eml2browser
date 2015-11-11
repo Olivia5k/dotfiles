@@ -1,0 +1,12 @@
+#!/usr/bin/zsh
+
+# Takes an .eml file as an argument, parses the HTML into a separate file, and
+# opens that file in chrome.
+
+file=$1
+target=~/tmp/eml/${file:t}.html
+
+qprint -d $1 2> /dev/null | grep -Pzo "(?s)<\!DOCTYPE.*</html>" > $target
+chromium-browser $target
+notify-send -t 3000 "Email recieved" \
+            $(grep -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" $file | head -n 1)
