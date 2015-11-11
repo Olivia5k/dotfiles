@@ -853,6 +853,7 @@ F5: Toggle debug mode
         initial-scratch-message ";; *scratch*\n\n")
 
   (setq backup-inhibited t
+        make-backup-files nil
         auto-save-default nil)
 
   (setq backup-by-copying t)
@@ -862,7 +863,7 @@ F5: Toggle debug mode
     (format "/tmp/emacs-%s/" (user-uid)))
   (make-directory emacs-tmp-dir t)
   (setq backup-directory-alist
-        `((".*" . ,emacs-tmp-dir)))
+        `(("." . ,emacs-tmp-dir)))
   (setq auto-save-file-name-transforms
         `((".*" ,emacs-tmp-dir t)))
   (setq temporary-file-directory emacs-tmp-dir)
@@ -870,14 +871,12 @@ F5: Toggle debug mode
   (setq auto-save-list-file-prefix
         emacs-tmp-dir)
 
-  (setq auto-save-interval 0
-        auto-save-timeout 1)
+  (setq auto-save-interval 90000
+        auto-save-timeout 3600)
 
   (setq echo-keystrokes 0.4
-        stack-trace-on-error nil
         standard-indent 4
-        tab-always-indent 'complete
-        grep-scroll-output t)
+        tab-always-indent 'complete)
 
   (setq-default comment-column 42
                 fill-column 78
@@ -889,6 +888,7 @@ F5: Toggle debug mode
   (electric-pair-mode t)
   (global-auto-revert-mode t)
   (auto-fill-mode t)
+  (auto-save-mode -1)
 #+end_src
 ** Backups
 #+begin_src emacs-lisp
@@ -896,16 +896,16 @@ F5: Toggle debug mode
   (if (not (file-exists-p --backup-directory))
           (make-directory --backup-directory t))
   (setq backup-directory-alist `(("." . ,--backup-directory)))
-  (setq make-backup-files t               ; backup of a file the first time it is saved.
-        backup-by-copying t               ; don't clobber symlinks
-        version-control t                 ; version numbers for backup files
-        delete-old-versions t             ; delete excess backup files silently
-        delete-by-moving-to-trash t
-        kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
-        kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
-        auto-save-default t               ; auto-save every buffer that visits a file
-        auto-save-timeout 2               ; number of seconds idle time before auto-save (default: 30)
-        auto-save-interval 20            ; number of keystrokes between auto-saves (default: 300)
+  (setq make-backup-files nil      ; backup of a file the first time it is saved.
+        backup-by-copying t        ; don't clobber symlinks
+        version-control nil        ; version numbers for backup files
+        delete-old-versions t      ; delete excess backup files silently
+        delete-by-moving-to-trash nil
+        kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
+        kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
+        auto-save-default nil      ; auto-save every buffer that visits a file
+        auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
+        auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
         )
 #+end_src
 ** Window management
