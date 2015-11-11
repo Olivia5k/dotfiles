@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-d="tmp/nm-$UID"
+d="$HOME/tmp/nm-$UID"
 mkdir -p $d
 cd $d
 nm-applet &> /dev/null &|
