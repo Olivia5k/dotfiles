@@ -520,6 +520,7 @@ Note that C-j will preview the file without closing the helm buffer.
   (define-key org-mode-map (kbd "M-i") 'helm-org-headlines)
 #+end_src
 *** Agenda and todo
+**** Settings and options
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
 
@@ -534,29 +535,84 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
                                  ("WAITING" . org-mode-line-clock)))
 
-  ;;(global-set-key (kbd "C-x o") 'org-todo-list)
+#+end_src
+**** Toggler keybindings
+#+begin_src emacs-lisp
+  (define-key org-mode-map (kbd "C-c t")
+    (lambda ()
+      (interactive)
+      (org-todo "TODO")))
 
-block
-  (defun th-helm-org-files ()
+  (define-key org-mode-map (kbd "C-c w")
+    (lambda ()
+      (interactive)
+      (org-todo "WORKING")))
+
+  (define-key org-mode-map (kbd "C-c z")
+    (lambda ()
+      (interactive)
+      (org-todo "WAITING")))
+
+  (define-key org-mode-map (kbd "C-c r")
+    (lambda ()
+      (interactive)
+      (org-todo "REVIEW")))
+
+  (define-key org-mode-map (kbd "C-c d")
+    (lambda ()
+      (interactive)
+      (org-todo "DONE")))
+
+  (define-key org-mode-map (kbd "C-c i")
+    (lambda ()
+      (interactive)
+      (org-todo "INVALID")))
+
+  (define-key org-mode-map (kbd "C-c SPC")
+    (lambda ()
+      (interactive)
+      (org-todo 'none)))
+
+#+end_src
+**** helm-org-agenda
+#+begin_src emacs-lisp
+  (defun th-helm-org-agenda-files ()
     (mapcar (lambda (s) (s-chop-suffix ".org" s))
             (directory-files "~/org/" nil ".*\\.org")))
 
-  (defun th-helm-org-visit (file)
+  (defun th-helm-org-agenda-visit (file)
     (find-file (format "~/org/%s.org" file)))
 
-  (defvar th-helm-org-sources
+  (defvar th-helm-org-agenda-sources
     '((name . "org-agenda files")
-      (candidates . th-helm-org-files)
-      (action . th-helm-org-visit)))
+      (candidates . th-helm-org-agenda-files)
+      (action . th-helm-org-agenda-visit)))
 
-  (defun th-helm-org ()
+  (defun th-helm-org-agenda ()
     (interactive)
     (helm
-     :sources th-helm-org-sources
+     :sources th-helm-org-agenda-sources
      :prompt "Agenda file: "
      :buffer "*helm-org-agenda*"))
 
-  (global-set-key (kbd "C-x C-o") 'th-helm-org)
+  (global-set-key (kbd "C-x C-o") 'th-helm-org-agenda)
+#+end_src
+**** org-goto-for-project
+#+begin_src emacs-lisp
+  (defun th-org-project ()
+    "Go to the org project for the current repository.
+
+  Go back if we're already in it."
+
+    (interactive)
+    (let* ((root (projectile-project-root))
+           (name (car (last (s-split "/" (projectile-project-root)) 2))))
+      (if (s-equals? (expand-file-name "~/org/") root)
+          (previous-buffer)
+        (find-file
+         (format "~/org/%s.org" name)))))
+
+  (global-set-key (kbd "C-x C-o") 'th-org-project)
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
