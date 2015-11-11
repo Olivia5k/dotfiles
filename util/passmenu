@@ -7,10 +7,13 @@ files=($prefix/**/*.gpg)
 files=(${files[@]#"$prefix/"})
 files=(${files[@]%.gpg})
 
-password=$(print ${(F)files} | dmenu ${(z)DMENU_OPTS})
+item=$(print ${(F)files} | dmenu ${(z)DMENU_OPTS} -p "password" -sb "#702c2c" -sf "#e6dbdb")
 
-[[ -z "$item" ]] && exit
-pass show -c "$item" 2>/dev/null
+if [[ -z "$item" ]]; then
+    echo "No item loaded."
+    exit
+fi
+pass show -c "$item"
 if [[ $? == 0 ]] ; then
     notify-send -t 1500 -u low "Password loaded" $item
 else
