@@ -266,17 +266,17 @@ autoload -U   edit-command-line
 zle -N        edit-command-line
 bindkey '^[e' edit-command-line
 
-# Use kicker as a Ctrl-O operator
-kicker-command-line() {
+# Use watcher as a Ctrl-O operator
+watcher-command-line() {
     [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER != kicker\ * ]]; then
-        BUFFER="kicker -ce \"$BUFFER\""
-        CURSOR=$(( CURSOR+12 ))
+    if [[ $BUFFER != watcher\ * ]]; then
+        BUFFER="watcher -d \".\"  \"$BUFFER\""
+        CURSOR=$(( CURSOR+19 ))
     fi
     _zsh_highlight
 }
-zle -N kicker-command-line
-bindkey '^Ok' kicker-command-line
+zle -N watcher-command-line
+bindkey '^Ok' watcher-command-line
 bindkey '^s' sudo-command-line
 
 # Disable Ctrl-q/s flow control.
