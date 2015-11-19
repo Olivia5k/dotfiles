@@ -686,23 +686,24 @@ Note that C-j will preview the file without closing the helm buffer.
     "Toggle coverage mode for the current buffer"
     (interactive)
 
-    (let ((bn (buffer-name)))
-      (if (s-contains? "<gocov>" bn)
-          (progn
-            (windmove-left)
-            (th-go-test-buffer-p))
-
-        (if (s-contains? "_test.go" bn)
+    (save-excursion
+      (let ((bn (buffer-name)))
+        (if (s-contains? "<gocov>" bn)
             (progn
               (windmove-left)
-              (th-go-coverage-p))
-          (windmove-right)
-          (if (not (s-contains? "<gocov>" (buffer-name)))
+              (th-go-test-buffer-p))
+
+          (if (s-contains? "_test.go" bn)
               (progn
                 (windmove-left)
                 (th-go-coverage-p))
-            (windmove-left)
-            (th-go-test-buffer-p))))))
+            (windmove-right)
+            (if (not (s-contains? "<gocov>" (buffer-name)))
+                (progn
+                  (windmove-left)
+                  (th-go-coverage-p))
+              (windmove-left)
+              (th-go-test-buffer-p)))))))
 
   (defun th-go-coverage-p ()
     (delete-other-windows)
