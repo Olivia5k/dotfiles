@@ -518,6 +518,8 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq org-hierarchical-checkbox-statistics t)
 
   (define-key org-mode-map (kbd "M-i") 'helm-org-headlines)
+  (define-key org-mode-map (kbd "C-c ;") 'org-edit-special)
+  (define-key org-src-mode-map (kbd "C-c ;") 'org-edit-src-exit)
 #+end_src
 *** Agenda and todo
 **** Settings and options
