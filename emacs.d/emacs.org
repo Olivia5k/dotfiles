@@ -670,22 +670,84 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 ** golang
 #+begin_src emacs-lisp
-    (require 'go-mode)
+  (require 'go-mode)
 
-    (defun th-go-hook ()
-      (add-hook 'before-save-hook 'gofmt-before-save)
-      (set (make-local-variable 'company-backends) '(company-go))
-                              (company-mode)
+  (defun th-go-hook ()
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (set (make-local-variable 'company-backends) '(company-go))
+    (company-mode)
+    (flycheck-mode 1)
 
-      (helm-dash-activate-docset 'Go))
+    (helm-dash-activate-docset 'Go)
 
+    (if (not (string-match "go" compile-command))
+        (set (make-local-variable 'compile-command)
+             "go generate && go test -coverprofile=cover.out && go build && go vet")))
 
-    (add-hook 'go-mode-hook 'th-go-hook)
-    (add-hook 'go-mode-hook 'go-eldoc-setup)
+  (defun th-go-coverage ()
+    "Toggle coverage mode for the current buffer"
+    (interactive)
 
-    (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
-    (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
-    (define-key go-mode-map (kbd "C-c d") 'godoc)
+    (let ((bn (buffer-name)))
+      (if (s-contains? "<gocov>" bn)
+          (progn
+            (windmove-left)
+            (th-go-test-buffer-p))
+
+        (if (s-contains? "_test.go" bn)
+            (progn
+              (windmove-left)
+              (th-go-coverage-p))
+          (windmove-right)
+          (if (not (s-contains? "<gocov>" (buffer-name)))
+              (progn
+                (windmove-left)
+                (th-go-coverage-p))
+            (windmove-left)
+            (th-go-test-buffer-p))))))
+
+  (defun th-go-coverage-p ()
+    (delete-other-windows)
+    (go-coverage (concat (projectile-project-root) "cover.out")))
+
+  (defun th-go-alternate-file (fn)
+    "If fn is code, return path to test file and vice versa"
+
+    (if (s-suffix? "_test.go" fn)
+        (s-replace "_test.go" ".go" fn)
+      (s-replace ".go" "_test.go" fn)))
+
+  (defun th-go-test-buffer-p ()
+    (let* ((bname (buffer-file-name))
+           (left "")
+           (right ""))
+
+      (if (s-suffix? "_test.go" bname)
+          (setq left (th-go-alternate-file bname)
+                right bname)
+        (setq left bname
+              right (th-go-alternate-file bname)))
+
+      (find-file left)
+      (delete-other-windows)
+      (split-window-horizontally)
+      (windmove-right)
+      (find-file right)))
+
+  (defun th-go-test-buffer ()
+    (interactive)
+    (th-go-test-buffer-p))
+
+  (add-hook 'go-mode-hook 'th-go-hook)
+  (add-hook 'go-mode-hook 'go-eldoc-setup)
+
+  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
+  (define-key go-mode-map (kbd "C-c C-c") 'compile)
+  (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
+  (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
+  (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
+  (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
+  (define-key go-mode-map (kbd "C-c d") 'godoc)
 #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
