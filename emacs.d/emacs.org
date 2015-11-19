@@ -405,7 +405,7 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 ** Default keys
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-g") 'goto-line)
+  (global-set-key (kbd "M-g") 'helm-swoop)
   (global-set-key (kbd "C-r") 'vr/replace)
   (global-set-key (kbd "M-j")
                   (lambda ()
