@@ -852,6 +852,8 @@ F5: Toggle debug mode
   (mouse-wheel-mode -1)
   (scroll-bar-mode -1)
 
+  (setq compilation-read-command nil)
+
   (setq inhibit-startup-screen t
         initial-scratch-message ";; *scratch*\n\n")
 
