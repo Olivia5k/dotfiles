@@ -42,7 +42,7 @@ alias as="sudo apt-cache search"
 alias ai="sudo apt-get install"
 
 alias zz="source $ZSHRC"
-alias sp="python setup.py"
+alias sp="sagacity"
 alias hc="herbstclient"
 
 alias e="emacsclient -nw"
