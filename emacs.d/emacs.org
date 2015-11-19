@@ -680,11 +680,7 @@ Note that C-j will preview the file without closing the helm buffer.
     (company-mode)
     (flycheck-mode 1)
 
-    (helm-dash-activate-docset 'Go)
-
-    (if (not (string-match "go" compile-command))
-        (set (make-local-variable 'compile-command)
-             "go generate && go test -coverprofile=cover.out && go build && go vet")))
+    (helm-dash-activate-docset 'Go))
 
   (defun th-go-coverage ()
     "Toggle coverage mode for the current buffer"
@@ -750,16 +746,23 @@ Note that C-j will preview the file without closing the helm buffer.
                    (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
         "")))
 
+  (defun th-go-compile ()
+    (interactive)
+    (projectile-save-project-buffers)
+    (compile
+     "go generate && go test -coverprofile=cover.out && go build && go vet"))
+
   (add-hook 'go-mode-hook 'th-go-hook)
   (add-hook 'go-mode-hook 'go-eldoc-setup)
 
   (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
-  (define-key go-mode-map (kbd "C-c C-c") 'compile)
+  (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
   (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
   (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
   (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
   (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
   (define-key go-mode-map (kbd "C-c d") 'godoc)
+
 #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
