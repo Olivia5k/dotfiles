@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : append
+#key : a
+#contributor : Lowe Thiderman
+# --
+$1 = append(${1:source}, ${2:item})

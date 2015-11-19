@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : prepend
+#key : pre
+#contributor : Lowe Thiderman
+# --
+$1 = append([]${2:kind}{${3:item}}, ${1:source}...)

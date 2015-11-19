@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : assert.NotNil()
+#key : ann
+#contributor : Lowe Thiderman
+# --
+assert.NotNil($0)
