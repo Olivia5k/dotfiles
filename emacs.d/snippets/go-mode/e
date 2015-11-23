@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : e
+#key : e
+#contributor : Lowe Thiderman
+# --
+errors.New($0)

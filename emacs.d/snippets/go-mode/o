@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : // Output:
+#key : o
+#contributor : Lowe Thiderman
+# --
+// Output: $0
