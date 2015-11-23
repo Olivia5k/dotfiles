@@ -610,7 +610,9 @@ Note that C-j will preview the file without closing the helm buffer.
     (let* ((root (projectile-project-root))
            (name (car (last (s-split "/" (projectile-project-root)) 2))))
       (if (s-equals? (expand-file-name "~/org/") root)
-          (previous-buffer)
+          (progn
+            (save-buffer)
+            (previous-buffer))
         (find-file
          (format "~/org/%s.org" name)))))
 
