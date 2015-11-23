@@ -673,9 +673,16 @@ Note that C-j will preview the file without closing the helm buffer.
 
 #+end_src
 ** golang
+
+These are my Go tricks. They are fairly opinionated, but once they work well
+enough I think I want to bring them to the upstream go-mode somehow! PR at the very least!
+
 #+begin_src emacs-lisp
   (require 'go-mode)
+#+end_src
 
+*** Main hook
+#+begin_src emacs-lisp
   (defun th-go-hook ()
     (add-hook 'before-save-hook 'gofmt-before-save)
     (set (make-local-variable 'company-backends) '(company-go))
@@ -684,6 +691,11 @@ Note that C-j will preview the file without closing the helm buffer.
 
     (helm-dash-activate-docset 'Go))
 
+  (add-hook 'go-mode-hook 'th-go-hook)
+  (add-hook 'go-mode-hook 'go-eldoc-setup)
+#+end_src
+*** Coverage functions
+#+begin_src emacs-lisp
   (defun th-go-coverage ()
     "Toggle coverage mode for the current buffer"
     (interactive)
@@ -711,13 +723,12 @@ Note that C-j will preview the file without closing the helm buffer.
     (delete-other-windows)
     (go-coverage (concat (projectile-project-root) "cover.out")))
 
-  (defun th-go-alternate-file (fn)
-    "If fn is code, return path to test file and vice versa"
-
-    (if (s-suffix? "_test.go" fn)
-        (s-replace "_test.go" ".go" fn)
-      (s-replace ".go" "_test.go" fn)))
-
+  (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
+#+end_src
+*** Test file view
+Brings up a split view of a single file and it's corresponding test file.
+The test file will be created if it does not already exist.
+#+begin_src emacs-lisp
   (defun th-go-test-buffer-p ()
     (let* ((bname (buffer-file-name))
            (left "")
@@ -739,6 +750,19 @@ Note that C-j will preview the file without closing the helm buffer.
     (interactive)
     (th-go-test-buffer-p))
 
+  (defun th-go-alternate-file (fn)
+    "If fn is code, return path to test file and vice versa"
+
+    (if (s-suffix? "_test.go" fn)
+        (s-replace "_test.go" ".go" fn)
+      (s-replace ".go" "_test.go" fn)))
+
+  (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
+#+end_src
+
+*** Snippet helpers
+These are functions used inside of yas.
+#+begin_src emacs-lisp
   (defun th-go-get-type-signature ()
     "Get the signature of the closest type: (t *Type)"
     (save-excursion
@@ -749,23 +773,26 @@ Note that C-j will preview the file without closing the helm buffer.
                    (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
         "")))
 
+#+end_src
+*** Compiling and executing
+#+begin_src emacs-lisp
   (defun th-go-compile ()
     (interactive)
     (projectile-save-project-buffers)
     (compile
      "go generate && go test -coverprofile=cover.out && go build && go vet"))
 
-  (add-hook 'go-mode-hook 'th-go-hook)
-  (add-hook 'go-mode-hook 'go-eldoc-setup)
-
-  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
   (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
   (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
-  (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
-  (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
+
+
+#+end_src
+
+** General keybindings
+#+begin_src emacs-lisp
+  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
   (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
   (define-key go-mode-map (kbd "C-c d") 'godoc)
-
 #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
