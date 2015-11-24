@@ -117,4 +117,4 @@ bar {
 new_window pixel 3
 workspace_layout default
 
-exec kodi
+exec maybe_kodi
