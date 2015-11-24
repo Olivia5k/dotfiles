@@ -758,7 +758,34 @@ The test file will be created if it does not already exist.
 
   (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
 #+end_src
+*** helm based file visitor
+Shows a helm session with the current soruce files, and opens a view with the
+chosen candidate and its corresponding test file.
+#+begin_src emacs-lisp
+  (defun th-helm-go-source-files ()
+    (mapcar (lambda (s)
+              (s-chop-suffix ".go" s))
+            (-filter (lambda (x) (not (s-contains? "_test" x)))
+                     (directory-files (projectile-project-root) nil ".*\\.go"))))
 
+  (defun th-helm-go-source-visit (file)
+    (find-file (format "%s/%s.go" (projectile-project-root) file))
+    (th-go-test-buffer-p))
+
+  (defvar th-helm-go-source-sources
+    '((name . "go files")
+      (candidates . th-helm-go-source-files)
+      (action . th-helm-go-source-visit)))
+
+  (defun th-helm-go-source ()
+    (interactive)
+    (helm
+     :sources th-helm-go-source-sources
+     :prompt "go source file: "
+     :buffer "*helm-go-source*"))
+
+  (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
+#+end_src
 *** Snippet helpers
 These are functions used inside of yas.
 #+begin_src emacs-lisp
