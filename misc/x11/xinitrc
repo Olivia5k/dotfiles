@@ -1,14 +1,19 @@
 #!/bin/zsh
 set -x
 
+source /home/thiderman/.zshrc
+
 keyboard-setup &
 xset -b
 wp &
 xrdb ~/.Xresources &
 
-exec nm-applet &
+if [[ $(hostname) == "dragonisle" ]]; then
+    xset s off
+    xset -dpms
+fi
 
-exec emacs --daemon &
+exec nm-applet &
 
 # export XORG_WM="hlwm"
 # exec herbstluftwm --locked

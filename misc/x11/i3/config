@@ -5,6 +5,9 @@ for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 
 # Assigning
 assign [class="float"] ~
+for_window [class="Kodi"] move container to workspace kodi; workspace kodi
+for_window [class="Keepassx"] move container to workspace pass; workspace pass
+for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h focus left
@@ -60,6 +63,7 @@ bindcode Mod4+36 exec mor main
 bindcode Mod4+Mod1+36 exec muxwin
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_exec -z
+# bindcode Mod4+65 exec ror "kodi" "Kodi" "kodi"
 bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw
 bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw ~/org/payments.org
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
@@ -112,3 +116,5 @@ bar {
 # no borders plx
 new_window pixel 3
 workspace_layout default
+
+exec kodi
