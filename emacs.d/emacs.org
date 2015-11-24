@@ -765,15 +765,24 @@ chosen candidate and its corresponding test file.
   (defun th-helm-go-source-files ()
     (mapcar (lambda (s)
               (s-chop-suffix ".go" s))
-            (-filter (lambda (x) (not (s-contains? "_test" x)))
+            (-filter #'th-helm-go-filter-files
                      (directory-files (projectile-project-root) nil ".*\\.go"))))
+
+  (defun th-helm-go-filter-files (x)
+    (let ((fn (concat (projectile-project-root) x))
+          (bufname (buffer-file-name (get-buffer helm-current-buffer))))
+      (and
+       (not (s-contains? "_test" x))      ; Test files
+       (not (s-contains? ".#" x))         ; emax backups
+       (not (s-contains? fn bufname))     ; the current module
+       (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
 
   (defun th-helm-go-source-visit (file)
     (find-file (format "%s/%s.go" (projectile-project-root) file))
     (th-go-test-buffer-p))
 
   (defvar th-helm-go-source-sources
-    '((name . "go files")
+    '((name . "go source files")
       (candidates . th-helm-go-source-files)
       (action . th-helm-go-source-visit)))
 
