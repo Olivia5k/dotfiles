@@ -61,6 +61,7 @@ Defines the packages to be installed.
       avy
       browse-kill-ring
       buffer-move
+      cl-lib
       company
       company-go
       crontab-mode
@@ -73,8 +74,6 @@ Defines the packages to be installed.
       epl
       expand-region
       fill-column-indicator
-      flx
-      flx-ido
       flycheck
       fringe-helper
       gist
@@ -88,13 +87,12 @@ Defines the packages to be installed.
       helm
       helm-ag
       helm-c-yasnippet
+      helm-dash
       helm-descbinds
       helm-projectile
       helm-swoop
       htmlize
       httpcode
-      ido-ubiquitous
-      ido-vertical-mode
       ioccur
       js2-mode
       lispy
@@ -107,7 +105,6 @@ Defines the packages to be installed.
       org-bullets
       org-fstree
       org-jekyll
-      otp
       paradox
       paredit
       pkg-info
@@ -119,10 +116,11 @@ Defines the packages to be installed.
       rainbow-mode
       rich-minority
       s
-      smart-mode-line
+      spaceline
       ssh-config-mode
-      string-inf
+      string-inflection
       transpose-frame
+      undo-tree
       virtualenvwrapper
       wrap-region
       xkcd
