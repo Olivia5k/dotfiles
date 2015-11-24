@@ -4,6 +4,7 @@ vim/.netrwhist
 old-configs-backup
 local
 util/*quake*
+backup/
 
 /emacs.d/url/
 /emacs.d/semanticdb/
