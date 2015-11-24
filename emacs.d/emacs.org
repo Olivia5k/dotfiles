@@ -122,6 +122,7 @@ Defines the packages to be installed.
       transpose-frame
       undo-tree
       virtualenvwrapper
+      visual-regexp-steroids
       wrap-region
       xkcd
       yaml-mode
