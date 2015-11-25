@@ -1056,6 +1056,11 @@ F5: Toggle debug mode
         )
 #+end_src
 ** Window management
+#+begin_src emacs-lisp
+  ;; Try to make emax split vertically when possible
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
+#+end_src
 *** Emacs-like
 #+begin_src emacs-lisp
   (define-key global-map (kbd "C-x 2")
