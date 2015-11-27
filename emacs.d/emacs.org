@@ -1067,12 +1067,14 @@ F5: Toggle debug mode
     (lambda ()
       (interactive)
       (split-window-vertically)
+      (balance-windows)
       (windmove-down)))
 
   (define-key global-map (kbd "C-x 3")
     (lambda ()
       (interactive)
       (split-window-horizontally)
+      (balance-windows)
       (windmove-right)))
 
 #+end_src
@@ -1091,7 +1093,11 @@ F5: Toggle debug mode
           (save-buffer)
           (kill-buffer)
           (delete-frame))
-      (delete-window)))
+      (progn
+        (delete-window)
+        (save-excursion
+          (balance-windows)))))
+
   (global-set-key (kbd "C-q") 'th-kill-window)
 #+end_src
 ** Linum
