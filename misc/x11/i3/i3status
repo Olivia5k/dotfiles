@@ -1,0 +1,66 @@
+general {
+        output_format = "i3bar"
+        colors = true
+        interval = 1
+
+        color_good = "#9dbf60"
+        color_bad = "#ff464b"
+        color_degraded ="#898989"
+}
+
+order += "disk /"
+order += "path_exists VPN"
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "battery 0"
+order += "load"
+order += "tztime local"
+
+wireless wlan0 {
+        format_up = "(%quality at %essid, %bitrate) %ip"
+        format_down = "No wlan0"
+}
+
+ethernet eth0 {
+        # if you use %speed, i3status requires the cap_net_admin capability
+        format_up = "%ip (%speed)"
+        format_down = "No eth0"
+}
+
+battery 0 {
+        format = "%status %percentage %remaining %emptytime"
+        format_down = "No battery"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPNC {
+        # file containing the PID of a vpnc process
+        pidfile = "/var/run/vpnc/pid"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+        format = "%1min %5min %15min"
+}
+
+cpu_temperature 0 {
+        format = "T: %degrees °C"
+        path = "/sys/devices/platform/coretemp.0/temp1_input"
+}
+
+disk "/" {
+        format = "%free"
+}
