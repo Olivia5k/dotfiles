@@ -5,15 +5,9 @@
 # isn't found, it will be started.
 # Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 
-if [[ -z "$1" ]]; then
-  echo "Arguments required. See the script plz."
-  exit 1
-fi
-
-sess=$1  # Session name
-shift
-
-[[ -n "$1" ]] && host="$1" || host="$HOST"  # Hostname to check for
+sess=${1:-main}
+host=${2:-$HOST}
+cmd=$3
 title="${sess}@${host}"
 
 # Try to get focus. Do not care whether it works or not
@@ -23,9 +17,9 @@ wmraise $title
 if [[ $(ps ax | grep "mux $sess" -c) -lt 3 ]] ; then
   term="urxvt -name $title"
 
-  if [[ "$host" = "$HOST" ]]; then
-    ${(z)term} -e mux $sess
+  if [[ "$host" =~ "($HOST|localhost)" ]]; then
+    ${(z)term} -e mux $sess $cmd
   else
-    ${(z)term} -e ssh $host -t .local/share/infect/util/mux $sess
+    ${(z)term} -e ssh $host -t .local/share/infect/util/mux $sess $cmd
   fi
 fi

@@ -2,13 +2,4 @@
 # tmux session manager for smooth remote management.
 # Written by Lowe Thiderman (lowe.thiderman@gmail.com)
 # WTFPL
-
-sess=${1:-main}
-# Attach if it exists, create it if it doesn't.
-if tmux ls | grep -E "^$sess:" &> /dev/null; then
-    cmd="attach -d -t"
-else
-    cmd="new-session -s"
-fi
-
-tmux ${(z)cmd} $sess
+tmux new-session -s ${1:-main} -A $2

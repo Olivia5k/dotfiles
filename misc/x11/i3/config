@@ -63,9 +63,11 @@ bindcode Mod4+36 exec mor main
 bindcode Mod4+Mod1+36 exec muxwin
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_exec -z
-# bindcode Mod4+65 exec ror "kodi" "Kodi" "kodi"
-bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw
-bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw ~/org/payments.org
+
+bindsym Mod4+Mod1+d exec mor emacs localhost "emacsclient -nw -a ''"
+bindsym Mod4+Mod1+w exec mor org localhost "emacsclient -nw -a '' ~/org/payments.org"
+
+bindsym Mod4+i exec mor main di
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
 bindsym Mod4+c exec chromium-browser
 
