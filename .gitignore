@@ -21,3 +21,5 @@ backup/
 /emacs.d/helm-adaptive-history
 /emacs.d/anaconda-mode/
 /emacs.d/.org-id-locations
+/emacs.d/recentf~
+/infect.rc
