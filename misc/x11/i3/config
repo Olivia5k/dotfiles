@@ -105,15 +105,23 @@ ipc-socket ~/.local/share/i3/ipc.sock
 bar {
     status_command i3status
     colors {
-        background #333333
+        background #332833
         statusline #dbdbdb
                            #border #bg     #text
-        focused_workspace  #9dbf60 #45702c #bde6bd
-        active_workspace   #282828 #282828 #ffffff
-        inactive_workspace #222922 #151515 #608860
-        urgent_workspace   #2f343a #900000 #ffffff
+        focused_workspace  #bf60bf #702c70 #ffffff
+        active_workspace   #362836 #362836 #ffffff
+        inactive_workspace #222922 #151515 #886088
+        urgent_workspace   #ff0000 #900000 #ffffff
     }
 }
+
+# class                 border  backgr. text    indicator
+client.focused          #902090 #702c70 #ffffff #f299c7
+client.focused_inactive #443644 #332833 #ffffff #85546d
+client.unfocused        #332833 #221522 #886688 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
+client.background       #ffffff
 
 # no borders plx
 new_window pixel 3
