@@ -676,6 +676,12 @@ Note that C-j will preview the file without closing the helm buffer.
 These are my Go tricks. They are fairly opinionated, but once they work well
 enough I think I want to bring them to the upstream go-mode somehow! PR at the very least!
 
+*** Ideas
+**** TODO Compile in background
+**** TODO Compile buffer recognition of tests
+**** TODO C-c C-c in test buffer tests only latest test
+**** TODO Duplicate test function
+
 #+begin_src emacs-lisp
   (require 'go-mode)
 #+end_src
@@ -749,6 +755,21 @@ The test file will be created if it does not already exist.
     (interactive)
     (th-go-test-buffer-p))
 
+
+  (defun th-go-test-buffer-split (file)
+    ;; If we happen to be on the test file when splitting, go left once
+    (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
+      (windmove-left))
+
+    (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
+      (split-window-below)
+      (find-file fn)
+      (windmove-right)
+      (split-window-below)
+      (find-file (th-go-alternate-file fn))
+      (balance-windows)))
+
+
   (defun th-go-alternate-file (fn)
     "If fn is code, return path to test file and vice versa"
 
@@ -756,10 +777,14 @@ The test file will be created if it does not already exist.
         (s-replace "_test.go" ".go" fn)
       (s-replace ".go" "_test.go" fn)))
 
+  (defun th-go-test-file-p (fn)
+    "Returns boolean if the file name given is a test file"
+    (s-contains? "_test.go" fn))
+
   (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
 #+end_src
 *** helm based file visitor
-Shows a helm session with the current soruce files, and opens a view with the
+Shows a helm session with the current source files, and opens a view with the
 chosen candidate and its corresponding test file.
 #+begin_src emacs-lisp
   (defun th-helm-go-source-files ()
@@ -781,10 +806,16 @@ chosen candidate and its corresponding test file.
     (find-file (format "%s/%s.go" (projectile-project-root) file))
     (th-go-test-buffer-p))
 
+  (defun th-helm-go-source-visit-split (file)
+    (th-go-test-buffer-split file))
+
   (defvar th-helm-go-source-sources
     '((name . "go source files")
       (candidates . th-helm-go-source-files)
-      (action . th-helm-go-source-visit)))
+      (action . (
+                 ("visit file" . th-helm-go-source-visit)
+                 ("split below `C-c j'" . th-helm-go-source-visit-split)
+                 ))))
 
   (defun th-helm-go-source ()
     (interactive)
@@ -820,7 +851,33 @@ These are functions used inside of yas.
   (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
   (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
 
+  ;; NOTE: This is not go specific.
+  (defun th-toggle-maximize-buffer (&optional buffer-name)
+    "Maximize buffer"
+    (interactive)
+    (if (= 1 (length (window-list)))
+        (jump-to-register '_)
+      (progn
+        (window-configuration-to-register '_)
+        (if buffer-name
+            (switch-to-buffer buffer-name))
+        (delete-other-windows))))
 
+  (defun th-quit-compilation-buffer ()
+    ;; TODO: Maybe this can be done with advice instead?
+    (interactive)
+    (if (= 1 (length (window-list)))
+        (jump-to-register '_)
+      (quit-window)))
+
+  (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
+  (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
+
+  (defun th-go-maximize-log ()
+    (interactive)
+    (th-toggle-maximize-buffer "*compilation*"))
+
+  (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
 #+end_src
 
 ** General keybindings
