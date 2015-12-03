@@ -296,6 +296,28 @@
        `(magit-tag                           ((t (:foreground ,ujelly-neutral_green))))
        `(magit-whitespace-warning-face       ((t (:background ,ujelly-faded_red))))
 
+       ;; neotree
+       `(neo-banner-face              ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-button-face              ((t (:foreground ,ujelly-medium :weight bold :background nil))))
+       `(neo-dir-link-face            ((t (:foreground ,ujelly-blue-1 :weight bold :background nil))))
+       `(neo-expand-btn-face          ((t (:foreground ,ujelly-dark2 :weight bold :background nil))))
+       `(neo-file-link-face           ((t (:foreground ,ujelly-bright_orange :weight normal :background nil))))
+       `(neo-header-face              ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-root-dir-face            ((t (:foreground ,ujelly-bright_purple :weight bold :background nil))))
+       `(neo-vc-added-face            ((t (:foreground ,ujelly-faded_green :background nil))))
+       `(neo-vc-conflict-face         ((t (:foreground ,ujelly-white :background ,ujelly-orange-0))))
+       `(neo-vc-default-face          ((t (:foreground ,ujelly-fg :background nil))))
+       `(neo-vc-edited-face           ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-ignored-face          ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-missing-face          ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-needs-merge-face      ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-needs-update-face     ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-removed-face          ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-unlocked-changes-face ((t (:foreground ,ujelly-faded_yellow :background nil))))
+       `(neo-vc-unregistered-face     ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-up-to-date-face       ((t (:foreground ,ujelly-faded_red :background nil))))
+       `(neo-vc-user-face             ((t (:foreground ,ujelly-faded_red :background nil))))
+
        ;; org-mode
        `(org-agenda-date-today               ((t (:foreground ,ujelly-light2 :slant italic :weight bold))) t)
        `(org-agenda-structure                ((t (:inherit font-lock-comment-face ))))
