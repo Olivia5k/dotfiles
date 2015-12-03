@@ -106,7 +106,7 @@ bar {
     status_command i3status
     colors {
         background #332833
-        statusline #dbdbdb
+        statusline #ffccff
                            #border #bg     #text
         focused_workspace  #bf60bf #702c70 #ffffff
         active_workspace   #362836 #362836 #ffffff
