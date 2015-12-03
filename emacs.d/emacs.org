@@ -20,6 +20,7 @@ might've actually gotten things done. That would have been something, right?
 ** Path configuration
 #+begin_src emacs-lisp
   (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+
   (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
   (dolist
@@ -1214,6 +1215,17 @@ F5: Toggle debug mode
 #+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
+#+end_src
+** Spotify
+
+#+begin_src emacs-lisp
+  ;; work-specific things that are in other repositories because secrets.
+  (setq work-path "~/git/payments-elisp/")
+  (when (f-dir? work-path)
+    (add-to-list 'load-path work-path))
+
+  (when (f-dir? work-path)
+    (require 'payments))
 #+end_src
 ** custom
 
