@@ -74,6 +74,7 @@ Defines the packages to be installed.
       emmet
       epl
       expand-region
+      f
       fill-column-indicator
       flycheck
       fringe-helper
