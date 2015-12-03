@@ -881,7 +881,10 @@ These are functions used inside of yas.
 
   (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
 #+end_src
-
+*** Refactoring and renaming
+#+begin_src emacs-lisp
+  (define-key go-mode-map (kbd "C-c r") 'go-rename)
+#+end_src
 ** General keybindings
 #+begin_src emacs-lisp
   (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
