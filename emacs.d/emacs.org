@@ -944,6 +944,13 @@ F5: Toggle debug mode
       (interactive)
       (th-toggle-file (concat user-emacs-directory "emacs.org"))))
 
+  (define-key global-map (kbd "C-x <f2>")
+    (lambda ()
+      (interactive)
+      (split-window-below)
+      (windmove-down)
+      (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+
   (define-key global-map (kbd "<f3>")
     (lambda ()
       (interactive)
