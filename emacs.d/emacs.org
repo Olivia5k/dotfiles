@@ -643,16 +643,20 @@ Note that C-j will preview the file without closing the helm buffer.
                           (if (file-exists-p (concat buffer-file-name "c"))
                               (delete-file (concat buffer-file-name "c")))))))
 
+  (defun th-buffer-or-region (action-name buffer-func region-func)
+    (let ((s "Buffer"))
+      (if (use-region-p)
+          (progn
+            (funcall region-func (region-beginning) (region-end))
+            (keyboard-escape-quit)
+            (setq s "Region"))
+        (funcall buffer-func))
+
+      (message "buffer-or-region: %s %s" s action-name)))
+
   (defun eval-buffer-or-region ()
     (interactive)
-    (if (use-region-p)
-        (progn
-          (eval-region (region-beginning) (region-end))
-          (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
-          (message "Region eval"))
-      (progn
-        (eval-buffer)
-        (message "Buffer eval"))))
+    (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
 
   (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
 #+end_src
