@@ -643,11 +643,11 @@ Note that C-j will preview the file without closing the helm buffer.
                           (if (file-exists-p (concat buffer-file-name "c"))
                               (delete-file (concat buffer-file-name "c")))))))
 
-  (defun eval-buffer-or-region (point mark)
-    (interactive "r")
-    (if (region-active-p)
+  (defun eval-buffer-or-region ()
+    (interactive)
+    (if (use-region-p)
         (progn
-          (eval-region point mark)
+          (eval-region (region-beginning) (region-end))
           (keyboard-escape-quit) ;; Is it possible to quit region otherwise?
           (message "Region eval"))
       (progn
