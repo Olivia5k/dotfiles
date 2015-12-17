@@ -697,11 +697,14 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
      CLOSED: [2015-12-15 Tue 17:28]
 **** TODO Duplicate test function
 **** TODO Go to things
-***** Function name
-****** Special for tests
-***** Pointer
-***** Return values
-***** Docstring
+***** DONE Function name
+      CLOSED: [2015-12-17 Thu 18:27]
+****** DONE Special for tests
+       CLOSED: [2015-12-17 Thu 18:27]
+***** TODO Pointer
+***** DONE Return values
+      CLOSED: [2015-12-17 Thu 18:27]
+***** TODO Docstring
 ****** Create if don't exists
 ****** Update if wrong
 **** TODO Toggle pointer to structs in file
@@ -757,7 +760,9 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
   (define-key th-go-goto-map (kbd "f") 'th-go-goto-function-name)
 
   (defun th-go-goto-return-value ()
-    "Go to the return value declaration of the current function."
+    "Go to the return value declaration of the current function.
+
+  If there is none, make space for one to be added."
     (interactive)
     (th-go-goto-arguments)
     (re-search-forward ")" nil t)
@@ -791,6 +796,20 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
     (re-search-backward "^import" nil t))
 
   (define-key th-go-goto-map (kbd "i") 'th-go-goto-imports)
+
+  (defun th-go-goto-type-signature ()
+    "Go to the type signature of the current function.
+
+  If there is none, add parenthesis to add one."
+    (interactive)
+    (th-go-goto-function)
+    (forward-char 5)
+    (when (not (looking-at "("))
+      (save-excursion
+        (insert "() ")))
+    (forward-char 1))
+
+  (define-key th-go-goto-map (kbd "t") 'th-go-goto-type-signature)
 #+end_src
 *** Function browser
 #+begin_src emacs-lisp
