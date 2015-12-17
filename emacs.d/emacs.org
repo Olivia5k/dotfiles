@@ -803,12 +803,13 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
    "/home/thiderman/var/go/src/github.com/thiderman/towerfall/tournament_test.go"
    th-go-test-functions)
 
-  (-each (th-go-test-filter test-files)
-    (lambda (fn)
-      (puthash
-       fn
-       (th-go-filter-test-functions (th-go-get-functions-from-file fn))
-       th-go-test-functions)))
+  (defun th-go-test-files ()
+    (-each (th-go-test-filter test-files)
+      (lambda (fn)
+        (puthash
+         fn
+         (th-go-filter-test-functions (th-go-get-functions-from-file fn))
+         th-go-test-functions))))
 
   (defun th-go-get-functions-from-file (fn)
     "Filters out all functions from a file"
