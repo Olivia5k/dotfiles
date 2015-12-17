@@ -693,8 +693,24 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 *** Ideas
 **** TODO Compile in background
 **** TODO Compile buffer recognition of tests
-**** TODO C-c C-c in test buffer tests only latest test
+**** DONE C-M-x in test buffer tests only a single test
+     CLOSED: [2015-12-15 Tue 17:28]
 **** TODO Duplicate test function
+**** TODO Go to things
+***** Function name
+****** Special for tests
+***** Pointer
+***** Return values
+***** Docstring
+****** Create if don't exists
+****** Update if wrong
+**** TODO Toggle pointer to structs in file
+**** TODO Toggle error as return value
+**** TODO Template for error if nil (en)
+**** TODO Replace inside function
+**** TODO vr
+***** update colors
+***** add binding for vr mc
 
 #+begin_src emacs-lisp
   (require 'go-mode)
