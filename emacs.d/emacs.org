@@ -701,12 +701,14 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
       CLOSED: [2015-12-17 Thu 18:27]
 ****** DONE Special for tests
        CLOSED: [2015-12-17 Thu 18:27]
-***** TODO Pointer
+***** DONE Pointer
+      CLOSED: [2015-12-17 Thu 18:37]
 ***** DONE Return values
       CLOSED: [2015-12-17 Thu 18:27]
 ***** TODO Docstring
-****** Create if don't exists
-****** Update if wrong
+****** DONE Create if don't exists
+       CLOSED: [2015-12-17 Thu 20:14]
+****** TODO Update if wrong
 **** TODO Toggle pointer to structs in file
 **** TODO Toggle error as return value
 **** TODO Template for error if nil (en)
@@ -810,6 +812,35 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
     (forward-char 1))
 
   (define-key th-go-goto-map (kbd "t") 'th-go-goto-type-signature)
+
+  (defun th-go-goto-docstring ()
+    "Go to the top of the docstring of the current function.
+
+  If there is none, add one."
+    (interactive)
+    (th-go-goto-function)
+    (forward-line -1)
+    (beginning-of-line)
+
+    (while (looking-at "^//")
+      (forward-line -1))
+    (next-line 1)
+
+    (if (looking-at "^func")
+        (let ((name (th-go-get-function-name)))
+          (forward-line -1)
+          (newline)
+          (insert (format "// %s " name)))
+      (beginning-of-line)
+      (forward-char 3)))
+
+  (define-key th-go-goto-map (kbd "d") 'th-go-goto-docstring)
+
+  (defun th-go-get-function-name ()
+    "Return the current function name as a string"
+    (save-excursion
+      (th-go-goto-function-name)
+      (symbol-at-point)))
 #+end_src
 *** Function browser
 #+begin_src emacs-lisp
