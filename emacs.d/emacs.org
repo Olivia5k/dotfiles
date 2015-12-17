@@ -746,7 +746,7 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
     (th-go-goto-function)
     (let ((words 1)
           (chars 1))
-      (if (looking-at "func (")
+      (when (looking-at "func (")
           (setq words 3
                 chars 2))
       (forward-word words)
