@@ -741,14 +741,16 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 
   (defun th-go-goto-function ()
     (interactive)
-    (re-search-backward "^func" nil t))
+    (re-search-backward "^func" nil t)
+    (beginning-of-line))
 
   (defun th-go-goto-function-name ()
     "Go to the name of the current function.
 
   If the function is a test, place point after 'Test'."
     (interactive)
-    (th-go-goto-function)
+    (when (not (looking-at "func"))
+      (th-go-goto-function))
     (let ((words 1)
           (chars 1))
       (when (looking-at "func (")
