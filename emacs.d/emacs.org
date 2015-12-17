@@ -761,7 +761,12 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
     (interactive)
     ())
 
+  (defun th-go-goto-imports ()
+    "Go to the import declarations."
+    (interactive)
+    (re-search-backward "^import" nil t))
 
+  (define-key th-go-goto-map (kbd "i") 'th-go-goto-imports)
 #+end_src
 *** Function browser
 #+begin_src emacs-lisp
