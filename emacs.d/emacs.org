@@ -758,8 +758,14 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 
   (defun th-go-goto-return-value ()
     "Go to the return value of the current function."
+  (defun th-go-goto-arguments ()
+    "Go to the return value declaration of the current function."
     (interactive)
-    ())
+    (th-go-goto-function-name)
+    (forward-word 1)
+    (forward-char 1))
+
+  (define-key th-go-goto-map (kbd "a") 'th-go-goto-arguments)
 
   (defun th-go-goto-imports ()
     "Go to the import declarations."
