@@ -757,7 +757,25 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
   (define-key th-go-goto-map (kbd "f") 'th-go-goto-function-name)
 
   (defun th-go-goto-return-value ()
-    "Go to the return value of the current function."
+    "Go to the return value declaration of the current function."
+    (interactive)
+    (th-go-goto-arguments)
+    (re-search-forward ")" nil t)
+    (forward-char 1)
+
+    ;; Opening parenthesis, enter it
+    (when (looking-at "(")
+      (forward-char 1))
+    ;; First item is a pointer, move past the pointer
+    (when (looking-at "*")
+      (forward-char 1))
+    ;; No return arguments, add space for adding
+    (when (looking-at "{")
+      (insert " ")
+      (backward-char 1)))
+
+  (define-key th-go-goto-map (kbd "r") 'th-go-goto-return-value)
+
   (defun th-go-goto-arguments ()
     "Go to the return value declaration of the current function."
     (interactive)
