@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : x
+#key : x
+#contributor :
+# --
+x := 0
