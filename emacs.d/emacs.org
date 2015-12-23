@@ -735,7 +735,8 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 **** TODO Template for error if nil (en)
 **** TODO Replace inside function
 **** TODO vr
-***** update colors
+***** DONE update colors
+      CLOSED: [2015-12-23 Wed 18:28]
 ***** add binding for vr mc
 
 #+begin_src emacs-lisp
@@ -1112,7 +1113,7 @@ These are functions used inside of yas.
 #+begin_src emacs-lisp
   (define-key go-mode-map (kbd "C-c r") 'go-rename)
 #+end_src
-** General keybindings
+*** General keybindings
 #+begin_src emacs-lisp
   (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
   (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
