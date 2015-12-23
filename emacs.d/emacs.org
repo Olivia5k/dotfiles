@@ -1185,6 +1185,7 @@ F5: Toggle debug mode
     (lambda ()
       (interactive)
       (split-window-below)
+      (balance-windows)
       (windmove-down)
       (th-toggle-file (concat user-emacs-directory "emacs.org"))))
 
