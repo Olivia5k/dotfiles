@@ -118,6 +118,7 @@ Defines the packages to be installed.
       rainbow-mode
       rich-minority
       s
+      skewer-mode
       spaceline
       ssh-config-mode
       string-inflection
@@ -1122,6 +1123,12 @@ These are functions used inside of yas.
   (add-hook 'prog-mode-hook 'semantic-mode)
   (add-hook 'prog-mode-hook (lambda ()
                               (auto-save-mode -1)))
+#+end_src
+** skewer
+#+begin_src emacs-lisp
+  (add-hook 'js2-mode-hook 'skewer-mode)
+  (add-hook 'css-mode-hook 'skewer-css-mode)
+  (add-hook 'html-mode-hook 'skewer-html-mode)
 #+end_src
 * Minor modes and utilities
 ** Buffer toggles
