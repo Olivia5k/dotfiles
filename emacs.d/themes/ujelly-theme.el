@@ -16,6 +16,7 @@
       (ujelly-green-0         (if (display-graphic-p) "#99ad6a" "color-107"))
       (ujelly-green-1         (if (display-graphic-p) "#447799" "color-66"))
       (ujelly-green-2         (if (display-graphic-p) "#a8ff60" "color-155"))
+      (ujelly-green-3         (if (display-graphic-p) "#a8ff60" "color-108"))
       (ujelly-grey-0          (if (display-graphic-p) "#888888" "color-244"))
       (ujelly-grey-1          (if (display-graphic-p) "#7f7f7f" "color-240"))
       (ujelly-grey-2          (if (display-graphic-p) "#151515" "color-237"))
@@ -409,7 +410,16 @@
        `(web-mode-html-tag-face              ((t (:foreground ,ujelly-fg))))
        `(web-mode-symbol-face                ((t (:foreground ,ujelly-green-1))))
 
+       ;; visual-regexp colors
+       `(vr/group-0                          ((t (:foreground ,ujelly-delimiter-1))))
+       `(vr/group-1                          ((t (:foreground ,ujelly-delimiter-2))))
+       `(vr/group-2                          ((t (:foreground ,ujelly-delimiter-3))))
+       `(vr/match-0                          ((t (:background ,ujelly-grey-3 :foreground ,ujelly-yellow-0 :weight bold))))
+       `(vr/match-1                          ((t (:background ,ujelly-grey-4 :foreground ,ujelly-yellow-0 :weight bold))))
+       `(vr/match-separator-face             ((t (:background ,ujelly-bg :foreground ,ujelly-yellow-0))))
+
        ))
+
 
 ;;;###autoload
 (when load-file-name
