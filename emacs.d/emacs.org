@@ -530,6 +530,8 @@ Note that C-j will preview the file without closing the helm buffer.
    'org-babel-load-languages
    '((emacs-lisp . t)))
 
+  (org-bullets-mode 1)
+
   (setq org-confirm-babel-evaluate nil)
   (setq org-directory "~/org")
   (setq org-fontify-emphasized-text t) ;; fontify *bold* _underline_ /italic/ and so on
