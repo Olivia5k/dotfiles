@@ -858,13 +858,25 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
       (forward-line -1))
     (next-line 1)
 
-    (if (looking-at "^func")
-        (let ((name (th-go-get-function-name)))
-          (forward-line -1)
-          (newline)
-          (insert (format "// %s " name)))
-      (beginning-of-line)
-      (forward-char 3)))
+    (let ((fn (th-go-get-function-name)))
+      (if (looking-at "^func")
+          ;; If we are still at the function signature, we should add a new docstring.
+          (progn
+            (forward-line -1)
+            (newline)
+            (insert (format "// %s " fn)))
+
+        ;; Update the docstring function name if it is wrong
+        (beginning-of-line)
+        (forward-char 3)
+        ;; Add a space so that shortened forms (FooBar -> Foo) are updated as well
+        (when (not (looking-at (format "%s " fn)))
+          (kill-word 1)
+          (insert fn)
+          ;; If we updated and are at the end of the line, add a space.
+          (if (looking-at "$")
+              (insert "")
+            (forward-char 1))))))
 
   (define-key th-go-goto-map (kbd "d") 'th-go-goto-docstring)
 
@@ -1120,6 +1132,17 @@ These are functions used inside of yas.
 *** Refactoring and renaming
 #+begin_src emacs-lisp
   (define-key go-mode-map (kbd "C-c r") 'go-rename)
+#+end_src
+*** Docstring manipulation
+#+begin_src emacs-lisp
+  (defun th-go-update-docstring ()
+    "Update the docstring of the current function to match the name it has."
+    (interactive)
+    (save-excursion
+      ;; Since this will update if it is wrong, just call it and let it be.
+      (th-go-goto-docstring)))
+
+  (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
 #+end_src
 *** General keybindings
 #+begin_src emacs-lisp
