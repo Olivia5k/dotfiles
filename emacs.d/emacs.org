@@ -1378,6 +1378,13 @@ F5: Toggle debug mode
   (auto-fill-mode t)
   (auto-save-mode -1)
 #+end_src
+** Browser setup
+This uses the `www` command from the dotfiles repo and puts browser
+configuration outside of emacs.
+#+begin_src emacs-lisp
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "www")
+#+end_src
 ** Backups
 #+begin_src emacs-lisp
   (defvar --backup-directory (concat user-emacs-directory "backups"))
