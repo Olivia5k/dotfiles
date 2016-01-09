@@ -648,6 +648,18 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (global-set-key (kbd "C-x C-o") 'th-org-project)
 #+end_src
+**** Archiving
+#+begin_src emacs-lisp
+  (defun org-archive-done-tasks ()
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (outline-previous-heading)))
+     "/DONE" 'file)))
+
+  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
+#+end_src
 ** Elisp
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
