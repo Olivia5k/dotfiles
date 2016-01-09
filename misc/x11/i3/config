@@ -2,12 +2,11 @@ font pango: inconsolata 16px
 
 for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
+for_window [class="Kodi"] move container to workspace kodi; workspace kodi
+for_window [class=".*steam.*"] move container to workspace steam; workspace steam
 
 # Assigning
 assign [class="float"] ~
-for_window [class="Kodi"] move container to workspace kodi; workspace kodi
-for_window [class="Keepassx"] move container to workspace pass; workspace pass
-for_window [class=".*emacs.*"] move container to workspace emacs; workspace emacs
 
 # Focus (Mod4+hjkl)
 bindsym Mod4+h focus left
@@ -48,6 +47,7 @@ bindsym Mod4+r workspace spotify
 bindsym Mod4+a workspace tmux
 bindsym Mod4+s workspace social
 bindsym Mod4+d workspace dev
+bindsym Mod4+f workspace steam
 
 # Moving windows
 bindsym Mod4+Shift+q move container to workspace www
@@ -57,6 +57,7 @@ bindsym Mod4+Shift+r move container to workspace spotify
 bindsym Mod4+Shift+a move container to workspace tmux
 bindsym Mod4+Shift+s move container to workspace social
 bindsym Mod4+Shift+d move container to workspace dev
+bindsym Mod4+Shift+f move container to workspace steam
 
 # Applications
 bindcode Mod4+36 exec mor main
