@@ -793,15 +793,18 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
     (interactive)
     (when (not (looking-at "func"))
       (th-go-goto-function))
-    (let ((words 1)
-          (chars 1))
-      (when (looking-at "func (")
+    ;; If we are looking at func( we are on an anonymous function and
+    ;; nothing else should be done.
+    (when (not (looking-at "func("))
+      (let ((words 1)
+            (chars 1))
+        (when (looking-at "func (")
           (setq words 3
                 chars 2))
-      (forward-word words)
-      (forward-char chars))
-    (when (looking-at "Test")
-      (forward-char 4)))
+        (forward-word words)
+        (forward-char chars)
+        (when (looking-at "Test")
+          (forward-char 4)))))
 
   (define-key th-go-goto-map (kbd "f") 'th-go-goto-function-name)
 
