@@ -112,6 +112,7 @@ Defines the packages to be installed.
       pkg-info
       popwin
       projectile
+      protobuf-mode
       puppet-mode
       rainbow-delimiters
       rainbow-identifiers
