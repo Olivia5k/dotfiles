@@ -139,6 +139,7 @@
        `(match                               ((t (:background ,ujelly-red-1))))
        `(minibuffer-prompt                   ((t (:foreground ,ujelly-fg))))
        `(mode-line                           ((t (:background ,ujelly-grey-2 :foreground ,ujelly-fg ))))
+       `(button                              ((t (:foreground ,ujelly-blue-1 :weight bold :underline t))))
        `(mode-line-inactive                  ((t (:background ,ujelly-grey-4 :foreground ,ujelly-fg ))))
 
        ;; avy
@@ -187,8 +188,10 @@
        `(helm-candidate-number               ((t (:foreground ,ujelly-fg :background ,ujelly-bg))))
        `(helm-ff-directory                   ((t (:background ,ujelly-bg))))
        `(helm-ff-file                        ((t (:foreground ,ujelly-fg))))
+       `(helm-grep-cmd                       ((t (:foreground ,ujelly-black :background ,ujelly-grey-2 :bold t))))
        `(helm-match                          ((t (:foreground ,ujelly-blue-0 :background ,ujelly-bg :bold t))))
        `(helm-selection                      ((t (:foreground ,ujelly-yellow-1 :background ,ujelly-grey-2 :bold t))))
+       `(helm-selection-line                 ((t (:foreground ,ujelly-yellow-1 :background ,ujelly-grey-1 :bold t))))
        `(helm-source-header                  ((t (:foreground ,ujelly-red-1 :background ,ujelly-grey-4))))
        `(hl-line                             ((t (:background ,ujelly-grey-4))))
        `(isearch                             ((t (:foreground ,ujelly-fg :background ,ujelly-red-1))))
