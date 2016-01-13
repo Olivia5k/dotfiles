@@ -323,7 +323,7 @@ alias gsb='git show-branch'
 
 # Fetching
 alias gf='git fetch'
-alias gfa='git fetch -a'
+alias gfa='git fetch --all'
 
 # Remotes
 alias gre='git remote -v'
