@@ -730,7 +730,8 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 **** DONE C-M-x in test buffer tests only a single test
      CLOSED: [2015-12-15 Tue 17:28]
 **** TODO Duplicate test function
-**** TODO Go to things
+**** DONE Go to things
+     CLOSED: [2015-12-30 Wed 13:15]
 ***** DONE Function name
       CLOSED: [2015-12-17 Thu 18:27]
 ****** DONE Special for tests
@@ -739,10 +740,12 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
       CLOSED: [2015-12-17 Thu 18:37]
 ***** DONE Return values
       CLOSED: [2015-12-17 Thu 18:27]
-***** TODO Docstring
+***** DONE Docstring
+      CLOSED: [2015-12-30 Wed 13:15]
 ****** DONE Create if don't exists
        CLOSED: [2015-12-17 Thu 20:14]
-****** TODO Update if wrong
+****** DONE Update if wrong
+       CLOSED: [2015-12-30 Wed 13:15]
 **** TODO Toggle pointer to structs in file
 **** TODO Toggle error as return value
 **** TODO Template for error if nil (en)
@@ -1168,6 +1171,25 @@ These are functions used inside of yas.
       (th-go-goto-docstring)))
 
   (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
+#+end_src
+*** Struct pointer toggler
+#+begin_src emacs-lisp
+  (defun th-go-convert-type-name-to-signature (ts)
+    "Converts from the string \"Type\" to \"(t *Type)\""
+    (format "(%s *%s)" (s-downcase (s-left 1 ts)) ts))
+
+  (defun th-go-get-types ()
+    "Return a list of all the types found in the current file."
+    (save-excursion
+      (let ((fn (buffer-file-name)))
+        (message fn)
+        (with-temp-buffer
+          (insert-file-contents fn)
+          (split-string (buffer-string) "\n" t)
+          (keep-lines "^type")))))
+
+
+
 #+end_src
 *** General keybindings
 #+begin_src emacs-lisp
