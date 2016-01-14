@@ -140,6 +140,7 @@
        `(minibuffer-prompt                   ((t (:foreground ,ujelly-fg))))
        `(mode-line                           ((t (:background ,ujelly-grey-2 :foreground ,ujelly-fg ))))
        `(button                              ((t (:foreground ,ujelly-blue-1 :weight bold :underline t))))
+       `(help-argument-name                  ((t (:foreground ,ujelly-green-0 :weight bold))))
        `(mode-line-inactive                  ((t (:background ,ujelly-grey-4 :foreground ,ujelly-fg ))))
 
        ;; avy
