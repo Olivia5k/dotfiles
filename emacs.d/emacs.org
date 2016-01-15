@@ -657,7 +657,7 @@ Note that C-j will preview the file without closing the helm buffer.
      (lambda ()
        (org-archive-subtree)
        (setq org-map-continue-from (outline-previous-heading)))
-     "/DONE" 'file)))
+     "/DONE" 'file))
 
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 #+end_src
@@ -697,7 +697,7 @@ Note that C-j will preview the file without closing the helm buffer.
 ** Python
 #+begin_src emacs-lisp
     (require 'python)
-    (require 'snakecharmer)
+    ;; (require 'snakecharmer)
 
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'eldoc-mode)
@@ -797,7 +797,7 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 
       (when (not (looking-at "func"))
         (re-search-forward "\\<func\\>" nil t)
-        (backward-word))))))
+        (backward-word)))))
 
   (defun th-go-goto-function-name ()
     "Go to the name of the current function.
