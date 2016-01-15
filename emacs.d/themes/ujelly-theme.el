@@ -32,6 +32,7 @@
       (ujelly-red-1           (if (display-graphic-p) "#dd0093" "color-162"))
       (ujelly-red-2           (if (display-graphic-p) "#de5577" "color-168"))
       (ujelly-red-3           (if (display-graphic-p) "#ff73fd" "color-207"))
+      (ujelly-red-4           (if (display-graphic-p) "#ff73fd" "color-196"))
       (ujelly-yellow-0        (if (display-graphic-p) "#fad07a" "color-222"))
       (ujelly-yellow-1        (if (display-graphic-p) "#ffff00" "color-179"))
       (ujelly-delimiter-1     (if (display-graphic-p) "#8090a0" "color-103"))
@@ -151,12 +152,12 @@
        `(avy-lead-face-2     ((t (:background ,ujelly-bright_blue :foreground ,ujelly-dark0_hard :weight bold ))))
 
        ;; Compilation
-       `(compilation-error                   ((t (:foreground ,ujelly-red-0))))
-       `(compilation-info                    ((t (:foreground ,ujelly-yellow-0))))
-       `(compilation-line-number             ((t (:foreground ,ujelly-grey-0))))
-       `(compilation-mode-line-exit          ((t (:foreground ,ujelly-green-0))))
-       `(compilation-mode-line-fail          ((t (:foreground ,ujelly-red-0))))
-       `(compilation-mode-line-run           ((t (:foreground ,ujelly-yellow-0))))
+       `(compilation-error                   ((t (:foreground ,ujelly-red-0 :weight bold))))
+       `(compilation-info                    ((t (:foreground ,ujelly-yellow-0 :weight bold))))
+       `(compilation-line-number             ((t (:foreground ,ujelly-blue-0 :weight bold))))
+       `(compilation-mode-line-exit          ((t (:foreground ,ujelly-green-0 :weight bold))))
+       `(compilation-mode-line-fail          ((t (:foreground ,ujelly-red-0 :weight bold))))
+       `(compilation-mode-line-run           ((t (:foreground ,ujelly-yellow-0 :weight bold))))
 
        ;; dired
        `(diredp-date-time                    ((t (:foreground ,ujelly-fg))))
@@ -424,6 +425,11 @@
 
        ))
 
+;; Underlines are the absolute worst.
+(mapc
+ (lambda (face)
+   (set-face-attribute face nil ':underline nil))
+ (face-list))
 
 ;;;###autoload
 (when load-file-name
