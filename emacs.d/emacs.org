@@ -1045,7 +1045,7 @@ The test file will be created if it does not already exist.
   (defun th-go-get-test-above ()
     "Gets the name of the test above point"
     (save-excursion
-      (re-search-backward "^func Test" nil t)
+      (re-search-backward "^func \\(Test\\|Example\\)" nil t)
       (forward-word 2)
       (thing-at-point 'symbol t)))
 
