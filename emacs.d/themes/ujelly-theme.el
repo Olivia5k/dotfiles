@@ -9,7 +9,7 @@
 
 (let* ((class '((class color) (min-colors 89)))
       (ujelly-fg              (if (display-graphic-p) "#ffffff" "color-255"))
-      (ujelly-bg              (if (display-graphic-p) "#111111" "color-234"))
+      (ujelly-bg              (if (display-graphic-p) "#111111" nil))
       (ujelly-blue-0          (if (display-graphic-p) "#8fbfdc" "color-110"))
       (ujelly-blue-1          (if (display-graphic-p) "#97aad3" "color-74"))
       (ujelly-blue-2          (if (display-graphic-p) "#97aad3" "color-123"))
