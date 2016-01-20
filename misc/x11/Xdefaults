@@ -8,7 +8,7 @@ URxvt.url-select.launcher: www
 URxvt.url-select.underline: true
 URxvt.underlineURLs: true
 URxvt.transparent: true
-URxvt.shading: 30
+URxvt.shading: 40
 URxvt.fading: 0
 URxvt.iso14755: false
 URxvt.meta8: false
