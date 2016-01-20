@@ -727,33 +727,11 @@ enough I think I want to bring them to the upstream go-mode somehow! PR at the v
 *** Ideas
 **** TODO Compile in background
 **** TODO Compile buffer recognition of tests
-**** DONE C-M-x in test buffer tests only a single test
-     CLOSED: [2015-12-15 Tue 17:28]
 **** TODO Duplicate test function
-**** DONE Go to things
-     CLOSED: [2015-12-30 Wed 13:15]
-***** DONE Function name
-      CLOSED: [2015-12-17 Thu 18:27]
-****** DONE Special for tests
-       CLOSED: [2015-12-17 Thu 18:27]
-***** DONE Pointer
-      CLOSED: [2015-12-17 Thu 18:37]
-***** DONE Return values
-      CLOSED: [2015-12-17 Thu 18:27]
-***** DONE Docstring
-      CLOSED: [2015-12-30 Wed 13:15]
-****** DONE Create if don't exists
-       CLOSED: [2015-12-17 Thu 20:14]
-****** DONE Update if wrong
-       CLOSED: [2015-12-30 Wed 13:15]
 **** TODO Toggle pointer to structs in file
 **** TODO Toggle error as return value
 **** TODO Template for error if nil (en)
 **** TODO Replace inside function
-**** TODO vr
-***** DONE update colors
-      CLOSED: [2015-12-23 Wed 18:28]
-***** add binding for vr mc
 
 #+begin_src emacs-lisp
   (require 'go-mode)
