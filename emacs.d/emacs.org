@@ -1399,6 +1399,9 @@ F5: Toggle debug mode
                 tab-width 2
                 word-wrap t)
 
+
+  (put 'downcase-region 'disabled nil)
+
   (show-paren-mode t)
   (electric-pair-mode t)
   (global-auto-revert-mode t)
