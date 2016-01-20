@@ -323,7 +323,13 @@ alias gsb='git show-branch'
 
 # Fetching
 alias gf='git fetch'
-alias gfa='git fetch --all'
+function gfa {
+    if ! git config -l | grep "remote.origin.fetch" | grep refs/pull &> /dev/null; then
+        git config --add remote.origin.fetch "+refs/pull/*/head:refs/remotes/origin/pr/*"
+        print -P "%F{71}%BAuto%b%f: Set up PR fetching"
+    fi
+    git fetch --all
+}
 
 # Remotes
 alias gre='git remote -v'
