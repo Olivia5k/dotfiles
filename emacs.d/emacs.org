@@ -1319,6 +1319,18 @@ F5: Toggle debug mode
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x M-f") 'neotree-toggle)
 #+end_src
+** ffap
+#+begin_src emacs-lisp
+  ;; This literally has to exist in emacs, I just can't figure out where it is.
+  (global-set-key
+   (kbd "C-M-f")
+   (lambda ()
+     (interactive)
+     (let ((fn (ffap-file-at-point)))
+       (if fn
+           (find-file fn)
+         (error "No file found at point")))))
+#+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
