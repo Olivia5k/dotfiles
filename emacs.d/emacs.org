@@ -1315,6 +1315,10 @@ F5: Toggle debug mode
   (global-set-key (kbd "C-x C-h") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
  #+end_src
+** neotree
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x M-f") 'neotree-toggle)
+#+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
