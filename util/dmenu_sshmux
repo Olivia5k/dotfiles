@@ -1,0 +1,16 @@
+#!/bin/zsh
+# dmenu remote tmux selector
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+# WTFPL
+
+rc="${XDG_CONFIG_HOME:-$HOME/.config}/dmenu/dmenurc"
+if [[ -f $rc ]]; then
+  source $rc
+fi
+
+# Grab hosts from known_hosts, but remove all lines that are commented or are
+# hashed hostnames
+cat ${SSHMUX_KNOWN_HOSTS:-$HOME/.ssh/known_hosts} \
+  | grep -vE "^(\||#)" \
+  | cut -f1 -d" " | cut -f1 -d, \
+  | dmenu_any "sshmux" ${SSHMUX_CMD:-urxvt -e sshmux %q} -

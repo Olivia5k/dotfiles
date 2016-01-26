@@ -1,0 +1,63 @@
+#!/bin/zsh
+# dmenu generic command selector
+# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
+# WTFPL
+
+# dmenu_any is a generic command selector based on dmenu which comes with
+# a builtin MRU.
+#
+# It takes one mandatory and two optional arguments:
+#  $1: Cache filename
+#  $2: Command to execute
+#  $3: Whether to read stdin or not. If present, will read stdin.
+#
+# $1 is where the results will be stored for the MRU.
+# $2 should be a string containing one "%q". The result will be printf:ed onto
+#    that and than eval:ed. So, if you have an imaginary ssh selector, "ssh %q"
+#    is your best choice.
+# $3 is a toggle that indicates if one is to read from stdin. I haven't found
+#    a way to detect if there is stdin or not, so for now this toggle is used
+#    to figure out if there is stdin to be read. Just blindingly reading for
+#    stdin would cause a hang if there is no stdin being sent.
+
+if [[ -z "$1" ]]; then
+  echo "Error: No argument(s) given. See documentation in the script."
+  exit 1
+fi
+
+rc="${XDG_CONFIG_HOME:-$HOME/.config}/dmenu/dmenurc"
+if [[ -f $rc ]]; then
+  source $rc
+fi
+
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu/$1"
+cmd=${2:-echo %q}
+data=""
+
+if [[ -n "$3" ]]; then
+  # Parse stdin into an array and join into string separated by \n. This will
+  # retain spaces in the items.
+  args=()
+  while read stdin; do
+    args+="$stdin"
+  done
+  data=${(F)args}
+fi
+
+if [[ ! -f $cache ]]; then
+  mkdir -p $cache:h
+  touch $cache
+fi
+
+# Sort in most recently used order and pipe into dmenu.
+# TODO: Replace cut part with sed
+ret=$(echo $data | cat - $cache | sort | uniq -c | sort -nr | tr -s " " \
+  | cut -d" " -f3,4,5,6,7,8,9 | ${(z)DMENU:-dmenu -i})
+
+if [[ -z "$ret" ]]; then
+  exit 2
+fi
+
+# Store selected item in cache and execute command
+echo $ret >> $cache
+eval $(printf $cmd $ret)
