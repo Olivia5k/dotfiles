@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+# All but current workspaces
+noncurrent=${(u)$(i3-msg -t get_workspaces | jq -r "map(select(.focused != true)) | .[].name")}
+non

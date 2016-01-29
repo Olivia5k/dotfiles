@@ -696,25 +696,28 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 ** Python
 #+begin_src emacs-lisp
-    (require 'python)
-    ;; (require 'snakecharmer)
+  (require 'python)
+  ;; (require 'snakecharmer)
 
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'eldoc-mode)
-    (add-hook 'python-mode-hook 'flycheck-mode)
-    (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-goto-definitions)
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-find-definitions)
 
-    ;; (add-hook 'python-mode-hook
-    ;;           (lambda ()
-    ;;             (add-hook 'after-save-hook 'flycheck-first-error)))
+  ;; (add-hook 'python-mode-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'after-save-hook 'flycheck-first-error)))
 
-    (defun sp-goto-mail ()
-      "Go to the latest email in <root>/_outgoing_emails."
-      (interactive)
-      (find-file (car (last (directory-files
-                             (concat (projectile-project-root)
-                                     "_outgoing_emails")
-                             t)))))
+  (defun sp-goto-mail ()
+    "Go to the latest email in <root>/_outgoing_emails."
+    (interactive)
+    (find-file
+     (car
+      (last
+       (directory-files
+        (concat (projectile-project-root)
+                "_outgoing_emails")
+        t)))))
 
 
 
@@ -1318,6 +1321,7 @@ F5: Toggle debug mode
 ** neotree
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x M-f") 'neotree-toggle)
+  (global-set-key (kbd "M-n") 'neotree-toggle)
 #+end_src
 ** ffap
 #+begin_src emacs-lisp
