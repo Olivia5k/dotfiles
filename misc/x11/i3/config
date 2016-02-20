@@ -118,14 +118,14 @@ bar {
 
 # class                 border  backgr. text    indicator
 client.focused          #902090 #702c70 #ffffff #f299c7
-client.focused_inactive #443644 #332833 #ffffff #85546d
-client.unfocused        #332833 #221522 #886688 #292d2e
+client.focused_inactive #443644 #554055 #ffffff #85546d
+client.unfocused        #332033 #221522 #aaaaaa #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 client.background       #ffffff
 
 # no borders plx
-new_window pixel 3
+new_window pixel 5
 workspace_layout default
 
 exec maybe_kodi
