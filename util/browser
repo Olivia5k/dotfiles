@@ -1,6 +1,8 @@
 #!/bin/zsh
 
-if (( $+commands[chromium] )) ; then
+if (( $+commands[vimb])) ; then
+    vimb "$@"
+elif (( $+commands[chromium] )) ; then
     chromium "$@"
 elif (( $+commands[chromium-browser] )); then
     chromium-browser "$@"
