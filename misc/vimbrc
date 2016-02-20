@@ -1,0 +1,43 @@
+set editor-command=emacsclient -nw %s
+# Pretend that we are Chrome so that Google allows us to use Inbox and etc
+set useragent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+
+set spell-checking=true
+
+set minimumfontsize=10
+set monofontsize=10
+set fontsize=10
+
+set cursivfont=Droid Serif 10
+set defaultfont=Droid Sans 10
+set monofont=Inconsolata 10
+set sansfont=Droid Sans 10
+set seriffont=Droid Serif 10
+
+set hintkeys=asdfhjkl
+set home-page=https://www.facebook.com
+
+set completion-bg-active=#7c6f64
+set completion-fg-active=#ebdbb2
+set completion-bg-normal=#32302f
+set completion-fg-normal=#ebdbb2
+set completion-font=Inconsolata 12
+
+set input-bg-normal=#322032
+set input-fg-normal=#ebdbb2
+set input-bg-error=#32302f
+set input-fg-error=#ebdbb2
+set input-font-normal=Inconsolata 12
+set input-font-error=Inconsolata 12
+
+set status-color-bg=#3c273c
+set status-color-fg=#076678
+set status-ssl-color-bg=#3c203c
+set status-ssl-color-fg=#ff71f1
+set status-sslinvalid-color-bg=#d07571
+set status-sslinvalid-color-fg=#076678
+set status-font=Inconsolata 12
+set status-ssl-font=Inconsolata 12
+set status-sslinvalid-font=Inconsolata 12
+
+# set x-hint-command=:sh! ~/local/bin/plumber <C-R>; <CR>
