@@ -2,15 +2,13 @@
 
 import sys
 import re
+import shutil
 
 from urllib.parse import quote
 import subprocess as sub
 
 
 def browser(url):
-    # sub.Popen(['wmraise', '("Navigator" "Firefox")'])
-    # sub.Popen(['firefox', url], stdout=sub.PIPE, stderr=sub.PIPE)
-    sub.Popen(['wmraise', 'Chromium'])
     sub.Popen(['browser', url], stdout=sub.PIPE, stderr=sub.PIPE)
 
 
@@ -19,19 +17,26 @@ def urlize(args):
 
 
 def google(args):
-    return 'http://www.google.com/search?q=' + urlize(args)
+    return 'https://www.google.com/search?q=' + urlize(args)
 
 
 def main():
     url = None
 
     if len(sys.argv) == 1:
-        url = 'http://www.google.com'
-    elif len(sys.argv) > 2 or len(sys.argv) == 2 and '.' not in sys.argv[1] \
+        url = 'https://www.google.com'
+
+    url = sys.argv[1]
+    # If whatever was passed is an actual executable, execute it right away
+    exe = shutil.which(url)
+    if exe:
+        sub.Popen([url], stdout=sub.PIPE, stderr=sub.PIPE)
+        return 0
+
+    if len(sys.argv) > 2 or len(sys.argv) == 2 and '.' not in sys.argv[1] \
             and not sys.argv[1].startswith('http'):
         url = google(sys.argv[1:])
     else:
-        url = sys.argv[1]
 
         # If no protocol, add http
         if not re.search(r'[a-z]{2,}://', url):
