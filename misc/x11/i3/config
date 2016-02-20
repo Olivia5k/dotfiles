@@ -39,9 +39,13 @@ bindcode Mod4+75 layout tabbed
 bindcode Mod4+76 layout default
 bindcode Mod4+77 layout stacking
 
+# Workspace manipulation
+bindsym Mod4+w exec dmenu_i3 workspace "i3-msg workspace %q"
+bindsym Mod4+Shift+w exec dmenu_i3 move-to "i3-msg move container to workspace %q"
+
 # Windows
 bindsym Mod4+q workspace www
-bindsym Mod4+w workspace org
+# bindsym Mod4+w workspace org
 bindsym Mod4+e workspace conf
 bindsym Mod4+r workspace spotify
 bindsym Mod4+a workspace tmux
@@ -51,7 +55,7 @@ bindsym Mod4+f workspace steam
 
 # Moving windows
 bindsym Mod4+Shift+q move container to workspace www
-bindsym Mod4+Shift+w move container to workspace org
+# bindsym Mod4+Shift+w move container to workspace org
 bindsym Mod4+Shift+e move container to workspace conf
 bindsym Mod4+Shift+r move container to workspace spotify
 bindsym Mod4+Shift+a move container to workspace tmux
