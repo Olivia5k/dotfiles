@@ -63,7 +63,8 @@ bindsym Mod4+Shift+f move container to workspace steam
 bindcode Mod4+36 exec mor main
 bindcode Mod4+Mod1+36 exec muxwin
 bindcode Mod4+Mod1+Control+36 exec urxvt
-bindcode Mod4+65 exec dmenu_exec -z
+bindcode Mod4+65 exec dmenu_www
+bindcode Mod4+Control+65 exec dmenu_exec
 
 bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw -a ''
 bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw -a '' ~/org/agenda.org
