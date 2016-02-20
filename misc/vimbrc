@@ -40,4 +40,6 @@ set status-font=Inconsolata 12
 set status-ssl-font=Inconsolata 12
 set status-sslinvalid-font=Inconsolata 12
 
+set webinspector=true
+
 # set x-hint-command=:sh! ~/local/bin/plumber <C-R>; <CR>
