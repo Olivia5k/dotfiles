@@ -1493,7 +1493,6 @@ configuration outside of emacs.
     (if (and (one-window-p) (server-running-p))
         (progn
           (save-buffer)
-          (kill-buffer)
           (delete-frame))
       (progn
         (delete-window)
