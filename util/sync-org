@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+export PATH=$HOME/.local/bin:$PATH
+cd $HOME/org
+git sync &> /dev/null
