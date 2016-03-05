@@ -1,0 +1,3 @@
+#!/usr/bin/zsh
+current=$(i3-msg -t get_workspaces | jq -r "map(select(.focused == true)) | .[].name")
+mor $current

@@ -1,6 +1,6 @@
 font pango: inconsolata 16px
 
-for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
+# for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
 for_window [class="Kodi"] move container to workspace kodi; workspace kodi
 for_window [class=".*steam.*"] move container to workspace steam; workspace steam
@@ -13,6 +13,10 @@ bindsym Mod4+h focus left
 bindsym Mod4+j focus down
 bindsym Mod4+k focus up
 bindsym Mod4+l focus right
+
+# Killing
+bindcode Mod4+9 kill
+bindsym --release button2 kill
 
 # Splitting
 bindsym Mod4+Mod1+z split v
@@ -40,31 +44,46 @@ bindcode Mod4+76 layout default
 bindcode Mod4+77 layout stacking
 
 # Workspace manipulation
-bindsym Mod4+w exec dmenu_i3 workspace "i3-msg workspace %q"
-bindsym Mod4+Shift+w exec dmenu_i3 move-to "i3-msg move container to workspace %q"
+bindsym Mod4+w exec dmenu_i3_workspace workspace "i3-msg workspace %q"
+bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to workspace %q"
+
+# Dedicated workspaces
+bindsym Mod4+Control+j exec i3-or-raise "jira" "www https://jira.spotify.net"
+bindsym Mod4+c exec i3-or-raise "cal" "www https://calendar.google.com"
+bindsym Mod4+f exec i3-or-raise "facebook" "www https://facebook.com"
+bindsym Mod4+i exec mor irc
+bindsym Mod4+r exec i3-or-raise "reddit" "www https://reddit.com"
+bindsym Mod4+s exec i3-or-raise "spotify" "spotify"
+bindsym Mod4+t exec i3-or-raise "tvtropes" "www tvtropes.org"
+bindsym Mod4+m exec i3-or-raise "mail" "www https://inbox.google.com"
+bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
+
+# Window selection
+bindsym Mod4+q exec i3window
+bindsym Mod4+d exec i3-for-workspace "emacsclient"
 
 # Windows
-bindsym Mod4+q workspace www
+# bindsym Mod4+q workspace www
 # bindsym Mod4+w workspace org
-bindsym Mod4+e workspace conf
-bindsym Mod4+r workspace spotify
-bindsym Mod4+a workspace tmux
-bindsym Mod4+s workspace social
-bindsym Mod4+d workspace dev
-bindsym Mod4+f workspace steam
+# bindsym Mod4+e workspace conf
+# bindsym Mod4+r workspace spotify
+# bindsym Mod4+a workspace tmux
+# bindsym Mod4+s workspace social
+# bindsym Mod4+d workspace dev
+# bindsym Mod4+f workspace steam
 
 # Moving windows
-bindsym Mod4+Shift+q move container to workspace www
+# bindsym Mod4+Shift+q move container to workspace www
 # bindsym Mod4+Shift+w move container to workspace org
-bindsym Mod4+Shift+e move container to workspace conf
-bindsym Mod4+Shift+r move container to workspace spotify
-bindsym Mod4+Shift+a move container to workspace tmux
-bindsym Mod4+Shift+s move container to workspace social
-bindsym Mod4+Shift+d move container to workspace dev
-bindsym Mod4+Shift+f move container to workspace steam
+# bindsym Mod4+Shift+e move container to workspace conf
+# bindsym Mod4+Shift+r move container to workspace spotify
+# bindsym Mod4+Shift+a move container to workspace tmux
+# bindsym Mod4+Shift+s move container to workspace social
+# bindsym Mod4+Shift+d move container to workspace dev
+# bindsym Mod4+Shift+f move container to workspace steam
 
 # Applications
-bindcode Mod4+36 exec mor main
+bindcode Mod4+36 exec i3-mor
 bindcode Mod4+Mod1+36 exec muxwin
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_www
@@ -73,9 +92,9 @@ bindcode Mod4+Control+65 exec dmenu_exec
 bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw -a ''
 bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw -a '' ~/org/agenda.org
 
-bindsym Mod4+i exec mor main di
+# bindsym Mod4+i exec mor main `di
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
-bindsym Mod4+c exec chromium-browser
+# bindsym Mod4+c exec chromium-browser
 
 # Locking and switching
 bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png

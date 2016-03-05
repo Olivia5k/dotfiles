@@ -1,0 +1,9 @@
+#!/usr/bin/zsh
+
+source $XDG_CONFIG_HOME/dmux/dmuxrc
+
+# All but current workspaces
+noncurrent=$(i3-msg -t get_workspaces | jq -r "map(select(.focused != true)) | .[].name")
+ret=$(echo $noncurrent | dmenu ${(z)DMENU_OPTS} -p "$1")
+
+eval $(printf $2 $ret)

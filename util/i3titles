@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+import i3
+
+
+def flatten(d, key):
+    ret = []
+    if type(d) == list:
+        for o in [flatten(x, key) for x in d]:
+            if o:
+                ret += o
+    elif type(d) == dict:
+        for k, value in d.items():
+            if k == key:
+                ret.append(value)
+            elif type(d) == dict:
+                out = flatten(value, key)
+                if out:
+                    ret += out
+
+    return ret
+
+
+def main():
+    r = i3.filter()[0]["nodes"]
+    l = flatten(r, 'title')
+    for x in l:
+        # i3bars are not selectable windows, not for user purposes
+        if x.startswith("i3bar for"):
+            continue
+        print(x)
+
+
+if __name__ == '__main__':
+    main()

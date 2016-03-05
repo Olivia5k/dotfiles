@@ -1,0 +1,21 @@
+#!/usr/bin/zsh
+
+ws=${1}
+cmd=${2}
+
+current=$(i3-msg -t get_workspaces | jq -r "map(select(.focused == true)) | .[].name")
+
+if [[ "$ws" == "$current" ]] ; then
+    # If we are on the workspace we are executing for, go back to the original
+    i3-msg workspace back_and_forth
+else
+    # Go to the workspace in question
+    i3-msg workspace $ws &> /dev/null
+
+    # Check if there are windows. If there aren't launch the thing.
+    w=$(i3nodes $ws)
+    if [[ $w -eq 0 ]] ; then
+        sleep 0.5
+        exec ${(z)cmd}
+    fi
+fi
