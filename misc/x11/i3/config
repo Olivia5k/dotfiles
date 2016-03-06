@@ -14,6 +14,11 @@ bindsym Mod4+j focus down
 bindsym Mod4+k focus up
 bindsym Mod4+l focus right
 
+# Switching workspaces
+# These are technically inverted, but the original felt... off.
+bindsym Mod4+p workspace next
+bindsym Mod4+n workspace prev
+
 # Killing
 bindcode Mod4+9 kill
 bindsym --release button2 kill
@@ -100,8 +105,8 @@ bindsym Mod4+Mod1+Control+d exec emacs-daemon
 bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png
 bindcode Mod4+Mod1+22 exec sswitch
 bindcode Mod4+Mod1+Control+22 exec susp
-bindsym Mod4+p exec passmenu
-bindsym Mod4+n exec n
+bindsym Mod4+Control+p exec passmenu
+bindsym Mod4+Control+n exec n
 
 # Backlight
 bindsym Mod4+Mod1+1 exec xbacklight -set 10
