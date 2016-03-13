@@ -63,6 +63,11 @@ bindsym Mod4+t exec i3-or-raise "tvtropes" "www tvtropes.org"
 bindsym Mod4+m exec i3-or-raise "mail" "www https://inbox.google.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 
+# Org buffer in the scratchpad
+bindsym Mod4+o [title="^emacsclient"] scratchpad show
+bindsym Mod4+Mod1+o exec urxvt -fb "xft:inconsolata:bold:pixelsize=16" -e emacsclient -nw -a '' ~/org/agenda.org
+bindsym Mod4+Control+o move scratchpad
+
 # Window selection
 bindsym Mod4+q exec i3window
 bindsym Mod4+d exec i3-for-workspace "emacsclient"
@@ -75,7 +80,6 @@ bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
 
 bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw -a ''
-bindsym Mod4+Mod1+w exec urxvt -e emacsclient -nw -a '' ~/org/agenda.org
 
 # bindsym Mod4+i exec mor main `di
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
