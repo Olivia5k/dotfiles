@@ -1413,6 +1413,14 @@ F5: Toggle debug mode
   (setq auto-save-interval 90000
         auto-save-timeout 3600)
 
+  (defadvice save-buffer (around save-buffer-as-root-around activate)
+    "Use sudo to save the current buffer."
+    (interactive "p")
+    (if (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
+        (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
+      ad-do-it)
+      ad-do-it))
+
   (setq echo-keystrokes 0.4
         standard-indent 4
         tab-always-indent 'complete)
