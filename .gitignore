@@ -24,3 +24,4 @@ backup/
 /emacs.d/recentf~
 /infect.rc
 /emacs.d/.sx/*
+/emacs.d/tramp
