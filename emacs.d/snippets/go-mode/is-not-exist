@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : is-not-exist
+#key : ine
+#contributor : Lowe Thiderman
+# --
+if err != nil && ${1:!}os.IsNotExist(err) {
+	$0
+}

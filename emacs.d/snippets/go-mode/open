@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : open
+#key : o
+#contributor : Lowe Thiderman
+# --
+${1:file}, ${2:err} := os.Open(${3:fn})
