@@ -404,7 +404,11 @@
        `(rainbow-identifiers-identifier-15   ((t (:foreground ,ujelly-delimiter-15 ))))
 
        `(smerge-markers                      ((t (:foreground ,ujelly-yellow-0 :background ,ujelly-grey-2))))
-       `(smerge-refined-change               ((t (:foreground ,ujelly-green-0))))
+       `(smerge-base                         ((t (:foreground ,ujelly-fg :background ,ujelly-blue-2))))
+       `(smerge-mine                         ((t (:foreground ,ujelly-fg :background ,ujelly-purple-2))))
+       `(smerge-other                        ((t (:foreground ,ujelly-fg :background ,ujelly-green-3))))
+       `(smerge-refined-added                ((t (:foreground ,ujelly-fg))))
+       `(smerge-refined-change               ((t (:foreground ,ujelly-fg))))
 
        `(trailing-whitespace                 ((t (:background ,ujelly-red-1))))
        `(whitespace-trailing                 ((t (:background ,ujelly-red-1))))
