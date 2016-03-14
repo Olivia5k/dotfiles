@@ -1532,17 +1532,24 @@ configuration outside of emacs.
 ** Linum
 #+begin_src emacs-lisp
   (global-linum-mode 0)
+  (setq linum-format " %4d ")
+
+  (defvar th-linum-modes
+    '(eshell-mode wl-summary-mode compilation-mode org-mode
+                  dired-mode doc-view-mode image-mode))
 
   (defun th-linum-filter ()
-    "killall -9 linum"
+    "Disable linum-mode if the file mode is in the defined list"
 
-    (linum-mode -1))
+    (unless (or
+             (-contains? th-linum-modes major-mode)
+             (string-match "*" (buffer-name)))
+      (linum-mode 1)))
 
   (add-hook 'find-file-hook 'th-linum-filter)
 
   (fringe-mode 12)
   (setq scroll-step 10)
-
 #+end_src
 ** Clean mode line
 #+begin_src emacs-lisp
