@@ -4,9 +4,7 @@ d="$HOME/tmp/nm-$UID"
 mkdir -p $d
 cd $d
 
-if [[ -n "$GNOME_KEYRING_CONTROL" ]]; then
-    eval $(gnome-keyring-daemon)
-fi
+eval $(gnome-keyring-daemon)
 
 killall nm-applet
 nm-applet &> /dev/null &|
