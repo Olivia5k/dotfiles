@@ -1192,6 +1192,7 @@ F2: Open this file
 F3: Open main org file
 F4: Scratch buffer
 F5: Toggle debug mode
+C-x ?: Print current file name relative to project root
 
 *** Functions
 #+begin_src emacs-lisp
@@ -1224,6 +1225,13 @@ F5: Toggle debug mode
             (save-buffer)
             (previous-buffer))
         (find-file file))))
+
+  (defun th-echo-file-name ()
+    (interactive)
+    (message
+     (s-chop-prefix
+      (projectile-project-root)
+      (file-truename (buffer-name)))))
 #+end_src
 *** Keymaps
 #+begin_src emacs-lisp
@@ -1265,6 +1273,8 @@ F5: Toggle debug mode
             (setq doe nil))
         (setq debug-on-error doe)
         (message "debug-on-error set to %s" doe))))
+
+  (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
 #+end_src
 ** magit and git
 *** magit
