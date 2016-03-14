@@ -704,6 +704,11 @@ Note that C-j will preview the file without closing the helm buffer.
   (add-hook 'python-mode-hook 'flycheck-mode)
   (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-find-definitions)
 
+  (defun th-python-mode-hook ()
+    (add-to-list 'company-backends 'company-jedi))
+
+  (add-hook 'python-mode-hook 'th-python-mode-hook)
+
   ;; (add-hook 'python-mode-hook
   ;;           (lambda ()
   ;;             (add-hook 'after-save-hook 'flycheck-first-error)))
