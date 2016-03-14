@@ -1355,8 +1355,13 @@ C-x ?: Print current file name relative to project root
  #+end_src
 ** neotree
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x M-f") 'neotree-toggle)
-  (global-set-key (kbd "M-n") 'neotree-toggle)
+  (defun neotree-toggle-windows ()
+    (interactive)
+    (neotree-toggle)
+    (balance-windows))
+
+  (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
+  (global-set-key (kbd "M-n") 'neotree-toggle-windows)
 #+end_src
 ** ffap
 #+begin_src emacs-lisp
