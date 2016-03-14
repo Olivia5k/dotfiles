@@ -564,10 +564,8 @@ function fuck() {
 export _Z_CMD="j"
 [ -f ~/git/z/z.sh ] && source ~/git/z/z.sh
 
-cli=$HOME/git/cli/autocomplete/zsh_autocomplete
-if [[ -f $cli ]] ; then
-    PROG=sagacity source $cli
-fi
+PROG=sagacity source $GOPATH/src/github.com/codegangsta/cli/autocomplete/$(basename $SHELL)_autocomplete
+alias sp=sagacity
 
 local USERFILE="$ZSHCONFDIR/local.zsh"
 if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
