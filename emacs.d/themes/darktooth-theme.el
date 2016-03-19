@@ -134,7 +134,7 @@
 
    ;; RainbowDelimiters
    `(rainbow-delimiters-depth-1-face           ((t (:foreground ,darktooth-delimiter-one ))))
-   `(rainbow-delimiters-depth-2-face           ((t (:foreground ,darktooth-delimiter-two                                                                                                    ))))
+   `(rainbow-delimiters-depth-2-face           ((t (:foreground ,darktooth-delimiter-two ))))
    `(rainbow-delimiters-depth-3-face           ((t (:foreground ,darktooth-delimiter-three ))))
    `(rainbow-delimiters-depth-4-face           ((t (:foreground ,darktooth-delimiter-four ))))
    `(rainbow-delimiters-depth-5-face           ((t (:foreground ,darktooth-delimiter-one ))))
@@ -173,7 +173,7 @@
 
    ;; Smartparens
    `(sp-pair-overlay-face                      ((t ( :background ,darktooth-dark2 ))))
-   ;;`(sp-wrap-overlay-face                    ((t (:inherit sp-wrap-overlay-face                                                                                                           ))))
+   ;;`(sp-wrap-overlay-face                    ((t (:inherit sp-wrap-overlay-face ))))
    ;;`(sp-wrap-tag-overlay-face                ((t (:inherit sp-wrap-overlay-face ))))
    `(sp-show-pair-match-face                   ((t ( :background ,darktooth-dark2 )))) ;; Pair tags highlight
    `(sp-show-pair-mismatch-face                ((t ( :background ,darktooth-neutral_red )))) ;; Highlight for bracket without pair
@@ -375,7 +375,7 @@
    `(company-tooltip-selection                 ((t (:foreground ,darktooth-light0 :background ,darktooth-faded_blue ))))
 
    ;; helm
-   `(helm-M-x-key                              ((t (:foreground ,darktooth-neutral_orange                                                                                                   ))))
+   `(helm-M-x-key                              ((t (:foreground ,darktooth-neutral_orange ))))
    `(helm-action                               ((t (:foreground ,darktooth-white :underline t ))))
    `(helm-bookmark-addressbook                 ((t (:foreground ,darktooth-neutral_red ))))
    `(helm-bookmark-directory                   ((t (:foreground ,darktooth-bright_purple ))))
@@ -449,7 +449,8 @@
      (boundp 'custom-theme-load-path)
      (add-to-list 'custom-theme-load-path
                   (file-name-as-directory
-                   (file-name-directory load-file-name                                                                                                             ))))
+                   (file-name-directory load-file-name))))
+
 
 (provide-theme 'darktooth)
 
