@@ -117,7 +117,24 @@ focus_follows_mouse no
 ipc-socket ~/.local/share/i3/ipc.sock
 
 bar {
+    output eDP1
+    output DP1
     status_command i3status
+    colors {
+        background #332833
+        statusline #ffccff
+                           #border #bg     #text
+        focused_workspace  #bf60bf #702c70 #ffffff
+        active_workspace   #362836 #362836 #ffffff
+        inactive_workspace #222922 #151515 #886088
+        urgent_workspace   #ff0000 #900000 #ffffff
+    }
+}
+
+
+bar {
+    output DP2
+    status_command i3status --config /etc/i3status-small.conf
     colors {
         background #332833
         statusline #ffccff
