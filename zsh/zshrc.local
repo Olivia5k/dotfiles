@@ -47,7 +47,7 @@ alias hc="herbstclient"
 
 alias e="emacsclient -nw"
 alias ed="emacs --daemon &|"
-alias vim="emacsclient -nw"
+# alias vim="emacsclient -nw"
 
 alias :q="exit"
 alias bell='echo -en "\007"'
