@@ -564,7 +564,10 @@ function fuck() {
 export _Z_CMD="j"
 [ -f ~/git/z/z.sh ] && source ~/git/z/z.sh
 
-PROG=sagacity source $GOPATH/src/github.com/codegangsta/cli/autocomplete/$(basename $SHELL)_autocomplete
+cli=$GOPATH/src/github.com/codegangsta/cli/autocomplete/$(basename $SHELL)_autocomplete
+if [ -f $cli ] ; then
+    PROG=sagacity source $cli
+fi
 alias sp=sagacity
 
 local USERFILE="$ZSHCONFDIR/local.zsh"
