@@ -25,3 +25,4 @@ backup/
 /infect.rc
 /emacs.d/.sx/*
 /emacs.d/tramp
+*.cache
