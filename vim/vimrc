@@ -19,7 +19,6 @@ let s:addons = []
 
 let s:addons += [
   \ 'nanotech/jellybeans.vim',
-  \ 'endel/vim-github-colorscheme.git',
 \ ]
 
 " }}}
@@ -27,46 +26,28 @@ let s:addons += [
 
 let s:addons += [
   \ 'itchyny/lightline.vim',
-  \ 'gregsexton/MatchTag',
-  \ 'kien/ctrlp.vim',
-  \ 'thiderman/ctrlp-project',
-  \ 'thiderman/vim-syntaxjump',
-  \ 'thiderman/vim-coward',
-  \ 'majutsushi/tagbar',
   \ 'scrooloose/nerdtree',
-  \ 'scrooloose/syntastic',
 \ ]
 
 " }}}
 " Git {{{
 
 let s:addons += [
-  \ 'tpope/vim-fugitive',
-  \ 'gregsexton/gitv',
 \ ]
 
 " }}}
 " Python {{{
 
 let s:addons += [
-  \ 'thiderman/vim-snakecharmer',
-  \ 'thiderman/vim-snakeskin',
-  \ 'thiderman/vim-troves',
-  \ 'thiderman/python-syntax',
 \ ]
 
 " }}}
 " Misc filetypes {{{
 
 let s:addons += [
-  \ 'fatih/vim-go',
   \ 'evanmiller/nginx-vim-syntax',
   \ 'rodjek/vim-puppet',
-  \ 'chrisbra/csv.vim',
-  \ 'PotatoesMaster/i3-vim-syntax',
   \ 'tpope/vim-markdown',
-  \ 'zaiste/tmux.vim',
-  \ 'chrisyip/Better-CSS-Syntax-for-Vim',
   \ 'elzr/vim-json',
 \ ]
 
@@ -74,35 +55,19 @@ let s:addons += [
 " Completion and snippets {{{
 
 let s:addons += [
-  \ 'SirVer/UltiSnips',
-  \ 'honza/vim-snippets',
 \ ]
 
 " }}}
 " Editing and misc {{{
 
 let s:addons += [
-  \ 'AndrewRadev/switch.vim',
   \ 'Raimondi/delimitMate',
-  \ 'godlygeek/tabular',
-  \ 'michaeljsmith/vim-indent-object',
-  \ 'mileszs/ack.vim',
-  \ 'kurkale6ka/vim-swap',
-  \ 'kurkale6ka/vim-pairs',
-  \ 'maxbrunsfeld/vim-yankstack',
-  \ 'terryma/vim-multiple-cursors',
-  \ 'tpope/vim-abolish',
   \ 'tpope/vim-commentary',
-  \ 'tpope/vim-dispatch',
   \ 'tpope/vim-endwise',
   \ 'tpope/vim-eunuch',
-  \ 'tpope/vim-projectionist',
   \ 'tpope/vim-repeat',
-  \ 'tpope/vim-scriptease',
   \ 'tpope/vim-surround',
-  \ 'tpope/vim-unimpaired',
   \ 'vim-scripts/argtextobj.vim',
-  \ 'vim-scripts/vimwiki',
 \ ]
 
 " }}}
@@ -130,12 +95,7 @@ fun! SetupVAM(addons)
   call vam#ActivateAddons(a:addons, {'auto_install' : 1})
 endfun
 
-" Silently install VAM stuff. This makes it possible to make a silent vim
-" install from puppet or similar. If not silent, there will be an "Press ENTER
-" to continue" prompt due to output, and this breaks automatic installs.
-set nomore
-silent call SetupVAM(s:addons)
-set more
+call SetupVAM(s:addons)
 
 " The classic one!
 runtime macros/matchit.vim
