@@ -1,17 +1,24 @@
 #!/bin/zsh
 # xrandr screen switch and rotator
 
-out=$(xrandr)
-other=$(echo $out | grep " connected (" | cut -d" " -f1)
-current=$(echo $out | grep -e " connected [0-9]" | cut -d" " -f1)
+other=$(xrandr | grep " connected (" | cut -d" " -f1)
 
 if [[ -z "$other" ]]; then
-  echo "No other non-disconnected screen. Doing nothing."
+  notify-send "No other non-disconnected screen. Doing nothing."
   exit 0
 fi
 
-xrandr --output $other --auto
-xrandr --output $current --off
+if [[ "$other" == "eDP1" ]] ; then
+    xrandr --output eDP1 --auto
+    xrandr --output DP1 --off
+    xrandr --output DP2 --off
+else
+    xrandr --output DP1 --auto
+    xrandr --output DP2 --auto
+    xrandr --output DP2 --right-of DP1
+    xrandr --output DP2 --rotate left
+    xrandr --output eDP1 --off
+fi
 
 keyboard-setup
 wp
