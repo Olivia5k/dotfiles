@@ -1,6 +1,6 @@
 set editor-command=emacsclient -nw %s
 # Pretend that we are Chrome so that Google allows us to use Inbox and etc
-set useragent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+# set useragent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
 
 set spell-checking=true
 
