@@ -30,8 +30,8 @@ set input-fg-error=#ebdbb2
 set input-font-normal=Inconsolata 12
 set input-font-error=Inconsolata 12
 
-set status-color-bg=#3c273c
-set status-color-fg=#076678
+set status-color-bg=#000000
+set status-color-fg=#ff61f1
 set status-ssl-color-bg=#3c203c
 set status-ssl-color-fg=#ff71f1
 set status-sslinvalid-color-bg=#d07571
