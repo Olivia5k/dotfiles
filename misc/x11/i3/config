@@ -60,7 +60,7 @@ bindsym Mod4+i exec mor irc
 bindsym Mod4+r exec i3-or-raise "reddit" "www https://reddit.com"
 bindsym Mod4+s exec i3-or-raise "spotify" "spotify"
 bindsym Mod4+t exec i3-or-raise "tvtropes" "www tvtropes.org"
-bindsym Mod4+m exec i3-or-raise "mail" "www https://inbox.google.com"
+# bindsym Mod4+m exec i3-or-raise "mail" "www https://inbox.google.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 
 # Org buffer in the scratchpad
@@ -102,6 +102,11 @@ bindsym Mod4+Mod1+6 exec xbacklight -set 60
 bindsym Mod4+Mod1+7 exec xbacklight -set 70
 bindsym Mod4+Mod1+8 exec xbacklight -set 80
 bindsym Mod4+Mod1+9 exec xbacklight -set 90
+
+# Volume control
+bindcode Mod4+59 exec vol down
+bindcode Mod4+60 exec vol up
+bindsym Mod4+m exec vol mute
 
 # i3 control
 bindsym Mod4+Control+k kill
