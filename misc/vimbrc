@@ -47,3 +47,4 @@ set scripts=on
 
 nmap h <C-o>
 nmap l <C-i>
+nmap i zI
