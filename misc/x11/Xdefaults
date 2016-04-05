@@ -20,8 +20,8 @@ URxvt.keysym.C-S-Down: perl:font-size:decglobal
 URxvt.font-size.step:  2
 
 ! fonts
-*.font: xft:inconsolata:bold:pixelsize=16
-*.boldFont: xft:inconsolata:bold:pixelsize=16
+*.font: xft:iosevka:pixelsize=16
+*.boldFont: xft:iosevka:bold:pixelsize=16
 Xft.dpi: 100.0
 
 ! Colorscheme (unnamed)
@@ -48,4 +48,4 @@ URxvt.color15: #ffffff
 emacs.Background: #111117
 emacs.Foreground: #dcdccc
 emacs.FontBackend: xft
-emacs.Font: Inconsolata-14
+emacs.Font: Iosevka-14
