@@ -1,1 +1,1 @@
-DMENU_OPTS="-i -fn 'Inconsolata-12:normal' -p exec -b -l 15 -nb #333 -nf #dbdbdb -sb #902090 -sf #e6bde6"
+DMENU_OPTS="-i -fn iosevka -p exec -b -l 15 -nb #333 -nf #dbdbdb -sb #902090 -sf #e6bde6"

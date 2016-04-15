@@ -1,4 +1,4 @@
-font pango: inconsolata 16px
+font pango: iosevka 16px
 
 # for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
