@@ -42,7 +42,7 @@
       (darktooth-bright_blue     (if g "#83A598" "color-109"))
       (darktooth-bright_purple   (if g "#D3869B" "color-175"))
       (darktooth-bright_aqua     (if g "#8EC07C" "color-108"))
-      (darktooth-bright_orange   (if g "#FE8019" "color-208"))
+      (darktooth-bright_orange   (if g "#FE80FE" "color-208"))
 
       ;; neutral, no 256-color code, requested, nice work-around meanwhile
       (darktooth-neutral_red     (if g "#FB4934" "#D75F5F"))
@@ -51,7 +51,7 @@
       (darktooth-neutral_blue    (if g "#83A598" "#87AFAF"))
       (darktooth-neutral_purple  (if g "#D3869B" "#D787AF"))
       (darktooth-neutral_aqua    (if g "#8EC07C" "#87AF87"))
-      (darktooth-neutral_orange  (if g "#FE8019" "#FF8700"))
+      (darktooth-neutral_orange  (if g "#dd40dd" "#FF8700"))
 
       (darktooth-faded_red       (if g "#9D0006" "color-88"))
       (darktooth-faded_green     (if g "#79740E" "color-100"))
@@ -76,9 +76,9 @@
 
       (darktooth-white           (if g "#FFFFFF" "white"))
       (darktooth-black           (if g "#000000" "black"))
-      (darktooth-sienna          (if g "#DD6F48" "sienna"))
+      (darktooth-sienna          (if g "#DD6Fdd" "sienna"))
       (darktooth-darkslategray4  (if g "#528B8B" "DarkSlateGray4"))
-      (darktooth-lightblue4      (if gp "#66999D" "LightBlue4"))
+      (darktooth-lightblue4      (if g "#66999D" "LightBlue4"))
       (darktooth-burlywood4      (if g "#BBAA97" "burlywood4"))
       (darktooth-aquamarine4     (if g "#83A598" "aquamarine4"))
       (darktooth-turquoise4      (if g "#61ACBB" "turquoise4")))
@@ -104,7 +104,7 @@
    `(font-lock-builtin-face                    ((t (:foreground ,darktooth-bright_orange ))))
    `(font-lock-constant-face                   ((t (:foreground ,darktooth-burlywood4 ))))
    `(font-lock-comment-face                    ((t (:foreground ,darktooth-dark4 ))))
-   `(font-lock-function-name-face              ((t (:foreground ,darktooth-light4 ))))
+   `(font-lock-function-name-face              ((t (:foreground ,darktooth-bright_purple ))))
    `(font-lock-keyword-face                    ((t (:foreground ,darktooth-sienna ))))
    `(font-lock-string-face                     ((t (:foreground ,darktooth-darkslategray4 ))))
    `(font-lock-variable-name-face              ((t (:foreground ,darktooth-aquamarine4 ))))
