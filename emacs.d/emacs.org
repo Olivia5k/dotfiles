@@ -152,7 +152,7 @@ Defines the packages to be installed.
 ** Appearance
 #+begin_src emacs-lisp
   (set-default-font "Inconsolata-12")
-  (load-theme darktooth t)
+  (load-theme 'ujelly t)
 
   ;; Remove underlines, make everything bold.
   (mapc
