@@ -50,7 +50,7 @@ bindcode Mod4+77 layout stacking
 
 # Workspace manipulation
 bindsym Mod4+w exec dmenu_i3_workspace workspace "i3-msg workspace %q"
-bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to workspace %q"
+bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to workspace %q" true
 
 # Dedicated workspaces
 bindsym Mod4+Control+j exec i3-or-raise "jira" "www https://jira.spotify.net"
