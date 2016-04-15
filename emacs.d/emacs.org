@@ -1375,20 +1375,26 @@ C-x ?: Print current file name relative to project root
     (neotree-toggle)
     (balance-windows))
 
-  (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
+  ;; (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
   (global-set-key (kbd "M-n") 'neotree-toggle-windows)
 #+end_src
 ** ffap
 #+begin_src emacs-lisp
   ;; This literally has to exist in emacs, I just can't figure out where it is.
   (global-set-key
-   (kbd "C-M-f")
+   (kbd "C-x M-f")
    (lambda ()
      (interactive)
-     (let ((fn (ffap-file-at-point)))
+     (let ((fn (ffap-file-at-point))
+           (sym (symbol-name (symbol-at-point))))
        (if fn
            (find-file fn)
-         (error "No file found at point")))))
+         (helm :sources helm-projectile-sources-list
+               :buffer "*helm projectile*"
+               :input sym
+               :prompt (projectile-prepend-project-name (if (projectile-project-p)
+                                                            "pattern: "
+                                                          "Switch to project: ")))))))
 #+end_src
 ** dired
 #+begin_src emacs-lisp
