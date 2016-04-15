@@ -144,6 +144,10 @@ Defines the packages to be installed.
              (assoc pkg package-archive-contents))
       (package-install pkg)))
 #+end_src
+** Required packages for the configuration
+#+begin_src emacs-lisp
+  (require 's)
+#+end_src
 * Interface
 ** Appearance
 #+begin_src emacs-lisp
