@@ -306,8 +306,8 @@ Note that C-j will preview the file without closing the helm buffer.
 #+end_src
 ** spaceline
 #+begin_src emacs-lisp
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme)
+  ;; (require 'spaceline-config)
+  ;; (spaceline-spacemacs-theme)
 #+end_src
 ** popwin
 #+begin_src emacs-lisp
