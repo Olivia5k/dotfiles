@@ -124,6 +124,7 @@ ipc-socket ~/.local/share/i3/ipc.sock
 bar {
     output eDP1
     output DP1
+    output VGA1
     status_command i3status
     colors {
         background #332833
