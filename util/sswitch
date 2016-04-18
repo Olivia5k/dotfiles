@@ -3,20 +3,11 @@
 
 other=$(xrandr | grep " connected (" | cut -d" " -f1)
 
-if [[ -z "$other" ]]; then
-  notify-send "No other non-disconnected screen. Doing nothing."
-  exit 0
-fi
-
 if [[ "$other" == "eDP1" ]] ; then
     xrandr --output eDP1 --auto
     xrandr --output DP1 --off
-    xrandr --output DP2 --off
 else
     xrandr --output DP1 --auto
-    xrandr --output DP2 --auto
-    xrandr --output DP2 --right-of DP1
-    xrandr --output DP2 --rotate left
     xrandr --output eDP1 --off
 fi
 
