@@ -64,9 +64,9 @@ bindsym Mod4+t exec i3-or-raise "tvtropes" "www tvtropes.org"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 
 # Org buffer in the scratchpad
-bindsym Mod4+o [title="^emacsclient"] scratchpad show
-bindsym Mod4+Mod1+o exec urxvt -fb "xft:inconsolata:bold:pixelsize=16" -e emacsclient -nw -a '' ~/org/agenda.org
-bindsym Mod4+Control+o move scratchpad
+bindsym Mod4+a [title="^emacsclient"] scratchpad show
+bindsym Mod4+Mod1+a exec urxvt -fb "xft:inconsolata:bold:pixelsize=16" -e emacsclient -nw -a '' ~/org/agenda.org
+bindsym Mod4+Control+a move scratchpad
 
 # Window selection
 bindsym Mod4+q exec i3window
