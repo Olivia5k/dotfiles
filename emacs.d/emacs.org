@@ -35,19 +35,19 @@ updated repositories outside of MELPA are added. Order matters.
 
 #+begin_src emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/") t)
+
+  (setq package-archives '(("org" . "http://orgmode.org/elpa/")
+                           ("tromey" . "http://tromey.com/elpa/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+
   (package-initialize)
 
-  (eval-after-load "package"
-    '(progn
-       (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
-       (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-       (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-       (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))))
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
 
-  ;; required because of a package.el bug
-  ;(setq url-http-attempt-keepalives nil)
+  (require 'use-package)
 #+end_src
 ** Packages
 
