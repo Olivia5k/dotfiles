@@ -48,8 +48,9 @@ fi
 
 # Sort in most recently used order and pipe into dmenu.
 # TODO: Replace cut part with sed
-ret=$(echo $data | cat - $cache | sort | uniq -c | sort -nr | tr -s " " \
-  | cut -d" " -f3,4,5,6,7,8,9 | dmenu ${(z)DMENU_OPTS} -p "www")
+ret=$(echo $data | cat - $cache | sort | uniq -c | sort -nr \
+   | sed -e 's/\s\+[0-9]\+\s\+//' \
+   | dmenu ${(z)DMENU_OPTS} -z -p "www")
 
 if [[ -z "$ret" ]]; then
   exit 2
