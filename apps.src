@@ -18,7 +18,6 @@ apps[terminfo]="misc/terminfo"
 apps[tig]="misc/tigrc"
 apps[tmux]="tmux tmux/tmux.conf"
 apps[vim]="vim vim/vimrc misc/gtkrc-2.0"
-apps[vimb]="misc/vimbrc misc/vimb-style.css"
 apps[x11]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 
@@ -28,13 +27,10 @@ apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 # actual destinations.
 dest[misc/x11/dmuxrc]="${XDG_CONFIG_HOME:-$HOME/.config}/dmux/dmuxrc"
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
-dest[misc/luakit/]="${XDG_CONFIG_HOME:-$HOME/.config}/luakit"
 dest[misc/x11/i3/config]="$HOME/.i3/config"
 dest[misc/x11/i3/i3status]="${XDG_CONFIG_HOME:-$HOME/.config}/i3status/config"
 dest[misc/x11/herbstluftwm.conf]="${XDG_CONFIG_HOME:-$HOME/.config}/herbstluftwm/autostart"
 dest[zsh/grml.zsh]="$HOME/.zshrc"
-dest[misc/vimbrc]="$XDG_CONFIG_HOME/vimb/config"
-dest[misc/vimb-style.css]="$XDG_CONFIG_HOME/vimb/style.css"
 
 # If a key is present here, it will always be installed regardless if the
 # application binary is found or not.
