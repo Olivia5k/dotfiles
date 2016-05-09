@@ -985,7 +985,7 @@ These are functions used inside of yas.
     (interactive)
     (projectile-save-project-buffers)
     (compile
-     "go generate && go test -coverprofile=cover.out && go build && go vet"))
+     "go generate && go test -coverprofile=cover.out && go build -v && go vet"))
 
   (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
   (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
@@ -1449,6 +1449,8 @@ C-x ?: Print current file name relative to project root
 
   (setq auto-save-interval 90000
         auto-save-timeout 3600)
+
+  (setq compilation-scroll-output t)
 
   (defadvice save-buffer (around save-buffer-as-root-around activate)
     "Use sudo to save the current buffer."
