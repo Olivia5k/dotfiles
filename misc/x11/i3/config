@@ -104,9 +104,9 @@ bindsym Mod4+Mod1+8 exec xbacklight -set 80
 bindsym Mod4+Mod1+9 exec xbacklight -set 90
 
 # Volume control
-bindcode Mod4+59 exec vol down
-bindcode Mod4+60 exec vol up
-bindsym Mod4+m exec vol mute
+bindsym Mod4+x exec vol down
+bindsym Mod4+c exec vol up
+bindsym Mod4+z exec vol mute
 
 # i3 control
 bindsym Mod4+Control+k kill
