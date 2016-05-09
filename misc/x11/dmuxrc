@@ -1,1 +1,1 @@
-DMENU_OPTS="-i -fn iosevka -p exec -b -l 15 -nb #333 -nf #dbdbdb -sb #902090 -sf #e6bde6"
+DMENU_OPTS="-i -fn Iosevka -p exec -b -l 10 -nb #332033 -nf #dbdbdb -sb #902090 -sf #e6aae6"

@@ -7,7 +7,7 @@ files=($prefix/**/*.gpg)
 files=(${files[@]#"$prefix/"})
 files=(${files[@]%.gpg})
 
-item=$(print ${(F)files} | dmenu ${(z)DMENU_OPTS} -p "password" -sb "#702c2c" -sf "#e6dbdb")
+item=$(print ${(F)files} | dmenu ${(z)DMENU_OPTS} -p "pass" -sb "#702c2c" -sf "#e6dbdb" -nb "#332020")
 
 if [[ -z "$item" ]]; then
     echo "No item loaded."
