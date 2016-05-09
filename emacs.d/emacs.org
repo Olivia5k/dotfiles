@@ -69,10 +69,8 @@ Defines the packages to be installed.
       csv-mode
       dash
       diminish
-      discover-my-major
       dockerfile-mode
       emmet
-      epl
       expand-region
       f
       fill-column-indicator
@@ -93,23 +91,15 @@ Defines the packages to be installed.
       helm-descbinds
       helm-projectile
       helm-swoop
-      htmlize
-      httpcode
-      ioccur
       js2-mode
       lispy
       magit
-      magit-gh-pulls
       markdown-mode
-      melpa
       multiple-cursors
       nginx-mode
       org-bullets
-      org-fstree
-      org-jekyll
       paradox
       paredit
-      pkg-info
       popwin
       projectile
       protobuf-mode
@@ -117,21 +107,18 @@ Defines the packages to be installed.
       rainbow-delimiters
       rainbow-identifiers
       rainbow-mode
-      rich-minority
       s
       skewer-mode
-      spaceline
       ssh-config-mode
       string-inflection
       transpose-frame
       undo-tree
-      virtualenvwrapper
       visual-regexp-steroids
       wrap-region
       xkcd
       yaml-mode
       yasnippet
-      zenburn)
+      )
     "A list of packages to be installed at launch.")
 #+end_src
 ** Actual package installation
