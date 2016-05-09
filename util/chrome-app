@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+if (( $+commands[chromium] )) ; then
+    chromium --app="$1"
+elif (( $+commands[chromium-browser] )); then
+    chromium-browser --app="$1"
+fi
