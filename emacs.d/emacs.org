@@ -1173,6 +1173,58 @@ These are functions used inside of yas.
 
   (define-key go-mode-map (kbd "C-c M-d") 'go-toggle-debug)
 #+end_src
+*** Server runner
+    #+begin_src emacs-lisp
+      ;; TODO: Make the argument part configurable
+      (defun th-go-server-start ()
+        "Start the server for the app"
+        (interactive)
+        (let* ((root (projectile-project-root))
+               (name (f-base root))
+               (procname (format "%s-server" name)))
+
+          ;; If the server is already running, stop it; effectively making this a restart.
+          (when (get-process procname)
+            (th-go-server-stop))
+
+          (start-process
+           procname
+           (format "*%s-server*" name)
+           (concat root name)
+           "server")
+
+          ;; (set-process-filter proc 'th-go-server-insertion-filter)
+          (message "Started %s server" name)))
+
+      (defun th-go-server-stop ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (delete-process
+           (format "*%s-server*" name))
+          (message "Stopped %s server" name)))
+
+      (defun th-go-server-buffer ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (switch-to-buffer (format "*%s-server*" name))))
+
+      ;; (defun th-go-server-insertion-filter (proc string)
+      ;;   (with-current-buffer (process-buffer proc)
+      ;;     ;; Insert the text, advancing the process marker.
+      ;;     (goto-char (process-mark proc))
+      ;;     (insert (format "Hehe <%s>" string))
+      ;;     (set-marker (process-mark proc) (point))
+      ;;     (goto-char (point-max))))
+
+      (let ((m (define-prefix-command 'go-server-map)))
+        (define-key m (kbd "s") 'th-go-server-start)
+        (define-key m (kbd "k") 'th-go-server-stop)
+        (define-key m (kbd "b") 'th-go-server-buffer))
+
+      (define-key go-mode-map (kbd "C-c s") 'go-server-map)
+    #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook 'semantic-mode)
