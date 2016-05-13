@@ -1448,6 +1448,44 @@ C-x ?: Print current file name relative to project root
 
   (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
 #+end_src
+** Context aware execution
+   Exeucte different things depending on what's under point.
+   #+begin_src emacs-lisp
+     (defun context-execute ()
+       "Context aware execution of what's under point"
+       (interactive)
+       (let ((symbol (thing-at-point 'symbol))
+             (url (thing-at-point 'url)))
+         (message "Executing: <%s>" symbol)
+
+         (cond
+          ;; JIRA tickets
+          ((s-matches? "[A-Z][A-Z]+-[0-9]+" symbol)
+           (context-visit-jira symbol))
+
+          ;; URLs
+          ((s-matches? "[a-z]+://" url)
+           (browse-url url)))
+
+         ))
+
+     (defun context-get-whitespace-word ()
+       "Get the whitespace delimited word under point."
+
+       (let ((start (save-excursion (re-search-backward "\\(^\\| \\)")))
+             (end (save-excursion (re-search-forward "\\( \\|$\\)"))))
+         (buffer-substring start end)))
+
+     (defun context-visit-jira (ticket)
+       "Visit the JIRA page"
+       (interactive)
+       (browse-url (concat context-jira-root "/browse/" ticket)))
+
+     (defvar context-jira-root "https://jira.spotify.net" "Root URL for JIRA")
+
+     (global-set-key (kbd "M-RET") 'context-execute)
+     (global-set-key (kbd "C-x RET") 'context-execute)
+   #+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
