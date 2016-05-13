@@ -1497,7 +1497,7 @@ C-x ?: Print current file name relative to project root
 
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (mouse-wheel-mode -1)
+  (mouse-wheel-mode 1)
   (scroll-bar-mode -1)
 
   (setq compilation-read-command nil)
@@ -1555,6 +1555,7 @@ C-x ?: Print current file name relative to project root
   (global-auto-revert-mode t)
   (auto-fill-mode t)
   (auto-save-mode -1)
+  (fci-mode 1)
 #+end_src
 ** Browser setup
 This uses the `www` command from the dotfiles repo and puts browser
@@ -1657,9 +1658,13 @@ configuration outside of emacs.
       (auto-fill-mode "af")
       (helm-mode "")
       (magit-auto-revert-mode "")
+      (auto-revert-mode "")
+      (yas-minor-mode "")
       (undo-tree-mode "")
 
       ;; Major modes
+      (js2-mode "js2")
+      (javascript-mode "js")
       (help-mode . "")
       (fundamental-mode . "0")
       (python-mode . "Py")
