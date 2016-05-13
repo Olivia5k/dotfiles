@@ -138,14 +138,15 @@ Defines the packages to be installed.
 * Interface
 ** Appearance
 #+begin_src emacs-lisp
-  (set-default-font "Inconsolata-12")
-  (load-theme 'ujelly t)
+  (set-frame-font "Iosevka-12")
+  (color-theme-sanityinc-tomorrow-night)
 
   ;; Remove underlines, make everything bold.
   (mapc
    (lambda (face)
      (set-face-attribute face nil ':bold t :underline nil))
    (face-list))
+
 #+end_src
 ** Helm
 
