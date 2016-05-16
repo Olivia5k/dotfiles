@@ -976,6 +976,12 @@ These are functions used inside of yas.
      "go generate && go test -coverprofile=cover.out && go build -v && go vet"))
 
   (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
+  ;; Quick compile, without tests or checks
+  (define-key go-mode-map (kbd "C-c M-c")
+    (lambda ()
+      (interactive)
+      (compile "go build -v")))
+
   (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
 
   ;; NOTE: This is not go specific.
@@ -1455,8 +1461,7 @@ C-x ?: Print current file name relative to project root
      (defun context-execute ()
        "Context aware execution of what's under point"
        (interactive)
-       (let ((symbol (thing-at-point 'symbol))
-             (url (thing-at-point 'url)))
+       (let ((symbol (context-get-whitespace-word)))
          (message "Executing: <%s>" symbol)
 
          (cond
@@ -1465,8 +1470,8 @@ C-x ?: Print current file name relative to project root
            (context-visit-jira symbol))
 
           ;; URLs
-          ((s-matches? "[a-z]+://" url)
-           (browse-url url)))
+          ((s-matches? "[a-z]+://" symbol)
+           (browse-url symbol)))
 
          ))
 
@@ -1475,7 +1480,7 @@ C-x ?: Print current file name relative to project root
 
        (let ((start (save-excursion (re-search-backward "\\(^\\| \\)")))
              (end (save-excursion (re-search-forward "\\( \\|$\\)"))))
-         (buffer-substring start end)))
+         (s-trim (buffer-substring start end))))
 
      (defun context-visit-jira (ticket)
        "Visit the JIRA page"
