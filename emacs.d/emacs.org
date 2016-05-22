@@ -122,6 +122,7 @@ Defines the packages to be installed.
       transpose-frame
       undo-tree
       visual-regexp-steroids
+      web-mode
       wrap-region
       xkcd
       yaml-mode
@@ -1247,7 +1248,10 @@ These are functions used inside of yas.
                               (auto-save-mode -1)
                               (toggle-truncate-lines -1)))
 #+end_src
+** web-mode
 #+begin_src emacs-lisp
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
 #+end_src
 * Minor modes and utilities
 ** Buffer toggles
