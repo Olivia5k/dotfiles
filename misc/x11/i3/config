@@ -67,8 +67,8 @@ bindsym Mod4+m exec i3-or-raise "mail" "chrome-app https://inbox.google.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 
 # Org buffer in the scratchpad
-bindsym Mod4+a [title="^emacsclient"] scratchpad show
-bindsym Mod4+Mod1+a exec urxvt -e emacsclient -nw -a '' ~/org/agenda.org
+bindsym Mod4+a scratchpad show
+bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/agenda.org
 bindsym Mod4+Control+a move scratchpad
 
 # Window selection
@@ -82,7 +82,7 @@ bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
 
-bindsym Mod4+Mod1+d exec urxvt -e emacsclient -nw -a ''
+bindsym Mod4+Mod1+d exec emacsclient -c -a ''
 
 # bindsym Mod4+i exec mor main `di
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
