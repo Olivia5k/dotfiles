@@ -895,7 +895,12 @@ The test file will be created if it does not already exist.
                      (buffer-file-name)
                    fn)))
 
-  (define-key go-mode-map (kbd "C-c a") 'th-go-test-buffer)
+  (defun th-go-alternate ()
+    "Go to the alternate file; code or test."
+    (interactive)
+    (find-file (th-go-alternate-file (buffer-name))))
+
+  (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
 #+end_src
 *** Single test execution
 #+begin_src emacs-lisp
