@@ -117,7 +117,6 @@ Defines the packages to be installed.
       rainbow-identifiers
       rainbow-mode
       s
-      skewer-mode
       ssh-config-mode
       string-inflection
       transpose-frame
@@ -1248,13 +1247,7 @@ These are functions used inside of yas.
                               (auto-save-mode -1)
                               (toggle-truncate-lines -1)))
 #+end_src
-** skewer
 #+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-  (add-hook 'js2-mode-hook 'skewer-mode)
-  (add-hook 'css-mode-hook 'skewer-css-mode)
-  (add-hook 'html-mode-hook 'skewer-html-mode)
 #+end_src
 * Minor modes and utilities
 ** Buffer toggles
