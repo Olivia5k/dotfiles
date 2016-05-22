@@ -1503,6 +1503,24 @@ C-x ?: Print current file name relative to project root
      (global-set-key (kbd "M-RET") 'context-execute)
      (global-set-key (kbd "C-x RET") 'context-execute)
    #+end_src
+** move-text
+#+begin_src emacs-lisp
+  (defun move-line-up ()
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2)
+    (indent-for-tab-command))
+
+  (defun move-line-down ()
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1)
+    (indent-for-tab-command))
+
+  (global-set-key [M-up] 'move-line-up)
+  (global-set-key [M-down] 'move-line-down)
+#+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
