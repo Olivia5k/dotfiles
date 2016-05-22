@@ -147,13 +147,12 @@ Defines the packages to be installed.
 * Interface
 ** Appearance
 #+begin_src emacs-lisp
-  (set-frame-font "Iosevka-12")
   (color-theme-sanityinc-tomorrow-night)
+  (set-frame-font "Iosevka-10")
 
-  ;; Remove underlines, make everything bold.
   (mapc
    (lambda (face)
-     (set-face-attribute face nil ':bold t :underline nil))
+     (set-face-attribute face nil ':bold t))
    (face-list))
 
 #+end_src
