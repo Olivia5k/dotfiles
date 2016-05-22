@@ -985,8 +985,9 @@ These are functions used inside of yas.
   (defun th-go-compile ()
     (interactive)
     (projectile-save-project-buffers)
+    (cd (projectile-project-root))
     (compile
-     "go generate && go test -coverprofile=cover.out && go build -v && go vet"))
+     "go test -coverprofile=cover.out && go build -v"))
 
   (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
   ;; Quick compile, without tests or checks
