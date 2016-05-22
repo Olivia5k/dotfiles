@@ -1245,7 +1245,8 @@ These are functions used inside of yas.
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook 'semantic-mode)
   (add-hook 'prog-mode-hook (lambda ()
-                              (auto-save-mode -1)))
+                              (auto-save-mode -1)
+                              (toggle-truncate-lines -1)))
 #+end_src
 ** skewer
 #+begin_src emacs-lisp
@@ -1514,6 +1515,7 @@ C-x ?: Print current file name relative to project root
   (tool-bar-mode -1)
   (mouse-wheel-mode 1)
   (scroll-bar-mode -1)
+  (set-default 'truncate-lines nil)
 
   (setq compilation-read-command nil)
 
