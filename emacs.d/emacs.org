@@ -16,6 +16,15 @@ might've actually gotten things done. That would have been something, right?
 #+begin_src emacs-lisp
 (require 'cl)
 #+end_src
+* Custom
+Does anyone even like custom? I find it incredibly annoying.
+
+#+begin_src emacs-lisp
+  (setq custom-file "~/.emacs.d/custom.el")
+  (unless (file-exists-p custom-file)
+    (with-temp-buffer (write-file custom-file)))
+  (load custom-file)
+#+end_src
 * Package configuration
 ** Path configuration
 #+begin_src emacs-lisp
@@ -1802,14 +1811,4 @@ configuration outside of emacs.
 
   (when (f-dir? work-path)
     (require 'payments))
-#+end_src
-** custom
-
-Does anyone even like custom? I find it incredibly annoying.
-
-#+begin_src emacs-lisp
-  (setq custom-file "~/.emacs.d/custom.el")
-  (unless (file-exists-p custom-file)
-    (with-temp-buffer (write-file custom-file)))
-  (load custom-file)
 #+end_src
