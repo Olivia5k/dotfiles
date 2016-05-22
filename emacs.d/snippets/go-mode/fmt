@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : fmt
+#key : fmt
+#contributor :
+# --
+fmt.Sprintf("${1:format}", $0)

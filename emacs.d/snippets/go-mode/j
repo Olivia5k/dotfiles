@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : join
+#key : j
+#contributor :
+# --
+filepath.Join($0)

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : if err != nil {
+#key : ien
+#contributor :
+# --
+if err != nil {
+	$0
+}
