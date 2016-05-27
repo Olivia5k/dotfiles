@@ -1598,11 +1598,20 @@ C-x ?: Print current file name relative to project root
   (setq compilation-scroll-output t)
 
   (defadvice save-buffer (around save-buffer-as-root-around activate)
-    "Use sudo to save the current buffer."
+    "Create non-existing parent directories; sudo to save the current buffer if permissions are lacking."
     (interactive "p")
-    (if (and (buffer-file-name) (not (file-writable-p (buffer-file-name))))
-        (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
-      ad-do-it)
+
+    ;; Only do any of this if we actually have a fil
+    (if (buffer-file-name)
+        (progn
+          ;; Create the parent directories
+          (make-directory (f-dirname (buffer-file-name)) t)
+
+          ;; If the file is not writeable, try
+          (if (not (file-writable-p (buffer-file-name)))
+              (let ((buffer-file-name (format "/sudo::%s" buffer-file-name)))
+                ad-do-it))
+          ad-do-it)
       ad-do-it))
 
   (setq echo-keystrokes 0.4
