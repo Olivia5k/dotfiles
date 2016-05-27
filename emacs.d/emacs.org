@@ -541,15 +541,16 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (org-bullets-mode 1)
 
-  (setq org-confirm-babel-evaluate nil)
-  (setq org-directory "~/org")
-  (setq org-fontify-emphasized-text t) ;; fontify *bold* _underline_ /italic/ and so on
-  (setq org-return-follows-link t)
-  (setq org-special-ctrl-a/e t)
-  (setq org-special-ctrl-k t)
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-  (setq org-src-window-setup 'current-window)
+  (setq
+   org-confirm-babel-evaluate nil
+   org-directory "~/org"
+   org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
+   org-return-follows-link t
+   org-special-ctrl-a/e t
+   org-special-ctrl-k t
+   org-src-fontify-natively t
+   org-src-tab-acts-natively t
+   org-src-window-setup 'current-window)
 
   ; When calculating percentages of checkboxes, count all boxes, not just
   ; direct children
