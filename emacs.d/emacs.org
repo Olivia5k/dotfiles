@@ -983,13 +983,43 @@ These are functions used inside of yas.
 #+end_src
 *** Compiling and executing
 #+begin_src emacs-lisp
-  (defun th-go-compile ()
+  (defun th-go-test ()
     (interactive)
     (projectile-save-project-buffers)
-    (compile
-     "go test -coverprofile=cover.out && go build -v"))
+    ;; The server compile command should run in the root
+    (compile "go test -coverprofile=cover.out"))
 
-  (define-key go-mode-map (kbd "C-c C-c") 'th-go-compile)
+  (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
+
+  (defun th-go-server-compile ()
+    (interactive)
+    (projectile-save-project-buffers)
+    ;; The server compile command should run in the root
+    (with-current-buffer (th-go-main-file-buffer)
+      (compile "go build -v")))
+
+  (defun th-go-main-file ()
+    "Returns the main go file of the project"
+    (let ((path (projectile-project-root)))
+      (concat path (format "%s.go" (f-base path)))))
+
+  (defun th-go-main-file-buffer ()
+    "Returns the buffer of the main go file of the project"
+    (get-file-buffer (th-go-main-file)))
+
+  (defun th-go-modules ()
+    "Get the paths to all modules found in the project"
+    (let ((path (projectile-project-root)))
+      (cdr ;; Remove the ./
+       (-uniq
+        (-map
+         (lambda (fn)
+           ;; Add ./ so that go considers the modules as local and not remote
+           (concat "./" (f-dirname fn)))
+         (-filter
+          ;; Return a list with all go files
+          (lambda (fn) (s-contains? ".go" fn))
+          (projectile-current-project-files)))))))
   ;; Quick compile, without tests or checks
   (define-key go-mode-map (kbd "C-c M-c")
     (lambda ()
@@ -1242,7 +1272,8 @@ These are functions used inside of yas.
       (let ((m (define-prefix-command 'go-server-map)))
         (define-key m (kbd "s") 'th-go-server-start)
         (define-key m (kbd "k") 'th-go-server-stop)
-        (define-key m (kbd "b") 'th-go-server-buffer))
+        (define-key m (kbd "b") 'th-go-server-buffer)
+        (define-key m (kbd "c") 'th-go-server-compile))
 
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
