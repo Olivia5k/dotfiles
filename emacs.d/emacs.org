@@ -107,6 +107,7 @@ Defines the packages to be installed.
       multiple-cursors
       nginx-mode
       org-bullets
+      org-journal
       paradox
       paredit
       popwin
@@ -532,7 +533,8 @@ Note that C-j will preview the file without closing the helm buffer.
   (eval-after-load "org"
     '(progn
        (require 'org-clock)
-       (require 'org-fstree)))
+       (require 'org-fstree)
+       (require 'org-journal)))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -575,6 +577,20 @@ Note that C-j will preview the file without closing the helm buffer.
   (setq org-todo-keywords '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
   (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
                                  ("WAITING" . org-mode-line-clock)))
+
+#+end_src
+**** Journal
+#+begin_src emacs-lisp
+  (setq org-journal-dir "~/org/journal/"
+        org-journal-file-format "%Y-%m-%d"
+        org-journal-date-format "%A, %Y-%m-%d"
+        org-journal-find-file 'find-file)
+
+  ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
+  (global-set-key (kbd "C-.") 'org-journal-new-entry)
+#+end_src
+**** Capturing
+#+begin_src emacs-lisp
 
 #+end_src
 **** Toggler keybindings
