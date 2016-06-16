@@ -149,7 +149,7 @@ Defines the packages to be installed.
 ** Appearance
 #+begin_src emacs-lisp
   (color-theme-sanityinc-tomorrow-night)
-  (set-frame-font "Iosevka-10")
+  (set-frame-font "Iosevka-12")
 
   (mapc
    (lambda (face)
