@@ -539,7 +539,8 @@ Note that C-j will preview the file without closing the helm buffer.
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
-     (sql . t)))
+     (sql . t)
+     (shell . t)))
 
   (org-bullets-mode 1)
 
