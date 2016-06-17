@@ -155,7 +155,6 @@ Defines the packages to be installed.
    (lambda (face)
      (set-face-attribute face nil ':bold t))
    (face-list))
-
 #+end_src
 ** Helm
 
@@ -1878,6 +1877,21 @@ configuration outside of emacs.
 #+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
+#+end_src
+** Minibuffer
+#+begin_src emacs-lisp
+  ;; http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html
+  (defun th-paste-from-x-clipboard ()
+    (interactive)
+    (shell-command "echo $(xsel -o)" 1))
+
+
+
+  (defun th-paste-in-minibuffer ()
+    (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
+    (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
+
+  (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
 #+end_src
 ** Spotify
 
