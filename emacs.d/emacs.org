@@ -191,6 +191,7 @@ becomes natural and very powerful.
   (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
 
   (global-set-key (kbd "C-x f") 'helm-projectile)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
   (global-set-key (kbd "C-c h") 'helm-command-prefix)
   (global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
