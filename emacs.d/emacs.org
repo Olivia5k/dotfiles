@@ -1456,9 +1456,9 @@ C-x ?: Print current file name relative to project root
 #+end_src
 ** ace-jump / avy
 #+begin_src emacs-lisp
-  (define-key global-map (kbd "M-n") 'avy-goto-word-1)
+  ;; (define-key global-map (kbd "M-n") 'avy-goto-word-1)
   (define-key global-map (kbd "C-l") 'avy-goto-word-1)
-  (define-key global-map (kbd "M-p") 'ace-window)
+  ;; (define-key global-map (kbd "M-p") 'ace-window)
 #+end_src
 ** Kill ring
 #+begin_src emacs-lisp
