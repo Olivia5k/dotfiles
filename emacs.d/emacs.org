@@ -1570,6 +1570,43 @@ C-x ?: Print current file name relative to project root
   (global-set-key [M-up] 'move-line-up)
   (global-set-key [M-down] 'move-line-down)
 #+end_src
+** Configuration toggling
+#+begin_src emacs-lisp
+  (defun th-toggle-minor-mode (mode)
+    "Toggles a mode - if enabled, disable and vice versa"
+
+    (if (th-minor-enabled-p mode)
+        (progn
+          (funcall mode -1)
+          (message "%s disabled" (symbol-name mode)))
+      (funcall mode 1)
+      (message "%s enabled" (symbol-name mode))))
+
+  (defun th-minor-enabled-p (mode)
+    (-contains?
+     (--filter (and (boundp it) (symbol-value it)) minor-mode-list)
+     mode))
+
+  (let ((m (define-prefix-command 'config-change-map)))
+    ;; (define-key m (kbd "a")
+    ;;   (lambda ()
+    ;;     (interactive)
+    ;;     (th-toggle-minor-mode 'auto-fill-mode)))
+
+    (define-key m (kbd "t") 'toggle-truncate-lines)
+
+    (define-key m (kbd "l")
+      (lambda ()
+        (interactive)
+        (th-toggle-minor-mode 'linum-mode)))
+
+    (define-key m (kbd "f")
+      (lambda ()
+        (interactive)
+        (th-toggle-minor-mode 'auto-revert-tail-mode))))
+
+  (global-set-key (kbd "C-x c") 'config-change-map)
+#+end_src
 * Setup and options
 ** Options and settings
 #+begin_src emacs-lisp
