@@ -568,14 +568,17 @@ Note that C-j will preview the file without closing the helm buffer.
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
 
-  (setq org-agenda-ndays 7)
-  (setq org-agenda-files '("~/org/"))
-  (setq org-agenda-show-all-dates t)
-  (setq org-agenda-start-on-weekday nil)
-  (setq org-archive-location "~/org/archive/%s::")
-  (setq org-log-done t) ;;timestamp when switching from todo to done
+  (setq
+   org-agenda-ndays 7
+   org-agenda-files '("~/org/")
+   org-agenda-show-all-dates t
+   org-agenda-start-on-weekday nil
+   org-archive-location "~/org/archive/%s::"
+   org-log-done t) ;;timestamp when switching from todo to done
 
-  (setq org-todo-keywords '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+  (setq org-todo-keywords
+        '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+
   (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
                                  ("WAITING" . org-mode-line-clock)))
 
