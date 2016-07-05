@@ -73,7 +73,7 @@ bindsym Mod4+q exec i3-or-raise "www" "browser"
 
 # Org buffer in the scratchpad
 bindsym Mod4+a scratchpad show
-bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/agenda.org
+bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/payments.org
 bindsym Mod4+Control+a move scratchpad
 
 
