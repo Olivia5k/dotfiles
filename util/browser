@@ -1,9 +1,7 @@
 #!/bin/zsh
 
-if (( $+commands[qutebrowser])) ; then
-    qutebrowser "$@"
+if (( $+commands[chromium-browser] )); then
+    chromium-browser "$@"
 elif (( $+commands[chromium] )) ; then
     chromium "$@"
-elif (( $+commands[chromium-browser] )); then
-    chromium-browser "$@"
 fi
