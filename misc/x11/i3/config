@@ -56,6 +56,7 @@ bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to w
 bindsym Mod4+Control+j exec i3-or-raise "jira" "www https://jira.spotify.net"
 bindsym Mod4+Control+c exec i3-or-raise "cal" "www https://calendar.google.com/calendar/b/1/render#main_7"
 bindsym Mod4+Mod1+c exec i3-or-raise "chill" "mux chill"
+bindsym Mod4+d exec i3-or-raise "dev" "emacsclient -c -a ''"
 bindsym Mod4+e exec i3-or-raise "slack" "www https://spotify.slack.com/messages/ladies/"
 bindsym Mod4+f exec i3-or-raise "facebook" "www https://facebook.com"
 bindsym Mod4+g exec i3-or-raise "ghe" "www https://ghe.spotify.net"
@@ -68,19 +69,17 @@ bindsym Mod4+t exec i3-or-raise "tam" "launch-tam"
 bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "www tvtropes.org"
 bindsym Mod4+m exec i3-or-raise "mail" "chrome-app https://inbox.google.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
+bindsym Mod4+q exec i3-or-raise "www" "browser"
 
 # Org buffer in the scratchpad
 bindsym Mod4+a scratchpad show
 bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/agenda.org
 bindsym Mod4+Control+a move scratchpad
 
-# Window selection
-bindsym Mod4+q exec i3window
-bindsym Mod4+d exec i3-for-workspace "emacsclient"
 
 # Applications
 bindcode Mod4+36 exec i3-mor
-bindcode Mod4+Mod1+36 exec muxwin
+bindcode Mod4+Mod1+36 exec browser
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
