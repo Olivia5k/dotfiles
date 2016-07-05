@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 # zshrc by Lowe Thiderman (lowe.thiderman@gmail.com)
 
-if [[ $(echotc Co) = 256 ]]; then
+if [[ "$TERM" != "dumb" ]] && [[ $(echotc Co) = 256 ]]; then
   # Shell syntax highlighting, in realtime.
   source $ZSHCONFDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -466,7 +466,7 @@ done
 zstyle ':prompt:grml:left:items:path' pre '%B%F{68}'
 zstyle ':prompt:grml:left:items:path' token '%1~ '
 zstyle ':prompt:grml:left:items:percent' pre "%B%F{238}"
-#zstyle ':prompt:grml:left:items:percent' token "> "
+zstyle ':prompt:grml:left:items:percent' token "> "
 zstyle ':prompt:grml:left:items:vcs' pre '$VENV_PROMPT'
 zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
 
@@ -578,4 +578,9 @@ fi
 # wow such shibe. https://github.com/thiderman/doge
 if (( $+commands[doge] )) ; then
   doge
+fi
+
+if [[ "$TERM" == "dumb" ]]; then
+  prompt off
+  PS1='> '
 fi
