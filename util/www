@@ -9,7 +9,7 @@ import subprocess as sub
 
 
 def browser(url):
-    sub.Popen(['browser', url], stdout=sub.PIPE, stderr=sub.PIPE)
+    start('browser', url)
 
 
 def urlize(args):
@@ -18,6 +18,12 @@ def urlize(args):
 
 def google(args):
     return 'https://www.google.com/search?q=' + urlize(args)
+
+
+def start(*args):
+    s = sub.Popen(args, stdout=sub.PIPE, stderr=sub.PIPE)
+    print(args, s)
+    s.communicate()
 
 
 def main():
@@ -30,7 +36,7 @@ def main():
     # If whatever was passed is an actual executable, execute it right away
     exe = shutil.which(url)
     if exe:
-        sub.Popen([url], stdout=sub.PIPE, stderr=sub.PIPE)
+        start(exe)
         return 0
 
     if len(sys.argv) > 2 or len(sys.argv) == 2 and '.' not in sys.argv[1] \
