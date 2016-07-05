@@ -8,7 +8,7 @@ xset -b
 wp &
 xrdb ~/.Xresources &
 
-if [[ $(hostname) == "dragonisle" ]]; then
+if [[ $(hostname) == "dragonkin" ]]; then
     xset s off
     xset -dpms
 fi
