@@ -553,7 +553,8 @@ Note that C-j will preview the file without closing the helm buffer.
    org-special-ctrl-k t
    org-src-fontify-natively t
    org-src-tab-acts-natively t
-   org-src-window-setup 'current-window)
+   org-src-window-setup 'current-window
+   org-use-speed-commands t)
 
   ; When calculating percentages of checkboxes, count all boxes, not just
   ; direct children
