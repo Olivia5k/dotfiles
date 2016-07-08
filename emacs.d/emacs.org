@@ -690,6 +690,20 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 #+end_src
+*** Hydra commands
+#+begin_src emacs-lisp
+  (defhydra th-org (:exit t)
+    "Org commands"
+    ("c" org-capture "Capture")
+    ("M-o" org-capture "Capture")
+    ("s" (org-agenda nil "a") "Schedule")
+    ("j" org-clock-goto "Current clocked task")
+    ("a" org-todo-list "Agenda")
+    ("t" org-tags-view "Tags"))
+
+  (global-set-key (kbd "M-o") 'th-org/body)
+  ;; (define-key lispy-mode-map (kbd "M-o") 'th-org/body)
+#+end_src
 ** Elisp
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
