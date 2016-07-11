@@ -548,6 +548,7 @@ Note that C-j will preview the file without closing the helm buffer.
    org-confirm-babel-evaluate nil
    org-directory "~/org"
    org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
+   org-hide-leading-stars t
    org-return-follows-link t
    org-special-ctrl-a/e t
    org-special-ctrl-k t
