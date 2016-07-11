@@ -596,9 +596,41 @@ Note that C-j will preview the file without closing the helm buffer.
   (global-set-key (kbd "C-.") 'org-journal-new-entry)
 #+end_src
 **** Capturing
-#+begin_src emacs-lisp
+     #+begin_src emacs-lisp
+       (setq
+        org-capture-templates
+        `(("t" "Tasks" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* TODO %^{Task}")
 
-#+end_src
+          ("T" "Quick task" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* TODO %^{Task}\nSCHEDULED: %t\n"
+           :immediate-finish t)
+
+          ("i" "Interrupting task" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* STARTED %^{Task}"
+           :clock-in :clock-resume)
+
+          ("e" "Emacs idea" entry
+           (file+headline "~/org/inbox.org" "Emacs")
+           "* TODO %^{Task}"
+           :immediate-finish t)
+
+          ("E" "Event" entry
+           (file+datetree+prompt "~/org/events.org" "Event")
+           "* TODO %^{Task}\nSCHEDULED: %<%Y-%m-%d %H:%M>"
+           :immediate-finish t)
+
+          ("q" "Quick note" item
+           (file+headline "~/org/inbox.org" "Quick notes"))
+
+          ("r" "Recipe" entry
+           (file+headline "~/org/food.org" "Recipes")
+           "* [[%^{URL}][%^{Title}]]"
+           )))
+     #+end_src
 **** Toggler keybindings
 #+begin_src emacs-lisp
   (define-key org-mode-map (kbd "C-c t")
