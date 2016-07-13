@@ -1820,16 +1820,9 @@ configuration outside of emacs.
   (global-linum-mode 0)
   (setq linum-format " %4d ")
 
-  (defvar th-linum-modes
-    '(eshell-mode wl-summary-mode compilation-mode org-mode
-                  dired-mode doc-view-mode image-mode))
-
   (defun th-linum-filter ()
-    "Disable linum-mode if the file mode is in the defined list"
-
-    (unless (or
-             (-contains? th-linum-modes major-mode)
-             (string-match "*" (buffer-name)))
+    "Only have line numbers when programming"
+    (if (derived-mode-p 'prog-mode)
       (linum-mode 1)))
 
   (add-hook 'find-file-hook 'th-linum-filter)
