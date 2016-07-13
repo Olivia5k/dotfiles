@@ -102,6 +102,7 @@ Defines the packages to be installed.
       helm-swoop
       js2-mode
       lispy
+      logview-mode
       magit
       markdown-mode
       multiple-cursors
@@ -1356,6 +1357,12 @@ These are functions used inside of yas.
 #+begin_src emacs-lisp
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-attr-indent-offset 2)
+#+end_src
+** logview-mode
+#+begin_src emacs-lisp
+  (add-hook 'logview-mode-hook (lambda ()
+                                 (linum-mode -1)
+                                 (toggle-truncate-lines 1)))
 #+end_src
 * Minor modes and utilities
 ** Buffer toggles
