@@ -182,6 +182,7 @@ function cd () {
   fi
 }
 
+mkdir -p $XDG_DATA_HOME/zsh
 a=( ${^fpath}/chpwd_recent_dirs(N) )
 if (( $#a > 0 )); then
   autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
