@@ -1,0 +1,15 @@
+export DOTFILES=$HOME/.local/share/infect
+export DOTFILES_URL=git@ghe.spotify.net:thiderman/dotfiles.git
+
+dots() {
+  if [ -d "$DOTFILES/.git" ] ; then
+    (cq $DOTFILES ; git pull -q && ./infect install)
+  else
+    git clone $DOTFILES_URL $DOTFILES --recurse-submodules
+    $DOTFILES/infect install
+  fi
+}
+
+echo
+echo " -> Dotfiles not pulled. Run `dots()` to get or pull them."
+echo
