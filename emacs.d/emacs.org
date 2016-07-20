@@ -2017,10 +2017,8 @@ configuration outside of emacs.
 #+begin_src emacs-lisp
   ;; work-specific things that are in other repositories because secrets.
   (require 'f)
-  (setq work-path "~/git/payments-elisp/")
-  (when (f-dir? work-path)
-    (add-to-list 'load-path work-path))
-
-  (when (f-dir? work-path)
-    (require 'payments))
+  (let ((work-path "~/git/payments-elisp/"))
+    (when (f-dir? work-path)
+      (add-to-list 'load-path work-path)
+      (require 'payments)))
 #+end_src
