@@ -460,8 +460,15 @@ for x in user at host path percent; do
   zstyle ":prompt:grml:left:items:$x" post '%f%b'
 done
 
+color=143 # Green
+if [[ -d "/payments" ]] ; then
+    color=202
+elif [[ $UID == 0 ]] ; then
+    color=9
+fi
+
 for x in user at host; do
-  zstyle ":prompt:grml:left:items:$x" pre '%B%F{143}'
+  zstyle ":prompt:grml:left:items:$x" pre "%B%F{$color}"
 done
 
 zstyle ':prompt:grml:left:items:path' pre '%B%F{68}'
