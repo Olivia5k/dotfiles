@@ -1398,11 +1398,12 @@ C-x ?: Print current file name relative to project root
       (unless done
         (funcall func))))
 
-  (defun th-toggle-file (path)
+  (defun th-toggle-file (path &optional no-save)
     (let ((file (file-truename path)))
       (if (s-equals? file buffer-file-name)
           (progn
-            (save-buffer)
+            (when (not no-save)
+              (save-buffer))
             (previous-buffer))
         (find-file file))))
 
@@ -1433,7 +1434,8 @@ C-x ?: Print current file name relative to project root
   (define-key global-map (kbd "<f3>")
     (lambda ()
       (interactive)
-      (th-toggle-file (concat user-emacs-directory "todo.org"))))
+      (th-toggle-file "~/.logs/payments/info.log" t)
+      (end-of-buffer)))
 
   (define-key global-map (kbd "<f4>")
     (lambda ()
