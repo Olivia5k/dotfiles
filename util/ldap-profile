@@ -11,5 +11,5 @@ dots() {
 }
 
 echo
-echo " -> Dotfiles not pulled. Run `dots()` to get or pull them."
+echo " -> Dotfiles not pulled. Run dots() to get or pull them."
 echo
