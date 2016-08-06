@@ -1,5 +1,5 @@
 #!/usr/bin/zsh
 
-if [[ $(hostname) == "dragonisle" ]]; then
+if [[ $(hostname) == "dragonkin" ]]; then
     kodi
 fi
