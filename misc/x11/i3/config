@@ -118,7 +118,7 @@ bindsym Mod4+z exec vol mute
 
 # i3 control
 bindsym Mod4+Control+k kill
-bindsym Mod4+Control+e exit
+bindsym Mod4+Control+F12 exit
 bindsym Mod4+Control+r reload
 bindsym Mod4+Mod1+Control+r restart
 
