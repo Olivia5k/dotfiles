@@ -19,13 +19,16 @@ bindsym Mod4+l focus right
 bindsym Mod4+p workspace next
 bindsym Mod4+n workspace prev
 
+# Switching displays
+bindsym Mod4+Mod1+z split v
+
 # Killing
 bindcode Mod4+9 kill
 bindsym --release button2 kill
 
 # Splitting
-bindsym Mod4+Mod1+z split v
-bindsym Mod4+Mod1+s split h
+bindsym Control+Mod4+Mod1+h move workspace to output left
+bindsym Control+Mod4+Mod1+l move workspace to output right
 
 # Fullscreening
 bindsym Mod4+Mod1+f fullscreen
