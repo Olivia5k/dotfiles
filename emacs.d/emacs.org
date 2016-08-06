@@ -1324,6 +1324,33 @@ These are functions used inside of yas.
            (format "*%s-server*" name))
           (message "Stopped %s server" name)))
 
+      ;; TODO: Move this to a non-golang place
+      (defun th-npm-server-start ()
+        "Start the server for the app"
+        (interactive)
+        (let* ((root (projectile-project-root))
+               (name (format "%s-npm" (f-base root)))
+               (procname (format "%s-server" name))
+               (procbuffer (format "*%s*" procname))
+               (dir (concat root "js/")))
+
+          ;; If the server is already running, stop it; effectively making this a restart.
+          (when (get-process procname)
+            (th-npm-server-stop))
+
+          (let ((default-directory dir))
+            (start-process procname procbuffer "npm" "run" "dev"))
+
+          (message "Started %s npm server" name)))
+
+      (defun th-npm-server-stop ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (delete-process
+           (format "*%s-npm-server*" name))
+          (message "Stopped %s server" name)))
+
       (defun th-go-server-buffer ()
         "Stop the server for the app"
         (interactive)
@@ -1342,7 +1369,8 @@ These are functions used inside of yas.
         (define-key m (kbd "s") 'th-go-server-start)
         (define-key m (kbd "k") 'th-go-server-stop)
         (define-key m (kbd "b") 'th-go-server-buffer)
-        (define-key m (kbd "c") 'th-go-server-compile))
+        (define-key m (kbd "c") 'th-go-server-compile)
+        (define-key m (kbd "n") 'th-npm-server-start))
 
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
