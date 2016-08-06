@@ -1,4 +1,11 @@
-#!/bin/bash
+#!/bin/zsh
+
+# Just disable the screen...
+if [[ $HOST == 'dragonisle' ]] ; then
+    sleep 1 && xset dpms force off
+    exit 0
+fi
+
 image=/tmp/screen.png
 
 scrot $image
