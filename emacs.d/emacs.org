@@ -1376,7 +1376,9 @@ These are functions used inside of yas.
     #+end_src
 ** prog-mode
 #+begin_src emacs-lisp
-  (add-hook 'prog-mode-hook 'semantic-mode)
+  (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
+  (add-hook 'go-mode-hook 'semantic-mode)
+  (add-hook 'python-mode-hook 'semantic-mode)
   (add-hook 'prog-mode-hook (lambda ()
                               (auto-save-mode -1)
                               (toggle-truncate-lines 1)))
