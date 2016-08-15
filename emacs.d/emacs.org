@@ -842,45 +842,6 @@ enough I think I want to bring them to the upstream go-mode somehow!
   ;; These were all moved into upstream! Yay open source <3
   (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
 #+end_src
-*** Function browser
-#+begin_src emacs-lisp
-  (defun th-go-test-filter (files)
-   (-filter (lambda (s) (s-contains? "_test.go" s)) files))
-
-  (setq th-go-test-functions (make-hash-table :test 'equal))
-
-  (gethash
-   "/home/thiderman/var/go/src/github.com/thiderman/towerfall/tournament_test.go"
-   th-go-test-functions)
-
-  (defun th-go-test-files ()
-    (-each (th-go-test-filter test-files)
-      (lambda (fn)
-        (puthash
-         fn
-         (th-go-filter-test-functions (th-go-get-functions-from-file fn))
-         th-go-test-functions))))
-
-  (defun th-go-get-functions-from-file (fn)
-    "Filters out all functions from a file"
-    (mapcar
-     (lambda (s)
-       (car (split-string (s-chop-prefix "func " s) "(" t)))
-     (-filter
-      (lambda (s)
-        (s-prefix? "func" s))
-      (with-temp-buffer
-        (insert-file-contents fn)
-        (split-string (buffer-string) "\n" t)))))
-
-
-  (defun th-go-filter-test-functions (funcs)
-    "Filters out all non-test functions from a list of functions"
-    (-filter (lambda (s) (s-prefix? "Test" s)) funcs))
-
-  (th-go-filter-test-functions (th-go-get-functions-from-file
-    "/home/thiderman/var/go/src/github.com/thiderman/towerfall/tournament_test.go"))
-#+end_src
 *** Coverage functions
 #+begin_src emacs-lisp
   (defun th-go-coverage ()
