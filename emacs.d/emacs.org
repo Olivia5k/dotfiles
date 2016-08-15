@@ -118,6 +118,7 @@ Defines the packages to be installed.
       rainbow-delimiters
       rainbow-identifiers
       rainbow-mode
+      restclient-mode
       s
       ssh-config-mode
       string-inflection
