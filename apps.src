@@ -14,11 +14,11 @@ apps[luakit]="misc/luakit/"
 apps[most]="misc/mostrc"
 apps[mplayer]="misc/mplayer"
 apps[ncmpcpp]="misc/ncmpcpp.conf"
+apps[startx]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[terminfo]="misc/terminfo"
 apps[tig]="misc/tigrc"
 apps[tmux]="tmux tmux/tmux.conf"
 apps[vim]="vim vim/vimrc misc/gtkrc-2.0"
-apps[x11]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 
 # By default, all the files and directories specified above will be linked as
