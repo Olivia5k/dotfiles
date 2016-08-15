@@ -1344,6 +1344,8 @@ These are functions used inside of yas.
   (add-hook 'prog-mode-hook (lambda ()
                               (auto-save-mode -1)
                               (toggle-truncate-lines 1)))
+  (add-hook 'text-mode-hook 'turn-on-fci-mode)
+  (add-hook 'text-mode-hook 'auto-fill-mode)
 #+end_src
 ** web-mode
 #+begin_src emacs-lisp
