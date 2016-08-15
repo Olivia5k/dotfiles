@@ -737,7 +737,8 @@ Note that C-j will preview the file without closing the helm buffer.
     ("t" org-tags-view "Tags"))
 
   (global-set-key (kbd "M-o") 'th-org/body)
-  ;; (define-key lispy-mode-map (kbd "M-o") 'th-org/body)
+  (require 'lispy)
+  (define-key lispy-mode-map (kbd "M-o") 'th-org/body)
 #+end_src
 ** Elisp
 #+begin_src emacs-lisp
