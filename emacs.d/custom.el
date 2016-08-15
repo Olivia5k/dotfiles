@@ -77,6 +77,6 @@
  '(org-block-begin-line ((t (:foreground "#008ED1" :background "#002E41"))))
  '(org-block-end-line ((t (:foreground "#008ED1" :background "#002E41"))))
  '(web-mode-html-attr-equal-face ((t (:foreground "gray70"))))
- '(web-mode-html-attr-name-face ((t (:foreground "cyan"))))
- '(web-mode-html-tag-face ((t (:foreground "PaleGreen"))))
+ '(web-mode-html-attr-name-face ((t (:inherit font-lock-variable-name-face))))
+ '(web-mode-html-tag-face ((t (:inherit font-lock-function-name-face))))
  '(which-func ((t (:foreground "#77aaff")))))
