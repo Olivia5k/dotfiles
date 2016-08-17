@@ -46,6 +46,8 @@ alias sp="sagacity"
 alias hc="herbstclient"
 
 alias e="emacsclient -nw"
+alias docker="sudo docker"
+
 alias ed="emacs --daemon &|"
 # alias vim="emacsclient -nw"
 
