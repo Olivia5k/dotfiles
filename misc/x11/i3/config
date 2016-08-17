@@ -95,8 +95,8 @@ bindsym Mod4+Mod1+d exec emacsclient -c -a ''
 bindsym Mod4+Mod1+Control+d exec emacs-daemon
 
 # Locking and switching
-# bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png
-bindcode Mod4+22 exec sswitch
+bindcode Mod4+22 exec lock /home/thiderman/tmp/71ar35igrrL.png
+# bindcode Mod4+22 exec sswitch
 bindcode Mod4+Mod1+22 exec sswitch
 bindcode Mod4+Mod1+Control+22 exec susp
 bindsym Mod4+Control+p exec passmenu
