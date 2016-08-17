@@ -1,0 +1,11 @@
+*vim-addon-manager-known-repositories.txt*
+
+------------------------------------------------------------------------------
+this repository contains plugin sources.~
+
+How to update plugins?
+- A cron job should do so in a regular manner. Run git pull and be happy
+- do it yourself: >
+    ./perl/www_vim_org.pl
+
+plugins missing? Contact me.

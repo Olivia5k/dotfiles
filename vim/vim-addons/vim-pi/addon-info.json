@@ -1,0 +1,9 @@
+{
+  "name" : "vim-pi",
+  "version" : "undefined",
+  "author" : "Marc Weber <marco-oweber@gmx.de>",
+  "maintainer" : "Marc Weber <marco-oweber@gmx.de>",
+  "repository" : {"type": "git", "url": "https://bitbucket.org/vimcommunity/vim-pi"},
+  "dependencies" : {},
+  "description" : "this repository contains a list of known other repositories only"
+}
