@@ -215,7 +215,9 @@ becomes natural and very powerful.
         helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-        helm-ff-file-name-history-use-recentf t)
+        helm-ff-file-name-history-use-recentf t
+        helm-ff-newfile-prompt-p              nil)
+
 
   ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
   (helm-autoresize-mode 1)
@@ -1352,6 +1354,18 @@ These are functions used inside of yas.
 #+begin_src emacs-lisp
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-attr-indent-offset 2)
+
+  (defun th-refresh-vue ()
+    (interactive)
+    (message "running hook")
+    (if (equal major-mode 'web-mode)
+        (progn
+          (message "reparsing")
+          (vue-mode))
+      (message "did not work")))
+
+  ;; Reparse the vue mode things so that the syntax coloring for HTML keeps working
+  ;; (add-hook 'after-save-hook )
 #+end_src
 ** logview-mode
 #+begin_src emacs-lisp
