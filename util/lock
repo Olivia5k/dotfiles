@@ -1,16 +1,19 @@
 #!/bin/zsh
 
-# Just disable the screen...
-if [[ $HOST == 'dragonisle' ]] ; then
-    sleep 1 && xset dpms force off
-    exit 0
-fi
-
 image=/tmp/screen.png
 
+# Grab a screenshot
 scrot $image
+
+# Scale it down to 10% and then back up again, giving it a nice pixelated look
 convert $image -modulate 100,33,100 -scale 10% -scale 1000% $image
+
+# If an argument was given, superimpose that image
 [[ -f $1 ]] && convert $image $1 -gravity SouthEast -composite -matte $image
-false && dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop
-i3lock -i $image
+
+# Lock and clean up
+i3lock -i $image -f
 rm $image
+
+# Also disable the screens
+xset dpms force off
