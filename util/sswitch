@@ -3,12 +3,12 @@
 
 other=$(xrandr | grep " connected (" | cut -d" " -f1)
 
-if [[ "$other" == "eDP1" ]] ; then
-    xrandr --output eDP1 --auto
-    xrandr --output DP1 --off
+if [[ "$other" == "eDP-1" ]] ; then
+    xrandr --output eDP-1 --auto
+    xrandr --output DP-1 --off
 else
-    xrandr --output DP1 --auto
-    xrandr --output eDP1 --off
+    xrandr --output DP-1 --auto
+    xrandr --output eDP-1 --off
 fi
 
 keyboard-setup
