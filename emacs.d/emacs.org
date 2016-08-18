@@ -1691,6 +1691,8 @@ C-x ?: Print current file name relative to project root
   (scroll-bar-mode -1)
   (set-default 'truncate-lines nil)
 
+  (setq mouse-yank-at-point t)
+
   (setq compilation-read-command nil)
 
   (setq inhibit-startup-screen t
