@@ -1639,42 +1639,18 @@ C-x ?: Print current file name relative to project root
   (global-set-key [M-up] 'move-line-up)
   (global-set-key [M-down] 'move-line-down)
 #+end_src
-** Configuration toggling
+** Minor mode switching
 #+begin_src emacs-lisp
-  (defun th-toggle-minor-mode (mode)
-    "Toggles a mode - if enabled, disable and vice versa"
-
-    (if (th-minor-enabled-p mode)
-        (progn
-          (funcall mode -1)
-          (message "%s disabled" (symbol-name mode)))
-      (funcall mode 1)
-      (message "%s enabled" (symbol-name mode))))
-
-  (defun th-minor-enabled-p (mode)
-    (-contains?
-     (--filter (and (boundp it) (symbol-value it)) minor-mode-list)
-     mode))
-
-  (let ((m (define-prefix-command 'config-change-map)))
-    ;; (define-key m (kbd "a")
-    ;;   (lambda ()
-    ;;     (interactive)
-    ;;     (th-toggle-minor-mode 'auto-fill-mode)))
-
-    (define-key m (kbd "t") 'toggle-truncate-lines)
-
-    (define-key m (kbd "l")
-      (lambda ()
-        (interactive)
-        (th-toggle-minor-mode 'linum-mode)))
-
-    (define-key m (kbd "f")
-      (lambda ()
-        (interactive)
-        (th-toggle-minor-mode 'auto-revert-tail-mode))))
-
-  (global-set-key (kbd "C-x c") 'config-change-map)
+  (defhydra th-modeswitch ()
+    "Switching minor modes"
+    ("a" auto-fill-mode "Auto fill")
+    ("f" fci-mode "Fill column")
+    ("M-f" auto-revert-tail-mode "Revert tail (follow)")
+    ("h" highlight-symbol-mode "Highlight symbol")
+    ("l" linum-mode "Line numbers")
+    ("r" rainbow-identifiers-mode "Rainbow identifiers")
+    ("t" toggle-truncate-lines "Truncate lines"))
+  (global-set-key (kbd "C-x c") 'th-modeswitch/body)
 #+end_src
 * Setup and options
 ** Options and settings
