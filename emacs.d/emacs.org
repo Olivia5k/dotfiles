@@ -83,7 +83,6 @@ Defines the packages to be installed.
       cl-lib
       company
       company-go
-      crontab-mode
       csv-mode
       dash
       diminish
@@ -1360,6 +1359,13 @@ These are functions used inside of yas.
                                  (linum-mode -1)
                                  (toggle-truncate-lines 1)))
 #+end_src
+
+** crontab-mode
+
+   #+begin_src emacs-lisp
+     (use-package crontab-mode)
+   #+end_src
+
 * Minor modes and utilities
 ** Buffer toggles
 
