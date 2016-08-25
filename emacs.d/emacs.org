@@ -1,6 +1,7 @@
 #+TITLE: init file for Emacs
 #+AUTHOR: Lowe Thiderman
 #+EMAIL: lowe.thiderman@gmail.com
+#+CREDIT: Howard Abrams <howard.abrams@gmail.com> (github.com/howardabrams/dot-files)
 
 * Introduction
 
@@ -45,19 +46,28 @@ updated repositories outside of MELPA are added. Order matters.
 #+begin_src emacs-lisp
   (require 'package)
 
-  (setq package-archives '(("org" . "http://orgmode.org/elpa/")
-                           ("tromey" . "http://tromey.com/elpa/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+  (setq package-archives
+        '(("org"       . "http://orgmode.org/elpa/")
+          ("tromey"    . "http://tromey.com/elpa/")
+          ("gnu"       . "http://elpa.gnu.org/packages/")
+          ("melpa"     . "http://stable.melpa.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")))
 
   (package-initialize)
-
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-
-  (require 'use-package)
+  (package-refresh-contents)
 #+end_src
+** use-package
+
+   Using [[https://github.com/jwiegley/use-package][use-package]] to automatically install certain packages, as
+   well as the ease of lazily loading them.
+
+   #+begin_src emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+
+     (require 'use-package)
+   #+end_src
 ** Packages
 
 Defines the packages to be installed.
