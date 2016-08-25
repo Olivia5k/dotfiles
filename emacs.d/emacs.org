@@ -93,7 +93,6 @@ Defines the packages to be installed.
       go-mode
       go-eldoc
       js2-mode
-      lispy
       multiple-cursors
       org-bullets
       org-journal
@@ -712,53 +711,62 @@ Defines the packages to be installed.
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 #+end_src
 *** Hydra commands
-#+begin_src emacs-lisp
-  (defhydra th-org (:exit t)
-    "Org commands"
-    ("c" org-capture "Capture")
-    ("M-o" org-capture "Capture")
-    ("s" (org-agenda nil "a") "Schedule")
-    ("j" org-clock-goto "Current clocked task")
-    ("a" org-todo-list "Agenda")
-    ("t" org-tags-view "Tags"))
 
-  (global-set-key (kbd "M-o") 'th-org/body)
-  (require 'lispy)
-  (define-key lispy-mode-map (kbd "M-o") 'th-org/body)
-#+end_src
+    #+begin_src emacs-lisp
+      (defhydra th-org (:exit t)
+        "Org commands"
+        ("c" org-capture "Capture")
+        ("M-o" org-capture "Capture")
+        ("s" (org-agenda nil "a") "Schedule")
+        ("j" org-clock-goto "Current clocked task")
+        ("a" org-todo-list "Agenda")
+        ("t" org-tags-view "Tags"))
+
+      (global-set-key (kbd "M-o") 'th-org/body)
+
+    #+end_src
 ** Elisp
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 
-  ;; pls no .elc
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (make-local-variable 'after-save-hook)
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (if (file-exists-p (concat buffer-file-name "c"))
-                              (delete-file (concat buffer-file-name "c")))))))
+   #+begin_src emacs-lisp
+     (use-package lispy
+       :bind (:map lispy-mode-map
+                   ;; This one just needs to be overwritten
+                   ("M-o" . th-org/body)))
 
-  (defun th-buffer-or-region (action-name buffer-func region-func)
-    (let ((s "Buffer"))
-      (if (use-region-p)
-          (progn
-            (funcall region-func (region-beginning) (region-end))
-            (keyboard-escape-quit)
-            (setq s "Region"))
-        (funcall buffer-func))
 
-      (message "buffer-or-region: %s %s" s action-name)))
+     (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+     (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+     (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 
-  (defun eval-buffer-or-region ()
-    (interactive)
-    (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
+     ;; pls no .elc
+     (add-hook
+      'emacs-lisp-mode-hook
+      (lambda ()
+        (make-local-variable 'after-save-hook)
+        (add-hook
+         'after-save-hook
+         (lambda ()
+           (if (file-exists-p (concat buffer-file-name "c"))
+               (delete-file (concat buffer-file-name "c")))))))
 
-  (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
-#+end_src
+     (defun th-buffer-or-region (action-name buffer-func region-func)
+       (let ((s "Buffer"))
+         (if (use-region-p)
+             (progn
+               (funcall region-func (region-beginning) (region-end))
+               (keyboard-escape-quit)
+               (setq s "Region"))
+           (funcall buffer-func))
+
+         (message "buffer-or-region: %s %s" s action-name)))
+
+     (defun eval-buffer-or-region ()
+       (interactive)
+       (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
+
+     (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+   #+end_src
 ** Python
 
    The major mode for editing Python in emacs. It honestly doesn't have much
