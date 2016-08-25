@@ -40,22 +40,22 @@ Does anyone even like custom? I find it incredibly annoying.
 #+end_src
 ** Preamble and setup
 
-Sets up the repositories to get packages from. Extra and more frequently
-updated repositories outside of MELPA are added. Order matters.
+   Sets up the repositories to get packages from. Extra and more frequently
+   updated repositories outside of MELPA are added. Order matters.
 
-#+begin_src emacs-lisp
-  (require 'package)
+   #+begin_src emacs-lisp
+     (require 'package)
 
-  (setq package-archives
-        '(("org"       . "http://orgmode.org/elpa/")
-          ("tromey"    . "http://tromey.com/elpa/")
-          ("gnu"       . "http://elpa.gnu.org/packages/")
-          ("melpa"     . "http://stable.melpa.org/packages/")
-          ("marmalade" . "http://marmalade-repo.org/packages/")))
+     (setq package-archives
+           '(("org"       . "http://orgmode.org/elpa/")
+             ("tromey"    . "http://tromey.com/elpa/")
+             ("gnu"       . "http://elpa.gnu.org/packages/")
+             ("melpa"     . "http://stable.melpa.org/packages/")
+             ("marmalade" . "http://marmalade-repo.org/packages/")))
 
-  (package-initialize)
-  (package-refresh-contents)
-#+end_src
+     (package-initialize)
+   #+end_src
+
 ** use-package
 
    Using [[https://github.com/jwiegley/use-package][use-package]] to automatically install certain packages, as
@@ -125,6 +125,15 @@ Defines the packages to be installed.
   (require 's)
 #+end_src
 * Interface
+** ace-window
+   #+begin_src emacs-lisp
+     (use-package avy
+       :ensure t
+       :commands avy-goto-word-1 avy-goto-char-1 avy-goto-line avy-goto-char-timer
+       :bind
+       ("C-l"     . avy-goto-word-1))
+   #+end_src
+
 ** Appearance
 #+begin_src emacs-lisp
   (color-theme-sanityinc-tomorrow-night)
@@ -135,7 +144,7 @@ Defines the packages to be installed.
      (set-face-attribute face nil ':bold t))
    (face-list))
 #+end_src
-** Helm
+** helm
 
    [[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of
    emacs. It replaces ido, flex etc.
@@ -270,7 +279,15 @@ Defines the packages to be installed.
         (setq helm-yas-space-match-any-greedy t))
     #+end_src
 
-** Projectile
+** popwin
+#+begin_src emacs-lisp
+  (require 'popwin)
+  (popwin-mode 1)
+
+  (global-set-key (kbd "C-x p") popwin:keymap)
+  (global-set-key (kbd "C-x C-k") 'popwin:close-popup-window)
+#+end_src
+** projectile
 #+begin_src emacs-lisp
   (require 'projectile)
   (projectile-global-mode)
@@ -283,56 +300,42 @@ Defines the packages to be installed.
   ;; (require 'spaceline-config)
   ;; (spaceline-spacemacs-theme)
 #+end_src
-** popwin
-#+begin_src emacs-lisp
-  (require 'popwin)
-  (popwin-mode 1)
-
-  (global-set-key (kbd "C-x p") popwin:keymap)
-  (global-set-key (kbd "C-x C-k") 'popwin:close-popup-window)
-#+end_src
-** ace-window
-   #+begin_src emacs-lisp
-     (use-package avy
-       :ensure t
-       :commands avy-goto-word-1 avy-goto-char-1 avy-goto-line avy-goto-char-timer
-       :bind
-       ("C-l"     . avy-goto-word-1))
-   #+end_src
-
 * Editing
-** undo tree
+** Adding current buffer to minibuffer
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-M-z") 'undo-tree-redo)
-  (global-undo-tree-mode +1)
-#+end_src
-** fill mode
-#+begin_src emacs-lisp
-  (auto-fill-mode 1)
-  (set-fill-column 79)
-#+end_src
-** yas
-#+begin_src emacs-lisp
-  (require 'yasnippet)
+  (define-key minibuffer-local-map [f3]
+    (lambda () (interactive)
+      (insert (file-truename (buffer-name
+                              (window-buffer (minibuffer-selected-window)))))))
 
-  ;; Without this, it doesn't load...
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'markdown-mode 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
 #+end_src
-** Save hooks
+** Autocompletion
 #+begin_src emacs-lisp
-  (add-hook 'before-save-hook
-            (lambda ()
-              (save-excursion
-                (save-restriction
-                  (delete-trailing-whitespace)
-                  (widen)
-                  (goto-char (point-max))
-                  (delete-blank-lines)))))
+  (require 'company)
+  (require 'company-go)
+
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+#+end_src
+** Bubble lines
+#+begin_src emacs-lisp
+  (defun th-bubble-up ()
+    "Moves current line to the line above"
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2))
+
+  (defun th-bubble-down ()
+    "Moves current line to the line below"
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1))
+
+  (global-set-key (kbd "ESC <up>") 'th-bubble-up)
+  (global-set-key (kbd "ESC <down>") 'th-bubble-down)
 #+end_src
 ** Commenting code
 #+begin_src emacs-lisp
@@ -352,59 +355,6 @@ Defines the packages to be installed.
       (comment-or-uncomment-region start end)))
 
   (global-set-key (kbd "M-;") 'comment-eclipse)
-#+end_src
-** Autocompletion
-#+begin_src emacs-lisp
-  (require 'company)
-  (require 'company-go)
-
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-#+end_src
-** Line duplication
-#+begin_src emacs-lisp
-  (defun duplicate-current-line-or-region (arg)
-    "Duplicates the current line or region ARG times.
-     If there's no region, the current line will be duplicated. However, if
-     there's a region, all lines that region covers will be duplicated."
-    (interactive "p")
-    (let (beg end (origin (point)))
-      (if (and mark-active (> (point) (mark)))
-          (exchange-point-and-mark))
-      (setq beg (line-beginning-position))
-      (if mark-active
-          (exchange-point-and-mark))
-      (setq end (line-end-position))
-      (let ((region (buffer-substring-no-properties beg end)))
-        (dotimes (i arg)
-          (goto-char end)
-          (newline)
-          (insert region)
-          (setq end (point)))
-        (goto-char (+ origin (* (length region) arg) arg)))))
-
-  (global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
-#+end_src
-** Entire line operation
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-k")
-                  (lambda ()
-                    (interactive)
-                    (beginning-of-line)
-                    (if (eq (point) (point-max))
-                        (previous-line))
-                    (kill-line 1)
-                    (back-to-indentation)))
-
-  (defun yank-entire-line ()
-    (interactive)
-    (save-excursion
-      (beginning-of-line)
-      (set-mark-command)
-      (end-of-line)
-      (kill-ring-save)))
 #+end_src
 ** Default keys
 #+begin_src emacs-lisp
@@ -480,246 +430,84 @@ Defines the packages to be installed.
 
   (global-set-key (kbd "M-f") 'forward-word-to-beginning)
 #+end_src
-** Adding current buffer to minibuffer
+** Entire line operation
 #+begin_src emacs-lisp
-  (define-key minibuffer-local-map [f3]
-    (lambda () (interactive)
-      (insert (file-truename (buffer-name
-                              (window-buffer (minibuffer-selected-window)))))))
+  (global-set-key (kbd "M-k")
+                  (lambda ()
+                    (interactive)
+                    (beginning-of-line)
+                    (if (eq (point) (point-max))
+                        (previous-line))
+                    (kill-line 1)
+                    (back-to-indentation)))
 
+  (defun yank-entire-line ()
+    (interactive)
+    (save-excursion
+      (beginning-of-line)
+      (set-mark-command)
+      (end-of-line)
+      (kill-ring-save)))
 #+end_src
-** Bubble lines
+** fill mode
 #+begin_src emacs-lisp
-  (defun th-bubble-up ()
-    "Moves current line to the line above"
-    (interactive)
-    (transpose-lines 1)
-    (forward-line -2))
+  (auto-fill-mode 1)
+  (set-fill-column 79)
+#+end_src
+** Line duplication
+#+begin_src emacs-lisp
+  (defun duplicate-current-line-or-region (arg)
+    "Duplicates the current line or region ARG times.
+     If there's no region, the current line will be duplicated. However, if
+     there's a region, all lines that region covers will be duplicated."
+    (interactive "p")
+    (let (beg end (origin (point)))
+      (if (and mark-active (> (point) (mark)))
+          (exchange-point-and-mark))
+      (setq beg (line-beginning-position))
+      (if mark-active
+          (exchange-point-and-mark))
+      (setq end (line-end-position))
+      (let ((region (buffer-substring-no-properties beg end)))
+        (dotimes (i arg)
+          (goto-char end)
+          (newline)
+          (insert region)
+          (setq end (point)))
+        (goto-char (+ origin (* (length region) arg) arg)))))
 
-  (defun th-bubble-down ()
-    "Moves current line to the line below"
-    (interactive)
-    (forward-line 1)
-    (transpose-lines 1)
-    (forward-line -1))
+  (global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
+#+end_src
+** Save hooks
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook
+            (lambda ()
+              (save-excursion
+                (save-restriction
+                  (delete-trailing-whitespace)
+                  (widen)
+                  (goto-char (point-max))
+                  (delete-blank-lines)))))
+#+end_src
+** undo tree
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-z") 'undo-tree-undo)
+  (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
+  (global-set-key (kbd "C-M-z") 'undo-tree-redo)
+  (global-undo-tree-mode +1)
+#+end_src
+** yas
+#+begin_src emacs-lisp
+  (require 'yasnippet)
 
-  (global-set-key (kbd "ESC <up>") 'th-bubble-up)
-  (global-set-key (kbd "ESC <down>") 'th-bubble-down)
+  ;; Without this, it doesn't load...
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook 'yas-minor-mode)
+  (add-hook 'markdown-mode 'yas-minor-mode)
+  (add-hook 'org-mode-hook 'yas-minor-mode)
 #+end_src
 * Major modes
-** org
-*** Main setup
-
-    #+begin_src emacs-lisp
-      (use-package org
-        :bind (("M-i"   . helm-imenu)
-               ("C-c ;" . org-edit-special)
-               :map org-src-mode-map
-               ("C-c ;" . org-edit-src-exit))
-
-        :init
-        (setq
-         org-confirm-babel-evaluate nil
-         org-directory "~/org"
-         org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
-         org-hide-leading-stars t
-         org-return-follows-link t
-         org-special-ctrl-a/e t
-         org-special-ctrl-k t
-         org-src-fontify-natively t
-         org-src-tab-acts-natively t
-         org-src-window-setup 'current-window
-         org-use-speed-commands t
-
-         ;; When calculating percentages of checkboxes, count all boxes, not just
-         ;; direct children
-         org-hierarchical-checkbox-statistics t)
-
-        :config
-        (org-babel-do-load-languages
-         'org-babel-load-languages
-         '((emacs-lisp . t)
-           (sql . t)
-           (shell . t)))
-
-        (org-bullets-mode 1))
-
-      (use-package org-journal)
-    #+end_src
-*** Agenda and todo
-**** Settings and options
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c a") 'org-agenda)
-
-  (setq
-   org-agenda-ndays 7
-   org-agenda-files '("~/org/")
-   org-agenda-show-all-dates t
-   org-agenda-start-on-weekday nil
-   org-archive-location "~/org/archive/%s::"
-   org-log-done t) ;;timestamp when switching from todo to done
-
-  (setq org-todo-keywords
-        '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
-
-  (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
-                                 ("WAITING" . org-mode-line-clock)))
-
-#+end_src
-**** Journal
-#+begin_src emacs-lisp
-  (setq org-journal-dir "~/org/journal/"
-        org-journal-file-format "%Y-%m-%d"
-        org-journal-date-format "%A, %Y-%m-%d"
-        org-journal-find-file 'find-file)
-
-  ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
-  (global-set-key (kbd "C-.") 'org-journal-new-entry)
-#+end_src
-**** Capturing
-     #+begin_src emacs-lisp
-       (setq
-        org-capture-templates
-        `(("t" "Tasks" entry
-           (file+headline "~/org/inbox.org" "Inbox")
-           "* TODO %^{Task}")
-
-          ("T" "Quick task" entry
-           (file+headline "~/org/inbox.org" "Inbox")
-           "* TODO %^{Task}\nSCHEDULED: %t\n"
-           :immediate-finish t)
-
-          ("i" "Interrupting task" entry
-           (file+headline "~/org/inbox.org" "Inbox")
-           "* STARTED %^{Task}"
-           :clock-in :clock-resume)
-
-          ("e" "Emacs idea" entry
-           (file+headline "~/org/inbox.org" "Emacs")
-           "* TODO %^{Task}"
-           :immediate-finish t)
-
-          ("E" "Event" entry
-           (file+datetree+prompt "~/org/events.org" "Event")
-           "* TODO %^{Task}\nSCHEDULED: %<%Y-%m-%d %H:%M>"
-           :immediate-finish t)
-
-          ("q" "Quick note" item
-           (file+headline "~/org/inbox.org" "Quick notes"))
-
-          ("r" "Recipe" entry
-           (file+headline "~/org/food.org" "Recipes")
-           "* [[%^{URL}][%^{Title}]]"
-           )))
-     #+end_src
-**** Toggler keybindings
-#+begin_src emacs-lisp
-  (define-key org-mode-map (kbd "C-c t")
-    (lambda ()
-      (interactive)
-      (org-todo "TODO")))
-
-  (define-key org-mode-map (kbd "C-c w")
-    (lambda ()
-      (interactive)
-      (org-todo "WORKING")))
-
-  (define-key org-mode-map (kbd "C-c z")
-    (lambda ()
-      (interactive)
-      (org-todo "WAITING")))
-
-  (define-key org-mode-map (kbd "C-c r")
-    (lambda ()
-      (interactive)
-      (org-todo "REVIEW")))
-
-  (define-key org-mode-map (kbd "C-c d")
-    (lambda ()
-      (interactive)
-      (org-todo "DONE")))
-
-  (define-key org-mode-map (kbd "C-c i")
-    (lambda ()
-      (interactive)
-      (org-todo "INVALID")))
-
-  (define-key org-mode-map (kbd "C-c SPC")
-    (lambda ()
-      (interactive)
-      (org-todo 'none)))
-
-#+end_src
-**** helm-org-agenda
-#+begin_src emacs-lisp
-  (defun th-helm-org-agenda-files ()
-    (mapcar (lambda (s) (s-chop-suffix ".org" s))
-            (directory-files "~/org/" nil ".*\\.org")))
-
-  (defun th-helm-org-agenda-visit (file)
-    (find-file (format "~/org/%s.org" file)))
-
-  (defvar th-helm-org-agenda-sources
-    '((name . "org-agenda files")
-      (candidates . th-helm-org-agenda-files)
-      (action . th-helm-org-agenda-visit)))
-
-  (defun th-helm-org-agenda ()
-    (interactive)
-    (helm
-     :sources th-helm-org-agenda-sources
-     :prompt "Agenda file: "
-     :buffer "*helm-org-agenda*"))
-
-  (global-set-key (kbd "C-x C-o") 'th-helm-org-agenda)
-#+end_src
-**** org-goto-for-project
-#+begin_src emacs-lisp
-  (defun th-org-project ()
-    "Go to the org project for the current repository.
-
-  Go back if we're already in it."
-
-    (interactive)
-    (let* ((root (projectile-project-root))
-           (name (car (last (s-split "/" (projectile-project-root)) 2))))
-      (if (s-equals? (expand-file-name "~/org/") root)
-          (progn
-            (save-buffer)
-            (previous-buffer))
-        (find-file
-         (format "~/org/%s.org" name)))))
-
-  (global-set-key (kbd "C-x C-o") 'th-org-project)
-#+end_src
-**** Archiving
-#+begin_src emacs-lisp
-  (defun org-archive-done-tasks ()
-    (interactive)
-    (org-map-entries
-     (lambda ()
-       (org-archive-subtree)
-       (setq org-map-continue-from (outline-previous-heading)))
-     "/DONE" 'file))
-
-  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
-#+end_src
-*** Hydra commands
-
-    #+begin_src emacs-lisp
-      (defhydra th-org (:exit t)
-        "Org commands"
-        ("c" org-capture "Capture")
-        ("M-o" org-capture "Capture")
-        ("s" (org-agenda nil "a") "Schedule")
-        ("j" org-clock-goto "Current clocked task")
-        ("a" org-todo-list "Agenda")
-        ("t" org-tags-view "Tags"))
-
-      (global-set-key (kbd "M-o") 'th-org/body)
-
-    #+end_src
-** Elisp
+** elisp
 
    #+begin_src emacs-lisp
      (use-package lispy
@@ -761,36 +549,6 @@ Defines the packages to be installed.
 
      (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
    #+end_src
-** Python
-
-   The major mode for editing Python in emacs. It honestly doesn't have much
-   going for it, but hey.
-
-   #+begin_src emacs-lisp
-     (use-package python-mode
-       :init
-
-       (defun sp-goto-mail ()
-         "Go to the latest email in <root>/_outgoing_emails."
-         (interactive)
-         (find-file
-          (car
-           (last
-            (directory-files
-             (concat (projectile-project-root)
-                     "_outgoing_emails")
-             t)))))
-
-       :config
-       (add-hook 'python-mode-hook 'flycheck-mode))
-
-     (use-package anaconda-mode
-       :config
-       (add-hook 'python-mode-hook 'anaconda-mode))
-   #+end_src
-
-*** TODO Configure a working company backend
-
 ** golang
 
    These are my Go tricks. They are fairly opinionated, but once they work well
@@ -1376,28 +1134,6 @@ Defines the packages to be installed.
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
 
-** prog-mode
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
-  (add-hook 'go-mode-hook 'semantic-mode)
-  (add-hook 'python-mode-hook 'semantic-mode)
-  (add-hook 'prog-mode-hook (lambda ()
-                              (auto-save-mode -1)
-                              (toggle-truncate-lines 1)))
-  (add-hook 'text-mode-hook 'turn-on-fci-mode)
-  (add-hook 'text-mode-hook 'auto-fill-mode)
-#+end_src
-** web-mode
-
-   Enhanced editing of HTML with support for embedded languages.
-   Used by vue-mode for templates.
-
-   #+begin_src emacs-lisp
-     (use-package web-mode
-       :init
-       (setq web-mode-markup-indent-offset 2
-             web-mode-attr-indent-offset 2))
-   #+end_src
 ** logview-mode
 
    Nifty little mode that makes reading structured logs easier.
@@ -1411,6 +1147,259 @@ Defines the packages to be installed.
           (linum-mode -1)
           (toggle-truncate-lines 1))))
    #+end_src
+
+** org
+*** Main setup
+
+    #+begin_src emacs-lisp
+      (use-package org
+        :bind (("M-i"   . helm-imenu)
+               ("C-c ;" . org-edit-special)
+               :map org-src-mode-map
+               ("C-c ;" . org-edit-src-exit))
+
+        :init
+        (setq
+         org-confirm-babel-evaluate nil
+         org-directory "~/org"
+         org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
+         org-hide-leading-stars t
+         org-return-follows-link t
+         org-special-ctrl-a/e t
+         org-special-ctrl-k t
+         org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-src-window-setup 'current-window
+         org-use-speed-commands t
+
+         ;; When calculating percentages of checkboxes, count all boxes, not just
+         ;; direct children
+         org-hierarchical-checkbox-statistics t)
+
+        :config
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (sql . t)
+           (shell . t)))
+
+        (org-bullets-mode 1))
+
+      (use-package org-journal)
+    #+end_src
+*** Agenda and todo
+**** Settings and options
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c a") 'org-agenda)
+
+  (setq
+   org-agenda-ndays 7
+   org-agenda-files '("~/org/")
+   org-agenda-show-all-dates t
+   org-agenda-start-on-weekday nil
+   org-archive-location "~/org/archive/%s::"
+   org-log-done t) ;;timestamp when switching from todo to done
+
+  (setq org-todo-keywords
+        '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+
+  (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
+                                 ("WAITING" . org-mode-line-clock)))
+
+#+end_src
+**** Journal
+#+begin_src emacs-lisp
+  (setq org-journal-dir "~/org/journal/"
+        org-journal-file-format "%Y-%m-%d"
+        org-journal-date-format "%A, %Y-%m-%d"
+        org-journal-find-file 'find-file)
+
+  ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
+  (global-set-key (kbd "C-.") 'org-journal-new-entry)
+#+end_src
+**** Capturing
+     #+begin_src emacs-lisp
+       (setq
+        org-capture-templates
+        `(("t" "Tasks" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* TODO %^{Task}")
+
+          ("T" "Quick task" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* TODO %^{Task}\nSCHEDULED: %t\n"
+           :immediate-finish t)
+
+          ("i" "Interrupting task" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* STARTED %^{Task}"
+           :clock-in :clock-resume)
+
+          ("e" "Emacs idea" entry
+           (file+headline "~/org/inbox.org" "Emacs")
+           "* TODO %^{Task}"
+           :immediate-finish t)
+
+          ("E" "Event" entry
+           (file+datetree+prompt "~/org/events.org" "Event")
+           "* TODO %^{Task}\nSCHEDULED: %<%Y-%m-%d %H:%M>"
+           :immediate-finish t)
+
+          ("q" "Quick note" item
+           (file+headline "~/org/inbox.org" "Quick notes"))
+
+          ("r" "Recipe" entry
+           (file+headline "~/org/food.org" "Recipes")
+           "* [[%^{URL}][%^{Title}]]"
+           )))
+     #+end_src
+**** Toggler keybindings
+#+begin_src emacs-lisp
+  (define-key org-mode-map (kbd "C-c t")
+    (lambda ()
+      (interactive)
+      (org-todo "TODO")))
+
+  (define-key org-mode-map (kbd "C-c w")
+    (lambda ()
+      (interactive)
+      (org-todo "WORKING")))
+
+  (define-key org-mode-map (kbd "C-c z")
+    (lambda ()
+      (interactive)
+      (org-todo "WAITING")))
+
+  (define-key org-mode-map (kbd "C-c r")
+    (lambda ()
+      (interactive)
+      (org-todo "REVIEW")))
+
+  (define-key org-mode-map (kbd "C-c d")
+    (lambda ()
+      (interactive)
+      (org-todo "DONE")))
+
+  (define-key org-mode-map (kbd "C-c i")
+    (lambda ()
+      (interactive)
+      (org-todo "INVALID")))
+
+  (define-key org-mode-map (kbd "C-c SPC")
+    (lambda ()
+      (interactive)
+      (org-todo 'none)))
+
+#+end_src
+**** helm-org-agenda
+#+begin_src emacs-lisp
+  (defun th-helm-org-agenda-files ()
+    (mapcar (lambda (s) (s-chop-suffix ".org" s))
+            (directory-files "~/org/" nil ".*\\.org")))
+
+  (defun th-helm-org-agenda-visit (file)
+    (find-file (format "~/org/%s.org" file)))
+
+  (defvar th-helm-org-agenda-sources
+    '((name . "org-agenda files")
+      (candidates . th-helm-org-agenda-files)
+      (action . th-helm-org-agenda-visit)))
+
+  (defun th-helm-org-agenda ()
+    (interactive)
+    (helm
+     :sources th-helm-org-agenda-sources
+     :prompt "Agenda file: "
+     :buffer "*helm-org-agenda*"))
+
+  (global-set-key (kbd "C-x C-o") 'th-helm-org-agenda)
+#+end_src
+**** org-goto-for-project
+#+begin_src emacs-lisp
+  (defun th-org-project ()
+    "Go to the org project for the current repository.
+
+  Go back if we're already in it."
+
+    (interactive)
+    (let* ((root (projectile-project-root))
+           (name (car (last (s-split "/" (projectile-project-root)) 2))))
+      (if (s-equals? (expand-file-name "~/org/") root)
+          (progn
+            (save-buffer)
+            (previous-buffer))
+        (find-file
+         (format "~/org/%s.org" name)))))
+
+  (global-set-key (kbd "C-x C-o") 'th-org-project)
+#+end_src
+**** Archiving
+#+begin_src emacs-lisp
+  (defun org-archive-done-tasks ()
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (outline-previous-heading)))
+     "/DONE" 'file))
+
+  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
+#+end_src
+*** Hydra commands
+
+    #+begin_src emacs-lisp
+      (defhydra th-org (:exit t)
+        "Org commands"
+        ("c" org-capture "Capture")
+        ("M-o" org-capture "Capture")
+        ("s" (org-agenda nil "a") "Schedule")
+        ("j" org-clock-goto "Current clocked task")
+        ("a" org-todo-list "Agenda")
+        ("t" org-tags-view "Tags"))
+
+      (global-set-key (kbd "M-o") 'th-org/body)
+
+    #+end_src
+** prog-mode
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
+  (add-hook 'go-mode-hook 'semantic-mode)
+  (add-hook 'python-mode-hook 'semantic-mode)
+  (add-hook 'prog-mode-hook (lambda ()
+                              (auto-save-mode -1)
+                              (toggle-truncate-lines 1)))
+  (add-hook 'text-mode-hook 'turn-on-fci-mode)
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+#+end_src
+** python
+
+   The major mode for editing Python in emacs. It honestly doesn't have much
+   going for it, but hey.
+
+   #+begin_src emacs-lisp
+     (use-package python-mode
+       :init
+
+       (defun sp-goto-mail ()
+         "Go to the latest email in <root>/_outgoing_emails."
+         (interactive)
+         (find-file
+          (car
+           (last
+            (directory-files
+             (concat (projectile-project-root)
+                     "_outgoing_emails")
+             t)))))
+
+       :config
+       (add-hook 'python-mode-hook 'flycheck-mode))
+
+     (use-package anaconda-mode
+       :config
+       (add-hook 'python-mode-hook 'anaconda-mode))
+   #+end_src
+
+*** TODO Configure a working company backend
 
 ** Utility modes
 
@@ -1429,6 +1418,17 @@ Defines the packages to be installed.
      (use-package yaml-mode)
    #+end_src
 
+** web-mode
+
+   Enhanced editing of HTML with support for embedded languages.
+   Used by vue-mode for templates.
+
+   #+begin_src emacs-lisp
+     (use-package web-mode
+       :init
+       (setq web-mode-markup-indent-offset 2
+             web-mode-attr-indent-offset 2))
+   #+end_src
 * Minor modes and utilities
 ** Buffer toggles
 
@@ -1528,6 +1528,100 @@ C-x ?: Print current file name relative to project root
 
   (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
 #+end_src
+** Context aware execution
+   Exeucte different things depending on what's under point.
+   #+begin_src emacs-lisp
+     (defun context-execute ()
+       "Context aware execution of what's under point"
+       (interactive)
+       (let ((symbol (context-get-whitespace-word)))
+         (message "Executing: <%s>" symbol)
+
+         (cond
+          ;; JIRA tickets
+          ((s-matches? "[A-Z][A-Z]+-[0-9]+" symbol)
+           (context-visit-jira symbol))
+
+          ;; URLs
+          ((s-matches? "[a-z]+://" symbol)
+           (browse-url symbol)))
+
+         ))
+
+     (defun context-get-whitespace-word ()
+       "Get the whitespace delimited word under point."
+
+       (let ((start (save-excursion (re-search-backward "\\(^\\| \\)")))
+             (end (save-excursion (re-search-forward "\\( \\|$\\)"))))
+         (s-trim (buffer-substring start end))))
+
+     (defun context-visit-jira (ticket)
+       "Visit the JIRA page"
+       (interactive)
+       (browse-url (concat context-jira-root "/browse/" ticket)))
+
+     (defvar context-jira-root "https://jira.spotify.net" "Root URL for JIRA")
+
+     (global-set-key (kbd "M-RET") 'context-execute)
+     (global-set-key (kbd "C-x RET") 'context-execute)
+   #+end_src
+** dired
+#+begin_src emacs-lisp
+  (defun th-kill-all-dired-buffers ()
+    (interactive)
+    (mapc
+     (lambda (buffer)
+       (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
+         (kill-buffer buffer)))
+     (buffer-list)))
+
+  (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
+#+end_src
+** emmet
+#+begin_src emacs-lisp
+  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+  (add-hook 'emmet-mode-hook
+            (lambda ()
+              (setq emmet-indentation 2))) ;; indent 2 spaces.
+#+end_src
+** expand-region
+#+begin_src emacs-lisp
+  (require 'expand-region)
+  (global-set-key (kbd "M-l") 'er/expand-region)
+  (global-set-key (kbd "C-M-l") 'er/contract-region)
+#+end_src
+** ffap
+#+begin_src emacs-lisp
+  ;; This literally has to exist in emacs, I just can't figure out where it is.
+  (global-set-key
+   (kbd "C-x M-f")
+   (lambda ()
+     (interactive)
+     (let ((fn (ffap-file-at-point))
+           (sym (symbol-name (symbol-at-point))))
+       (if fn
+           (find-file fn)
+         (helm :sources helm-projectile-sources-list
+               :buffer "*helm projectile*"
+               :input sym
+               :prompt (projectile-prepend-project-name (if (projectile-project-p)
+                                                            "pattern: "
+                                                          "Switch to project: ")))))))
+#+end_src
+** Flycheck
+#+begin_src emacs-lisp
+  (require 'flycheck)
+  (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
+  (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
+  (global-set-key (kbd "C-c C-SPC")
+                  (lambda ()
+                    (interactive)
+                    (th-toggle-buffer 'flycheck-list-errors "*Flycheck errors*")))
+
+  (with-eval-after-load 'flycheck
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+#+end_src
 ** git and magit
 *** git
 
@@ -1576,36 +1670,40 @@ C-x ?: Print current file name relative to project root
           "Restores the previous window configuration and kills the magit buffer"
           (jump-to-register :magit-fullscreen)))
     #+end_src
-** Flycheck
-#+begin_src emacs-lisp
-  (require 'flycheck)
-  (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
-  (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
-  (global-set-key (kbd "C-c C-SPC")
-                  (lambda ()
-                    (interactive)
-                    (th-toggle-buffer 'flycheck-list-errors "*Flycheck errors*")))
-
-  (with-eval-after-load 'flycheck
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-#+end_src
-** emmet
-#+begin_src emacs-lisp
-  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-  (add-hook 'emmet-mode-hook
-            (lambda ()
-              (setq emmet-indentation 2))) ;; indent 2 spaces.
-#+end_src
 ** Kill ring
 #+begin_src emacs-lisp
   (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
 #+end_src
-** expand-region
+** Minor mode switching
 #+begin_src emacs-lisp
-  (require 'expand-region)
-  (global-set-key (kbd "M-l") 'er/expand-region)
-  (global-set-key (kbd "C-M-l") 'er/contract-region)
+  (defhydra th-modeswitch ()
+    "Switching minor modes"
+    ("a" auto-fill-mode "Auto fill")
+    ("f" fci-mode "Fill column")
+    ("M-f" auto-revert-tail-mode "Revert tail (follow)")
+    ("h" highlight-symbol-mode "Highlight symbol")
+    ("l" linum-mode "Line numbers")
+    ("r" rainbow-identifiers-mode "Rainbow identifiers")
+    ("t" toggle-truncate-lines "Truncate lines"))
+  (global-set-key (kbd "C-x c") 'th-modeswitch/body)
+#+end_src
+** move-text
+#+begin_src emacs-lisp
+  (defun move-line-up ()
+    (interactive)
+    (transpose-lines 1)
+    (forward-line -2)
+    (indent-for-tab-command))
+
+  (defun move-line-down ()
+    (interactive)
+    (forward-line 1)
+    (transpose-lines 1)
+    (forward-line -1)
+    (indent-for-tab-command))
+
+  (global-set-key [M-up] 'move-line-up)
+  (global-set-key [M-down] 'move-line-down)
 #+end_src
 ** multiple-cursors
 #+begin_src emacs-lisp
@@ -1625,105 +1723,134 @@ C-x ?: Print current file name relative to project root
   ;; (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
   (global-set-key (kbd "M-n") 'neotree-toggle-windows)
 #+end_src
-** ffap
-#+begin_src emacs-lisp
-  ;; This literally has to exist in emacs, I just can't figure out where it is.
-  (global-set-key
-   (kbd "C-x M-f")
-   (lambda ()
-     (interactive)
-     (let ((fn (ffap-file-at-point))
-           (sym (symbol-name (symbol-at-point))))
-       (if fn
-           (find-file fn)
-         (helm :sources helm-projectile-sources-list
-               :buffer "*helm projectile*"
-               :input sym
-               :prompt (projectile-prepend-project-name (if (projectile-project-p)
-                                                            "pattern: "
-                                                          "Switch to project: ")))))))
-#+end_src
-** dired
-#+begin_src emacs-lisp
-  (defun th-kill-all-dired-buffers ()
-    (interactive)
-    (mapc
-     (lambda (buffer)
-       (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
-         (kill-buffer buffer)))
-     (buffer-list)))
-
-  (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
-#+end_src
-** Context aware execution
-   Exeucte different things depending on what's under point.
-   #+begin_src emacs-lisp
-     (defun context-execute ()
-       "Context aware execution of what's under point"
-       (interactive)
-       (let ((symbol (context-get-whitespace-word)))
-         (message "Executing: <%s>" symbol)
-
-         (cond
-          ;; JIRA tickets
-          ((s-matches? "[A-Z][A-Z]+-[0-9]+" symbol)
-           (context-visit-jira symbol))
-
-          ;; URLs
-          ((s-matches? "[a-z]+://" symbol)
-           (browse-url symbol)))
-
-         ))
-
-     (defun context-get-whitespace-word ()
-       "Get the whitespace delimited word under point."
-
-       (let ((start (save-excursion (re-search-backward "\\(^\\| \\)")))
-             (end (save-excursion (re-search-forward "\\( \\|$\\)"))))
-         (s-trim (buffer-substring start end))))
-
-     (defun context-visit-jira (ticket)
-       "Visit the JIRA page"
-       (interactive)
-       (browse-url (concat context-jira-root "/browse/" ticket)))
-
-     (defvar context-jira-root "https://jira.spotify.net" "Root URL for JIRA")
-
-     (global-set-key (kbd "M-RET") 'context-execute)
-     (global-set-key (kbd "C-x RET") 'context-execute)
-   #+end_src
-** move-text
-#+begin_src emacs-lisp
-  (defun move-line-up ()
-    (interactive)
-    (transpose-lines 1)
-    (forward-line -2)
-    (indent-for-tab-command))
-
-  (defun move-line-down ()
-    (interactive)
-    (forward-line 1)
-    (transpose-lines 1)
-    (forward-line -1)
-    (indent-for-tab-command))
-
-  (global-set-key [M-up] 'move-line-up)
-  (global-set-key [M-down] 'move-line-down)
-#+end_src
-** Minor mode switching
-#+begin_src emacs-lisp
-  (defhydra th-modeswitch ()
-    "Switching minor modes"
-    ("a" auto-fill-mode "Auto fill")
-    ("f" fci-mode "Fill column")
-    ("M-f" auto-revert-tail-mode "Revert tail (follow)")
-    ("h" highlight-symbol-mode "Highlight symbol")
-    ("l" linum-mode "Line numbers")
-    ("r" rainbow-identifiers-mode "Rainbow identifiers")
-    ("t" toggle-truncate-lines "Truncate lines"))
-  (global-set-key (kbd "C-x c") 'th-modeswitch/body)
-#+end_src
 * Setup and options
+** Aborting and stopping
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-unset-key (kbd "C-x C-c"))
+  (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
+#+end_src
+** Backups
+#+begin_src emacs-lisp
+  (defvar --backup-directory (concat user-emacs-directory "backups"))
+  (if (not (file-exists-p --backup-directory))
+          (make-directory --backup-directory t))
+  (setq backup-directory-alist `(("." . ,--backup-directory)))
+  (setq make-backup-files nil      ; backup of a file the first time it is saved.
+        backup-by-copying t        ; don't clobber symlinks
+        version-control nil        ; version numbers for backup files
+        delete-old-versions t      ; delete excess backup files silently
+        delete-by-moving-to-trash nil
+        kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
+        kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
+        auto-save-default nil      ; auto-save every buffer that visits a file
+        auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
+        auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
+        )
+#+end_src
+** Browser setup
+This uses the `www` command from the dotfiles repo and puts browser
+configuration outside of emacs.
+#+begin_src emacs-lisp
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "www")
+#+end_src
+** Clean mode line
+#+begin_src emacs-lisp
+  ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
+  (defvar mode-line-cleaner-alist
+    `((paredit-mode . " ()")
+      (eldoc-mode . "")
+      (abbrev-mode . "")
+      (auto-fill-mode "af")
+      (helm-mode "")
+      (magit-auto-revert-mode "")
+      (auto-revert-mode "")
+      (yas-minor-mode "")
+      (undo-tree-mode "")
+
+      ;; Major modes
+      (js2-mode "js2")
+      (javascript-mode "js")
+      (help-mode . "")
+      (fundamental-mode . "0")
+      (python-mode . "Py")
+      (emacs-lisp-mode . "El")))
+
+  (defun clean-mode-line ()
+    (interactive)
+    (cl-loop for cleaner in mode-line-cleaner-alist
+          do (let* ((mode (car cleaner))
+                   (mode-str (cdr cleaner))
+                   (old-mode-str (cdr (assq mode minor-mode-alist))))
+               (when old-mode-str
+                   (setcar old-mode-str mode-str))
+                 ;; major mode
+               (when (eq mode major-mode)
+                 (setq mode-name mode-str)))))
+
+  (add-hook 'after-change-major-mode-hook 'clean-mode-line)
+#+end_src
+** eshell
+#+begin_src emacs-lisp
+  (defun eshell-here ()
+    "Opens up a new shell in the directory associated with the
+  current buffer's file. The eshell is renamed to match that
+  directory to make multiple eshell windows easier."
+    (interactive)
+    (let* ((parent (if (buffer-file-name)
+                       (file-name-directory (buffer-file-name))
+                     default-directory))
+           (height (/ (window-total-height) 3))
+           (name   (car (last (split-string parent "/" t)))))
+      (split-window-vertically (- height))
+      (other-window 1)
+      (eshell "new")
+      (rename-buffer (concat "*eshell: " name "*"))
+
+      (insert (concat "ls"))
+      (eshell-send-input)))
+
+  (global-set-key (kbd "C-x e") 'eshell-here)
+
+  (defun eshell/x ()
+    (insert "exit")
+    (eshell-send-input)
+    (delete-window))
+
+  (setenv "PAGER" "cat")
+  (defalias 'e 'find-file)
+#+end_src
+** Linum
+#+begin_src emacs-lisp
+  (global-linum-mode 0)
+  (setq linum-format " %4d ")
+
+  (defun th-linum-filter ()
+    "Only have line numbers when programming"
+    (if (derived-mode-p 'prog-mode)
+      (linum-mode 1)))
+
+  (add-hook 'find-file-hook 'th-linum-filter)
+
+  (fringe-mode 12)
+  (setq scroll-step 10)
+#+end_src
+** Minibuffer
+#+begin_src emacs-lisp
+  ;; http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html
+  (defun th-paste-from-x-clipboard ()
+    (interactive)
+    (shell-command "echo $(xsel -o)" 1))
+
+
+
+  (defun th-paste-in-minibuffer ()
+    (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
+    (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
+
+  (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
+#+end_src
 ** Options and settings
 #+begin_src emacs-lisp
   (require 's)
@@ -1805,126 +1932,6 @@ C-x ?: Print current file name relative to project root
   (auto-fill-mode t)
   (auto-save-mode -1)
   (fci-mode 1)
-#+end_src
-** Browser setup
-This uses the `www` command from the dotfiles repo and puts browser
-configuration outside of emacs.
-#+begin_src emacs-lisp
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "www")
-#+end_src
-** Backups
-#+begin_src emacs-lisp
-  (defvar --backup-directory (concat user-emacs-directory "backups"))
-  (if (not (file-exists-p --backup-directory))
-          (make-directory --backup-directory t))
-  (setq backup-directory-alist `(("." . ,--backup-directory)))
-  (setq make-backup-files nil      ; backup of a file the first time it is saved.
-        backup-by-copying t        ; don't clobber symlinks
-        version-control nil        ; version numbers for backup files
-        delete-old-versions t      ; delete excess backup files silently
-        delete-by-moving-to-trash nil
-        kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
-        kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
-        auto-save-default nil      ; auto-save every buffer that visits a file
-        auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
-        auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
-        )
-#+end_src
-** Window management
-#+begin_src emacs-lisp
-  ;; Try to make emax split vertically when possible
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 0)
-#+end_src
-*** Emacs-like
-#+begin_src emacs-lisp
-  (define-key global-map (kbd "C-x 2")
-    (lambda ()
-      (interactive)
-      (split-window-vertically)
-      (balance-windows)
-      (windmove-down)))
-
-  (define-key global-map (kbd "C-x 3")
-    (lambda ()
-      (interactive)
-      (split-window-horizontally)
-      (balance-windows)
-      (windmove-right)))
-
-#+end_src
-*** vim-like
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x h") 'windmove-left)
-  (global-set-key (kbd "C-x j") 'windmove-down)
-  (global-set-key (kbd "C-x k") 'windmove-up)
-  (global-set-key (kbd "C-x l") 'windmove-right)
-
-  (defun th-kill-window ()
-    "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
-    (interactive)
-    (if (and (one-window-p) (server-running-p))
-        (progn
-          (save-buffer)
-          (delete-frame))
-      (progn
-        (delete-window)
-        (save-excursion
-          (balance-windows)))))
-
-  (global-set-key (kbd "C-q") 'th-kill-window)
-#+end_src
-** Linum
-#+begin_src emacs-lisp
-  (global-linum-mode 0)
-  (setq linum-format " %4d ")
-
-  (defun th-linum-filter ()
-    "Only have line numbers when programming"
-    (if (derived-mode-p 'prog-mode)
-      (linum-mode 1)))
-
-  (add-hook 'find-file-hook 'th-linum-filter)
-
-  (fringe-mode 12)
-  (setq scroll-step 10)
-#+end_src
-** Clean mode line
-#+begin_src emacs-lisp
-  ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
-  (defvar mode-line-cleaner-alist
-    `((paredit-mode . " ()")
-      (eldoc-mode . "")
-      (abbrev-mode . "")
-      (auto-fill-mode "af")
-      (helm-mode "")
-      (magit-auto-revert-mode "")
-      (auto-revert-mode "")
-      (yas-minor-mode "")
-      (undo-tree-mode "")
-
-      ;; Major modes
-      (js2-mode "js2")
-      (javascript-mode "js")
-      (help-mode . "")
-      (fundamental-mode . "0")
-      (python-mode . "Py")
-      (emacs-lisp-mode . "El")))
-
-  (defun clean-mode-line ()
-    (interactive)
-    (cl-loop for cleaner in mode-line-cleaner-alist
-          do (let* ((mode (car cleaner))
-                   (mode-str (cdr cleaner))
-                   (old-mode-str (cdr (assq mode minor-mode-alist))))
-               (when old-mode-str
-                   (setcar old-mode-str mode-str))
-                 ;; major mode
-               (when (eq mode major-mode)
-                 (setq mode-name mode-str)))))
-
-  (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 #+end_src
 ** Powerline
 #+begin_src emacs-lisp
@@ -2016,63 +2023,57 @@ configuration outside of emacs.
 
   (powerline-ha-theme)
 #+end_src
-** Aborting and stopping
-#+begin_src emacs-lisp
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-unset-key (kbd "C-x C-c"))
-  (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
-#+end_src
 ** uniquify
 #+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
 #+end_src
-** Minibuffer
+** Window management
 #+begin_src emacs-lisp
-  ;; http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html
-  (defun th-paste-from-x-clipboard ()
-    (interactive)
-    (shell-command "echo $(xsel -o)" 1))
-
-
-
-  (defun th-paste-in-minibuffer ()
-    (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
-    (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
-
-  (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
+  ;; Try to make emax split vertically when possible
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
 #+end_src
-** eshell
+*** Emacs-like
 #+begin_src emacs-lisp
-  (defun eshell-here ()
-    "Opens up a new shell in the directory associated with the
-  current buffer's file. The eshell is renamed to match that
-  directory to make multiple eshell windows easier."
-    (interactive)
-    (let* ((parent (if (buffer-file-name)
-                       (file-name-directory (buffer-file-name))
-                     default-directory))
-           (height (/ (window-total-height) 3))
-           (name   (car (last (split-string parent "/" t)))))
-      (split-window-vertically (- height))
-      (other-window 1)
-      (eshell "new")
-      (rename-buffer (concat "*eshell: " name "*"))
+  (define-key global-map (kbd "C-x 2")
+    (lambda ()
+      (interactive)
+      (split-window-vertically)
+      (balance-windows)
+      (windmove-down)))
 
-      (insert (concat "ls"))
-      (eshell-send-input)))
+  (define-key global-map (kbd "C-x 3")
+    (lambda ()
+      (interactive)
+      (split-window-horizontally)
+      (balance-windows)
+      (windmove-right)))
 
-  (global-set-key (kbd "C-x e") 'eshell-here)
-
-  (defun eshell/x ()
-    (insert "exit")
-    (eshell-send-input)
-    (delete-window))
-
-  (setenv "PAGER" "cat")
-  (defalias 'e 'find-file)
 #+end_src
-** Spotify
+*** vim-like
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x h") 'windmove-left)
+  (global-set-key (kbd "C-x j") 'windmove-down)
+  (global-set-key (kbd "C-x k") 'windmove-up)
+  (global-set-key (kbd "C-x l") 'windmove-right)
+
+  (defun th-kill-window ()
+    "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
+    (interactive)
+    (if (and (one-window-p) (server-running-p))
+        (progn
+          (save-buffer)
+          (delete-frame))
+      (progn
+        (delete-window)
+        (save-excursion
+          (balance-windows)))))
+
+  (global-set-key (kbd "C-q") 'th-kill-window)
+#+end_src
+
+* Work
 
 #+begin_src emacs-lisp
   ;; work-specific things that are in other repositories because secrets.
