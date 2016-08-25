@@ -83,10 +83,8 @@ Defines the packages to be installed.
       cl-lib
       company
       company-go
-      csv-mode
       dash
       diminish
-      dockerfile-mode
       emmet
       expand-region
       f
@@ -98,30 +96,24 @@ Defines the packages to be installed.
       js2-mode
       lispy
       logview-mode
-      markdown-mode
       multiple-cursors
-      nginx-mode
       org-bullets
       org-journal
       paradox
       paredit
       popwin
       projectile
-      protobuf-mode
-      puppet-mode
       rainbow-delimiters
       rainbow-identifiers
       rainbow-mode
       restclient-mode
       s
-      ssh-config-mode
       string-inflection
       transpose-frame
       undo-tree
       visual-regexp-steroids
       wrap-region
       xkcd
-      yaml-mode
       yasnippet
       )
     "A list of packages to be installed at launch.")
@@ -1360,10 +1352,21 @@ These are functions used inside of yas.
                                  (toggle-truncate-lines 1)))
 #+end_src
 
-** crontab-mode
+** Utility modes
+
+   Several modes that I just install to have, without configuring. Grouped
+   together because why not.
 
    #+begin_src emacs-lisp
      (use-package crontab-mode)
+     (use-package csv-mode)
+     (use-package dockerfile-mode)
+     (use-package markdown-mode)
+     (use-package nginx-mode)
+     (use-package protobuf-mode)
+     (use-package puppet-mode)
+     (use-package ssh-config-mode)
+     (use-package yaml-mode)
    #+end_src
 
 * Minor modes and utilities
