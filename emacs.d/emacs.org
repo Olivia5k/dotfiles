@@ -95,7 +95,6 @@ Defines the packages to be installed.
       go-eldoc
       js2-mode
       lispy
-      logview-mode
       multiple-cursors
       org-bullets
       org-journal
@@ -1346,11 +1345,18 @@ These are functions used inside of yas.
              web-mode-attr-indent-offset 2))
    #+end_src
 ** logview-mode
-#+begin_src emacs-lisp
-  (add-hook 'logview-mode-hook (lambda ()
-                                 (linum-mode -1)
-                                 (toggle-truncate-lines 1)))
-#+end_src
+
+   Nifty little mode that makes reading structured logs easier.
+
+   #+begin_src emacs-lisp
+     (use-package logview
+       :init
+       (add-hook
+        'logview-mode-hook
+        (lambda ()
+          (linum-mode -1)
+          (toggle-truncate-lines 1))))
+   #+end_src
 
 ** Utility modes
 
