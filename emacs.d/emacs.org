@@ -91,7 +91,6 @@ Defines the packages to be installed.
       paradox
       paredit
       popwin
-      projectile
       restclient-mode
       transpose-frame
       undo-tree
@@ -293,11 +292,11 @@ Defines the packages to be installed.
 #+end_src
 ** projectile
 #+begin_src emacs-lisp
-  (require 'projectile)
-  (projectile-global-mode)
-
-  (setq projectile-completion-system 'helm)
-  (setq projectile-mode-line nil)
+  (use-package projectile
+    :config
+    (projectile-global-mode)
+    (setq projectile-completion-system 'helm
+          projectile-mode-line nil))
 #+end_src
 ** spaceline
 #+begin_src emacs-lisp
