@@ -94,8 +94,6 @@ Defines the packages to be installed.
       go-eldoc
       js2-mode
       multiple-cursors
-      org-bullets
-      org-journal
       paradox
       paredit
       popwin
@@ -514,44 +512,43 @@ Defines the packages to be installed.
 * Major modes
 ** org
 *** Main setup
-#+begin_src emacs-lisp
-  (require 'org)
 
-  (eval-after-load "org"
-    '(progn
-       (require 'org-clock)
-       (require 'org-fstree)
-       (require 'org-journal)))
+    #+begin_src emacs-lisp
+      (use-package org
+        :bind (("M-i"   . helm-imenu)
+               ("C-c ;" . org-edit-special)
+               :map org-src-mode-map
+               ("C-c ;" . org-edit-src-exit))
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (sql . t)
-     (shell . t)))
+        :init
+        (setq
+         org-confirm-babel-evaluate nil
+         org-directory "~/org"
+         org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
+         org-hide-leading-stars t
+         org-return-follows-link t
+         org-special-ctrl-a/e t
+         org-special-ctrl-k t
+         org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-src-window-setup 'current-window
+         org-use-speed-commands t
 
-  (org-bullets-mode 1)
+         ;; When calculating percentages of checkboxes, count all boxes, not just
+         ;; direct children
+         org-hierarchical-checkbox-statistics t)
 
-  (setq
-   org-confirm-babel-evaluate nil
-   org-directory "~/org"
-   org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
-   org-hide-leading-stars t
-   org-return-follows-link t
-   org-special-ctrl-a/e t
-   org-special-ctrl-k t
-   org-src-fontify-natively t
-   org-src-tab-acts-natively t
-   org-src-window-setup 'current-window
-   org-use-speed-commands t)
+        :config
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (sql . t)
+           (shell . t)))
 
-  ; When calculating percentages of checkboxes, count all boxes, not just
-  ; direct children
-  (setq org-hierarchical-checkbox-statistics t)
+        (org-bullets-mode 1))
 
-  (define-key org-mode-map (kbd "M-i") 'helm-imenu)
-  (define-key org-mode-map (kbd "C-c ;") 'org-edit-special)
-  (define-key org-src-mode-map (kbd "C-c ;") 'org-edit-src-exit)
-#+end_src
+      (use-package org-journal)
+    #+end_src
 *** Agenda and todo
 **** Settings and options
 #+begin_src emacs-lisp
