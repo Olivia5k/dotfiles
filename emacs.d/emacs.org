@@ -81,7 +81,6 @@ Defines the packages to be installed.
       buffer-move
       cl-lib
       company
-      company-go
       dash
       diminish
       emmet
@@ -90,8 +89,6 @@ Defines the packages to be installed.
       fill-column-indicator
       flycheck
       fringe-helper
-      go-mode
-      go-eldoc
       js2-mode
       multiple-cursors
       paradox
@@ -796,9 +793,9 @@ Defines the packages to be installed.
 
 ** golang
 
-These are my Go tricks. They are fairly opinionated, but once they work well
-enough I think I want to bring them to the upstream go-mode somehow!
-[[https://github.com/dominikh/go-mode.el/pull/117][It started happening!]]
+   These are my Go tricks. They are fairly opinionated, but once they work well
+   enough I think I want to bring them to the upstream go-mode somehow!
+   [[https://github.com/dominikh/go-mode.el/pull/117][It started happening!]]
 
 *** Ideas
 **** TODO Compile in background
@@ -813,436 +810,491 @@ enough I think I want to bring them to the upstream go-mode somehow!
   (require 'go-mode)
 #+end_src
 
-*** Main hook
-#+begin_src emacs-lisp
-  (defun th-go-hook ()
-    (add-hook 'before-save-hook 'gofmt-before-save)
-    (set (make-local-variable 'company-backends) '(company-go))
-    (company-mode)
-    (flycheck-mode 1))
+*** Package and hooks
 
-  (add-hook 'go-mode-hook 'th-go-hook)
-  (add-hook 'go-mode-hook 'go-eldoc-setup)
-#+end_src
+    Load the base go-mode package and set up the hooks.
+
+    #+begin_src emacs-lisp
+      (use-package go-mode
+        :bind
+        ("C-c r"   . go-rename)
+        ("C-c i"   . go-goto-imports)
+        ("C-c C-i" . go-remove-unused-imports)
+        ("C-c d"   . godoc)
+
+        :init
+        (defun th-go-hook ()
+          (add-hook 'before-save-hook 'gofmt-before-save)
+          (set (make-local-variable 'company-backends) '(company-go))
+          (company-mode)
+          (flycheck-mode 1))
+
+        :config
+        (add-hook 'go-mode-hook 'th-go-hook)
+        (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+      (use-package company-go)
+      (use-package go-eldoc)
+    #+end_src
+
 *** goto functions
-#+begin_src emacs-lisp
-  ;; These were all moved into upstream! Yay open source <3
-  (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
-#+end_src
+
+    #+begin_src emacs-lisp
+      ;; These were all moved into upstream! Yay open source <3
+      (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
+    #+end_src
+
 *** Coverage functions
-#+begin_src emacs-lisp
-  (defun th-go-coverage ()
-    "Toggle coverage mode for the current buffer"
-    (interactive)
 
-    (save-excursion
-      (let ((bn (buffer-name)))
-        (if (s-contains? "<gocov>" bn)
-            (progn
-              (windmove-left)
-              (th-go-test-buffer-p))
+    Shows coverage for the current go file. Deletes other windows.
 
-          (if (s-contains? "_test.go" bn)
-              (progn
-                (windmove-left)
-                (th-go-coverage-p))
-            (windmove-right)
-            (if (not (s-contains? "<gocov>" (buffer-name)))
+    #+begin_src emacs-lisp
+      (defun th-go-coverage ()
+        "Toggle coverage mode for the current buffer"
+        (interactive)
+
+        (save-excursion
+          (let ((bn (buffer-name)))
+            (if (s-contains? "<gocov>" bn)
                 (progn
                   (windmove-left)
-                  (th-go-coverage-p))
-              (windmove-left)
-              (th-go-test-buffer-p)))))))
+                  (th-go-test-buffer-p))
 
-  (defun th-go-coverage-p ()
-    (delete-other-windows)
-    (go-coverage (concat (projectile-project-root) "cover.out")))
+              (if (s-contains? "_test.go" bn)
+                  (progn
+                    (windmove-left)
+                    (th-go-coverage-p))
+                (windmove-right)
+                (if (not (s-contains? "<gocov>" (buffer-name)))
+                    (progn
+                      (windmove-left)
+                      (th-go-coverage-p))
+                  (windmove-left)
+                  (th-go-test-buffer-p)))))))
 
-  (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
-#+end_src
+      (defun th-go-coverage-p ()
+        (delete-other-windows)
+        (go-coverage (concat (projectile-project-root) "cover.out")))
+
+      (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
+    #+end_src
+
 *** Test file view
-Brings up a split view of a single file and it's corresponding test file.
-The test file will be created if it does not already exist.
-#+begin_src emacs-lisp
-  (defun th-go-test-buffer-p ()
-    (let* ((bname (buffer-file-name))
-           (left "")
-           (right ""))
 
-      (if (s-suffix? "_test.go" bname)
-          (setq left (th-go-alternate-file bname)
-                right bname)
-        (setq left bname
-              right (th-go-alternate-file bname)))
+    Brings up a split view of a single file and it's corresponding test file.
+    The test file will be created if it does not already exist.
 
-      (find-file left)
-      (delete-other-windows)
-      (split-window-horizontally)
-      (windmove-right)
-      (find-file right)))
+    #+begin_src emacs-lisp
+      (defun th-go-test-buffer-p ()
+        (let* ((bname (buffer-file-name))
+               (left "")
+               (right ""))
 
-  (defun th-go-test-buffer ()
-    (interactive)
-    (th-go-test-buffer-p))
+          (if (s-suffix? "_test.go" bname)
+              (setq left (th-go-alternate-file bname)
+                    right bname)
+            (setq left bname
+                  right (th-go-alternate-file bname)))
 
+          (find-file left)
+          (delete-other-windows)
+          (split-window-horizontally)
+          (windmove-right)
+          (find-file right)))
 
-  (defun th-go-test-buffer-split (file)
-    ;; If we happen to be on the test file when splitting, go left once
-    (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
-      (windmove-left))
+      (defun th-go-test-buffer ()
+        (interactive)
+        (th-go-test-buffer-p))
 
-    (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
-      (split-window-below)
-      (find-file fn)
-      (windmove-right)
-      (split-window-below)
-      (find-file (th-go-alternate-file fn))
-      (balance-windows)))
+      (defun th-go-test-buffer-split (file)
+        ;; If we happen to be on the test file when splitting, go left once
+        (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
+          (windmove-left))
 
+        (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
+          (split-window-below)
+          (find-file fn)
+          (windmove-right)
+          (split-window-below)
+          (find-file (th-go-alternate-file fn))
+          (balance-windows)))
 
-  (defun th-go-alternate-file (fn)
-    "If fn is code, return path to test file and vice versa"
+      (defun th-go-alternate-file (fn)
+        "If fn is code, return path to test file and vice versa"
 
-    (if (s-suffix? "_test.go" fn)
-        (s-replace "_test.go" ".go" fn)
-      (s-replace ".go" "_test.go" fn)))
+        (if (s-suffix? "_test.go" fn)
+            (s-replace "_test.go" ".go" fn)
+          (s-replace ".go" "_test.go" fn)))
 
-  (defun th-go-test-file-p (&optional fn)
-    "Returns boolean if the file name given is a test file"
-    (s-contains? "_test.go"
-                 (if (not fn)
-                     (buffer-file-name)
-                   fn)))
+      (defun th-go-test-file-p (&optional fn)
+        "Returns boolean if the file name given is a test file"
+        (s-contains? "_test.go"
+                     (if (not fn)
+                         (buffer-file-name)
+                       fn)))
 
-  (defun th-go-alternate ()
-    "Go to the alternate file; code or test."
-    (interactive)
-    (find-file (th-go-alternate-file (buffer-name))))
+      (defun th-go-alternate ()
+        "Go to the alternate file; code or test."
+        (interactive)
+        (find-file (th-go-alternate-file (buffer-name))))
 
-  (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
-#+end_src
+      (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
+    #+end_src
+
 *** Single test execution
-#+begin_src emacs-lisp
-  (defun th-go-get-test-above ()
-    "Gets the name of the test above point"
-    (save-excursion
-      (re-search-backward "^func \\(Test\\|Example\\)" nil t)
-      (forward-word 2)
-      (thing-at-point 'symbol t)))
 
-  (defvar th-go-last-single-test "go test" "The last single test command that was run")
+    Helper function that lets you execute a single test rather than the entire
+    suite. Run with =C-M-x= on a test file. When run in a non-test file, the
+    most recently executed test will be run again.
 
-  (defun th-go-single-test ()
-    "If in test file, run the test above point. If not, run the last run test."
-    (interactive)
-    (projectile-save-project-buffers)
-    (when (th-go-test-file-p)
-      (setq th-go-single-test (format "go test -v -run %s" (th-go-get-test-above))))
-    (compile th-go-single-test))
+    #+begin_src emacs-lisp
+      (defun th-go-get-test-above ()
+        "Gets the name of the test above point"
+        (save-excursion
+          (re-search-backward "^func \\(Test\\|Example\\)" nil t)
+          (forward-word 2)
+          (thing-at-point 'symbol t)))
 
-  (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
-#+end_src
+      (defvar th-go-last-single-test "go test" "The last single test command that was run")
+
+      (defun th-go-single-test ()
+        "If in test file, run the test above point. If not, run the last run test."
+        (interactive)
+        (projectile-save-project-buffers)
+        (when (th-go-test-file-p)
+          (setq th-go-single-test (format "go test -v -run %s" (th-go-get-test-above))))
+        (compile th-go-single-test))
+
+      (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
+    #+end_src
+
 *** helm based file visitor
-Shows a helm session with the current source files, and opens a view with the
-chosen candidate and its corresponding test file.
-#+begin_src emacs-lisp
-  (defun th-helm-go-source-files ()
-    (mapcar (lambda (s)
-              (s-chop-suffix ".go" s))
-            (-filter #'th-helm-go-filter-files
-                     (directory-files (projectile-project-root) nil ".*\\.go"))))
 
-  (defun th-helm-go-filter-files (x)
-    (let ((fn (concat (projectile-project-root) x))
-          (bufname (buffer-file-name (get-buffer helm-current-buffer))))
-      (and
-       (not (s-contains? "_test" x))      ; Test files
-       (not (s-contains? ".#" x))         ; emax backups
-       (not (s-contains? fn bufname))     ; the current module
-       (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
+    Shows a helm session with the current source files, and opens a view with
+    the chosen candidate and its corresponding test file.
 
-  (defun th-helm-go-source-visit (file)
-    (find-file (format "%s/%s.go" (projectile-project-root) file))
-    (th-go-test-buffer-p))
+    #+begin_src emacs-lisp
+      (defun th-helm-go-source-files ()
+        (mapcar (lambda (s)
+                  (s-chop-suffix ".go" s))
+                (-filter #'th-helm-go-filter-files
+                         (directory-files (projectile-project-root) nil ".*\\.go"))))
 
-  (defun th-helm-go-source-visit-split (file)
-    (th-go-test-buffer-split file))
+      (defun th-helm-go-filter-files (x)
+        (let ((fn (concat (projectile-project-root) x))
+              (bufname (buffer-file-name (get-buffer helm-current-buffer))))
+          (and
+           (not (s-contains? "_test" x))      ; Test files
+           (not (s-contains? ".#" x))         ; emax backups
+           (not (s-contains? fn bufname))     ; the current module
+           (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
 
-  (defvar th-helm-go-source-sources
-    '((name . "go source files")
-      (candidates . th-helm-go-source-files)
-      (action . (
-                 ("visit file" . th-helm-go-source-visit)
-                 ("split below `C-c j'" . th-helm-go-source-visit-split)
-                 ))))
+      (defun th-helm-go-source-visit (file)
+        (find-file (format "%s/%s.go" (projectile-project-root) file))
+        (th-go-test-buffer-p))
 
-  (defun th-helm-go-source ()
-    (interactive)
-    (helm
-     :sources th-helm-go-source-sources
-     :prompt "go source file: "
-     :buffer "*helm-go-source*"))
+      (defun th-helm-go-source-visit-split (file)
+        (th-go-test-buffer-split file))
 
-  (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
-#+end_src
+      (defvar th-helm-go-source-sources
+        '((name . "go source files")
+          (candidates . th-helm-go-source-files)
+          (action . (
+                     ("visit file" . th-helm-go-source-visit)
+                     ("split below `C-c j'" . th-helm-go-source-visit-split)))))
+
+      (defun th-helm-go-source ()
+        (interactive)
+        (helm
+         :sources th-helm-go-source-sources
+         :prompt "go source file: "
+         :buffer "*helm-go-source*"))
+
+      (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
+    #+end_src
+
 *** Snippet helpers
-These are functions used inside of yas.
-#+begin_src emacs-lisp
-  (defun th-go-get-type-signature ()
-    "Get the signature of the closest type: (t *Type)"
-    (save-excursion
-      (re-search-backward "^type" nil t)
-      (if (looking-at "type")
-          (progn (forward-word 2)
-                 (let ((s (symbol-name (symbol-at-point))))
-                   (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
-        "")))
 
-#+end_src
+    These are functions used inside of yas.
+
+    #+begin_src emacs-lisp
+      (defun th-go-get-type-signature ()
+        "Get the signature of the closest type: (t *Type)"
+        (save-excursion
+          (re-search-backward "^type" nil t)
+          (if (looking-at "type")
+              (progn (forward-word 2)
+                     (let ((s (symbol-name (symbol-at-point))))
+                       (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
+            "")))
+
+    #+end_src
+
 *** Compiling and executing
-#+begin_src emacs-lisp
-  (defun th-go-test ()
-    (interactive)
-    (projectile-save-project-buffers)
-    ;; The server compile command should run in the root
-    (compile "go test -coverprofile=cover.out"))
 
-  (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
+    Helper functions that make compiling and viewing the compilation log
+    simpler.
 
-  (defun th-go-server-compile ()
-    (interactive)
-    (projectile-save-project-buffers)
-    ;; The server compile command should run in the root
-    (with-current-buffer (th-go-main-file-buffer)
-      (compile "go build -v")))
+    #+begin_src emacs-lisp
+      (defun th-go-test ()
+        (interactive)
+        (projectile-save-project-buffers)
+        ;; The server compile command should run in the root
+        (compile "go test -coverprofile=cover.out"))
 
-  (defun th-go-main-file ()
-    "Returns the main go file of the project"
-    (let ((path (projectile-project-root)))
-      (concat path (format "%s.go" (f-base path)))))
+      (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
 
-  (defun th-go-main-file-buffer ()
-    "Returns the buffer of the main go file of the project"
-    (get-file-buffer (th-go-main-file)))
+      (defun th-go-server-compile ()
+        (interactive)
+        (projectile-save-project-buffers)
+        ;; The server compile command should run in the root
+        (with-current-buffer (th-go-main-file-buffer)
+          (compile "go build -v")))
 
-  (defun th-go-modules ()
-    "Get the paths to all modules found in the project"
-    (let ((path (projectile-project-root)))
-      (cdr ;; Remove the ./
-       (-uniq
-        (-map
-         (lambda (fn)
-           ;; Add ./ so that go considers the modules as local and not remote
-           (concat "./" (f-dirname fn)))
-         (-filter
-          ;; Return a list with all go files
-          (lambda (fn) (s-contains? ".go" fn))
-          (projectile-current-project-files)))))))
-  ;; Quick compile, without tests or checks
-  (define-key go-mode-map (kbd "C-c M-c")
-    (lambda ()
-      (interactive)
-      (compile "go build -v")))
+      (defun th-go-main-file ()
+        "Returns the main go file of the project"
+        (let ((path (projectile-project-root)))
+          (concat path (format "%s.go" (f-base path)))))
 
-  (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
+      (defun th-go-main-file-buffer ()
+        "Returns the buffer of the main go file of the project"
+        (get-file-buffer (th-go-main-file)))
 
-  ;; NOTE: This is not go specific.
-  (defun th-toggle-maximize-buffer (&optional buffer-name)
-    "Maximize buffer"
-    (interactive)
-    (if (= 1 (length (window-list)))
-        (jump-to-register '_)
-      (progn
-        (window-configuration-to-register '_)
-        (if buffer-name
-            (switch-to-buffer buffer-name))
-        (delete-other-windows))))
+      (defun th-go-modules ()
+        "Get the paths to all modules found in the project"
+        (let ((path (projectile-project-root)))
+          (cdr ;; Remove the ./
+           (-uniq
+            (-map
+             (lambda (fn)
+               ;; Add ./ so that go considers the modules as local and not remote
+               (concat "./" (f-dirname fn)))
+             (-filter
+              ;; Return a list with all go files
+              (lambda (fn) (s-contains? ".go" fn))
+              (projectile-current-project-files)))))))
 
-  (defun th-quit-compilation-buffer ()
-    ;; TODO: Maybe this can be done with advice instead?
-    (interactive)
-    (if (= 1 (length (window-list)))
-        (jump-to-register '_)
-      (quit-window)))
+      ;; Quick compile, without tests or checks
+      (define-key go-mode-map (kbd "C-c M-c")
+        (lambda ()
+          (interactive)
+          (compile "go build -v")))
 
-  (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
-  (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
+      (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
 
-  (defun th-go-maximize-log ()
-    (interactive)
-    (th-toggle-maximize-buffer "*compilation*"))
-
-  (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
-#+end_src
-*** Refactoring and renaming
-#+begin_src emacs-lisp
-  (define-key go-mode-map (kbd "C-c r") 'go-rename)
-#+end_src
-*** Docstring manipulation
-#+begin_src emacs-lisp
-  (defun th-go-update-docstring ()
-    "Update the docstring of the current function to match the name it has."
-    (interactive)
-    (save-excursion
-      ;; Since this will update if it is wrong, just call it and let it be.
-      (th-go-goto-docstring)))
-
-  (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
-#+end_src
-*** Struct pointer toggler
-#+begin_src emacs-lisp
-  (defun go--convert-type-name-to-receiver (tn)
-    "Converts from the string \"Type\" to \"(t *Type)\""
-    (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
-
-  (defun go--get-types (&optional file-name skip)
-    "Return a list of all the types found in the current file.
-
-  The strings returned are based on all lines that begin with
-  '^type'. The letters 'type ' and the ending ' {' are both
-  removed.
-
-  If `skip' is provided, that type will not be included in the resulting list."
-    (save-excursion
-      (let ((fn (or file-name (buffer-file-name))))
-        (-map
-         (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
-         (-filter
-          (lambda (s)
-            (if skip
-                ;; If skip is provided, also filter out that line
-                (and (s-prefix? "type " s)
-                     (not (s-prefix? (format "type %s " skip) s)))
-              ;; Otherwise just return lines that start with "type"
-              (s-prefix? "type " s)))
-
-          ;; Does emacs really don't have a cleaner way of getting lines in a
-          ;; file? :/
-          (with-temp-buffer
-            (insert-file-contents fn)
-            (split-string (buffer-string) "\n" t)))))))
-
-  (defun go-refactor-method-receiver ()
-    "Changes or removes the method receiver of the current function.
-
-  A choice between all the types in the current file are
-  interactively presented. Also presented is an item `<none>',
-  which will remove the receiver if there is one.
-
-  If there was a receiver and a new one is chosen,"
-    ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
-    (interactive)
-    (save-excursion
-      (go-goto-function t)
-      (forward-char 5)
-
-      (let*
-          ((empty "<none>")
-           (current-var
-            (save-excursion
-              (forward-char 1)
-              (thing-at-point 'symbol t)))
-           (current-type
-            (save-excursion
-              (forward-char 1)
-              (forward-word 2)
-              (thing-at-point 'symbol t)))
-           (type (completing-read
-                  "Type: "
-                  (append (go--get-types (buffer-file-name) current-type)
-                          (list empty))))
-           (receiver (when (not (s-equals? type empty))
-                       (go--convert-type-name-to-receiver
-                        (car (s-split " " type))))))
-
-        (cond
-         ;; If we are looking at an opening parenthesis, there is already a method receiver
-         ((looking-at "(")
-          ;; Firstly, store the current receiver variable name.
-
-
-          ;; Then, delete the existing one.
-          (delete-region
-           (point)
-           (save-excursion
-             (forward-list 1)
-             (point)))
-          ;; If we do not have a receiver (i.e. we chose 'empty) we should
-          ;; delete the extra space.
-          (if (not receiver)
-              (delete-char 1)
-            ;; If there was a receiver previously and we set a new one, update the
-            ;; variable name.
-            (insert receiver)
-
-            ;; And also update the variable name inside of the function.
-            (when (and current-var receiver)
-              (go--refactor-symbol-in-function
-               current-var
-               (s-downcase (s-left 1 type))))))
-         ((and (not (looking-at "(")) receiver)
-          ;; There is no receiver, but we are adding one. Just insert it.
-          (insert (format "%s " receiver)))))))
-
-  (defun go--refactor-symbol-in-function (from to)
-    "Changes instances of the symbol `from' into `to'.
-
-  Assumes that point is on line defining the function we are replacing in."
-    (save-excursion
-      (beginning-of-line)
-      (let ((start
-             (save-excursion
-               (forward-line -1)
-               (point)))
-            (end
-             (save-excursion
-               ;; TODO(thiderman): Make a method that reliably moves to opening brace.
-               (end-of-line)
-               ;; In case of trailing whitespace...
-               (search-backward "{")
-               (forward-list 1)
-               (backward-char 1)
-               (point))))
-
-        (replace-string from to t start end))))
-
-  (define-prefix-command 'go-refactor-map)
-  (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
-
-  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
-#+end_src
-*** General keybindings
-#+begin_src emacs-lisp
-  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
-  (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
-  (define-key go-mode-map (kbd "C-c d") 'godoc)
-#+end_src
-*** Debug toggler
-#+begin_src emacs-lisp
-  (defun go-toggle-debug ()
-    "Toggle the toggle/debug file"
-    (interactive)
-    (let* ((dir (concat (projectile-project-root) "toggle/"))
-           (toggle "debug")
-           (action "Toggled")
-           (fn (concat dir toggle)))
-      ;; Create the directory if it doesn't already exist
-      (when (not (f-directory? dir))
-        (make-directory dir))
-
-      ;; Toggle the existence of the file
-      (if (f-file? fn)
+      ;; NOTE: This is not go specific.
+      (defun th-toggle-maximize-buffer (&optional buffer-name)
+        "Maximize buffer"
+        (interactive)
+        (if (= 1 (length (window-list)))
+            (jump-to-register '_)
           (progn
-            (f-delete fn)
-            (setq action "Disabled"))
-        (with-temp-buffer
-          (write-file fn))
-        (setq action "Enabled"))
-      (message "%s %s" action toggle)))
+            (window-configuration-to-register '_)
+            (if buffer-name
+                (switch-to-buffer buffer-name))
+            (delete-other-windows))))
 
-  (define-key go-mode-map (kbd "C-c M-d") 'go-toggle-debug)
-#+end_src
+      (defun th-quit-compilation-buffer ()
+        ;; TODO: Maybe this can be done with advice instead?
+        (interactive)
+        (if (= 1 (length (window-list)))
+            (jump-to-register '_)
+          (quit-window)))
+
+      (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
+      (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
+
+      (defun th-go-maximize-log ()
+        (interactive)
+        (th-toggle-maximize-buffer "*compilation*"))
+
+      (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
+    #+end_src
+
+*** Docstring manipulation
+
+    Update the function name of the docstring for the function you are
+    visiting. Useful when renaming functions.
+
+    #+begin_src emacs-lisp
+      (defun th-go-update-docstring ()
+        "Update the docstring of the current function to match the name it has."
+        (interactive)
+        (save-excursion
+          ;; Since this will update if it is wrong, just call it and let it be.
+          (th-go-goto-docstring)))
+
+      (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
+    #+end_src
+
+*** Struct pointer refactoring
+
+    =C-c C-m r=, a function to change the type signature of the current
+    method. Will
+
+    #+begin_src emacs-lisp
+      (defun go--convert-type-name-to-receiver (tn)
+        "Converts from the string \"Type\" to \"(t *Type)\""
+        (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
+
+      (defun go--get-types (&optional file-name skip)
+        "Return a list of all the types found in the current file.
+
+      The strings returned are based on all lines that begin with
+      '^type'. The letters 'type ' and the ending ' {' are both
+      removed.
+
+      If `skip' is provided, that type will not be included in the resulting list."
+
+        (save-excursion
+          (let ((fn (or file-name (buffer-file-name))))
+            (-map
+             (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
+             (-filter
+              (lambda (s)
+                (if skip
+                    ;; If skip is provided, also filter out that line
+                    (and (s-prefix? "type " s)
+                         (not (s-prefix? (format "type %s " skip) s)))
+                  ;; Otherwise just return lines that start with "type"
+                  (s-prefix? "type " s)))
+
+              ;; Does emacs really don't have a cleaner way of getting lines in a
+              ;; file? :/
+              (with-temp-buffer
+                (insert-file-contents fn)
+                (split-string (buffer-string) "\n" t)))))))
+
+      (defun go-refactor-method-receiver ()
+        "Changes or removes the method receiver of the current function.
+
+      A choice between all the types in the current file are
+      interactively presented. Also presented is an item `<none>',
+      which will remove the receiver if there is one.
+
+      If there was a receiver and a new one is chosen,"
+        ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
+        (interactive)
+        (save-excursion
+          (go-goto-function t)
+          (forward-char 5)
+
+          (let*
+              ((empty "<none>")
+               (current-var
+                (save-excursion
+                  (forward-char 1)
+                  (thing-at-point 'symbol t)))
+               (current-type
+                (save-excursion
+                  (forward-char 1)
+                  (forward-word 2)
+                  (thing-at-point 'symbol t)))
+               (type (completing-read
+                      "Type: "
+                      (append (go--get-types (buffer-file-name) current-type)
+                              (list empty))))
+               (receiver (when (not (s-equals? type empty))
+                           (go--convert-type-name-to-receiver
+                            (car (s-split " " type))))))
+
+            (cond
+             ;; If we are looking at an opening parenthesis, there is already a method receiver
+             ((looking-at "(")
+              ;; Firstly, store the current receiver variable name.
+
+
+              ;; Then, delete the existing one.
+              (delete-region
+               (point)
+               (save-excursion
+                 (forward-list 1)
+                 (point)))
+              ;; If we do not have a receiver (i.e. we chose 'empty) we should
+              ;; delete the extra space.
+              (if (not receiver)
+                  (delete-char 1)
+                ;; If there was a receiver previously and we set a new one, update the
+                ;; variable name.
+                (insert receiver)
+
+                ;; And also update the variable name inside of the function.
+                (when (and current-var receiver)
+                  (go--refactor-symbol-in-function
+                   current-var
+                   (s-downcase (s-left 1 type))))))
+             ((and (not (looking-at "(")) receiver)
+              ;; There is no receiver, but we are adding one. Just insert it.
+              (insert (format "%s " receiver)))))))
+
+      (defun go--refactor-symbol-in-function (from to)
+        "Changes instances of the symbol `from' into `to'.
+
+      Assumes that point is on line defining the function we are replacing in."
+        (save-excursion
+          (beginning-of-line)
+          (let ((start
+                 (save-excursion
+                   (forward-line -1)
+                   (point)))
+                (end
+                 (save-excursion
+                   ;; TODO(thiderman): Make a method that reliably moves to opening brace.
+                   (end-of-line)
+                   ;; In case of trailing whitespace...
+                   (search-backward "{")
+                   (forward-list 1)
+                   (backward-char 1)
+                   (point))))
+
+            (replace-string from to t start end))))
+
+      (define-prefix-command 'go-refactor-map)
+      (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
+
+      (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
+    #+end_src
+
+*** Debug toggler
+
+    Touch or remove the =toggle/debug= file. Can be used in applications to
+    easily increase the log level or similar operations.
+
+    #+begin_src emacs-lisp
+      (defun go-toggle-debug ()
+        "Toggle the toggle/debug file"
+        (interactive)
+        (let* ((dir (concat (projectile-project-root) "toggle/"))
+               (toggle "debug")
+               (action "Toggled")
+               (fn (concat dir toggle)))
+          ;; Create the directory if it doesn't already exist
+          (when (not (f-directory? dir))
+            (make-directory dir))
+
+          ;; Toggle the existence of the file
+          (if (f-file? fn)
+              (progn
+                (f-delete fn)
+                (setq action "Disabled"))
+            (with-temp-buffer
+              (write-file fn))
+            (setq action "Enabled"))
+          (message "%s %s" action toggle)))
+
+      (define-key go-mode-map (kbd "C-c M-d") 'go-toggle-debug)
+    #+end_src
+
 *** Server runner
+
+    Helper functions to run the executable that the current project produces.
+    * =C-c s c= compiles the server
+    * =C-c s s= starts or restarts the server
+    * =C-c s b= visits the buffer with the output from the process
+
+    One caveat is that the code currently assumes that you have a file called
+    =<project-name>.go=.
+
     #+begin_src emacs-lisp
       ;; TODO: Make the argument part configurable
       (defun th-go-server-start ()
@@ -1323,6 +1375,7 @@ These are functions used inside of yas.
 
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
+
 ** prog-mode
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
