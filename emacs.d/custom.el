@@ -66,7 +66,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background "#151515"))))
+ '(default ((t (:background nil))))
  '(mmm-code-submode-face ((t nil)))
  '(mmm-default-submode-face ((t nil)))
  '(mode-line ((t (:foreground "#000000" :background "#dddddd" :box nil))))
@@ -74,8 +74,10 @@
  '(mode-line-inactive ((t (:foreground "#caaaca" :background "#eeeeee" :box nil))))
  '(org-block ((t (:background "#000000"))))
  '(org-block-background ((t (:background "#000000"))))
- '(org-block-begin-line ((t (:foreground "#008ED1" :background "#002E41"))))
- '(org-block-end-line ((t (:foreground "#008ED1" :background "#002E41"))))
+ '(org-block-begin-line ((t (:foreground "#886688" :background nil))))
+ '(org-block-end-line ((t (:inherit org-block-begin-line))))
+ '(region ((t (:background "#493a49" :weight bold))))
+ '(secondary-selection ((t (:background "#89628c" :weight bold))))
  '(web-mode-html-attr-equal-face ((t (:foreground "gray70"))))
  '(web-mode-html-attr-name-face ((t (:inherit font-lock-variable-name-face))))
  '(web-mode-html-tag-face ((t (:inherit font-lock-function-name-face))))
