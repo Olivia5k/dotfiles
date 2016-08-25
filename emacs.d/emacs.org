@@ -75,10 +75,8 @@ Defines the packages to be installed.
 #+begin_src emacs-lisp
   (defvar elpa-packages
     '(
-      ace-jump-mode
       adaptive-wrap
       anaconda-mode
-      avy
       browse-kill-ring
       buffer-move
       cl-lib
@@ -328,6 +326,15 @@ Note that C-j will preview the file without closing the helm buffer.
   (global-set-key (kbd "C-x p") popwin:keymap)
   (global-set-key (kbd "C-x C-k") 'popwin:close-popup-window)
 #+end_src
+** ace-window
+   #+begin_src emacs-lisp
+     (use-package avy
+       :ensure t
+       :commands avy-goto-word-1 avy-goto-char-1 avy-goto-line avy-goto-char-timer
+       :bind
+       ("C-l"     . avy-goto-word-1))
+   #+end_src
+
 * Editing
 ** undo tree
 #+begin_src emacs-lisp
@@ -1529,12 +1536,6 @@ C-x ?: Print current file name relative to project root
   (add-hook 'emmet-mode-hook
             (lambda ()
               (setq emmet-indentation 2))) ;; indent 2 spaces.
-#+end_src
-** ace-jump / avy
-#+begin_src emacs-lisp
-  ;; (define-key global-map (kbd "M-n") 'avy-goto-word-1)
-  (define-key global-map (kbd "C-l") 'avy-goto-word-1)
-  ;; (define-key global-map (kbd "M-p") 'ace-window)
 #+end_src
 ** Kill ring
 #+begin_src emacs-lisp
