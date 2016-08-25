@@ -101,13 +101,6 @@ Defines the packages to be installed.
       gitignore-mode
       go-mode
       go-eldoc
-      helm
-      helm-ag
-      helm-c-yasnippet
-      helm-dash
-      helm-descbinds
-      helm-projectile
-      helm-swoop
       js2-mode
       lispy
       logview-mode
@@ -168,143 +161,139 @@ Defines the packages to be installed.
 #+end_src
 ** Helm
 
-[[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of emacs.
-It replaces ido, flex etc.
+   [[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of
+   emacs. It replaces ido, flex etc.
 
-It should be noted that the default fuzzy finding is slightly different from
-what you are probably used to. There are no implicit ".*" between all
-characters. You either add an explicit ".* " or (more commonly) you add a
-space. Adding a space will add a new filter to your already filtered matches,
+   It should be noted that the default fuzzy finding is slightly different
+   from what you are probably used to. There are no implicit ".*" between all
+   characters. You either add an explicit ".* " or (more commonly) you add a
+   space. Adding a space will add a new filter to your already filtered
+   matches,
 
-and it can be done multiple times.
-It seems difficult in the beginning, but once you get used to it the feature
-becomes natural and very powerful.
+   and it can be done multiple times.  It seems difficult in the beginning,
+   but once you get used to it the feature becomes natural and very powerful.
 
-*** Include helm
-#+begin_src emacs-lisp
-  (require 'helm)
-  (require 'helm-config)
+*** Basic setup
+    #+begin_src emacs-lisp
+      (use-package helm
+        :bind (("M-x"     . helm-M-x)
+               ("C-x b"   . helm-mini)
+               ("C-x C-f" . helm-find-files)
+               ("M-i"     . helm-semantic-or-imenu)
 
-  (helm-mode 1)
-#+end_src
-*** Keybindings
-#+begin_src emacs-lisp
-  ;; Main access
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
+               :map helm-map
+               ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
+               ("C-i"   . helm-execute-persistent-action) ; make TAB works in terminal
+               ("C-z"   . helm-select-action)             ; list actions using C-z
+               )
 
-  (defun switch-to-previous-buffer ()
-    "Switch to previously open buffer.
-  Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
-  (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
+        :init
+        (when (executable-find "curl")
+          (setq helm-google-suggest-use-curl-p t))
 
-  (global-set-key (kbd "C-x f") 'helm-projectile)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+        (setq
+         helm-command-prefix-key "C-c h"
+         helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+         helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+         helm-ff-file-name-history-use-recentf t
+         helm-ff-newfile-prompt-p              nil ; don't ask for filenames when making new buffer
+         helm-autoresize-max-height 30
+         helm-autoresize-min-height 30)
 
-  (global-set-key (kbd "C-c h") 'helm-command-prefix)
-  (global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
+        ;; Set up the default bindings
+        (require 'helm-config)
 
-  ;; The default binding is... pretty bad.
-  (global-unset-key (kbd "C-x c"))
+        :config
+        ;; Make the size of the buffer make sense
+        ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
+        (helm-autoresize-mode 1)
 
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-  (define-key helm-map (kbd "C-z") 'helm-select-action) ; list actions using C-z
+        ;; Actually load helm
+        (helm-mode 1))
+    #+end_src
 
-#+end_src
-*** Settings
-#+begin_src emacs-lisp
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
-
-  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-        helm-ff-file-name-history-use-recentf t
-        helm-ff-newfile-prompt-p              nil)
-
-
-  ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
-  (helm-autoresize-mode 1)
-  (setq helm-autoresize-max-height 30)
-  (setq helm-autoresize-min-height 30)
-#+end_src
 *** helm-swoop
 
-[[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing text
-inside of a single or multiple buffers.
+    [[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing
+    text inside of a single or multiple buffers.
 
-One nice trick is to use helm-swoop to replace multiple occurances easily;
-Do a swoop, filter to the lines you want to change, and then to C-c C-e for
-edit mode. Once in there, do the usual (probably C-r) and then save that
-buffer. Boom!
+    One nice trick is to use helm-swoop to replace multiple occurances easily;
+    Do a swoop, filter to the lines you want to change, and then to =C-c C-e=
+    for edit mode. Once in there, do the usual (probably =C-r=) and then save
+    that buffer. Boom!
 
-#+begin_src emacs-lisp
-  (require 'helm-swoop)
+    #+begin_src emacs-lisp
+      (use-package helm-swoop
+        :bind (("C-s"     . helm-swoop)
+               ("C-c M-i" . helm-multi-swoop)
+               ("C-x M-i" . helm-multi-swoop-all)
 
-  (global-set-key (kbd "C-s") 'helm-swoop)
-  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+               :map helm-swoop-map
+               ("M-i"     . helm-multi-swoop-all-from-helm-swoop))
 
-  ;; From helm-swoop to helm-multi-swoop-all
-  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+        :init
+        ;; Save buffer when helm-multi-swoop-edit complete
+        (setq helm-multi-swoop-edit-save t)
 
-  ;; Move up and down like isearch
-  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+        ;; If this value is t, split window inside the current window
+        (setq helm-swoop-split-with-multiple-windows t)
 
-  ;; Save buffer when helm-multi-swoop-edit complete
-  (setq helm-multi-swoop-edit-save t)
+        ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+        (setq helm-swoop-split-direction 'split-window-vertically)
 
-  ;; If this value is t, split window inside the current window
-  (setq helm-swoop-split-with-multiple-windows t)
+        ;; If nil, you can slightly boost invoke speed in exchange for text color
+        (setq helm-swoop-speed-or-color t)
 
-  ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-  (setq helm-swoop-split-direction 'split-window-vertically)
+        ;; Go to the opposite side of line from the end or beginning of line
+        (setq helm-swoop-move-to-line-cycle t)
 
-  ;; If nil, you can slightly boost invoke speed in exchange for text color
-  (setq helm-swoop-speed-or-color t)
+        ;; Optional face for line numbers
+        ;; Face name is `helm-swoop-line-number-face`
+        (setq helm-swoop-use-line-number-face t)
 
-  ;; Go to the opposite side of line from the end or beginning of line
-  (setq helm-swoop-move-to-line-cycle t)
+        ;; Disable pre-input
+        (setq helm-swoop-pre-input-function (lambda () "")))
+    #+end_src
 
-  ;; Optional face for line numbers
-  ;; Face name is `helm-swoop-line-number-face`
-  (setq helm-swoop-use-line-number-face t)
+*** helm-projectile
 
-  ;; Disable pre-input
-  (setq helm-swoop-pre-input-function
-        (lambda () ""))
-#+end_src
-*** helm-dash
+    Bindings that work together with projectile.
 
-[[https://github.com/areina/helm-dash][helm-dash]] is a helm-based interface to [[https://kapeli.com/dash][Dash]], the API documentation service.
+    #+begin_src emacs-lisp
+      (use-package helm-projectile
+        :bind (("C-x f" . helm-projectile)
+               ("C-M-s" . helm-projectile-ag))
+        :config
+        ;; If we don't have ag, use grep
+        (when (not (executable-find "ag"))
+          (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
+        (helm-projectile-on))
+    #+end_src
 
-#+begin_src emacs-lisp
-  ;; helm-dash
-  (require 'helm-dash)
-  (setq helm-dash-browser-func 'eww)
-#+end_src
-*** helm-grep
+*** helm-descbinds
 
-Use helm to grep for files in the current project.
+    A nice little utility to view the currently bound keybindings. Bound to
+    =F1=.
 
-Uses ag if available, but falls back to grep if not.
-Only available when projectile is active, e.g. when you are editing files
-under git.
+    #+begin_src emacs-lisp
+      (use-package helm-descbinds
+        :bind (("<f1>" . helm-descbinds)))
+    #+end_src
 
-Note that C-j will preview the file without closing the helm buffer.
+*** helm-yasnippet
 
-#+begin_src emacs-lisp
-  (if (executable-find "ag")
-      (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
-    (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
-#+end_src
+    Interactively choose a snippet to edit via helm
+
+    #+begin_src emacs-lisp
+      (use-package helm-c-yasnippet
+        :bind (("C-c h s" . helm-yas-complete))
+        :init
+        ;; [default: nil]
+        (setq helm-yas-space-match-any-greedy t))
+    #+end_src
+
 ** Projectile
 #+begin_src emacs-lisp
   (require 'projectile)
@@ -351,13 +340,9 @@ Note that C-j will preview the file without closing the helm buffer.
 ** yas
 #+begin_src emacs-lisp
   (require 'yasnippet)
-  (require 'helm-c-yasnippet)
 
   ;; Without this, it doesn't load...
   (yas-reload-all)
-  (setq helm-yas-space-match-any-greedy t) ;[default: nil]
-  (global-set-key (kbd "C-c h s") 'helm-yas-complete)
-
   (add-hook 'prog-mode-hook 'yas-minor-mode)
   (add-hook 'markdown-mode 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode)
@@ -850,9 +835,7 @@ enough I think I want to bring them to the upstream go-mode somehow!
     (add-hook 'before-save-hook 'gofmt-before-save)
     (set (make-local-variable 'company-backends) '(company-go))
     (company-mode)
-    (flycheck-mode 1)
-
-    (helm-dash-activate-docset 'Go))
+    (flycheck-mode 1))
 
   (add-hook 'go-mode-hook 'th-go-hook)
   (add-hook 'go-mode-hook 'go-eldoc-setup)
@@ -1393,7 +1376,7 @@ These are functions used inside of yas.
 * Minor modes and utilities
 ** Buffer toggles
 
-F1: `helm-descbinds`
+F1: `helm-descbinds` (set from helm config above)
 F2: Open this file
 F3: Open main org file
 F4: Scratch buffer
@@ -1439,11 +1422,16 @@ C-x ?: Print current file name relative to project root
      (s-chop-prefix
       (projectile-project-root)
       (file-truename (buffer-name)))))
+
+  (defun switch-to-previous-buffer ()
+    "Switch to previously open buffer.
+  Repeated invocations toggle between the two most recently open buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
 #+end_src
 *** Keymaps
 #+begin_src emacs-lisp
-  (define-key global-map (kbd "<f1>") 'helm-descbinds)
-
   (define-key global-map (kbd "<f2>")
     (lambda ()
       (interactive)
