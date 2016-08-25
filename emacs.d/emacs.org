@@ -120,7 +120,6 @@ Defines the packages to be installed.
       transpose-frame
       undo-tree
       visual-regexp-steroids
-      web-mode
       wrap-region
       xkcd
       yaml-mode
@@ -1345,22 +1344,16 @@ These are functions used inside of yas.
   (add-hook 'text-mode-hook 'auto-fill-mode)
 #+end_src
 ** web-mode
-#+begin_src emacs-lisp
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-attr-indent-offset 2)
 
-  (defun th-refresh-vue ()
-    (interactive)
-    (message "running hook")
-    (if (equal major-mode 'web-mode)
-        (progn
-          (message "reparsing")
-          (vue-mode))
-      (message "did not work")))
+   Enhanced editing of HTML with support for embedded languages.
+   Used by vue-mode for templates.
 
-  ;; Reparse the vue mode things so that the syntax coloring for HTML keeps working
-  ;; (add-hook 'after-save-hook )
-#+end_src
+   #+begin_src emacs-lisp
+     (use-package web-mode
+       :init
+       (setq web-mode-markup-indent-offset 2
+             web-mode-attr-indent-offset 2))
+   #+end_src
 ** logview-mode
 #+begin_src emacs-lisp
   (add-hook 'logview-mode-hook (lambda ()
