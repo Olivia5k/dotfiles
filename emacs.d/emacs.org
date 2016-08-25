@@ -95,9 +95,6 @@ Defines the packages to be installed.
       paredit
       popwin
       projectile
-      rainbow-delimiters
-      rainbow-identifiers
-      rainbow-mode
       restclient-mode
       s
       string-inflection
@@ -110,6 +107,7 @@ Defines the packages to be installed.
       )
     "A list of packages to be installed at launch.")
 #+end_src
+
 ** Actual package installation
 #+begin_src emacs-lisp
   (when (not package-archive-contents)
@@ -1723,6 +1721,21 @@ C-x ?: Print current file name relative to project root
   ;; (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
   (global-set-key (kbd "M-n") 'neotree-toggle-windows)
 #+end_src
+
+** Rainbows <3
+
+   The rainbow modes bring nice colors to your code:
+
+   * =rainbow-mode= colorizes strings like ~red~ and ~#405060~.
+   * =rainbow-delimiters= colorizes parenthesis, brackets and other delimiters.
+   * =rainbow-identifiers= colorizes variables in different colors.
+
+   #+begin_src emacs-lisp
+     (use-package rainbow-mode)
+     (use-package rainbow-delimiters)
+     (use-package rainbow-identifiers)
+   #+end_src
+
 * Setup and options
 ** Aborting and stopping
 #+begin_src emacs-lisp
