@@ -79,13 +79,10 @@ Defines the packages to be installed.
       adaptive-wrap
       browse-kill-ring
       buffer-move
-      cl-lib
       company
-      dash
       diminish
       emmet
       expand-region
-      f
       fill-column-indicator
       flycheck
       fringe-helper
@@ -96,8 +93,6 @@ Defines the packages to be installed.
       popwin
       projectile
       restclient-mode
-      s
-      string-inflection
       transpose-frame
       undo-tree
       visual-regexp-steroids
@@ -122,6 +117,17 @@ Defines the packages to be installed.
 #+begin_src emacs-lisp
   (require 's)
 #+end_src
+* Libraries
+
+  These make working with emacs a bit more pleasurable and modern.
+
+  #+begin_src emacs-lisp
+    (use-package cl-lib)
+    (use-package dash)
+    (use-package f)
+    (use-package s)
+  #+end_src
+
 * Interface
 ** ace-window
    #+begin_src emacs-lisp
