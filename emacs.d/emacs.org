@@ -66,6 +66,7 @@ updated repositories outside of MELPA are added. Order matters.
        (package-refresh-contents)
        (package-install 'use-package))
 
+     (setq use-package-always-ensure t)
      (require 'use-package)
    #+end_src
 ** Packages
