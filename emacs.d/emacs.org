@@ -77,7 +77,6 @@ Defines the packages to be installed.
   (defvar elpa-packages
     '(
       adaptive-wrap
-      anaconda-mode
       browse-kill-ring
       buffer-move
       cl-lib
@@ -761,38 +760,35 @@ Defines the packages to be installed.
   (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
 #+end_src
 ** Python
-#+begin_src emacs-lisp
-  (require 'python)
-  ;; (require 'snakecharmer)
 
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-find-definitions)
+   The major mode for editing Python in emacs. It honestly doesn't have much
+   going for it, but hey.
 
-  (defun th-python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
+   #+begin_src emacs-lisp
+     (use-package python-mode
+       :init
 
-  (add-hook 'python-mode-hook 'th-python-mode-hook)
+       (defun sp-goto-mail ()
+         "Go to the latest email in <root>/_outgoing_emails."
+         (interactive)
+         (find-file
+          (car
+           (last
+            (directory-files
+             (concat (projectile-project-root)
+                     "_outgoing_emails")
+             t)))))
 
-  ;; (add-hook 'python-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'after-save-hook 'flycheck-first-error)))
+       :config
+       (add-hook 'python-mode-hook 'flycheck-mode))
 
-  (defun sp-goto-mail ()
-    "Go to the latest email in <root>/_outgoing_emails."
-    (interactive)
-    (find-file
-     (car
-      (last
-       (directory-files
-        (concat (projectile-project-root)
-                "_outgoing_emails")
-        t)))))
+     (use-package anaconda-mode
+       :config
+       (add-hook 'python-mode-hook 'anaconda-mode))
+   #+end_src
 
+*** TODO Configure a working company backend
 
-
-#+end_src
 ** golang
 
 These are my Go tricks. They are fairly opinionated, but once they work well
