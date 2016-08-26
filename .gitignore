@@ -9,3 +9,4 @@ backup/
 /infect.rc
 *.cache
 /emacs.d/bookmarks
+/emacs.d/var/
