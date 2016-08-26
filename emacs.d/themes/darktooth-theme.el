@@ -15,7 +15,7 @@
 (unless (>= emacs-major-version 24)
   (error "Requires Emacs 24 or later"))
 
-(deftheme darktooth "A remix of the excellent theme Gruvbox")
+(deftheme darktooth-custom "A remix of the excellent theme Gruvbox - custom by thiderman")
 
 (let* ((g (display-graphic-p))
       (darktooth-dark0_hard      (if g "#1D2021" "color-234"))
@@ -42,7 +42,7 @@
       (darktooth-bright_blue     (if g "#83A598" "color-109"))
       (darktooth-bright_purple   (if g "#D3869B" "color-175"))
       (darktooth-bright_aqua     (if g "#8EC07C" "color-108"))
-      (darktooth-bright_orange   (if g "#FE80FE" "color-208"))
+      (darktooth-bright_orange   (if g "color-208" "color-208"))
 
       ;; neutral, no 256-color code, requested, nice work-around meanwhile
       (darktooth-neutral_red     (if g "#FB4934" "#D75F5F"))
@@ -51,7 +51,7 @@
       (darktooth-neutral_blue    (if g "#83A598" "#87AFAF"))
       (darktooth-neutral_purple  (if g "#D3869B" "#D787AF"))
       (darktooth-neutral_aqua    (if g "#8EC07C" "#87AF87"))
-      (darktooth-neutral_orange  (if g "#dd40dd" "#FF8700"))
+      (darktooth-neutral_orange  (if g "#FF8700" "#FF8700"))
 
       (darktooth-faded_red       (if g "#9D0006" "color-88"))
       (darktooth-faded_green     (if g "#79740E" "color-100"))
@@ -76,7 +76,7 @@
 
       (darktooth-white           (if g "#FFFFFF" "white"))
       (darktooth-black           (if g "#000000" "black"))
-      (darktooth-sienna          (if g "#DD6Fdd" "sienna"))
+      (darktooth-sienna          (if g "sienna" "sienna"))
       (darktooth-darkslategray4  (if g "#528B8B" "DarkSlateGray4"))
       (darktooth-lightblue4      (if g "#66999D" "LightBlue4"))
       (darktooth-burlywood4      (if g "#BBAA97" "burlywood4"))
@@ -451,7 +451,7 @@
                    (file-name-directory load-file-name))))
 
 
-(provide-theme 'darktooth)
+(provide-theme 'darktooth-custom)
 
 ;; Local Variables:
 ;; eval: (when (fboundp 'rainbow-mode) (rainbow-mode +1))

@@ -1,442 +1,377 @@
 #+TITLE: init file for Emacs
 #+AUTHOR: Lowe Thiderman
 #+EMAIL: lowe.thiderman@gmail.com
+#+CREDIT: Howard Abrams <howard.abrams@gmail.com> (github.com/howardabrams/dot-files)
 
-* Introduction
-
-This is my emax setup. It's a constant work in progress. The current setup is
-like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an elisp file
-that is compiled upon startup. org-mode was chose since it helps organize the
-file, gives nice folding, and sets up for writing inline documentation.
-
-If only I was not one of those so very fond of tinkering and dotfiling, I
-might've actually gotten things done. That would have been something, right?
+This is my emacs setup, and it's a constant work in progress. The current
+setup is like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an
+elisp file that is executed upon startup. org-mode was chosen since it helps
+organize the file, gives nice folding, and sets up for writing inline
+documentation in a style similar to literate programming.
 
 * Common Lisp
-#+begin_src emacs-lisp
-(require 'cl)
-#+end_src
-* Custom
-Does anyone even like custom? I find it incredibly annoying.
 
-#+begin_src emacs-lisp
-  (setq custom-file "~/.emacs.d/custom.el")
-  (unless (file-exists-p custom-file)
-    (with-temp-buffer (write-file custom-file)))
-  (load custom-file)
-#+end_src
+  This seems to be painfully required...
+
+  #+begin_src emacs-lisp
+    (require 'cl)
+  #+end_src
+
+* Custom
+
+  I don't particularly like custom, but hey, it's here.
+
+  #+begin_src emacs-lisp
+    (setq custom-file "~/.emacs.d/custom.el")
+    (unless (file-exists-p custom-file)
+      (with-temp-buffer (write-file custom-file)))
+    (load custom-file)
+  #+end_src
+
 * Package configuration
 ** Path configuration
-#+begin_src emacs-lisp
-  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
-  (setq custom-theme-directory (concat user-emacs-directory "themes"))
+   This sets up so that packages and themes can be loaded properly.
 
-  (dolist
-      (path (directory-files custom-theme-directory t "\\w+"))
-    (when (file-directory-p path)
-      (add-to-list 'custom-theme-load-path path)))
-#+end_src
+   #+begin_src emacs-lisp
+     (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+
+     (setq custom-theme-directory (concat user-emacs-directory "themes"))
+
+     (dolist
+         (path (directory-files custom-theme-directory t "\\w+"))
+       (when (file-directory-p path)
+         (add-to-list 'custom-theme-load-path path)))
+   #+end_src
+
 ** Preamble and setup
 
-Sets up the repositories to get packages from. Extra and more frequently
-updated repositories outside of MELPA are added. Order matters.
+   Sets up the repositories to get packages from. Extra and more frequently
+   updated repositories outside of MELPA are added. Order matters.
 
-#+begin_src emacs-lisp
-  (require 'package)
+   #+begin_src emacs-lisp
+     (require 'package)
 
-  (setq package-archives '(("org" . "http://orgmode.org/elpa/")
-                           ("tromey" . "http://tromey.com/elpa/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+     (setq package-archives
+           '(("org"       . "http://orgmode.org/elpa/")
+             ("tromey"    . "http://tromey.com/elpa/")
+             ("gnu"       . "http://elpa.gnu.org/packages/")
+             ("melpa"     . "http://stable.melpa.org/packages/")
+             ("marmalade" . "http://marmalade-repo.org/packages/")))
 
-  (package-initialize)
+     (package-initialize)
+   #+end_src
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+** use-package
 
-  (require 'use-package)
-#+end_src
-** Packages
+   Using [[https://github.com/jwiegley/use-package][use-package]] to automatically install certain packages, as
+   well as the ease of lazily loading them.
 
-Defines the packages to be installed.
+   #+begin_src emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
 
-#+begin_src emacs-lisp
-  (defvar elpa-packages
-    '(
-      ace-jump-mode
-      adaptive-wrap
-      anaconda-mode
-      avy
-      browse-kill-ring
-      buffer-move
-      cl-lib
-      company
-      company-go
-      crontab-mode
-      csv-mode
-      dash
-      diminish
-      dockerfile-mode
-      emmet
-      expand-region
-      f
-      fill-column-indicator
-      flycheck
-      fringe-helper
-      gist
-      git-commit-mode
-      git-messenger
-      git-timemachine
-      gitconfig-mode
-      gitignore-mode
-      go-mode
-      go-eldoc
-      helm
-      helm-ag
-      helm-c-yasnippet
-      helm-dash
-      helm-descbinds
-      helm-projectile
-      helm-swoop
-      js2-mode
-      lispy
-      logview-mode
-      magit
-      markdown-mode
-      multiple-cursors
-      nginx-mode
-      org-bullets
-      org-journal
-      paradox
-      paredit
-      popwin
-      projectile
-      protobuf-mode
-      puppet-mode
-      rainbow-delimiters
-      rainbow-identifiers
-      rainbow-mode
-      restclient-mode
-      s
-      ssh-config-mode
-      string-inflection
-      transpose-frame
-      undo-tree
-      visual-regexp-steroids
-      web-mode
-      wrap-region
-      xkcd
-      yaml-mode
-      yasnippet
-      )
-    "A list of packages to be installed at launch.")
-#+end_src
-** Actual package installation
-#+begin_src emacs-lisp
-  (when (not package-archive-contents)
-    (package-refresh-contents))
+     (setq use-package-always-ensure t)
+     (require 'use-package)
+   #+end_src
 
-  (dolist (pkg elpa-packages)
-    (when (and (not (package-installed-p pkg))
-             (assoc pkg package-archive-contents))
-      (package-install pkg)))
-#+end_src
-** Required packages for the configuration
-#+begin_src emacs-lisp
-  (require 's)
-#+end_src
+* Libraries
+
+  These make working with emacs a bit more pleasurable and modern.
+
+  #+begin_src emacs-lisp
+    (use-package cl-lib)
+    (use-package dash)
+    (use-package f)
+    (use-package s)
+  #+end_src
+
 * Interface
-** Appearance
-#+begin_src emacs-lisp
-  (color-theme-sanityinc-tomorrow-night)
-  (set-frame-font "Iosevka-12")
+** avy
 
-  (mapc
-   (lambda (face)
-     (set-face-attribute face nil ':bold t))
-   (face-list))
-#+end_src
-** Helm
+   avy is a nice little package that helps with quick navigation. Using =C-l=
+   you get a prompt for a character. Press one and that character will get
+   guiding characters that help you move to a specific one in a keystroke. Try
+   it out and you might change your movement habits forever.
 
-[[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of emacs.
-It replaces ido, flex etc.
+   #+begin_src emacs-lisp
+     (use-package avy
+       :ensure t
+       :commands avy-goto-word-1 avy-goto-char-1 avy-goto-line avy-goto-char-timer
+       :bind
+       ("C-l"     . avy-goto-word-1))
+   #+end_src
 
-It should be noted that the default fuzzy finding is slightly different from
-what you are probably used to. There are no implicit ".*" between all
-characters. You either add an explicit ".* " or (more commonly) you add a
-space. Adding a space will add a new filter to your already filtered matches,
+** darktooth
 
-and it can be done multiple times.
-It seems difficult in the beginning, but once you get used to it the feature
-becomes natural and very powerful.
+   I really like the darktooth theme! This sets that up and also makes some
+   overrides. As much as I like it, it has some things I want to improve on!
 
-*** Include helm
-#+begin_src emacs-lisp
-  (require 'helm)
-  (require 'helm-config)
+   #+begin_src emacs-lisp
+     (use-package darktooth-theme
+       :ensure t)
 
-  (helm-mode 1)
-#+end_src
-*** Keybindings
-#+begin_src emacs-lisp
-  ;; Main access
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
+     (load-theme 'darktooth)
+     (set-frame-font "Iosevka-10")
 
-  (defun switch-to-previous-buffer ()
-    "Switch to previously open buffer.
-  Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
-  (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
+     ;; This is called at the very bottom of emacs.org. See comments there.
+     (defun th-fix-darktooth ()
+       "Things that make darktooth a theme more suited for me."
 
-  (global-set-key (kbd "C-x f") 'helm-projectile)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+       (let ((faces (face-list)))
+         ;; This is to fix the lack of boldness in darktooth
+         (mapc
+          (lambda (face)
+            (set-face-attribute face nil ':bold t))
+          (-filter
+           (lambda (face)
+             (let ((fn (symbol-name face)))
+               (or (s-starts-with? "font-lock" fn)
+                   (s-starts-with? "org-level" fn)
+                   (s-starts-with? "rainbow" fn))))
+           faces))
 
-  (global-set-key (kbd "C-c h") 'helm-command-prefix)
-  (global-set-key (kbd "M-i") 'helm-semantic-or-imenu)
+         ;; This is to fix the fact that darktooth has foreground colorization for
+         ;; avy, which to my eyes don't stick out enough.
+         (mapc
+          (lambda (face)
+            (set-face-attribute face nil ':inverse-video t))
+          (-filter
+           (lambda (face)
+             (let ((fn (symbol-name face)))
+               (s-starts-with? "avy-lead" fn)))
+           faces)))
 
-  ;; The default binding is... pretty bad.
-  (global-unset-key (kbd "C-x c"))
+       ;; Also make the linum and the fringe stand out more!
+       (set-face-attribute 'linum nil :background "#1D2021" :foreground "#7C6F64")
+       (set-face-attribute 'fringe nil :background "#3C3836")
 
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-  (define-key helm-map (kbd "C-z") 'helm-select-action) ; list actions using C-z
+       ;; Also strings and types are the same, which is bad. Make strings greener.
+       (set-face-attribute 'font-lock-string-face nil :foreground "#427B58")
+       ;; And functions do not stand out at all...
+       (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019")
 
-#+end_src
-*** Settings
-#+begin_src emacs-lisp
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
+       (message "darktooth fixed"))
+   #+end_src
 
-  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-        helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-        helm-ff-file-name-history-use-recentf t
-        helm-ff-newfile-prompt-p              nil)
+** helm
 
+   [[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of
+   emacs. It replaces ido, flex etc.
 
-  ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
-  (helm-autoresize-mode 1)
-  (setq helm-autoresize-max-height 30)
-  (setq helm-autoresize-min-height 30)
-#+end_src
+   It should be noted that the default fuzzy finding is slightly different
+   from what you are probably used to. There are no implicit ".*" between all
+   characters. You either add an explicit ".* " or (more commonly) you add a
+   space. Adding a space will add a new filter to your already filtered
+   matches,
+
+   and it can be done multiple times.  It seems difficult in the beginning,
+   but once you get used to it the feature becomes natural and very powerful.
+
+*** Basic setup
+    #+begin_src emacs-lisp
+      (use-package helm
+        :bind (("M-x"     . helm-M-x)
+               ("C-x b"   . helm-mini)
+               ("C-x C-f" . helm-find-files)
+               ("C-x y"   . helm-show-kill-ring)
+               ("M-i"     . helm-semantic-or-imenu)
+
+               :map helm-map
+               ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
+               ("C-i"   . helm-execute-persistent-action) ; make TAB works in terminal
+               ("C-z"   . helm-select-action)             ; list actions using C-z
+               )
+
+        :init
+        (when (executable-find "curl")
+          (setq helm-google-suggest-use-curl-p t))
+
+        (setq
+         helm-command-prefix-key "C-c h"
+         helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+         helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+         helm-ff-file-name-history-use-recentf t
+         helm-ff-newfile-prompt-p              nil ; don't ask for filenames when making new buffer
+         helm-autoresize-max-height 30
+         helm-autoresize-min-height 30)
+
+        ;; Set up the default bindings
+        (require 'helm-config)
+
+        :config
+        ;; Make the size of the buffer make sense
+        ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
+        (helm-autoresize-mode 1)
+
+        ;; Actually load helm
+        (helm-mode 1))
+    #+end_src
+
 *** helm-swoop
 
-[[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing text
-inside of a single or multiple buffers.
+    [[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing
+    text inside of a single or multiple buffers.
 
-One nice trick is to use helm-swoop to replace multiple occurances easily;
-Do a swoop, filter to the lines you want to change, and then to C-c C-e for
-edit mode. Once in there, do the usual (probably C-r) and then save that
-buffer. Boom!
+    One nice trick is to use helm-swoop to replace multiple occurances easily;
+    Do a swoop, filter to the lines you want to change, and then to =C-c C-e=
+    for edit mode. Once in there, do the usual (probably =C-r=) and then save
+    that buffer. Boom!
 
-#+begin_src emacs-lisp
-  (require 'helm-swoop)
+    #+begin_src emacs-lisp
+      (use-package helm-swoop
+        :bind (("C-s"     . helm-swoop)
+               ("C-c M-i" . helm-multi-swoop)
+               ("C-x M-i" . helm-multi-swoop-all)
 
-  (global-set-key (kbd "C-s") 'helm-swoop)
-  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+               :map helm-swoop-map
+               ("M-i"     . helm-multi-swoop-all-from-helm-swoop))
 
-  ;; From helm-swoop to helm-multi-swoop-all
-  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+        :init
+        ;; Save buffer when helm-multi-swoop-edit complete
+        (setq helm-multi-swoop-edit-save t)
 
-  ;; Move up and down like isearch
-  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+        ;; If this value is t, split window inside the current window
+        (setq helm-swoop-split-with-multiple-windows t)
 
-  ;; Save buffer when helm-multi-swoop-edit complete
-  (setq helm-multi-swoop-edit-save t)
+        ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+        (setq helm-swoop-split-direction 'split-window-vertically)
 
-  ;; If this value is t, split window inside the current window
-  (setq helm-swoop-split-with-multiple-windows t)
+        ;; If nil, you can slightly boost invoke speed in exchange for text color
+        (setq helm-swoop-speed-or-color t)
 
-  ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-  (setq helm-swoop-split-direction 'split-window-vertically)
+        ;; Go to the opposite side of line from the end or beginning of line
+        (setq helm-swoop-move-to-line-cycle t)
 
-  ;; If nil, you can slightly boost invoke speed in exchange for text color
-  (setq helm-swoop-speed-or-color t)
+        ;; Optional face for line numbers
+        ;; Face name is `helm-swoop-line-number-face`
+        (setq helm-swoop-use-line-number-face t)
 
-  ;; Go to the opposite side of line from the end or beginning of line
-  (setq helm-swoop-move-to-line-cycle t)
+        ;; Disable pre-input
+        (setq helm-swoop-pre-input-function (lambda () "")))
+    #+end_src
 
-  ;; Optional face for line numbers
-  ;; Face name is `helm-swoop-line-number-face`
-  (setq helm-swoop-use-line-number-face t)
+*** helm-projectile
 
-  ;; Disable pre-input
-  (setq helm-swoop-pre-input-function
-        (lambda () ""))
-#+end_src
-*** helm-dash
+    Bindings that work together with projectile.
 
-[[https://github.com/areina/helm-dash][helm-dash]] is a helm-based interface to [[https://kapeli.com/dash][Dash]], the API documentation service.
+    #+begin_src emacs-lisp
+      (use-package helm-projectile
+        :bind (("C-x f" . helm-projectile)
+               ("C-M-s" . helm-projectile-ag))
+        :config
+        ;; If we don't have ag, use grep
+        (when (not (executable-find "ag"))
+          (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
+        (helm-projectile-on))
+    #+end_src
 
-#+begin_src emacs-lisp
-  ;; helm-dash
-  (require 'helm-dash)
-  (setq helm-dash-browser-func 'eww)
-#+end_src
-*** helm-grep
+*** helm-descbinds
 
-Use helm to grep for files in the current project.
+    A nice little utility to view the currently bound keybindings. Bound to
+    =F1=.
 
-Uses ag if available, but falls back to grep if not.
-Only available when projectile is active, e.g. when you are editing files
-under git.
+    #+begin_src emacs-lisp
+      (use-package helm-descbinds
+        :bind (("<f1>" . helm-descbinds)))
+    #+end_src
 
-Note that C-j will preview the file without closing the helm buffer.
+*** helm-yasnippet
 
-#+begin_src emacs-lisp
-  (if (executable-find "ag")
-      (global-set-key (kbd "C-M-s") 'helm-projectile-ag)
-    (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
-#+end_src
-** Projectile
-#+begin_src emacs-lisp
-  (require 'projectile)
-  (projectile-global-mode)
+    Interactively choose a snippet to edit via helm
 
-  (setq projectile-completion-system 'helm)
-  (setq projectile-mode-line nil)
-#+end_src
-** spaceline
-#+begin_src emacs-lisp
-  ;; (require 'spaceline-config)
-  ;; (spaceline-spacemacs-theme)
-#+end_src
+    #+begin_src emacs-lisp
+      (use-package helm-c-yasnippet
+        :bind (("C-c h s" . helm-yas-complete))
+        :init
+        ;; [default: nil]
+        (setq helm-yas-space-match-any-greedy t))
+    #+end_src
+
 ** popwin
-#+begin_src emacs-lisp
-  (require 'popwin)
-  (popwin-mode 1)
 
-  (global-set-key (kbd "C-x p") popwin:keymap)
-  (global-set-key (kbd "C-x C-k") 'popwin:close-popup-window)
-#+end_src
+   popwin is a little library that makes most special kinds of buffers appear
+   as smaller popups rather than just take up the entire space of a buffer.
+
+   #+begin_src emacs-lisp
+     (use-package popwin
+       :bind
+       ("C-x C-k" . popwin:close-popup-window)
+
+       :config
+       (popwin-mode 1)
+       ;; It was apparently tricky to make use-package map to what's just a keymap
+       (global-set-key (kbd "C-x p") popwin:keymap))
+   #+end_src
+
+** projectile
+
+   projectile brings knowledge of your different projects into emacs. Sadly, I
+   mostly only use =C-c p p=, which brings up a helm selector for all visited
+   projects. projectile itself is much more powerful than that, I just never
+   got around to using it much more.
+
+   #+begin_src emacs-lisp
+     (use-package projectile
+       :config
+       (projectile-global-mode)
+       (setq projectile-completion-system 'helm
+             projectile-mode-line nil))
+   #+end_src
+
 * Editing
-** undo tree
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-M-z") 'undo-tree-redo)
-  (global-undo-tree-mode +1)
-#+end_src
-** fill mode
-#+begin_src emacs-lisp
-  (auto-fill-mode 1)
-  (set-fill-column 79)
-#+end_src
-** yas
-#+begin_src emacs-lisp
-  (require 'yasnippet)
-  (require 'helm-c-yasnippet)
+** Adding current buffer to minibuffer
 
-  ;; Without this, it doesn't load...
-  (yas-reload-all)
-  (setq helm-yas-space-match-any-greedy t) ;[default: nil]
-  (global-set-key (kbd "C-c h s") 'helm-yas-complete)
+   Press =F3= to insert the full path of the current buffer into the
+   minibuffer.
 
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'markdown-mode 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
-#+end_src
-** Save hooks
-#+begin_src emacs-lisp
-  (add-hook 'before-save-hook
-            (lambda ()
-              (save-excursion
-                (save-restriction
-                  (delete-trailing-whitespace)
-                  (widen)
-                  (goto-char (point-max))
-                  (delete-blank-lines)))))
-#+end_src
-** Commenting code
-#+begin_src emacs-lisp
-  (defun comment-eclipse ()
-    (interactive)
-    (let ((start (line-beginning-position))
-          (end (line-end-position)))
-      (when (region-active-p)
-        (setq start (save-excursion
-                      (goto-char (region-beginning))
-                      (beginning-of-line)
-                      (point))
-              end (save-excursion
-                    (goto-char (region-end))
-                    (end-of-line)
-                    (point))))
-      (comment-or-uncomment-region start end)))
+   #+begin_src emacs-lisp
+     (define-key minibuffer-local-map [f3]
+       (lambda () (interactive)
+         (insert (file-truename
+                  (buffer-name
+                   (window-buffer (minibuffer-selected-window)))))))
 
-  (global-set-key (kbd "M-;") 'comment-eclipse)
-#+end_src
+   #+end_src
+
 ** Autocompletion
-#+begin_src emacs-lisp
-  (require 'company)
-  (require 'company-go)
 
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-#+end_src
-** Line duplication
-#+begin_src emacs-lisp
-  (defun duplicate-current-line-or-region (arg)
-    "Duplicates the current line or region ARG times.
-     If there's no region, the current line will be duplicated. However, if
-     there's a region, all lines that region covers will be duplicated."
-    (interactive "p")
-    (let (beg end (origin (point)))
-      (if (and mark-active (> (point) (mark)))
-          (exchange-point-and-mark))
-      (setq beg (line-beginning-position))
-      (if mark-active
-          (exchange-point-and-mark))
-      (setq end (line-end-position))
-      (let ((region (buffer-substring-no-properties beg end)))
-        (dotimes (i arg)
-          (goto-char end)
-          (newline)
-          (insert region)
-          (setq end (point)))
-        (goto-char (+ origin (* (length region) arg) arg)))))
+   #+begin_src emacs-lisp
+     (require 'company)
+     (require 'company-go)
 
-  (global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
-#+end_src
-** Entire line operation
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-k")
-                  (lambda ()
-                    (interactive)
-                    (beginning-of-line)
-                    (if (eq (point) (point-max))
-                        (previous-line))
-                    (kill-line 1)
-                    (back-to-indentation)))
+     (setq company-tooltip-limit 20)                      ; bigger popup window
+     (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+     (setq company-echo-delay 0)                          ; remove annoying blinking
+     (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+   #+end_src
 
-  (defun yank-entire-line ()
-    (interactive)
-    (save-excursion
-      (beginning-of-line)
-      (set-mark-command)
-      (end-of-line)
-      (kill-ring-save)))
-#+end_src
-** Default keys
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-g") 'helm-swoop)
-  (global-set-key (kbd "C-r") 'vr/replace)
-  (global-set-key (kbd "M-j")
-                  (lambda ()
-                    (interactive)
-                    (join-line -1)))
-#+end_src
+** Commenting code
+
+   Comments lines or regions.
+
+   #+begin_src emacs-lisp
+     (defun th-comment-block ()
+       (interactive)
+       (let ((start (line-beginning-position))
+             (end (line-end-position)))
+         (when (region-active-p)
+           (setq start (save-excursion
+                         (goto-char (region-beginning))
+                         (beginning-of-line)
+                         (point))
+                 end (save-excursion
+                       (goto-char (region-end))
+                       (end-of-line)
+                       (point))))
+         (comment-or-uncomment-region start end)))
+
+     (global-set-key (kbd "M-;") 'th-comment-block)
+   #+end_src
+
 ** Enhanced default keybindings
 *** C-a
 #+begin_src emacs-lisp
@@ -502,73 +437,804 @@ Note that C-j will preview the file without closing the helm buffer.
 
   (global-set-key (kbd "M-f") 'forward-word-to-beginning)
 #+end_src
-** Adding current buffer to minibuffer
+** Entire line operation
 #+begin_src emacs-lisp
-  (define-key minibuffer-local-map [f3]
-    (lambda () (interactive)
-      (insert (file-truename (buffer-name
-                              (window-buffer (minibuffer-selected-window)))))))
+  (global-set-key (kbd "M-k")
+                  (lambda ()
+                    (interactive)
+                    (beginning-of-line)
+                    (if (eq (point) (point-max))
+                        (previous-line))
+                    (kill-line 1)
+                    (back-to-indentation)))
 
+  (defun yank-entire-line ()
+    (interactive)
+    (save-excursion
+      (beginning-of-line)
+      (set-mark-command)
+      (end-of-line)
+      (kill-ring-save)))
 #+end_src
-** Bubble lines
+** fill mode
 #+begin_src emacs-lisp
-  (defun th-bubble-up ()
-    "Moves current line to the line above"
-    (interactive)
-    (transpose-lines 1)
-    (forward-line -2))
-
-  (defun th-bubble-down ()
-    "Moves current line to the line below"
-    (interactive)
-    (forward-line 1)
-    (transpose-lines 1)
-    (forward-line -1))
-
-  (global-set-key (kbd "ESC <up>") 'th-bubble-up)
-  (global-set-key (kbd "ESC <down>") 'th-bubble-down)
+  (auto-fill-mode 1)
+  (set-fill-column 79)
 #+end_src
+
+** Joining lines
+
+   The default behavior didn't really sit well with me.
+
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))
+   #+end_src
+
+** Line duplication
+
+   Duplicates a line or the current region. Is smart about copying the lines
+   and not just where the region started or ended.
+
+   #+begin_src emacs-lisp
+     (defun duplicate-current-line-or-region (arg)
+       "Duplicates the current line or region ARG times.
+        If there's no region, the current line will be duplicated. However, if
+        there's a region, all lines that region covers will be duplicated."
+       (interactive "p")
+       (let (beg end (origin (point)))
+         (if (and mark-active (> (point) (mark)))
+             (exchange-point-and-mark))
+         (setq beg (line-beginning-position))
+         (if mark-active
+             (exchange-point-and-mark))
+         (setq end (line-end-position))
+         (let ((region (buffer-substring-no-properties beg end)))
+           (dotimes (i arg)
+             (goto-char end)
+             (newline)
+             (insert region)
+             (setq end (point)))
+           (goto-char (+ origin (* (length region) arg) arg)))))
+
+     (global-set-key (kbd "C-x d") 'duplicate-current-line-or-region) ; fak u paredit <3
+   #+end_src
+
+** Save hooks
+
+   Delete trailing whitespace on save. Also truncates empty lines at the end
+   of the file.
+
+   #+begin_src emacs-lisp
+     (add-hook 'before-save-hook
+               (lambda ()
+                 (save-excursion
+                   (save-restriction
+                     (delete-trailing-whitespace)
+                     (widen)
+                     (goto-char (point-max))
+                     (delete-blank-lines)))))
+   #+end_src
+
+** undo tree
+
+   Visualizes states of undo. Really nice when you want to backtrack a bit to
+   get an overview of what you just messed up.
+
+   #+begin_src emacs-lisp
+     (use-package undo-tree
+       :bind
+       (("C-z"     . undo-tree-undo)
+        ("C-x C-z" . undo-tree-undo)
+        ("C-M-z"   . undo-tree-redo)
+        ("C-x u"   . undo-tree-visualize))
+
+       :config
+       (global-undo-tree-mode +1))
+   #+end_src
+
+** yas
+
+   The canonical snippet library for emacs. Mostly works well, although it can
+   come with questionable defaults every now and again.
+
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :config
+       (yas-reload-all) ;; Without this, it doesn't load...
+       (add-hook 'prog-mode-hook 'yas-minor-mode)
+       (add-hook 'markdown-mode 'yas-minor-mode)
+       (add-hook 'org-mode-hook 'yas-minor-mode))
+   #+end_src
+
 * Major modes
-** org
-*** Main setup
+** elisp
+
+   Options and settings for hacking on emacs itself.
+
+   #+begin_src emacs-lisp
+     (use-package lispy
+       :bind (:map lispy-mode-map
+                   ;; This one just needs to be overwritten
+                   ("M-o" . th-org/body)))
+
+     (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+     (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+     (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
+
+     ;; pls no .elc
+     (add-hook
+      'emacs-lisp-mode-hook
+      (lambda ()
+        (make-local-variable 'after-save-hook)
+        (add-hook
+         'after-save-hook
+         (lambda ()
+           (if (file-exists-p (concat buffer-file-name "c"))
+               (delete-file (concat buffer-file-name "c")))))))
+
+     (defun th-buffer-or-region (action-name buffer-func region-func)
+       (let ((s "Buffer"))
+         (if (use-region-p)
+             (progn
+               (funcall region-func (region-beginning) (region-end))
+               (keyboard-escape-quit)
+               (setq s "Region"))
+           (funcall buffer-func))
+
+         (message "buffer-or-region: %s %s" s action-name)))
+
+     (defun eval-buffer-or-region ()
+       (interactive)
+       (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
+
+     (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+   #+end_src
+
+** golang
+
+   These are my Go tricks. They are fairly opinionated, but once they work well
+   enough I think I want to bring them to the upstream go-mode somehow!
+   [[https://github.com/dominikh/go-mode.el/pull/117][It started happening!]]
+
+*** Ideas
+**** TODO Compile in background
+**** TODO Compile buffer recognition of tests
+**** TODO Duplicate test function
+**** TODO Toggle pointer to structs in file
+**** TODO Toggle error as return value
+**** TODO Template for error if nil (en)
+**** TODO Replace inside function
+
 #+begin_src emacs-lisp
-  (require 'org)
-
-  (eval-after-load "org"
-    '(progn
-       (require 'org-clock)
-       (require 'org-fstree)
-       (require 'org-journal)))
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (sql . t)
-     (shell . t)))
-
-  (org-bullets-mode 1)
-
-  (setq
-   org-confirm-babel-evaluate nil
-   org-directory "~/org"
-   org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
-   org-hide-leading-stars t
-   org-return-follows-link t
-   org-special-ctrl-a/e t
-   org-special-ctrl-k t
-   org-src-fontify-natively t
-   org-src-tab-acts-natively t
-   org-src-window-setup 'current-window
-   org-use-speed-commands t)
-
-  ; When calculating percentages of checkboxes, count all boxes, not just
-  ; direct children
-  (setq org-hierarchical-checkbox-statistics t)
-
-  (define-key org-mode-map (kbd "M-i") 'helm-imenu)
-  (define-key org-mode-map (kbd "C-c ;") 'org-edit-special)
-  (define-key org-src-mode-map (kbd "C-c ;") 'org-edit-src-exit)
+  (require 'go-mode)
 #+end_src
+
+*** Package and hooks
+
+    Load the base go-mode package and set up the hooks.
+
+    #+begin_src emacs-lisp
+      (use-package go-mode
+        :bind
+        ("C-c r"   . go-rename)
+        ("C-c i"   . go-goto-imports)
+        ("C-c C-i" . go-remove-unused-imports)
+        ("C-c d"   . godoc)
+
+        :init
+        (defun th-go-hook ()
+          (add-hook 'before-save-hook 'gofmt-before-save)
+          (set (make-local-variable 'company-backends) '(company-go))
+          (company-mode)
+          (flycheck-mode 1))
+
+        :config
+        (add-hook 'go-mode-hook 'th-go-hook)
+        (add-hook 'go-mode-hook 'go-eldoc-setup))
+
+      (use-package company-go)
+      (use-package go-eldoc)
+    #+end_src
+
+*** goto functions
+
+    #+begin_src emacs-lisp
+      ;; These were all moved into upstream! Yay open source <3
+      (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
+    #+end_src
+
+*** Coverage functions
+
+    Shows coverage for the current go file. Deletes other windows.
+
+    #+begin_src emacs-lisp
+      (defun th-go-coverage ()
+        "Toggle coverage mode for the current buffer"
+        (interactive)
+
+        (save-excursion
+          (let ((bn (buffer-name)))
+            (if (s-contains? "<gocov>" bn)
+                (progn
+                  (windmove-left)
+                  (th-go-test-buffer-p))
+
+              (if (s-contains? "_test.go" bn)
+                  (progn
+                    (windmove-left)
+                    (th-go-coverage-p))
+                (windmove-right)
+                (if (not (s-contains? "<gocov>" (buffer-name)))
+                    (progn
+                      (windmove-left)
+                      (th-go-coverage-p))
+                  (windmove-left)
+                  (th-go-test-buffer-p)))))))
+
+      (defun th-go-coverage-p ()
+        (delete-other-windows)
+        (go-coverage (concat (projectile-project-root) "cover.out")))
+
+      (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
+    #+end_src
+
+*** Test file view
+
+    Brings up a split view of a single file and it's corresponding test file.
+    The test file will be created if it does not already exist.
+
+    #+begin_src emacs-lisp
+      (defun th-go-test-buffer-p ()
+        (let* ((bname (buffer-file-name))
+               (left "")
+               (right ""))
+
+          (if (s-suffix? "_test.go" bname)
+              (setq left (th-go-alternate-file bname)
+                    right bname)
+            (setq left bname
+                  right (th-go-alternate-file bname)))
+
+          (find-file left)
+          (delete-other-windows)
+          (split-window-horizontally)
+          (windmove-right)
+          (find-file right)))
+
+      (defun th-go-test-buffer ()
+        (interactive)
+        (th-go-test-buffer-p))
+
+      (defun th-go-test-buffer-split (file)
+        ;; If we happen to be on the test file when splitting, go left once
+        (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
+          (windmove-left))
+
+        (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
+          (split-window-below)
+          (find-file fn)
+          (windmove-right)
+          (split-window-below)
+          (find-file (th-go-alternate-file fn))
+          (balance-windows)))
+
+      (defun th-go-alternate-file (fn)
+        "If fn is code, return path to test file and vice versa"
+
+        (if (s-suffix? "_test.go" fn)
+            (s-replace "_test.go" ".go" fn)
+          (s-replace ".go" "_test.go" fn)))
+
+      (defun th-go-test-file-p (&optional fn)
+        "Returns boolean if the file name given is a test file"
+        (s-contains? "_test.go"
+                     (if (not fn)
+                         (buffer-file-name)
+                       fn)))
+
+      (defun th-go-alternate ()
+        "Go to the alternate file; code or test."
+        (interactive)
+        (find-file (th-go-alternate-file (buffer-name))))
+
+      (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
+    #+end_src
+
+*** Single test execution
+
+    Helper function that lets you execute a single test rather than the entire
+    suite. Run with =C-M-x= on a test file. When run in a non-test file, the
+    most recently executed test will be run again.
+
+    #+begin_src emacs-lisp
+      (defun th-go-get-test-above ()
+        "Gets the name of the test above point"
+        (save-excursion
+          (re-search-backward "^func \\(Test\\|Example\\)" nil t)
+          (forward-word 2)
+          (thing-at-point 'symbol t)))
+
+      (defvar th-go-last-single-test "go test" "The last single test command that was run")
+
+      (defun th-go-single-test ()
+        "If in test file, run the test above point. If not, run the last run test."
+        (interactive)
+        (projectile-save-project-buffers)
+        (when (th-go-test-file-p)
+          (setq th-go-single-test (format "go test -v -run %s" (th-go-get-test-above))))
+        (compile th-go-single-test))
+
+      (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
+    #+end_src
+
+*** helm based file visitor
+
+    Shows a helm session with the current source files, and opens a view with
+    the chosen candidate and its corresponding test file.
+
+    #+begin_src emacs-lisp
+      (defun th-helm-go-source-files ()
+        (mapcar (lambda (s)
+                  (s-chop-suffix ".go" s))
+                (-filter #'th-helm-go-filter-files
+                         (directory-files (projectile-project-root) nil ".*\\.go"))))
+
+      (defun th-helm-go-filter-files (x)
+        (let ((fn (concat (projectile-project-root) x))
+              (bufname (buffer-file-name (get-buffer helm-current-buffer))))
+          (and
+           (not (s-contains? "_test" x))      ; Test files
+           (not (s-contains? ".#" x))         ; emax backups
+           (not (s-contains? fn bufname))     ; the current module
+           (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
+
+      (defun th-helm-go-source-visit (file)
+        (find-file (format "%s/%s.go" (projectile-project-root) file))
+        (th-go-test-buffer-p))
+
+      (defun th-helm-go-source-visit-split (file)
+        (th-go-test-buffer-split file))
+
+      (defvar th-helm-go-source-sources
+        '((name . "go source files")
+          (candidates . th-helm-go-source-files)
+          (action . (
+                     ("visit file" . th-helm-go-source-visit)
+                     ("split below `C-c j'" . th-helm-go-source-visit-split)))))
+
+      (defun th-helm-go-source ()
+        (interactive)
+        (helm
+         :sources th-helm-go-source-sources
+         :prompt "go source file: "
+         :buffer "*helm-go-source*"))
+
+      (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
+    #+end_src
+
+*** Snippet helpers
+
+    These are functions used inside of yas.
+
+    #+begin_src emacs-lisp
+      (defun th-go-get-type-signature ()
+        "Get the signature of the closest type: (t *Type)"
+        (save-excursion
+          (re-search-backward "^type" nil t)
+          (if (looking-at "type")
+              (progn (forward-word 2)
+                     (let ((s (symbol-name (symbol-at-point))))
+                       (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
+            "")))
+
+    #+end_src
+
+*** Compiling and executing
+
+    Helper functions that make compiling and viewing the compilation log
+    simpler.
+
+    #+begin_src emacs-lisp
+      (defun th-go-test ()
+        (interactive)
+        (projectile-save-project-buffers)
+        ;; The server compile command should run in the root
+        (compile "go test -coverprofile=cover.out"))
+
+      (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
+
+      (defun th-go-server-compile ()
+        (interactive)
+        (projectile-save-project-buffers)
+        ;; The server compile command should run in the root
+        (with-current-buffer (th-go-main-file-buffer)
+          (compile "go build -v")))
+
+      (defun th-go-main-file ()
+        "Returns the main go file of the project"
+        (let ((path (projectile-project-root)))
+          (concat path (format "%s.go" (f-base path)))))
+
+      (defun th-go-main-file-buffer ()
+        "Returns the buffer of the main go file of the project"
+        (get-file-buffer (th-go-main-file)))
+
+      (defun th-go-modules ()
+        "Get the paths to all modules found in the project"
+        (let ((path (projectile-project-root)))
+          (cdr ;; Remove the ./
+           (-uniq
+            (-map
+             (lambda (fn)
+               ;; Add ./ so that go considers the modules as local and not remote
+               (concat "./" (f-dirname fn)))
+             (-filter
+              ;; Return a list with all go files
+              (lambda (fn) (s-contains? ".go" fn))
+              (projectile-current-project-files)))))))
+
+      ;; Quick compile, without tests or checks
+      (define-key go-mode-map (kbd "C-c M-c")
+        (lambda ()
+          (interactive)
+          (compile "go build -v")))
+
+      (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
+
+      ;; NOTE: This is not go specific.
+      (defun th-toggle-maximize-buffer (&optional buffer-name)
+        "Maximize buffer"
+        (interactive)
+        (if (= 1 (length (window-list)))
+            (jump-to-register '_)
+          (progn
+            (window-configuration-to-register '_)
+            (if buffer-name
+                (switch-to-buffer buffer-name))
+            (delete-other-windows))))
+
+      (defun th-quit-compilation-buffer ()
+        ;; TODO: Maybe this can be done with advice instead?
+        (interactive)
+        (if (= 1 (length (window-list)))
+            (jump-to-register '_)
+          (quit-window)))
+
+      (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
+      (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
+
+      (defun th-go-maximize-log ()
+        (interactive)
+        (th-toggle-maximize-buffer "*compilation*"))
+
+      (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
+    #+end_src
+
+*** Docstring manipulation
+
+    Update the function name of the docstring for the function you are
+    visiting. Useful when renaming functions.
+
+    #+begin_src emacs-lisp
+      (defun th-go-update-docstring ()
+        "Update the docstring of the current function to match the name it has."
+        (interactive)
+        (save-excursion
+          ;; Since this will update if it is wrong, just call it and let it be.
+          (th-go-goto-docstring)))
+
+      (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
+    #+end_src
+
+*** Struct pointer refactoring
+
+    =C-c C-m r=, a function to change the type signature of the current
+    method. Will
+
+    #+begin_src emacs-lisp
+      (defun go--convert-type-name-to-receiver (tn)
+        "Converts from the string \"Type\" to \"(t *Type)\""
+        (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
+
+      (defun go--get-types (&optional file-name skip)
+        "Return a list of all the types found in the current file.
+
+      The strings returned are based on all lines that begin with
+      '^type'. The letters 'type ' and the ending ' {' are both
+      removed.
+
+      If `skip' is provided, that type will not be included in the resulting list."
+
+        (save-excursion
+          (let ((fn (or file-name (buffer-file-name))))
+            (-map
+             (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
+             (-filter
+              (lambda (s)
+                (if skip
+                    ;; If skip is provided, also filter out that line
+                    (and (s-prefix? "type " s)
+                         (not (s-prefix? (format "type %s " skip) s)))
+                  ;; Otherwise just return lines that start with "type"
+                  (s-prefix? "type " s)))
+
+              ;; Does emacs really don't have a cleaner way of getting lines in a
+              ;; file? :/
+              (with-temp-buffer
+                (insert-file-contents fn)
+                (split-string (buffer-string) "\n" t)))))))
+
+      (defun go-refactor-method-receiver ()
+        "Changes or removes the method receiver of the current function.
+
+      A choice between all the types in the current file are
+      interactively presented. Also presented is an item `<none>',
+      which will remove the receiver if there is one.
+
+      If there was a receiver and a new one is chosen,"
+        ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
+        (interactive)
+        (save-excursion
+          (go-goto-function t)
+          (forward-char 5)
+
+          (let*
+              ((empty "<none>")
+               (current-var
+                (save-excursion
+                  (forward-char 1)
+                  (thing-at-point 'symbol t)))
+               (current-type
+                (save-excursion
+                  (forward-char 1)
+                  (forward-word 2)
+                  (thing-at-point 'symbol t)))
+               (type (completing-read
+                      "Type: "
+                      (append (go--get-types (buffer-file-name) current-type)
+                              (list empty))))
+               (receiver (when (not (s-equals? type empty))
+                           (go--convert-type-name-to-receiver
+                            (car (s-split " " type))))))
+
+            (cond
+             ;; If we are looking at an opening parenthesis, there is already a method receiver
+             ((looking-at "(")
+              ;; Firstly, store the current receiver variable name.
+
+
+              ;; Then, delete the existing one.
+              (delete-region
+               (point)
+               (save-excursion
+                 (forward-list 1)
+                 (point)))
+              ;; If we do not have a receiver (i.e. we chose 'empty) we should
+              ;; delete the extra space.
+              (if (not receiver)
+                  (delete-char 1)
+                ;; If there was a receiver previously and we set a new one, update the
+                ;; variable name.
+                (insert receiver)
+
+                ;; And also update the variable name inside of the function.
+                (when (and current-var receiver)
+                  (go--refactor-symbol-in-function
+                   current-var
+                   (s-downcase (s-left 1 type))))))
+             ((and (not (looking-at "(")) receiver)
+              ;; There is no receiver, but we are adding one. Just insert it.
+              (insert (format "%s " receiver)))))))
+
+      (defun go--refactor-symbol-in-function (from to)
+        "Changes instances of the symbol `from' into `to'.
+
+      Assumes that point is on line defining the function we are replacing in."
+        (save-excursion
+          (beginning-of-line)
+          (let ((start
+                 (save-excursion
+                   (forward-line -1)
+                   (point)))
+                (end
+                 (save-excursion
+                   ;; TODO(thiderman): Make a method that reliably moves to opening brace.
+                   (end-of-line)
+                   ;; In case of trailing whitespace...
+                   (search-backward "{")
+                   (forward-list 1)
+                   (backward-char 1)
+                   (point))))
+
+            (replace-string from to t start end))))
+
+      (define-prefix-command 'go-refactor-map)
+      (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
+
+      (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
+    #+end_src
+
+*** Debug toggler
+
+    Touch or remove the =toggle/debug= file. Can be used in applications to
+    easily increase the log level or similar operations.
+
+    #+begin_src emacs-lisp
+      (defun go-toggle-debug ()
+        "Toggle the toggle/debug file"
+        (interactive)
+        (let* ((dir (concat (projectile-project-root) "toggle/"))
+               (toggle "debug")
+               (action "Toggled")
+               (fn (concat dir toggle)))
+          ;; Create the directory if it doesn't already exist
+          (when (not (f-directory? dir))
+            (make-directory dir))
+
+          ;; Toggle the existence of the file
+          (if (f-file? fn)
+              (progn
+                (f-delete fn)
+                (setq action "Disabled"))
+            (with-temp-buffer
+              (write-file fn))
+            (setq action "Enabled"))
+          (message "%s %s" action toggle)))
+
+      (define-key go-mode-map (kbd "C-c M-d") 'go-toggle-debug)
+    #+end_src
+
+*** Server runner
+
+    Helper functions to run the executable that the current project produces.
+    * =C-c s c= compiles the server
+    * =C-c s s= starts or restarts the server
+    * =C-c s b= visits the buffer with the output from the process
+
+    One caveat is that the code currently assumes that you have a file called
+    =<project-name>.go=.
+
+    #+begin_src emacs-lisp
+      ;; TODO: Make the argument part configurable
+      (defun th-go-server-start ()
+        "Start the server for the app"
+        (interactive)
+        (let* ((root (projectile-project-root))
+               (name (f-base root))
+               (procname (format "%s-server" name)))
+
+          ;; If the server is already running, stop it; effectively making this a restart.
+          (when (get-process procname)
+            (th-go-server-stop))
+
+          (start-process
+           procname
+           (format "*%s-server*" name)
+           (concat root name)
+           "server")
+
+          ;; (set-process-filter proc 'th-go-server-insertion-filter)
+          (message "Started %s server" name)))
+
+      (defun th-go-server-stop ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (delete-process
+           (format "*%s-server*" name))
+          (message "Stopped %s server" name)))
+
+      ;; TODO: Move this to a non-golang place
+      (defun th-npm-server-start ()
+        "Start the server for the app"
+        (interactive)
+        (let* ((root (projectile-project-root))
+               (name (format "%s-npm" (f-base root)))
+               (procname (format "%s-server" name))
+               (procbuffer (format "*%s*" procname))
+               (dir (concat root "js/")))
+
+          ;; If the server is already running, stop it; effectively making this a restart.
+          (when (get-process procname)
+            (th-npm-server-stop))
+
+          (let ((default-directory dir))
+            (start-process procname procbuffer "npm" "run" "dev"))
+
+          (message "Started %s npm server" name)))
+
+      (defun th-npm-server-stop ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (delete-process
+           (format "*%s-npm-server*" name))
+          (message "Stopped %s server" name)))
+
+      (defun th-go-server-buffer ()
+        "Stop the server for the app"
+        (interactive)
+        (let* ((name (f-base (projectile-project-root))))
+          (switch-to-buffer (format "*%s-server*" name))))
+
+      ;; (defun th-go-server-insertion-filter (proc string)
+      ;;   (with-current-buffer (process-buffer proc)
+      ;;     ;; Insert the text, advancing the process marker.
+      ;;     (goto-char (process-mark proc))
+      ;;     (insert (format "Hehe <%s>" string))
+      ;;     (set-marker (process-mark proc) (point))
+      ;;     (goto-char (point-max))))
+
+      (let ((m (define-prefix-command 'go-server-map)))
+        (define-key m (kbd "s") 'th-go-server-start)
+        (define-key m (kbd "k") 'th-go-server-stop)
+        (define-key m (kbd "b") 'th-go-server-buffer)
+        (define-key m (kbd "c") 'th-go-server-compile)
+        (define-key m (kbd "n") 'th-npm-server-start))
+
+      (define-key go-mode-map (kbd "C-c s") 'go-server-map)
+    #+end_src
+
+** logview-mode
+
+   Nifty little mode that makes reading structured logs easier.
+
+   #+begin_src emacs-lisp
+     (use-package logview
+       :init
+       (add-hook
+        'logview-mode-hook
+        (lambda ()
+          (linum-mode -1)
+          (toggle-truncate-lines 1))))
+   #+end_src
+
+** org
+
+   One of the obvious killer features of emacs! org is the kind of thing that
+   makes emacs users into obnoxious cultists, but it is for a reason! Once you
+   get into it, it'll be hard to look back.
+
+*** Main setup
+
+    #+begin_src emacs-lisp
+      (use-package org
+        :bind (:map org-mode-map
+                    ("M-i"   . helm-imenu)
+                    ("C-c ;" . org-edit-special)
+               :map org-src-mode-map
+                    ("C-c ;" . org-edit-src-exit))
+
+        :init
+        (setq
+         org-confirm-babel-evaluate nil
+         org-directory "~/org"
+         org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
+         org-hide-leading-stars t
+         org-return-follows-link t
+         org-special-ctrl-a/e t
+         org-special-ctrl-k t
+         org-src-fontify-natively t
+         org-src-tab-acts-natively t
+         org-src-window-setup 'current-window
+         org-use-speed-commands t
+
+         ;; When calculating percentages of checkboxes, count all boxes, not just
+         ;; direct children
+         org-hierarchical-checkbox-statistics t)
+
+        :config
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (sql . t)
+           (shell . t)))
+
+        (org-bullets-mode 1))
+
+      (use-package org-journal)
+    #+end_src
 *** Agenda and todo
 **** Settings and options
 #+begin_src emacs-lisp
@@ -728,864 +1394,297 @@ Note that C-j will preview the file without closing the helm buffer.
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 #+end_src
 *** Hydra commands
-#+begin_src emacs-lisp
-  (defhydra th-org (:exit t)
-    "Org commands"
-    ("c" org-capture "Capture")
-    ("M-o" org-capture "Capture")
-    ("s" (org-agenda nil "a") "Schedule")
-    ("j" org-clock-goto "Current clocked task")
-    ("a" org-todo-list "Agenda")
-    ("t" org-tags-view "Tags"))
 
-  (global-set-key (kbd "M-o") 'th-org/body)
-  (require 'lispy)
-  (define-key lispy-mode-map (kbd "M-o") 'th-org/body)
-#+end_src
-** Elisp
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
-
-  ;; pls no .elc
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (make-local-variable 'after-save-hook)
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (if (file-exists-p (concat buffer-file-name "c"))
-                              (delete-file (concat buffer-file-name "c")))))))
-
-  (defun th-buffer-or-region (action-name buffer-func region-func)
-    (let ((s "Buffer"))
-      (if (use-region-p)
-          (progn
-            (funcall region-func (region-beginning) (region-end))
-            (keyboard-escape-quit)
-            (setq s "Region"))
-        (funcall buffer-func))
-
-      (message "buffer-or-region: %s %s" s action-name)))
-
-  (defun eval-buffer-or-region ()
-    (interactive)
-    (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
-
-  (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
-#+end_src
-** Python
-#+begin_src emacs-lisp
-  (require 'python)
-  ;; (require 'snakecharmer)
-
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (define-key python-mode-map (kbd "C-c C-d") 'anaconda-mode-find-definitions)
-
-  (defun th-python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
-
-  (add-hook 'python-mode-hook 'th-python-mode-hook)
-
-  ;; (add-hook 'python-mode-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'after-save-hook 'flycheck-first-error)))
-
-  (defun sp-goto-mail ()
-    "Go to the latest email in <root>/_outgoing_emails."
-    (interactive)
-    (find-file
-     (car
-      (last
-       (directory-files
-        (concat (projectile-project-root)
-                "_outgoing_emails")
-        t)))))
-
-
-
-#+end_src
-** golang
-
-These are my Go tricks. They are fairly opinionated, but once they work well
-enough I think I want to bring them to the upstream go-mode somehow!
-[[https://github.com/dominikh/go-mode.el/pull/117][It started happening!]]
-
-*** Ideas
-**** TODO Compile in background
-**** TODO Compile buffer recognition of tests
-**** TODO Duplicate test function
-**** TODO Toggle pointer to structs in file
-**** TODO Toggle error as return value
-**** TODO Template for error if nil (en)
-**** TODO Replace inside function
-
-#+begin_src emacs-lisp
-  (require 'go-mode)
-#+end_src
-
-*** Main hook
-#+begin_src emacs-lisp
-  (defun th-go-hook ()
-    (add-hook 'before-save-hook 'gofmt-before-save)
-    (set (make-local-variable 'company-backends) '(company-go))
-    (company-mode)
-    (flycheck-mode 1)
-
-    (helm-dash-activate-docset 'Go))
-
-  (add-hook 'go-mode-hook 'th-go-hook)
-  (add-hook 'go-mode-hook 'go-eldoc-setup)
-#+end_src
-*** goto functions
-#+begin_src emacs-lisp
-  ;; These were all moved into upstream! Yay open source <3
-  (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
-#+end_src
-*** Coverage functions
-#+begin_src emacs-lisp
-  (defun th-go-coverage ()
-    "Toggle coverage mode for the current buffer"
-    (interactive)
-
-    (save-excursion
-      (let ((bn (buffer-name)))
-        (if (s-contains? "<gocov>" bn)
-            (progn
-              (windmove-left)
-              (th-go-test-buffer-p))
-
-          (if (s-contains? "_test.go" bn)
-              (progn
-                (windmove-left)
-                (th-go-coverage-p))
-            (windmove-right)
-            (if (not (s-contains? "<gocov>" (buffer-name)))
-                (progn
-                  (windmove-left)
-                  (th-go-coverage-p))
-              (windmove-left)
-              (th-go-test-buffer-p)))))))
-
-  (defun th-go-coverage-p ()
-    (delete-other-windows)
-    (go-coverage (concat (projectile-project-root) "cover.out")))
-
-  (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
-#+end_src
-*** Test file view
-Brings up a split view of a single file and it's corresponding test file.
-The test file will be created if it does not already exist.
-#+begin_src emacs-lisp
-  (defun th-go-test-buffer-p ()
-    (let* ((bname (buffer-file-name))
-           (left "")
-           (right ""))
-
-      (if (s-suffix? "_test.go" bname)
-          (setq left (th-go-alternate-file bname)
-                right bname)
-        (setq left bname
-              right (th-go-alternate-file bname)))
-
-      (find-file left)
-      (delete-other-windows)
-      (split-window-horizontally)
-      (windmove-right)
-      (find-file right)))
-
-  (defun th-go-test-buffer ()
-    (interactive)
-    (th-go-test-buffer-p))
-
-
-  (defun th-go-test-buffer-split (file)
-    ;; If we happen to be on the test file when splitting, go left once
-    (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
-      (windmove-left))
-
-    (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
-      (split-window-below)
-      (find-file fn)
-      (windmove-right)
-      (split-window-below)
-      (find-file (th-go-alternate-file fn))
-      (balance-windows)))
-
-
-  (defun th-go-alternate-file (fn)
-    "If fn is code, return path to test file and vice versa"
-
-    (if (s-suffix? "_test.go" fn)
-        (s-replace "_test.go" ".go" fn)
-      (s-replace ".go" "_test.go" fn)))
-
-  (defun th-go-test-file-p (&optional fn)
-    "Returns boolean if the file name given is a test file"
-    (s-contains? "_test.go"
-                 (if (not fn)
-                     (buffer-file-name)
-                   fn)))
-
-  (defun th-go-alternate ()
-    "Go to the alternate file; code or test."
-    (interactive)
-    (find-file (th-go-alternate-file (buffer-name))))
-
-  (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
-#+end_src
-*** Single test execution
-#+begin_src emacs-lisp
-  (defun th-go-get-test-above ()
-    "Gets the name of the test above point"
-    (save-excursion
-      (re-search-backward "^func \\(Test\\|Example\\)" nil t)
-      (forward-word 2)
-      (thing-at-point 'symbol t)))
-
-  (defvar th-go-last-single-test "go test" "The last single test command that was run")
-
-  (defun th-go-single-test ()
-    "If in test file, run the test above point. If not, run the last run test."
-    (interactive)
-    (projectile-save-project-buffers)
-    (when (th-go-test-file-p)
-      (setq th-go-single-test (format "go test -v -run %s" (th-go-get-test-above))))
-    (compile th-go-single-test))
-
-  (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
-#+end_src
-*** helm based file visitor
-Shows a helm session with the current source files, and opens a view with the
-chosen candidate and its corresponding test file.
-#+begin_src emacs-lisp
-  (defun th-helm-go-source-files ()
-    (mapcar (lambda (s)
-              (s-chop-suffix ".go" s))
-            (-filter #'th-helm-go-filter-files
-                     (directory-files (projectile-project-root) nil ".*\\.go"))))
-
-  (defun th-helm-go-filter-files (x)
-    (let ((fn (concat (projectile-project-root) x))
-          (bufname (buffer-file-name (get-buffer helm-current-buffer))))
-      (and
-       (not (s-contains? "_test" x))      ; Test files
-       (not (s-contains? ".#" x))         ; emax backups
-       (not (s-contains? fn bufname))     ; the current module
-       (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
-
-  (defun th-helm-go-source-visit (file)
-    (find-file (format "%s/%s.go" (projectile-project-root) file))
-    (th-go-test-buffer-p))
-
-  (defun th-helm-go-source-visit-split (file)
-    (th-go-test-buffer-split file))
-
-  (defvar th-helm-go-source-sources
-    '((name . "go source files")
-      (candidates . th-helm-go-source-files)
-      (action . (
-                 ("visit file" . th-helm-go-source-visit)
-                 ("split below `C-c j'" . th-helm-go-source-visit-split)
-                 ))))
-
-  (defun th-helm-go-source ()
-    (interactive)
-    (helm
-     :sources th-helm-go-source-sources
-     :prompt "go source file: "
-     :buffer "*helm-go-source*"))
-
-  (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
-#+end_src
-*** Snippet helpers
-These are functions used inside of yas.
-#+begin_src emacs-lisp
-  (defun th-go-get-type-signature ()
-    "Get the signature of the closest type: (t *Type)"
-    (save-excursion
-      (re-search-backward "^type" nil t)
-      (if (looking-at "type")
-          (progn (forward-word 2)
-                 (let ((s (symbol-name (symbol-at-point))))
-                   (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
-        "")))
-
-#+end_src
-*** Compiling and executing
-#+begin_src emacs-lisp
-  (defun th-go-test ()
-    (interactive)
-    (projectile-save-project-buffers)
-    ;; The server compile command should run in the root
-    (compile "go test -coverprofile=cover.out"))
-
-  (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
-
-  (defun th-go-server-compile ()
-    (interactive)
-    (projectile-save-project-buffers)
-    ;; The server compile command should run in the root
-    (with-current-buffer (th-go-main-file-buffer)
-      (compile "go build -v")))
-
-  (defun th-go-main-file ()
-    "Returns the main go file of the project"
-    (let ((path (projectile-project-root)))
-      (concat path (format "%s.go" (f-base path)))))
-
-  (defun th-go-main-file-buffer ()
-    "Returns the buffer of the main go file of the project"
-    (get-file-buffer (th-go-main-file)))
-
-  (defun th-go-modules ()
-    "Get the paths to all modules found in the project"
-    (let ((path (projectile-project-root)))
-      (cdr ;; Remove the ./
-       (-uniq
-        (-map
-         (lambda (fn)
-           ;; Add ./ so that go considers the modules as local and not remote
-           (concat "./" (f-dirname fn)))
-         (-filter
-          ;; Return a list with all go files
-          (lambda (fn) (s-contains? ".go" fn))
-          (projectile-current-project-files)))))))
-  ;; Quick compile, without tests or checks
-  (define-key go-mode-map (kbd "C-c M-c")
-    (lambda ()
-      (interactive)
-      (compile "go build -v")))
-
-  (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
-
-  ;; NOTE: This is not go specific.
-  (defun th-toggle-maximize-buffer (&optional buffer-name)
-    "Maximize buffer"
-    (interactive)
-    (if (= 1 (length (window-list)))
-        (jump-to-register '_)
-      (progn
-        (window-configuration-to-register '_)
-        (if buffer-name
-            (switch-to-buffer buffer-name))
-        (delete-other-windows))))
-
-  (defun th-quit-compilation-buffer ()
-    ;; TODO: Maybe this can be done with advice instead?
-    (interactive)
-    (if (= 1 (length (window-list)))
-        (jump-to-register '_)
-      (quit-window)))
-
-  (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
-  (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
-
-  (defun th-go-maximize-log ()
-    (interactive)
-    (th-toggle-maximize-buffer "*compilation*"))
-
-  (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
-#+end_src
-*** Refactoring and renaming
-#+begin_src emacs-lisp
-  (define-key go-mode-map (kbd "C-c r") 'go-rename)
-#+end_src
-*** Docstring manipulation
-#+begin_src emacs-lisp
-  (defun th-go-update-docstring ()
-    "Update the docstring of the current function to match the name it has."
-    (interactive)
-    (save-excursion
-      ;; Since this will update if it is wrong, just call it and let it be.
-      (th-go-goto-docstring)))
-
-  (define-key go-mode-map (kbd "C-c M-d") 'th-go-update-docstring)
-#+end_src
-*** Struct pointer toggler
-#+begin_src emacs-lisp
-  (defun go--convert-type-name-to-receiver (tn)
-    "Converts from the string \"Type\" to \"(t *Type)\""
-    (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
-
-  (defun go--get-types (&optional file-name skip)
-    "Return a list of all the types found in the current file.
-
-  The strings returned are based on all lines that begin with
-  '^type'. The letters 'type ' and the ending ' {' are both
-  removed.
-
-  If `skip' is provided, that type will not be included in the resulting list."
-    (save-excursion
-      (let ((fn (or file-name (buffer-file-name))))
-        (-map
-         (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
-         (-filter
-          (lambda (s)
-            (if skip
-                ;; If skip is provided, also filter out that line
-                (and (s-prefix? "type " s)
-                     (not (s-prefix? (format "type %s " skip) s)))
-              ;; Otherwise just return lines that start with "type"
-              (s-prefix? "type " s)))
-
-          ;; Does emacs really don't have a cleaner way of getting lines in a
-          ;; file? :/
-          (with-temp-buffer
-            (insert-file-contents fn)
-            (split-string (buffer-string) "\n" t)))))))
-
-  (defun go-refactor-method-receiver ()
-    "Changes or removes the method receiver of the current function.
-
-  A choice between all the types in the current file are
-  interactively presented. Also presented is an item `<none>',
-  which will remove the receiver if there is one.
-
-  If there was a receiver and a new one is chosen,"
-    ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
-    (interactive)
-    (save-excursion
-      (go-goto-function t)
-      (forward-char 5)
-
-      (let*
-          ((empty "<none>")
-           (current-var
-            (save-excursion
-              (forward-char 1)
-              (thing-at-point 'symbol t)))
-           (current-type
-            (save-excursion
-              (forward-char 1)
-              (forward-word 2)
-              (thing-at-point 'symbol t)))
-           (type (completing-read
-                  "Type: "
-                  (append (go--get-types (buffer-file-name) current-type)
-                          (list empty))))
-           (receiver (when (not (s-equals? type empty))
-                       (go--convert-type-name-to-receiver
-                        (car (s-split " " type))))))
-
-        (cond
-         ;; If we are looking at an opening parenthesis, there is already a method receiver
-         ((looking-at "(")
-          ;; Firstly, store the current receiver variable name.
-
-
-          ;; Then, delete the existing one.
-          (delete-region
-           (point)
-           (save-excursion
-             (forward-list 1)
-             (point)))
-          ;; If we do not have a receiver (i.e. we chose 'empty) we should
-          ;; delete the extra space.
-          (if (not receiver)
-              (delete-char 1)
-            ;; If there was a receiver previously and we set a new one, update the
-            ;; variable name.
-            (insert receiver)
-
-            ;; And also update the variable name inside of the function.
-            (when (and current-var receiver)
-              (go--refactor-symbol-in-function
-               current-var
-               (s-downcase (s-left 1 type))))))
-         ((and (not (looking-at "(")) receiver)
-          ;; There is no receiver, but we are adding one. Just insert it.
-          (insert (format "%s " receiver)))))))
-
-  (defun go--refactor-symbol-in-function (from to)
-    "Changes instances of the symbol `from' into `to'.
-
-  Assumes that point is on line defining the function we are replacing in."
-    (save-excursion
-      (beginning-of-line)
-      (let ((start
-             (save-excursion
-               (forward-line -1)
-               (point)))
-            (end
-             (save-excursion
-               ;; TODO(thiderman): Make a method that reliably moves to opening brace.
-               (end-of-line)
-               ;; In case of trailing whitespace...
-               (search-backward "{")
-               (forward-list 1)
-               (backward-char 1)
-               (point))))
-
-        (replace-string from to t start end))))
-
-  (define-prefix-command 'go-refactor-map)
-  (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
-
-  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
-#+end_src
-*** General keybindings
-#+begin_src emacs-lisp
-  (define-key go-mode-map (kbd "C-c i") 'go-goto-imports)
-  (define-key go-mode-map (kbd "C-c C-i") 'go-remove-unused-imports)
-  (define-key go-mode-map (kbd "C-c d") 'godoc)
-#+end_src
-*** Debug toggler
-#+begin_src emacs-lisp
-  (defun go-toggle-debug ()
-    "Toggle the toggle/debug file"
-    (interactive)
-    (let* ((dir (concat (projectile-project-root) "toggle/"))
-           (toggle "debug")
-           (action "Toggled")
-           (fn (concat dir toggle)))
-      ;; Create the directory if it doesn't already exist
-      (when (not (f-directory? dir))
-        (make-directory dir))
-
-      ;; Toggle the existence of the file
-      (if (f-file? fn)
-          (progn
-            (f-delete fn)
-            (setq action "Disabled"))
-        (with-temp-buffer
-          (write-file fn))
-        (setq action "Enabled"))
-      (message "%s %s" action toggle)))
-
-  (define-key go-mode-map (kbd "C-c M-d") 'go-toggle-debug)
-#+end_src
-*** Server runner
     #+begin_src emacs-lisp
-      ;; TODO: Make the argument part configurable
-      (defun th-go-server-start ()
-        "Start the server for the app"
-        (interactive)
-        (let* ((root (projectile-project-root))
-               (name (f-base root))
-               (procname (format "%s-server" name)))
+      (defhydra th-org (:exit t)
+        "Org commands"
+        ("c" org-capture "Capture")
+        ("M-o" org-capture "Capture")
+        ("s" (org-agenda nil "a") "Schedule")
+        ("j" org-clock-goto "Current clocked task")
+        ("a" org-todo-list "Agenda")
+        ("t" org-tags-view "Tags"))
 
-          ;; If the server is already running, stop it; effectively making this a restart.
-          (when (get-process procname)
-            (th-go-server-stop))
-
-          (start-process
-           procname
-           (format "*%s-server*" name)
-           (concat root name)
-           "server")
-
-          ;; (set-process-filter proc 'th-go-server-insertion-filter)
-          (message "Started %s server" name)))
-
-      (defun th-go-server-stop ()
-        "Stop the server for the app"
-        (interactive)
-        (let* ((name (f-base (projectile-project-root))))
-          (delete-process
-           (format "*%s-server*" name))
-          (message "Stopped %s server" name)))
-
-      ;; TODO: Move this to a non-golang place
-      (defun th-npm-server-start ()
-        "Start the server for the app"
-        (interactive)
-        (let* ((root (projectile-project-root))
-               (name (format "%s-npm" (f-base root)))
-               (procname (format "%s-server" name))
-               (procbuffer (format "*%s*" procname))
-               (dir (concat root "js/")))
-
-          ;; If the server is already running, stop it; effectively making this a restart.
-          (when (get-process procname)
-            (th-npm-server-stop))
-
-          (let ((default-directory dir))
-            (start-process procname procbuffer "npm" "run" "dev"))
-
-          (message "Started %s npm server" name)))
-
-      (defun th-npm-server-stop ()
-        "Stop the server for the app"
-        (interactive)
-        (let* ((name (f-base (projectile-project-root))))
-          (delete-process
-           (format "*%s-npm-server*" name))
-          (message "Stopped %s server" name)))
-
-      (defun th-go-server-buffer ()
-        "Stop the server for the app"
-        (interactive)
-        (let* ((name (f-base (projectile-project-root))))
-          (switch-to-buffer (format "*%s-server*" name))))
-
-      ;; (defun th-go-server-insertion-filter (proc string)
-      ;;   (with-current-buffer (process-buffer proc)
-      ;;     ;; Insert the text, advancing the process marker.
-      ;;     (goto-char (process-mark proc))
-      ;;     (insert (format "Hehe <%s>" string))
-      ;;     (set-marker (process-mark proc) (point))
-      ;;     (goto-char (point-max))))
-
-      (let ((m (define-prefix-command 'go-server-map)))
-        (define-key m (kbd "s") 'th-go-server-start)
-        (define-key m (kbd "k") 'th-go-server-stop)
-        (define-key m (kbd "b") 'th-go-server-buffer)
-        (define-key m (kbd "c") 'th-go-server-compile)
-        (define-key m (kbd "n") 'th-npm-server-start))
-
-      (define-key go-mode-map (kbd "C-c s") 'go-server-map)
+      (global-set-key (kbd "M-o") 'th-org/body)
     #+end_src
+
 ** prog-mode
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
-  (add-hook 'go-mode-hook 'semantic-mode)
-  (add-hook 'python-mode-hook 'semantic-mode)
-  (add-hook 'prog-mode-hook (lambda ()
-                              (auto-save-mode -1)
-                              (toggle-truncate-lines 1)))
-  (add-hook 'text-mode-hook 'turn-on-fci-mode)
-  (add-hook 'text-mode-hook 'auto-fill-mode)
-#+end_src
-** web-mode
-#+begin_src emacs-lisp
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-attr-indent-offset 2)
 
-  (defun th-refresh-vue ()
-    (interactive)
-    (message "running hook")
-    (if (equal major-mode 'web-mode)
-        (progn
-          (message "reparsing")
-          (vue-mode))
-      (message "did not work")))
+   Hooks that are needed for programming modes.
 
-  ;; Reparse the vue mode things so that the syntax coloring for HTML keeps working
-  ;; (add-hook 'after-save-hook )
-#+end_src
-** logview-mode
-#+begin_src emacs-lisp
-  (add-hook 'logview-mode-hook (lambda ()
-                                 (linum-mode -1)
+   #+begin_src emacs-lisp
+     (add-hook 'emacs-lisp-mode-hook 'semantic-mode)
+     (add-hook 'go-mode-hook 'semantic-mode)
+     (add-hook 'python-mode-hook 'semantic-mode)
+     (add-hook 'prog-mode-hook (lambda ()
+                                 (auto-save-mode -1)
                                  (toggle-truncate-lines 1)))
-#+end_src
+     (add-hook 'text-mode-hook 'turn-on-fci-mode)
+     (add-hook 'text-mode-hook 'auto-fill-mode)
+   #+end_src
+
+** python
+
+   The major mode for editing Python in emacs. It honestly doesn't have much
+   going for it, but hey.
+
+   #+begin_src emacs-lisp
+     (use-package python-mode
+       :init
+
+       (defun sp-goto-mail ()
+         "Go to the latest email in <root>/_outgoing_emails."
+         (interactive)
+         (find-file
+          (car
+           (last
+            (directory-files
+             (concat (projectile-project-root)
+                     "_outgoing_emails")
+             t)))))
+
+       :config
+       (add-hook 'python-mode-hook 'flycheck-mode))
+
+     (use-package anaconda-mode
+       :config
+       (add-hook 'python-mode-hook 'anaconda-mode))
+   #+end_src
+
+*** TODO Configure a working company backend
+
+** Utility modes
+
+   Several modes that I just install to have, without configuring. Grouped
+   together because why not.
+
+   #+begin_src emacs-lisp
+     (use-package crontab-mode)
+     (use-package csv-mode)
+     (use-package dockerfile-mode)
+     (use-package markdown-mode)
+     (use-package nginx-mode)
+     (use-package protobuf-mode)
+     (use-package puppet-mode)
+     (use-package ssh-config-mode)
+     (use-package yaml-mode)
+   #+end_src
+
+** web-mode
+
+   Enhanced editing of HTML with support for embedded languages.
+   Used by vue-mode for templates.
+
+   #+begin_src emacs-lisp
+     (use-package web-mode
+       :init
+       (setq web-mode-markup-indent-offset 2
+             web-mode-attr-indent-offset 2))
+   #+end_src
+
 * Minor modes and utilities
 ** Buffer toggles
 
-F1: `helm-descbinds`
-F2: Open this file
-F3: Open main org file
-F4: Scratch buffer
-F5: Toggle debug mode
-C-x ?: Print current file name relative to project root
+   F1: `helm-descbinds` (set from helm config above)
+   F2: Open this file
+   F3: Open main org file
+   F4: Scratch buffer
+   F5: Toggle debug mode
+   C-x ?: Print current file name relative to project root
 
 *** Functions
-#+begin_src emacs-lisp
-  (defun th-toggle-buffer (func name &optional kill-window)
-    "Toggle or destroy a buffer, depending on if it exists or not.
 
-    The `func` argument should be a callable that toggles the buffer.
-    The `name` argument is a substring of the buffer that should be matched."
-    (interactive)
-    (let ((done nil))
-      (loop for buffer being the buffers
-            do (let ((bname (buffer-name buffer)))
-                 (when (s-contains? name bname)
-                   (if kill-window
-                       (progn
-                         (select-window (get-buffer-window buffer))
-                         (kill-buffer-and-window)
-                         (message "Killed %s" bname))
-                     (progn
-                       (kill-buffer buffer)
-                       (message "%s toggled away" bname)))
-                   (setq done t))))
-      (unless done
-        (funcall func))))
+    #+begin_src emacs-lisp
+      (defun th-toggle-buffer (func name &optional kill-window)
+        "Toggle or destroy a buffer, depending on if it exists or not.
 
-  (defun th-toggle-file (path &optional no-save)
-    (let ((file (file-truename path)))
-      (if (s-equals? file buffer-file-name)
-          (progn
-            (when (not no-save)
-              (save-buffer))
-            (previous-buffer))
-        (find-file file))))
+        The `func` argument should be a callable that toggles the buffer.
+        The `name` argument is a substring of the buffer that should be matched."
+        (interactive)
+        (let ((done nil))
+          (loop for buffer being the buffers
+                do (let ((bname (buffer-name buffer)))
+                     (when (s-contains? name bname)
+                       (if kill-window
+                           (progn
+                             (select-window (get-buffer-window buffer))
+                             (kill-buffer-and-window)
+                             (message "Killed %s" bname))
+                         (progn
+                           (kill-buffer buffer)
+                           (message "%s toggled away" bname)))
+                       (setq done t))))
+          (unless done
+            (funcall func))))
 
-  (defun th-echo-file-name ()
-    (interactive)
-    (message
-     (s-chop-prefix
-      (projectile-project-root)
-      (file-truename (buffer-name)))))
-#+end_src
+      (defun th-toggle-file (path &optional no-save)
+        (let ((file (file-truename path)))
+          (if (s-equals? file buffer-file-name)
+              (progn
+                (when (not no-save)
+                  (save-buffer))
+                (previous-buffer))
+            (find-file file))))
+
+      (defun th-echo-file-name ()
+        (interactive)
+        (message
+         (s-chop-prefix
+          (projectile-project-root)
+          (file-truename (buffer-name)))))
+
+      (defun switch-to-previous-buffer ()
+        "Switch to previously open buffer.
+      Repeated invocations toggle between the two most recently open buffers."
+        (interactive)
+        (switch-to-buffer (other-buffer (current-buffer) 1)))
+      (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
+    #+end_src
+
 *** Keymaps
-#+begin_src emacs-lisp
-  (define-key global-map (kbd "<f1>") 'helm-descbinds)
 
-  (define-key global-map (kbd "<f2>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+    #+begin_src emacs-lisp
+      (define-key global-map (kbd "<f2>")
+        (lambda ()
+          (interactive)
+          (th-toggle-file (concat user-emacs-directory "emacs.org"))))
 
-  (define-key global-map (kbd "C-x <f2>")
-    (lambda ()
-      (interactive)
-      (split-window-below)
-      (balance-windows)
-      (windmove-down)
-      (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+      (define-key global-map (kbd "C-x <f2>")
+        (lambda ()
+          (interactive)
+          (split-window-below)
+          (balance-windows)
+          (windmove-down)
+          (th-toggle-file (concat user-emacs-directory "emacs.org"))))
 
-  (define-key global-map (kbd "<f3>")
-    (lambda ()
-      (interactive)
-      (th-toggle-file "~/.logs/payments/info.log" t)
-      (end-of-buffer)))
+      (define-key global-map (kbd "<f3>")
+        (lambda ()
+          (interactive)
+          (th-toggle-file "~/.logs/payments/info.log" t)
+          (end-of-buffer)))
 
-  (define-key global-map (kbd "<f4>")
-    (lambda ()
-      (interactive)
-      (let ((content initial-scratch-message)
-            (buf "*scratch*"))
-        (when (get-buffer buf)
-          (setq content ""))
-        (switch-to-buffer buf)
-        (insert content))))
+      (define-key global-map (kbd "<f4>")
+        (lambda ()
+          (interactive)
+          (let ((content initial-scratch-message)
+                (buf "*scratch*"))
+            (when (get-buffer buf)
+              (setq content ""))
+            (switch-to-buffer buf)
+            (insert content))))
 
-  (define-key global-map (kbd "<f5>")
-    (lambda ()
-      (interactive)
-      (let ((doe t))
-        (if debug-on-error
-            (setq doe nil))
-        (setq debug-on-error doe)
-        (message "debug-on-error set to %s" doe))))
+      (define-key global-map (kbd "<f5>")
+        (lambda ()
+          (interactive)
+          (let ((doe t))
+            (if debug-on-error
+                (setq doe nil))
+            (setq debug-on-error doe)
+            (message "debug-on-error set to %s" doe))))
 
-  (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
-#+end_src
-** magit and git
-*** magit
-#+begin_src emacs-lisp
-  (require 'magit)
+      (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
+    #+end_src
 
-  (defun th-magit-status ()
-    (interactive)
-    (save-some-buffers t)
-    (magit-status))
+** Configurationless utilities
 
-  (global-set-key (kbd "C-x g") 'th-magit-status)
-  (global-set-key (kbd "M-m") 'th-magit-status)
+   These are tools that are useful just by dropping them in and not doing any
+   further configuration on them.
 
-  (setq magit-save-some-buffers 'dontask)
-  (setq magit-last-seen-setup-instructions "1.4.0")
+*** adaptive-wrap
 
-  (defadvice magit-status (around magit-fullscreen activate)
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
+    Nice little minor mode that visually aligns wrapping smarter than just in
+    the beginning of the line.
 
-  (defadvice magit-mode-bury-buffer (after magit-restore-screen activate)
-    "Restores the previous window configuration and kills the magit buffer"
-    (jump-to-register :magit-fullscreen))
+    #+begin_src emacs-lisp
+      (use-package adaptive-wrap)
+    #+end_src
 
-  (define-key magit-status-mode-map (kbd "q") 'magit-mode-bury-buffer)
-  (define-key magit-status-mode-map (kbd "M-m") 'magit-mode-bury-buffer)
-#+end_src
-*** git
-#+begin_src emacs-lisp
-  (setq git-commit-summary-max-length 79)
-#+end_src
-** Flycheck
-#+begin_src emacs-lisp
-  (require 'flycheck)
-  (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
-  (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
-  (global-set-key (kbd "C-c C-SPC")
-                  (lambda ()
-                    (interactive)
-                    (th-toggle-buffer 'flycheck-list-errors "*Flycheck errors*")))
+*** buffer-move
 
-  (with-eval-after-load 'flycheck
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-#+end_src
-** emmet
-#+begin_src emacs-lisp
-  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-  (add-hook 'emmet-mode-hook
-            (lambda ()
-              (setq emmet-indentation 2))) ;; indent 2 spaces.
-#+end_src
-** ace-jump / avy
-#+begin_src emacs-lisp
-  ;; (define-key global-map (kbd "M-n") 'avy-goto-word-1)
-  (define-key global-map (kbd "C-l") 'avy-goto-word-1)
-  ;; (define-key global-map (kbd "M-p") 'ace-window)
-#+end_src
-** Kill ring
-#+begin_src emacs-lisp
-  (define-key global-map (kbd "C-x y") 'helm-show-kill-ring)
-#+end_src
-** expand-region
-#+begin_src emacs-lisp
-  (require 'expand-region)
-  (global-set-key (kbd "M-l") 'er/expand-region)
-  (global-set-key (kbd "C-M-l") 'er/contract-region)
-#+end_src
-** multiple-cursors
-#+begin_src emacs-lisp
-  (require 'multiple-cursors)
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C-x C-l") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-x C-h") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
- #+end_src
-** neotree
-#+begin_src emacs-lisp
-  (defun neotree-toggle-windows ()
-    (interactive)
-    (neotree-toggle)
-    (balance-windows))
+    Switch places of buffers.
 
-  ;; (global-set-key (kbd "C-x M-f") 'neotree-toggle-windows)
-  (global-set-key (kbd "M-n") 'neotree-toggle-windows)
-#+end_src
-** ffap
-#+begin_src emacs-lisp
-  ;; This literally has to exist in emacs, I just can't figure out where it is.
-  (global-set-key
-   (kbd "C-x M-f")
-   (lambda ()
-     (interactive)
-     (let ((fn (ffap-file-at-point))
-           (sym (symbol-name (symbol-at-point))))
-       (if fn
-           (find-file fn)
-         (helm :sources helm-projectile-sources-list
-               :buffer "*helm projectile*"
-               :input sym
-               :prompt (projectile-prepend-project-name (if (projectile-project-p)
-                                                            "pattern: "
-                                                          "Switch to project: ")))))))
-#+end_src
-** dired
-#+begin_src emacs-lisp
-  (defun th-kill-all-dired-buffers ()
-    (interactive)
-    (mapc
-     (lambda (buffer)
-       (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
-         (kill-buffer buffer)))
-     (buffer-list)))
+    #+begin_src emacs-lisp
+      (use-package buffer-move)
+    #+end_src
 
-  (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
-#+end_src
+*** company
+
+    Completion backend. Daemon based and ridiculously fast.
+
+    #+begin_src emacs-lisp
+      (use-package company)
+    #+end_src
+
+*** diminish
+
+    Clean up the modeline by removing certain minor modes.
+
+    #+begin_src emacs-lisp
+      (use-package diminish)
+    #+end_src
+
+*** fill-column-indicator
+
+    Show a line at the end where the =wrap-column= ends.
+
+    #+begin_src emacs-lisp
+      (use-package fill-column-indicator)
+    #+end_src
+
+*** paradox
+
+    Nicer list of packages. Supports upgrading and giving stars to github
+    repositories.
+
+    #+begin_src emacs-lisp
+      (use-package paradox)
+    #+end_src
+
+*** paredit
+
+    Powerful lisp editing. Comes with emacs, but updating it is nice.
+
+    #+begin_src emacs-lisp
+      (use-package paredit)
+    #+end_src
+
+*** restclient
+
+    Nifty package that lets you make requests towards a REST sources and
+    displays pretty versions of the
+
+    #+begin_src emacs-lisp
+      (use-package restclient)
+    #+end_src
+
+*** transpose-frame
+
+    Move from vertically split to horizontally split frames.
+
+    #+begin_src emacs-lisp
+      (use-package transpose-frame)
+    #+end_src
+
+*** wrap-region
+
+    Actually this one needs config and shouldn't be here...
+
+    #+begin_src emacs-lisp
+      (use-package wrap-region)
+    #+end_src
+
+*** xkcd
+
+    View xkcd strips inside of emacs!
+
+    #+begin_src emacs-lisp
+      (use-package xkcd)
+    #+end_src
+
 ** Context aware execution
+
    Exeucte different things depending on what's under point.
+
    #+begin_src emacs-lisp
      (defun context-execute ()
        "Context aware execution of what's under point"
@@ -1621,43 +1720,388 @@ C-x ?: Print current file name relative to project root
      (global-set-key (kbd "M-RET") 'context-execute)
      (global-set-key (kbd "C-x RET") 'context-execute)
    #+end_src
-** move-text
-#+begin_src emacs-lisp
-  (defun move-line-up ()
-    (interactive)
-    (transpose-lines 1)
-    (forward-line -2)
-    (indent-for-tab-command))
 
-  (defun move-line-down ()
-    (interactive)
-    (forward-line 1)
-    (transpose-lines 1)
-    (forward-line -1)
-    (indent-for-tab-command))
+** dired
 
-  (global-set-key [M-up] 'move-line-up)
-  (global-set-key [M-down] 'move-line-down)
-#+end_src
+   =dired= seems pretty dated at first, but it's actually quite nice!
+
+   #+begin_src emacs-lisp
+     (require 'dired)
+
+     (defun th-kill-all-dired-buffers ()
+       (interactive)
+       (mapc
+        (lambda (buffer)
+          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
+            (kill-buffer buffer)))
+        (buffer-list)))
+
+     (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
+   #+end_src
+
+** emmet
+
+   =emmet= provides expansion on HTML, so you can write CSS-like strings in
+   your HTML files and then do =C-j= and it will expand it out to the full
+   tags. Very useful!
+
+   #+begin_src emacs-lisp
+     (use-package emmet-mode
+       :init
+       (setq emmet-indentation 2)
+
+       :config
+       (add-hook 'sgml-mode-hook 'emmet-mode)   ;; Auto-start on any markup modes
+       (add-hook 'css-mode-hook  'emmet-mode))  ;; Enable Emmet's css abbreviation.
+
+     (use-package helm-emmet)
+   #+end_src
+
+** expand-region
+
+   Classic plugin by magnars that manipulates the region based on known
+   delimiters.
+
+   #+begin_src emacs-lisp
+     (use-package expand-region
+       :bind
+       ("M-l"   . er/expand-region)
+       ("C-M-l" . er/contract-region))
+   #+end_src
+
+** ffap
+
+   This is an extended version of =ffap= that will try to find the file at
+   point and bring up a preconfigured helm session if nothing can be found.
+
+   #+begin_src emacs-lisp
+     ;; This literally has to exist in emacs, I just can't figure out where it is.
+     (global-set-key
+      (kbd "C-x M-f")
+      (lambda ()
+        (interactive)
+        (let ((fn (ffap-file-at-point))
+              (sym (symbol-name (symbol-at-point))))
+          (if fn
+              (find-file fn)
+            (helm :sources helm-projectile-sources-list
+                  :buffer "*helm projectile*"
+                  :input sym
+                  :prompt (projectile-prepend-project-name (if (projectile-project-p)
+                                                               "pattern: "
+                                                             "Switch to project: ")))))))
+   #+end_src
+
+** flycheck
+
+   Error checking and linting done right! Comes pre-packaged for most modes!
+
+   #+begin_src emacs-lisp
+     (use-package flycheck
+       :bind
+       ("C-x C-n" . flycheck-next-error)
+       ("C-x C-p" . flycheck-previous-error)
+
+       :config
+       (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+   #+end_src
+
+** git and magit
+*** git
+
+    Default packages that make git usage pleasant with emacs.
+
+    #+begin_src emacs-lisp
+      (use-package gitconfig-mode)
+      (use-package gitignore-mode)
+      (use-package git-commit
+        :init
+        (setq git-commit-summary-max-length 79))
+
+      ;; Move back and forth between commits <3
+      (use-package git-timemachine)
+
+      ;; List and edit gists on github.com <3
+      (use-package gist)
+    #+end_src
+
+*** magit
+
+    ~magit~ is by far the best git interface ever conceived.
+    This setup makes sure that the magit buffers are spawned fullscreen and
+    that the previous screen layout is restored when it is buried.
+
+    #+begin_src emacs-lisp
+      (use-package magit
+        :bind (("C-x g" . th-magit-status)
+               :map magit-status-mode-map
+               ("q"   . magit-mode-bury-buffer))
+
+        :init
+        (defun th-magit-status ()
+          (interactive)
+          (save-some-buffers t)
+          (magit-status))
+
+        (setq magit-save-some-buffers 'dontask)
+        (setq magit-last-seen-setup-instructions "1.4.0")
+
+        (defadvice magit-status (around magit-fullscreen activate)
+          (window-configuration-to-register :magit-fullscreen)
+          ad-do-it
+          (delete-other-windows))
+
+        (defadvice magit-mode-bury-buffer (after magit-restore-screen activate)
+          "Restores the previous window configuration and kills the magit buffer"
+          (jump-to-register :magit-fullscreen)))
+    #+end_src
+
 ** Minor mode switching
-#+begin_src emacs-lisp
-  (defhydra th-modeswitch ()
-    "Switching minor modes"
-    ("a" auto-fill-mode "Auto fill")
-    ("f" fci-mode "Fill column")
-    ("M-f" auto-revert-tail-mode "Revert tail (follow)")
-    ("h" highlight-symbol-mode "Highlight symbol")
-    ("l" linum-mode "Line numbers")
-    ("r" rainbow-identifiers-mode "Rainbow identifiers")
-    ("t" toggle-truncate-lines "Truncate lines"))
-  (global-set-key (kbd "C-x c") 'th-modeswitch/body)
-#+end_src
+
+   There are some minor modes that you might want to have enabled every now
+   and again. This provides a nice hydra that lets you do many of them real
+   quick.
+
+   #+begin_src emacs-lisp
+     (defhydra th-modeswitch ()
+       "Switching minor modes"
+       ("a" auto-fill-mode "Auto fill")
+       ("f" fci-mode "Fill column")
+       ("M-f" auto-revert-tail-mode "Revert tail (follow)")
+       ("h" highlight-symbol-mode "Highlight symbol")
+       ("l" linum-mode "Line numbers")
+       ("r" rainbow-identifiers-mode "Rainbow identifiers")
+       ("t" toggle-truncate-lines "Truncate lines"))
+
+     (global-set-key (kbd "C-x c") 'th-modeswitch/body)
+   #+end_src
+
+** move-text
+
+   Moving lines up and down. Also tries to indent according to where it lands
+
+   #+begin_src emacs-lisp
+     (defun move-line-up ()
+       (interactive)
+       (transpose-lines 1)
+       (forward-line -2)
+       (indent-for-tab-command))
+
+     (defun move-line-down ()
+       (interactive)
+       (forward-line 1)
+       (transpose-lines 1)
+       (forward-line -1)
+       (indent-for-tab-command))
+
+     (global-set-key [M-up] 'move-line-up)
+     (global-set-key [M-down] 'move-line-down)
+   #+end_src
+
+** multiple-cursors
+
+   Quickfast editing of multiple places at once.
+
+   #+begin_src emacs-lisp
+     (use-package multiple-cursors
+       :bind
+       ("C-x C-l" . mc/mark-next-like-this)
+       ("C-x C-h" . mc/mark-previous-like-this))
+   #+end_src
+
+** Rainbows <3
+
+   The rainbow modes bring nice colors to your code:
+
+   * =rainbow-mode= colorizes strings like ~red~ and ~#405060~.
+   * =rainbow-delimiters= colorizes parenthesis, brackets and other delimiters.
+   * =rainbow-identifiers= colorizes variables in different colors.
+
+   #+begin_src emacs-lisp
+     (use-package rainbow-mode)
+     (use-package rainbow-delimiters)
+     (use-package rainbow-identifiers)
+   #+end_src
+
+** visual-regexp-steroids
+
+   Nice little mode to get a better search/replace experience.
+
+   #+begin_src emacs-lisp
+     (use-package visual-regexp-steroids
+       :bind
+       ("C-r" . vr/replace))
+   #+end_src
+
 * Setup and options
+** Aborting and stopping
+
+   Every once in a blue moon, you actually want out of emacs...
+
+   #+begin_src emacs-lisp
+     ;; The default isn't that great actually.
+     (global-unset-key (kbd "C-x C-c"))
+
+     ;; Hard to accidentally do, but still easy to hit.
+     (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
+   #+end_src
+
+** Backups
+
+   Backups are disabled. Never had use for them, and the default settings are
+   pretty littering.
+
+   #+begin_src emacs-lisp
+     (defvar --backup-directory (concat user-emacs-directory "backups"))
+
+     (if (not (file-exists-p --backup-directory))
+         (make-directory --backup-directory t))
+
+     (setq backup-directory-alist `(("." . ,--backup-directory)))
+
+     (setq make-backup-files nil      ; backup of a file the first time it is saved.
+           backup-by-copying t        ; don't clobber symlinks
+           version-control nil        ; version numbers for backup files
+           delete-old-versions t      ; delete excess backup files silently
+           delete-by-moving-to-trash nil
+           kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
+           kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
+           auto-save-default nil      ; auto-save every buffer that visits a file
+           auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
+           auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
+           )
+   #+end_src
+
+** Browser setup
+
+   This uses the `www` command from the dotfiles repo and puts browser
+   configuration outside of emacs.
+
+   #+begin_src emacs-lisp
+     (setq browse-url-browser-function 'browse-url-generic
+           browse-url-generic-program "www")
+   #+end_src
+
+** Clean mode line
+
+   This tries to clean up the modeline as much as possible. I'm honestly not
+   sure if it is still needed, but hey.
+
+   Nicely borrowed from a [[http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/][Mastering Emacs]] blog post.
+
+   #+begin_src emacs-lisp
+     (defvar mode-line-cleaner-alist
+       `((paredit-mode . "()")
+         (eldoc-mode . "")
+         (abbrev-mode . "")
+         (auto-fill-mode "")
+         (helm-mode "")
+         (magit-auto-revert-mode "")
+         (auto-revert-mode "")
+         (yas-minor-mode "")
+         (undo-tree-mode "")
+
+         ;; Major modes
+         (js2-mode "js2")
+         (javascript-mode "js")
+         (help-mode . "")
+         (fundamental-mode . "0")
+         (python-mode . "py")
+         (emacs-lisp-mode . "el")))
+
+     (defun clean-mode-line ()
+       (interactive)
+       (cl-loop for cleaner in mode-line-cleaner-alist
+                do (let* ((mode (car cleaner))
+                          (mode-str (cdr cleaner))
+                          (old-mode-str (cdr (assq mode minor-mode-alist))))
+                     (when old-mode-str
+                       (setcar old-mode-str mode-str))
+                     ;; major mode
+                     (when (eq mode major-mode)
+                       (setq mode-name mode-str)))))
+
+     (add-hook 'after-change-major-mode-hook 'clean-mode-line)
+   #+end_src
+
+** eshell
+
+   eshell is nice and I am getting into the habit of using it! This defines a
+   nice function that lets you drop into a shell in the directory where the
+   current buffer is visiting a file.
+
+   #+begin_src emacs-lisp
+     (defun eshell-here ()
+       "Opens up a new shell in the directory associated with the
+     current buffer's file. The eshell is renamed to match that
+     directory to make multiple eshell windows easier."
+       (interactive)
+       (let* ((parent (if (buffer-file-name)
+                          (file-name-directory (buffer-file-name))
+                        default-directory))
+              (height (/ (window-total-height) 3))
+              (name   (car (last (split-string parent "/" t)))))
+         (split-window-vertically (- height))
+         (other-window 1)
+         (eshell "new")
+         (rename-buffer (concat "*eshell: " name "*"))
+
+         (insert (concat "ls"))
+         (eshell-send-input)))
+
+     (global-set-key (kbd "C-x e") 'eshell-here)
+
+     (defun eshell/x ()
+       (insert "exit")
+       (eshell-send-input)
+       (delete-window))
+
+     (setenv "PAGER" "cat")
+     (defalias 'e 'find-file)
+   #+end_src
+
+** Linum
+
+   This sets up =linum=, but only for programming buffers. =org= gets super
+   sad by line numbers for some reason.
+
+   #+begin_src emacs-lisp
+     (global-linum-mode 0)
+     (setq linum-format " %4d ")
+
+     (defun th-linum-filter ()
+       "Only have line numbers when programming"
+       (if (derived-mode-p 'prog-mode)
+           (linum-mode 1)))
+
+     (add-hook 'find-file-hook 'th-linum-filter)
+   #+end_src
+
+** Minibuffer
+
+   Pasting into the minibuffer. Inspired by a [[http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html][blog post]] found some time ago.
+
+   #+begin_src emacs-lisp
+     (defun th-paste-from-x-clipboard ()
+       (interactive)
+       (shell-command "echo $(xsel -o)" 1))
+
+     (defun th-paste-in-minibuffer ()
+       (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
+       (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
+
+     (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
+   #+end_src
+
 ** Options and settings
 #+begin_src emacs-lisp
   (require 's)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indicate-empty-lines t)
+
+
+     (fringe-mode 12)
+     (setq scroll-step 10)
 
   (setq debug-on-error nil)
 
@@ -1735,279 +2179,188 @@ C-x ?: Print current file name relative to project root
   (auto-save-mode -1)
   (fci-mode 1)
 #+end_src
-** Browser setup
-This uses the `www` command from the dotfiles repo and puts browser
-configuration outside of emacs.
-#+begin_src emacs-lisp
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "www")
-#+end_src
-** Backups
-#+begin_src emacs-lisp
-  (defvar --backup-directory (concat user-emacs-directory "backups"))
-  (if (not (file-exists-p --backup-directory))
-          (make-directory --backup-directory t))
-  (setq backup-directory-alist `(("." . ,--backup-directory)))
-  (setq make-backup-files nil      ; backup of a file the first time it is saved.
-        backup-by-copying t        ; don't clobber symlinks
-        version-control nil        ; version numbers for backup files
-        delete-old-versions t      ; delete excess backup files silently
-        delete-by-moving-to-trash nil
-        kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
-        kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
-        auto-save-default nil      ; auto-save every buffer that visits a file
-        auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
-        auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
-        )
-#+end_src
-** Window management
-#+begin_src emacs-lisp
-  ;; Try to make emax split vertically when possible
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 0)
-#+end_src
-*** Emacs-like
-#+begin_src emacs-lisp
-  (define-key global-map (kbd "C-x 2")
-    (lambda ()
-      (interactive)
-      (split-window-vertically)
-      (balance-windows)
-      (windmove-down)))
-
-  (define-key global-map (kbd "C-x 3")
-    (lambda ()
-      (interactive)
-      (split-window-horizontally)
-      (balance-windows)
-      (windmove-right)))
-
-#+end_src
-*** vim-like
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x h") 'windmove-left)
-  (global-set-key (kbd "C-x j") 'windmove-down)
-  (global-set-key (kbd "C-x k") 'windmove-up)
-  (global-set-key (kbd "C-x l") 'windmove-right)
-
-  (defun th-kill-window ()
-    "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
-    (interactive)
-    (if (and (one-window-p) (server-running-p))
-        (progn
-          (save-buffer)
-          (delete-frame))
-      (progn
-        (delete-window)
-        (save-excursion
-          (balance-windows)))))
-
-  (global-set-key (kbd "C-q") 'th-kill-window)
-#+end_src
-** Linum
-#+begin_src emacs-lisp
-  (global-linum-mode 0)
-  (setq linum-format " %4d ")
-
-  (defun th-linum-filter ()
-    "Only have line numbers when programming"
-    (if (derived-mode-p 'prog-mode)
-      (linum-mode 1)))
-
-  (add-hook 'find-file-hook 'th-linum-filter)
-
-  (fringe-mode 12)
-  (setq scroll-step 10)
-#+end_src
-** Clean mode line
-#+begin_src emacs-lisp
-  ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
-  (defvar mode-line-cleaner-alist
-    `((paredit-mode . " ()")
-      (eldoc-mode . "")
-      (abbrev-mode . "")
-      (auto-fill-mode "af")
-      (helm-mode "")
-      (magit-auto-revert-mode "")
-      (auto-revert-mode "")
-      (yas-minor-mode "")
-      (undo-tree-mode "")
-
-      ;; Major modes
-      (js2-mode "js2")
-      (javascript-mode "js")
-      (help-mode . "")
-      (fundamental-mode . "0")
-      (python-mode . "Py")
-      (emacs-lisp-mode . "El")))
-
-  (defun clean-mode-line ()
-    (interactive)
-    (cl-loop for cleaner in mode-line-cleaner-alist
-          do (let* ((mode (car cleaner))
-                   (mode-str (cdr cleaner))
-                   (old-mode-str (cdr (assq mode minor-mode-alist))))
-               (when old-mode-str
-                   (setcar old-mode-str mode-str))
-                 ;; major mode
-               (when (eq mode major-mode)
-                 (setq mode-name mode-str)))))
-
-  (add-hook 'after-change-major-mode-hook 'clean-mode-line)
-#+end_src
 ** Powerline
-#+begin_src emacs-lisp
-  ;; All of the contents borrowed from howardabrams/dot-files/emacs-mode-line.org
 
-  (custom-set-faces
-   '(mode-line-buffer-id ((t (:foreground "#000000" :bold t))))
-   '(which-func ((t (:foreground "#77aaff"))))
-   '(mode-line ((t (:foreground "#000000" :background "#dddddd" :box nil))))
-   '(mode-line-inactive ((t (:foreground "#caaaca" :background "#eeeeee" :box nil)))))
+   All of the contents borrowed from howardabrams/dot-files/emacs-mode-line.org
 
-  (defun powerline-simpler-vc-mode (s)
-    (if s
-        (replace-regexp-in-string "Git[:-]" "" s)
-      s))
+   #+begin_src emacs-lisp
+     ;; (custom-set-faces
+     ;;  '(mode-line-buffer-id ((t (:foreground "#000000" :bold t))))
+     ;;  '(which-func ((t (:foreground "#77aaff"))))
+     ;;  '(mode-line ((t (:foreground "#000000" :background "#dddddd" :box nil))))
+     ;;  '(mode-line-inactive ((t (:foreground "#caaaca" :background "#eeeeee" :box nil)))))
 
-  (defun powerline-simpler-minor-display (s)
-      (replace-regexp-in-string
-       (concat " " (mapconcat 'identity '("񓵸" "Projectile" "Fill" "BufFace") "\\|")) "" s))
+     (defun powerline-simpler-vc-mode (s)
+       (if s
+           (replace-regexp-in-string "Git[:-]" "" s)
+         s))
 
-  (defun powerline-ha-theme ()
-    "A powerline theme that removes many minor-modes that don't serve much purpose on the mode-line."
-    (interactive)
-    (setq-default mode-line-format
-                  '("%e"
-                    (:eval
-                     (let*
-                         ((active
-                           (powerline-selected-window-active))
-                          (mode-line
-                           (if active 'mode-line 'mode-line-inactive))
-                          (face1
-                           (if active 'powerline-active1 'powerline-inactive1))
-                          (face2
-                           (if active 'powerline-active2 'powerline-inactive2))
-                          (separator-left
-                           (intern
-                            (format "powerline-%s-%s" powerline-default-separator
-                                    (car powerline-default-separator-dir))))
-                          (separator-right
-                           (intern
-                            (format "powerline-%s-%s" powerline-default-separator
-                                    (cdr powerline-default-separator-dir))))
-                          (lhs
-                           (list
-                            (powerline-raw "%*" nil 'l)
-                            ;; (powerline-buffer-size nil 'l)
-                            (powerline-buffer-id nil 'l)
-                            (powerline-raw " ")
-                            (funcall separator-left mode-line face1)
-                            (powerline-narrow face1 'l)
-                            (powerline-simpler-vc-mode (powerline-vc face1))))
-                          (rhs
-                           (list
-                            (powerline-raw mode-line-misc-info face1 'r)
-                            (powerline-raw "%4l" face1 'r)
-                            (powerline-raw ":" face1)
-                            (powerline-raw "%3c" face1 'r)
-                            (funcall separator-right face1 mode-line)
-                            (powerline-raw " ")
-                            (powerline-raw "%6p" nil 'r)
-                            (powerline-hud face2 face1)))
-                          (center
-                           (list
-                            (powerline-raw " " face1)
-                            (funcall separator-left face1 face2)
-                            (when
-                                (boundp 'erc-modified-channels-object)
-                              (powerline-raw erc-modified-channels-object face2 'l))
-                            (powerline-major-mode face2 'l)
-                            (powerline-process face2)
-                            (powerline-raw " :" face2)
+     (defun powerline-simpler-minor-display (s)
+       (replace-regexp-in-string
+        (concat " " (mapconcat 'identity '("񓵸" "Projectile" "Fill" "BufFace") "\\|")) "" s))
 
-                            (powerline-simpler-minor-display
-                             (powerline-minor-modes face2 'l))
+     (defun powerline-ha-theme ()
+       "A powerline theme that removes many minor-modes that don't serve much purpose on the mode-line."
+       (interactive)
+       (setq-default mode-line-format
+                     '("%e"
+                       (:eval
+                        (let*
+                            ((active
+                              (powerline-selected-window-active))
+                             (mode-line
+                              (if active 'mode-line 'mode-line-inactive))
+                             (face1
+                              (if active 'powerline-active1 'powerline-inactive1))
+                             (face2
+                              (if active 'powerline-active2 'powerline-inactive2))
+                             (separator-left
+                              (intern
+                               (format "powerline-%s-%s" powerline-default-separator
+                                       (car powerline-default-separator-dir))))
+                             (separator-right
+                              (intern
+                               (format "powerline-%s-%s" powerline-default-separator
+                                       (cdr powerline-default-separator-dir))))
+                             (lhs
+                              (list
+                               (powerline-raw "%*" nil 'l)
+                               ;; (powerline-buffer-size nil 'l)
+                               (powerline-buffer-id nil 'l)
+                               (powerline-raw " ")
+                               (funcall separator-left mode-line face1)
+                               (powerline-narrow face1 'l)
+                               (powerline-simpler-vc-mode (powerline-vc face1))))
+                             (rhs
+                              (list
+                               (powerline-raw mode-line-misc-info face1 'r)
+                               (powerline-raw "%4l" face1 'r)
+                               (powerline-raw ":" face1)
+                               (powerline-raw "%3c" face1 'r)
+                               (funcall separator-right face1 mode-line)
+                               (powerline-raw " ")
+                               (powerline-raw "%6p" nil 'r)
+                               (powerline-hud face2 face1)))
+                             (center
+                              (list
+                               (powerline-raw " " face1)
+                               (funcall separator-left face1 face2)
+                               (when
+                                   (boundp 'erc-modified-channels-object)
+                                 (powerline-raw erc-modified-channels-object face2 'l))
+                               (powerline-major-mode face2 'l)
+                               (powerline-process face2)
+                               (powerline-raw " :" face2)
 
-                            (powerline-raw " " face2)
-                            (funcall separator-right face2 face1))))
-                       (concat
-                        (powerline-render lhs)
-                        (powerline-fill-center face1
-                                               (/
-                                                (powerline-width center)
-                                                2.0))
-                        (powerline-render center)
-                        (powerline-fill face1
-                                        (powerline-width rhs))
-                        (powerline-render rhs)))))))
+                               (powerline-simpler-minor-display
+                                (powerline-minor-modes face2 'l))
 
-  (powerline-ha-theme)
-#+end_src
-** Aborting and stopping
-#+begin_src emacs-lisp
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-unset-key (kbd "C-x C-c"))
-  (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
-#+end_src
+                               (powerline-raw " " face2)
+                               (funcall separator-right face2 face1))))
+                          (concat
+                           (powerline-render lhs)
+                           (powerline-fill-center face1
+                                                  (/
+                                                   (powerline-width center)
+                                                   2.0))
+                           (powerline-render center)
+                           (powerline-fill face1
+                                           (powerline-width rhs))
+                           (powerline-render rhs)))))))
+
+     (powerline-ha-theme)
+   #+end_src
+
 ** uniquify
-#+begin_src emacs-lisp
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward)
-#+end_src
-** Minibuffer
-#+begin_src emacs-lisp
-  ;; http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html
-  (defun th-paste-from-x-clipboard ()
-    (interactive)
-    (shell-command "echo $(xsel -o)" 1))
 
+   emacs has this interesting habit of wanting to make new buffers every time
+   you visit a new file. This is silly, and this plugin fixes that.
 
+   #+begin_src emacs-lisp
+     (require 'uniquify)
+     (setq uniquify-buffer-name-style 'forward)
+   #+end_src
 
-  (defun th-paste-in-minibuffer ()
-    (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
-    (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
+** Window management
 
-  (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
-#+end_src
-** eshell
-#+begin_src emacs-lisp
-  (defun eshell-here ()
-    "Opens up a new shell in the directory associated with the
-  current buffer's file. The eshell is renamed to match that
-  directory to make multiple eshell windows easier."
-    (interactive)
-    (let* ((parent (if (buffer-file-name)
-                       (file-name-directory (buffer-file-name))
-                     default-directory))
-           (height (/ (window-total-height) 3))
-           (name   (car (last (split-string parent "/" t)))))
-      (split-window-vertically (- height))
-      (other-window 1)
-      (eshell "new")
-      (rename-buffer (concat "*eshell: " name "*"))
+   Sets up quicker window management bindings.
 
-      (insert (concat "ls"))
-      (eshell-send-input)))
+   #+begin_src emacs-lisp
+     ;; Try to make emax split vertically when possible
+     (setq split-height-threshold nil)
+     (setq split-width-threshold 0)
+   #+end_src
 
-  (global-set-key (kbd "C-x e") 'eshell-here)
+*** Emacs-like
 
-  (defun eshell/x ()
-    (insert "exit")
-    (eshell-send-input)
-    (delete-window))
+    These do the same as the normal emacs bindings, but they also balance the
+    windows after splitting, and it moves to the newly created window. I hate
+    to admit it, but this is a behavior I got from vim, and it stuck.
 
-  (setenv "PAGER" "cat")
-  (defalias 'e 'find-file)
-#+end_src
-** Spotify
+    #+begin_src emacs-lisp
+      (define-key global-map (kbd "C-x 2")
+        (lambda ()
+          (interactive)
+          (split-window-vertically)
+          (balance-windows)
+          (windmove-down)))
 
-#+begin_src emacs-lisp
-  ;; work-specific things that are in other repositories because secrets.
-  (require 'f)
-  (let ((work-path "~/git/payments-elisp/"))
-    (when (f-dir? work-path)
-      (add-to-list 'load-path work-path)
-      (require 'payments)))
-#+end_src
+      (define-key global-map (kbd "C-x 3")
+        (lambda ()
+          (interactive)
+          (split-window-horizontally)
+          (balance-windows)
+          (windmove-right)))
+
+    #+end_src
+
+*** vim-like
+
+    The window movement commands in emacs never really suited me. The old
+    school vim ones work pretty well though.
+
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-x h") 'windmove-left)
+      (global-set-key (kbd "C-x j") 'windmove-down)
+      (global-set-key (kbd "C-x k") 'windmove-up)
+      (global-set-key (kbd "C-x l") 'windmove-right)
+
+      (defun th-kill-window ()
+        "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
+        (interactive)
+        (if (and (one-window-p) (server-running-p))
+            (progn
+              (save-buffer)
+              (delete-frame))
+          (progn
+            (delete-window)
+            (save-excursion
+              (balance-windows)))))
+
+      (global-set-key (kbd "C-q") 'th-kill-window)
+    #+end_src
+
+* Work
+
+  Work-specific things that are in other repositories because secrets.
+
+  #+begin_src emacs-lisp
+    (require 'f)
+    (let ((work-path "~/git/payments-elisp/"))
+      (when (f-dir? work-path)
+        (add-to-list 'load-path work-path)
+        (require 'payments)))
+  #+end_src
+
+* Theme fixes
+
+  Because of how emacs loads things, some of the fixes need to be applied
+  really late. Like, linum has not been loaded when the theme loading
+  happens. As such, we place it here.
+
+  #+begin_src emacs-lisp
+    (th-fix-darktooth)
+  #+end_src
+
+If only I was not one of those so very fond of tinkering and dotfiling, I
+might've actually gotten things done. That would have been something, right?
