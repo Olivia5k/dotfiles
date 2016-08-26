@@ -3,16 +3,11 @@
 #+EMAIL: lowe.thiderman@gmail.com
 #+CREDIT: Howard Abrams <howard.abrams@gmail.com> (github.com/howardabrams/dot-files)
 
-* Introduction
-
-  This is my emax setup. It's a constant work in progress. The current setup
-  is like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an elisp
-  file that is compiled upon startup. org-mode was chose since it helps
-  organize the file, gives nice folding, and sets up for writing inline
-  documentation.
-
-  If only I was not one of those so very fond of tinkering and dotfiling, I
-  might've actually gotten things done. That would have been something, right?
+This is my emacs setup, and it's a constant work in progress. The current
+setup is like this, as an [[https://orgmode.org][org-mode]] plain text file that compiles down to an
+elisp file that is executed upon startup. org-mode was chosen since it helps
+organize the file, gives nice folding, and sets up for writing inline
+documentation in a style similar to literate programming.
 
 * Common Lisp
 
@@ -2366,3 +2361,6 @@
   #+begin_src emacs-lisp
     (th-fix-darktooth)
   #+end_src
+
+If only I was not one of those so very fond of tinkering and dotfiling, I
+might've actually gotten things done. That would have been something, right?
