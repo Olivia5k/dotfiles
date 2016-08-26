@@ -81,7 +81,6 @@ Defines the packages to be installed.
       company
       diminish
       fill-column-indicator
-      flycheck
       paradox
       paredit
       popwin
@@ -1613,17 +1612,14 @@ C-x ?: Print current file name relative to project root
                                                             "pattern: "
                                                           "Switch to project: ")))))))
 #+end_src
-** Flycheck
+** flycheck
 #+begin_src emacs-lisp
-  (require 'flycheck)
-  (global-set-key (kbd "C-x C-n") 'flycheck-next-error)
-  (global-set-key (kbd "C-x C-p") 'flycheck-previous-error)
-  (global-set-key (kbd "C-c C-SPC")
-                  (lambda ()
-                    (interactive)
-                    (th-toggle-buffer 'flycheck-list-errors "*Flycheck errors*")))
+  (use-package flycheck
+    :bind
+    ("C-x C-n" . flycheck-next-error)
+    ("C-x C-p" . flycheck-previous-error)
 
-  (with-eval-after-load 'flycheck
+    :config
     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 #+end_src
 ** git and magit
