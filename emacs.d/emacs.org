@@ -1564,6 +1564,8 @@ C-x ?: Print current file name relative to project root
    #+end_src
 ** dired
 #+begin_src emacs-lisp
+  (require 'dired)
+
   (defun th-kill-all-dired-buffers ()
     (interactive)
     (mapc
