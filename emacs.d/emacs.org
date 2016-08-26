@@ -1151,10 +1151,11 @@ Does anyone even like custom? I find it incredibly annoying.
 
     #+begin_src emacs-lisp
       (use-package org
-        :bind (("M-i"   . helm-imenu)
-               ("C-c ;" . org-edit-special)
+        :bind (:map org-mode-map
+                    ("M-i"   . helm-imenu)
+                    ("C-c ;" . org-edit-special)
                :map org-src-mode-map
-               ("C-c ;" . org-edit-src-exit))
+                    ("C-c ;" . org-edit-src-exit))
 
         :init
         (setq
