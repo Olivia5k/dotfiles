@@ -81,7 +81,6 @@ Defines the packages to be installed.
       company
       diminish
       emmet
-      expand-region
       fill-column-indicator
       flycheck
       multiple-cursors
@@ -1587,9 +1586,10 @@ C-x ?: Print current file name relative to project root
 #+end_src
 ** expand-region
 #+begin_src emacs-lisp
-  (require 'expand-region)
-  (global-set-key (kbd "M-l") 'er/expand-region)
-  (global-set-key (kbd "C-M-l") 'er/contract-region)
+  (use-package expand-region
+    :bind
+    ("M-l"   . er/expand-region)
+    ("C-M-l" . er/contract-region))
 #+end_src
 ** ffap
 #+begin_src emacs-lisp
