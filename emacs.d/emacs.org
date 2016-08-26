@@ -80,7 +80,6 @@ Defines the packages to be installed.
       buffer-move
       company
       diminish
-      emmet
       fill-column-indicator
       flycheck
       multiple-cursors
@@ -1578,11 +1577,15 @@ C-x ?: Print current file name relative to project root
 #+end_src
 ** emmet
 #+begin_src emacs-lisp
-  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-  (add-hook 'emmet-mode-hook
-            (lambda ()
-              (setq emmet-indentation 2))) ;; indent 2 spaces.
+  (use-package emmet-mode
+    :init
+    (setq emmet-indentation 2)
+
+    :config
+    (add-hook 'sgml-mode-hook 'emmet-mode)   ;; Auto-start on any markup modes
+    (add-hook 'css-mode-hook  'emmet-mode))  ;; Enable Emmet's css abbreviation.
+
+  (use-package helm-emmet)
 #+end_src
 ** expand-region
 #+begin_src emacs-lisp
