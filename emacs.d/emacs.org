@@ -83,7 +83,6 @@ Defines the packages to be installed.
       fill-column-indicator
       paradox
       paredit
-      popwin
       restclient-mode
       transpose-frame
       wrap-region
@@ -274,11 +273,14 @@ Defines the packages to be installed.
 
 ** popwin
 #+begin_src emacs-lisp
-  (require 'popwin)
-  (popwin-mode 1)
+  (use-package popwin
+    :bind
+    ("C-x C-k" . popwin:close-popup-window)
 
-  (global-set-key (kbd "C-x p") popwin:keymap)
-  (global-set-key (kbd "C-x C-k") 'popwin:close-popup-window)
+    :config
+    (popwin-mode 1)
+    ;; It was apparently tricky to make use-package map to what's just a keymap
+    (global-set-key (kbd "C-x p") popwin:keymap))
 #+end_src
 ** projectile
 #+begin_src emacs-lisp
