@@ -89,7 +89,6 @@ Defines the packages to be installed.
       undo-tree
       wrap-region
       xkcd
-      yasnippet
       )
     "A list of packages to be installed at launch.")
 #+end_src
@@ -491,13 +490,12 @@ Defines the packages to be installed.
 #+end_src
 ** yas
 #+begin_src emacs-lisp
-  (require 'yasnippet)
-
-  ;; Without this, it doesn't load...
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'markdown-mode 'yas-minor-mode)
-  (add-hook 'org-mode-hook 'yas-minor-mode)
+  (use-package yasnippet
+    :config
+    (yas-reload-all) ;; Without this, it doesn't load...
+    (add-hook 'prog-mode-hook 'yas-minor-mode)
+    (add-hook 'markdown-mode 'yas-minor-mode)
+    (add-hook 'org-mode-hook 'yas-minor-mode))
 #+end_src
 * Major modes
 ** elisp
