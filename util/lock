@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 image=/tmp/screen.png
+doge=/home/thiderman/git/dotfiles/img/doge.png
 
 # Grab a screenshot
 scrot $image
@@ -9,7 +10,7 @@ scrot $image
 convert $image -modulate 100,33,100 -scale 10% -scale 1000% $image
 
 # If an argument was given, superimpose that image
-[[ -f $1 ]] && convert $image $1 -gravity SouthEast -composite -matte $image
+[[ -f $doge ]] && convert $image $doge -gravity SouthEast -composite -matte $image
 
 # Lock and clean up
 i3lock -i $image -f
