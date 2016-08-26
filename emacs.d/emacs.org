@@ -77,7 +77,6 @@ Defines the packages to be installed.
   (defvar elpa-packages
     '(
       adaptive-wrap
-      browse-kill-ring
       buffer-move
       company
       diminish
@@ -85,8 +84,6 @@ Defines the packages to be installed.
       expand-region
       fill-column-indicator
       flycheck
-      fringe-helper
-      js2-mode
       multiple-cursors
       paradox
       paredit
