@@ -87,7 +87,6 @@ Defines the packages to be installed.
       restclient-mode
       transpose-frame
       undo-tree
-      visual-regexp-steroids
       wrap-region
       xkcd
       yasnippet
@@ -354,8 +353,6 @@ Defines the packages to be installed.
 #+end_src
 ** Default keys
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-g") 'helm-swoop)
-  (global-set-key (kbd "C-r") 'vr/replace)
   (global-set-key (kbd "M-j")
                   (lambda ()
                     (interactive)
@@ -1735,6 +1732,16 @@ C-x ?: Print current file name relative to project root
      (use-package rainbow-mode)
      (use-package rainbow-delimiters)
      (use-package rainbow-identifiers)
+   #+end_src
+
+** visual-regexp-steroids
+
+   Nice little mode to get a better search/replace experience.
+
+   #+begin_src emacs-lisp
+     (use-package visual-regexp-steroids
+       :bind
+       ("C-r" . vr/replace))
    #+end_src
 
 * Setup and options
