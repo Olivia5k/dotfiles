@@ -75,19 +75,7 @@ Defines the packages to be installed.
 
 #+begin_src emacs-lisp
   (defvar elpa-packages
-    '(
-      adaptive-wrap
-      buffer-move
-      company
-      diminish
-      fill-column-indicator
-      paradox
-      paredit
-      restclient-mode
-      transpose-frame
-      wrap-region
-      xkcd
-      )
+    '()
     "A list of packages to be installed at launch.")
 #+end_src
 
@@ -1525,6 +1513,103 @@ C-x ?: Print current file name relative to project root
 
   (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
 #+end_src
+
+** Configurationless utilities
+
+   These are tools that are useful just by dropping them in and not doing any
+   further configuration on them.
+
+*** adaptive-wrap
+
+    Nice little minor mode that visually aligns wrapping smarter than just in
+    the beginning of the line.
+
+    #+begin_src emacs-lisp
+      (use-package adaptive-wrap)
+    #+end_src
+
+*** buffer-move
+
+    Switch places of buffers.
+
+    #+begin_src emacs-lisp
+      (use-package buffer-move)
+    #+end_src
+
+*** company
+
+    Completion backend. Daemon based and ridiculously fast.
+
+    #+begin_src emacs-lisp
+      (use-package company)
+    #+end_src
+
+*** diminish
+
+    Clean up the modeline by removing certain minor modes.
+
+    #+begin_src emacs-lisp
+      (use-package diminish)
+    #+end_src
+
+*** fill-column-indicator
+
+    Show a line at the end where the =wrap-column= ends.
+
+    #+begin_src emacs-lisp
+      (use-package fill-column-indicator)
+    #+end_src
+
+*** paradox
+
+    Nicer list of packages. Supports upgrading and giving stars to github
+    repositories.
+
+    #+begin_src emacs-lisp
+      (use-package paradox)
+    #+end_src
+
+*** paredit
+
+    Powerful lisp editing. Comes with emacs, but updating it is nice.
+
+    #+begin_src emacs-lisp
+      (use-package paredit)
+    #+end_src
+
+*** restclient
+
+    Nifty package that lets you make requests towards a REST sources and
+    displays pretty versions of the
+
+    #+begin_src emacs-lisp
+      (use-package restclient)
+    #+end_src
+
+*** transpose-frame
+
+    Move from vertically split to horizontally split frames.
+
+    #+begin_src emacs-lisp
+      (use-package transpose-frame)
+    #+end_src
+
+*** wrap-region
+
+    Actually this one needs config and shouldn't be here...
+
+    #+begin_src emacs-lisp
+      (use-package wrap-region)
+    #+end_src
+
+*** xkcd
+
+    View xkcd strips inside of emacs!
+
+    #+begin_src emacs-lisp
+      (use-package xkcd)
+    #+end_src
+
 ** Context aware execution
    Exeucte different things depending on what's under point.
    #+begin_src emacs-lisp
