@@ -69,30 +69,6 @@ Does anyone even like custom? I find it incredibly annoying.
      (setq use-package-always-ensure t)
      (require 'use-package)
    #+end_src
-** Packages
-
-Defines the packages to be installed.
-
-#+begin_src emacs-lisp
-  (defvar elpa-packages
-    '()
-    "A list of packages to be installed at launch.")
-#+end_src
-
-** Actual package installation
-#+begin_src emacs-lisp
-  (when (not package-archive-contents)
-    (package-refresh-contents))
-
-  (dolist (pkg elpa-packages)
-    (when (and (not (package-installed-p pkg))
-             (assoc pkg package-archive-contents))
-      (package-install pkg)))
-#+end_src
-** Required packages for the configuration
-#+begin_src emacs-lisp
-  (require 's)
-#+end_src
 * Libraries
 
   These make working with emacs a bit more pleasurable and modern.
