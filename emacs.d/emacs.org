@@ -82,7 +82,6 @@ Defines the packages to be installed.
       diminish
       fill-column-indicator
       flycheck
-      multiple-cursors
       paradox
       paredit
       popwin
@@ -1710,11 +1709,10 @@ C-x ?: Print current file name relative to project root
 #+end_src
 ** multiple-cursors
 #+begin_src emacs-lisp
-  (require 'multiple-cursors)
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C-x C-l") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-x C-h") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (use-package multiple-cursors
+    :bind
+    ("C-x C-l" . mc/mark-next-like-this)
+    ("C-x C-h" . mc/mark-previous-like-this))
  #+end_src
 ** neotree
 #+begin_src emacs-lisp
