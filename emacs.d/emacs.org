@@ -86,7 +86,6 @@ Defines the packages to be installed.
       popwin
       restclient-mode
       transpose-frame
-      undo-tree
       wrap-region
       xkcd
       )
@@ -483,10 +482,15 @@ Defines the packages to be installed.
 #+end_src
 ** undo tree
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-x C-z") 'undo-tree-undo)
-  (global-set-key (kbd "C-M-z") 'undo-tree-redo)
-  (global-undo-tree-mode +1)
+  (use-package undo-tree
+    :bind
+    (("C-z"     . undo-tree-undo)
+     ("C-x C-z" . undo-tree-undo)
+     ("C-M-z"   . undo-tree-redo)
+     ("C-x u"   . undo-tree-visualize))
+
+    :config
+    (global-undo-tree-mode +1))
 #+end_src
 ** yas
 #+begin_src emacs-lisp
