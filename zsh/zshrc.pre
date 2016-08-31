@@ -31,6 +31,11 @@ export GOPATH="$HOME/var/go"
 local _PATH="$XDG_DATA_HOME/infect/util:$HOMEBIN"
 local _PATH="$_PATH:$GOPATH/bin"
 
+# If we're in a docker image, we want to have the special tools on the path
+if [[ -d "/docker/bin" ]]; then
+    local _PATH="$_PATH:/docker/bin"
+fi
+
 # No cool globs yet...
 if [[ -d "$HOME/.gem/ruby/" ]]; then
   for ruby in $(ls -rd $HOME/.gem/ruby/*/bin); do
