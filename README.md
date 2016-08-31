@@ -29,10 +29,9 @@ vim. The window decorations are from [herbstluftwm][herbst], the terminal is
 [tmuxreadme]: tmux
 
 
-## Quick Install of the Dotfiles
+## Quick install
 
-Just open a terminal and run: 
 ```
-git clone https://github.com/thiderman/dotfiles .local/share/infect --recurse-submodules
+git clone https://github.com/thiderman/dotfiles .local/share/infect
 .local/share/infect/infect install
 ```
