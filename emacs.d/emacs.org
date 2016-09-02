@@ -1792,6 +1792,21 @@ documentation in a style similar to literate programming.
                                                              "Switch to project: ")))))))
    #+end_src
 
+** fixme-mode
+
+   Highlight TODO and other related keywords.
+
+   #+begin_src emacs-lisp
+     (use-package fixme-mode
+       :config
+       (add-hook 'prog-mode-hook 'fixme-mode)
+       (setq fixme-mode-warning-words
+             '("FIXME" "TODO" "BUG" "KLUDGE" "FIX" "FixMe" "HACK"
+               "REFACTOR" "NOCOMMIT" "XXX")))
+   #+end_src
+
+*** TODO Add support for highlighting labels like TODO(thiderman)
+
 ** flycheck
 
    Error checking and linting done right! Comes pre-packaged for most modes!
