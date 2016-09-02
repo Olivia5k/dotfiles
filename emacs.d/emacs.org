@@ -1479,7 +1479,9 @@ documentation in a style similar to literate programming.
      (use-package web-mode
        :init
        (setq web-mode-markup-indent-offset 2
-             web-mode-attr-indent-offset 2))
+             web-mode-attr-indent-offset 2)
+       :config
+       (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
    #+end_src
 
 * Minor modes and utilities
@@ -1751,8 +1753,9 @@ documentation in a style similar to literate programming.
        (setq emmet-indentation 2)
 
        :config
-       (add-hook 'sgml-mode-hook 'emmet-mode)   ;; Auto-start on any markup modes
-       (add-hook 'css-mode-hook  'emmet-mode))  ;; Enable Emmet's css abbreviation.
+       (add-hook 'sgml-mode-hook 'emmet-mode)  ;; Auto-start on any markup modes
+       (add-hook 'css-mode-hook  'emmet-mode)  ;; Enable Emmet's css abbreviation.
+       (add-hook 'web-mode-hook  'emmet-mode))
 
      (use-package helm-emmet)
    #+end_src
