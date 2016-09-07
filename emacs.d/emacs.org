@@ -1840,7 +1840,10 @@ documentation in a style similar to literate programming.
       (use-package magit
         :bind (("C-x g" . th-magit-status)
                :map magit-status-mode-map
-               ("q"   . magit-mode-bury-buffer))
+               ("q"   . magit-mode-bury-buffer)
+               ;; In certain modes we want to just kill the window, not magit entirely
+               :map magit-process-mode-map
+               ("q"   . delete-window))
 
         :init
         (defun th-magit-status ()
