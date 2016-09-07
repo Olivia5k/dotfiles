@@ -1430,19 +1430,6 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (use-package python-mode
-       :init
-
-       (defun sp-goto-mail ()
-         "Go to the latest email in <root>/_outgoing_emails."
-         (interactive)
-         (find-file
-          (car
-           (last
-            (directory-files
-             (concat (projectile-project-root)
-                     "_outgoing_emails")
-             t)))))
-
        :config
        (add-hook 'python-mode-hook 'flycheck-mode))
 
