@@ -72,7 +72,7 @@ bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "www http://sl.se"
 bindsym Mod4+t exec i3-or-raise "tam" "launch-tam"
 bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "www tvtropes.org"
 bindsym Mod4+m exec i3-or-raise "messenger" "chrome-app https://messenger.com"
-bindsym Mod4+Mod1+m exec i3-or-raise "mail" "chrome-app https://inbox.google.com"
+bindsym Mod4+Mod1+m exec "chrome-app https://messenger.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 bindsym Mod4+q exec i3-or-raise "www" "browser"
 
