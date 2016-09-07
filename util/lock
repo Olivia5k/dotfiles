@@ -16,5 +16,8 @@ convert $image -modulate 100,33,100 -scale 10% -scale 1000% $image
 i3lock -i $image -f
 rm $image
 
+# Kill any messenger.com window that might be around
+i3-msg -t command '[title="Messenger"]' kill
+
 # Also disable the screens
 xset dpms force off
