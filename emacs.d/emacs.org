@@ -113,7 +113,12 @@ documentation in a style similar to literate programming.
        :ensure t)
 
      (load-theme 'darktooth)
-     (set-frame-font "Iosevka-10")
+
+     ;; On the workstation, the font should be big. Elsewhere, make it smaller.
+     (set-frame-font
+      (if (s-equals? (system-name) "dragonwing")
+          "Iosevka-13"
+        "Iosevka-10"))
 
      ;; This is called at the very bottom of emacs.org. See comments there.
      (defun th-fix-darktooth ()
