@@ -2354,7 +2354,7 @@ documentation in a style similar to literate programming.
 
   #+begin_src emacs-lisp
     (require 'f)
-    (let ((work-path "~/git/payments-elisp/"))
+    (let ((work-path "~/spotify/elisp/"))
       (when (f-dir? work-path)
         (add-to-list 'load-path work-path)
         (require 'payments)))
