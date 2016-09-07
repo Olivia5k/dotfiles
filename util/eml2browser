@@ -8,7 +8,7 @@ mkdir -p ~/tmp/eml/
 target=~/tmp/eml/${file:t}.html
 
 qprint -d $1 2> /dev/null | grep -Pzo "(?s)<\!DOCTYPE.*</html>" > $target
-chromium --app=$target
-i3-msg -t command workspace www
+chromium --app="file://$target"
+#i3-msg -t command workspace www
 # notify-send -t 3000 "Email recieved" \
             # $(grep -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" $file | head -n 1)
