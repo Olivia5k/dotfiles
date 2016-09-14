@@ -552,6 +552,52 @@ documentation in a style similar to literate programming.
    #+end_src
 
 * Major modes
+** compile
+
+   The compilation concept inside of emacs is great, but its defaults is a
+   tad... old fashioned.
+
+*** Settings
+
+    #+begin_src emacs-lisp
+      (use-package compile
+        :bind (:map compilation-mode-map
+               ("q" . th-quit-compilation-buffer)
+               ;; `C-c l` is because that same command is used in golang and others
+               ("C-c l" . th-toggle-maximize-buffer)
+
+               :map go-mode-map
+               ("C-c l" . th-maximize-log))
+
+        :init
+        (setq compilation-always-kill t
+              compilation-ask-about-save nil
+              compilation-auto-jump-to-first-error
+              compilation-scroll-output t)
+
+        (defun th-toggle-maximize-buffer (&optional buffer-name)
+          "Maximize buffer"
+          (interactive)
+          (if (= 1 (length (window-list)))
+              (jump-to-register '_)
+            (progn
+              (window-configuration-to-register '_)
+              (if buffer-name
+                  (switch-to-buffer buffer-name))
+              (delete-other-windows))))
+
+        (defun th-maximize-log ()
+          (interactive)
+          (th-toggle-maximize-buffer "*compilation*"))
+
+        (defun th-quit-compilation-buffer ()
+          ;; TODO: Maybe this can be done with advice instead?
+          (interactive)
+          (if (= 1 (length (window-list)))
+              (jump-to-register '_)
+            (quit-window))))
+    #+end_src
+
 ** elisp
 
    Options and settings for hacking on emacs itself.
@@ -879,41 +925,8 @@ documentation in a style similar to literate programming.
               (lambda (fn) (s-contains? ".go" fn))
               (projectile-current-project-files)))))))
 
-      ;; Quick compile, without tests or checks
-      (define-key go-mode-map (kbd "C-c M-c")
-        (lambda ()
-          (interactive)
-          (compile "go build -v")))
-
       (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
 
-      ;; NOTE: This is not go specific.
-      (defun th-toggle-maximize-buffer (&optional buffer-name)
-        "Maximize buffer"
-        (interactive)
-        (if (= 1 (length (window-list)))
-            (jump-to-register '_)
-          (progn
-            (window-configuration-to-register '_)
-            (if buffer-name
-                (switch-to-buffer buffer-name))
-            (delete-other-windows))))
-
-      (defun th-quit-compilation-buffer ()
-        ;; TODO: Maybe this can be done with advice instead?
-        (interactive)
-        (if (= 1 (length (window-list)))
-            (jump-to-register '_)
-          (quit-window)))
-
-      (define-key compilation-mode-map (kbd "C-c l") 'th-toggle-maximize-buffer)
-      (define-key compilation-mode-map (kbd "q") 'th-quit-compilation-buffer)
-
-      (defun th-go-maximize-log ()
-        (interactive)
-        (th-toggle-maximize-buffer "*compilation*"))
-
-      (define-key go-mode-map (kbd "C-c l") 'th-go-maximize-log)
     #+end_src
 
 *** Docstring manipulation
