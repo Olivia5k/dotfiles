@@ -572,7 +572,7 @@ documentation in a style similar to literate programming.
         :init
         (setq compilation-always-kill t
               compilation-ask-about-save nil
-              compilation-auto-jump-to-first-error
+              compilation-auto-jump-to-first-error nil
               compilation-scroll-output t)
 
         (defun th-toggle-maximize-buffer (&optional buffer-name)
