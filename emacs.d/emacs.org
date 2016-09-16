@@ -1503,7 +1503,12 @@ documentation in a style similar to literate programming.
              web-mode-attr-indent-offset 2)
        :config
        (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-       (add-hook 'after-save-hook 'vue-mode))
+       ;; If we're in vue-mode, make sure to reset it when we save.
+       (add-hook 'after-save-hook
+                 (lambda ()
+                   (interactive)
+                   (when (eq 'vue-mode major-mode)
+                     (vue-mode)))))
    #+end_src
 
 * Minor modes and utilities
