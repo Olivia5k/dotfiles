@@ -672,6 +672,7 @@ documentation in a style similar to literate programming.
         ("C-c i"   . go-goto-imports)
         ("C-c C-i" . go-remove-unused-imports)
         ("C-c d"   . godoc)
+        ("C-c C-o" . th-go-guru/body)
 
         :init
         (defun th-go-hook ()
@@ -680,12 +681,28 @@ documentation in a style similar to literate programming.
           (company-mode)
           (flycheck-mode 1))
 
+        (defhydra th-go-guru (:exit t)
+          ("d" go-guru-describe)
+          ("f" go-guru-freevars)
+          ("i" go-guru-implements)
+          ("c" go-guru-peers)  ; c for channel
+          ("r" go-guru-referrers)
+          ("j" go-guru-definition) ; j for jump
+          ("p" go-guru-pointsto)
+          ("s" go-guru-callstack) ; s for stack
+          ("e" go-guru-whicherrs) ; e for error
+          ("<" go-guru-callers)
+          (">" go-guru-callees)
+          ("x" go-guru-expand-region)) ;; x for expand
+
         :config
+        (require 'go-guru)
         (add-hook 'go-mode-hook 'th-go-hook)
         (add-hook 'go-mode-hook 'go-eldoc-setup))
 
       (use-package company-go)
       (use-package go-eldoc)
+
     #+end_src
 
 *** goto functions
