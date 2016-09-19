@@ -120,6 +120,16 @@ documentation in a style similar to literate programming.
           "Iosevka-13"
         "Iosevka-10"))
 
+     (defun th-toggle-font ()
+       "Toggles between smaller and larger fonts"
+       (interactive)
+       (set-frame-font
+        (if (s-contains? "-18-" (frame-parameter nil 'font))
+            "Iosevka-10"
+          "Iosevka-13")))
+
+     (global-set-key (kbd "M-1") 'th-toggle-font)
+
      ;; This is called at the very bottom of emacs.org. See comments there.
      (defun th-fix-darktooth ()
        "Things that make darktooth a theme more suited for me."
