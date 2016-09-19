@@ -2079,12 +2079,12 @@ documentation in a style similar to literate programming.
 
 ** Browser setup
 
-   This uses the `www` command from the dotfiles repo and puts browser
+   This uses the `chrome-app` command from the dotfiles repo and puts browser
    configuration outside of emacs.
 
    #+begin_src emacs-lisp
      (setq browse-url-browser-function 'browse-url-generic
-           browse-url-generic-program "www")
+           browse-url-generic-program "chrome-app")
    #+end_src
 
 ** Clean mode line
