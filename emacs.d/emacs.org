@@ -1822,6 +1822,16 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (require 'dired)
+     (require 'dired-x)
+
+     (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
+     (setq-default dired-omit-files-p t) ; Buffer-local variable
+     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$"))
+     (setq dired-omit-mode t)
+     (setq dired-hide-details-hide-information-lines t)
+     (setq dired-hide-details-mode t)
+     (setq diredp-hide-details-initially-flag t)
 
      (defun th-kill-all-dired-buffers ()
        (interactive)
