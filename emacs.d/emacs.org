@@ -2412,8 +2412,8 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      ;; Try to make emax split vertically when possible
-     (setq split-height-threshold nil)
-     (setq split-width-threshold 0)
+     (setq split-height-threshold 10)
+     (setq split-width-threshold 160)
    #+end_src
 
 *** Emacs-like
