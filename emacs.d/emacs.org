@@ -1318,7 +1318,6 @@ documentation in a style similar to literate programming.
         (find-file
          (format "~/org/%s.org" name)))))
 
-  (global-set-key (kbd "C-x C-o") 'th-org-project)
 #+end_src
 **** Archiving
 #+begin_src emacs-lisp
@@ -1337,6 +1336,7 @@ documentation in a style similar to literate programming.
     #+begin_src emacs-lisp
       (defhydra th-org (:exit t)
         "Org commands"
+        ("C-o" th-org-project "Project file")
         ("c" org-capture "Capture")
         ("M-o" org-capture "Capture")
         ("s" (org-agenda nil "a") "Schedule")
@@ -1344,7 +1344,7 @@ documentation in a style similar to literate programming.
         ("a" org-todo-list "Agenda")
         ("t" org-tags-view "Tags"))
 
-      (global-set-key (kbd "M-o") 'th-org/body)
+      (global-set-key (kbd "C-x C-o") 'th-org/body)
     #+end_src
 
 ** prog-mode
