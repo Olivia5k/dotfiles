@@ -1174,36 +1174,41 @@ documentation in a style similar to literate programming.
 
       (use-package org-journal)
     #+end_src
+
 *** Agenda and todo
 **** Settings and options
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c a") 'org-agenda)
 
-  (setq
-   org-agenda-ndays 7
-   org-agenda-files '("~/org/")
-   org-agenda-show-all-dates t
-   org-agenda-start-on-weekday nil
-   org-archive-location "~/org/archive/%s::"
-   org-log-done t) ;;timestamp when switching from todo to done
+     #+begin_src emacs-lisp
+       (global-set-key (kbd "C-c a") 'org-agenda)
 
-  (setq org-todo-keywords
-        '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+       (setq
+        org-agenda-ndays 7
+        org-agenda-files '("~/org/")
+        org-agenda-show-all-dates t
+        org-agenda-start-on-weekday nil
+        org-archive-location "~/org/archive/%s::"
+        org-log-done t) ;;timestamp when switching from todo to done
 
-  (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
-                                 ("WAITING" . org-mode-line-clock)))
+       (setq org-todo-keywords
+             '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
 
-#+end_src
+       (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
+                                      ("WAITING" . org-mode-line-clock)))
+
+     #+end_src
+
 **** Journal
-#+begin_src emacs-lisp
-  (setq org-journal-dir "~/org/journal/"
-        org-journal-file-format "%Y-%m-%d"
-        org-journal-date-format "%A, %Y-%m-%d"
-        org-journal-find-file 'find-file)
 
-  ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
-  (global-set-key (kbd "C-.") 'org-journal-new-entry)
-#+end_src
+     #+begin_src emacs-lisp
+       (setq org-journal-dir "~/org/journal/"
+             org-journal-file-format "%Y-%m-%d"
+             org-journal-date-format "%A, %Y-%m-%d"
+             org-journal-find-file 'find-file)
+
+       ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
+       (global-set-key (kbd "C-.") 'org-journal-new-entry)
+     #+end_src
+
 **** Capturing
      #+begin_src emacs-lisp
        (setq
@@ -1240,97 +1245,81 @@ documentation in a style similar to literate programming.
            "* [[%^{URL}][%^{Title}]]"
            )))
      #+end_src
+
 **** Toggler keybindings
-#+begin_src emacs-lisp
-  (define-key org-mode-map (kbd "C-c t")
-    (lambda ()
-      (interactive)
-      (org-todo "TODO")))
 
-  (define-key org-mode-map (kbd "C-c w")
-    (lambda ()
-      (interactive)
-      (org-todo "WORKING")))
+     #+begin_src emacs-lisp
+       (define-key org-mode-map (kbd "C-c t")
+         (lambda ()
+           (interactive)
+           (org-todo "TODO")))
 
-  (define-key org-mode-map (kbd "C-c z")
-    (lambda ()
-      (interactive)
-      (org-todo "WAITING")))
+       (define-key org-mode-map (kbd "C-c w")
+         (lambda ()
+           (interactive)
+           (org-todo "WORKING")))
 
-  (define-key org-mode-map (kbd "C-c r")
-    (lambda ()
-      (interactive)
-      (org-todo "REVIEW")))
+       (define-key org-mode-map (kbd "C-c z")
+         (lambda ()
+           (interactive)
+           (org-todo "WAITING")))
 
-  (define-key org-mode-map (kbd "C-c d")
-    (lambda ()
-      (interactive)
-      (org-todo "DONE")))
+       (define-key org-mode-map (kbd "C-c r")
+         (lambda ()
+           (interactive)
+           (org-todo "REVIEW")))
 
-  (define-key org-mode-map (kbd "C-c i")
-    (lambda ()
-      (interactive)
-      (org-todo "INVALID")))
+       (define-key org-mode-map (kbd "C-c d")
+         (lambda ()
+           (interactive)
+           (org-todo "DONE")))
 
-  (define-key org-mode-map (kbd "C-c SPC")
-    (lambda ()
-      (interactive)
-      (org-todo 'none)))
+       (define-key org-mode-map (kbd "C-c i")
+         (lambda ()
+           (interactive)
+           (org-todo "INVALID")))
 
-#+end_src
-**** helm-org-agenda
-#+begin_src emacs-lisp
-  (defun th-helm-org-agenda-files ()
-    (mapcar (lambda (s) (s-chop-suffix ".org" s))
-            (directory-files "~/org/" nil ".*\\.org")))
+       (define-key org-mode-map (kbd "C-c SPC")
+         (lambda ()
+           (interactive)
+           (org-todo 'none)))
 
-  (defun th-helm-org-agenda-visit (file)
-    (find-file (format "~/org/%s.org" file)))
+     #+end_src
 
-  (defvar th-helm-org-agenda-sources
-    '((name . "org-agenda files")
-      (candidates . th-helm-org-agenda-files)
-      (action . th-helm-org-agenda-visit)))
-
-  (defun th-helm-org-agenda ()
-    (interactive)
-    (helm
-     :sources th-helm-org-agenda-sources
-     :prompt "Agenda file: "
-     :buffer "*helm-org-agenda*"))
-
-  (global-set-key (kbd "C-x C-o") 'th-helm-org-agenda)
-#+end_src
 **** org-goto-for-project
-#+begin_src emacs-lisp
-  (defun th-org-project ()
-    "Go to the org project for the current repository.
 
-  Go back if we're already in it."
+     #+begin_src emacs-lisp
+       (defun th-org-project ()
+         "Go to the org project for the current repository.
 
-    (interactive)
-    (let* ((root (projectile-project-root))
-           (name (car (last (s-split "/" (projectile-project-root)) 2))))
-      (if (s-equals? (expand-file-name "~/org/") root)
-          (progn
-            (save-buffer)
-            (previous-buffer))
-        (find-file
-         (format "~/org/%s.org" name)))))
+       Go back if we're already in it."
 
-#+end_src
+         (interactive)
+         (let* ((root (projectile-project-root))
+                (name (car (last (s-split "/" (projectile-project-root)) 2))))
+           (if (s-equals? (expand-file-name "~/org/") root)
+               (progn
+                 (save-buffer)
+                 (previous-buffer))
+             (find-file
+              (format "~/org/%s.org" name)))))
+
+     #+end_src
+
 **** Archiving
-#+begin_src emacs-lisp
-  (defun org-archive-done-tasks ()
-    (interactive)
-    (org-map-entries
-     (lambda ()
-       (org-archive-subtree)
-       (setq org-map-continue-from (outline-previous-heading)))
-     "/DONE" 'file))
 
-  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
-#+end_src
+     #+begin_src emacs-lisp
+       (defun org-archive-done-tasks ()
+         (interactive)
+         (org-map-entries
+          (lambda ()
+            (org-archive-subtree)
+            (setq org-map-continue-from (outline-previous-heading)))
+          "/DONE" 'file))
+
+       (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
+     #+end_src
+
 *** Hydra commands
 
     #+begin_src emacs-lisp
