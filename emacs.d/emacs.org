@@ -170,142 +170,6 @@ documentation in a style similar to literate programming.
        (message "darktooth fixed"))
    #+end_src
 
-** helm
-
-   [[http://tuhdo.github.io/helm-intro.html][helm]] is a fuzzy interface builder that can be used with almost any part of
-   emacs. It replaces ido, flex etc.
-
-   It should be noted that the default fuzzy finding is slightly different
-   from what you are probably used to. There are no implicit ".*" between all
-   characters. You either add an explicit ".* " or (more commonly) you add a
-   space. Adding a space will add a new filter to your already filtered
-   matches,
-
-   and it can be done multiple times.  It seems difficult in the beginning,
-   but once you get used to it the feature becomes natural and very powerful.
-
-*** Basic setup
-    #+begin_src emacs-lisp
-      (use-package helm
-        :bind (("M-x"     . helm-M-x)
-               ("C-x b"   . helm-mini)
-               ("C-x C-f" . helm-find-files)
-               ("C-x y"   . helm-show-kill-ring)
-               ("M-i"     . helm-semantic-or-imenu)
-
-               :map helm-map
-               ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
-               ("C-i"   . helm-execute-persistent-action) ; make TAB works in terminal
-               ("C-z"   . helm-select-action)             ; list actions using C-z
-               )
-
-        :init
-        (when (executable-find "curl")
-          (setq helm-google-suggest-use-curl-p t))
-
-        (setq
-         helm-command-prefix-key "C-c h"
-         helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-         helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-         helm-ff-file-name-history-use-recentf t
-         helm-ff-newfile-prompt-p              nil ; don't ask for filenames when making new buffer
-         helm-autoresize-max-height 30
-         helm-autoresize-min-height 30)
-
-        ;; Set up the default bindings
-        (require 'helm-config)
-
-        :config
-        ;; Make the size of the buffer make sense
-        ;; https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window/
-        (helm-autoresize-mode 1)
-
-        ;; Actually load helm
-        (helm-mode 1))
-    #+end_src
-
-*** helm-swoop
-
-    [[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] is an extension concerning searching, filtering and replacing
-    text inside of a single or multiple buffers.
-
-    One nice trick is to use helm-swoop to replace multiple occurances easily;
-    Do a swoop, filter to the lines you want to change, and then to =C-c C-e=
-    for edit mode. Once in there, do the usual (probably =C-r=) and then save
-    that buffer. Boom!
-
-    #+begin_src emacs-lisp
-      (use-package helm-swoop
-        :bind (("C-s"     . helm-swoop)
-               ("C-c M-i" . helm-multi-swoop)
-               ("C-x M-i" . helm-multi-swoop-all)
-
-               :map helm-swoop-map
-               ("M-i"     . helm-multi-swoop-all-from-helm-swoop))
-
-        :init
-        ;; Save buffer when helm-multi-swoop-edit complete
-        (setq helm-multi-swoop-edit-save t)
-
-        ;; If this value is t, split window inside the current window
-        (setq helm-swoop-split-with-multiple-windows t)
-
-        ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-        (setq helm-swoop-split-direction 'split-window-vertically)
-
-        ;; If nil, you can slightly boost invoke speed in exchange for text color
-        (setq helm-swoop-speed-or-color t)
-
-        ;; Go to the opposite side of line from the end or beginning of line
-        (setq helm-swoop-move-to-line-cycle t)
-
-        ;; Optional face for line numbers
-        ;; Face name is `helm-swoop-line-number-face`
-        (setq helm-swoop-use-line-number-face t)
-
-        ;; Disable pre-input
-        (setq helm-swoop-pre-input-function (lambda () "")))
-    #+end_src
-
-*** helm-projectile
-
-    Bindings that work together with projectile.
-
-    #+begin_src emacs-lisp
-      (use-package helm-projectile
-        :bind (("C-x f" . helm-projectile)
-               ("C-M-s" . helm-projectile-ag))
-        :config
-        ;; If we don't have ag, use grep
-        (when (not (executable-find "ag"))
-          (global-set-key (kbd "C-M-s") 'helm-projectile-grep))
-        (helm-projectile-on))
-    #+end_src
-
-*** helm-descbinds
-
-    A nice little utility to view the currently bound keybindings. Bound to
-    =F1=.
-
-    #+begin_src emacs-lisp
-      (use-package helm-descbinds
-        :bind (("<f1>" . helm-descbinds)))
-    #+end_src
-
-*** helm-yasnippet
-
-    Interactively choose a snippet to edit via helm
-
-    #+begin_src emacs-lisp
-      (use-package helm-c-yasnippet
-        :bind (("C-c h s" . helm-yas-complete))
-        :init
-        ;; [default: nil]
-        (setq helm-yas-space-match-any-greedy t))
-    #+end_src
-
 ** popwin
 
    popwin is a little library that makes most special kinds of buffers appear
@@ -331,10 +195,41 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (use-package projectile
+       :bind (("C-x f" . projectile-find-file))
+
        :config
        (projectile-global-mode)
-       (setq projectile-completion-system 'helm
+       (setq projectile-completion-system 'ivy
              projectile-mode-line nil))
+   #+end_src
+
+** Swiper / ivy / counsel
+
+   [[https://github.com/abo-abo/swiper][swiper]] is a fuzzy completion library similar to helm, but is lighter, tons
+   simpler to use and much easier to extend.
+
+   #+begin_src emacs-lisp
+     (use-package ivy
+       :bind (("C-s"     . swiper)
+              ("C-M-s"   . counsel-git-grep)
+              ("M-x"     . counsel-M-x)
+              ("M-i"     . counsel-imenu)
+              ("C-x y"   . counsel-yank-pop)
+              ("C-c C-r" . ivy-resume))
+
+       :config
+       (setq ivy-use-virtual-buffers t)
+       (setq ivy-count-format "(%d/%d) ")
+       (setq ivy-height 20)
+       (setq magit-completing-read-function 'ivy-completing-read)
+
+       ;; So that we can do space separation in file name completions
+       (setq ivy-re-builders-alist
+             '((t . ivy--regex-ignore-order)))
+
+       (ivy-mode 1))
+
+     (use-package counsel)
    #+end_src
 
 * Editing
@@ -1246,7 +1141,6 @@ documentation in a style similar to literate programming.
     #+begin_src emacs-lisp
       (use-package org
         :bind (:map org-mode-map
-                    ("M-i"   . helm-imenu)
                     ("C-c ;" . org-edit-special)
                :map org-src-mode-map
                     ("C-c ;" . org-edit-src-exit))
