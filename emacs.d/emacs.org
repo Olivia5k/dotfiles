@@ -1116,6 +1116,33 @@ documentation in a style similar to literate programming.
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
 
+*** go-guru hydra
+
+    Since there are so many commands to the guru, I feel like adding them to
+    a hydra makes quite a lot of sense!
+
+    #+begin_src emacs-lisp
+      (define-key
+        go-mode-map
+        (kbd "C-c C-o")
+        (defhydra th-go-guru (:exit t)
+          "Guru commands"
+          ("C-o" th-org-project "Project file")
+
+          ("d" go-guru-describe "describe")
+          ("f" go-guru-freevars "freevars")
+          ("i" go-guru-implements "implements")
+          ("c" go-guru-peers "peers (channels)")
+          ("r" go-guru-referrers "referrers")
+          ("j" go-guru-definition "definition")
+          ("p" go-guru-pointsto "pointsto")
+          ("s" go-guru-callstack "callstack")
+          ("e" go-guru-whicherrs "whicherrs")
+          ("<" go-guru-callers "callers")
+          (">" go-guru-callees "callees")
+          ("x" go-guru-expand-region "expand-region")))
+    #+end_src
+
 ** logview-mode
 
    Nifty little mode that makes reading structured logs easier.
