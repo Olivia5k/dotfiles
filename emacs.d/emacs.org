@@ -2320,52 +2320,29 @@ documentation in a style similar to literate programming.
 
    Sets up quicker window management bindings.
 
+*** Settings
+
+    These things set in which directions windows split.
+
    #+begin_src emacs-lisp
      ;; Try to make emax split vertically when possible
      (setq split-height-threshold 100)
      (setq split-width-threshold 160)
    #+end_src
 
-*** Emacs-like
+*** Killing windows
 
-    These do the same as the normal emacs bindings, but they also balance the
-    windows after splitting, and it moves to the newly created window. I hate
-    to admit it, but this is a behavior I got from vim, and it stuck.
-
-    #+begin_src emacs-lisp
-      (define-key global-map (kbd "C-x 2")
-        (lambda ()
-          (interactive)
-          (split-window-vertically)
-          (balance-windows)
-          (windmove-down)))
-
-      (define-key global-map (kbd "C-x 3")
-        (lambda ()
-          (interactive)
-          (split-window-horizontally)
-          (balance-windows)
-          (windmove-right)))
-
-    #+end_src
-
-*** vim-like
-
-    The window movement commands in emacs never really suited me. The old
-    school vim ones work pretty well though.
+    I kill windows all the time. So often that I want to be able to do it
+    super quickly. So, =C-q= comes into play!
 
     #+begin_src emacs-lisp
-      (global-set-key (kbd "C-x h") 'windmove-left)
-      (global-set-key (kbd "C-x j") 'windmove-down)
-      (global-set-key (kbd "C-x k") 'windmove-up)
-      (global-set-key (kbd "C-x l") 'windmove-right)
-
       (defun th-kill-window ()
         "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
         (interactive)
         (if (and (one-window-p) (server-running-p))
             (progn
-              (save-buffer)
+              (when (buffer-file-name)
+                (save-buffer))
               (delete-frame))
           (progn
             (delete-window)
@@ -2374,6 +2351,78 @@ documentation in a style similar to literate programming.
 
       (global-set-key (kbd "C-q") 'th-kill-window)
     #+end_src
+
+*** Hydra switching
+
+    Hydras are great, especially for these kinds of things.
+    http://oremacs.com/2015/02/04/pre-hydra-post/
+
+    #+begin_src emacs-lisp
+      (defhydra hydra-window ()
+         "window"
+         ("h" windmove-left)
+         ("j" windmove-down)
+         ("k" windmove-up)
+         ("l" windmove-right)
+         ("H" shrink-window-horizontally)
+         ("J" shrink-window)
+         ("K" enlarge-window)
+         ("L" enlarge-window-horizontally)
+         ("b" balance-windows "balance")
+         ("a" (lambda ()
+                (interactive)
+                (ace-window 1)
+                (add-hook 'ace-window-end-once-hook
+                          'hydra-window/body)
+                (throw 'hydra-disable t))
+          "ace")
+         ("s" (lambda ()
+                (interactive)
+                (split-window-right)
+                (windmove-right))
+          "vert")
+         ("z" (lambda ()
+                (interactive)
+                (split-window-below)
+                (windmove-down))
+          "horz")
+         ("w" (lambda ()
+                (interactive)
+                (ace-window 4)
+                (add-hook 'ace-window-end-once-hook
+                          'hydra-window/body)
+                (throw 'hydra-disable t))
+          "swap")
+         ("t" transpose-frame "'")
+         ("d" (lambda ()
+                (interactive)
+                (ace-window 16)
+                (add-hook 'ace-window-end-once-hook
+                          'hydra-window/body)
+                (throw 'hydra-disable t))
+          "del")
+         ("o" delete-other-windows "one" :color blue)
+         ("i" ace-maximize-window "ace-one" :color blue)
+         ("q" nil "cancel"))
+
+      (defun th-copy-or-hydra-window ()
+        "M-w without a region is terrible. Make it useful instead."
+        (interactive)
+        (if (use-region-p)
+            (kill-ring-save (region-beginning) (region-end))
+          (hydra-window/body)))
+
+      (global-set-key (kbd "M-w") 'th-copy-or-hydra-window)
+
+      ;; Also disable the old ones so that I stop using them
+      (defun th-disabled-key ()
+        (interactive)
+        (message "This key is disabled. Use M-w."))
+
+      (global-set-key (kbd "C-x 1") 'th-disabled-key)
+      (global-set-key (kbd "C-x 2") 'th-disabled-key)
+      (global-set-key (kbd "C-x 3") 'th-disabled-key)
+   #+end_src
 
 * Work
 
