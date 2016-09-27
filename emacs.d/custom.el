@@ -30,6 +30,27 @@
    (quote
     (ivy protobuf-mode smooth-scrolling worf curl-for-url leuven-theme org-journal web-mode vue-mode guide-key use-package color-theme-sanityinc-tomorrow restclient zenburn-theme zenburn yaml-mode xterm-color xkcd wrap-region visual-regexp virtualenvwrapper undo-tree twittering-mode twitter transpose-frame tidy string-inflection ssh-config-mode spaceline solarized-theme smex smart-mode-line-powerline-theme rainbow-mode rainbow-identifiers rainbow-delimiters python-django puppet-mode popwin pony-mode paredit paradox otp org-jekyll org-fstree org-bullets nginx-mode multiple-cursors move-text morlock markdown-mode magit-gh-pulls lispy key-chord js2-mode jedi ipython ioccur ido-vertical-mode ido-ubiquitous hydra httpcode htmlize helm-swoop helm-projectile helm-descbinds helm-dash helm-c-yasnippet helm-ag go-eldoc gitignore-mode gitconfig-mode git-timemachine git-messenger git-gutter-fringe gist flymake-css flycheck-pyflakes flx-ido fiplr fill-column-indicator expand-region emmet-mode dockerfile-mode django-mode discover-my-major diminish cyberpunk-theme csv-mode crontab-mode company-jedi company-go company-anaconda buffer-move browse-kill-ring adaptive-wrap ack-and-a-half ace-jump-mode ac-dabbrev)))
  '(paradox-github-token t)
+ '(popwin:special-display-config
+   (quote
+    (("*Miniedit Help*" :noselect t)
+     (help-mode)
+     (completion-list-mode :noselect t)
+     (grep-mode :noselect t)
+     (occur-mode :noselect t)
+     ("*Pp Macroexpand Output*" :noselect t)
+     ("*Shell Command Output*")
+     ("*vc-diff*")
+     ("*vc-change-log*")
+     (" *undo-tree*" :width 60 :position right)
+     ("^\\*anything.*\\*$" :regexp t)
+     ("*slime-apropos*")
+     ("*slime-macroexpansion*")
+     ("*slime-description*")
+     ("*slime-compilation*" :noselect t)
+     ("*slime-xref*")
+     (sldb-mode :stick t)
+     (slime-repl-mode)
+     (slime-connection-list-mode))))
  '(pos-tip-background-color "#36473A")
  '(pos-tip-foreground-color "#FFFFC8")
  '(safe-local-variable-values
