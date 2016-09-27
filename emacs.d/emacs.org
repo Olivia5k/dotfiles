@@ -117,7 +117,7 @@ documentation in a style similar to literate programming.
      ;; On the workstation, the font should be big. Elsewhere, make it smaller.
      (set-frame-font
       (if (s-equals? (system-name) "dragonwing")
-          "Iosevka-13"
+          "Iosevka-12"
         "Iosevka-10"))
 
      (defun th-toggle-font ()
@@ -126,7 +126,7 @@ documentation in a style similar to literate programming.
        (set-frame-font
         (if (s-contains? "-18-" (frame-parameter nil 'font))
             "Iosevka-10"
-          "Iosevka-13")))
+          "Iosevka-12")))
 
      (global-set-key (kbd "M-1") 'th-toggle-font)
 
