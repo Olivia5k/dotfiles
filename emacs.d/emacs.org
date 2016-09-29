@@ -208,6 +208,8 @@ documentation in a style similar to literate programming.
    [[https://github.com/abo-abo/swiper][swiper]] is a fuzzy completion library similar to helm, but is lighter, tons
    simpler to use and much easier to extend.
 
+*** Base setup
+
    #+begin_src emacs-lisp
      (use-package ivy
        :bind (("C-s"     . swiper)
@@ -231,6 +233,44 @@ documentation in a style similar to literate programming.
 
      (use-package counsel)
    #+end_src
+
+*** Custom actions
+
+    These commands add so that the z/s actions in buffer switching and file
+    switching opens in a new split of the corresponding kind. I've missed this
+    since I switched to emacs 18 months ago, damn.
+
+    #+begin_src emacs-lisp
+      (ivy-set-actions
+       'projectile-find-file
+       '(("z" (lambda (fn)
+                (interactive)
+                (split-window-below)
+                (windmove-down)
+                (find-file fn))
+          "horz")
+         ("s" (lambda (fn)
+                (interactive)
+                (split-window-right)
+                (windmove-right)
+                (find-file fn))
+          "vert")))
+
+      (ivy-set-actions
+       'ivy-switch-buffer
+       '(("z" (lambda (buf)
+                (interactive)
+                (split-window-below)
+                (windmove-down)
+                (switch-to-buffer buf))
+          "horz")
+         ("s" (lambda (buf)
+                (interactive)
+                (split-window-right)
+                (windmove-right)
+                (switch-to-buffer buf))
+          "horz")))
+    #+end_src
 
 * Editing
 ** Adding current buffer to minibuffer
