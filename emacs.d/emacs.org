@@ -781,51 +781,6 @@ documentation in a style similar to literate programming.
       (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
     #+end_src
 
-*** helm based file visitor
-
-    Shows a helm session with the current source files, and opens a view with
-    the chosen candidate and its corresponding test file.
-
-    #+begin_src emacs-lisp
-      (defun th-helm-go-source-files ()
-        (mapcar (lambda (s)
-                  (s-chop-suffix ".go" s))
-                (-filter #'th-helm-go-filter-files
-                         (directory-files (projectile-project-root) nil ".*\\.go"))))
-
-      (defun th-helm-go-filter-files (x)
-        (let ((fn (concat (projectile-project-root) x))
-              (bufname (buffer-file-name (get-buffer helm-current-buffer))))
-          (and
-           (not (s-contains? "_test" x))      ; Test files
-           (not (s-contains? ".#" x))         ; emax backups
-           (not (s-contains? fn bufname))     ; the current module
-           (not (s-contains? fn (th-go-alternate-file bufname)))))) ; and the current test module
-
-      (defun th-helm-go-source-visit (file)
-        (find-file (format "%s/%s.go" (projectile-project-root) file))
-        (th-go-test-buffer-p))
-
-      (defun th-helm-go-source-visit-split (file)
-        (th-go-test-buffer-split file))
-
-      (defvar th-helm-go-source-sources
-        '((name . "go source files")
-          (candidates . th-helm-go-source-files)
-          (action . (
-                     ("visit file" . th-helm-go-source-visit)
-                     ("split below `C-c j'" . th-helm-go-source-visit-split)))))
-
-      (defun th-helm-go-source ()
-        (interactive)
-        (helm
-         :sources th-helm-go-source-sources
-         :prompt "go source file: "
-         :buffer "*helm-go-source*"))
-
-      (define-key go-mode-map (kbd "C-c f") 'th-helm-go-source)
-    #+end_src
-
 *** Snippet helpers
 
     These are functions used inside of yas.
@@ -1472,6 +1427,81 @@ documentation in a style similar to literate programming.
    #+end_src
 
 * Minor modes and utilities
+** Alternate file visiting
+*** Other files with same extension
+
+    #+begin_src emacs-lisp
+      (defun th-other-files-suffix (&optional suffix)
+        "Browse between files of a certain kind in the current project.
+      Defaults to the suffix of the current buffer if none is given.
+
+      E.g. if you are visiting a .go file, this will list all other .go files.
+
+      This is useful if you have backend and frontend code in the same repo."
+
+        (interactive)
+        (find-file
+         (concat
+          (projectile-project-root)
+          (let ((suf (or suffix (f-ext (buffer-file-name))))
+                (default-directory (projectile-project-root)))
+
+            (completing-read
+             (format "%s files: " suf)
+             (-filter
+              (lambda (x)
+                (and
+                 (s-suffix? (concat "." suf) x)
+                 ;; Filter out test files, backup files and the current file
+                 (not (s-contains? "test" x))
+                 (not (s-contains? ".#" x))
+                 (not (s-contains? x (buffer-file-name)))))
+              (projectile-get-repo-files)))))))
+
+      (global-set-key (kbd "C-x a") 'th-other-files-suffix)
+    #+end_src
+
+*** Other files with the same base name
+
+    #+begin_src emacs-lisp
+      (defun th-other-files-same-base ()
+        "Find other files that have the same base as the current
+      one. Complete if there are multiple found.
+
+      E.g. if you are visiting `user.go' and `User.vue' exists, visit
+      that. If there is also a `UserPanel.vue', start completion
+      between the matching files instead.
+
+      This is useful if you have backend and frontend code in the same repo."
+
+        (interactive)
+
+        (let* ((base (f-base (buffer-file-name)))
+               (default-directory (projectile-project-root))
+               (files (-filter
+                       (lambda (x)
+                         (and
+                          (s-prefix? (downcase base)
+                                     (downcase (f-base (f-filename x))))
+                          ;; Filter out test files, backup files and the current file
+                          (not (s-contains? "test" x))
+                          (not (s-contains? ".#" x))
+                          (not (s-contains? x (buffer-file-name)))))
+                       (projectile-get-repo-files))))
+          (cond
+           ((= (length files) 1)
+            (find-file (car files)))
+
+           ((> (length files) 1)
+            (find-file
+             (completing-read "Alt files: " files)))
+
+           (t
+            (error "No alternate file for %s" (buffer-name))))))
+
+      (global-set-key (kbd "C-x C-a") 'th-other-files-same-base)
+    #+end_src
+
 ** Buffer toggles
 
    F1: `helm-descbinds` (set from helm config above)
