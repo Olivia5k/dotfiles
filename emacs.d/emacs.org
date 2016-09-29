@@ -1406,25 +1406,38 @@ documentation in a style similar to literate programming.
      (use-package yaml-mode)
    #+end_src
 
-** web-mode
+** web-mode / vue-mode
 
    Enhanced editing of HTML with support for embedded languages.
    Used by vue-mode for templates.
 
-   #+begin_src emacs-lisp
-     (use-package web-mode
-       :init
-       (setq web-mode-markup-indent-offset 2
-             web-mode-attr-indent-offset 2)
-       :config
-       (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-       ;; If we're in vue-mode, make sure to reset it when we save.
-       (add-hook 'after-save-hook
-                 (lambda ()
-                   (interactive)
-                   (when (eq 'vue-mode major-mode)
-                     (vue-mode)))))
-   #+end_src
+*** Default setup
+
+    #+begin_src emacs-lisp
+      (use-package vue-mode)
+
+      (use-package web-mode
+        :init
+        (setq web-mode-markup-indent-offset 2
+              web-mode-attr-indent-offset 2)
+        :config
+        (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+        ;; If we're in vue-mode, make sure to reset it when we save.
+        (add-hook 'after-save-hook
+                  (lambda ()
+                    (interactive)
+                    (when (eq 'vue-mode major-mode)
+                      (vue-mode)))))
+    #+end_src
+
+*** Browse to vue files only
+
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-c v")
+                      (lambda ()
+                        (interactive)
+                        (th-other-files-suffix "vue")))
+    #+end_src
 
 * Minor modes and utilities
 ** Alternate file visiting
