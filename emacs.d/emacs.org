@@ -2484,6 +2484,8 @@ documentation in a style similar to literate programming.
          ("J" shrink-window)
          ("K" enlarge-window)
          ("L" enlarge-window-horizontally)
+         ("f" projectile-find-file "file" :color blue)
+         ("p" projectile-switch-project "project" :color blue)
          ("b" balance-windows "balance")
          ("e" next-error "next error")
          ("E" previous-error "prev error")
