@@ -2467,6 +2467,7 @@ documentation in a style similar to literate programming.
          ("K" enlarge-window)
          ("L" enlarge-window-horizontally)
          ("b" balance-windows "balance")
+         ("n" new-frame "new frame" :color blue)
          ("a" (lambda ()
                 (interactive)
                 (ace-window 1)
