@@ -2041,6 +2041,21 @@ documentation in a style similar to literate programming.
      (use-package rainbow-identifiers)
    #+end_src
 
+** Rotate text
+
+   #+begin_src emacs-lisp
+     (use-package rotate-text
+       :init
+       (setq rotate-text-words '(("width" "height")
+                                 ("left" "right" "top" "bottom")
+                                 ("true" "false")
+                                 ("==" "!=" "<=" ">=")))
+
+       (setq rotate-text-symbols '(("true" "false")
+                                   ("==" "!=" "<=" ">=")))
+       :bind (("M-s" . rotate-text)))
+   #+end_src
+
 ** visual-regexp-steroids
 
    Nice little mode to get a better search/replace experience.
