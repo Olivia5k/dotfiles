@@ -2523,6 +2523,21 @@ documentation in a style similar to literate programming.
       (global-set-key (kbd "C-x 3") 'th-disabled-key)
    #+end_src
 
+*** Quick switching
+
+    Even though the hydra above is great, there are some things we just do all
+    the time - switching between the windows.
+
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-x h") 'windmove-left)
+      (global-set-key (kbd "C-x j") 'windmove-down)
+      (global-set-key (kbd "C-x k") 'windmove-up)
+      (global-set-key (kbd "C-x l") 'windmove-right)
+    #+end_src
+
+
+
+
 * Work
 
   Work-specific things that are in other repositories because secrets.
