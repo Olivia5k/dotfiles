@@ -1790,8 +1790,14 @@ documentation in a style similar to literate programming.
        (when (not dir)
          (setq dir default-directory))
 
-       ;; TODO: Only fetches the first file right now
-       (car (f-files dir (lambda (file) (equal (f-ext file) "env")))))
+       ;; Fetches the first file if there is only one - completing read if multiple.
+       ;; TODO(thiderman): No error handling if there are no files
+       (let* ((files (f-files dir
+                              (lambda (file)
+                                (equal (f-ext file) "env")))))
+         (if (= 1 (length files))
+             (car files)
+           (completing-read "env: " files))))
 
      (defun th-get-env-hash (fn)
        "For a given filename, return a list of acons of env variables inside."
