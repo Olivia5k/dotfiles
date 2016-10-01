@@ -2440,6 +2440,10 @@ documentation in a style similar to literate programming.
      ;; Try to make emax split vertically when possible
      (setq split-height-threshold 100)
      (setq split-width-threshold 160)
+
+     ;; So that (compile) and other commands re-use already open buffers in other
+     ;; frames. Really useful when using dual monitors.
+     (setq display-buffer-reuse-frames t)
    #+end_src
 
 *** Killing windows
