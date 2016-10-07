@@ -1996,6 +1996,8 @@ documentation in a style similar to literate programming.
        ("f" fci-mode "Fill column")
        ("M-f" auto-revert-tail-mode "Revert tail (follow)")
        ("h" highlight-symbol-mode "Highlight symbol")
+       ("j" text-scale-decrease "Font -")
+       ("k" text-scale-increase "Font +")
        ("l" linum-mode "Line numbers")
        ("r" rainbow-identifiers-mode "Rainbow identifiers")
        ("t" toggle-truncate-lines "Truncate lines"))
