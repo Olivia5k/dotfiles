@@ -2135,7 +2135,8 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (defvar mode-line-cleaner-alist
-       `((paredit-mode . "()")
+       `((paredit-mode . "")
+         (lispy-mode . " ()")
          (eldoc-mode . "")
          (abbrev-mode . "")
          (auto-fill-mode "")
@@ -2144,6 +2145,7 @@ documentation in a style similar to literate programming.
          (auto-revert-mode "")
          (yas-minor-mode "")
          (undo-tree-mode "")
+         (ivy-mode "")
 
          ;; Major modes
          (js2-mode "js2")
