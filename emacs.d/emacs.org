@@ -1897,12 +1897,7 @@ documentation in a style similar to literate programming.
               (sym (symbol-name (symbol-at-point))))
           (if fn
               (find-file fn)
-            (helm :sources helm-projectile-sources-list
-                  :buffer "*helm projectile*"
-                  :input sym
-                  :prompt (projectile-prepend-project-name (if (projectile-project-p)
-                                                               "pattern: "
-                                                             "Switch to project: ")))))))
+            (counsel-find-file sym)))))
    #+end_src
 
 ** fixme-mode
