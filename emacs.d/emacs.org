@@ -2248,7 +2248,8 @@ documentation in a style similar to literate programming.
                (t "    ")))
         "    "
         ; directory and buffer/file name
-        (:propertize (:eval (shorten-directory default-directory 30))
+        (:propertize (:eval (when (not (s-contains? "*" (buffer-name)))
+                              (shorten-directory default-directory 30)))
                      face mode-line-folder-face)
         (:propertize "%b"
                      face mode-line-filename-face)
