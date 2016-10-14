@@ -583,6 +583,10 @@ alias sp=sagacity
 # If we're on a remote machine and in a tmux, source the remote tmux file
 if [[ -d "/spotify" ]] && [[ -n "$TMUX" ]]; then
   tmux source-file ~/.tmux/remote.conf &> /dev/null
+
+  if [[ -d "/payments" ]]; then
+    tmux set -g status-left "#[fg=colour255,bg=colour28,bold] payments-docker #[bg=colour234] "
+  fi
 fi
 
 local USERFILE="$ZSHCONFDIR/local.zsh"
