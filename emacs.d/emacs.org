@@ -1181,7 +1181,9 @@ documentation in a style similar to literate programming.
          'org-babel-load-languages
          '((emacs-lisp . t)
            (sql . t)
-           (shell . t)))
+           (shell . t)
+           (python . t)
+           (js . t)))
 
         (org-bullets-mode 1))
 
