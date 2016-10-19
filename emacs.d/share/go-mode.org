@@ -314,24 +314,34 @@ rather than a very tricky to use keymap.
 
   #+end_src
 
-* Struct pointer refactoring
+* Method receiver refactoring
 
-  =C-c C-m r=, a function to change the type signature of the current
-  method. Will
+  Adds ~go-refactor-method-receiver~ (bound to =C-c C-m r=), a function to
+  change the type signature of the current method.
+
+  Calling it will present a selection of all available types in the current
+  file. Selecting one of them will change the receiver to the new one, so
+  selecting /User/ will set the receiver to be ~(u *User)~.
+
+  If there was a previous type (e.g. ~(s *Server)~) all instances of ~s~ will
+  be replaced with ~u~ inside of the method.
+
+  The special type ~<none>~ will remove the receiver. This will not change the
+  ~s~ in the example above.
 
   #+begin_src emacs-lisp
     (defun go--convert-type-name-to-receiver (tn)
       "Converts from the string \"Type\" to \"(t *Type)\""
       (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
 
-    (defun go--get-types (&optional file-name skip)
+    (defun go--get-types (&optional file-name skip-type)
       "Return a list of all the types found in the current file.
 
     The strings returned are based on all lines that begin with
     '^type'. The letters 'type ' and the ending ' {' are both
     removed.
 
-    If `skip' is provided, that type will not be included in the resulting list."
+    If `skip-type' is provided, that type will not be included in the resulting list."
 
       (save-excursion
         (let ((fn (or file-name (buffer-file-name))))
@@ -339,10 +349,10 @@ rather than a very tricky to use keymap.
            (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
            (-filter
             (lambda (s)
-              (if skip
-                  ;; If skip is provided, also filter out that line
+              (if skip-type
+                  ;; If skip-type is provided, also filter out that line
                   (and (s-prefix? "type " s)
-                       (not (s-prefix? (format "type %s " skip) s)))
+                       (not (s-prefix? (format "type %s " skip-type) s)))
                 ;; Otherwise just return lines that start with "type"
                 (s-prefix? "type " s)))
 
