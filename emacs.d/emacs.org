@@ -796,16 +796,20 @@ documentation in a style similar to literate programming.
     These are functions used inside of yas.
 
     #+begin_src emacs-lisp
-      (defun th-go-get-type-signature ()
-        "Get the signature of the closest type: (t *Type)"
+      (defun th-go-select-type-signature ()
+        "Used to make a selection of what type to attach a new func to"
         (save-excursion
-          (re-search-backward "^type" nil t)
-          (if (looking-at "type")
-              (progn (forward-word 2)
-                     (let ((s (symbol-name (symbol-at-point))))
-                       (format "(%s *%s)" (s-downcase (s-left 1 s)) s)))
-            "")))
-
+          (let* ((empty "<none>")
+                 (type (completing-read
+                        "Type: "
+                        (append (list empty)
+                                (go--get-types)))))
+            (if (not (s-equals? type empty))
+                (format
+                 " %s "
+                 (go--convert-type-name-to-receiver
+                  (car (s-split " " type))))
+              " "))))
     #+end_src
 
 *** Compiling and executing
