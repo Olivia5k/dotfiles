@@ -2368,11 +2368,11 @@ documentation in a style similar to literate programming.
      (make-face 'mode-line-process-face)
      (make-face 'mode-line-hi-col-face)
 
-     (set-face-attribute 'mode-line nil          :foreground "gray60" :background "#333333" :inverse-video nil :box '(:line-width 3 :color "#101010" :style nil))
-     (set-face-attribute 'mode-line-inactive nil :foreground "gray80" :background "#1B141F" :inverse-video nil :box '(:line-width 3 :color "#1B141F" :style nil))
+     (set-face-attribute 'mode-line nil          :foreground "gray80" :background "#333333" :inverse-video nil :box '(:line-width 1 :color "#101010" :style nil))
+     (set-face-attribute 'mode-line-inactive nil :foreground "gray60" :background "#1d2021" :inverse-video nil :box '(:line-width 1 :color "#101010" :style nil))
 
-     (set-face-attribute 'mode-line-read-only-face nil  :inherit 'mode-line-face          :foreground "#4271ae" :box '(:line-width 3 :color "#4271ae"))
-     (set-face-attribute 'mode-line-modified-face nil   :inherit 'mode-line-face          :foreground "#FF0000" :background "#dbdbdb" :box '(:line-width 3 :color "#880000"))
+     (set-face-attribute 'mode-line-read-only-face nil  :inherit 'mode-line-face          :foreground "#4271ae" :box '(:line-width 1 :color "#4271ae"))
+     (set-face-attribute 'mode-line-modified-face nil   :inherit 'mode-line-face          :foreground "#FF0000" :background "#dbdbdb" :box '(:line-width 1 :color "#880000"))
      (set-face-attribute 'mode-line-folder-face nil     :inherit 'mode-line-face          :foreground "gray50")
      (set-face-attribute 'mode-line-filename-face nil   :inherit 'mode-line-face          :foreground "#FABD2F" :weight 'bold)
      (set-face-attribute 'mode-line-position-face nil   :inherit 'mode-line-face)
