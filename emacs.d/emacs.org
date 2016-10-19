@@ -1204,6 +1204,12 @@ documentation in a style similar to literate programming.
           ("x" go-guru-expand-region "expand-region")))
     #+end_src
 
+** hydra
+
+   #+begin_src emacs-lisp
+     (use-package hydra)
+   #+end_src
+
 ** logview-mode
 
    Nifty little mode that makes reading structured logs easier.
