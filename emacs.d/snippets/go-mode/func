@@ -3,6 +3,6 @@
 # key: func
 # --
 // $1 ${4:...}
-func`(th-go-select-type-signature)`${1:name}(${2:args}) ${3:ret} {
+func`(th/go-select-type-signature)`${1:name}(${2:args}) ${3:ret} {
   $0
 }
