@@ -6,6 +6,7 @@
 ac-comphist.dat
 anaconda-mode/
 auto-save-list
+bookmarks
 el-get
 elpa
 emacs.el
@@ -20,4 +21,5 @@ smex-items
 snippets/core
 tramp
 url/
+var
 xkcd/
