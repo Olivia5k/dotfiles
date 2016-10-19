@@ -17,9 +17,10 @@ You will need [[https://github.com/jwiegley/use-package][use-package]] for this 
 If you have [[https://github.com/abo-abo/hydra][hydra]] installed, the [[https://godoc.org/golang.org/x/tools/cmd/guru][guru]] command of ~C-c C-o~ will become a hydra
 rather than a very tricky to use keymap.
 
-* Package and hooks
+* Packages and hooks
 
   Load the base go-mode package and set up the hooks.
+  Also installs the libraries that these tricks depend on.
 
   #+begin_src emacs-lisp
     (use-package go-mode
@@ -41,9 +42,14 @@ rather than a very tricky to use keymap.
       (add-hook 'go-mode-hook 'th/go-hook)
       (add-hook 'go-mode-hook 'go-eldoc-setup))
 
+    (use-package company)
     (use-package company-go)
     (use-package go-eldoc)
 
+    ;; These are libraries used within
+    (use-package dash)
+    (use-package f)
+    (use-package s)
   #+end_src
 
 * goto functions
