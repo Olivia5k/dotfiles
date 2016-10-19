@@ -275,12 +275,19 @@ documentation in a style similar to literate programming.
                 (windmove-down)
                 (switch-to-buffer buf))
           "horz")
+
          ("s" (lambda (buf)
                 (interactive)
                 (split-window-right)
                 (windmove-right)
                 (switch-to-buffer buf))
-          "horz")))
+          "vert")
+
+         ("d" (lambda (buf)
+                (interactive)
+                (kill-buffer buf)
+                (message "Buffer %s killed" buf))
+          "delete")))
     #+end_src
 
 * Editing
