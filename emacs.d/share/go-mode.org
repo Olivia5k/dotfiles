@@ -576,8 +576,6 @@ rather than a very tricky to use keymap.
         (kbd "C-c C-o")
         (defhydra th/go-guru (:exit t)
           "Guru commands"
-          ("C-o" th/org-project "Project file")
-
           ("d" go-guru-describe "describe")
           ("f" go-guru-freevars "freevars")
           ("i" go-guru-implements "implements")
