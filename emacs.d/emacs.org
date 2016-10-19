@@ -196,6 +196,9 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (use-package projectile
        :bind (("C-x f" . projectile-find-file))
+       :bind-keymap (("C-x p" . projectile-command-map))
+       :commands (projectile-switch-project)
+       :demand
 
        :config
        (projectile-global-mode)
