@@ -17,6 +17,7 @@ projectile-bookmarks.eld
 recentf
 recentf~
 semanticdb/
+share/*.el
 smex-items
 snippets/core
 tramp
