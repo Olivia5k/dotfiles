@@ -2312,7 +2312,16 @@ documentation in a style similar to literate programming.
         "    "
         ; directory and buffer/file name
         (:propertize (:eval (when (not (s-contains? "*" (buffer-name)))
-                              (shorten-directory default-directory 30)))
+                              (let* ((projectile-require-project-root nil)
+                                     (ppr (projectile-project-root))
+                                     (target default-directory))
+                                ;; If there is a projectile root, remove everything
+                                ;; in front of its name to save space.
+                                (when ppr (setq
+                                           target
+                                           (s-replace (concat (f-dirname ppr) "/") "" target)))
+
+                                (shorten-directory target 30))))
                      face mode-line-folder-face)
         (:propertize "%b"
                      face mode-line-filename-face)
