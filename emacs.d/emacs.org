@@ -2038,17 +2038,23 @@ documentation in a style similar to literate programming.
           (jump-to-register :magit-fullscreen)))
     #+end_src
 
-** Minor mode switching
+** Utility hydra
 
-   There are some minor modes that you might want to have enabled every now
-   and again. This provides a nice hydra that lets you do many of them real
-   quick.
+   This is a hydra that does many things that are useful every now and
+   again. It can:
+
+   * Toggle ~auto-fill~, ~fci~, ~linum~, ~highlight-symbol~,
+     ~rainbow-identifiers~, ~auto-revert~ and ~truncate-lines~ modes.
+   * Increase and decrease font size for the current buffer
+   * Load .env files in a repository into the emacs env
+   * Enter the yas hydra
 
    #+begin_src emacs-lisp
-     (defhydra th-modeswitch ()
-       "Switching minor modes"
-       ("a" auto-fill-mode "Auto fill")
-       ("e" th-load-env "Load 12FA env")
+     (defhydra th-util-hydra ()
+       "Util"
+       ("e" th-load-env "Load 12FA env" :color blue)
+       ("s" th-yas-hydra/body "yas" :color blue)
+       ("a" auto-fill-mode Auto fill)
        ("f" fci-mode "Fill column")
        ("M-f" auto-revert-tail-mode "Revert tail (follow)")
        ("h" highlight-symbol-mode "Highlight symbol")
@@ -2058,7 +2064,7 @@ documentation in a style similar to literate programming.
        ("r" rainbow-identifiers-mode "Rainbow identifiers")
        ("t" toggle-truncate-lines "Truncate lines"))
 
-     (global-set-key (kbd "C-x c") 'th-modeswitch/body)
+     (global-set-key (kbd "C-x c") 'th-util-hydra/body)
    #+end_src
 
 ** move-text
