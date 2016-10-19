@@ -120,7 +120,7 @@ documentation in a style similar to literate programming.
           "Iosevka-12"
         "Iosevka-10"))
 
-     (defun th-toggle-font ()
+     (defun th/toggle-font ()
        "Toggles between smaller and larger fonts"
        (interactive)
        (set-frame-font
@@ -128,10 +128,10 @@ documentation in a style similar to literate programming.
             "Iosevka-10"
           "Iosevka-12")))
 
-     (global-set-key (kbd "M-1") 'th-toggle-font)
+     (global-set-key (kbd "M-1") 'th/toggle-font)
 
      ;; This is called at the very bottom of emacs.org. See comments there.
-     (defun th-fix-darktooth ()
+     (defun th/fix-darktooth ()
        "Things that make darktooth a theme more suited for me."
 
        (let ((faces (face-list)))
@@ -322,7 +322,7 @@ documentation in a style similar to literate programming.
    Comments lines or regions.
 
    #+begin_src emacs-lisp
-     (defun th-comment-block ()
+     (defun th/comment-block ()
        (interactive)
        (let ((start (line-beginning-position))
              (end (line-end-position)))
@@ -337,7 +337,7 @@ documentation in a style similar to literate programming.
                        (point))))
          (comment-or-uncomment-region start end)))
 
-     (global-set-key (kbd "M-;") 'th-comment-block)
+     (global-set-key (kbd "M-;") 'th/comment-block)
    #+end_src
 
 ** Enhanced default keybindings
@@ -496,7 +496,7 @@ documentation in a style similar to literate programming.
        (add-hook 'markdown-mode 'yas-minor-mode)
        (add-hook 'org-mode-hook 'yas-minor-mode))
 
-     (defhydra th-yas-hydra (:exit t)
+     (defhydra th/yas-hydra (:exit t)
        "yas"
        ("s" yas-insert-snippet "snippet")
        ("M-s" yas-insert-snippet "snippet")
@@ -504,7 +504,7 @@ documentation in a style similar to literate programming.
        ("n" yas-new-snippet "new")
        ("v" yas-visit-snippet-file "visit"))
 
-     (global-set-key (kbd "M-s") 'th-yas-hydra/body)
+     (global-set-key (kbd "M-s") 'th/yas-hydra/body)
    #+end_src
 
 * Major modes
@@ -518,12 +518,12 @@ documentation in a style similar to literate programming.
     #+begin_src emacs-lisp
       (use-package compile
         :bind (:map compilation-mode-map
-               ("q" . th-quit-compilation-buffer)
+               ("q" . th/quit-compilation-buffer)
                ;; `C-c l` is because that same command is used in golang and others
-               ("C-c l" . th-toggle-maximize-buffer)
+               ("C-c l" . th/toggle-maximize-buffer)
 
                :map go-mode-map
-               ("C-c l" . th-maximize-log))
+               ("C-c l" . th/maximize-log))
 
         :init
         (setq compilation-always-kill t
@@ -531,7 +531,7 @@ documentation in a style similar to literate programming.
               compilation-auto-jump-to-first-error nil
               compilation-scroll-output t)
 
-        (defun th-toggle-maximize-buffer (&optional buffer-name)
+        (defun th/toggle-maximize-buffer (&optional buffer-name)
           "Maximize buffer"
           (interactive)
           (if (= 1 (length (window-list)))
@@ -542,11 +542,11 @@ documentation in a style similar to literate programming.
                   (switch-to-buffer buffer-name))
               (delete-other-windows))))
 
-        (defun th-maximize-log ()
+        (defun th/maximize-log ()
           (interactive)
-          (th-toggle-maximize-buffer "*compilation*"))
+          (th/toggle-maximize-buffer "*compilation*"))
 
-        (defun th-quit-compilation-buffer ()
+        (defun th/quit-compilation-buffer ()
           ;; TODO: Maybe this can be done with advice instead?
           (interactive)
           (if (= 1 (length (window-list)))
@@ -562,7 +562,7 @@ documentation in a style similar to literate programming.
      (use-package lispy
        :bind (:map lispy-mode-map
                    ;; This one just needs to be overwritten
-                   ("M-o" . th-org/body)))
+                   ("M-o" . th/org/body)))
 
      (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
      (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
@@ -580,7 +580,7 @@ documentation in a style similar to literate programming.
            (if (file-exists-p (concat buffer-file-name "c"))
                (delete-file (concat buffer-file-name "c")))))))
 
-     (defun th-buffer-or-region (action-name buffer-func region-func)
+     (defun th/buffer-or-region (action-name buffer-func region-func)
        (let ((s "Buffer"))
          (if (use-region-p)
              (progn
@@ -593,7 +593,7 @@ documentation in a style similar to literate programming.
 
      (defun eval-buffer-or-region ()
        (interactive)
-       (th-buffer-or-region "eval" 'eval-buffer 'eval-region))
+       (th/buffer-or-region "eval" 'eval-buffer 'eval-region))
 
      (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
    #+end_src
@@ -627,16 +627,16 @@ documentation in a style similar to literate programming.
         ("C-c i"   . go-goto-imports)
         ("C-c C-i" . go-remove-unused-imports)
         ("C-c d"   . godoc)
-        ("C-c C-o" . th-go-guru/body)
+        ("C-c C-o" . th/go-guru/body)
 
         :init
-        (defun th-go-hook ()
+        (defun th/go-hook ()
           (add-hook 'before-save-hook 'gofmt-before-save)
           (set (make-local-variable 'company-backends) '(company-go))
           (company-mode)
           (flycheck-mode 1))
 
-        (defhydra th-go-guru (:exit t)
+        (defhydra th/go-guru (:exit t)
           ("d" go-guru-describe)
           ("f" go-guru-freevars)
           ("i" go-guru-implements)
@@ -652,7 +652,7 @@ documentation in a style similar to literate programming.
 
         :config
         (require 'go-guru)
-        (add-hook 'go-mode-hook 'th-go-hook)
+        (add-hook 'go-mode-hook 'th/go-hook)
         (add-hook 'go-mode-hook 'go-eldoc-setup))
 
       (use-package company-go)
@@ -672,7 +672,7 @@ documentation in a style similar to literate programming.
     Shows coverage for the current go file. Deletes other windows.
 
     #+begin_src emacs-lisp
-      (defun th-go-coverage ()
+      (defun th/go-coverage ()
         "Toggle coverage mode for the current buffer"
         (interactive)
 
@@ -681,25 +681,25 @@ documentation in a style similar to literate programming.
             (if (s-contains? "<gocov>" bn)
                 (progn
                   (windmove-left)
-                  (th-go-test-buffer-p))
+                  (th/go-test-buffer-p))
 
               (if (s-contains? "_test.go" bn)
                   (progn
                     (windmove-left)
-                    (th-go-coverage-p))
+                    (th/go-coverage-p))
                 (windmove-right)
                 (if (not (s-contains? "<gocov>" (buffer-name)))
                     (progn
                       (windmove-left)
-                      (th-go-coverage-p))
+                      (th/go-coverage-p))
                   (windmove-left)
-                  (th-go-test-buffer-p)))))))
+                  (th/go-test-buffer-p)))))))
 
-      (defun th-go-coverage-p ()
+      (defun th/go-coverage-p ()
         (delete-other-windows)
         (go-coverage (concat (projectile-project-root) "cover.out")))
 
-      (define-key go-mode-map (kbd "C-c c") 'th-go-coverage)
+      (define-key go-mode-map (kbd "C-c c") 'th/go-coverage)
     #+end_src
 
 *** Test file view
@@ -708,16 +708,16 @@ documentation in a style similar to literate programming.
     The test file will be created if it does not already exist.
 
     #+begin_src emacs-lisp
-      (defun th-go-test-buffer-p ()
+      (defun th/go-test-buffer-p ()
         (let* ((bname (buffer-file-name))
                (left "")
                (right ""))
 
           (if (s-suffix? "_test.go" bname)
-              (setq left (th-go-alternate-file bname)
+              (setq left (th/go-alternate-file bname)
                     right bname)
             (setq left bname
-                  right (th-go-alternate-file bname)))
+                  right (th/go-alternate-file bname)))
 
           (find-file left)
           (delete-other-windows)
@@ -725,13 +725,13 @@ documentation in a style similar to literate programming.
           (windmove-right)
           (find-file right)))
 
-      (defun th-go-test-buffer ()
+      (defun th/go-test-buffer ()
         (interactive)
-        (th-go-test-buffer-p))
+        (th/go-test-buffer-p))
 
-      (defun th-go-test-buffer-split (file)
+      (defun th/go-test-buffer-split (file)
         ;; If we happen to be on the test file when splitting, go left once
-        (when (th-go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
+        (when (th/go-test-file-p (buffer-file-name (get-buffer helm-current-buffer)))
           (windmove-left))
 
         (let ((fn (format "%s/%s.go" (projectile-project-root) file)))
@@ -739,29 +739,29 @@ documentation in a style similar to literate programming.
           (find-file fn)
           (windmove-right)
           (split-window-below)
-          (find-file (th-go-alternate-file fn))
+          (find-file (th/go-alternate-file fn))
           (balance-windows)))
 
-      (defun th-go-alternate-file (fn)
+      (defun th/go-alternate-file (fn)
         "If fn is code, return path to test file and vice versa"
 
         (if (s-suffix? "_test.go" fn)
             (s-replace "_test.go" ".go" fn)
           (s-replace ".go" "_test.go" fn)))
 
-      (defun th-go-test-file-p (&optional fn)
+      (defun th/go-test-file-p (&optional fn)
         "Returns boolean if the file name given is a test file"
         (s-contains? "_test.go"
                      (if (not fn)
                          (buffer-file-name)
                        fn)))
 
-      (defun th-go-alternate ()
+      (defun th/go-alternate ()
         "Go to the alternate file; code or test."
         (interactive)
-        (find-file (th-go-alternate-file (buffer-name))))
+        (find-file (th/go-alternate-file (buffer-name))))
 
-      (define-key go-mode-map (kbd "C-c a") 'th-go-alternate)
+      (define-key go-mode-map (kbd "C-c a") 'th/go-alternate)
     #+end_src
 
 *** Single test execution
@@ -771,24 +771,24 @@ documentation in a style similar to literate programming.
     most recently executed test will be run again.
 
     #+begin_src emacs-lisp
-      (defun th-go-get-test-above ()
+      (defun th/go-get-test-above ()
         "Gets the name of the test above point"
         (save-excursion
           (re-search-backward "^func \\(Test\\|Example\\)" nil t)
           (forward-word 2)
           (thing-at-point 'symbol t)))
 
-      (defvar th-go-last-single-test "go test" "The last single test command that was run")
+      (defvar th/go-last-single-test "go test" "The last single test command that was run")
 
-      (defun th-go-single-test ()
+      (defun th/go-single-test ()
         "If in test file, run the test above point. If not, run the last run test."
         (interactive)
         (projectile-save-project-buffers)
-        (when (th-go-test-file-p)
-          (setq th-go-single-test (format "go test -v -run %s" (th-go-get-test-above))))
-        (compile th-go-single-test))
+        (when (th/go-test-file-p)
+          (setq th/go-single-test (format "go test -v -run %s" (th/go-get-test-above))))
+        (compile th/go-single-test))
 
-      (define-key go-mode-map (kbd "C-M-x") 'th-go-single-test)
+      (define-key go-mode-map (kbd "C-M-x") 'th/go-single-test)
     #+end_src
 
 *** Snippet helpers
@@ -796,7 +796,7 @@ documentation in a style similar to literate programming.
     These are functions used inside of yas.
 
     #+begin_src emacs-lisp
-      (defun th-go-select-type-signature ()
+      (defun th/go-select-type-signature ()
         "Used to make a selection of what type to attach a new func to"
         (save-excursion
           (let* ((empty "<none>")
@@ -818,31 +818,31 @@ documentation in a style similar to literate programming.
     simpler.
 
     #+begin_src emacs-lisp
-      (defun th-go-test ()
+      (defun th/go-test ()
         (interactive)
         (projectile-save-project-buffers)
         ;; The server compile command should run in the root
         (compile "go test -coverprofile=cover.out"))
 
-      (define-key go-mode-map (kbd "C-c C-c") 'th-go-test)
+      (define-key go-mode-map (kbd "C-c C-c") 'th/go-test)
 
-      (defun th-go-server-compile ()
+      (defun th/go-server-compile ()
         (interactive)
         (projectile-save-project-buffers)
         ;; The server compile command should run in the root
-        (with-current-buffer (th-go-main-file-buffer)
+        (with-current-buffer (th/go-main-file-buffer)
           (compile "go build -v")))
 
-      (defun th-go-main-file ()
+      (defun th/go-main-file ()
         "Returns the main go file of the project"
         (let ((path (projectile-project-root)))
           (concat path (format "%s.go" (f-base path)))))
 
-      (defun th-go-main-file-buffer ()
+      (defun th/go-main-file-buffer ()
         "Returns the buffer of the main go file of the project"
-        (get-file-buffer (th-go-main-file)))
+        (get-file-buffer (th/go-main-file)))
 
-      (defun th-go-modules ()
+      (defun th/go-modules ()
         "Get the paths to all modules found in the project"
         (let ((path (projectile-project-root)))
           (cdr ;; Remove the ./
@@ -1098,7 +1098,7 @@ documentation in a style similar to literate programming.
 
     #+begin_src emacs-lisp
       ;; TODO: Make the argument part configurable
-      (defun th-go-server-start ()
+      (defun th/go-server-start ()
         "Start the server for the app"
         (interactive)
         (let* ((root (projectile-project-root))
@@ -1107,7 +1107,7 @@ documentation in a style similar to literate programming.
 
           ;; If the server is already running, stop it; effectively making this a restart.
           (when (get-process procname)
-            (th-go-server-stop))
+            (th/go-server-stop))
 
           (start-process
            procname
@@ -1115,10 +1115,10 @@ documentation in a style similar to literate programming.
            (concat root name)
            "server")
 
-          ;; (set-process-filter proc 'th-go-server-insertion-filter)
+          ;; (set-process-filter proc 'th/go-server-insertion-filter)
           (message "Started %s server" name)))
 
-      (defun th-go-server-stop ()
+      (defun th/go-server-stop ()
         "Stop the server for the app"
         (interactive)
         (let* ((name (f-base (projectile-project-root))))
@@ -1127,7 +1127,7 @@ documentation in a style similar to literate programming.
           (message "Stopped %s server" name)))
 
       ;; TODO: Move this to a non-golang place
-      (defun th-npm-server-start ()
+      (defun th/npm-server-start ()
         "Start the server for the app"
         (interactive)
         (let* ((root (projectile-project-root))
@@ -1138,14 +1138,14 @@ documentation in a style similar to literate programming.
 
           ;; If the server is already running, stop it; effectively making this a restart.
           (when (get-process procname)
-            (th-npm-server-stop))
+            (th/npm-server-stop))
 
           (let ((default-directory dir))
             (start-process procname procbuffer "npm" "run" "dev"))
 
           (message "Started %s npm server" name)))
 
-      (defun th-npm-server-stop ()
+      (defun th/npm-server-stop ()
         "Stop the server for the app"
         (interactive)
         (let* ((name (f-base (projectile-project-root))))
@@ -1153,13 +1153,13 @@ documentation in a style similar to literate programming.
            (format "*%s-npm-server*" name))
           (message "Stopped %s server" name)))
 
-      (defun th-go-server-buffer ()
+      (defun th/go-server-buffer ()
         "Stop the server for the app"
         (interactive)
         (let* ((name (f-base (projectile-project-root))))
           (switch-to-buffer (format "*%s-server*" name))))
 
-      ;; (defun th-go-server-insertion-filter (proc string)
+      ;; (defun th/go-server-insertion-filter (proc string)
       ;;   (with-current-buffer (process-buffer proc)
       ;;     ;; Insert the text, advancing the process marker.
       ;;     (goto-char (process-mark proc))
@@ -1168,11 +1168,11 @@ documentation in a style similar to literate programming.
       ;;     (goto-char (point-max))))
 
       (let ((m (define-prefix-command 'go-server-map)))
-        (define-key m (kbd "s") 'th-go-server-start)
-        (define-key m (kbd "k") 'th-go-server-stop)
-        (define-key m (kbd "b") 'th-go-server-buffer)
-        (define-key m (kbd "c") 'th-go-server-compile)
-        (define-key m (kbd "n") 'th-npm-server-start))
+        (define-key m (kbd "s") 'th/go-server-start)
+        (define-key m (kbd "k") 'th/go-server-stop)
+        (define-key m (kbd "b") 'th/go-server-buffer)
+        (define-key m (kbd "c") 'th/go-server-compile)
+        (define-key m (kbd "n") 'th/npm-server-start))
 
       (define-key go-mode-map (kbd "C-c s") 'go-server-map)
     #+end_src
@@ -1186,9 +1186,9 @@ documentation in a style similar to literate programming.
       (define-key
         go-mode-map
         (kbd "C-c C-o")
-        (defhydra th-go-guru (:exit t)
+        (defhydra th/go-guru (:exit t)
           "Guru commands"
-          ("C-o" th-org-project "Project file")
+          ("C-o" th/org-project "Project file")
 
           ("d" go-guru-describe "describe")
           ("f" go-guru-freevars "freevars")
@@ -1379,7 +1379,7 @@ documentation in a style similar to literate programming.
 **** org-goto-for-project
 
      #+begin_src emacs-lisp
-       (defun th-org-project ()
+       (defun th/org-project ()
          "Go to the org project for the current repository.
 
        Go back if we're already in it."
@@ -1413,9 +1413,9 @@ documentation in a style similar to literate programming.
 *** Hydra commands
 
     #+begin_src emacs-lisp
-      (defhydra th-org (:exit t)
+      (defhydra th/org (:exit t)
         "Org commands"
-        ("C-o" th-org-project "Project file")
+        ("C-o" th/org-project "Project file")
         ("c" org-capture "Capture")
         ("M-o" org-capture "Capture")
         ("s" (org-agenda nil "a") "Schedule")
@@ -1423,7 +1423,7 @@ documentation in a style similar to literate programming.
         ("a" org-todo-list "Agenda")
         ("t" org-tags-view "Tags"))
 
-      (global-set-key (kbd "C-x C-o") 'th-org/body)
+      (global-set-key (kbd "C-x C-o") 'th/org/body)
     #+end_src
 
 ** prog-mode
@@ -1504,7 +1504,7 @@ documentation in a style similar to literate programming.
       (global-set-key (kbd "C-c v")
                       (lambda ()
                         (interactive)
-                        (th-other-files-suffix "vue")))
+                        (th/other-files-suffix "vue")))
     #+end_src
 
 * Minor modes and utilities
@@ -1512,7 +1512,7 @@ documentation in a style similar to literate programming.
 *** Other files with same extension
 
     #+begin_src emacs-lisp
-      (defun th-other-files-suffix (&optional suffix)
+      (defun th/other-files-suffix (&optional suffix)
         "Browse between files of a certain kind in the current project.
       Defaults to the suffix of the current buffer if none is given.
 
@@ -1539,13 +1539,13 @@ documentation in a style similar to literate programming.
                  (not (s-contains? x (buffer-file-name)))))
               (projectile-get-repo-files)))))))
 
-      (global-set-key (kbd "C-x a") 'th-other-files-suffix)
+      (global-set-key (kbd "C-x a") 'th/other-files-suffix)
     #+end_src
 
 *** Other files with the same base name
 
     #+begin_src emacs-lisp
-      (defun th-other-files-same-base ()
+      (defun th/other-files-same-base ()
         "Find other files that have the same base as the current
       one. Complete if there are multiple found.
 
@@ -1580,7 +1580,7 @@ documentation in a style similar to literate programming.
            (t
             (error "No alternate file for %s" (buffer-name))))))
 
-      (global-set-key (kbd "C-x C-a") 'th-other-files-same-base)
+      (global-set-key (kbd "C-x C-a") 'th/other-files-same-base)
     #+end_src
 
 ** Buffer toggles
@@ -1595,7 +1595,7 @@ documentation in a style similar to literate programming.
 *** Functions
 
     #+begin_src emacs-lisp
-      (defun th-toggle-buffer (func name &optional kill-window)
+      (defun th/toggle-buffer (func name &optional kill-window)
         "Toggle or destroy a buffer, depending on if it exists or not.
 
         The `func` argument should be a callable that toggles the buffer.
@@ -1617,7 +1617,7 @@ documentation in a style similar to literate programming.
           (unless done
             (funcall func))))
 
-      (defun th-toggle-file (path &optional no-save)
+      (defun th/toggle-file (path &optional no-save)
         (let ((file (file-truename path)))
           (if (s-equals? file buffer-file-name)
               (progn
@@ -1626,7 +1626,7 @@ documentation in a style similar to literate programming.
                 (previous-buffer))
             (find-file file))))
 
-      (defun th-echo-file-name ()
+      (defun th/echo-file-name ()
         (interactive)
         (message
          (s-chop-prefix
@@ -1647,7 +1647,7 @@ documentation in a style similar to literate programming.
       (define-key global-map (kbd "<f2>")
         (lambda ()
           (interactive)
-          (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+          (th/toggle-file (concat user-emacs-directory "emacs.org"))))
 
       (define-key global-map (kbd "C-x <f2>")
         (lambda ()
@@ -1655,12 +1655,12 @@ documentation in a style similar to literate programming.
           (split-window-below)
           (balance-windows)
           (windmove-down)
-          (th-toggle-file (concat user-emacs-directory "emacs.org"))))
+          (th/toggle-file (concat user-emacs-directory "emacs.org"))))
 
       (define-key global-map (kbd "<f3>")
         (lambda ()
           (interactive)
-          (th-toggle-file "~/.logs/payments/info.log" t)
+          (th/toggle-file "~/.logs/payments/info.log" t)
           (end-of-buffer)))
 
       (define-key global-map (kbd "<f4>")
@@ -1682,7 +1682,7 @@ documentation in a style similar to literate programming.
             (setq debug-on-error doe)
             (message "debug-on-error set to %s" doe))))
 
-      (define-key global-map (kbd "C-x ?") 'th-echo-file-name)
+      (define-key global-map (kbd "C-x ?") 'th/echo-file-name)
     #+end_src
 
 ** Configurationless utilities
@@ -1827,12 +1827,12 @@ documentation in a style similar to literate programming.
    set them into emacs. Useful if you are working with [[https://12factor.net/config][12 factor apps]].
 
    #+begin_src emacs-lisp
-     (defun th-load-env (&optional dir)
+     (defun th/load-env (&optional dir)
        "Loads all environment variables inside of given file into emacs."
        (interactive)
 
-       (let* ((fn (th-find-env-file dir))
-              (hash (th-get-env-hash fn))
+       (let* ((fn (th/find-env-file dir))
+              (hash (th/get-env-hash fn))
               (keys (hash-table-keys hash)))
          (mapcar
           (lambda (k)
@@ -1842,7 +1842,7 @@ documentation in a style similar to literate programming.
                   (f-base fn)
                   (s-join ", " keys))))
 
-     (defun th-find-env-file (&optional dir)
+     (defun th/find-env-file (&optional dir)
        "Find the .env file in the current directory.
 
      If `dir' is given, use that instead of current."
@@ -1859,24 +1859,24 @@ documentation in a style similar to literate programming.
              (car files)
            (completing-read "env: " files))))
 
-     (defun th-get-env-hash (fn)
+     (defun th/get-env-hash (fn)
        "For a given filename, return a list of acons of env variables inside."
        (let ((table (make-hash-table :test 'equal)))
          (with-temp-buffer
            (insert-file fn)
            (beginning-of-buffer)
-           (mapcar 'th--put-into-hash
-            (th--get-env-lines-in-file)))
+           (mapcar 'th/-put-into-hash
+            (th/-get-env-lines-in-file)))
          table))
 
-     (defun th--put-into-hash (s)
+     (defun th/-put-into-hash (s)
        (let* ((spl (s-split "=" (s-replace "export " "" s)))
               (key (car spl))
               (val (s-replace "\"" "" (cadr spl))))
          ;; `table' is set in the lexical scope of the callee
          (puthash key val table)))
 
-     (defun th--get-env-lines-in-file ()
+     (defun th/-get-env-lines-in-file ()
        (-filter
         (lambda (s) (s-starts-with? "export" s))
         (s-lines
@@ -1900,7 +1900,7 @@ documentation in a style similar to literate programming.
      (setq dired-hide-details-mode t)
      (setq diredp-hide-details-initially-flag t)
 
-     (defun th-kill-all-dired-buffers ()
+     (defun th/kill-all-dired-buffers ()
        (interactive)
        (mapc
         (lambda (buffer)
@@ -1908,7 +1908,7 @@ documentation in a style similar to literate programming.
             (kill-buffer buffer)))
         (buffer-list)))
 
-     (define-key dired-mode-map (kbd "q") 'th-kill-all-dired-buffers)
+     (define-key dired-mode-map (kbd "q") 'th/kill-all-dired-buffers)
    #+end_src
 
 ** emmet
@@ -2016,7 +2016,7 @@ documentation in a style similar to literate programming.
 
     #+begin_src emacs-lisp
       (use-package magit
-        :bind (("C-x g" . th-magit-status)
+        :bind (("C-x g" . th/magit-status)
                :map magit-status-mode-map
                ("q"   . magit-mode-bury-buffer)
                ;; In certain modes we want to just kill the window, not magit entirely
@@ -2024,7 +2024,7 @@ documentation in a style similar to literate programming.
                ("q"   . delete-window))
 
         :init
-        (defun th-magit-status ()
+        (defun th/magit-status ()
           (interactive)
           (save-some-buffers t)
           (magit-status))
@@ -2054,10 +2054,10 @@ documentation in a style similar to literate programming.
    * Enter the yas hydra
 
    #+begin_src emacs-lisp
-     (defhydra th-util-hydra ()
+     (defhydra th/util-hydra ()
        "Util"
-       ("e" th-load-env "Load 12FA env" :color blue)
-       ("s" th-yas-hydra/body "yas" :color blue)
+       ("e" th/load-env "Load 12FA env" :color blue)
+       ("s" th/yas-hydra/body "yas" :color blue)
        ("a" auto-fill-mode Auto fill)
        ("f" fci-mode "Fill column")
        ("M-f" auto-revert-tail-mode "Revert tail (follow)")
@@ -2068,7 +2068,7 @@ documentation in a style similar to literate programming.
        ("r" rainbow-identifiers-mode "Rainbow identifiers")
        ("t" toggle-truncate-lines "Truncate lines"))
 
-     (global-set-key (kbd "C-x c") 'th-util-hydra/body)
+     (global-set-key (kbd "C-x c") 'th/util-hydra/body)
    #+end_src
 
 ** move-text
@@ -2281,12 +2281,12 @@ documentation in a style similar to literate programming.
      (global-linum-mode 0)
      (setq linum-format " %4d ")
 
-     (defun th-linum-filter ()
+     (defun th/linum-filter ()
        "Only have line numbers when programming"
        (if (derived-mode-p 'prog-mode)
            (linum-mode 1)))
 
-     (add-hook 'find-file-hook 'th-linum-filter)
+     (add-hook 'find-file-hook 'th/linum-filter)
    #+end_src
 
 ** Minibuffer
@@ -2294,15 +2294,15 @@ documentation in a style similar to literate programming.
    Pasting into the minibuffer. Inspired by a [[http://blog.binchen.org/posts/paste-string-from-clipboard-into-minibuffer-in-emacs.html][blog post]] found some time ago.
 
    #+begin_src emacs-lisp
-     (defun th-paste-from-x-clipboard ()
+     (defun th/paste-from-x-clipboard ()
        (interactive)
        (shell-command "echo $(xsel -o)" 1))
 
-     (defun th-paste-in-minibuffer ()
-       (local-set-key (kbd "M-y") 'th-paste-from-x-clipboard)
-       (local-set-key [mouse-2] 'th-paste-from-x-clipboard))
+     (defun th/paste-in-minibuffer ()
+       (local-set-key (kbd "M-y") 'th/paste-from-x-clipboard)
+       (local-set-key [mouse-2] 'th/paste-from-x-clipboard))
 
-     (add-hook 'minibuffer-setup-hook 'th-paste-in-minibuffer)
+     (add-hook 'minibuffer-setup-hook 'th/paste-in-minibuffer)
    #+end_src
 
 ** mode-line
@@ -2529,7 +2529,7 @@ documentation in a style similar to literate programming.
     super quickly. So, =C-q= comes into play!
 
     #+begin_src emacs-lisp
-      (defun th-kill-window ()
+      (defun th/kill-window ()
         "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
         (interactive)
         (if (and (one-window-p) (server-running-p))
@@ -2542,7 +2542,7 @@ documentation in a style similar to literate programming.
             (save-excursion
               (balance-windows)))))
 
-      (global-set-key (kbd "C-q") 'th-kill-window)
+      (global-set-key (kbd "C-q") 'th/kill-window)
     #+end_src
 
 *** Hydra switching
@@ -2604,23 +2604,23 @@ documentation in a style similar to literate programming.
          ("i" ace-maximize-window "ace-one" :color blue)
          ("q" nil "cancel"))
 
-      (defun th-copy-or-hydra-window ()
+      (defun th/copy-or-hydra-window ()
         "M-w without a region is terrible. Make it useful instead."
         (interactive)
         (if (use-region-p)
             (kill-ring-save (region-beginning) (region-end))
           (hydra-window/body)))
 
-      (global-set-key (kbd "M-w") 'th-copy-or-hydra-window)
+      (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
 
       ;; Also disable the old ones so that I stop using them
-      (defun th-disabled-key ()
+      (defun th/disabled-key ()
         (interactive)
         (message "This key is disabled. Use M-w."))
 
-      (global-set-key (kbd "C-x 1") 'th-disabled-key)
-      (global-set-key (kbd "C-x 2") 'th-disabled-key)
-      (global-set-key (kbd "C-x 3") 'th-disabled-key)
+      (global-set-key (kbd "C-x 1") 'th/disabled-key)
+      (global-set-key (kbd "C-x 2") 'th/disabled-key)
+      (global-set-key (kbd "C-x 3") 'th/disabled-key)
    #+end_src
 
 *** Quick switching
@@ -2654,7 +2654,7 @@ documentation in a style similar to literate programming.
   happens. As such, we place it here.
 
   #+begin_src emacs-lisp
-    (th-fix-darktooth)
+    (th/fix-darktooth)
   #+end_src
 
 If only I was not one of those so very fond of tinkering and dotfiling, I
