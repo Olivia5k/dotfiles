@@ -2291,9 +2291,15 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      ;; Mode line setup - forked from http://amitp.blogspot.com.au/2011/08/emacs-custom-mode-line.html
+
+     ;; Remove the silly "Git" part of the mode line. I know I'm using git.
+     (setcdr (assq 'vc-mode mode-line-format)
+             '((:eval (replace-regexp-in-string "^ Git." " " vc-mode))))
+
      (setq-default
       mode-line-format
-      '(; Position, including warning for 80 columns
+      '("  "
+        ; Position, including warning for 80 columns
         (:propertize "%4l:" face mode-line-position-face)
         (:eval (propertize "%3c" 'face
                            (if (>= (current-column) 100)
