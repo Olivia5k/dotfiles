@@ -2389,6 +2389,7 @@ documentation in a style similar to literate programming.
   (tool-bar-mode -1)
   (mouse-wheel-mode 1)
   (scroll-bar-mode -1)
+  (blink-cursor-mode -1)
   (set-default 'truncate-lines nil)
 
   (setq mouse-yank-at-point t)
