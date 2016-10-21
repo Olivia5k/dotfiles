@@ -337,7 +337,7 @@ rather than a very tricky to use keymap.
      (define-key go-mode-map (kbd "C-c C-m i") 'go-refactor-wrap-if)
    #+end_src
 
-** TODO Wrap in loop
+** Wrap in loop
 
    Wraps the current line in a for loop. Places point just after ~for~.
 
@@ -350,7 +350,27 @@ rather than a very tricky to use keymap.
      (define-key go-mode-map (kbd "C-c C-m f") 'go-refactor-wrap-for)
    #+end_src
 
-** TODO Wrap in goroutine
+** Wrap in goroutine
+
+   Wraps the current line in a for loop. Places point just after ~for~.
+
+   #+begin_src emacs-lisp
+     (defun go-refactor-wrap-goroutine ()
+       (interactive)
+       (go--refactor-wrap "go func()")
+
+       ;; Also add the parenthesis at the end
+       (save-excursion
+         (end-of-line)
+         (backward-char 1)
+         (forward-list)
+         (insert "()"))
+
+       (forward-char 8))
+
+     (define-key go-mode-map (kbd "C-c C-m g") 'go-refactor-wrap-goroutine)
+   #+end_src
+
 ** TODO Wrap in err if
 ** TODO Raise
 ** TODO Extract variable
