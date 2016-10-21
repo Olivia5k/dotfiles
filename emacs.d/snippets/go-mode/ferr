@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ferr
+# key: ferr
+# --
+if err != nil {
+  log.Fatal(err)
+}
