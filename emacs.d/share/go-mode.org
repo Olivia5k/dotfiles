@@ -267,7 +267,7 @@ rather than a very tricky to use keymap.
       (interactive)
 
       ;; Only run this hook when in go mode
-      (when (eq major-mode 'go-mode)
+      (when (and nil (eq major-mode 'go-mode))
         (save-excursion
           (let ((fn (go--function-name)))
             (when (go--should-generate-docstring-p fn)
@@ -327,6 +327,28 @@ rather than a very tricky to use keymap.
 ** Wrap in if
 
    Wraps the current line in an if statement. Places point just after ~if~.
+
+   #+begin_src emacs-lisp
+     (defun go-refactor-wrap-if ()
+       "Wraps the current line in an if statement."
+       (interactive)
+       (save-excursion
+         (let* ((start (progn
+                         (beginning-of-line-text)
+                         (point)))
+                (end (progn
+                       (end-of-line)
+                       (point))))
+           (kill-region start end)
+           (insert "if  {}")
+           (backward-char 1)
+           (newline-and-indent)
+           (yank)))
+       (forward-char 3)
+     )
+
+     (define-key go-mode-map (kbd "C-c C-m i") 'go-refactor-wrap-if)
+   #+end_src
 
 ** TODO Wrap in goroutine
 ** TODO Wrap in loop
