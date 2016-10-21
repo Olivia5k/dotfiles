@@ -330,22 +330,21 @@ rather than a very tricky to use keymap.
 
    #+begin_src emacs-lisp
      (defun go-refactor-wrap-if ()
-       "Wraps the current line in an if statement."
+       "Wraps the current line or region in an if statement."
        (interactive)
        (save-excursion
-         (let* ((start (progn
-                         (beginning-of-line-text)
-                         (point)))
-                (end (progn
-                       (end-of-line)
-                       (point))))
-           (kill-region start end)
+         (let* ((pos (go--region-or-lines))
+                (beg (car pos))
+                (end (cadr pos)))
+           (kill-region beg end)
+           (indent-according-to-mode)
            (insert "if  {}")
            (backward-char 1)
            (newline-and-indent)
-           (yank)))
-       (forward-char 3)
-     )
+           (yank)
+           (indent-region beg end)))
+       (beginning-of-line-text)
+       (forward-char 3))
 
      (define-key go-mode-map (kbd "C-c C-m i") 'go-refactor-wrap-if)
    #+end_src
@@ -472,6 +471,7 @@ rather than a very tricky to use keymap.
      (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
    #+end_src
 ** Refactoring helper methods
+*** Type helper methods
 
    #+begin_src emacs-lisp
      (defun go--convert-type-name-to-receiver (tn)
@@ -507,6 +507,23 @@ rather than a very tricky to use keymap.
                (split-string (buffer-string) "\n" t)))))))
 
    #+end_src
+*** Region helper methods
+
+    #+begin_src emacs-lisp
+      (defun go--region-or-lines ()
+        "Operate or regions or lines"
+
+        (let (beg end)
+          (if (and mark-active (> (point) (mark)))
+              (exchange-point-and-mark))
+          (setq beg (save-excursion
+                      (back-to-indentation)
+                      (point)))
+          (if mark-active
+              (exchange-point-and-mark))
+          (setq end (line-end-position))
+          (list beg end)))
+    #+end_src
 
 * Debug toggler
 
