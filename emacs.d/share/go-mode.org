@@ -320,143 +320,171 @@ rather than a very tricky to use keymap.
 
   #+end_src
 
-* Method receiver refactoring
+* Refactoring
 
-  Adds ~go-refactor-method-receiver~ (bound to =C-c C-m r=), a function to
-  change the type signature of the current method.
+  These are inspired by [[https://github.com/magnars/js2-refactor.el][js2-refactor]].
 
-  Calling it will present a selection of all available types in the current
-  file. Selecting one of them will change the receiver to the new one, so
-  selecting /User/ will set the receiver to be ~(u *User)~.
+** Wrap in if
 
-  If there was a previous type (e.g. ~(s *Server)~) all instances of ~s~ will
-  be replaced with ~u~ inside of the method.
+   Wraps the current line in an if statement. Places point just after ~if~.
 
-  The special type ~<none>~ will remove the receiver. This will not change the
-  ~s~ in the example above.
+** TODO Wrap in goroutine
+** TODO Wrap in loop
+** TODO Wrap in err if
+** TODO Raise
+** TODO Extract variable
+** TODO Extract function
+** TODO Type migration
+** TODO Toggle error return
 
-  #+begin_src emacs-lisp
-    (defun go--convert-type-name-to-receiver (tn)
-      "Converts from the string \"Type\" to \"(t *Type)\""
-      (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
+   Toggles if the method returns an error or not. Adds or removes the `err`
+   variable to any return statements in the current function.
 
-    (defun go--get-types (&optional file-name skip-type)
-      "Return a list of all the types found in the current file.
+** TODO Toggle error assign
 
-    The strings returned are based on all lines that begin with
-    '^type'. The letters 'type ' and the ending ' {' are both
-    removed.
+   Toggles between ~err~/~_~ for the current assigment.
 
-    If `skip-type' is provided, that type will not be included in the resulting list."
+** Method receiver
 
-      (save-excursion
-        (let ((fn (or file-name (buffer-file-name))))
-          (-map
-           (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
-           (-filter
-            (lambda (s)
-              (if skip-type
-                  ;; If skip-type is provided, also filter out that line
-                  (and (s-prefix? "type " s)
-                       (not (s-prefix? (format "type %s " skip-type) s)))
-                ;; Otherwise just return lines that start with "type"
-                (s-prefix? "type " s)))
+   Adds ~go-refactor-method-receiver~ (bound to =C-c C-m r=), a function to
+   change the type signature of the current method.
 
-            ;; Does emacs really don't have a cleaner way of getting lines in a
-            ;; file? :/
-            (with-temp-buffer
-              (insert-file-contents fn)
-              (split-string (buffer-string) "\n" t)))))))
+   Calling it will present a selection of all available types in the current
+   file. Selecting one of them will change the receiver to the new one, so
+   selecting /User/ will set the receiver to be ~(u *User)~.
 
-    (defun go-refactor-method-receiver ()
-      "Changes or removes the method receiver of the current function.
+   If there was a previous type (e.g. ~(s *Server)~) all instances of ~s~ will
+   be replaced with ~u~ inside of the method.
 
-    A choice between all the types in the current file are
-    interactively presented. Also presented is an item `<none>',
-    which will remove the receiver if there is one.
+   The special type ~<none>~ will remove the receiver. This will not change the
+   ~s~ in the example above.
 
-    If there was a receiver and a new one is chosen,"
-      ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
-      (interactive)
-      (save-excursion
-        (go-goto-function t)
-        (forward-char 5)
+   #+begin_src emacs-lisp
+     (defun go-refactor-method-receiver ()
+       "Changes or removes the method receiver of the current function.
 
-        (let*
-            ((empty "<none>")
-             (current-var
-              (save-excursion
-                (forward-char 1)
-                (thing-at-point 'symbol t)))
-             (current-type
-              (save-excursion
-                (forward-char 1)
-                (forward-word 2)
-                (thing-at-point 'symbol t)))
-             (type (completing-read
-                    "Type: "
-                    (append (go--get-types (buffer-file-name) current-type)
-                            (list empty))))
-             (receiver (when (not (s-equals? type empty))
-                         (go--convert-type-name-to-receiver
-                          (car (s-split " " type))))))
+     A choice between all the types in the current file are
+     interactively presented. Also presented is an item `<none>',
+     which will remove the receiver if there is one.
 
-          (cond
-           ;; If we are looking at an opening parenthesis, there is already a method receiver
-           ((looking-at "(")
-            ;; Firstly, store the current receiver variable name.
+     If there was a receiver and a new one is chosen,"
+       ;; TODO(thiderman): We need to undo twice to undo this. Investigate.
+       (interactive)
+       (save-excursion
+         (go-goto-function t)
+         (forward-char 5)
 
-
-            ;; Then, delete the existing one.
-            (delete-region
-             (point)
-             (save-excursion
-               (forward-list 1)
-               (point)))
-            ;; If we do not have a receiver (i.e. we chose 'empty) we should
-            ;; delete the extra space.
-            (if (not receiver)
-                (delete-char 1)
-              ;; If there was a receiver previously and we set a new one, update the
-              ;; variable name.
-              (insert receiver)
-
-              ;; And also update the variable name inside of the function.
-              (when (and current-var receiver)
-                (go--refactor-symbol-in-function
-                 current-var
-                 (s-downcase (s-left 1 type))))))
-           ((and (not (looking-at "(")) receiver)
-            ;; There is no receiver, but we are adding one. Just insert it.
-            (insert (format "%s " receiver)))))))
-
-    (defun go--refactor-symbol-in-function (from to)
-      "Changes instances of the symbol `from' into `to'.
-
-    Assumes that point is on line defining the function we are replacing in."
-      (save-excursion
-        (beginning-of-line)
-        (let ((start
+         (let*
+             ((empty "<none>")
+              (current-var
                (save-excursion
-                 (forward-line -1)
-                 (point)))
-              (end
+                 (forward-char 1)
+                 (thing-at-point 'symbol t)))
+              (current-type
                (save-excursion
-                 ;; TODO(thiderman): Make a method that reliably moves to opening brace.
-                 (end-of-line)
-                 ;; In case of trailing whitespace...
-                 (search-backward "{")
-                 (forward-list 1)
-                 (backward-char 1)
-                 (point))))
+                 (forward-char 1)
+                 (forward-word 2)
+                 (thing-at-point 'symbol t)))
+              (type (completing-read
+                     "Type: "
+                     (append (go--get-types (buffer-file-name) current-type)
+                             (list empty))))
+              (receiver (when (not (s-equals? type empty))
+                          (go--convert-type-name-to-receiver
+                           (car (s-split " " type))))))
 
-          (replace-string from to t start end))))
+           (cond
+            ;; If we are looking at an opening parenthesis, there is already a method receiver
+            ((looking-at "(")
+             ;; Firstly, store the current receiver variable name.
 
-    (define-prefix-command 'go-refactor-map)
-    (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
 
-    (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
-  #+end_src
+             ;; Then, delete the existing one.
+             (delete-region
+              (point)
+              (save-excursion
+                (forward-list 1)
+                (point)))
+             ;; If we do not have a receiver (i.e. we chose 'empty) we should
+             ;; delete the extra space.
+             (if (not receiver)
+                 (delete-char 1)
+               ;; If there was a receiver previously and we set a new one, update the
+               ;; variable name.
+               (insert receiver)
+
+               ;; And also update the variable name inside of the function.
+               (when (and current-var receiver)
+                 (go--refactor-symbol-in-function
+                  current-var
+                  (s-downcase (s-left 1 type))))))
+            ((and (not (looking-at "(")) receiver)
+             ;; There is no receiver, but we are adding one. Just insert it.
+             (insert (format "%s " receiver)))))))
+
+     (defun go--refactor-symbol-in-function (from to)
+       "Changes instances of the symbol `from' into `to'.
+
+     Assumes that point is on line defining the function we are replacing in."
+       (save-excursion
+         (beginning-of-line)
+         (let ((start
+                (save-excursion
+                  (forward-line -1)
+                  (point)))
+               (end
+                (save-excursion
+                  ;; TODO(thiderman): Make a method that reliably moves to opening brace.
+                  (end-of-line)
+                  ;; In case of trailing whitespace...
+                  (search-backward "{")
+                  (forward-list 1)
+                  (backward-char 1)
+                  (point))))
+
+           (replace-string from to t start end))))
+
+     (define-prefix-command 'go-refactor-map)
+     (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
+
+     (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
+   #+end_src
+** Refactoring helper methods
+
+   #+begin_src emacs-lisp
+     (defun go--convert-type-name-to-receiver (tn)
+       "Converts from the string \"Type\" to \"(t *Type)\""
+       (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
+
+     (defun go--get-types (&optional file-name skip-type)
+       "Return a list of all the types found in the current file.
+
+     The strings returned are based on all lines that begin with
+     '^type'. The letters 'type ' and the ending ' {' are both
+     removed.
+
+     If `skip-type' is provided, that type will not be included in the resulting list."
+
+       (save-excursion
+         (let ((fn (or file-name (buffer-file-name))))
+           (-map
+            (lambda (s) (s-chop-suffix " {" (s-chop-prefix "type " s)))
+            (-filter
+             (lambda (s)
+               (if skip-type
+                   ;; If skip-type is provided, also filter out that line
+                   (and (s-prefix? "type " s)
+                        (not (s-prefix? (format "type %s " skip-type) s)))
+                 ;; Otherwise just return lines that start with "type"
+                 (s-prefix? "type " s)))
+
+             ;; Does emacs really don't have a cleaner way of getting lines in a
+             ;; file? :/
+             (with-temp-buffer
+               (insert-file-contents fn)
+               (split-string (buffer-string) "\n" t)))))))
+
+   #+end_src
 
 * Debug toggler
 
