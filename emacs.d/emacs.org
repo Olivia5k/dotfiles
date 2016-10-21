@@ -1151,10 +1151,11 @@ documentation in a style similar to literate programming.
 *** restclient
 
     Nifty package that lets you make requests towards a REST sources and
-    displays pretty versions of the
+    displays pretty versions of the responses.
 
     #+begin_src emacs-lisp
-      (use-package restclient)
+      (use-package restclient
+        :mode ("\\.http\\'" . restclient-mode))
     #+end_src
 
 *** transpose-frame
