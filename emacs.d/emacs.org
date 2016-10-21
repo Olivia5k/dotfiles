@@ -1737,7 +1737,9 @@ documentation in a style similar to literate programming.
                (t "    ")))
         "    "
         ; directory and buffer/file name
-        (:propertize (:eval (when (not (s-contains? "*" (buffer-name)))
+        (:propertize (:eval (when (and
+                                   (not (file-remote-p (buffer-file-name)))
+                                   (not (s-contains? "*" (buffer-name))))
                               (let* ((projectile-require-project-root nil)
                                      (ppr (projectile-project-root))
                                      (target default-directory))
