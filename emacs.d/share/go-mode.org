@@ -330,20 +330,8 @@ rather than a very tricky to use keymap.
 
    #+begin_src emacs-lisp
      (defun go-refactor-wrap-if ()
-       "Wraps the current line or region in an if statement."
        (interactive)
-       (save-excursion
-         (let* ((pos (go--region-or-lines))
-                (beg (car pos))
-                (end (cadr pos)))
-           (kill-region beg end)
-           (indent-according-to-mode)
-           (insert "if  {}")
-           (backward-char 1)
-           (newline-and-indent)
-           (yank)
-           (indent-region beg end)))
-       (beginning-of-line-text)
+       (go--refactor-wrap "if ")
        (forward-char 3))
 
      (define-key go-mode-map (kbd "C-c C-m i") 'go-refactor-wrap-if)
@@ -471,6 +459,64 @@ rather than a very tricky to use keymap.
      (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
    #+end_src
 ** Refactoring helper methods
+*** Wrapper helpers
+
+    #+begin_src emacs-lisp
+      (defun go--refactor-wrap (prefix)
+        "Wraps the current line or region or statement in a templated statement.
+
+      If the current line ends in an opening brace, the entire
+      statement until that brace's end will be wrapped.
+
+      Point ends up on the beginning of the templated statement."
+        (interactive)
+        (save-excursion
+          (let* ((pos (go--region-or-lines))
+                 (beg (car pos))
+                 (end (cadr pos)))
+            (kill-region beg end)
+            (indent-according-to-mode)
+            (insert (format "%s {}" prefix))
+            (backward-char 1)
+            (newline-and-indent)
+            (yank)))
+
+        (beginning-of-line-text)
+
+        ;; Indent the things we just wrapped
+        (indent-region
+         (point)
+         (save-excursion
+           (end-of-line)
+           (backward-char 1)
+           (forward-list)
+           (point)))))
+
+      (defun go--region-or-lines ()
+        "Operate or regions or lines"
+
+        (let (beg end)
+          (if (and mark-active (> (point) (mark)))
+              (exchange-point-and-mark))
+          (setq beg (save-excursion
+                      (back-to-indentation)
+                      (point)))
+          (if mark-active
+              (exchange-point-and-mark))
+          ;; If we're on a line that ends on an opening brace, set the end to
+          ;; be the outside of that brace.
+          (setq end
+                (save-excursion
+                  (if (progn (end-of-line)
+                             (backward-char 1)
+                             (looking-at "{"))
+                      (progn
+                        (forward-list)
+                        (point))
+                    (line-end-position))))
+          (list beg end)))
+    #+end_src
+
 *** Type helper methods
 
    #+begin_src emacs-lisp
@@ -507,23 +553,6 @@ rather than a very tricky to use keymap.
                (split-string (buffer-string) "\n" t)))))))
 
    #+end_src
-*** Region helper methods
-
-    #+begin_src emacs-lisp
-      (defun go--region-or-lines ()
-        "Operate or regions or lines"
-
-        (let (beg end)
-          (if (and mark-active (> (point) (mark)))
-              (exchange-point-and-mark))
-          (setq beg (save-excursion
-                      (back-to-indentation)
-                      (point)))
-          (if mark-active
-              (exchange-point-and-mark))
-          (setq end (line-end-position))
-          (list beg end)))
-    #+end_src
 
 * Debug toggler
 
