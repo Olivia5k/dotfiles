@@ -817,8 +817,9 @@ documentation in a style similar to literate programming.
         "Org commands"
         ("C-o" th/org-project "Project file")
         ("c" org-capture "Capture")
-        ("M-o" org-capture "Capture")
+        ("o" org-capture "Capture")
         ("s" (org-agenda nil "a") "Schedule")
+        ("i" (find-file "~/org/inbox.org") "Inbox")
         ("j" org-clock-goto "Current clocked task")
         ("a" org-todo-list "Agenda")
         ("t" org-tags-view "Tags"))
