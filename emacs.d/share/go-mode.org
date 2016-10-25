@@ -371,7 +371,14 @@ rather than a very tricky to use keymap.
      (define-key go-mode-map (kbd "C-c C-m g") 'go-refactor-wrap-goroutine)
    #+end_src
 
-** TODO Wrap in err if
+** Wrap in err if
+
+   Wraps the current statement
+
+*** TODO Actually check if an error is returned
+    Would be really neat if this could use guru to figure out if the statement
+    actually returns an error or not
+
 ** TODO Raise
 ** TODO Extract variable
 ** TODO Extract function
@@ -522,7 +529,7 @@ rather than a very tricky to use keymap.
            (end-of-line)
            (backward-char 1)
            (forward-list)
-           (point)))))
+           (point))))
 
       (defun go--region-or-lines ()
         "Operate or regions or lines"
