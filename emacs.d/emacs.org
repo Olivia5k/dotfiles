@@ -1936,6 +1936,24 @@ documentation in a style similar to literate programming.
      (setq display-buffer-reuse-frames t)
    #+end_src
 
+*** Correction of window splitting
+
+    I never liked the way a split is made but not moved into.
+
+    #+begin_src emacs-lisp
+      (defun th/split-horizontally ()
+        (interactive)
+        (split-window-below)
+        (windmove-down)
+        (balance-windows))
+
+      (defun th/split-vertically ()
+        (interactive)
+        (split-window-right)
+        (windmove-right)
+        (balance-windows))
+    #+end_src
+
 *** Killing windows
 
     I kill windows all the time. So often that I want to be able to do it
@@ -1988,16 +2006,8 @@ documentation in a style similar to literate programming.
                           'hydra-window/body)
                 (throw 'hydra-disable t))
           "ace")
-         ("s" (lambda ()
-                (interactive)
-                (split-window-right)
-                (windmove-right))
-          "vert")
-         ("z" (lambda ()
-                (interactive)
-                (split-window-below)
-                (windmove-down))
-          "horz")
+         ("s" th/split-vertically "vert")
+         ("z" th/split-horizontally "horz")
          ("w" (lambda ()
                 (interactive)
                 (ace-window 4)
@@ -2011,6 +2021,7 @@ documentation in a style similar to literate programming.
                 (ace-window 16)
                 (add-hook 'ace-window-end-once-hook
                           'hydra-window/body)
+                (balance-windows)
                 (throw 'hydra-disable t))
           "del")
          ("o" delete-other-windows "one" :color blue)
@@ -2026,6 +2037,19 @@ documentation in a style similar to literate programming.
 
       (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
 
+   #+end_src
+
+*** Quick switching
+
+    Even though the hydra above is great, there are some things we just do all
+    the time - and those need better binds.
+
+    #+begin_src emacs-lisp
+      (global-set-key (kbd "C-x h") 'windmove-left)
+      (global-set-key (kbd "C-x j") 'windmove-down)
+      (global-set-key (kbd "C-x k") 'windmove-up)
+      (global-set-key (kbd "C-x l") 'windmove-right)
+
       ;; Also disable the old ones so that I stop using them
       (defun th/disabled-key ()
         (interactive)
@@ -2034,18 +2058,12 @@ documentation in a style similar to literate programming.
       (global-set-key (kbd "C-x 1") 'th/disabled-key)
       (global-set-key (kbd "C-x 2") 'th/disabled-key)
       (global-set-key (kbd "C-x 3") 'th/disabled-key)
-   #+end_src
 
-*** Quick switching
+      (global-set-key (kbd "M-1") 'delete-other-windows)
+      (global-set-key (kbd "M-2") 'th/split-horizontally)
+      (global-set-key (kbd "M-3") 'th/split-vertically)
 
-    Even though the hydra above is great, there are some things we just do all
-    the time - switching between the windows.
 
-    #+begin_src emacs-lisp
-      (global-set-key (kbd "C-x h") 'windmove-left)
-      (global-set-key (kbd "C-x j") 'windmove-down)
-      (global-set-key (kbd "C-x k") 'windmove-up)
-      (global-set-key (kbd "C-x l") 'windmove-right)
     #+end_src
 
 * Work
