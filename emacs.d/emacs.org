@@ -120,16 +120,6 @@ documentation in a style similar to literate programming.
           "Iosevka-12"
         "Iosevka-10"))
 
-     (defun th/toggle-font ()
-       "Toggles between smaller and larger fonts"
-       (interactive)
-       (set-frame-font
-        (if (s-contains? "-18-" (frame-parameter nil 'font))
-            "Iosevka-10"
-          "Iosevka-12")))
-
-     (global-set-key (kbd "M-1") 'th/toggle-font)
-
      ;; This is called at the very bottom of emacs.org. See comments there.
      (defun th/fix-darktooth ()
        "Things that make darktooth a theme more suited for me."
@@ -1450,8 +1440,9 @@ documentation in a style similar to literate programming.
    again. It can:
 
    * Toggle ~auto-fill~, ~fci~, ~linum~, ~highlight-symbol~,
-     ~rainbow-identifiers~, ~auto-revert~ and ~truncate-lines~ modes.
+     ~rainbow-identifiers~, and ~truncate-lines~ modes.
    * Increase and decrease font size for the current buffer
+   * Open a font size hydra
    * Load .env files in a repository into the emacs env
    * Enter the yas hydra
 
@@ -1462,7 +1453,7 @@ documentation in a style similar to literate programming.
        ("s" th/yas-hydra/body "yas" :color blue)
        ("a" auto-fill-mode Auto fill)
        ("f" fci-mode "Fill column")
-       ("M-f" auto-revert-tail-mode "Revert tail (follow)")
+       ("M-f" th/font-hydra/body "font-hydra" :color blue)
        ("h" highlight-symbol-mode "Highlight symbol")
        ("j" text-scale-decrease "Font -")
        ("k" text-scale-increase "Font +")
@@ -1471,6 +1462,24 @@ documentation in a style similar to literate programming.
        ("t" toggle-truncate-lines "Truncate lines"))
 
      (global-set-key (kbd "C-x c") 'th/util-hydra/body)
+   #+end_src
+
+   Also the font size hydra
+
+   #+begin_src emacs-lisp
+     (defun th/iosevka (size)
+       (set-frame-font (format "Iosevka-%s" size)))
+
+     (defhydra th/font-hydra ()
+       "Font size"
+       ("a" (th/iosevka 10))
+       ("s" (th/iosevka 12))
+       ("d" (th/iosevka 13))
+       ("f" (th/iosevka 17))
+       ("h" (th/iosevka 20))
+       ("j" (th/iosevka 22))
+       ("k" (th/iosevka 24))
+       ("l" (th/iosevka 25)))
    #+end_src
 
 ** move-text
