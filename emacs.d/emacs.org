@@ -1541,7 +1541,7 @@ documentation in a style similar to literate programming.
 
        (setq rotate-text-symbols '(("true" "false")
                                    ("==" "!=" "<=" ">=")))
-       :bind (("M-s" . rotate-text)))
+       :bind (("M-r" . rotate-text)))
    #+end_src
 
 ** visual-regexp-steroids
