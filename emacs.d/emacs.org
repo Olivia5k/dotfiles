@@ -210,7 +210,8 @@ documentation in a style similar to literate programming.
               ("M-x"     . counsel-M-x)
               ("M-i"     . counsel-imenu)
               ("C-x y"   . counsel-yank-pop)
-              ("C-c C-r" . ivy-resume))
+              ("C-c C-r" . ivy-resume)
+              ("<F1>"    . counsel-descbinds))
 
        :config
        (setq ivy-use-virtual-buffers t)
