@@ -324,6 +324,11 @@ rather than a very tricky to use keymap.
 
   These are inspired by [[https://github.com/magnars/js2-refactor.el][js2-refactor]].
 
+  #+begin_src emacs-lisp
+    (define-prefix-command 'go-refactor-map)
+    (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
+  #+end_src
+
 ** Wrap in if
 
    Wraps the current line in an if statement. Places point just after ~if~.
@@ -334,7 +339,7 @@ rather than a very tricky to use keymap.
        (go--refactor-wrap "if ")
        (forward-char 3))
 
-     (define-key go-mode-map (kbd "C-c C-m i") 'go-refactor-wrap-if)
+     (define-key go-refactor-map (kbd "i") 'go-refactor-wrap-if)
    #+end_src
 
 ** Wrap in loop
@@ -347,7 +352,7 @@ rather than a very tricky to use keymap.
        (go--refactor-wrap "for ")
        (forward-char 4))
 
-     (define-key go-mode-map (kbd "C-c C-m f") 'go-refactor-wrap-for)
+     (define-key go-refactor-map (kbd "f") 'go-refactor-wrap-for)
    #+end_src
 
 ** Wrap in goroutine
@@ -368,7 +373,7 @@ rather than a very tricky to use keymap.
 
        (forward-char 8))
 
-     (define-key go-mode-map (kbd "C-c C-m g") 'go-refactor-wrap-goroutine)
+     (define-key go-refactor-map (kbd "g") 'go-refactor-wrap-goroutine)
    #+end_src
 
 ** Wrap in err if
@@ -491,9 +496,6 @@ rather than a very tricky to use keymap.
                   (point))))
 
            (replace-string from to t start end))))
-
-     (define-prefix-command 'go-refactor-map)
-     (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
 
      (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
    #+end_src
