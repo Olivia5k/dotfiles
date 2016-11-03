@@ -1031,6 +1031,8 @@ documentation in a style similar to literate programming.
         (interactive)
         (switch-to-buffer (other-buffer (current-buffer) 1)))
       (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
+
+      (global-set-key (kbd "C-x M-b") 'ibuffer)
     #+end_src
 
 *** Keymaps
