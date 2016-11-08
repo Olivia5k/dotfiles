@@ -378,13 +378,70 @@ rather than a very tricky to use keymap.
 
 ** Wrap in err if
 
-   Wraps the current statement
+   Wraps the current statement in an ~err := <x> ; err != nil {~ block.
 
 *** TODO Actually check if an error is returned
     Would be really neat if this could use guru to figure out if the statement
     actually returns an error or not
+*** TODO Support selecting a block and just wrapping the first line
 
-** TODO Raise
+  #+begin_src emacs-lisp
+    (defun go-refactor-wrap-errif ()
+      (interactive)
+      (beginning-of-line-text)
+      (insert "err := ")
+      (end-of-line)
+      (insert "; err != nil {}")
+      (backward-char 1)
+      (newline-and-indent))
+
+    (define-key go-refactor-map (kbd "e") 'go-refactor-wrap-errif)
+  #+end_src
+
+** WORKING Raise
+
+   Take the current statement and raise it to replace its parent.
+
+   #+begin_src emacs-lisp
+     (defun go-refactor-unwrap ()
+       "Take the current statement and raise it to replace its parent.
+
+     Naively tries to figure out what the opening statement is by finding
+     the previous line ending with an opening brace."
+
+       (interactive)
+       (let* ((pos (go--region-or-lines))
+              (beg (car pos))
+              (end (cadr pos)))
+
+         ;; Figure out if we can actually do a raise
+         (save-excursion
+           (goto-char beg)
+           ;; If looking back at the beginning of the line or just a single tab, we
+           ;; cannot raise because that would always produce an unusable end result.
+           (when (looking-back "^\t?")
+             (error "Cannot raise top-level statements")))
+
+         (kill-region beg end)
+         (re-search-backward "{$" nil t)
+
+         ;; Find out where the wrapping statement is and delete it
+         (save-excursion
+           (beginning-of-line-text)
+           (setq beg (point)))
+         (forward-list 1)
+         (setq end (point))
+         (delete-region beg end)
+
+         ;; Finally, yank out the original statements.
+         ;; Out of laziness, also run gofmt to make them prettier again.
+         (yank)
+         (gofmt)))
+
+     ;; raise / unwrap
+     (define-key go-refactor-map (kbd "u") 'go-refactor-unwrap)
+   #+end_src
+
 ** TODO Extract variable
 ** TODO Extract function
 ** TODO Type migration
