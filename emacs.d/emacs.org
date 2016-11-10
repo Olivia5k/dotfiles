@@ -1532,6 +1532,14 @@ documentation in a style similar to literate programming.
        ("C-x C-h" . mc/mark-previous-like-this))
    #+end_src
 
+** prettify-symbols
+
+   Because it's more fun to have a pretty lambda!
+
+   #+begin_src emacs-lisp
+     (global-prettify-symbols-mode 1)
+   #+end_src
+
 ** Rainbows <3
 
    The rainbow modes bring nice colors to your code:
