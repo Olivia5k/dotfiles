@@ -56,7 +56,18 @@ rather than a very tricky to use keymap.
 
   #+begin_src emacs-lisp
     ;; These were all moved into upstream! Yay open source <3
-    (define-key go-mode-map (kbd "C-c g") 'go-goto-map)
+    (defhydra go-goto-hydra ()
+      "goto"
+      ("a" go-goto-arguments "arguments")
+      ("d" go-goto-docstring "docstring")
+      ("f" go-goto-function "function")
+      ("i" go-goto-imports "imports")
+      ("m" go-goto-method-receiver "receiver")
+      ("n" go-goto-function-name "name")
+      ("r" go-goto-return-values "return")
+      ("q" nil))
+
+    (define-key go-mode-map (kbd "M-m") 'go-goto-hydra/body)
   #+end_src
 
 * Coverage functions
