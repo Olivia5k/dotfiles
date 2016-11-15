@@ -63,7 +63,7 @@
             (quote rainbow-mode))
            (rainbow-mode 1)))))
  '(scss-compile-at-save nil)
- '(sh-indentation 2)
+ '(sh-indentation 4)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
