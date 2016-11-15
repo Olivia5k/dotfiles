@@ -1529,7 +1529,8 @@ documentation in a style similar to literate programming.
      (use-package multiple-cursors
        :bind
        ("C-x C-l" . mc/mark-next-like-this)
-       ("C-x C-h" . mc/mark-previous-like-this))
+       ("C-x C-h" . mc/mark-previous-like-this)
+       ("C-M-s"   . mc/edit-lines))
    #+end_src
 
 ** prettify-symbols
