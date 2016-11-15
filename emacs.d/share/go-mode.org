@@ -491,6 +491,33 @@ rather than a very tricky to use keymap.
 ** TODO Toggle error assign
 
    Toggles between ~err~/~_~ for the current assigment.
+** Toggle variable declaration
+
+   Toggle whether the current statement uses ~:=~ or ~=~
+
+   #+begin_src emacs-lisp
+     (defun go-refactor-declaration-colon ()
+       "Toggle if the current line should use \"=\" or \":=\"."
+       (interactive)
+       (save-excursion
+         (let (beg end)
+           (end-of-line)
+           (setq end (point))
+           (beginning-of-line)
+           (setq beg (point))
+
+           (when (not (s-contains? "=" (buffer-substring beg end)))
+             (error "No declaration on current line"))
+
+           (search-forward "=")
+           (backward-char 1)
+           (if (looking-back ":" 1)
+               (delete-char -1)
+             (insert ":")))))
+
+     (define-key go-refactor-map (kbd "d") 'go-refactor-declaration-colon)
+     (define-key go-mode-map (kbd "C-M-d") 'go-refactor-declaration-colon)
+   #+end_src
 
 ** Method receiver
 
