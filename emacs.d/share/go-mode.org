@@ -453,7 +453,34 @@ rather than a very tricky to use keymap.
      (define-key go-refactor-map (kbd "u") 'go-refactor-unwrap)
    #+end_src
 
-** TODO Extract variable
+** Extract variable
+
+   Extract the current region into a variable
+
+   #+begin_src emacs-lisp
+     (defun go-refactor-extract-variable ()
+       "Extract the current region into a variable"
+       (interactive)
+
+       (when (not (region-active-p))
+         (error "No region active"))
+
+       (save-excursion
+         (let* ((var (read-string "Variable name: ")))
+           (kill-region (region-beginning) (region-end))
+           (insert var)
+
+           (beginning-of-line-text)
+           (newline-and-indent)
+           (previous-line)
+           (indent-according-to-mode)
+
+           (insert (format "%s := " var))
+           (yank))))
+
+     (define-key go-refactor-map (kbd "v") 'go-refactor-extract-variable)
+   #+end_src
+
 ** TODO Extract function
 ** TODO Type migration
 ** TODO Toggle error return
