@@ -205,13 +205,9 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (use-package ivy
-       :bind (("C-s"     . swiper)
-              ("C-M-s"   . counsel-git-grep)
-              ("M-x"     . counsel-M-x)
-              ("M-i"     . counsel-imenu)
+       :bind (("M-x"     . counsel-M-x)
               ("C-x y"   . counsel-yank-pop)
-              ("C-c C-r" . ivy-resume)
-              ("<F1>"    . counsel-descbinds))
+              ("C-c C-r" . ivy-resume))
 
        :config
        (setq ivy-use-virtual-buffers t)
@@ -234,6 +230,17 @@ documentation in a style similar to literate programming.
               "\\(?:\\`[#.]\\)"
               ;; File names ending with # or ~
               "\\|\\(?:\\`.+?[#~]\\'\\)")))
+
+     (defhydra th/search-hydra (:exit t)
+       "Searching"
+       ("C-s" counsel-grep-or-swiper "search")
+       ("s" counsel-grep-or-swiper "search")
+       ("a" swiper-all "all")
+       ("g" counsel-git-grep "git grep")
+       ("i" counsel-imenu "imenu")
+       ("k" counsel-descbinds "keys"))
+
+     (global-set-key (kbd "C-s") 'th/search-hydra/body)
    #+end_src
 
 *** Custom actions
