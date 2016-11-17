@@ -484,7 +484,7 @@ done
 
 zstyle ':prompt:grml:left:items:path' pre '%B%F{68}'
 zstyle ':prompt:grml:left:items:path' token '%1~ '
-zstyle ':prompt:grml:left:items:percent' pre "%B%F{238}"
+zstyle ':prompt:grml:left:items:percent' pre "%B%F{245}"
 zstyle ':prompt:grml:left:items:percent' token "> "
 zstyle ':prompt:grml:left:items:vcs' pre '$VENV_PROMPT'
 zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
