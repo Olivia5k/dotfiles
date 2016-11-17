@@ -1933,6 +1933,8 @@ documentation in a style similar to literate programming.
   (auto-fill-mode t)
   (auto-save-mode -1)
   (fci-mode 1)
+
+  (setq enable-recursive-minibuffers t)
 #+end_src
 ** uniquify
 
