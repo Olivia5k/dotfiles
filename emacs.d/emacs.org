@@ -1056,6 +1056,19 @@ documentation in a style similar to literate programming.
 
       (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
 
+      (defun th/dired-menu ()
+        "Go to one of the currently open dired buffers (if there is one)."
+        (interactive)
+        (let* ((dired-buffers (--map (buffer-name it)
+                                     (--filter
+                                      (equal 'dired-mode (with-current-buffer it major-mode))
+                                      (buffer-list)))))
+          (if dired-buffers
+              (switch-to-buffer (completing-read "Select dired: " dired-buffers))
+            (message "There's no dired buffers open right now"))))
+
+      (global-set-key (kbd "C-x M-d") 'th/dired-menu)
+
       (global-set-key (kbd "C-x M-b") 'ibuffer)
     #+end_src
 
@@ -1319,15 +1332,7 @@ documentation in a style similar to literate programming.
      (setq dired-hide-details-mode t)
      (setq diredp-hide-details-initially-flag t)
 
-     (defun th/kill-all-dired-buffers ()
-       (interactive)
-       (mapc
-        (lambda (buffer)
-          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
-            (kill-buffer buffer)))
-        (buffer-list)))
 
-     (define-key dired-mode-map (kbd "q") 'th/kill-all-dired-buffers)
    #+end_src
 
 ** emmet
