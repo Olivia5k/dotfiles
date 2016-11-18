@@ -830,6 +830,16 @@ documentation in a style similar to literate programming.
       (global-set-key (kbd "C-x C-o") 'th/org/body)
     #+end_src
 
+*** worf
+
+    Smoother org mode speed key bindings
+
+    #+begin_src emacs-lisp
+      (use-package worf)
+
+      (add-hook 'org-mode-hook 'worf-mode)
+    #+end_src
+
 ** prog-mode
 
    Hooks that are needed for programming modes.
