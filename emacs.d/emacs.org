@@ -231,7 +231,7 @@ documentation in a style similar to literate programming.
               ;; File names ending with # or ~
               "\\|\\(?:\\`.+?[#~]\\'\\)")))
 
-     (defhydra th/search-hydra (:exit t)
+     (defhydra th/search-hydra (:exit t :foreign-keys warn)
        "Searching"
        ("C-s" counsel-grep-or-swiper "search")
        ("s" counsel-grep-or-swiper "search")
