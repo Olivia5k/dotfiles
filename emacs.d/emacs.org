@@ -1043,9 +1043,17 @@ documentation in a style similar to literate programming.
 
       (defun switch-to-previous-buffer ()
         "Switch to previously open buffer.
+
+      Ignores buffers that are not visiting files.
+
       Repeated invocations toggle between the two most recently open buffers."
         (interactive)
-        (switch-to-buffer (other-buffer (current-buffer) 1)))
+        (let* ((buffers (--map (buffer-name it)
+                               (--filter
+                                (buffer-file-name it)
+                                (buffer-list)))))
+          (switch-to-buffer (cadr buffers))))
+
       (global-set-key (kbd "C-x C-b") 'switch-to-previous-buffer)
 
       (global-set-key (kbd "C-x M-b") 'ibuffer)
