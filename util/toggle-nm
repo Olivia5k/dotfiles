@@ -1,4 +1,0 @@
-#!/bin/zsh
-
-killall nm-applet
-nm-applet &|

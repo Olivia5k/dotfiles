@@ -1,5 +1,0 @@
-#!/bin/zsh
-
-killall storm
-source ~/git/storm/bin/activate
-storm

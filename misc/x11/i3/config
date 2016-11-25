@@ -92,7 +92,6 @@ bindcode Mod4+Control+65 exec dmenu_exec
 bindsym Mod4+Mod1+d exec emacsclient -c -a ''
 
 # bindsym Mod4+i exec mor main `di
-bindsym Mod4+Mod1+Control+d exec emacs-daemon
 
 # Locking and switching
 bindcode Mod4+22 exec lock
