@@ -5,6 +5,7 @@
 # skipped.
 apps[dmenu]="misc/x11/dmuxrc"
 apps[emacs]="emacs.d"
+apps[fish]="fish"
 apps[gem]="misc/gemrc"
 apps[git]="misc/gitconfig misc/git_template"
 apps[herbstluftwm]="misc/x11/herbstluftwm.conf"
@@ -24,6 +25,7 @@ apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 # into $HOME with a dot prepended. This array specifies different paths. The
 # keys are the names relative to the infect root and the values are the final
 # actual destinations.
+dest[fish]="${XDG_CONFIG_HOME:-$HOME/.config}/fish"
 dest[misc/x11/dmuxrc]="${XDG_CONFIG_HOME:-$HOME/.config}/dmux/dmuxrc"
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
 dest[misc/x11/i3/config]="$HOME/.i3/config"
