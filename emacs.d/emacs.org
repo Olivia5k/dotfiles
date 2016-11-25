@@ -884,6 +884,7 @@ documentation in a style similar to literate programming.
      (use-package crontab-mode)
      (use-package csv-mode)
      (use-package dockerfile-mode)
+     (use-package fish-mode)
      (use-package markdown-mode)
      (use-package nginx-mode)
      (use-package protobuf-mode)
