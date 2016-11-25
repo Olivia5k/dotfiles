@@ -20,6 +20,7 @@
  '(global-semantic-idle-scheduler-mode nil)
  '(global-semanticdb-minor-mode nil)
  '(gofmt-command "gofmt")
+ '(hl-sexp-background-color "#efebe9")
  '(httpd-port 8001)
  '(js-indent-level 2)
  '(js2-mode-show-strict-warnings nil)
@@ -31,7 +32,7 @@
  '(org-journal-file-format "%Y-%m-%d")
  '(package-selected-packages
    (quote
-    (highlight-indentation json-reformat flycheck ivy-hydra paradox git-gutter+ rotate-text ivy protobuf-mode smooth-scrolling curl-for-url org-journal web-mode vue-mode use-package restclient zenburn-theme zenburn yaml-mode xterm-color xkcd wrap-region visual-regexp undo-tree twittering-mode twitter transpose-frame tidy string-inflection ssh-config-mode solarized-theme smex smart-mode-line-powerline-theme rainbow-mode rainbow-identifiers rainbow-delimiters python-django puppet-mode popwin pony-mode paredit otp org-jekyll org-bullets nginx-mode multiple-cursors move-text morlock markdown-mode lispy key-chord js2-mode jedi ipython ioccur hydra httpcode htmlize go-eldoc gitignore-mode gitconfig-mode git-timemachine git-gutter-fringe gist flymake-css flycheck-pyflakes fiplr fill-column-indicator expand-region emmet-mode dockerfile-mode django-mode diminish cyberpunk-theme csv-mode crontab-mode company-jedi company-go company-anaconda buffer-move browse-kill-ring adaptive-wrap ack-and-a-half ace-jump-mode ac-dabbrev)))
+    (fish-mode dashboard esup rotate-text ivy protobuf-mode smooth-scrolling curl-for-url leuven-theme org-journal web-mode vue-mode guide-key use-package color-theme-sanityinc-tomorrow restclient zenburn-theme zenburn yaml-mode xterm-color xkcd wrap-region visual-regexp virtualenvwrapper undo-tree twittering-mode twitter transpose-frame tidy string-inflection ssh-config-mode spaceline solarized-theme smex smart-mode-line-powerline-theme rainbow-mode rainbow-identifiers rainbow-delimiters python-django puppet-mode popwin pony-mode paredit paradox otp org-jekyll org-fstree org-bullets nginx-mode multiple-cursors move-text morlock markdown-mode magit-gh-pulls lispy key-chord js2-mode jedi ipython ioccur ido-vertical-mode ido-ubiquitous hydra httpcode htmlize helm-swoop helm-projectile helm-descbinds helm-dash helm-c-yasnippet helm-ag go-eldoc gitignore-mode gitconfig-mode git-timemachine git-messenger git-gutter-fringe gist flymake-css flycheck-pyflakes flx-ido fiplr fill-column-indicator expand-region emmet-mode dockerfile-mode django-mode discover-my-major diminish cyberpunk-theme csv-mode crontab-mode company-jedi company-go company-anaconda buffer-move browse-kill-ring adaptive-wrap ack-and-a-half ace-jump-mode ac-dabbrev)))
  '(paradox-github-token t)
  '(popwin:special-display-config
    (quote
@@ -56,6 +57,7 @@
      (slime-connection-list-mode))))
  '(pos-tip-background-color "#36473A")
  '(pos-tip-foreground-color "#FFFFC8")
+ '(revert-without-query (quote (".")))
  '(safe-local-variable-values
    (quote
     ((eval when
