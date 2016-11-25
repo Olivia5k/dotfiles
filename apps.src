@@ -13,8 +13,6 @@ apps[i3]="misc/x11/i3/config"
 apps[i3status]="misc/x11/i3/i3status"
 apps[luakit]="misc/luakit/"
 apps[most]="misc/mostrc"
-apps[mplayer]="misc/mplayer"
-apps[ncmpcpp]="misc/ncmpcpp.conf"
 apps[startx]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[terminfo]="misc/terminfo"
 apps[tig]="misc/tigrc"
@@ -43,12 +41,4 @@ function post_infect_install() {
   mkdir -p \
     $HOME/.logs \
     $HOME/.local/{bin,logs,share/zsh}
-
-  if [[ $(git --version | grep 1.7 -c) = 1 ]]; then
-    ext=""
-    if [[ "$(uname -s)" =~ 'Darwin' ]]; then
-      ext="''"
-    fi
-    sed -e "s/\[push\]//g" -e "s/\tdefault = simple//" -i$ext ~/.gitconfig
-  fi
 }
