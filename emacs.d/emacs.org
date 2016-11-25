@@ -649,6 +649,7 @@ documentation in a style similar to literate programming.
          org-src-tab-acts-natively t
          org-src-window-setup 'current-window
          org-use-speed-commands t
+         org-imenu-depth 5
 
          ;; When calculating percentages of checkboxes, count all boxes, not just
          ;; direct children
@@ -703,6 +704,7 @@ documentation in a style similar to literate programming.
      #+end_src
 
 **** Capturing
+
      #+begin_src emacs-lisp
        (setq
         org-capture-templates
