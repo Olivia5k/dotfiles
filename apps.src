@@ -18,7 +18,6 @@ apps[startx]="misc/x11/Xdefaults misc/x11/xinitrc"
 apps[terminfo]="misc/terminfo"
 apps[tig]="misc/tigrc"
 apps[tmux]="tmux tmux/tmux.conf"
-apps[vim]="vim vim/vimrc misc/gtkrc-2.0"
 apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 
 # By default, all the files and directories specified above will be linked as
@@ -40,7 +39,6 @@ force[terminfo]=true
 function post_infect_install() {
   # These directories are required for the applications to work correctly
   mkdir -p \
-    $HOME/.cache/vim/{backup,undo,swap} \
     $HOME/.logs \
     $HOME/.local/{bin,logs,share/zsh}
 

@@ -1,2 +1,0 @@
-:call vam#install#Install(["vam_test_hg"])
-:call WriteFile(sort(map(items(vam#AddonInfo('vam_test_hg')), 'string(v:val)')))

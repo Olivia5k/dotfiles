@@ -1,2 +1,0 @@
-:call Try('call vam#ActivateAddons(["vam_test_dos"])')
-:source addmessages.vim
