@@ -53,11 +53,12 @@ documentation in a style similar to literate programming.
      (require 'package)
 
      (setq package-archives
-           '(("org"       . "http://orgmode.org/elpa/")
-             ("tromey"    . "http://tromey.com/elpa/")
-             ("gnu"       . "http://elpa.gnu.org/packages/")
-             ("melpa"     . "http://stable.melpa.org/packages/")
-             ("marmalade" . "http://marmalade-repo.org/packages/")))
+           '(("org"          . "http://orgmode.org/elpa/")
+             ("tromey"       . "http://tromey.com/elpa/")
+             ("gnu"          . "http://elpa.gnu.org/packages/")
+             ("melpa"        . "http://melpa.org/packages/")
+             ("melpa-stable" . "http://stable.melpa.org/packages/")
+             ("marmalade"    . "http://marmalade-repo.org/packages/")))
 
      (package-initialize)
    #+end_src
@@ -876,6 +877,14 @@ documentation in a style similar to literate programming.
    #+end_src
 
 *** TODO Configure a working company backend
+
+** Racket
+
+   Lisp lovin' <3
+
+   #+begin_src emacs-lisp
+     (use-package racket-mode)
+   #+end_src
 
 ** Utility modes
 
