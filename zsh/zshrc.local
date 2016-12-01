@@ -56,69 +56,6 @@ alias bell='echo -en "\007"'
 
 alias z=keyboard-setup
 
-# Auto source/unsource of virtualenvs
-function _autovenv() {
-  local cur=${1:-$PWD}
-  local f="bin/activate"
-  local auto='%F{71}%BAuto%b%f'
-
-  # If there should be a virtualenv but there is none yet, create it.
-  if [[ -f "$cur/setup.py" ]] && [[ -f "$cur/requirements.txt" ]] ; then
-    if [[ ! -f "$cur/$f" ]] ; then
-      virtualenv .
-      source bin/activate
-      pip install -r requirements.txt
-      python setup.py develop
-    fi
-  fi
-
-  # Find upwards and look for a $f. If it is found, source it.
-  until [[ -z "$cur" ]]; do
-    if [[ -f "$cur/$f" ]]; then
-      if [[ -z "$VIRTUAL_ENV" ]] || [[ "$VIRTUAL_ENV" != "$cur" ]]; then
-        source $cur/$f
-        export VENV_PROMPT="%B%F{048}venv%F{237}:"
-        print -P "$auto: Setting venv for %B%F{067}${cur}$b"
-      fi
-      return
-    fi
-    cur=${cur%/*}
-  done
-
-  # If set and no longer inside a virtualenv, deactivate it.
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    export VENV_PROMPT=''
-    deactivate
-  fi
-}
-_autovenv
-
-function _autoworkgit() {
-  local auto='%F{71}%BAuto%b%f'
-
-  # If this is not a git repo or the conditions are not set up, bail
-  if [[ -z "$WORK_EMAIL" ]] || [[ -z "$WORK_REMOTE" ]] || [[ ! -r .git ]]; then
-    return
-  fi
-
-  local remote=$(git config remote.origin.url)
-  # If the origin remote does not point to the $WORK_REMOTE, bail
-  if [[ ! $remote =~ $WORK_REMOTE ]]; then
-    return
-  fi
-
-  if [[ ! $(git config user.email) =~ $WORK_EMAIL ]]; then
-    print -P "$auto: Configured $WORK_EMAIL and hub host"
-    git config user.email "$WORK_EMAIL"
-    git config hub.host ghe.spotify.net
-  fi
-}
-
-function chpwd() {
-  _autovenv
-  _autoworkgit
-}
-
 alias -g J="| python -m json.tool"
 alias -g JC="| python -m json.tool | pygmentize -l json"
 alias -g G="| grep -i"
