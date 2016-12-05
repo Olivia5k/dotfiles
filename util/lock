@@ -20,4 +20,7 @@ rm $image
 i3-msg -t command '[title="Messenger"]' kill
 
 # Also disable the screens
-xset dpms force off
+# Unless we have the screen that takes like 10 seconds to start...
+if [[ $(hostname) != "dragonwing" ]]; then
+    xset dpms force off
+fi
