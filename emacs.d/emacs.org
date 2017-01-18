@@ -572,6 +572,7 @@ documentation in a style similar to literate programming.
      (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
      (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
      (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
+     (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
 
      ;; pls no .elc
      (add-hook
@@ -1571,7 +1572,7 @@ documentation in a style similar to literate programming.
    Because it's more fun to have a pretty lambda!
 
    #+begin_src emacs-lisp
-     (global-prettify-symbols-mode 1)
+     (global-prettify-symbols-mode 0)
    #+end_src
 
 ** Rainbows <3
