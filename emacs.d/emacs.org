@@ -1929,7 +1929,6 @@ documentation in a style similar to literate programming.
    #+end_src
 ** Options and settings
 #+begin_src emacs-lisp
-  (require 's)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indicate-empty-lines t)
 
