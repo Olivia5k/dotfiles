@@ -1626,7 +1626,7 @@ documentation in a style similar to literate programming.
      (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
    #+end_src
 
-** Backups
+** Autosave and backups
 
    Backups are disabled. Never had use for them, and the default settings are
    pretty littering.
@@ -1650,6 +1650,20 @@ documentation in a style similar to literate programming.
            auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
            auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
            )
+
+     (setq global-auto-revert-non-file-buffers t)
+     (setq auto-revert-verbose nil)
+
+     (setq backup-inhibited t
+           make-backup-files nil)
+
+     ;; Save all tempfiles in $TMPDIR/emacs-$UID/
+     (defconst emacs-tmp-dir
+       (format "/tmp/emacs-%s/" (user-uid)))
+     (make-directory emacs-tmp-dir t)
+
+     (setq temporary-file-directory emacs-tmp-dir)
+     (setq auto-save-list-file-prefix emacs-tmp-dir)
    #+end_src
 
 ** Browser setup
@@ -1906,35 +1920,16 @@ documentation in a style similar to literate programming.
   (setq inhibit-startup-screen t
         initial-scratch-message ";; *scratch*\n\n")
 
-  (setq backup-inhibited t
-        make-backup-files nil
-        auto-save-default nil)
-
-  (setq backup-by-copying t)
-
-  ;; Save all tempfiles in $TMPDIR/emacs$UID/
-  (defconst emacs-tmp-dir
-    (format "/tmp/emacs-%s/" (user-uid)))
-  (make-directory emacs-tmp-dir t)
-  (setq backup-directory-alist
-        `(("." . ,emacs-tmp-dir)))
-  (setq auto-save-file-name-transforms
-        `((".*" ,emacs-tmp-dir t)))
-  (setq temporary-file-directory emacs-tmp-dir)
-
-  (setq auto-save-list-file-prefix
-        emacs-tmp-dir)
-
-  (setq auto-save-interval 90000
-        auto-save-timeout 3600)
-
   (setq compilation-scroll-output t)
+
+  (add-hook 'after-save-hook
+    'executable-make-buffer-file-executable-if-script-p)
 
   (defadvice save-buffer (around save-buffer-as-root-around activate)
     "Create non-existing parent directories; sudo to save the current buffer if permissions are lacking."
     (interactive "p")
 
-    ;; Only do any of this if we actually have a fil
+    ;; Only do any of this if we actually have a file
     (if (buffer-file-name)
         (progn
           ;; Create the parent directories
@@ -1957,14 +1952,12 @@ documentation in a style similar to literate programming.
                 tab-width 2
                 word-wrap t)
 
-
   (put 'downcase-region 'disabled nil)
 
   (show-paren-mode t)
   (electric-pair-mode t)
   (global-auto-revert-mode t)
   (auto-fill-mode t)
-  (auto-save-mode -1)
   (fci-mode 1)
 
   (setq enable-recursive-minibuffers t)
