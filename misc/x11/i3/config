@@ -111,6 +111,19 @@ bindsym Mod4+Mod1+6 exec xbacklight -set 60
 bindsym Mod4+Mod1+7 exec xbacklight -set 70
 bindsym Mod4+Mod1+8 exec xbacklight -set 80
 bindsym Mod4+Mod1+9 exec xbacklight -set 90
+bindsym Mod4+Mod1+0 exec xbacklight -set 100
+
+# Volume control
+bindsym Mod4+Control+Mod1+1 exec vol set 10
+bindsym Mod4+Control+Mod1+2 exec vol set 20
+bindsym Mod4+Control+Mod1+3 exec vol set 30
+bindsym Mod4+Control+Mod1+4 exec vol set 40
+bindsym Mod4+Control+Mod1+5 exec vol set 50
+bindsym Mod4+Control+Mod1+6 exec vol set 60
+bindsym Mod4+Control+Mod1+7 exec vol set 70
+bindsym Mod4+Control+Mod1+8 exec vol set 80
+bindsym Mod4+Control+Mod1+9 exec vol set 90
+bindsym Mod4+Control+Mod1+0 exec vol set 100
 
 # Volume control
 bindsym Mod4+x exec vol down
