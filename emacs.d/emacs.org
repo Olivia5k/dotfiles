@@ -1932,17 +1932,11 @@ documentation in a style similar to literate programming.
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indicate-empty-lines t)
 
-
-     (fringe-mode 12)
-     (setq scroll-step 10)
+  (fringe-mode 12)
+  (setq scroll-step 10)
 
   (setq debug-on-error nil)
 
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (mouse-wheel-mode 1)
-  (scroll-bar-mode -1)
-  (blink-cursor-mode -1)
   (set-default 'truncate-lines nil)
 
   (setq mouse-yank-at-point t)
