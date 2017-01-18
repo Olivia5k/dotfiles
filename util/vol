@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-pulseaudio-ctl $1
-ret=$(pulseaudio-ctl | grep "Volume level" | cut -d" " -f8 \
-  | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g")
-notify-send "Volume" "${ret}%"
+pulseaudio-ctl $*
+vol=$(pulseaudio-ctl full-status)
+num=$(echo $vol | cut -d" " -f 1)
+notify-send "Volume" "${num}%"
