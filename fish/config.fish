@@ -5,6 +5,8 @@ set -x WORK_EMAIL thiderman@spotify.com
 set -x WORK_REMOTE ghe
 set -x PAYMENTS_SRC $HOME/spotify/payments/
 
+set -x DOCKER_HOST localhost
+
 set -g theme_color_scheme gruvbox
 
 # Disable Ctrl-q/s flow control.
