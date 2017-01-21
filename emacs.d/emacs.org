@@ -346,32 +346,34 @@ documentation in a style similar to literate programming.
 
 ** Enhanced default keybindings
 *** C-a
-#+begin_src emacs-lisp
-  (defun back-to-indentation-or-previous-line ()
-    "Go to first non whitespace character on a line, or if already on the first
-    non whitespace character, go to the beginning of the previous non-blank line."
-    (interactive)
-    (if (= (point) (save-excursion (back-to-indentation) (point)))
-        (previous-line))
-    (if (and (eolp) (bolp))
-        (back-to-indentation-or-previous-line))
-    (back-to-indentation))
 
-  (global-set-key (kbd "C-a") 'back-to-indentation-or-previous-line)
-#+end_src
+    #+begin_src emacs-lisp
+      (defun back-to-indentation-or-bol ()
+        "Go to first non whitespace character on a line, or if already on the first
+        non whitespace character, go to the beginning of the previous non-blank line."
+        (interactive)
+        (if (= (point)
+               (save-excursion
+                 (back-to-indentation)
+                 (point)))
+            (beginning-of-line)
+          (back-to-indentation)))
+
+      (global-set-key (kbd "C-a") 'back-to-indentation-or-bol)
+    #+end_src
+
 *** C-e
-#+begin_src emacs-lisp
-  (defun move-end-of-line-or-next-line ()
-    (interactive)
-    (if (eolp)
-        (progn
-          (next-line)
-          (if (bolp)
-              (move-end-of-line-or-next-line))))
-    (move-end-of-line nil))
 
-  (global-set-key (kbd "C-e") 'move-end-of-line-or-next-line)
-#+end_src
+    #+begin_src emacs-lisp
+      (defun th/eol-or-bol ()
+        (interactive)
+        (if (eolp)
+            (back-to-indentation)
+          (move-end-of-line nil)))
+
+      (global-set-key (kbd "C-e") 'th/eol-or-bol)
+    #+end_src
+
 *** C-o and C-M-o
 #+begin_src emacs-lisp
   (defun insertline-and-move-to-line (&optional up)
