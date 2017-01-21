@@ -1512,6 +1512,35 @@ documentation in a style similar to literate programming.
           (jump-to-register :magit-fullscreen)))
     #+end_src
 
+*** git-gutter
+
+    Shows git status in the gutter of the file you are editing.
+
+    #+begin_src emacs-lisp
+      (use-package git-gutter+)
+
+      (add-hook 'prog-mode-hook 'git-gutter+-mode)
+    #+end_src
+
+*** git hydra
+
+    #+begin_src emacs-lisp
+      (defhydra th/git-hydra ()
+        "git"
+        ("n" git-gutter+-next-hunk "next")
+        ("p" git-gutter+-previous-hunk "prev")
+        ("s" git-gutter+-stage-hunks "stage")
+        ("r" git-gutter+-revert-hunk "revert")
+        ("g" magit-status "magit" :exit t)
+        ("b" magit-blame "blame" :exit t)
+        ("l" magit-log-buffer-file "log" :exit t)
+        ("t" git-timemachine "timemachine" :exit t)
+        ("SPC" git-gutter+-show-hunk-inline-at-point "show")
+        ("q" nil))
+
+      (global-set-key (kbd "C-x C-g") 'th/git-hydra/body)
+    #+end_src
+
 ** Utility hydra
 
    This is a hydra that does many things that are useful every now and
