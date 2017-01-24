@@ -892,6 +892,8 @@ documentation in a style similar to literate programming.
      (use-package anaconda-mode
        :config
        (add-hook 'python-mode-hook 'anaconda-mode))
+
+     (use-package pip-requirements)
    #+end_src
 
 *** TODO Configure a working company backend
