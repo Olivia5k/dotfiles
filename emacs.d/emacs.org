@@ -914,7 +914,6 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (use-package crontab-mode)
      (use-package csv-mode)
-     (use-package dockerfile-mode)
      (use-package fish-mode)
      (use-package markdown-mode)
      (use-package nginx-mode)
@@ -1286,6 +1285,16 @@ documentation in a style similar to literate programming.
 
      (global-set-key (kbd "M-RET") 'context-execute)
      (global-set-key (kbd "C-x RET") 'context-execute)
+   #+end_src
+
+** Docker
+
+   Docker management from inside of emacs!
+
+   #+begin_src emacs-lisp
+     (use-package docker
+       :bind (("C-x C-d" . docker-images)))
+     (use-package dockerfile-mode)
    #+end_src
 
 ** editorconfig
