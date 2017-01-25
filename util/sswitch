@@ -1,17 +1,18 @@
 #!/bin/zsh
 # xrandr screen switch and rotator
 
-other=$(xrandr | grep " connected (" | cut -d" " -f1)
-
-if [[ "$other" == "eDP-1" ]] ; then
-    xrandr --output eDP-1 --auto
-    xrandr --output DP-1 --off
-else
-    xrandr --output DP-1 --auto
-    xrandr --output eDP-1 --off
-fi
+case $1 in
+    "laptop")
+        xrandr --output DP-1 --off
+        xrandr --output eDP-1 --auto
+        ;;
+    "work")
+        xrandr --output DP-1 --auto
+        xrandr --output eDP-1 --right-of DP-1
+        ;;
+esac
 
 keyboard-setup
 wp
 
-killall keynav; keynav &> /dev/null &|
+# killall keynav; keynav &> /dev/null &|
