@@ -1,5 +1,6 @@
 set -x PATH $HOME/.local/bin/ $PATH
 set -x PATH $HOME/git/dotfiles/util $PATH
+set -x PATH $HOME/tmp/gcp/google-cloud-sdk/bin $PATH
 
 set -x WORK_EMAIL thiderman@spotify.com
 set -x WORK_REMOTE ghe
