@@ -1255,16 +1255,17 @@ documentation in a style similar to literate programming.
    Exeucte different things depending on what's under point.
 
    #+begin_src emacs-lisp
-     (defun context-execute ()
+     (defun th/context-execute ()
        "Context aware execution of what's under point"
+
        (interactive)
-       (let ((symbol (context-get-whitespace-word)))
+       (let ((symbol (th/context-get-whitespace-word)))
          (message "Executing: <%s>" symbol)
 
          (cond
           ;; JIRA tickets
           ((s-matches? "[A-Z][A-Z]+-[0-9]+" symbol)
-           (context-visit-jira symbol))
+           (th/context-visit-jira symbol))
 
           ;; URLs
           ((s-matches? "[a-z]+://" symbol)
@@ -1272,22 +1273,22 @@ documentation in a style similar to literate programming.
 
          ))
 
-     (defun context-get-whitespace-word ()
+     (defun th/context-get-whitespace-word ()
        "Get the whitespace delimited word under point."
 
        (let ((start (save-excursion (re-search-backward "\\(^\\| \\)")))
              (end (save-excursion (re-search-forward "\\( \\|$\\)"))))
          (s-trim (buffer-substring start end))))
 
-     (defun context-visit-jira (ticket)
+     (defun th/context-visit-jira (ticket)
        "Visit the JIRA page"
        (interactive)
-       (browse-url (concat context-jira-root "/browse/" ticket)))
+       (browse-url (concat th/context-jira-root "/browse/" ticket)))
 
-     (defvar context-jira-root "https://jira.spotify.net" "Root URL for JIRA")
+     (defvar th/context-jira-root "https://jira.spotify.net" "Root URL for JIRA")
 
-     (global-set-key (kbd "M-RET") 'context-execute)
-     (global-set-key (kbd "C-x RET") 'context-execute)
+     (global-set-key (kbd "M-RET") 'th/context-execute)
+     (global-set-key (kbd "C-x RET") 'th/context-execute)
    #+end_src
 
 ** Docker
