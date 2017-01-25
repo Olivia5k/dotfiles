@@ -1824,6 +1824,19 @@ documentation in a style similar to literate programming.
 
      (setenv "PAGER" "cat")
      (defalias 'e 'find-file)
+
+     (defun th/eshell-menu ()
+       "Go to one of the currently open eshell buffers (if there is one)."
+       (interactive)
+       (let* ((eshell-buffers (--map (buffer-name it)
+                                    (--filter
+                                     (equal 'eshell-mode (with-current-buffer it major-mode))
+                                     (buffer-list)))))
+         (if eshell-buffers
+             (switch-to-buffer (completing-read "Select eshell: " eshell-buffers))
+           (message "There's no eshell buffers open right now"))))
+
+     (global-set-key (kbd "C-x M-e") 'th/eshell-menu)
    #+end_src
 
 ** Linum
