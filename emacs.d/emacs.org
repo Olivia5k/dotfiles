@@ -894,6 +894,9 @@ documentation in a style similar to literate programming.
        (add-hook 'python-mode-hook 'anaconda-mode))
 
      (use-package pip-requirements)
+     (use-package virtualenvwrapper
+       :config
+       (venv-initialize-eshell))
    #+end_src
 
 *** TODO Configure a working company backend
