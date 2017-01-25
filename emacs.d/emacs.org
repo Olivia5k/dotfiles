@@ -1796,17 +1796,16 @@ documentation in a style similar to literate programming.
               (name (car (last (split-string parent "/" t))))
               (shellname (concat "*eshell: " name "*")))
 
-         (if (get-buffer shellname)
-             ;; If we're already in eshell, go back.
-             ;; Otherwise, switch to it
-             (if (derived-mode-p 'eshell-mode)
-                 (previous-buffer)
-               (switch-to-buffer shellname))
-           (eshell "new")
-           (rename-buffer shellname)
-
-           (insert (concat "ls"))
-           (eshell-send-input))))
+         (if (not (get-buffer shellname))
+             ;;
+             (progn
+               (eshell "new")
+               (rename-buffer shellname))
+           ;; If we're already in eshell, go back to where we were.
+           ;; Otherwise, switch to it said eshell.
+           (if (derived-mode-p 'eshell-mode)
+               (previous-buffer)
+             (switch-to-buffer shellname)))))
 
      (global-set-key (kbd "C-x e") 'eshell-here)
 
