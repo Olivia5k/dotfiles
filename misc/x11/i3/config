@@ -14,6 +14,12 @@ bindsym Mod4+j focus down
 bindsym Mod4+k focus up
 bindsym Mod4+l focus right
 
+# Workspaces to screens
+workspace www output DP-1
+workspace dev output DP-1
+workspace dash output DP-1
+workspace spotify output DP-1
+
 # Switching workspaces
 # These are technically inverted, but the original felt... off.
 bindsym Mod4+p workspace next
@@ -45,6 +51,12 @@ bindsym Mod4+Shift+h move left
 bindsym Mod4+Shift+j move down
 bindsym Mod4+Shift+k move up
 bindsym Mod4+Shift+l move right
+
+# Screen layouts (Mod4+F5-F8)
+bindcode Mod4+71 exec sswitch laptop
+bindcode Mod4+72 exec sswitch work
+bindcode Mod4+73 exec sswitch desktop
+bindcode Mod4+74 exec sswitch tv
 
 # Workspace layouts (Mod4+F9-F11)
 bindcode Mod4+75 layout tabbed
