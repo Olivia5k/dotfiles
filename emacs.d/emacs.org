@@ -1623,6 +1623,14 @@ documentation in a style similar to literate programming.
        ("C-M-s"   . mc/edit-lines))
    #+end_src
 
+** password-store
+
+   Emacs interface to [[https://www.passwordstore.org][pass]]. <3
+
+   #+begin_src emacs-lisp
+     (use-package pass)
+   #+end_src
+
 ** prettify-symbols
 
    Because it's more fun to have a pretty lambda!
