@@ -559,22 +559,6 @@ documentation in a style similar to literate programming.
               (jump-to-register '_)
             (quit-window))))
     #+end_src
-** eclim
-
-   The java integration into emacs!
-
-   #+begin_src emacs-lisp
-     (use-package eclim
-       :init
-       (add-hook 'java-mode-hook 'eclim-mode)
-       (setq eclimd-autostart t)
-       (global-eclim-mode))
-
-     (use-package company-emacs-eclim
-       :bind
-       (("C-i" . company-emacs-eclim)))
-   #+end_src
-
 ** elisp
 
    Options and settings for hacking on emacs itself.
