@@ -1159,14 +1159,6 @@ documentation in a style similar to literate programming.
       (use-package buffer-move)
     #+end_src
 
-*** company
-
-    Completion backend. Daemon based and ridiculously fast.
-
-    #+begin_src emacs-lisp
-      (use-package company)
-    #+end_src
-
 *** diminish
 
     Clean up the modeline by removing certain minor modes.
@@ -1274,6 +1266,19 @@ documentation in a style similar to literate programming.
      (global-set-key (kbd "M-RET") 'th/context-execute)
      (global-set-key (kbd "C-x RET") 'th/context-execute)
    #+end_src
+
+** company
+
+   Completion backend. Daemon based and ridiculously fast.
+
+   #+begin_src emacs-lisp
+     (use-package company
+       :config
+       (use-package company-flx
+         :config
+         (company-flx-mode +1)))
+   #+end_src
+
 
 ** Docker
 
@@ -1527,10 +1532,31 @@ documentation in a style similar to literate programming.
         ("b" magit-blame "blame" :exit t)
         ("l" magit-log-buffer-file "log" :exit t)
         ("t" git-timemachine "timemachine" :exit t)
+        ("s" th/smerge-hydra/body "smerge" :exit t)
         ("SPC" git-gutter+-show-hunk-inline-at-point "show")
         ("q" nil))
 
       (global-set-key (kbd "C-x C-g") 'th/git-hydra/body)
+    #+end_src
+
+*** smerge hydra
+
+    #+begin_src emacs-lisp
+      (defhydra th/smerge-hydra (:foreign-keys warn)
+        "smerge"
+        ("n" smerge-next "next")
+        ("p" smerge-prev "prev")
+        ("a" smerge-keep-all "all")
+        ("c" smerge-keep-current "current")
+        ("RET" smerge-keep-current "current")
+        ("o" smerge-keep-other "other")
+        ("DEL" smerge-keep-other "other")
+        ("m" smerge-keep-mine "mine")
+        ("SPC" smerge-keep-mine "mine")
+        ("b" smerge-keep-base "base")
+        ("q" smerge-mode :exit t))
+
+      ;; (add-hook 'smerge-mode-hook 'th/smerge-hydra/body)
     #+end_src
 
 ** Utility hydra
