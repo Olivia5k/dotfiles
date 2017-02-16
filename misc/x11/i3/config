@@ -20,6 +20,7 @@ workspace dev output DP-1
 workspace dash output DP-1
 workspace spotify output DP-1
 workspace fraud output DP-1
+workspace idea output DP-1
 workspace slack output eDP-1
 workspace messenger output eDP-1
 workspace code output eDP-1
