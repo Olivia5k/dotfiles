@@ -615,13 +615,7 @@ documentation in a style similar to literate programming.
    Nifty little mode that makes reading structured logs easier.
 
    #+begin_src emacs-lisp
-     (use-package logview
-       :init
-       (add-hook
-        'logview-mode-hook
-        (lambda ()
-          (linum-mode -1)
-          (toggle-truncate-lines 1))))
+     (use-package logview)
    #+end_src
 
 ** org
@@ -1872,13 +1866,6 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (global-linum-mode 0)
      (setq linum-format " %4d ")
-
-     (defun th/linum-filter ()
-       "Only have line numbers when programming"
-       (if (derived-mode-p 'prog-mode)
-           (linum-mode 1)))
-
-     (add-hook 'find-file-hook 'th/linum-filter)
    #+end_src
 
 ** Minibuffer
