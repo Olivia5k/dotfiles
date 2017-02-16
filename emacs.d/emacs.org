@@ -1781,6 +1781,7 @@ documentation in a style similar to literate programming.
          (yas-minor-mode "")
          (undo-tree-mode "")
          (ivy-mode "")
+         (editorconfig-mode "")
 
          ;; Major modes
          (js2-mode "js2")
