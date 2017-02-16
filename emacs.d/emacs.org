@@ -1281,7 +1281,9 @@ documentation in a style similar to literate programming.
 
    #+begin_src emacs-lisp
      (use-package docker
-       :bind (("C-x C-d" . docker-images)))
+       :bind (("C-x C-d" . docker-containers)
+              (:map docker-containers-mode-map
+                    ("i" . docker-images))))
      (use-package dockerfile-mode)
    #+end_src
 
