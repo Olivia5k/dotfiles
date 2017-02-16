@@ -1684,6 +1684,16 @@ documentation in a style similar to literate programming.
        :bind (("M-r" . rotate-text)))
    #+end_src
 
+** sqlup
+
+   Uppercase SQL keywords as you type them <3
+
+   #+begin_src emacs-lisp
+     (use-package sqlup-mode
+       :config
+       (add-hook 'sql-mode-hook 'sqlup-mode))
+   #+end_src
+
 ** visual-regexp-steroids
 
    Nice little mode to get a better search/replace experience.
