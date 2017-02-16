@@ -865,7 +865,8 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (use-package python-mode
        :config
-       (add-hook 'python-mode-hook 'flycheck-mode))
+       (add-hook 'python-mode-hook 'flycheck-mode)
+       (setq-default py-split-windows-on-execute-p nil))
 
      (use-package anaconda-mode
        :config
