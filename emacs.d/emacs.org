@@ -532,6 +532,8 @@ documentation in a style similar to literate programming.
                ("C-c l" . th/maximize-log))
 
         :init
+        (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
         (setq compilation-always-kill t
               compilation-ask-about-save nil
               compilation-auto-jump-to-first-error nil
@@ -1739,6 +1741,7 @@ documentation in a style similar to literate programming.
            version-control nil        ; version numbers for backup files
            delete-old-versions t      ; delete excess backup files silently
            delete-by-moving-to-trash nil
+           create-lockfiles nil       ;
            kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
            kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
            auto-save-default nil      ; auto-save every buffer that visits a file
