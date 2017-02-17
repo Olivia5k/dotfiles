@@ -955,20 +955,27 @@ documentation in a style similar to literate programming.
         (find-file
          (concat
           (projectile-project-root)
-          (let ((suf (or suffix (f-ext (buffer-file-name))))
-                (default-directory (projectile-project-root)))
+          (let* ((suf (or suffix (f-ext (buffer-file-name))))
+                (default-directory (projectile-project-root))
+                (targets (-filter
+                          (lambda (x)
+                            (and
+                             (s-suffix? (concat "." suf) x)
+                             ;; Filter out test files, backup files and the current file
+                             ;; (not (s-contains? "test" x))
+                             (not (s-contains? ".#" x))
+                             (not (s-contains? x (buffer-file-name)))))
+                          (projectile-get-repo-files))))
 
-            (completing-read
-             (format "%s files: " suf)
-             (-filter
-              (lambda (x)
-                (and
-                 (s-suffix? (concat "." suf) x)
-                 ;; Filter out test files, backup files and the current file
-                 (not (s-contains? "test" x))
-                 (not (s-contains? ".#" x))
-                 (not (s-contains? x (buffer-file-name)))))
-              (projectile-get-repo-files)))))))
+            (cond
+             ((= (length targets) 1)
+              (car targets))
+             ((= (length targets) 0)
+              (error (format "No other %s files" suf)))
+             (t
+              (completing-read
+               (format "%s files: " suf)
+               targets)))))))
 
       (global-set-key (kbd "C-x a") 'th/other-files-suffix)
     #+end_src
