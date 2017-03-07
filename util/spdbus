@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+send="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player"
+
+case $1 in
+    open)
+        $send.OpenUri string:$2
+        ;;
+    vol)
+        $send.Volume int:$2
+        ;;
+    toggle)
+        $send.PlayPause
+        ;;
+    stop)
+        $send.Stop
+        ;;
+    mute)
+        $send.Volume int:0
+        ;;
+
+esac

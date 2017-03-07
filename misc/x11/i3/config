@@ -154,6 +154,17 @@ bindsym Mod4+Control+F12 exit
 bindsym Mod4+Control+r reload
 bindsym Mod4+Mod1+Control+r restart
 
+# Spotify Experiment
+# # Playlists
+bindcode Mod4+79 exec spdbus open spotify:user:1165497318:playlist:6vLfsliI3xQZJdaT8Y7li0
+bindcode Mod4+80 exec spdbus open spotify:artist:3HKoyHD86fikvLBdecyl5j
+bindcode Mod4+81 exec spdbus open spotify:user:spotify:playlist:37i9dQZEVXbrsiIFnfRrWi
+bindcode Mod4+82 exec spdbus open spotify:user:particledetector:playlist:3E90KLZS2pz3y71c3YAtIE
+# # Playing
+bindcode Mod4+104 exec spdbus toggle
+bindsym Mod4+button4 exec vol up
+bindsym Mod4+button5 exec vol down
+
 focus_follows_mouse yes
 
 # The IPC interface allows programs like an external workspace bar
