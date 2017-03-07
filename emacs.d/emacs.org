@@ -2260,6 +2260,12 @@ documentation in a style similar to literate programming.
         (balance-windows))
     #+end_src
 
+*** Autobalance
+
+    #+begin_src emacs-lisp
+      (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
+        (balance-windows))
+    #+end_src
 *** Killing windows
 
     I kill windows all the time. So often that I want to be able to do it
