@@ -414,6 +414,16 @@ documentation in a style similar to literate programming.
       (end-of-line)
       (kill-ring-save)))
 #+end_src
+** hungry-delete
+
+   Delete all spaces instead of just a little bit
+
+   #+begin_src emacs-lisp
+     (use-package hungry-delete
+       :config
+       (global-hungry-delete-mode))
+   #+end_src
+
 ** fill mode
 #+begin_src emacs-lisp
   (auto-fill-mode 1)
@@ -1888,17 +1898,17 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (defvar mode-line-cleaner-alist
        `((paredit-mode . "")
-         (lispy-mode . " ()")
+         (lispy-mode . "()")
          (eldoc-mode . "")
          (abbrev-mode . "")
          (auto-fill-mode "")
-         (helm-mode "")
          (magit-auto-revert-mode "")
          (auto-revert-mode "")
          (yas-minor-mode "")
          (undo-tree-mode "")
          (ivy-mode "")
          (editorconfig-mode "")
+         (hungry-delete-mode "")
 
          ;; Major modes
          (js2-mode "js2")
