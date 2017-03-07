@@ -2042,7 +2042,7 @@ documentation in a style similar to literate programming.
         (:eval
          (cond (buffer-read-only
                 (propertize " RO " 'face 'mode-line-read-only-face))
-               ((buffer-modified-p)
+               ((and (buffer-modified-p) (not (s-prefix? "*" (buffer-name))))
                 (propertize " ** " 'face 'mode-line-modified-face))
                (t "    ")))
         "    "
