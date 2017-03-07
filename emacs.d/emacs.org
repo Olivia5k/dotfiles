@@ -223,6 +223,7 @@ documentation in a style similar to literate programming.
        (ivy-mode 1))
 
      (use-package counsel
+       :bind (("C-x M-p" . counsel-package))
        :config
        ;; https://github.com/abo-abo/swiper/issues/685#issuecomment-249162962
        (setq counsel-find-file-ignore-regexp
