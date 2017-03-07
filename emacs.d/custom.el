@@ -17,7 +17,12 @@
  '(electric-pair-mode t)
  '(elfeed-feeds
    (quote
-    ("http://www.wilfred.me.uk/rss.xml" "http://emacsredux.com/atom.xml" "http://endlessparentheses.com/atom.xml" "http://planet.emacsen.org/atom.xml" "http://oremacs.com/atom.xml")))
+    ("http://www.wilfred.me.uk/rss.xml"
+     "http://emacsredux.com/atom.xml"
+     "http://endlessparentheses.com/atom.xml"
+     "http://planet.emacsen.org/atom.xml"
+     "http://oremacs.com/atom.xml"
+     "http://cestlaz.github.io/rss.xml")))
  '(fci-rule-color "#373b41")
  '(flycheck-checkers
    (quote
