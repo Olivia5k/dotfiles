@@ -396,24 +396,27 @@ documentation in a style similar to literate programming.
                                   (insertline-and-move-to-line t)))
 #+end_src
 ** Entire line operation
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-k")
-                  (lambda ()
-                    (interactive)
-                    (beginning-of-line)
-                    (if (eq (point) (point-max))
-                        (previous-line))
-                    (kill-line 1)
-                    (back-to-indentation)))
 
-  (defun yank-entire-line ()
-    (interactive)
-    (save-excursion
-      (beginning-of-line)
-      (set-mark-command)
-      (end-of-line)
-      (kill-ring-save)))
-#+end_src
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "M-k")
+                     (lambda ()
+                       (interactive)
+                       (beginning-of-line)
+                       (if (eq (point) (point-max))
+                           (previous-line))
+                       (kill-line 1)
+                       (back-to-indentation)))
+
+     (defun yank-entire-line ()
+       (interactive)
+       (save-excursion
+         (beginning-of-line)
+         (set-mark-command)
+         (end-of-line)
+         (kill-ring-save)))
+
+   #+end_src
+
 ** hungry-delete
 
    Delete all spaces instead of just a little bit
