@@ -31,6 +31,7 @@
  '(global-semantic-idle-scheduler-mode nil)
  '(global-semanticdb-minor-mode nil)
  '(gofmt-command "gofmt")
+ '(highlight-symbol-idle-delay 0)
  '(hl-sexp-background-color "#efebe9")
  '(httpd-port 8001)
  '(js-indent-level 2)
