@@ -1657,6 +1657,7 @@ documentation in a style similar to literate programming.
         ("l" magit-log-buffer-file "log" :exit t)
         ("t" git-timemachine "timemachine" :exit t)
         ("s" th/smerge-hydra/body "smerge" :exit t)
+        ("RET" magithub-browse "repo" :exit t)
         ("SPC" git-gutter+-show-hunk-inline-at-point "show")
         ("q" nil))
 
