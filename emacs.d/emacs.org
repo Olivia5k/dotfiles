@@ -209,7 +209,7 @@ documentation in a style similar to literate programming.
        :bind (("M-x"     . counsel-M-x)
               ("C-x y"   . counsel-yank-pop)
               ("C-c C-r" . ivy-resume))
-
+       :commands (ivy-set-actions)
        :config
        (setq ivy-use-virtual-buffers t)
        (setq ivy-count-format "(%d/%d) ")
@@ -579,6 +579,30 @@ documentation in a style similar to literate programming.
 ** elfeed
 
    #+begin_src emacs-lisp
+     (use-package elfeed
+       :ensure t
+       :commands (elfeed-expose)
+       :bind (:map elfeed-search-mode-map
+                   ("a" . elfeed-add-feed)
+                   ("G" . elfeed-update)
+                   ("q" . bjm/elfeed-save-db-and-bury)
+                   ("Q" . bjm/elfeed-save-db-and-bury)
+                   ("j" . mz/make-and-run-elfeed-hydra)
+                   ("J" . mz/make-and-run-elfeed-hydra)
+                   ("m" . elfeed-toggle-star)
+                   ("M" . elfeed-toggle-star)))
+
+     (use-package elfeed-goodies
+       :ensure t
+       :config
+       (elfeed-goodies/setup))
+
+     (use-package elfeed-org
+       :ensure t
+       :config
+       (elfeed-org)
+       (setq rmh-elfeed-org-files nil))
+
      ;; (setq elfeed-db-directory "~/Dropbox/shared/elfeeddb")
 
      (defun elfeed-mark-all-as-read ()
@@ -604,29 +628,6 @@ documentation in a style similar to literate programming.
 
      (defalias 'elfeed-toggle-star
        (elfeed-expose #'elfeed-search-toggle-all 'star))
-
-     (use-package elfeed
-       :ensure t
-       :bind (:map elfeed-search-mode-map
-                   ("a" . elfeed-add-feed)
-                   ("G" . elfeed-update)
-                   ("q" . bjm/elfeed-save-db-and-bury)
-                   ("Q" . bjm/elfeed-save-db-and-bury)
-                   ("j" . mz/make-and-run-elfeed-hydra)
-                   ("J" . mz/make-and-run-elfeed-hydra)
-                   ("m" . elfeed-toggle-star)
-                   ("M" . elfeed-toggle-star)))
-
-     (use-package elfeed-goodies
-       :ensure t
-       :config
-       (elfeed-goodies/setup))
-
-     (use-package elfeed-org
-       :ensure t
-       :config
-       (elfeed-org)
-       (setq rmh-elfeed-org-files nil))
 
      (defun z/hasCap (s)
        ""
