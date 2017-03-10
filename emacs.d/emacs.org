@@ -1490,6 +1490,8 @@ documentation in a style similar to literate programming.
 
      (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
+     (define-key dired-mode-map (kbd "M-r") 'rgrep)
+
      (setq-default dired-omit-files-p t) ; Buffer-local variable
      (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$"))
      (setq dired-omit-mode t)
