@@ -8,7 +8,7 @@ case $1 in
         ;;
     "work")
         xrandr --output DP-1 --auto
-        xrandr --output eDP-1 --right-of DP-1
+        xrandr --output eDP-1 --off
         ;;
 esac
 
