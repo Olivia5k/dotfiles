@@ -758,6 +758,8 @@ rather than a very tricky to use keymap.
   =<project-name>.go=.
 
   #+begin_src emacs-lisp
+    (defvar th/go-server-args nil "Argument to go server start")
+
     ;; TODO: Make the argument part configurable
     (defun th/go-server-start ()
       "Start the server for the app"
@@ -770,14 +772,18 @@ rather than a very tricky to use keymap.
         (when (get-process procname)
           (th/go-server-stop))
 
+        (when (not th/go-server-args)
+          (setq th/go-server-args
+                (completing-read (format "%s-server args: " name) '("server" ""))))
+
         (start-process
          procname
          (format "*%s-server*" name)
          (concat root name)
-         "server")
+         th/go-server-args)
 
         ;; (set-process-filter proc 'th/go-server-insertion-filter)
-        (message "Started %s server" name)))
+        (message "Started '%s'" name)))
 
     (defun th/go-server-stop ()
       "Stop the server for the app"
