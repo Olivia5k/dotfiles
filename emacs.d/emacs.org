@@ -1396,7 +1396,6 @@ documentation in a style similar to literate programming.
          (company-flx-mode +1)))
    #+end_src
 
-
 ** Docker
 
    Docker management from inside of emacs!
@@ -1713,7 +1712,7 @@ documentation in a style similar to literate programming.
        ("r" rainbow-identifiers-mode "Rainbow identifiers")
        ("t" toggle-truncate-lines "Truncate lines"))
 
-     (global-set-key (kbd "C-x t") 'th/util-hydra/body)
+     (global-set-key (kbd "C-x c") 'th/util-hydra/body)
    #+end_src
 
    Also the font size hydra
