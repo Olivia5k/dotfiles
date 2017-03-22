@@ -1492,13 +1492,12 @@ documentation in a style similar to literate programming.
      (define-key dired-mode-map (kbd "M-r") 'rgrep)
 
      (setq-default dired-omit-files-p t) ; Buffer-local variable
-     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$"))
+     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$\\|.sock$"))
      (setq dired-omit-mode t)
+     (setq dired-omit-verbose nil) ;; https://open.spotify.com/track/2XRl0NfORYPEvUJXLtJiND
      (setq dired-hide-details-hide-information-lines t)
      (setq dired-hide-details-mode t)
      (setq diredp-hide-details-initially-flag t)
-
-
    #+end_src
 
 ** emmet
