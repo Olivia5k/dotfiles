@@ -739,11 +739,12 @@ documentation in a style similar to literate programming.
    targets in the current makefile and runs it with =compile=.
 
    #+begin_src emacs-lisp
+     ;; The \n and the subsequent hard tab are put there since org-src is trying to
+     ;; be smart and converts the tab to spaces, which make really disagrees with.
+     ;; Tabs in makefiles are possibly the saddest point of tech debt ever.
      (defvar makefile-list-target "# Listing all the make targets; http://stackoverflow.com/a/26339924/983746
      .PHONY: list
-     list:
-   	  @$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ \"^[#.]\") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
-     "
+     list:\n	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ \"^[#.]\") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'\n"
        "Definition of target used to list makefile targets.")
 
      (defun makefile-execute-target ()
@@ -774,7 +775,9 @@ documentation in a style similar to literate programming.
 
          (with-temp-buffer
            (shell-command
-            (format "make -f %s list" file) ((current) -buffer))
+            (format "make -f %s list" file)
+            (current-buffer))
+           (delete-file file)
            (s-split "\n" (buffer-string) t))))
    #+end_src
 
