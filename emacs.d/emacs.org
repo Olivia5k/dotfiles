@@ -1727,7 +1727,24 @@ documentation in a style similar to literate programming.
        ("h" (th/iosevka 17))
        ("j" (th/iosevka 20))
        ("k" (th/iosevka 22))
-       ("l" (th/iosevka 24)))
+       ("l" (th/iosevka 24))
+       ("i" (describe-char (point)) "font information" :color blue))
+   #+end_src
+
+** Execution hydra
+
+   Hydra that starts things
+
+   #+begin_src emacs-lisp
+     (defhydra th/exec-hydra (:foreign-keys warn :exit t)
+       "Execution"
+       ("e" elfeed "elfeed")
+       ("h" (counsel-find-file "/") "hosts")
+       ("p" payments/actions/body "payments")
+       ("M-p" proced "proced")
+       ("q" nil))
+
+     (global-set-key (kbd "C-x C-c") 'th/exec-hydra/body)
    #+end_src
 
 ** move-text
