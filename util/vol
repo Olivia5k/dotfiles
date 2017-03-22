@@ -3,4 +3,9 @@
 pulseaudio-ctl $*
 vol=$(pulseaudio-ctl full-status)
 num=$(echo $vol | cut -d" " -f 1)
-notify-send "Volume" "${num}%"
+
+if [[ $(echo $vol | cut -d" " -f 2) == "yes" ]]; then
+    notify-send "Volume" "Muted"
+else
+    notify-send "Volume" "${num}%"
+fi
