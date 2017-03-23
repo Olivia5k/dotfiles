@@ -1550,6 +1550,7 @@ documentation in a style similar to literate programming.
      (setq dired-hide-details-hide-information-lines t)
      (setq dired-hide-details-mode t)
      (setq diredp-hide-details-initially-flag t)
+     (setq dired-listing-switches "-alh --group-directories-first")
    #+end_src
 
 ** emmet
