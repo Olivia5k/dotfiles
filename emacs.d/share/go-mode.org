@@ -68,6 +68,8 @@ rather than a very tricky to use keymap.
       ("q" nil))
 
     (define-key go-mode-map (kbd "M-m") 'go-goto-hydra/body)
+    (define-key go-mode-map (kbd "M-.") 'godef-jump)
+    (define-key go-mode-map (kbd "C-c C-j") 'godef-jump-other-window)
   #+end_src
 
 * Coverage functions
@@ -224,10 +226,22 @@ rather than a very tricky to use keymap.
     (defun th/go-test ()
       (interactive)
       (projectile-save-project-buffers)
-      ;; The server compile command should run in the root
-      (compile "go test -coverprofile=cover.out"))
-
+      (if (f-exists-p (concat projectile-project-root "Makefile"))
+          (compile "make check")
+        (compile "go test -coverprofile=cover.out")))
     (define-key go-mode-map (kbd "C-c C-c") 'th/go-test)
+
+    (defun th/go-lint ()
+      (interactive)
+      (projectile-save-project-buffers)
+      (compile "make lint"))
+    (define-key go-mode-map (kbd "C-c C-l") 'th/go-lint)
+
+    (defun th/go-race ()
+      (interactive)
+      (projectile-save-project-buffers)
+      (compile "make race"))
+    (define-key go-mode-map (kbd "C-c C-r") 'th/go-race)
 
     (defun th/go-server-compile ()
       (interactive)
@@ -451,6 +465,7 @@ rather than a very tricky to use keymap.
 
      ;; raise / unwrap
      (define-key go-refactor-map (kbd "u") 'go-refactor-unwrap)
+     (define-key go-mode-map (kbd "M-r") 'go-refactor-unwrap)
    #+end_src
 
 ** Extract variable
@@ -491,6 +506,7 @@ rather than a very tricky to use keymap.
 ** TODO Toggle error assign
 
    Toggles between ~err~/~_~ for the current assigment.
+
 ** Toggle variable declaration
 
    Toggle whether the current statement uses ~:=~ or ~=~
