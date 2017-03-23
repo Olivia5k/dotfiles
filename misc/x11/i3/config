@@ -1,4 +1,4 @@
-font pango: iosevka 16px
+font pango: Yanone kaffeesatz 18px
 
 # for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
@@ -197,4 +197,9 @@ client.background       #ffffff
 new_window pixel 5
 workspace_layout default
 
+gaps inner 10
+smart_gaps on
+smart_borders on
+
 exec maybe_kodi
+exec compton --backend glx
