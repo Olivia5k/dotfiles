@@ -86,6 +86,8 @@ documentation in a style similar to literate programming.
     (use-package dash)
     (use-package f)
     (use-package s)
+    (use-package hydra)
+    (use-package ivy)
   #+end_src
 
 * Interface
