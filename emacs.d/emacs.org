@@ -2119,8 +2119,8 @@ documentation in a style similar to literate programming.
         "    "
         ; directory and buffer/file name
         (:propertize (:eval (when (and
-                                   (not (file-remote-p (buffer-file-name)))
-                                   (not (s-contains? "*" (buffer-name))))
+                                   (not (s-contains? "*" (buffer-name)))
+                                   (not (file-remote-p (buffer-file-name))))
                               (let* ((projectile-require-project-root nil)
                                      (ppr (projectile-project-root))
                                      (target default-directory))
@@ -2149,8 +2149,7 @@ documentation in a style similar to literate programming.
         (global-mode-string global-mode-string)
         "    "
         ; nyan-mode uses nyan cat as an alternative to %p
-        (:eval (when nyan-mode (list (nyan-create))))
-        ))
+        (:eval (when nyan-mode (list (nyan-create))))))
 
      ;; Helper function
      (defun shorten-directory (dir max-length)
