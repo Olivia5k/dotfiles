@@ -1,1 +1,1 @@
-DMENU_OPTS="-i -fn Iosevka -p exec -b -l 10 -nb #332033 -nf #dbdbdb -sb #902090 -sf #e6aae6"
+DMENU_OPTS="-i -fn Yanone\ kaffeesatz-Bold:pixelsize=20 -p exec -b -l 10 -nb #332033 -nf #dbdbdb -sb #902090 -sf #e6aae6"
