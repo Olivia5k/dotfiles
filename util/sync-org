@@ -2,4 +2,4 @@
 
 export PATH=$HOME/.local/bin:$PATH
 cd $HOME/org
-git sync &> /dev/null
+git sync &> /dev/null || notify-send -u 'critical' 'Org failed' 'git-sync for org failed.'
