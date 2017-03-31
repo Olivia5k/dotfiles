@@ -653,19 +653,10 @@ documentation in a style similar to literate programming.
       (defalias 'elfeed-toggle-star
         (elfeed-expose #'elfeed-search-toggle-all 'star))
 
-
-
-      (use-package elfeed-org
-        :ensure t
-        :config
-        (elfeed-org)
-        (setq rmh-elfeed-org-files nil))
-
       (defun z/hasCap (s)
         ""
         (let ((case-fold-search nil))
           (string-match-p "[[:upper:]]" s)))
-
 
       (defun z/get-hydra-option-key (s)
         "returns single upper case letter (converted to lower) or first"
