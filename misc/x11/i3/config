@@ -202,4 +202,5 @@ smart_gaps on
 smart_borders on
 
 exec maybe_kodi
+exec dunst
 exec compton --backend glx

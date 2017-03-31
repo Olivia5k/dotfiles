@@ -4,6 +4,7 @@
 # executable files on your path, they will be symlinked. If not, they will be
 # skipped.
 apps[dmenu]="misc/x11/dmuxrc"
+apps[dunst]="misc/x11/dunstrc"
 apps[emacs]="emacs.d"
 apps[fish]="fish"
 apps[gem]="misc/gemrc"
@@ -25,6 +26,7 @@ apps[zsh]="zsh/grml.zsh zsh/zshrc.pre zsh/zshrc.local"
 # actual destinations.
 dest[fish]="${XDG_CONFIG_HOME:-$HOME/.config}/fish"
 dest[misc/x11/dmuxrc]="${XDG_CONFIG_HOME:-$HOME/.config}/dmux/dmuxrc"
+dest[misc/x11/dunstrc]="${XDG_CONFIG_HOME:-$HOME/.config}/dunst/dunstrc"
 dest[misc/ncmpcpp.conf]="$HOME/.ncmpcpp/config"
 dest[misc/x11/i3/config]="$HOME/.i3/config"
 dest[misc/x11/i3/i3status]="${XDG_CONFIG_HOME:-$HOME/.config}/i3status/config"
