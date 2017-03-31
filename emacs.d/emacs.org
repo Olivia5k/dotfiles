@@ -1271,10 +1271,13 @@ documentation in a style similar to literate programming.
 
       (defun th/echo-file-name ()
         (interactive)
-        (message
-         (s-chop-prefix
-          (projectile-project-root)
-          (file-truename (buffer-name)))))
+        (let ((fn (file-truename (buffer-name))))
+          (message
+           (if (projectile-project-p)
+               (s-chop-prefix (projectile-project-root) fn)
+             fn))))
+
+      (define-key global-map (kbd "C-x ?") 'th/echo-file-name)
 
       (defun switch-to-previous-buffer ()
         "Switch to previously open buffer.
@@ -1341,7 +1344,6 @@ documentation in a style similar to literate programming.
             (setq debug-on-error doe)
             (message "debug-on-error set to %s" doe))))
 
-      (define-key global-map (kbd "C-x ?") 'th/echo-file-name)
     #+end_src
 
 ** Configurationless utilities
