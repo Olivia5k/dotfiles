@@ -10,6 +10,14 @@ case $1 in
         xrandr --output DP-1 --auto
         xrandr --output eDP-1 --off
         ;;
+    "desktop")
+        xrandr --output HDMI-0 --off
+        xrandr --output DVI-I-1 --left-of DVI-D-0
+        ;;
+    "tv")
+        xrandr --output HDMI-0 --auto
+        xrandr --output HDMI-0 --right-of DVI-D-0
+        ;;
 esac
 
 keyboard-setup
