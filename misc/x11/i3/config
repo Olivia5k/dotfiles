@@ -74,21 +74,23 @@ bindsym Mod4+w exec dmenu_i3_workspace workspace "i3-msg workspace %q"
 bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to workspace %q" true
 
 # Dedicated workspaces
-bindsym Mod4+Control+j exec i3-or-raise "jira" "www https://jira.spotify.net"
-bindsym Mod4+Control+c exec i3-or-raise "cal" "www https://calendar.google.com/calendar/b/1/render#main_7"
+bindsym Mod4+Control+j exec i3-or-raise "jira" "chrome-app https://jira.spotify.net"
+bindsym Mod4+Control+c exec i3-or-raise "cal" "chrome-app https://calendar.google.com/calendar/b/1/render#main_7"
 bindsym Mod4+Mod1+c exec i3-or-raise "chill" "mux chill"
 bindsym Mod4+d workspace code; workspace dev
+bindsym Mod4+Mod1+d exec "emacs"
 bindsym Mod4+e exec i3-or-raise "slack" "chrome-app https://spotify.slack.com/messages/wtb-private/"
-bindsym Mod4+f exec i3-or-raise "facebook" "www https://facebook.com"
-bindsym Mod4+g exec i3-or-raise "ghe" "www https://ghe.spotify.net"
-bindsym Mod4+Control+g exec i3-or-raise "github" "www https://github.com"
+bindsym Mod4+Control+e exec "chrome-app https://spotify.slack.com/messages/wtb-private/"
+bindsym Mod4+f exec i3-or-raise "facebook" "chrome-app https://facebook.com"
+bindsym Mod4+g exec i3-or-raise "ghe" "chrome-app https://ghe.spotify.net"
+bindsym Mod4+Control+g exec i3-or-raise "github" "chrome-app https://github.com"
 bindsym Mod4+i exec mor irc
 bindsym Mod4+Mod1+p exec ror "bin/payments-docker" "payments-docker" "urxvt -name payments-docker -e payments-docker local"
-bindsym Mod4+r exec i3-or-raise "reddit" "www https://reddit.com"
+bindsym Mod4+r exec i3-or-raise "reddit" "chrome-app https://reddit.com"
 bindsym Mod4+s exec i3-or-raise "spotify" "launch-spotify"
-bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "www http://sl.se"
+bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "chrome-app http://sl.se"
 bindsym Mod4+t exec i3-or-raise "tam" "launch-tam"
-bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "www tvtropes.org"
+bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "chrome-app tvtropes.org"
 bindsym Mod4+m exec i3-or-raise "messenger" "chrome-app https://messenger.com"
 bindsym Mod4+Mod1+m exec "chrome-app https://messenger.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
@@ -106,8 +108,6 @@ bindcode Mod4+Mod1+36 exec browser
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
-
-bindsym Mod4+Mod1+d exec emacsclient -c -a ''
 
 # bindsym Mod4+i exec mor main `di
 
