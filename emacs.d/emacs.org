@@ -178,6 +178,16 @@ documentation in a style similar to literate programming.
        (message "darktooth fixed"))
    #+end_src
 
+** dumb-jump
+
+   #+begin_src emacs-lisp
+     (use-package dumb-jump
+       :bind (("M-." . dumb-jump-go))
+       :config
+       (setq dumb-jump-selector 'ivy)
+       :ensure)
+   #+end_src
+
 ** popwin
 
    popwin is a little library that makes most special kinds of buffers appear
