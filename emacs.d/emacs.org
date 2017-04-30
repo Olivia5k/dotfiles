@@ -1576,6 +1576,9 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (require 'dired)
      (require 'dired-x)
+     (use-package dired-subtree
+       :after (dired)
+       :config)
 
      (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
@@ -1589,6 +1592,10 @@ documentation in a style similar to literate programming.
      (setq dired-hide-details-mode t)
      (setq diredp-hide-details-initially-flag t)
      (setq dired-listing-switches "-alh --group-directories-first")
+     (setq dired-recursive-copies 'always)
+     (setq dired-recursive-deletes 'always)
+
+     (put 'dired-find-alternate-file 'disabled nil)
    #+end_src
 
 ** emmet
