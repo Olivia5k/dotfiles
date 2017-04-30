@@ -1674,6 +1674,13 @@ documentation in a style similar to literate programming.
        (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
    #+end_src
 
+** flyspell
+
+   #+begin_src emacs-lisp
+     (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))
+     (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
+   #+end_src
+
 ** git and magit
 *** git
 
