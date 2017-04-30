@@ -849,6 +849,8 @@ documentation in a style similar to literate programming.
          ;; direct children
          org-hierarchical-checkbox-statistics t)
 
+        (add-hook 'org-mode-hook 'org-bullets-mode)
+
         :config
         (org-babel-do-load-languages
          'org-babel-load-languages
@@ -856,9 +858,7 @@ documentation in a style similar to literate programming.
            (sql . t)
            (shell . t)
            (python . t)
-           (js . t)))
-
-        (org-bullets-mode 1))
+           (js . t))))
 
       (use-package org-journal)
     #+end_src
