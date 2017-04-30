@@ -2141,107 +2141,87 @@ documentation in a style similar to literate programming.
 
 ** mode-line
 
-   https://github.com/ocodo/.emacs.d/blob/master/custom/mode-line-hack.el
+   Based on
 
    #+begin_src emacs-lisp
-     ;; Mode line setup - forked from http://amitp.blogspot.com.au/2011/08/emacs-custom-mode-line.html
+     (defun make-rect (color height width)
+         "Create an XPM bitmap."
+         (when window-system
+           (propertize
+            " " 'display
+            (let ((data nil)
+                  (i 0))
+              (setq data (make-list height (make-list width 1)))
+              (pl/make-xpm "percent" color color (reverse data))))))
 
-     ;; Remove the silly "Git" part of the mode line. I know I'm using git.
-     (setcdr (assq 'vc-mode mode-line-format)
-             '((:eval (replace-regexp-in-string "^ Git." " " vc-mode))))
+       (defun powerline-mode-icon ()
+         (let ((icon (all-the-icons-icon-for-buffer)))
+           (unless (symbolp icon) ;; This implies it's the major mode
+             (format " %s"
+                     (propertize icon
+                                 'help-echo (format "Major-mode: `%s`" major-mode)
+                                 'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))))
 
-     (setq-default
-      mode-line-format
-      '("  "
-        ; Position, including warning for 80 columns
-        (:propertize "%4l:" face mode-line-position-face)
-        (:eval (propertize "%3c" 'face
-                           (if (>= (current-column) 100)
-                               'mode-line-hi-col-face
-                             'mode-line-position-face)))
-        ; emacsclient [default -- keep?]
-        mode-line-client
-        "  "
-        ; read-only or modified status
-        (:eval
-         (cond (buffer-read-only
-                (propertize " RO " 'face 'mode-line-read-only-face))
-               ((and (buffer-modified-p) (not (s-prefix? "*" (buffer-name))))
-                (propertize " ** " 'face 'mode-line-modified-face))
-               (t "    ")))
-        "    "
-        ; directory and buffer/file name
-        (:propertize (:eval (when (and
-                                   (not (s-contains? "*" (buffer-name)))
-                                   (not (file-remote-p (buffer-file-name))))
-                              (let* ((projectile-require-project-root nil)
-                                     (ppr (projectile-project-root))
-                                     (target default-directory))
-                                ;; If there is a projectile root, remove everything
-                                ;; in front of its name to save space.
-                                (when ppr (setq
-                                           target
-                                           (s-replace (concat (f-dirname ppr) "/") "" target)))
+     (use-package powerline
+       :ensure t
+       :config
+       (setq-default mode-line-format
+                     '("%e"
+                       (:eval
+                        (let* ((active (powerline-selected-window-active))
+                               (modified (buffer-modified-p))
+                               (ro buffer-read-only)
+                               (face1 (if active 'powerline-active1 'powerline-inactive1))
+                               (face2 (if active 'powerline-active2 'powerline-inactive2))
+                               (bar-color (cond ((and active modified) (face-foreground 'error))
+                                                (active (face-background 'cursor))
+                                                (t (face-background 'tooltip))))
+                               (lhs (list
+                                     (make-rect bar-color 30 3)
+                                     ;; If read-only, show the lock icon. If not
+                                     ;; read-only and modified, show the modified icon.
+                                     ;; If buffer is not tied to a file, don't show anything.
+                                     (if (buffer-file-name)
+                                         (if ro
+                                             (concat
+                                              " "
+                                              (all-the-icons-faicon "ban"
+                                                                    :face (when active 'font-lock-keyword-face)
+                                                                    :v-adjust -0.01))
+                                           (when modified
+                                             (concat
+                                              " "
+                                              (all-the-icons-faicon "floppy-o"
+                                                                    :face (when active 'error)
+                                                                    :v-adjust -0.01)))))
+                                     " "
+                                     (powerline-buffer-id)
+                                     " "))
+                               (center (list
+                                        " "
+                                        (powerline-mode-icon)
+                                        " "
+                                        (powerline-major-mode)
+                                        " "))
+                               (rhs (list
+                                     ;; " "
+                                     ;; (powerline-minor-modes)
+                                     " "
+                                     (powerline-raw " %l:%c" 'mode-line 'r)
+                                     " | "
+                                     (powerline-raw "%6p" 'mode-line 'r)
+                                     (powerline-hud 'highlight 'region 1)
+                                     " "
+                                     )))
+                          (concat
+                           (powerline-render lhs)
+                           (powerline-fill-center face2 (/ (powerline-width center) 2.0))
+                           (powerline-render center)
+                           (powerline-fill face2 (powerline-width rhs))
+                           (powerline-render rhs)))))))
 
-                                (shorten-directory target 30))))
-                     face mode-line-folder-face)
-        (:propertize "%b"
-                     face mode-line-filename-face)
-        ; narrow [default -- keep?]
-        " %n "
-        ; mode indicators: vc, recursive edit, major mode, minor modes, process, global
-        (vc-mode vc-mode)
-        "  %["
-        (:propertize mode-name
-                     face mode-line-mode-face)
-        "%] "
-        (:eval (propertize (format-mode-line minor-mode-alist)
-                           'face 'mode-line-minor-mode-face))
-        (:propertize mode-line-process
-                     face mode-line-process-face)
-        (global-mode-string global-mode-string)
-        "    "
-        ; nyan-mode uses nyan cat as an alternative to %p
-        (:eval (when nyan-mode (list (nyan-create))))))
-
-     ;; Helper function
-     (defun shorten-directory (dir max-length)
-       "Show up to `max-length' characters of a directory name `dir'."
-       (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
-             (output ""))
-         (when (and path (equal "" (car path)))
-           (setq path (cdr path)))
-         (while (and path (< (length output) (- max-length 4)))
-           (setq output (concat (car path) "/" output))
-           (setq path (cdr path)))
-         (when path
-           (setq output (concat ".../" output)))
-         output))
-
-     ;; Extra mode line faces
-     (make-face 'mode-line-read-only-face)
-     (make-face 'mode-line-modified-face)
-     (make-face 'mode-line-folder-face)
-     (make-face 'mode-line-filename-face)
-     (make-face 'mode-line-position-face)
-     (make-face 'mode-line-mode-face)
-     (make-face 'mode-line-minor-mode-face)
-     (make-face 'mode-line-process-face)
-     (make-face 'mode-line-hi-col-face)
-
-     (set-face-attribute 'mode-line nil          :foreground "gray80" :background "#333333" :inverse-video nil :box '(:line-width 1 :color "#101010" :style nil))
-     (set-face-attribute 'mode-line-inactive nil :foreground "gray60" :background "#1d2021" :inverse-video nil :box '(:line-width 1 :color "#101010" :style nil))
-
-     (set-face-attribute 'mode-line-read-only-face nil  :inherit 'mode-line-face          :foreground "#4271ae" :box '(:line-width 1 :color "#4271ae"))
-     (set-face-attribute 'mode-line-modified-face nil   :inherit 'mode-line-face          :foreground "#FF0000" :background "#dbdbdb" :box '(:line-width 1 :color "#880000"))
-     (set-face-attribute 'mode-line-folder-face nil     :inherit 'mode-line-face          :foreground "gray50")
-     (set-face-attribute 'mode-line-filename-face nil   :inherit 'mode-line-face          :foreground "#FABD2F" :weight 'bold)
-     (set-face-attribute 'mode-line-position-face nil   :inherit 'mode-line-face)
-     (set-face-attribute 'mode-line-mode-face nil       :inherit 'mode-line-face          :foreground "#fe8019")
-     (set-face-attribute 'mode-line-minor-mode-face nil :inherit 'mode-line-mode-face     :foreground "gray60")
-     (set-face-attribute 'mode-line-process-face nil    :inherit 'mode-line-face          :foreground "#718c00")
-     (set-face-attribute 'mode-line-hi-col-face nil     :inherit 'mode-line-position-face :foreground "black" :background "#db6000")
    #+end_src
+
 ** Narrowing
 
    http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
