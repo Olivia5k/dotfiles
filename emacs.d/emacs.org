@@ -503,14 +503,19 @@ documentation in a style similar to literate programming.
    of the file.
 
    #+begin_src emacs-lisp
-     (add-hook 'before-save-hook
-               (lambda ()
-                 (save-excursion
-                   (save-restriction
-                     (delete-trailing-whitespace)
-                     (widen)
-                     (goto-char (point-max))
-                     (delete-blank-lines)))))
+     (defvar th/clean-whitespace-p t "Cleaning whitespace or not")
+
+     (defun th/clean-whitespace ()
+       (if th/clean-whitespace-p
+           (save-excursion
+             (save-restriction
+               (delete-trailing-whitespace)
+               (widen)
+               (goto-char (point-max))
+               (delete-blank-lines)))
+         (message "Not cleaning whitespace")))
+
+     (add-hook 'before-save-hook #'th/clean-whitespace)
    #+end_src
 
 ** undo tree
