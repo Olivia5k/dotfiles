@@ -40,7 +40,9 @@ rather than a very tricky to use keymap.
       :config
       (require 'go-guru)
       (add-hook 'go-mode-hook 'th/go-hook)
-      (add-hook 'go-mode-hook 'go-eldoc-setup))
+      (add-hook 'go-mode-hook 'go-eldoc-setup)
+      (setq gofmt-command "goimports")
+      (setq gofmt-args ""))
 
     (use-package company)
     (use-package company-go)
