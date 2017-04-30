@@ -48,6 +48,12 @@ rather than a very tricky to use keymap.
     (use-package company-go)
     (use-package go-eldoc)
 
+    (use-package go-impl)
+    (use-package go-add-tags
+      :bind
+      (:map go-mode-map
+            ("C-c t" . go-add-tags)))
+
     ;; These are libraries used within
     (use-package dash)
     (use-package f)
