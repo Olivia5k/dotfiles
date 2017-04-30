@@ -133,12 +133,10 @@ documentation in a style similar to literate programming.
           "Iosevka-12"
         "Iosevka-10"))
 
-     ;; This is called at the very bottom of emacs.org. See comments there.
-     (defun th/fix-darktooth ()
-       "Things that make darktooth a theme more suited for me."
+     (defun th/boldly-go ()
+       "Fix bolding in colorschemes"
 
        (let ((faces (face-list)))
-         ;; This is to fix the lack of boldness in darktooth
          (mapc
           (lambda (face)
             (set-face-attribute face nil ':bold t))
@@ -150,8 +148,6 @@ documentation in a style similar to literate programming.
                    (s-starts-with? "rainbow" fn))))
            faces))
 
-         ;; This is to fix the fact that darktooth has foreground colorization for
-         ;; avy, which to my eyes don't stick out enough.
          (mapc
           (lambda (face)
             (set-face-attribute face nil ':inverse-video t))
@@ -159,7 +155,16 @@ documentation in a style similar to literate programming.
            (lambda (face)
              (let ((fn (symbol-name face)))
                (s-starts-with? "avy-lead" fn)))
-           faces)))
+           faces))))
+
+     (defadvice load-theme (after load-theme-auto-bold activate)
+       (th/boldly-go))
+
+     ;; This is called at the very bottom of emacs.org. See comments there.
+     (defun th/fix-darktooth ()
+       "Things that make darktooth a theme more suited for me."
+
+       (th/boldly-go)
 
        ;; Also make the linum and the fringe stand out more!
        (set-face-attribute 'linum nil :background "#1D2021" :foreground "#7C6F64")
