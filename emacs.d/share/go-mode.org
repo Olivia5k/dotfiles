@@ -235,9 +235,17 @@ rather than a very tricky to use keymap.
       (interactive)
       (projectile-save-project-buffers)
       (if (f-exists-p (concat projectile-project-root "Makefile"))
-          (compile "make check")
+          (compile "make test")
         (compile "go test -coverprofile=cover.out")))
     (define-key go-mode-map (kbd "C-c C-c") 'th/go-test)
+
+    (defun th/go-benchmark ()
+      (interactive)
+      (projectile-save-project-buffers)
+      (if (f-exists-p (concat projectile-project-root "Makefile"))
+          (compile "make benchmark")
+        (compile "go test -v -bench=.")))
+    (define-key go-mode-map (kbd "C-c C-b") 'th/go-benchmark)
 
     (defun th/go-lint ()
       (interactive)

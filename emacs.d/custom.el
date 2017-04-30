@@ -13,7 +13,7 @@
  '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("c9321e2db48a21fc656a907e97ee85d8cd86967855bf0bed3998bcf9195c758b" "e2a06cbad59e7a19c40c689b4bcb84344fe6a375e7c237ad991ef1aa587e9caa" "47aa6e82734866b2915781c6e1d9517bd897d45fe8aec360dd4b6294fec73068" "00de442f1a471c98c62281bdf5000b4311db26832a0d6b6f8ffde8705e027828" "c626e064e512724d0c5ec0f802243fe2f0a4223373df8bb89c1f70ce904c135c" "03a393dc05b4916e15035b3dc0ae7f8974a3f33bc70b4a9c0e2fc9f946b780bf" "fa14bd013a2e92f53ab79221a80d8212c49670d891ed730033267c2b7f84d29c" "323dda494baea89d8455101bee9a9de01868a44f6f61ec21aa67de6ea8008444" "94bd9c67eb85cb8f68a8678f55de7dc8ff788b0d59a8de5b3061d31d82fd197c" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "0ae09e79d0a3a7c9f31522fa325c7b9f248e5f5481e9b4a0c3bb9f3a91f221f1" "aef93845026271eef513daa3700619d27168fb094d5e15db2eef81af52faea3c" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "38e99f77afd16890a501a47a918c88793e56775bcce47924c6732128cd80cd5d" "440c1bd2007fca5379c6b954a5362ce66bf6a7083a77c6ba860d3094a08a61ec" "dd7491df4e7df285f3869c253a93ae77659fc1394cb7938d76ddd41585120309" "7abf5a28ec511e7e8f5fe10978b3d63058bbd280ed2b8d513f9dd8b7f5fc9400" default)))
+    ("093b2a26030dcd576cad4e59b5d804bc0496e56f4e2659e8900b4814279c3402" "9541f1dc11258239ef02aa1a5e9db3e1e46bc8fb1d7dbe83946c1541ae6dbdf9" "c9321e2db48a21fc656a907e97ee85d8cd86967855bf0bed3998bcf9195c758b" "e2a06cbad59e7a19c40c689b4bcb84344fe6a375e7c237ad991ef1aa587e9caa" "47aa6e82734866b2915781c6e1d9517bd897d45fe8aec360dd4b6294fec73068" "00de442f1a471c98c62281bdf5000b4311db26832a0d6b6f8ffde8705e027828" "c626e064e512724d0c5ec0f802243fe2f0a4223373df8bb89c1f70ce904c135c" "03a393dc05b4916e15035b3dc0ae7f8974a3f33bc70b4a9c0e2fc9f946b780bf" "fa14bd013a2e92f53ab79221a80d8212c49670d891ed730033267c2b7f84d29c" "323dda494baea89d8455101bee9a9de01868a44f6f61ec21aa67de6ea8008444" "94bd9c67eb85cb8f68a8678f55de7dc8ff788b0d59a8de5b3061d31d82fd197c" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "0ae09e79d0a3a7c9f31522fa325c7b9f248e5f5481e9b4a0c3bb9f3a91f221f1" "aef93845026271eef513daa3700619d27168fb094d5e15db2eef81af52faea3c" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "38e99f77afd16890a501a47a918c88793e56775bcce47924c6732128cd80cd5d" "440c1bd2007fca5379c6b954a5362ce66bf6a7083a77c6ba860d3094a08a61ec" "dd7491df4e7df285f3869c253a93ae77659fc1394cb7938d76ddd41585120309" "7abf5a28ec511e7e8f5fe10978b3d63058bbd280ed2b8d513f9dd8b7f5fc9400" default)))
  '(electric-pair-mode t)
  '(elfeed-feeds
    (quote
@@ -22,6 +22,7 @@
  '(flycheck-checkers
    (quote
     (ada-gnat asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint d-dmd emacs-lisp emacs-lisp-checkdoc erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy jade javascript-eslint javascript-jshint javascript-gjslint javascript-jscs javascript-standard json-jsonlint json-python-json less luacheck lua perl perl-perlcritic php php-phpmd php-phpcs processing puppet-parser puppet-lint python-flake8 python-pylint python-pycompile r-lintr racket rpm-rpmlint rst-sphinx rst ruby-rubocop ruby-rubylint ruby ruby-jruby rust-cargo rust sass scala scala-scalastyle scss-lint scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim sql-sqlint tex-chktex tex-lacheck texinfo verilog-verilator xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby)))
+ '(flyspell-auto-correct-binding [201326651])
  '(global-prettify-symbols-mode nil)
  '(global-semantic-idle-scheduler-mode nil)
  '(global-semanticdb-minor-mode nil)
@@ -68,9 +69,9 @@
  '(safe-local-variable-values
    (quote
     ((eval when
-	   (fboundp
-	    (quote rainbow-mode))
-	   (rainbow-mode 1)))))
+           (fboundp
+            (quote rainbow-mode))
+           (rainbow-mode 1)))))
  '(scss-compile-at-save nil)
  '(sh-indentation 4)
  '(vc-annotate-background nil)
