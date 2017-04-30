@@ -1009,6 +1009,14 @@ documentation in a style similar to literate programming.
        (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
      #+end_src
 
+**** Refiling
+
+     #+begin_src emacs-lisp
+       (setq org-refile-targets
+             '((org-agenda-files :maxlevel . 5)
+               ("~/git/dotfiles/emacs.d/emacs.org" :level . 2)))
+     #+end_src
+
 *** Hydra commands
 
     #+begin_src emacs-lisp
