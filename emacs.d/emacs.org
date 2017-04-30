@@ -91,6 +91,16 @@ documentation in a style similar to literate programming.
   #+end_src
 
 * Interface
+** all-the-icons
+
+   #+begin_src emacs-lisp
+     (use-package all-the-icons
+       :config
+       (use-package all-the-icons-dired
+         :config
+         (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+   #+end_src
+
 ** avy
 
    avy is a nice little package that helps with quick navigation. Using =C-l=
