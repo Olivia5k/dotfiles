@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Scenario: You are working on a large project at work. You are using a
+# library that requires database patches to be named
+# xxx_database_upgrade.sql. You are currently making a patch for
+# 236_database_upgrade.sql, and so is a colleague. Said colleague commits
+# their thing to master first, and now you have to rebase. You get a
+# conflict. Anger and despair sets in.
+#
+# This script solves this by taking your patch and putting it into the next
+# number while preserving the previous one. Joy is back in the world again!
+
+PREV_NAME=$(git diff --name-only --diff-filter=U)
+NUMBER=$(echo $PREV_NAME | grep -o -e '[[:digit:]]\+')
+NEXT_NUMBER=$((NUMBER+1))
+NEXT_NAME=$(echo $PREV_NAME | sed -e "s/$NUMBER/$NEXT_NUMBER/")
+
+git show ":3:$PREV_NAME" > $NEXT_NAME
+git show ":2:$PREV_NAME" > $PREV_NAME
+git add $PREV_NAME $NEXT_NAME
+git status
