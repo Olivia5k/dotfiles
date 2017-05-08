@@ -764,43 +764,48 @@ documentation in a style similar to literate programming.
    #+begin_src emacs-lisp
      (require 'make-mode)
 
-     ;; The \n and the subsequent hard tab are put there since org-src is trying to
-     ;; be smart and converts the tab to spaces, which make really disagrees with.
-     ;; Tabs in makefiles are possibly the saddest point of tech debt ever.
-     (defvar makefile-list-target "# Listing all the make targets; http://stackoverflow.com/a/26339924/983746
-      .PHONY: list
-      list:\n	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ \"^[#.]\") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'\n"
-       "Definition of target used to list makefile targets.")
+     (defvar makefile-list-special-target "emacs--makefile--list")
+
+     ;; Based on http://stackoverflow.com/a/26339924/983746
+     (defvar makefile-list-target-code
+       (format
+        ".PHONY: %s\n%s:\n	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ \"^[#.]\") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'\n"
+        makefile-list-special-target makefile-list-special-target)
+       "Definition of target used to list all other makefile targets.")
 
      (defun makefile-execute-target ()
        "Presents a `completing-read' of all the targets of a makefile and executes
       the chosen one. "
        (interactive)
 
-       (let ((fn (buffer-file-name)))
-         (compile
-          (format
-           "make -f %s %s" fn
-           (completing-read "target: " (makefile-get-targets fn) nil t)))))
+       (compile
+        (format
+         "make -f %s %s" (buffer-name)
+         (completing-read "target: " (makefile-get-targets) nil t))))
 
      (define-key makefile-mode-map (kbd "C-c C-c") 'makefile-execute-target)
 
-     (defun makefile-get-targets (fn)
+     (defun makefile-get-targets (&optional fn)
        "Returns a list of all the targets of a makefile.
 
-      To list them in a computed manner, a new target called \"list\" is added and
-      the buffer is written to a temporary file."
-       (let* ((file (make-temp-file "makefile"))
+      To list them in a computed manner, a new special target is
+      added, the buffer is written to a temporary file and finally
+      executed with the special target."
+       (let* ((fn (if fn fn (buffer-name)))
+              (file (make-temp-file "makefile"))
               (makefile-contents
                (concat
-                (with-temp-buffer (insert-file-contents fn) (buffer-string))
+                (with-temp-buffer
+                  (insert-file-contents fn)
+                  (buffer-string))
                 "\n\n"
-                makefile-list-target)))
+                makefile-list-target-code)))
+
          (f-write-text makefile-contents 'utf-8 file)
 
          (with-temp-buffer
            (shell-command
-            (format "make -f %s list" file)
+            (format "make -f %s %s" file makefile-list-special-target)
             (current-buffer))
            (delete-file file)
            (s-split "\n" (buffer-string) t))))
