@@ -1093,7 +1093,9 @@ documentation in a style similar to literate programming.
      (use-package crontab-mode)
      (use-package csv-mode)
      (use-package fish-mode)
-     (use-package markdown-mode)
+     (use-package markdown-mode
+       :config
+       (setq markdown-asymmetric-header t))
      (use-package nginx-mode)
      (use-package protobuf-mode)
      (use-package puppet-mode)
