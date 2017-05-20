@@ -101,15 +101,12 @@ bindsym Mod4+a scratchpad show
 bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/payments.org
 bindsym Mod4+Control+a move scratchpad
 
-
 # Applications
 bindcode Mod4+36 exec i3-mor
 bindcode Mod4+Mod1+36 exec browser
 bindcode Mod4+Mod1+Control+36 exec urxvt
 bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
-
-# bindsym Mod4+i exec mor main `di
 
 # Locking and switching
 bindcode Mod4+22 exec lock
@@ -153,6 +150,9 @@ bindsym Mod4+Control+k kill
 bindsym Mod4+Control+F12 exit
 bindsym Mod4+Control+r reload
 bindsym Mod4+Mod1+Control+r restart
+
+# Screenshots
+bindcode Mod4+Control+22 exec ss
 
 # Spotify Experiment
 # # Playlists
