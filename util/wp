@@ -3,7 +3,7 @@
 src="$HOME/.local/wallpaper"
 
 if [[ -d $src ]]; then
-  feh --bg-fill $(find $src | shuf -n 1)
+  feh --bg-tile $(find $src | shuf -n 1)
 elif [[ -f $src ]]; then
-  feh --bg-fill $src
+  feh --bg-tile $src
 fi
