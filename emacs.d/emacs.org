@@ -762,73 +762,7 @@ documentation in a style similar to literate programming.
    targets in the current makefile and runs it with =compile=.
 
    #+begin_src emacs-lisp
-     (require 'make-mode)
-
-     (defvar makefile-list-special-target "emacs--makefile--list")
-
-     ;; Based on http://stackoverflow.com/a/26339924/983746
-     (defvar makefile-list-target-code
-       (format
-        ".PHONY: %s\n%s:\n	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ \"^[#.]\") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'\n"
-        makefile-list-special-target makefile-list-special-target)
-       "Definition of target used to list all other makefile targets.")
-
-     (defun makefile-execute-target (fn)
-       "Presents a `completing-read' of all the targets of a makefile and executes
-      the chosen one. "
-       (interactive
-        (list (buffer-file-name)))
-
-       (compile
-        (format
-         "make -f %s %s" fn
-         (completing-read "target: " (makefile-get-targets fn) nil t))))
-
-     (define-key makefile-mode-map (kbd "C-c C-c") 'makefile-execute-target)
-
-     (defun makefile-get-targets (&optional fn)
-       "Returns a list of all the targets of a makefile.
-
-      To list them in a computed manner, a new special target is
-      added, the buffer is written to a temporary file and finally
-      executed with the special target."
-       (let* ((fn (or fn (buffer-file-name)))
-              (file (make-temp-file "makefile"))
-              (makefile-contents
-               (concat
-                (with-temp-buffer
-                  (insert-file-contents fn)
-                  (buffer-string))
-                "\n\n"
-                makefile-list-target-code)))
-
-         (f-write-text makefile-contents 'utf-8 file)
-
-         (with-temp-buffer
-           (shell-command
-            (format "make -f %s %s" file makefile-list-special-target)
-            (current-buffer))
-           (delete-file file)
-           (s-split "\n" (buffer-string) t))))
-
-     (defun makefile-projectile-get-makefiles ()
-       "Get all makefiles in the current project"
-       (-filter (lambda (f) (s-suffix? "makefile" (s-downcase f)))
-                (projectile-current-project-files)))
-
-     (defun makefile-projectile-execute-target ()
-       "Choose a makefile target from all of the makefiles in the project.
-
-     If there are several makefiles, a prompt to select one of them is shown."
-       (interactive)
-       (let* ((files (makefile-projectile-get-makefiles))
-              (makefile
-               (if (= (length files) 1)
-                   (car files)
-                 (completing-read "Makefile: " files nil t))))
-         (makefile-execute-target makefile)))
-
-     (global-set-key (kbd "C-x m") 'makefile-projectile-execute-target)
+     ;; (use-package makefile+)
    #+end_src
 
 ** org
