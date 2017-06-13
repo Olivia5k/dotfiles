@@ -17,6 +17,7 @@
                           'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))))
 
 (use-package powerline
+  :demand t
   :ensure t
   :config
   (setq-default mode-line-format

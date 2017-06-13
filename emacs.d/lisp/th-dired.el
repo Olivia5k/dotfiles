@@ -1,5 +1,6 @@
 (use-package dired
   :ensure nil
+  :demand
   :bind (:map dired-mode-map
               ("M-r" . rgrep))
 
@@ -19,6 +20,7 @@
 
   (use-package dired-x
     :ensure nil
+    :demand t
     :config
     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$\\|.sock$"))
     (setq dired-omit-verbose nil) ;; https://open.spotify.com/track/2XRl0NfORYPEvUJXLtJiND

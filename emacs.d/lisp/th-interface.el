@@ -138,11 +138,6 @@
           "REFACTOR" "NOCOMMIT" "XXX")))
 
 
-(use-package rainbow-mode)
-(use-package rainbow-delimiters)
-(use-package rainbow-identifiers)
-
-
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 (defun th/narrow-or-widen-dwim (p)
   "Widen if buffer is narrowed, narrow-dwim otherwise.
@@ -173,11 +168,6 @@ is already narrowed."
 ;; copy it if that's what you want.
 (define-key ctl-x-map "n" #'th/narrow-or-widen-dwim)
 
-
-
-;; linum is disabled
-(global-linum-mode 0)
-(setq linum-format " %4d ")
 
 ;; Indicators on the edges of the screen
 (fringe-mode 12)

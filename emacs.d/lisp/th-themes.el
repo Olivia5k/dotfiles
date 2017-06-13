@@ -1,21 +1,14 @@
 (require 'linum)
+(global-linum-mode 0)
+(setq linum-format " %4d ")
 
-;; Load the theme real early
-(use-package darktooth-theme
-  :ensure t)
-(load-theme 'darktooth)
+;; These are needed before we do the colorscheme loading
+(use-package rainbow-mode :demand t)
+(use-package rainbow-delimiters :demand t)
+(use-package rainbow-identifiers :demand t)
 
-
-;; all-the-icons - fantastic icons package <3
-(use-package all-the-icons
-  :config
-  (use-package all-the-icons-dired
-    :config
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
-
-;; Automatic bolding of certain keywords
 (defun th/boldly-go ()
-  "Fix bolding in colorschemes"
+  "Automatic bolding in all colorschemes"
 
   (let ((faces (face-list)))
     (mapc
@@ -53,9 +46,26 @@
   ;; Also strings and types are the same, which is bad. Make strings greener.
   (set-face-attribute 'font-lock-string-face nil :foreground "#427B58")
   ;; And functions do not stand out at all...
-  (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019")
+  (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
-  (message "darktooth fixed"))
+(use-package darktooth-theme
+  :demand t
+  :ensure t
+  :config
+  (load-theme 'darktooth)
+  (th/fix-darktooth))
 
-(th/fix-darktooth)
+
+;; all-the-icons - fantastic icons package <3
+(use-package all-the-icons
+  :demand t
+  :config
+  (use-package all-the-icons-dired
+    :after (dired)
+    :config
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+
+(setq custom-safe-themes t)
+
+
 (provide 'th-themes)

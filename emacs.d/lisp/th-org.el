@@ -32,9 +32,35 @@
      (sql . t)
      (shell . t)
      (python . t)
-     (js . t))))
+     (js . t)))
 
-(use-package org-journal)
+  (define-key org-mode-map (kbd "C-c t")
+    (lambda () (interactive) (org-todo "TODO")))
+  (define-key org-mode-map (kbd "C-c w")
+    (lambda () (interactive) (org-todo "WORKING")))
+  (define-key org-mode-map (kbd "C-c z")
+    (lambda () (interactive) (org-todo "WAITING")))
+  (define-key org-mode-map (kbd "C-c r")
+    (lambda () (interactive) (org-todo "REVIEW")))
+  (define-key org-mode-map (kbd "C-c d")
+    (lambda () (interactive) (org-todo "DONE")))
+  (define-key org-mode-map (kbd "C-c i")
+    (lambda () (interactive) (org-todo "INVALID")))
+  (define-key org-mode-map (kbd "C-c SPC")
+    (lambda () (interactive) (org-todo 'none)))
+
+
+  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks))
+
+
+(use-package org-journal
+  :config
+  (setq org-journal-dir "~/org/journal/")
+  (setq org-journal-file-format "%Y-%m-%d")
+  (setq org-journal-date-format "%A, %Y-%m-%d")
+  (setq org-journal-find-file 'find-file))
+
+
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq
@@ -51,10 +77,6 @@
 (setq org-todo-keyword-faces '(("WORKING" . org-scheduled-today)
                                ("WAITING" . org-mode-line-clock)))
 
-(setq org-journal-dir "~/org/journal/"
-      org-journal-file-format "%Y-%m-%d"
-      org-journal-date-format "%A, %Y-%m-%d"
-      org-journal-find-file 'find-file)
 
 ;; Since I am planning to do a lot of these, let's just pick a super simple keybind!
 (global-set-key (kbd "C-.") 'org-journal-new-entry)
@@ -91,40 +113,8 @@
     (file+headline "~/org/food.org" "Recipes")
     "* [[%^{URL}][%^{Title}]]"
     )))
-(define-key org-mode-map (kbd "C-c t")
-  (lambda ()
-    (interactive)
-    (org-todo "TODO")))
 
-(define-key org-mode-map (kbd "C-c w")
-  (lambda ()
-    (interactive)
-    (org-todo "WORKING")))
 
-(define-key org-mode-map (kbd "C-c z")
-  (lambda ()
-    (interactive)
-    (org-todo "WAITING")))
-
-(define-key org-mode-map (kbd "C-c r")
-  (lambda ()
-    (interactive)
-    (org-todo "REVIEW")))
-
-(define-key org-mode-map (kbd "C-c d")
-  (lambda ()
-    (interactive)
-    (org-todo "DONE")))
-
-(define-key org-mode-map (kbd "C-c i")
-  (lambda ()
-    (interactive)
-    (org-todo "INVALID")))
-
-(define-key org-mode-map (kbd "C-c SPC")
-  (lambda ()
-    (interactive)
-    (org-todo 'none)))
 
 (defun th/org-project ()
   "Go to the org project for the current repository.
@@ -149,7 +139,7 @@ Go back if we're already in it."
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'file))
 
-(define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
+
 
 (setq org-refile-targets
       '((org-agenda-files :maxlevel . 5)
