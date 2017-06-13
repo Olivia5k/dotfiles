@@ -37,9 +37,6 @@
   (elfeed-db-save)
   (quit-window))
 
-(defalias 'elfeed-toggle-star
-  (elfeed-expose #'elfeed-search-toggle-all 'star))
-
 (defun z/hasCap (s)
   ""
   (let ((case-fold-search nil))

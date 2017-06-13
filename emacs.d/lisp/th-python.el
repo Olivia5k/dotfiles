@@ -8,8 +8,6 @@
   (add-hook 'python-mode-hook 'anaconda-mode))
 
 (use-package pip-requirements)
-(use-package virtualenvwrapper
-  :config
-  (venv-initialize-eshell))
+
 
 (provide 'th-python)
