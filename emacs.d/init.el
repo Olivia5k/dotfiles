@@ -5,6 +5,7 @@
 (when (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 (when (fboundp 'mouse-wheel-mode) (mouse-wheel-mode 1))
 
+
 ;; Start the package configuration
 (require 'cl)
 (require 'url-handlers)
@@ -16,6 +17,11 @@
         ("melpa-stable" . "http://stable.melpa.org/packages/")
         ("marmalade"    . "http://marmalade-repo.org/packages/")))
 (package-initialize)
+
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
 
 ;; Load custom
 (setq custom-file "~/.emacs.d/custom.el")
@@ -41,6 +47,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
+
 (require 'use-package)
 
 ;; ...you know - every once and again... <3
@@ -53,6 +60,9 @@
 (use-package s)
 (use-package hydra)
 (use-package ivy)
+
+;; The ones above should always be loaded
+(setq use-package-always-defer t)
 
 ;; Loading of all the modules
 (require 'th-themes)
