@@ -17,10 +17,11 @@
               (when (eq 'vue-mode major-mode)
                 (vue-mode)))))
 
-(global-set-key (kbd "C-c v")
-                (lambda ()
-                  (interactive)
-                  (th/other-files-suffix "vue")))
+(defun th/vue-switcher ()
+  (interactive)
+  (th/other-files-suffix "vue"))
+
+(global-set-key (kbd "C-c v") #'th/vue-switcher)
 
 (use-package emmet-mode
   :init
