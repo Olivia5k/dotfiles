@@ -1,10 +1,14 @@
-(use-package vue-mode)
+(use-package vue-mode
+  :config
+  (setq css-indent-offset 2)
+  (setq mmm-submode-decoration-level 0))
 
 (use-package web-mode
-  :init
-  (setq web-mode-markup-indent-offset 2
-        web-mode-attr-indent-offset 2)
   :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   ;; If we're in vue-mode, make sure to reset it when we save.
   (add-hook 'after-save-hook
@@ -26,5 +30,7 @@
   (add-hook 'sgml-mode-hook 'emmet-mode)  ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode)  ;; Enable Emmet's css abbreviation.
   (add-hook 'web-mode-hook  'emmet-mode))
+
+(setq httpd-port 8001)
 
 (provide 'th-web)

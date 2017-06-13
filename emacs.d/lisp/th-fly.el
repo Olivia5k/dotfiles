@@ -4,6 +4,8 @@
   ("C-x C-p" . flycheck-previous-error)
 
   :config
+  (setq flycheck-checkers
+   '(css-csslint emacs-lisp go-gofmt go-golint go-vet go-build go-test html-tidy json-jsonlint json-python-json less python-flake8 python-pylint python-pycompile sass scss-lint scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck sql-sqlint yaml-jsyaml yaml-ruby))
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 

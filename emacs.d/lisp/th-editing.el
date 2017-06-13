@@ -14,7 +14,6 @@
   (global-undo-tree-mode +1))
 
 (auto-fill-mode 1)
-(set-fill-column 79)
 
 
 (defun th/new-module (fn)
@@ -62,6 +61,8 @@
 
 (add-hook 'before-save-hook #'th/clean-whitespace)
 
+
+(setq completion-styles '(initials basic partial-completion emacs22))
 
 (defun th/insert-file-name-to-minibuffer ()
   (interactive)

@@ -23,6 +23,7 @@
 
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
+(setq revert-without-query '("."))
 
 (setq backup-inhibited t
       make-backup-files nil)

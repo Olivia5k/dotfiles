@@ -4,6 +4,8 @@
 (use-package editorconfig
   :init (editorconfig-mode 1))
 (use-package fish-mode)
+(use-package highlight-symbol
+  :config (setq highlight-symbol-idle-delay 0))
 (use-package logview)
 (use-package markdown-mode
   :config (setq markdown-asymmetric-header t))
@@ -19,8 +21,10 @@
 (use-package adaptive-wrap)
 (use-package buffer-move)
 (use-package diminish)
-(use-package fill-column-indicator)
-(use-package paradox)
+(use-package fill-column-indicator
+  :config (setq fci-rule-color "#373b41"))
+(use-package paradox
+  :config (setq paradox-github-token t))
 (use-package paredit)
 (use-package restclient
   :mode ("\\.http\\'" . restclient-mode))
@@ -30,5 +34,28 @@
 (use-package wrap-region)
 (use-package xkcd)
 
+
+
+;; builtins
+(use-package semantic
+  :ensure nil
+  :config
+  (setq global-semantic-idle-scheduler-mode nil)
+  (setq global-semanticdb-minor-mode nil))
+(use-package sh-script
+  :ensure nil
+  :config
+  (setq sh-indentation 4))
+(use-package winner
+  :ensure nil
+  :config (winner-mode 1))
+(use-package vc
+  :ensure nil
+  :config (setq vc-follow-symlinks t))
+(use-package edit-server
+  :demand t
+  :init
+  (add-hook 'after-init-hook 'server-start t)
+  (add-hook 'after-init-hook 'edit-server-start t))
 
 (provide 'th-utilities)

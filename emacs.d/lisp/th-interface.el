@@ -24,7 +24,12 @@
   :config
   (popwin-mode 1)
   ;; It was apparently tricky to make use-package map to what's just a keymap
-  (global-set-key (kbd "C-x p") popwin:keymap))
+  (global-set-key (kbd "C-x p") popwin:keymap)
+
+  (setq popwin:special-display-config
+        '((help-mode)
+          ("*Shell Command Output*")
+          (" *undo-tree*" :width 60 :position right))))
 
 
 ;; projectile - project management <3
@@ -178,10 +183,9 @@ is already narrowed."
 (fringe-mode 12)
 (setq-default indicate-empty-lines t)
 
-
 (setq enable-recursive-minibuffers t)
 
-(setq echo-keystrokes 0.4)
+(setq echo-keystrokes 0.2)
 
 
 (provide 'th-interface)
