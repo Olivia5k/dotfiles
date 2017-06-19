@@ -311,9 +311,9 @@ there's a region, all lines that region covers will be duplicated."
 (setq fill-column 78)
 (setq word-wrap t)
 
-(setq indent-tabs-mode nil)
-(setq tab-always-indent 'complete)
-(setq tab-width 2)
-(setq standard-indent 2)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-always-indent 'complete)
+(setq-default tab-width 2)
+(setq-default standard-indent 2)
 
 (provide 'th-editing)
