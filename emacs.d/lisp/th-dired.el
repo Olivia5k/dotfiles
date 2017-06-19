@@ -2,7 +2,9 @@
   :ensure nil
   :demand
   :bind (:map dired-mode-map
-              ("M-r" . rgrep))
+              ("M-r" . rgrep)
+              ("/" . th/dired-goto-root)
+              ("e" . th/eshell-here))
 
   :config
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -28,5 +30,10 @@
 
   (use-package dired-subtree
     :after (dired)))
+
+(defun th/dired-goto-root ()
+  "Shortcut to browse to root via dired"
+  (interactive)
+  (dired "/"))
 
 (provide 'th-dired)
