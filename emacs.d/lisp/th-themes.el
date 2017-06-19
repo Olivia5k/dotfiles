@@ -52,7 +52,7 @@
   :demand t
   :ensure t
   :config
-  (load-theme 'darktooth)
+  (load-theme 'darktooth t)
   (th/fix-darktooth))
 
 
