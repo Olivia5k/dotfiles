@@ -138,6 +138,18 @@
           "REFACTOR" "NOCOMMIT" "XXX")))
 
 
+(use-package helpful
+  :bind
+  ("C-c h" . hydra-helpful/body)
+
+  :config
+  (defhydra hydra-helpful (:color blue)
+    "Helpful"
+    ("f" helpful-function "Function")
+    ("c" helpful-command "Command")
+    ("m" helpful-macro "Macro")))
+
+
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 (defun th/narrow-or-widen-dwim (p)
   "Widen if buffer is narrowed, narrow-dwim otherwise.
