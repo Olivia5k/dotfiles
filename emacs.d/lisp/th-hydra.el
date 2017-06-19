@@ -32,11 +32,19 @@
   "Execution"
   ("e" elfeed "elfeed")
   ("h" (counsel-find-file "/") "hosts")
-  ("p" payments/actions/body "payments")
+  ("p" th/package-hydra/body "package")
   ("M-p" proced "proced")
   ("q" nil))
 
 (global-set-key (kbd "C-x C-c") 'th/exec-hydra/body)
+
+(defhydra th/package-hydra (:foreign-keys warn)
+  "Packages"
+  ("p" counsel-package "package" :color blue)
+  ("r" package-refresh-contents "refresh")
+  ("u" paradox-upgrade-packages "upgrade" :color blue)
+  ("l" list-packages "list" :color blue))
+
 
 
 (provide 'th-hydra)
