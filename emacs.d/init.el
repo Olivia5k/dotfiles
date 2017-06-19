@@ -30,12 +30,7 @@
 (load custom-file)
 
 ;; Path configuration for libraries and themes
-(defvar emacs-d
-  (file-name-directory
-   (file-chase-links load-file-name))
-  "The giant turtle on which the world rests.")
-
-(add-to-list 'load-path (expand-file-name "lisp" emacs-d))
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 (dolist (path (directory-files custom-theme-directory t "\\w+"))
@@ -48,12 +43,11 @@
   (package-install 'use-package))
 (setq use-package-always-ensure t)
 
-(require 'use-package)
-
 ;; ...you know - every once and again... <3
 (global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
 
 ;; Libraries that are simply useful always
+(use-package no-littering)
 (use-package cl-lib)
 (use-package dash)
 (use-package f)
