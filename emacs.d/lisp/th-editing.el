@@ -173,7 +173,42 @@ there's a region, all lines that region covers will be duplicated."
 (use-package expand-region
   :bind
   ("M-l"   . er/expand-region)
-  ("C-M-l" . er/contract-region))
+  ("C-M-l" . er/contract-region)
+  ("C-c SPC" . hydra-mark/body)
+
+  :config
+  (setq shift-select-mode nil) ;; https://github.com/magnars/expand-region.el/issues/220
+  (use-package change-inner)
+
+  (defhydra hydra-mark (:color blue :idle 1.5 :columns 4)
+    "Mark"
+    ("d" er/mark-defun "Defun / Function")
+    ("f" er/mark-defun "Defun / Function")
+    ("w" er/mark-word "Word")
+    ("u" er/mark-url "Url")
+    ("e" mark-sexp "S-Expression")
+    ("E" er/mark-email "Email")
+    ("b" mark-whole-buffer "Buffer")
+    ("l" mark-line "Line")
+    ("p" er/mark-text-paragraph "Paragraph")
+    ("s" er/mark-symbol "Symbol")
+    ("S" er/mark-symbol-with-prefix "Prefixed symbol")
+    ("q" er/mark-inside-quotes "Inside Quotes")
+    ("Q" er/mark-outside-quotes "Outside Quotes")
+    ("(" er/mark-inside-pairs "Inside Pairs")
+    ("[" er/mark-inside-pairs "Inside Pairs")
+    ("{" er/mark-inside-pairs "Inside Pairs")
+    (")" er/mark-outside-pairs "Outside Pairs")
+    ("]" er/mark-outside-pairs "Outside Pairs")
+    ("}" er/mark-outside-pairs "Outside Pairs")
+    ("t" er/mark-inner-tag "Inner Tag")
+    ("T" er/mark-outer-tag "Outer Tag")
+    ("c" er/mark-comment "Comment")
+    ("a" er/mark-html-attribute "HTML Attribute")
+    ("i" change-inner "Inner")
+    ("o" change-outer "Outer")
+    ("." er/expand-region "Expand Region" :exit nil)
+    ("," er/contract-region "Contract Region" :exit nil)))
 
 (use-package multiple-cursors
   :bind
