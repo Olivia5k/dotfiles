@@ -12,6 +12,7 @@
 ;; Until released for real, this one should be local and not ensured
 (use-package makefile+
   :ensure nil
+  :commands (makefile-plus-execute-target makefile-plus-execute-project-target)
   :load-path "/home/thiderman/git/makefile-plus.el/")
 
 (provide 'th-compile)
