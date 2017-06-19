@@ -79,22 +79,24 @@ bindsym Mod4+Control+c exec i3-or-raise "cal" "chrome-app https://calendar.googl
 bindsym Mod4+Mod1+c exec i3-or-raise "chill" "mux chill"
 bindsym Mod4+d workspace code; workspace dev
 bindsym Mod4+Mod1+d exec "emacs"
-bindsym Mod4+e exec i3-or-raise "slack" "chrome-app https://spotify.slack.com/messages/wtb-private/"
-bindsym Mod4+Control+e exec "chrome-app https://spotify.slack.com/messages/wtb-private/"
+# bindsym Mod4+e exec i3-or-raise "slack" "chrome-app https://spotify.slack.com/messages/wtb-private/"
+# bindsym Mod4+Control+e exec "chrome-app https://spotify.slack.com/messages/wtb-private/"
 bindsym Mod4+f exec i3-or-raise "facebook" "chrome-app https://facebook.com"
 bindsym Mod4+g exec i3-or-raise "ghe" "chrome-app https://ghe.spotify.net"
 bindsym Mod4+Control+g exec i3-or-raise "github" "chrome-app https://github.com"
-bindsym Mod4+i exec mor irc
+bindsym Mod4+i exec i3-or-raise "inbox" "chrome-app https://inbox.google.com"
 bindsym Mod4+Mod1+p exec ror "bin/payments-docker" "payments-docker" "urxvt -name payments-docker -e payments-docker local"
-bindsym Mod4+r exec i3-or-raise "reddit" "chrome-app https://reddit.com"
+bindsym Mod4+r exec i3-or-raise "reddit" "chromium --new-window https://reddit.com"
 bindsym Mod4+s exec i3-or-raise "spotify" "launch-spotify"
 bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "chrome-app http://sl.se"
+bindsym Mod4+Mod1+Control+n exec i3-or-raise "nordea" "chrome-app https://internetbanken.privat.nordea.se/nsp/login"
 bindsym Mod4+t exec i3-or-raise "tam" "launch-tam"
 bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "chrome-app tvtropes.org"
 bindsym Mod4+m exec i3-or-raise "messenger" "chrome-app https://messenger.com"
 bindsym Mod4+Mod1+m exec "chrome-app https://messenger.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 bindsym Mod4+q exec i3-or-raise "www" "browser"
+bindsym Mod4+Control+Mod1+x exec i3-or-raise "xxx" "chromium --new-window https://reddit.com/me/m/nsfw/"
 
 # Org buffer in the scratchpad
 bindsym Mod4+a scratchpad show
