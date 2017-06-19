@@ -1,5 +1,9 @@
-;; I've never had backsups or autosaving work well in emacs, so these settings
-;; are solely here to disable them as much as possible.
+(use-package real-auto-save
+  :init
+  (setq real-auto-save-interval 5)
+  :config
+  (add-hook 'prog-mode-hook 'real-auto-save-mode)
+  (add-hook 'org-mode-hook 'real-auto-save-mode))
 
 (defvar th/backup-directory (concat user-emacs-directory "backups"))
 
@@ -8,18 +12,18 @@
 
 (setq backup-directory-alist `(("." . ,th/backup-directory)))
 
-(setq make-backup-files nil      ; backup of a file the first time it is saved.
-      backup-by-copying t        ; don't clobber symlinks
-      version-control nil        ; version numbers for backup files
-      delete-old-versions t      ; delete excess backup files silently
-      delete-by-moving-to-trash nil
-      create-lockfiles nil       ;
-      kept-old-versions 1        ; oldest versions to keep when a new numbered backup is made (default: 2)
-      kept-new-versions 1        ; newest versions to keep when a new numbered backup is made (default: 2)
-      auto-save-default nil      ; auto-save every buffer that visits a file
-      auto-save-timeout 9000     ; number of seconds idle time before auto-save (default: 30)
-      auto-save-interval 900000  ; number of keystrokes between auto-saves (default: 300)
-      )
+(setq make-backup-files nil)
+(setq backup-by-copying t)
+(setq version-control nil)
+(setq delete-old-versions t)
+(setq delete-by-moving-to-trash nil)
+(setq create-lockfiles nil)
+(setq kept-old-versions 1)
+(setq kept-new-versions 1)
+
+(setq-default auto-save-default nil)
+(setq-default auto-save-timeout 5)
+(setq-default auto-save-interval 300)
 
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
