@@ -41,6 +41,6 @@
   (interactive)
   (th/buffer-or-region "eval" 'eval-buffer 'eval-region))
 
-(define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer-or-region)
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-buffer-or-region)
 
 (provide 'th-elisp)
