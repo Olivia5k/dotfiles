@@ -600,6 +600,7 @@
   (git-gutter-fr+-modified                   (:inherit 'git-gutter+-modified))
 
   ;; MODE SUPPORT: magit
+  (git-commit-summary                        (:foreground nightmare-aquamarine4 :bold t))
   (magit-section-highlight                   (:background nightmare-dark0_soft))
   (magit-branch                              (:foreground nightmare-turquoise4 :background nil))
   (magit-branch-local                        (:foreground nightmare-turquoise4 :background nil))
