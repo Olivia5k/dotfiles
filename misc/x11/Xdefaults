@@ -45,7 +45,7 @@ URxvt.color14: #41dbb5
 URxvt.color15: #ffffff
 
 !emacs
-emacs.Background: #151515
-emacs.Foreground: #dcdcdc
+emacs.Background: #281a28
+emacs.Foreground: #fdf4c1
 emacs.FontBackend: xft
 emacs.Font: Iosevka-10

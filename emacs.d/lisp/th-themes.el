@@ -48,13 +48,16 @@
   ;; And functions do not stand out at all...
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
-(use-package darktooth-theme
-  :demand t
-  :ensure t
-  :config
-  (load-theme 'darktooth t)
-  (th/fix-darktooth))
+;; (use-package darktooth-theme
+;;   :demand t
+;;   :ensure t
+;;   :config
+;;   (load-theme 'darktooth t)
+;;   (th/fix-darktooth))
 
+(use-package nightmare-theme
+  :ensure nil
+  :demand t)
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
