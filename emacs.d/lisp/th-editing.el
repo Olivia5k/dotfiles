@@ -1,4 +1,5 @@
 (use-package hungry-delete
+  :demand
   :config
   (global-hungry-delete-mode))
 
@@ -262,6 +263,37 @@ there's a region, all lines that region covers will be duplicated."
 (use-package visual-regexp-steroids
   :bind
   ("C-r" . vr/replace))
+
+
+(use-package hexrgb
+  :commands (hexrgb-increment-red hexrgb-increment-green hexrgb-increment-blue))
+
+;; Hydra that can be used to gradually increase or decrease hex
+;; colors. Very useful when designing color themes!
+;; TODO(thiderman): Having the th/hexrgb-step variable in the hydra docstring
+(defhydra th/hexrgb-hydra (:foreign-keys warn)
+  "Colors (rgb+, rgb-)"
+  ("q" (th/hexrgb #'hexrgb-increment-red 1))
+  ("w" (th/hexrgb #'hexrgb-increment-green 1))
+  ("e" (th/hexrgb #'hexrgb-increment-blue 1))
+  ("a" (th/hexrgb #'hexrgb-increment-red -1))
+  ("s" (th/hexrgb #'hexrgb-increment-green -1))
+  ("d" (th/hexrgb #'hexrgb-increment-blue -1))
+  ("i" (setq th/hexrgb-step (read-number "Step number: ")) "Set increment")
+  ("x" nil "exit" :exit t))
+
+(defvar th/hexrgb-step 1 "Steps to move when using th/hexrgb-hydra")
+
+(defun th/hexrgb (fun val)
+  "Helper that runs color increments via the `th/hexrgb-hydra'."
+  (when (looking-at "#")
+    (forward-char 1))
+  (let* ((color (format "#%s" (word-at-point)))
+         (result (funcall fun color 2 (* th/hexrgb-step val))))
+    (search-backward "\"")
+    (forward-char 1)
+    (kill-word 1)
+    (insert result)))
 
 
 ;; Pasting into minibuffer
