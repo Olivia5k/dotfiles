@@ -102,6 +102,27 @@
 (global-set-key (kbd "C-x k") 'windmove-up)
 (global-set-key (kbd "C-x l") 'windmove-right)
 
+(defmacro th/i3-emacs (win-fun i3-fun)
+  "Generate a function that either runs WIN-FUN successfully or executes I3-FUN.
+
+This can be used to have the same keybinding either move between
+buffers in emacs, or execute an i3-msg command. So, if you try to move
+left from a buffer that doesn't have anything to its left, `i3-msg
+focus left` will be run instead.
+
+This works best if used with https://github.com/thiderman/dotfiles/utils/i3emacs."
+
+  (let ((cmd-name (intern (format "th/i3-emacs/%s" win-fun))))
+    `(defun ,cmd-name ()
+       (interactive)
+       (unless (ignore-errors (funcall ',win-fun))
+         (start-process-shell-command "i3-msg" nil (format "i3-msg %s" ,i3-fun))))))
+
+(global-set-key (kbd "s-h") (th/i3-emacs windmove-left "focus left"))
+(global-set-key (kbd "s-j") (th/i3-emacs windmove-down "focus down"))
+(global-set-key (kbd "s-k") (th/i3-emacs windmove-up "focus up"))
+(global-set-key (kbd "s-l") (th/i3-emacs windmove-right "focus right"))
+
 ;; Also disable the old ones so that I stop using them
 (defun th/disabled-key ()
   (interactive)

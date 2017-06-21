@@ -9,10 +9,16 @@ for_window [class=".*steam.*"] move container to workspace steam; workspace stea
 assign [class="float"] ~
 
 # Focus (Mod4+hjkl)
-bindsym Mod4+h focus left
-bindsym Mod4+j focus down
-bindsym Mod4+k focus up
-bindsym Mod4+l focus right
+bindsym Mod4+h exec i3emacs "focus left" "super+h"
+bindsym Mod4+j exec i3emacs "focus down" "super+j"
+bindsym Mod4+k exec i3emacs "focus up" "super+k"
+bindsym Mod4+l exec i3emacs "focus right" "super+l"
+
+# Focus (Mod4+hjkl)
+bindsym Mod4+Mod1+h focus left
+bindsym Mod4+Mod1+j focus down
+bindsym Mod4+Mod1+k focus up
+bindsym Mod4+Mod1+l focus right
 
 # Workspaces to screens
 workspace www output DP-1
@@ -39,18 +45,18 @@ bindcode Mod4+9 kill
 bindsym --release button2 kill
 
 # Splitting
-bindsym Control+Mod4+Mod1+h move workspace to output left
-bindsym Control+Mod4+Mod1+l move workspace to output right
+bindsym Shift+Mod4+Mod1+h move workspace to output left
+bindsym Shift+Mod4+Mod1+l move workspace to output right
 
 # Fullscreening
 bindsym Mod4+Mod1+f fullscreen
 bindcode Mod4+23 fullscreen
 
 # Resizing (Mod4+Alt+hjkl)
-bindsym Mod4+Mod1+h resize shrink width 10 px or 3 ppt
-bindsym Mod4+Mod1+j resize shrink height 10 px or 3 ppt
-bindsym Mod4+Mod1+k resize grow height 10 px or 3 ppt
-bindsym Mod4+Mod1+l resize grow width 10 px or 3 ppt
+bindsym Mod4+Mod1+Control+h resize shrink width 10 px or 3 ppt
+bindsym Mod4+Mod1+Control+j resize shrink height 10 px or 3 ppt
+bindsym Mod4+Mod1+Control+k resize grow height 10 px or 3 ppt
+bindsym Mod4+Mod1+Control+l resize grow width 10 px or 3 ppt
 
 # Move (Mod4+Shift+hjkl)
 bindsym Mod4+Shift+h move left
@@ -176,7 +182,7 @@ ipc-socket ~/.local/share/i3/ipc.sock
 bar {
     status_command i3status
     colors {
-        background #201520
+        background #271927
         statusline #ffccff
                            #border #bg     #text
         focused_workspace  #702c70 #702c70 #ffffff
