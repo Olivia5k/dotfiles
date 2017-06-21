@@ -13,7 +13,7 @@
     (flycheck-mode 1))
 
   :config
-  (require 'go-guru)
+
   (add-hook 'go-mode-hook 'th/go-hook)
   (add-hook 'go-mode-hook 'go-eldoc-setup)
   (setq gofmt-command "goimports")
@@ -696,7 +696,7 @@ resulting list."
     (define-key
       go-mode-map
       (kbd "C-c C-o")
-      (defhydra th/go-guru (:exit t)
+      (defhydra th/go-guru (:exit t :columns 3)
         "Guru commands"
         ("d" go-guru-describe "describe")
         ("f" go-guru-freevars "freevars")
@@ -711,5 +711,7 @@ resulting list."
         (">" go-guru-callees "callees")
         ("x" go-guru-expand-region "expand-region")))))
 
+(use-package go-guru
+  :after go-mode)
 
 (provide 'th-golang)
