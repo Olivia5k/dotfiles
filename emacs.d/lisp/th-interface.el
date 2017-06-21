@@ -52,8 +52,8 @@
 
   :config
   (projectile-global-mode)
-  (setq projectile-completion-system 'ivy
-        projectile-mode-line nil))
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-mode-line nil))
 
 
 ;; ivy - better fuzzy selection
@@ -195,6 +195,7 @@ is already narrowed."
 ;; Indicators on the edges of the screen
 (fringe-mode 12)
 (setq-default indicate-empty-lines t)
+(setq-default cursor-in-non-selected-windows nil)
 
 (setq enable-recursive-minibuffers t)
 
