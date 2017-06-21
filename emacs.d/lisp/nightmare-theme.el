@@ -48,7 +48,7 @@
   (nightmare-bright_green    "#B8BB26" "#afaf00")
   (nightmare-bright_yellow   "#FABD2F" "#ffaf00")
   (nightmare-bright_blue     "#83A598" "#87afaf")
-  (nightmare-bright_purple   "#D3869B" "#d787af")
+  (nightmare-bright_purple   "#D350DA" "#d787af")
   (nightmare-bright_aqua     "#8EC07C" "#87af87")
   (nightmare-bright_orange   "orchid4" "#ff8700")
   (nightmare-bright_cyan     "#3FD7E5" "#00d7ff")
@@ -158,11 +158,11 @@
   (font-lock-builtin-face                            (:bold t :foreground nightmare-bright_orange))
   (font-lock-constant-face                           (:bold t :foreground nightmare-burlywood4))
   (font-lock-comment-face                            (:bold t :foreground nightmare-dark4))
-  (font-lock-function-name-face                      (:bold t :foreground nightmare-light4))
+  (font-lock-function-name-face                      (:bold t :foreground nightmare-bright_purple))
   (font-lock-keyword-face                            (:bold t :foreground nightmare-sienna))
   (font-lock-string-face                             (:bold t :foreground nightmare-darkslategray4))
   (font-lock-variable-name-face                      (:bold t :foreground nightmare-aquamarine4))
-  (font-lock-type-face                               (:bold t :foreground nightmare-lightblue4))
+  (font-lock-type-face                               (:bold t :foreground nightmare-bright_aqua))
   (font-lock-warning-face                            (:bold t :foreground nightmare-neutral_red :bold t))
 
   ;; MODE SUPPORT: which-key
