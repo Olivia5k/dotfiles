@@ -150,6 +150,7 @@ Go back if we're already in it."
   ("C-o" th/org-project "Project file")
   ("c" org-capture "Capture")
   ("o" org-capture "Capture")
+  ("f" (projectile-switch-project-by-name "~/org/") "Files")
   ("s" (org-agenda nil "a") "Schedule")
   ("i" (find-file "~/org/inbox.org") "Inbox")
   ("j" org-clock-goto "Current clocked task")
@@ -157,6 +158,7 @@ Go back if we're already in it."
   ("t" org-tags-view "Tags"))
 
 (global-set-key (kbd "C-x C-o") 'th/org/body)
+
 
 (use-package worf
   :init

@@ -8,10 +8,21 @@
 
 ;; dumb-jump - IDE-like goto that just uses grep tools and context
 (use-package dumb-jump
-  :bind (("M-." . dumb-jump-go))
+  :bind (("M-." . dumb-jump-go)
+         ("C-x ." . th/dumb-jump-hydra/body))
   :config
   (setq dumb-jump-selector 'ivy)
-  :ensure)
+  (setq dumb-jump-prefer-searcher 'ag)
+  (dumb-jump-mode 1)
+
+  (defhydra th/dumb-jump-hydra (:exit t :foreign-keys warn)
+    "Dumb Jump"
+    ("g" dumb-jump-go "Go")
+    ("b" dumb-jump-back "Back")
+    ("l" dumb-jump-quick-look "Look")
+    ("e" dumb-jump-go-prefer-external "External")
+    ("w" dumb-jump-go-other-window "Window")
+    ("q" nil)))
 
 
 ;; popwin - making most *special-buffers* act like popups

@@ -39,9 +39,8 @@
 (global-set-key (kbd "C-q") 'th/kill-window)
 
 
-
 ;; http://oremacs.com/2015/02/04/pre-hydra-post/
-(defhydra hydra-window ()
+(defhydra hydra-window (:columns 4)
   "window"
   ("h" windmove-left)
   ("j" windmove-down)

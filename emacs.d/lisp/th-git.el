@@ -66,10 +66,9 @@
   ("SPC" git-gutter+-show-hunk-inline-at-point "show")
   ("q" nil))
 
-(global-set-key (kbd "C-x C-g") 'th/git-hydra/body)
 
-
-(defhydra smerge-hydra (:foreign-keys warn)
+(defhydra th/smerge-hydra (:foreign-keys warn
+                           :pre (smerge-mode 1))
   "smerge"
   ("n" smerge-next "next")
   ("p" smerge-prev "prev")
@@ -81,7 +80,7 @@
   ("m" smerge-keep-mine "mine")
   ("SPC" smerge-keep-mine "mine")
   ("b" smerge-keep-base "base")
-  ("q" smerge-mode :exit t))
+  ("q" (smerge-mode -1) :exit t))
 
 ;; TODO(thiderman) This would be super nice to have activate immediately when
 ;; you enter a buffer that has smerge!
