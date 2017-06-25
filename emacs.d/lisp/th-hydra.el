@@ -30,6 +30,7 @@
 
 (defhydra th/exec-hydra (:foreign-keys warn :exit t)
   "Execution"
+  ("C-c" (projectile-switch-project-by-name "~/git/dotfiles") "config")
   ("e" elfeed "elfeed")
   ("h" (counsel-find-file "/") "hosts")
   ("g" th/git-hydra/body "git")
