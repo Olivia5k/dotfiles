@@ -5,23 +5,19 @@
               ("C-c ;" . org-edit-src-exit))
 
   :init
-  (setq
-   org-confirm-babel-evaluate nil
-   org-directory "~/org"
-   org-fontify-emphasized-text t ;; fontify *bold* _underline_ /italic/ and so on
-   org-hide-leading-stars t
-   org-return-follows-link t
-   org-special-ctrl-a/e t
-   org-special-ctrl-k t
-   org-src-fontify-natively t
-   org-src-tab-acts-natively t
-   org-src-window-setup 'current-window
-   org-use-speed-commands t
-   org-imenu-depth 5
-
-   ;; When calculating percentages of checkboxes, count all boxes, not just
-   ;; direct children
-   org-hierarchical-checkbox-statistics t)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-directory "~/org")
+  (setq org-fontify-emphasized-text t)
+  (setq org-hide-leading-stars t)
+  (setq org-return-follows-link t)
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t)
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window)
+  (setq org-use-speed-commands t)
+  (setq org-imenu-depth 5)
+  (setq org-hierarchical-checkbox-statistics t)
 
   (add-hook 'org-mode-hook 'org-bullets-mode)
 
@@ -34,8 +30,15 @@
      (python . t)
      (js . t)))
 
-  (define-key org-mode-map (kbd "C-c t")
-    (lambda () (interactive) (org-todo "TODO")))
+  (defmacro th/org-todo (keyword)
+    (let* ((label (s-upcase keyword))
+           (key (substring keyword 0 1)))
+      `(define-key org-mode-map (kbd (format "C-c %s" ,key))
+         (lambda ()
+           (interactive)
+           (org-todo ,label)))))
+
+  (th/org-todo todo)
   (define-key org-mode-map (kbd "C-c w")
     (lambda () (interactive) (org-todo "WORKING")))
   (define-key org-mode-map (kbd "C-c z")
