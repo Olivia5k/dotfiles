@@ -1,4 +1,5 @@
 (use-package vue-mode
+  :mode "\\.vue\\'"
   :config
   (setq css-indent-offset 2)
   (setq mmm-submode-decoration-level 0))

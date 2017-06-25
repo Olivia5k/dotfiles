@@ -3,7 +3,11 @@
 (setq linum-format " %4d ")
 
 ;; These are needed before we do the colorscheme loading
-(use-package rainbow-mode :demand t)
+(use-package rainbow-mode
+  :demand t
+  :config
+  (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook 'scss-mode-hook 'rainbow-mode))
 (use-package rainbow-delimiters :demand t)
 (use-package rainbow-identifiers :demand t)
 
