@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-tmux switch-client -t $(tmux ls | cut -d: -f1 | fzf)

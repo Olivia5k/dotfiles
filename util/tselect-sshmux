@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-DMENU='fzf' SSHMUX_CMD='tmux neww -n %1$q "ssh %1$q"' dmenu_sshmux

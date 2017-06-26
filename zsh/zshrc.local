@@ -42,61 +42,23 @@ alias as="sudo apt-cache search"
 alias ai="sudo apt-get install"
 
 alias zz="source $ZSHRC"
-alias sp="sagacity"
-alias hc="herbstclient"
 
 alias docker="sudo docker"
 
 alias e="emacsclient --alternate-editor='vim' -t"
-alias ed="emacs --daemon &|"
-# alias vim="emacsclient -nw"
-
-alias :q="exit"
 alias bell='echo -en "\007"'
 
 alias z=keyboard-setup
 
-alias -g J="| python -m json.tool"
-alias -g JC="| python -m json.tool | pygmentize -l json"
 alias -g G="| grep -i"
 alias -g T="| tail"
 alias -g S="| sort"
+alias -g SH="| sort -h"
 alias -g SU='| sort -u'
 alias -g SN='| sort -n'
-alias -g SNR='| sort -nr'
 alias -g W="| wc -l"
 alias -g E="&| exit"
 alias -g EE="&& exit"
-alias -g N="&> /dev/null"
-alias -g 1N="1> /dev/null"
-alias -g 2N="2> /dev/null"
-
-autoload -U split-shell-arguments
-
-function rationalise-dot() {
-  local reply REPLY REPLY2
-  if [[ $_IS_PASTING = 1 ]]; then
-    zle self-insert
-    return
-  fi
-  #local MATCH
-  if [[ $LBUFFER =~ '(^|/| |  |'$'\n''|\||;|&)\.\.$' ]]; then
-    LBUFFER+=/
-    zle self-insert
-    zle self-insert
-
-    split-shell-arguments
-    (( REPLY -= 1 ))  # The actual $REPLY is whitespace. See doc for ssa.
-    zle -M ${reply[$REPLY]:a}
-  else
-    zle self-insert
-  fi
-}
-
-zle -N rationalise-dot
-bindkey . rationalise-dot
-# without this, typing a . aborts incremental history search
-bindkey -M isearch . self-insert
 
 # 1. Normal cd
 # 2. Create a directory if it doesn't exist
@@ -134,115 +96,13 @@ if (( $#a > 0 )); then
   zstyle ':chpwd:*' recent-dirs-max 21
 fi
 
-zle -N _inline-updir
-zle -N _inline-back
-zle -N _inline-ls
-zle -N _inline-gs
-
-# ZLE hax0r navigation
-function _inline-updir() {
-  pushd -q ..
-  _inline-precmd
-}
-function _inline-back() {
-  if ! popd -q; then
-    zle -M 'Directory stack empty'
-    sleep 0.5
-  fi
-  _inline-precmd
-}
-function _inline-ls() {
-  echo
-  ls
-  zle .reset-prompt
-}
-function _inline-gs() {
-  echo
-  git status
-  zle .reset-prompt
-}
-
-function _inline-precmd() {
-  _autovenv
-  _find_git_root
-  zle .reset-prompt
-}
-
-
-bindkey "^[h" _inline-updir
-bindkey "^[j" _inline-ls
-bindkey "^[k" _inline-gs
-bindkey "^[l" _inline-back
-bindkey "^[s" _inline-gs
-
-zle -N _inline-fzf-branch
-bindkey "^[o" _inline-fzf-branch
-function _inline-fzf-branch() {
-    if ! git rev-parse --git-dir 2> /dev/null; then
-        zle -M "Not in a git repository"
-        return
-    fi
-    local branches branch
-    branches=$(git branch --all | grep -v HEAD) &&
-        branch=$(echo "$branches" |
-                        fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-        echo && git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-    # vcs_info
-    zle .reset-prompt
-}
-
-# Make an arguments path be absolute. Will resolve symlinks.
-function abs-previous-word () {
-  autoload -U modify-current-argument
-  modify-current-argument '${ARG:A}'
-}
-
-zle -N abs-previous-word
-zle -N dirname-previous-word
-#bindkey '^[s' abs-previous-word
-
 # Edit current commandline with actual editor
 autoload -U   edit-command-line
 zle -N        edit-command-line
 bindkey '^[e' edit-command-line
 
-# Use watcher as a Ctrl-O operator
-watcher-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER != watcher\ * ]]; then
-        BUFFER="watcher -d \".\"  \"$BUFFER\""
-        CURSOR=$(( CURSOR+19 ))
-    fi
-    _zsh_highlight
-}
-zle -N watcher-command-line
-bindkey '^Ok' watcher-command-line
-bindkey '^s' sudo-command-line
-
 # Disable Ctrl-q/s flow control.
 stty -ixon
-
-function f() {
-  if git rev-parse --git-dir &> /dev/null; then
-    # If inside of a repo, use git ls-files instead
-    if [[ -n "$1" ]]; then
-      git ls-files 2>/dev/null | grep -is "$1"
-    else
-      ls -1d ${(z)$(git ls-files 2>/dev/null)}
-    fi
-  else
-    ls -1d ${(z)$(find 2>/dev/null | grep -is "$1")}
-  fi
-}
-
-function fd() {
-  find 2>/dev/null -type d | grep -v '\.git' | grep -is "$1"
-}
-
-# Global grep. Searches files for content.
-function gg() {
-  grep "$*" * -ERIins
-}
 
 # Git setup
 # Committing / General
@@ -274,13 +134,6 @@ function gfa {
 # Remotes
 alias gre='git remote -v'
 alias gra='git remote add'
-
-# Checkouting
-if ! (( $+commands[go] )) ; then
-  alias go='git checkout'
-  alias goo='git checkout --ours'
-  alias got='git checkout --theirs'
-fi
 
 # Stashing
 alias gt="git stash"
@@ -432,26 +285,6 @@ zstyle ':prompt:grml:right:items:sad-smiley' pre '%B%F{196}'
 # z is a pretty cool guy. eh jumps dirs and doesn't afraid of anything
 export _Z_CMD="j"
 [ -f ~/git/z/z.sh ] && source ~/git/z/z.sh
-
-cli=$GOPATH/src/github.com/codegangsta/cli/autocomplete/$(basename $SHELL)_autocomplete
-if [ -f $cli ] ; then
-    PROG=sagacity source $cli
-fi
-alias sp=sagacity
-
-# If we're on a remote machine and in a tmux, source the remote tmux file
-if [[ -d "/spotify" ]] && [[ -n "$TMUX" ]]; then
-  tmux source-file ~/.tmux/remote.conf &> /dev/null
-
-  if [[ -d "/payments" ]]; then
-    tmux set -g status-left "#[fg=colour255,bg=colour28,bold] payments-docker #[bg=colour234] " &> /dev/null
-  fi
-fi
-
-local USERFILE="$ZSHCONFDIR/local.zsh"
-if [[ -f $USERFILE ]] || [[ -L $USERFILE ]]; then
-  source $USERFILE
-fi
 
 # wow such shibe. https://github.com/thiderman/doge
 if (( $+commands[doge] )) ; then

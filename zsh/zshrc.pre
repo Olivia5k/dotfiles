@@ -2,25 +2,16 @@
 export ZSHRC="$HOME/.zshrc"
 export ZSHCONFDIR=$ZSHRC:A:h
 
-# User specific pre-configuration {{{
 local USERPREFILE="$ZSHCONFDIR/local.zsh.pre"
 if [[ -f $USERPREFILE ]] || [[ -L $USERPREFILE ]] ; then
   source $USERPREFILE
 fi
-
-# The XDG standard is indeed quite exquisite.
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
-export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share/:/usr/local/share/}
-export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
 export LOGS="$HOME/.logs"
 export HISTFILE="$LOGS/.zsh_history"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-# Self compiled libraries
 export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
 
 export EDITOR="emacsclient"
@@ -31,18 +22,6 @@ export GOPATH="$HOME/var/go"
 local _PATH="$XDG_DATA_HOME/infect/util:$HOMEBIN"
 local _PATH="$_PATH:$GOPATH/bin"
 
-# If we're in a docker image, we want to have the special tools on the path
-if [[ -d "/docker/bin" ]]; then
-    local _PATH="$_PATH:/docker/bin"
-fi
-
-# No cool globs yet...
-if [[ -d "$HOME/.gem/ruby/" ]]; then
-  for ruby in $(ls -rd $HOME/.gem/ruby/*/bin); do
-    local _PATH="$_PATH:$ruby"
-  done
-fi
-
 # Prevent trailing backslash to break the command lines! :D
 setopt sunkeyboardhack
 export KEYBOARD_HACK='\'
@@ -52,55 +31,9 @@ if ! [[ $PATH =~ "$_PATH" ]] ; then
   export PATH=$_PATH:$PATH
 fi
 
-# Don't you ever touch my prompties <3
 export VIRTUAL_ENV_DISABLE_PROMPT="yes"
 
 setopt promptsubst
 
 fpath=($ZSHCONFDIR/comp $ZSHCONFDIR/modules/zsh-completions/src $fpath)
 zstyle ':completion:*' hosts off
-
-if (( $+commands[sshmux] )); then
-  export SSHMUX_CMD="i3-msg workspace 5: sshmux && urxvt -e sshmux %q"
-fi
-
-# }}}
-# Automatic Python completion {{{
-
-# https://pypi.python.org/pypi/genzshcomp
-# If you have this installed, it can generate completion for Python programs
-# that use argparse or optparse.
-# Set $PYTHON_ZSH_COMP="app1 app2 etc" in $USERFILE and it will be applied
-# automatically.
-
-function _genzshcomp_load() {
-  comp=$ZSHCONFDIR/comp
-  apps=(${(z)PYTHON_ZSH_COMP:-pep8 genzshcomp})
-
-  mkdir -p $comp
-  for app in $apps; do
-    target=$comp/_$app
-
-    if ! (($+commands[$app])) || [[ -f $target ]] ; then
-      continue
-    fi
-
-    $app --help | genzshcomp > $target
-
-    if [[ -n "$1" ]]; then
-      echo "$app reloaded"
-    fi
-  done
-}
-
-if (( $+commands[genzshcomp] )) && [[ -n "$PYTHON_ZSH_COMP" ]]; then
-  _genzshcomp_load
-fi
-
-# Run this to refresh all the completions.
-function genzshcomp_reload() {
-  for f in $ZSHCONFDIR/comp/* ; do rm $f ; done
-  _genzshcomp_load verbose
-}
-
-# }}}

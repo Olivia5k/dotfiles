@@ -1,7 +1,0 @@
-#!/bin/zsh
-
-for C in $(git for-each-ref --sort=committerdate refs/heads --format="%(refname:short)"); do
-  git show -s --pretty=format:"%Cgreen%ci %Cblue%cr%Creset $C" "$C" --
-  git show --stat -s $C
-  echo
-done

@@ -1,1 +1,0 @@
-/home/thiderman/.config/fisherman/fzf/functions/__fzfcmd.fish

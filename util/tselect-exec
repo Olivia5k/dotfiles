@@ -1,6 +1,0 @@
-#!/bin/zsh
-
-ret=($print -rl -- ${(ko)commands} | fzf)
-if [[ -n "$ret" ]]; then
-  tmux neww -n "${ret}" "${ret}"
-fi

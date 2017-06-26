@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-tmux select-window -t $(tmux lsw | cut -d\( -f1 | fzf | cut -d: -f1)

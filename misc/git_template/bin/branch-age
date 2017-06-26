@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-function f() {
-  git for-each-ref --sort=committerdate refs/heads $1 --format="%(refname:short)"
-};
-
-for C in $(f $1) ; do
-  git show -s --pretty=format:"%C(blue bold)%ci %C(green)%cr%C(reset) $C" "$C" --
-done

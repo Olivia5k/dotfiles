@@ -1,5 +1,0 @@
-#!/usr/bin/zsh
-
-lock
-# This requires passwordless sudo on pm-suspend
-sudo pm-suspend

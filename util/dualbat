@@ -1,1 +1,0 @@
-acpi -b | grep -Eo "([[:digit:]]+%)" | tr -d "%" | awk '{s+=$1/2} END {print s}'

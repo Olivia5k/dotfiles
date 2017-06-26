@@ -1,6 +1,0 @@
-#!/usr/bin/zsh
-
-c=$(tmux save-buffer -)
-echo $c | xclip -i
-
-notify-send ""
