@@ -30,7 +30,7 @@
 
 
   ;; These were all moved into upstream! Yay open source <3
-  (defhydra go-goto-hydra ()
+  (defhydra go-goto-hydra (:foreign-keys warn)
     "goto"
     ("a" go-goto-arguments "arguments")
     ("d" go-goto-docstring "docstring")
@@ -39,6 +39,7 @@
     ("m" go-goto-method-receiver "receiver")
     ("n" go-goto-function-name "name")
     ("r" go-goto-return-values "return")
+    ("b" pop-mark "back")
     ("q" nil))
 
   (define-key go-mode-map (kbd "M-m") 'go-goto-hydra/body)
