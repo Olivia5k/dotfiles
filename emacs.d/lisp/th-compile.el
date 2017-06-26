@@ -9,10 +9,12 @@
   (setq compilation-read-command nil))
 
 
-;; Until released for real, this one should be local and not ensured
-(use-package makefile+
+(use-package makefile-executor
   :ensure nil
-  :commands (makefile-plus-execute-target makefile-plus-execute-project-target)
-  :load-path "/home/thiderman/git/makefile-plus.el/")
+  :demand
+  :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
+  :load-path "/home/thiderman/git/makefile-executor.el/"
+  :config
+  (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
 (provide 'th-compile)
