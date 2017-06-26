@@ -29,8 +29,8 @@
 (setq auto-revert-verbose nil)
 (setq revert-without-query '("."))
 
-(setq backup-inhibited t
-      make-backup-files nil)
+(setq backup-inhibited t)
+(setq make-backup-files nil)
 
 ;; Save all tempfiles in $TMPDIR/emacs-$UID/
 (defconst th/emacs-tmp-dir

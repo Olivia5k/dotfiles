@@ -30,28 +30,12 @@
      (python . t)
      (js . t)))
 
-  (defmacro th/org-todo (keyword)
-    (let* ((label (s-upcase keyword))
-           (key (substring keyword 0 1)))
-      `(define-key org-mode-map (kbd (format "C-c %s" ,key))
-         (lambda ()
-           (interactive)
-           (org-todo ,label)))))
-
-  (th/org-todo todo)
-  (define-key org-mode-map (kbd "C-c w")
-    (lambda () (interactive) (org-todo "WORKING")))
-  (define-key org-mode-map (kbd "C-c z")
-    (lambda () (interactive) (org-todo "WAITING")))
-  (define-key org-mode-map (kbd "C-c r")
-    (lambda () (interactive) (org-todo "REVIEW")))
-  (define-key org-mode-map (kbd "C-c d")
-    (lambda () (interactive) (org-todo "DONE")))
-  (define-key org-mode-map (kbd "C-c i")
-    (lambda () (interactive) (org-todo "INVALID")))
-  (define-key org-mode-map (kbd "C-c SPC")
-    (lambda () (interactive) (org-todo 'none)))
-
+  (define-key org-mode-map (kbd "C-c w")   (lambda () (interactive) (org-todo "WORKING")))
+  (define-key org-mode-map (kbd "C-c z")   (lambda () (interactive) (org-todo "WAITING")))
+  (define-key org-mode-map (kbd "C-c r")   (lambda () (interactive) (org-todo "REVIEW")))
+  (define-key org-mode-map (kbd "C-c d")   (lambda () (interactive) (org-todo "DONE")))
+  (define-key org-mode-map (kbd "C-c i")   (lambda () (interactive) (org-todo "INVALID")))
+  (define-key org-mode-map (kbd "C-c SPC") (lambda () (interactive) (org-todo 'none)))
 
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks))
 
@@ -66,13 +50,12 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-(setq
- org-agenda-ndays 7
- org-agenda-files '("~/org/")
- org-agenda-show-all-dates t
- org-agenda-start-on-weekday nil
- org-archive-location "~/org/archive/%s::"
- org-log-done t) ;;timestamp when switching from todo to done
+(setq org-agenda-ndays 7)
+(setq org-agenda-files '("~/org/"))
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-start-on-weekday nil)
+(setq org-archive-location "~/org/archive/%s::")
+(setq org-log-done t) ;;timestamp when switching from todo to done
 
 (setq org-todo-keywords
       '("TODO(t)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
@@ -118,7 +101,6 @@
     )))
 
 
-
 (defun th/org-project ()
   "Go to the org project for the current repository.
 
@@ -141,7 +123,6 @@ Go back if we're already in it."
      (org-archive-subtree)
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'file))
-
 
 
 (setq org-refile-targets
