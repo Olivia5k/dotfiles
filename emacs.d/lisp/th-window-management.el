@@ -1,3 +1,9 @@
+(use-package ace-window
+  :demand
+  :bind ("M-p" . ace-window)
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+
 ;; Try to make emax split vertically when possible
 (setq split-height-threshold 100)
 (setq split-width-threshold 160)

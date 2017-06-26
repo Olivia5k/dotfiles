@@ -52,12 +52,18 @@
                                 " "
                                 (powerline-buffer-id)
                                 " "))
-                          (center (list
-                                   " "
-                                   (powerline-mode-icon)
-                                   " "
-                                   (powerline-major-mode)
-                                   " "))
+                          (center (if (-contains? (list-minor-modes)
+                                                  'ace-window-mode)
+                                      (list
+                                       " "
+                                       ace-window-mode
+                                       " ")
+                                    (list
+                                       " "
+                                       (powerline-mode-icon)
+                                       " "
+                                       (powerline-major-mode)
+                                       " ")))
                           (rhs (list
                                 ;; " "
                                 ;; (powerline-minor-modes)
