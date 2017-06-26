@@ -34,6 +34,8 @@
   ("e" elfeed "elfeed")
   ("h" (counsel-find-file "/") "hosts")
   ("g" th/git-hydra/body "git")
+  ("m" th/quickmajor "major-mode")
+  ("n" th/toggle-minor-mode "minor-mode")
   ("p" th/package-hydra/body "package")
   ("M-p" proced "proced")
   ("s" th/smerge-hydra/body "smerge")
@@ -49,6 +51,6 @@
   ("r" package-refresh-contents "refresh" :exit nil)
   ("u" paradox-upgrade-packages "upgrade")
   ("l" list-packages "list")
-  (q nil))
+  ("q" nil))
 
 (provide 'th-hydra)

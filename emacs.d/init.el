@@ -87,3 +87,4 @@
 (require 'th-modeline)
 (require 'th-window-management)
 (require 'th-golang)
+(require 'th-quickfast)
