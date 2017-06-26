@@ -11,8 +11,8 @@ versatile and contain lots of things, but since I discovered emacs in
 
 * A seriously purple interface. Purple is my color, and this
   configuration reflects that _a lot_.
-* [Heavy customization](emacs.d/lisp/th-go-mode.el) of the
-  excellent [go-mode](https://github.com/dominkh/go-mode).
+* [Heavy customization](emacs.d/lisp/th-golang.el) of the
+  excellent [go-mode](https://github.com/dominikh/go-mode.el).
 * Lots and lots of [hydras](https://github.com/abo-abo/hydra).
 
 ## Quick install
