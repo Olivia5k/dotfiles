@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+cd $HOME/git/tldr
+git pull &> /dev/null || notify-send -u 'critical' 'tldr failed' 'git-sync for tldr failed.'

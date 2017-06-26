@@ -88,3 +88,4 @@
 (require 'th-window-management)
 (require 'th-golang)
 (require 'th-quickfast)
+(require 'th-manuals)
