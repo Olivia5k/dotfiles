@@ -1,11 +1,4 @@
 #!/bin/zsh
 
-pulseaudio-ctl $*
-vol=$(pulseaudio-ctl full-status)
-num=$(echo $vol | cut -d" " -f 1)
-
-if [[ $(echo $vol | cut -d" " -f 2) == "yes" ]]; then
-    notify-send "Volume" "Muted"
-else
-    notify-send "Volume" "${num}%"
-fi
+pamixer $* 10
+notify-send -t 1 -c "vol" "Volume" "$(pamixer --get-volume)%"
