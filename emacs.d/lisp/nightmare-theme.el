@@ -8,7 +8,7 @@
 ;; Package-Requires: ((autothemer "0.2"))
 
 ;;; Commentary:
-;;  ...and it gazes back.
+;;  A purple remix of darktooth
 ;;
 ;;  This is a remix of the excellent darktooth theme which makes it
 ;;  100x more purple. It currently only supports GUI colors.
@@ -21,7 +21,7 @@
   (error "Requires Emacs 24 or later"))
 
 (autothemer-deftheme
- nightmare "...and it gazes back."
+ nightmare "A purple remix of darktooth"
 
  ((((class color) (min-colors #xFFFFFF)) ;; color column 1 GUI/24bit
    ((class color) (min-colors #xFF)))    ;; color column 2 Xterm/256

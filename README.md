@@ -1,37 +1,34 @@
-# dotfiles
+# dotfiles / emacs.d
 
-These are dotfiles originating from [thiderman][thiderman]. They primarily
-concern [vim][vim], [zsh][zsh] and [tmux][tmux], but also contain haxings for
-[git][git], some general tiling window manager setups, and finally some
-generally helpful scripts.
+These are dotfiles originating
+from [thiderman](https://github.com/thiderman). They used to be very
+versatile and contain lots of things, but since I discovered emacs in
+2015 almost all the focus has been on that.
 
-Please see the directories in this repository for specific READMEs for them:
+![It's so purple](img/nightmare.png)
 
-* [vim][vimreadme]
-* [tmux][tmuxreadme]
+*Main features:*
 
-![wow screenshot](http://i.imgur.com/X1WN9rK.png)
-
-In action: A tmux split showing a [doge][doge] and writing this very README in
-vim. The window decorations are from [herbstluftwm][herbst], the terminal is
-[rxvt-unicode][urxvt] and the font is the beautiful [Inconsolata][inconsolata].
-
-[thiderman]: https://github.com/thiderman
-[vim]: http://www.vim.org
-[zsh]: http://www.zsh.org
-[tmux]: http://tmux.sourceforge.net
-[git]: http://git-scm.com
-[doge]: https://github.com/thiderman/doge
-[herbst]: http://herbstluftwm.org/
-[urxvt]: http://software.schmorp.de/pkg/rxvt-unicode.html
-[inconsolata]: http://www.levien.com/type/myfonts/inconsolata.html
-[vimreadme]: vim
-[tmuxreadme]: tmux
-
+* A seriously purple interface. Purple is my color, and this
+  configuration reflects that _a lot_.
+* [Heavy customization](emacs.d/lisp/th-go-mode.el) of the
+  excellent [go-mode](https://github.com/dominkh/go-mode).
+* Lots and lots of [hydras](https://github.com/abo-abo/hydra).
 
 ## Quick install
+
+There is a script that will install them for you.  The installer was
+written back in the time when I tried to put my vim/zsh/tmux configs
+on all the remote servers I was on.  Nowadays, everything happens in
+the aforementioned purple OS, hehe.
+
+Anyways:
 
 ```
 git clone https://github.com/thiderman/dotfiles .local/share/infect
 .local/share/infect/infect install
 ```
+
+## License
+
+Everything in here is licensed under the MIT license unless otherwise noted.
