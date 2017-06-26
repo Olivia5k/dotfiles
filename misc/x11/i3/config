@@ -179,10 +179,10 @@ focus_follows_mouse yes
 ipc-socket ~/.local/share/i3/ipc.sock
 
 bar {
-    status_command i3status
+    status_command goblocks
     colors {
-        background #271927
-        statusline #ffccff
+        background #1F111F
+        statusline #C197A6
                            #border #bg     #text
         focused_workspace  #702c70 #702c70 #ffffff
         active_workspace   #362836 #362836 #ffffff
