@@ -282,7 +282,7 @@ there's a region, all lines that region covers will be duplicated."
   ("i" (setq th/hexrgb-step (read-number "Step number: ")) "Set increment")
   ("x" nil "exit" :exit t))
 
-(defvar th/hexrgb-step 1 "Steps to move when using th/hexrgb-hydra")
+(defvar th/hexrgb-step 1 "Steps to move when using th/hexrgb")
 
 (defun th/hexrgb (fun val)
   "Helper that runs color increments via the `th/hexrgb-hydra'."
@@ -290,8 +290,9 @@ there's a region, all lines that region covers will be duplicated."
     (forward-char 1))
   (let* ((color (format "#%s" (word-at-point)))
          (result (funcall fun color 2 (* th/hexrgb-step val))))
-    (search-backward "\"")
-    (forward-char 1)
+    (when (not (looking-at "#"))
+      (search-backward "#"))
+    (delete-char 1)
     (kill-word 1)
     (insert result)))
 
