@@ -4,6 +4,16 @@
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
+(use-package winner
+  :bind
+  ("M-s-n" . winner-undo)
+  ("M-s-p" . winner-redo)
+  ("C-c <left>" . th/disabled-key)
+  ("C-c <right>" . th/disabled-key)
+  :demand
+  :ensure nil
+  :config (winner-mode 1))
+
 ;; Try to make emax split vertically when possible
 (setq split-height-threshold 100)
 (setq split-width-threshold 160)
@@ -102,11 +112,6 @@
 (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
 
 
-(global-set-key (kbd "C-x h") 'windmove-left)
-(global-set-key (kbd "C-x j") 'windmove-down)
-(global-set-key (kbd "C-x k") 'windmove-up)
-(global-set-key (kbd "C-x l") 'windmove-right)
-
 (defmacro th/i3-emacs (win-fun i3-fun)
   "Generate a function that either runs WIN-FUN successfully or executes I3-FUN.
 
@@ -131,7 +136,7 @@ This works best if used with https://github.com/thiderman/dotfiles/utils/i3emacs
 ;; Also disable the old ones so that I stop using them
 (defun th/disabled-key ()
   (interactive)
-  (message "This key is disabled. Use M-w."))
+  (message "This key is disabled."))
 
 (global-set-key (kbd "C-x 1") #'th/disabled-key)
 (global-set-key (kbd "C-x 2") #'th/disabled-key)

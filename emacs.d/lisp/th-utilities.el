@@ -47,10 +47,6 @@
   :ensure nil
   :config
   (setq sh-indentation 4))
-(use-package winner
-  :demand
-  :ensure nil
-  :config (winner-mode 1))
 (use-package vc
   :ensure nil
   :config (setq vc-follow-symlinks t))
