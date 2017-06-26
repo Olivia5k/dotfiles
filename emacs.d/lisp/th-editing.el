@@ -311,6 +311,11 @@ there's a region, all lines that region covers will be duplicated."
 (setq mouse-yank-at-point t)
 
 
+(defun crontab-e ()
+  (interactive)
+  (with-editor-async-shell-command "crontab -e"))
+
+
 (defadvice save-buffer (around save-buffer-as-root-around activate)
   "Create non-existing parent directories; sudo to save the current buffer if permissions are lacking."
   (interactive "p")
