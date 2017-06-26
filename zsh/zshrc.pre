@@ -23,8 +23,8 @@ export SAVEHIST=100000
 # Self compiled libraries
 export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
 
-export EDITOR="emacsclient -nw"
-export VISUAL="emacsclient -nw"
+export EDITOR="emacsclient"
+export VISUAL="emacsclient"
 export MAIL="$HOME/var/mail"
 export HOMEBIN="$HOME/.local/bin"
 export GOPATH="$HOME/var/go"
