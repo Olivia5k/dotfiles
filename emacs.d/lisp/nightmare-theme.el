@@ -26,7 +26,7 @@
  ((((class color) (min-colors #xFFFFFF)) ;; color column 1 GUI/24bit
    ((class color) (min-colors #xFF)))    ;; color column 2 Xterm/256
 
-  (nightmare-dark0_hard      "#1D2031" "#1c1c1c")
+  (nightmare-dark0_hard      "#2D2031" "#1c1c1c")
   (nightmare-dark0           "#281a28" "#262626")
   (nightmare-dark0_soft      "#32243F" "#303030")
   (nightmare-dark1           "#3C3246" "#3a3a3a")
@@ -34,20 +34,19 @@
   (nightmare-dark3           "#665064" "#626262")
   (nightmare-dark4           "#5C3074" "#767676")
 
-  (nightmare-medium          "#928374" "#8a8a8a") ;; or 244
+  (nightmare-medium          "#927F74" "#8a8a8a")
 
-  (nightmare-light0_hard     "#FFFFC8" "#ffffdf")
-  (nightmare-light0          "#FDF4C1" "#ffffaf")
-  (nightmare-light0_soft     "#F4E8BA" "#ffff87")
-  (nightmare-light1          "#EBDBB2" "#ffdfaf")
-  (nightmare-light2          "#D5C4A1" "#bcbcbc")
-  (nightmare-light3          "#BDAE93" "#a8a8a8")
-  (nightmare-light4          "#A89984" "#949494")
+  (nightmare-light0          "#FFDDD4" "#ffffaf")
+  (nightmare-light0_soft     "#F8D1CD" "#ffff87")
+  (nightmare-light1          "#EFC4C5" "#ffdfaf")
+  (nightmare-light2          "#D9ADB4" "#bcbcbc")
+  (nightmare-light3          "#C197A6" "#a8a8a8")
+  (nightmare-light4          "#AC8297" "#949494")
 
-  (nightmare-bright_red      "#FB4933" "#d75f5f")
-  (nightmare-bright_green    "#B8BB26" "#afaf00")
-  (nightmare-bright_yellow   "#FABD2F" "#ffaf00")
-  (nightmare-bright_blue     "#83A598" "#87afaf")
+  (nightmare-bright_red      "#FB2133" "#d75f5f")
+  (nightmare-bright_green    "#B89326" "#afaf00")
+  (nightmare-bright_yellow   "#FA952F" "#ffaf00")
+  (nightmare-bright_blue     "#837D98" "#87afaf")
   (nightmare-bright_purple   "#D350DA" "#d787af")
   (nightmare-bright_aqua     "#8EC07C" "#87af87")
   (nightmare-bright_orange   "orchid4" "#ff8700")
@@ -66,10 +65,11 @@
   (nightmare-faded_red       "#9D0006" "#870000")
   (nightmare-faded_green     "#79740E" "#878700")
   (nightmare-faded_yellow    "#B57614" "#af8700")
-  (nightmare-faded_blue      "#076678" "#005f87")
+  (nightmare-faded_blue      "#674678" "#005f87")
   (nightmare-faded_purple    "#8F3F71" "#875f87")
   (nightmare-faded_aqua      "#427B58" "#5f8787")
   (nightmare-faded_orange    "#AF3A03" "#af5f00")
+
   (nightmare-faded_cyan      "#00A7AF" "#00afaf")
 
   (nightmare-muted_red       "#901A1E" "#870000")
@@ -99,28 +99,28 @@
   (nightmare-mid_orange      "#603000" "#af5f00")
   (nightmare-mid_cyan        "#005560" "#005f87")
 
-  (nightmare-delimiter-one   "#5C7E81" "#5f8787")
-  (nightmare-delimiter-two   "#837486" "#875f5f")
-  (nightmare-delimiter-three "#9C6F68" "#af5f5f")
-  (nightmare-delimiter-four  "#7B665C" "#5f5f5f")
+  (nightmare-delimiter-one   "#5C5F81" "#5f8787")
+  (nightmare-delimiter-two   "#835586" "#875f5f")
+  (nightmare-delimiter-three "#9C5068" "#af5f5f")
+  (nightmare-delimiter-four  "#7B475C" "#5f5f5f")
 
   ;; 24 bit has tints from light0 and terminal cycles through
   ;; the 4 nightmare-delimiter colors
-  (nightmare-identifiers-1   "#E1A1C6" "#ffdfaf")
-  (nightmare-identifiers-2   "#E0B2C6" "#dfdfaf")
-  (nightmare-identifiers-3   "#D6B2C6" "#dfe5c5")
-  (nightmare-identifiers-4   "#CBB2C6" "#ffd7af")
-  (nightmare-identifiers-5   "#C6B2CB" "#dfdf87")
-  (nightmare-identifiers-6   "#C6B2D6" "#dfdfdf")
-  (nightmare-identifiers-7   "#C6B2E0" "#afdfdf")
-  (nightmare-identifiers-8   "#C6ACE6" "#dfdfff")
-  (nightmare-identifiers-9   "#C6A2E6" "#afdfff")
-  (nightmare-identifiers-10  "#C697E6" "#dfafff")
-  (nightmare-identifiers-11  "#CB92E6" "#afafff")
-  (nightmare-identifiers-12  "#D692E6" "#dfafaf")
-  (nightmare-identifiers-13  "#E092E6" "#dfc5e5")
-  (nightmare-identifiers-14  "#E692E0" "#ffafaf")
-  (nightmare-identifiers-15  "#E692D6" "#dfdfff")
+  (nightmare-identifiers-1   "#E17FC6" "#ffdfaf")
+  (nightmare-identifiers-2   "#E090C6" "#dfdfaf")
+  (nightmare-identifiers-3   "#D690C6" "#dfe5c5")
+  (nightmare-identifiers-4   "#CB90C6" "#ffd7af")
+  (nightmare-identifiers-5   "#C690CB" "#dfdf87")
+  (nightmare-identifiers-6   "#C690D6" "#dfdfdf")
+  (nightmare-identifiers-7   "#C690E0" "#afdfdf")
+  (nightmare-identifiers-8   "#C68AE6" "#dfdfff")
+  (nightmare-identifiers-9   "#C680E6" "#afdfff")
+  (nightmare-identifiers-10  "#C675E6" "#dfafff")
+  (nightmare-identifiers-11  "#CB70E6" "#afafff")
+  (nightmare-identifiers-12  "#D670E6" "#dfafaf")
+  (nightmare-identifiers-13  "#E070E6" "#dfc5e5")
+  (nightmare-identifiers-14  "#E670E0" "#ffafaf")
+  (nightmare-identifiers-15  "#E670D6" "#dfdfff")
 
   (nightmare-white           "#FFFFFF" "white")
   (nightmare-black           "#000000" "black")
@@ -138,7 +138,8 @@
 
   (mode-line                                 (:foreground nightmare-light3 :background nightmare-dark0_hard :box nil))
   (mode-line-inactive                        (:foreground nightmare-light2 :background nightmare-dark2 :box nil))
-  (fringe                                    (:background nightmare-dark0))
+  (fringe                                    (:background nightmare-dark0 :foreground nightmare-dark2))
+  (vertical-border                           (:background nightmare-dark0 :foreground nightmare-dark2))
   (linum                                     (:foreground nightmare-dark4))
   (hl-line                                   (:background nightmare-dark_purple))
   (region                                    (:background nightmare-dark2 :distant-foreground nightmare-light0))
@@ -190,6 +191,13 @@
   (tldr-description                          (:inherit 'default))
   (tldr-title                                (:foreground nightmare-bright_red :bold t :height 1.2))
   (tldr-introduction                         (:inherit 'font-lock-comment-face :slant 'italic))
+
+  ;; MODE SUPPORT: markdown
+  (markdown-header-face                      (:inherit font-lock-function-name-face :bold t :height 1.7 :family "Yanone Kaffesatz"))
+  (markdown-header-face-2                    (:inherit font-lock-builtin-face :bold t :height 1.5 :family "Yanone Kaffesatz"))
+  (markdown-header-face-3                    (:inherit font-lock-string-face :bold t :height 1.2 :family "Yanone Kaffesatz"))
+  (markdown-italic-face                      (:inherit 'italic :foreground nightmare-bright_blue))
+  (markdown-list-face                        (:foreground nightmare-darkslategray4 :bold t))
 
   ;; MODE SUPPORT: whitespace-mode
   (whitespace-space                          (:foreground nightmare-dark4 :background nightmare-dark0))
