@@ -22,7 +22,7 @@ URxvt.font-size.step:  2
 ! fonts
 *.font: xft:iosevka:pixelsize=16
 *.boldFont: xft:iosevka:bold:pixelsize=16
-Xft.dpi: 100.0
+Xft.dpi: 100
 
 ! Colorscheme (unnamed)
 URxvt.foreground: #dbdbdb
