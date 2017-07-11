@@ -2,6 +2,7 @@
   "Util"
   ("s" th/yas-hydra/body "yas" :exit t)
   ("a" auto-fill-mode "Auto fill")
+  ("d" th/toggle-debug "debug")
   ("f" th/font-hydra/body "font-hydra" :exit t)
   ("M-f" fci-mode "Fill column")
   ("h" highlight-symbol-mode "Highlight symbol")

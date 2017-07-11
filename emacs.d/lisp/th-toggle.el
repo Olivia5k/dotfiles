@@ -102,6 +102,4 @@ Repeated invocations toggle between the two most recently open buffers."
       (setq debug-on-error doe)
       (message "debug-on-error set to %s" doe)))
 
-(define-key global-map (kbd "<f5>") #'th/toggle-debug)
-
 (provide 'th-toggle)
