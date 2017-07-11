@@ -21,16 +21,11 @@ bindsym Mod4+Mod1+k focus up
 bindsym Mod4+Mod1+l focus right
 
 # Workspaces to screens
-workspace www output DP-1
-workspace dev output DP-1
-workspace dash output DP-1
-workspace spotify output DP-1
-workspace fraud output DP-1
-workspace idea output DP-1
-workspace slack output eDP-1
-workspace messenger output eDP-1
-workspace code output eDP-1
-workspace docker output eDP-1
+workspace www output DVI-I-1
+workspace dev output DVI-I-1
+workspace code output DVI-I-1
+workspace spotify output DVI-D-0
+workspace messenger output DVI-D-0
 
 # Switching workspaces
 # These are technically inverted, but the original felt... off.
@@ -45,18 +40,18 @@ bindcode Mod4+9 kill
 bindsym --release button2 kill
 
 # Splitting
-bindsym Shift+Mod4+Mod1+h move workspace to output left
-bindsym Shift+Mod4+Mod1+l move workspace to output right
+bindsym Control+Mod4+Mod1+h move workspace to output left
+bindsym Control+Mod4+Mod1+l move workspace to output right
 
 # Fullscreening
 bindsym Mod4+Mod1+f fullscreen
 bindcode Mod4+23 fullscreen
 
 # Resizing (Mod4+Alt+hjkl)
-bindsym Mod4+Mod1+Control+h resize shrink width 10 px or 3 ppt
-bindsym Mod4+Mod1+Control+j resize shrink height 10 px or 3 ppt
-bindsym Mod4+Mod1+Control+k resize grow height 10 px or 3 ppt
-bindsym Mod4+Mod1+Control+l resize grow width 10 px or 3 ppt
+bindsym Mod4+Mod1+h resize shrink width 10 px or 3 ppt
+bindsym Mod4+Mod1+j resize shrink height 10 px or 3 ppt
+bindsym Mod4+Mod1+k resize grow height 10 px or 3 ppt
+bindsym Mod4+Mod1+l resize grow width 10 px or 3 ppt
 
 # Move (Mod4+Shift+hjkl)
 bindsym Mod4+Shift+h move left
@@ -80,33 +75,23 @@ bindsym Mod4+w exec dmenu_i3_workspace workspace "i3-msg workspace %q"
 bindsym Mod4+Shift+w exec dmenu_i3_workspace move-to "i3-msg move container to workspace %q" true
 
 # Dedicated workspaces
-bindsym Mod4+Control+j exec i3-or-raise "jira" "chrome-app https://jira.spotify.net"
-bindsym Mod4+Control+c exec i3-or-raise "cal" "chrome-app https://calendar.google.com/calendar/b/1/render#main_7"
-bindsym Mod4+Mod1+c exec i3-or-raise "chill" "mux chill"
+bindsym Mod4+Control+c exec i3-or-raise "cal" "chrome-app https://calendar.google.com/"
 bindsym Mod4+d workspace code; workspace dev
 bindsym Mod4+Mod1+d exec "emacs"
-# bindsym Mod4+e exec i3-or-raise "slack" "chrome-app https://spotify.slack.com/messages/wtb-private/"
-# bindsym Mod4+Control+e exec "chrome-app https://spotify.slack.com/messages/wtb-private/"
 bindsym Mod4+f exec i3-or-raise "facebook" "chrome-app https://facebook.com"
-bindsym Mod4+g exec i3-or-raise "ghe" "chrome-app https://ghe.spotify.net"
-bindsym Mod4+Control+g exec i3-or-raise "github" "chrome-app https://github.com"
+bindsym Mod4+g exec i3-or-raise "github" "chromium --new-window https://github.com"
 bindsym Mod4+i exec i3-or-raise "inbox" "chrome-app https://inbox.google.com"
 bindsym Mod4+r exec i3-or-raise "reddit" "chromium --new-window https://reddit.com"
 bindsym Mod4+s exec i3-or-raise "spotify" "launch-spotify"
-bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "chrome-app http://sl.se"
+bindsym Mod4+Mod1+Control+s exec i3-or-raise "sl" "chrome-app https://sl.se/#/Travel/SearchTravelById/Terrassen%20(Stockholm)/Liljeholmen%20(Stockholm)/1535/9294/null/depart/sv/null/null/2,8,1,4,96,/null/null/null/null/null/false/null/0/0/null/true"
 bindsym Mod4+Mod1+Control+n exec i3-or-raise "nordea" "chrome-app https://internetbanken.privat.nordea.se/nsp/login"
-bindsym Mod4+t exec i3-or-raise "tam" "launch-tam"
-bindsym Mod4+Mod1+t exec i3-or-raise "tvtropes" "chrome-app tvtropes.org"
+bindsym Mod4+t exec i3-or-raise "tvtropes" "chrome-app tvtropes.org"
+bindsym Mod4+Mod1+t exec i3-or-raise "tam" "launch-tam"
 bindsym Mod4+m exec i3-or-raise "messenger" "chrome-app https://messenger.com"
 bindsym Mod4+Mod1+m exec "chrome-app https://messenger.com"
 bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 bindsym Mod4+q exec i3-or-raise "www" "browser"
 bindsym Mod4+Control+Mod1+x exec i3-or-raise "xxx" "chromium --new-window https://reddit.com/me/m/nsfw/"
-
-# Org buffer in the scratchpad
-bindsym Mod4+a scratchpad show
-bindsym Mod4+Mod1+a exec emacsclient -c -a '' ~/org/payments.org
-bindsym Mod4+Control+a move scratchpad
 
 # Applications
 bindcode Mod4+36 exec i3-mor
@@ -116,7 +101,7 @@ bindcode Mod4+65 exec dmenu_www
 bindcode Mod4+Control+65 exec dmenu_exec
 
 # Locking and switching
-bindcode Mod4+22 exec lock
+bindcode Mod4+22 exec lock2
 # bindcode Mod4+22 exec sswitch
 bindcode Mod4+Mod1+22 exec sswitch
 bindcode Mod4+Mod1+Control+22 exec susp
@@ -208,6 +193,5 @@ gaps inner 10
 smart_gaps on
 smart_borders on
 
-exec maybe_kodi
 exec dunst
 exec compton --backend glx
