@@ -181,7 +181,7 @@ there's a region, all lines that region covers will be duplicated."
   (setq shift-select-mode nil) ;; https://github.com/magnars/expand-region.el/issues/220
   (use-package change-inner)
 
-  (defhydra hydra-mark (:color blue :idle 1.5 :columns 4)
+  (defhydra hydra-mark (:color blue :columns 4)
     "Mark"
     ("d" er/mark-defun "Defun / Function")
     ("f" er/mark-defun "Defun / Function")
@@ -208,8 +208,8 @@ there's a region, all lines that region covers will be duplicated."
     ("a" er/mark-html-attribute "HTML Attribute")
     ("i" change-inner "Inner")
     ("o" change-outer "Outer")
-    ("." er/expand-region "Expand Region" :exit nil)
-    ("," er/contract-region "Contract Region" :exit nil)))
+    ("SPC" er/expand-region "Expand Region" :exit nil)
+    ("M-SPC" er/contract-region "Contract Region" :exit nil)))
 
 (use-package multiple-cursors
   :bind
