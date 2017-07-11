@@ -47,6 +47,7 @@
 
 
 (use-package git-gutter+
+  :demand
   :config
   (add-hook 'prog-mode-hook 'git-gutter+-mode))
 
@@ -66,6 +67,7 @@
   ("SPC" git-gutter+-show-hunk-inline-at-point "show")
   ("q" nil))
 
+(global-set-key (kbd "C-x C-g") 'th/git-hydra/body)
 
 (defhydra th/smerge-hydra (:foreign-keys warn
                            :pre (smerge-mode 1))
