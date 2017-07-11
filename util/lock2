@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+image=/tmp/screen.png
+
+param=(--bshlcolor=#888888aa \
+       --insidecolor=#5c307400 \
+       --insidevercolor=#faddfc00 \
+       --insidewrongcolor=#88888800 \
+       --keyhlcolor=#d350daaa \
+       --linecolor=#55555500 \
+       --ringcolor=#fafafa00 \
+       --ringvercolor=#faddfcaa \
+       --ringwrongcolor=#888888aa
+       --separatorcolor=#22152200 \
+       --textcolor=#dbdbdb00)
+
+resolution=$(xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
+
+ffmpeg -loglevel quiet -y -s $resolution -f x11grab -i $DISPLAY -vframes 1 -vf "gblur=sigma=12" "$image"
+convert "$image" $HOME/.local/lock-wallpaper-pink.png -composite "$image"
+
+i3lock "${param[@]}" -i "$image" -f
+rm -f $image
+
+xset dpms force off
