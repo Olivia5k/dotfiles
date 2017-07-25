@@ -84,3 +84,5 @@
 [hub]
 	host = ghe.spotify.net
 	host = ghe
+[pull]
+	rebase = true
