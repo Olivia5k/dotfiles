@@ -20,8 +20,9 @@ URxvt.keysym.C-S-Down: perl:font-size:decglobal
 URxvt.font-size.step:  2
 
 ! fonts
-*.font: xft:iosevka:pixelsize=16
-*.boldFont: xft:iosevka:bold:pixelsize=16
+! These are set to URxvt since emacs tooltips via pos-tip crashes otherwise.
+URxvt.font: xft:iosevka:pixelsize=16
+URxvt.boldFont: xft:iosevka:bold:pixelsize=16
 Xft.dpi: 100
 
 ! Colorscheme (unnamed)
