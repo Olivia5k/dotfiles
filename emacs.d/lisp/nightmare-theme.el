@@ -139,7 +139,7 @@
 
   (mode-line                                 (:foreground nightmare-light3 :background nightmare-dark0_hard :box nil))
   (mode-line-inactive                        (:foreground nightmare-light2 :background nightmare-dark2 :box nil))
-  (fringe                                    (:background nightmare-dark0 :foreground nightmare-dark2))
+  (fringe                                    (:background nightmare-dark0_hard :foreground nightmare-dark2))
   (vertical-border                           (:background nightmare-dark0 :foreground nightmare-dark2))
   (linum                                     (:foreground nightmare-dark4))
   (hl-line                                   (:background nightmare-dark_purple))
@@ -583,11 +583,11 @@
   (smerge-refined-removed                    (:background nightmare-dark_red))
 
   ;; MODE SUPPORT: git-gutter
-  (git-gutter:added                         (:foreground nightmare-faded_green :background nightmare-muted_green ))
-  (git-gutter:deleted                       (:foreground nightmare-faded_red :background nightmare-muted_red ))
-  (git-gutter:modified                      (:foreground nightmare-faded_purple :background nightmare-muted_purple ))
-  (git-gutter:separator                     (:foreground nightmare-faded_cyan :background nightmare-muted_cyan ))
-  (git-gutter:unchanged                     (:foreground nightmare-faded_yellow :background nightmare-muted_yellow ))
+  (git-gutter:added                         (:foreground nightmare-neutral_green :background nightmare-dark0_hard))
+  (git-gutter:deleted                       (:foreground nightmare-neutral_red :background nightmare-dark0_hard))
+  (git-gutter:modified                      (:foreground nightmare-neutral_purple :background nightmare-dark0_hard))
+  (git-gutter:separator                     (:foreground nightmare-neutral_cyan :background nightmare-dark0_hard))
+  (git-gutter:unchanged                     (:foreground nightmare-neutral_yellow :background nightmare-dark0_hard))
 
   ;; MODE SUPPORT: git-gutter-fr
   (git-gutter-fr:added                      (:inherit 'git-gutter:added))
@@ -596,11 +596,11 @@
 
   ;; MODE SUPPORT: git-gutter+
   (git-gutter+-commit-header-face            (:inherit 'font-lock-comment-face))
-  (git-gutter+-added                         (:foreground nightmare-faded_green :background nightmare-muted_green ))
-  (git-gutter+-deleted                       (:foreground nightmare-faded_red :background nightmare-muted_red ))
-  (git-gutter+-modified                      (:foreground nightmare-faded_purple :background nightmare-muted_purple ))
-  (git-gutter+-separator                     (:foreground nightmare-faded_cyan :background nightmare-muted_cyan ))
-  (git-gutter+-unchanged                     (:foreground nightmare-faded_yellow :background nightmare-muted_yellow ))
+  (git-gutter+-added                         (:foreground nightmare-neutral_green :background nightmare-muted_green ))
+  (git-gutter+-deleted                       (:foreground nightmare-neutral_red :background nightmare-muted_red ))
+  (git-gutter+-modified                      (:foreground nightmare-neutral_purple :background nightmare-muted_purple ))
+  (git-gutter+-separator                     (:foreground nightmare-neutral_cyan :background nightmare-muted_cyan ))
+  (git-gutter+-unchanged                     (:foreground nightmare-neutral_yellow :background nightmare-muted_yellow ))
 
 
   ;; MODE SUPPORT: git-gutter-fr+

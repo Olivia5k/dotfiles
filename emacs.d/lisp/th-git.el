@@ -46,7 +46,7 @@
   :config (magithub-feature-autoinject t))
 
 
-(use-package git-gutter+
+(use-package git-gutter-fringe+
   :demand
   :config
   (add-hook 'prog-mode-hook 'git-gutter+-mode))
