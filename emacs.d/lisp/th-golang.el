@@ -18,7 +18,7 @@
   (setq gofmt-args "")
 
   (define-key go-mode-map (kbd "C-M-x") 'th/go-single-test)
-  (define-key go-mode-map (kbd "C-c C-c") 'th/go-test)
+  (define-key go-mode-map (kbd "C-c C-c") 'makefile-executor-execute-last)
   (define-key go-mode-map (kbd "C-c C-b") 'th/go-benchmark)
   (define-key go-mode-map (kbd "C-c C-l") 'th/go-lint)
   (define-key go-mode-map (kbd "C-c C-r") 'th/go-race)
@@ -175,14 +175,6 @@
            (go--convert-type-name-to-receiver
             (car (s-split " " type))))
         " "))))
-
-
-(defun th/go-test ()
-  (interactive)
-  (projectile-save-project-buffers)
-  (if (f-exists-p (concat projectile-project-root "Makefile"))
-      (compile "make test")
-    (compile "go test -coverprofile=cover.out")))
 
 
 (defun th/go-benchmark ()
