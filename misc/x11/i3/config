@@ -14,18 +14,17 @@ bindsym Mod4+j exec i3emacs "focus down" "super+j"
 bindsym Mod4+k exec i3emacs "focus up" "super+k"
 bindsym Mod4+l exec i3emacs "focus right" "super+l"
 
-# Focus (Mod4+hjkl)
-bindsym Mod4+Mod1+h focus left
-bindsym Mod4+Mod1+j focus down
-bindsym Mod4+Mod1+k focus up
-bindsym Mod4+Mod1+l focus right
-
 # Workspaces to screens
 workspace www output DVI-I-1
-workspace dev output DVI-I-1
 workspace code output DVI-I-1
+workspace inbox output DVI-I-1
 workspace spotify output DVI-D-0
+workspace dev output DVI-D-0
 workspace messenger output DVI-D-0
+workspace steam output DVI-D-0
+workspace gimp output DVI-D-0
+workspace nordea output DVI-D-0
+workspace xxx output DVI-D-0
 
 # Switching workspaces
 # These are technically inverted, but the original felt... off.
