@@ -13,6 +13,14 @@
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
   )
 
-(use-package company-go)
+(use-package company-go
+  :after company
+  :demand t)
+
+(use-package company-quickhelp
+  :after company
+  :demand t
+  :config
+  (company-quickhelp-mode 1))
 
 (provide 'th-company)
