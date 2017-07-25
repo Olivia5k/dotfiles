@@ -256,16 +256,10 @@ for x in user at host path percent; do
 done
 
 color=143 # Green
-if [[ -d "/payments" ]] ; then
-    color=46 # Greener
-elif [[ $UID == 0 ]] ; then
+if [[ $UID == 0 ]] ; then
     color=9 # Root red
 elif [[ $HOST =~ 'dragon' ]]; then
     color=177 # Purple
-elif [[ $HOST =~ 'cloud.' ]]; then
-    color=209 # Orange
-elif [[ $HOST =~ '(lon|ash|sto|sjc)' ]]; then
-    color=9 # Red
 fi
 
 for x in user at host; do
