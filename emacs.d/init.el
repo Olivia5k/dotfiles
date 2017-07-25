@@ -91,4 +91,3 @@
 (require 'th-quickfast)
 (require 'th-manuals)
 (require 'th-email)
-(require 'th-org-agenda)
