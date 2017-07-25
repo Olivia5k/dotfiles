@@ -80,6 +80,12 @@
   (setq org-journal-date-format "%A, %Y-%m-%d")
   (setq org-journal-find-file 'find-file))
 
+(use-package org-habit
+  :ensure nil
+  :init
+  (setq org-modules '(org-habit))
+  (setq org-habit-show-habits-only-for-today t))
+
 (setq
  org-capture-templates
  `(("t" "Tasks" entry
