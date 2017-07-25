@@ -91,6 +91,15 @@ bindsym Mod4+Control+s exec i3-or-raise "steam" "steam"
 bindsym Mod4+q exec i3-or-raise "www" "browser"
 bindsym Mod4+Control+Mod1+x exec i3-or-raise "xxx" "chromium --new-window https://reddit.com/me/m/nsfw/"
 
+# Moving to dedicated workspaces
+bindsym Mod4+Shift+f move to workspace facebook; workspace facebook
+bindsym Mod4+Shift+g move to workspace github; workspace github
+bindsym Mod4+Shift+i move to workspace inbox; workspace inbox
+bindsym Mod4+Shift+r move to workspace reddit; workspace reddit
+bindsym Mod4+Shift+c move to workspace code; workspace code
+bindsym Mod4+Shift+d move to workspace dev; workspace dev
+bindsym Mod4+Shift+q move to workspace www; workspace www
+
 # Applications
 bindcode Mod4+36 exec i3-mor
 bindcode Mod4+Mod1+36 exec browser
