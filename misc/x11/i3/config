@@ -1,8 +1,6 @@
 font pango: Yanone kaffeesatz 20px
 
-# for_window [class="^Spotify$"] move container to workspace spotify; workspace spotify
 for_window [class="Gimp"] move container to workspace gimp; workspace gimp
-for_window [class="Kodi"] move container to workspace kodi; workspace kodi
 for_window [class=".*steam.*"] move container to workspace steam; workspace steam
 
 # Assigning
