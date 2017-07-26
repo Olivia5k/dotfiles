@@ -39,6 +39,7 @@
 
 ;; builtins
 (use-package semantic
+  :disabled t
   :ensure nil
   :config
   (setq global-semantic-idle-scheduler-mode nil)
