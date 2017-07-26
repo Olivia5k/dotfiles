@@ -156,4 +156,6 @@ Insert it if it does not exist."
 
 (setq httpd-port 8001)
 
+(use-package npm-mode)
+
 (provide 'th-web)
