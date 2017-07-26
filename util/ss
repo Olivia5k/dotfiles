@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 date=$(date +'%Y%m%d.%H%M%S')
-localpath="$HOME/var/img/ss/dated"
+localpath="$HOME/tmp/scrot/"
 
 mkdir -p $localpath
-escrotum -s $localpath/$date.png
-
-notify-send --expire-time 2 --category "screenshot" "Shot taken" "$date.png"
+escrotum -s $localpath/$date.png && \
+  notify-send --expire-time 2 --category "screenshot" "Shot taken" "$date.png" || \
+  notify-send --expire-time 2 --category "screenshot" "Shot cancelled"
