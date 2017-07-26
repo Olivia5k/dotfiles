@@ -34,8 +34,9 @@
   "Execution"
   ("C-c" (projectile-switch-project-by-name "~/git/dotfiles") "config")
   ("e" elfeed "elfeed")
+  ("f" hydra-flycheck/body "flycheck")
   ("M-e" th/load-env "Load 12FA env")
-  ("h" (counsel-find-file "/") "hosts")
+  ("h" hydra-helpful/body "helpful")
   ("g" th/git-hydra/body "git")
   ("m" th/quickmajor "major-mode")
   ("n" th/toggle-minor-mode "minor-mode")
