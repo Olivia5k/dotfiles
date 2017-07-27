@@ -15,17 +15,6 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
 
-;; pls no .elc
-(add-hook
- 'emacs-lisp-mode-hook
- (lambda ()
-   (make-local-variable 'after-save-hook)
-   (add-hook
-    'after-save-hook
-    (lambda ()
-      (if (file-exists-p (concat buffer-file-name "c"))
-          (delete-file (concat buffer-file-name "c")))))))
-
 (defun th/buffer-or-region (action-name buffer-func region-func)
   (let ((s "Buffer"))
     (if (use-region-p)
