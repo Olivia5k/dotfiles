@@ -67,10 +67,9 @@ case for this."
         (when (buffer-file-name)
           (save-buffer))
         (delete-frame))
-    (progn
-      (delete-window)
-      (save-excursion
-        (balance-windows)))))
+    (delete-window)
+    (save-excursion
+      (balance-windows))))
 
 (global-set-key (kbd "C-q") 'th/kill-window)
 
