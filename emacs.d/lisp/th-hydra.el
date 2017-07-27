@@ -4,6 +4,7 @@
   ("a" auto-fill-mode "Auto fill")
   ("d" th/toggle-debug "debug")
   ("f" th/font-hydra/body "font-hydra" :exit t)
+  ("g" customize-group "customize" :exit t)
   ("M-f" fci-mode "Fill column")
   ("h" highlight-symbol-mode "Highlight symbol")
   ("j" text-scale-decrease "Font -")
@@ -13,7 +14,7 @@
   ("t" toggle-truncate-lines "Truncate lines")
   ("q" nil))
 
-(global-set-key (kbd "C-x c") 'th/util-hydra/body)
+(global-set-key (kbd "s-o") 'th/util-hydra/body)
 
 (defun th/iosevka (size)
   (set-frame-font (format "Iosevka-%s" size)))
@@ -48,7 +49,8 @@
   ("C-q" save-buffers-kill-emacs "exit emacs")
   ("q" nil))
 
-(global-set-key (kbd "C-x C-c") 'th/exec-hydra/body)
+(global-set-key (kbd "s-SPC") 'th/exec-hydra/body)
+(global-set-key (kbd "C-x C-C") 'th/exec-hydra/body)
 
 (defhydra th/package-hydra (:foreign-keys warn :exit t)
   "Packages"
