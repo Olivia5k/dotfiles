@@ -20,7 +20,7 @@ directory to make multiple eshell windows easier."
           (previous-buffer)
         (switch-to-buffer shellname)))))
 
-(global-set-key (kbd "C-x e") #'th/eshell-here)
+(global-set-key (kbd "s-<return>") #'th/eshell-here)
 
 (defun eshell/x ()
   (insert "exit")
