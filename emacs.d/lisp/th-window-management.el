@@ -39,6 +39,21 @@
 (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
   (balance-windows))
 
+(defun split-window-sensibly (&optional window)
+  "A split-window-sensibly that's actually sensible.
+
+If there is room for a window (80 chars) to the side, split to
+there. Otherwise split downwards.
+
+Checks `window-splittable-p' as well so that windows that already have
+a fixed size can retain that fixed size. `magit-popup' is a common use
+case for this."
+  (let ((window (or window (selected-window))))
+    (if (or (not (window-splittable-p window t))
+            (not (>= (window-width window) 160)))
+        (split-window-vertically)
+      (split-window-horizontally))))
+
 (defun th/kill-window ()
   "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
   (interactive)
