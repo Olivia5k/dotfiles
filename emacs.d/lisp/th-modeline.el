@@ -16,6 +16,42 @@
                           'help-echo (format "Major-mode: `%s`" major-mode)
                           'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))))
 
+;; (defvar powerline-center-components nil)
+;; (setq powerline-center-components nil)
+
+;; ;;;###autoload
+;; (defmacro powerline-center-component (target pred eval)
+;;   "Register a component that overrides the major mode display in the modeline."
+;;   `(setq powerline-center-components
+;;         (plist-put powerline-center-components
+;;                    (quote ,target)
+;;                    (list (quote ,pred)
+;;                          (list (quote ,eval))))))
+
+;; (powerline-center-component ace
+;;  (-contains? (list-minor-modes) 'ace-window-mode)
+;;  (" " ace-window-mode " "))
+
+;; (powerline-center-component mu4e
+;;  (eq major-mode 'mu4e-headers-mode)
+;;  (" " mu4e~headers-last-query " "))
+
+;; (defmacro powerline-center-cond ()
+;;   "Renders the conditional center component.
+
+;; Based on the contents of `powerline-center-components'."
+;;   `(cond
+;;     ,@(-mapcat
+;;        (lambda (x) (when (listp x) (list x)))
+;;        powerline-center-components)
+;;     (t
+;;      (list
+;;       " "
+;;       (powerline-mode-icon)
+;;       " %["
+;;       (powerline-major-mode)
+;;       "%] "))))
+
 (use-package powerline
   :demand t
   :ensure t
@@ -52,18 +88,21 @@
                                 " "
                                 (powerline-buffer-id)
                                 " "))
-                          (center (if (-contains? (list-minor-modes)
-                                                  'ace-window-mode)
-                                      (list
-                                       " "
-                                       ace-window-mode
-                                       " ")
+
+                          (center (cond
+                                   ((-contains? (list-minor-modes) 'ace-window-mode)
+                                    (list " " ace-window-mode " "))
+
+                                   ((eq major-mode 'mu4e-headers-mode)
+                                    (list " " mu4e~headers-last-query " "))
+
+                                   (t
                                     (list
-                                       " "
-                                       (powerline-mode-icon)
-                                       " "
-                                       (powerline-major-mode)
-                                       " ")))
+                                     " "
+                                     (powerline-mode-icon)
+                                     " "
+                                     (powerline-major-mode)
+                                     " "))))
                           (rhs (list
                                 ;; " "
                                 ;; (powerline-minor-modes)
