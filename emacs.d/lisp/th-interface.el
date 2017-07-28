@@ -142,6 +142,7 @@
 
 
 (use-package fixme-mode
+  :demand
   :config
   (add-hook 'prog-mode-hook 'fixme-mode)
   (setq fixme-mode-warning-words
