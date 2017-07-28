@@ -141,7 +141,7 @@ show this warning instead."
                                             (org-agenda-start-on-weekday nil)
                                             (org-agenda-start-day "+0d")
                                             (org-agenda-todo-ignore-deadlines nil)))
-                                (tags-todo "-INACTIVE-CANCELLED-ARCHIVE/!NEXT"
+                                (tags-todo "-INACTIVE-CANCELLED-SCHEDULED-ARCHIVE/!NEXT"
                                            ((org-agenda-overriding-header "Next Tasks:")
                                             ))
                                 (tags "REFILE-ARCHIVE-REFILE=\"nil\""
