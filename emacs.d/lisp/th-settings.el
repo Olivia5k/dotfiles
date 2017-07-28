@@ -11,4 +11,14 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (set-default 'truncate-lines nil)
 
+;; Set new PATH elements that won't be there otherwise
+(unless (s-contains? ".local/" (getenv "PATH"))
+  (setenv "PATH"
+          (concat
+           "$HOME/.local/bin:"
+           "$HOME/.local/share/infect/util:"
+           "$GOPATH/bin:"
+           (getenv "PATH"))
+          t))
+
 (provide 'th-settings)
