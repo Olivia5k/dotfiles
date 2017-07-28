@@ -41,6 +41,11 @@
   (balance-windows))
 
 
+(defadvice customize-group (before customize-group-split-window activate)
+  "Makes `customize-group' appear in its own window."
+  (split-window-sensibly)
+  (other-window 1))
+
 (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
   (balance-windows))
 
