@@ -46,7 +46,7 @@
   ("s" th/smerge-hydra/body "smerge")
   ("t" counsel-tldr "tldr")
   ("x" th/hexrgb-hydra/body "hexrgb")
-  ("C-q" save-buffers-kill-emacs "exit emacs")
+  ("C-q" (save-buffers-kill-emacs t) "exit emacs")
   ("q" nil))
 
 (global-set-key (kbd "s-SPC") 'th/exec-hydra/body)

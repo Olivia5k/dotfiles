@@ -44,7 +44,7 @@
 (setq use-package-always-ensure t)
 
 ;; ...you know - every once and again... <3
-(global-set-key (kbd "<f11>") 'save-buffers-kill-emacs)
+(global-set-key (kbd "<f11>") (lambda () (save-buffers-kill-emacs t)))
 
 ;; Libraries that are simply useful always
 (use-package no-littering)
