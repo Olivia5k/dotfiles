@@ -2,7 +2,8 @@
 ;; https://gist.github.com/areina/3879626
 
 (use-package mu4e
-  :bind ("C-x m" . mu4e-hydra/body)
+  :bind
+  ("C-x m" . mu4e-hydra/body)
   :demand
   :ensure nil
 
@@ -20,7 +21,7 @@
         list)))
 
   ;; Making sure "trashing" is not the same as "deleting"
-  (setq mu4e-marks (remove-nth-element 5 mu4e-marks))
+  (setq mu4e-marks (remove-nth-element 6 mu4e-marks))
   (add-to-list 'mu4e-marks
                '(trash
                  :char ("d" . "▼")
@@ -48,12 +49,41 @@
   (setq smtpmail-default-smtp-server "smtp.gmail.com")
   (setq smtpmail-smtp-server "smtp.gmail.com")
   (setq smtpmail-smtp-service 587)
-  (setq smtpmail-debug-info t))
+  (setq smtpmail-debug-info t)
+
+  (define-key mu4e-headers-mode-map (kbd "i")
+    (lambda () (interactive) (mu4e~headers-jump-to-maildir "/gmail/INBOX")))
+
+  (define-key mu4e-headers-mode-map (kbd "TAB") #'th/mu4e-toggle-unread)
+
+  (define-key mu4e-headers-mode-map (kbd "SPC") #'th/mu4e-to-browser)
+  (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser))
 
 (defhydra mu4e-hydra (:exit t)
   "mu4e"
   ("m" (mu4e~headers-jump-to-maildir "/gmail/INBOX") "inbox")
   ("j" mu4e~headers-jump-to-maildir "mailboxes")
-  ("c" (mu4e-compose-new) "compose"))
+  ("c" (mu4e-compose-new) "compose")
+  ("u" (mu4e-headers-search "flag:unread AND NOT flag:trashed") "unread"))
+
+;;;###autoload
+(defun th/mu4e-to-browser ()
+  "Open the current email in a browser window."
+  (interactive)
+  (shell-command
+   (format "eml2browser %s"
+           (plist-get (mu4e-message-at-point) :path))))
+
+;;;###autoload
+(defun th/mu4e-toggle-unread ()
+  "Toggle between showing unread or not."
+  (interactive)
+  (let* ((query mu4e~headers-last-query)
+        (flag " AND flag:unread")
+        (final
+         (if (s-suffix? flag query)
+             (s-chop-suffix flag query)
+           (concat mu4e~headers-last-query flag))))
+    (mu4e-headers-search final)))
 
 (provide 'th-email)
