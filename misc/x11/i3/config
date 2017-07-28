@@ -101,11 +101,11 @@ bindsym Mod4+Shift+d move to workspace dev; workspace dev
 bindsym Mod4+Shift+q move to workspace www; workspace www
 
 # Applications
-bindcode Mod4+36 exec i3-mor
+bindcode Mod4+36 exec i3emacs "exec i3-mor" "super+Return"
 bindcode Mod4+Mod1+36 exec browser
-bindcode Mod4+Mod1+Control+36 exec urxvt
-bindcode Mod4+65 exec dmenu_www
-bindcode Mod4+Control+65 exec dmenu_exec
+bindcode Mod4+Mod1+Control+36 exec i3-mor
+bindcode Mod4+65 exec i3emacs "exec dmenu_www" "super+space"
+bindcode Mod4+Mod1+65 exec dmenu_www
 
 # Locking and switching
 bindcode Mod4+22 exec lock2
