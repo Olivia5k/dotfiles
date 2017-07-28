@@ -11,6 +11,18 @@
   (setq org-archive-location "~/org/archive/%s::")
   (setq org-log-done t) )
 
+;; http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WIqBud9vGAk
+(use-package org-gcal
+  :demand
+  :config
+  (setq org-gcal-file-alist '(("lowe.thiderman@gmail.com" . "~/org/gcal.org"))))
+
+(use-package calfw
+  :demand)
+(use-package calfw-org
+  :demand)
+
+
 ;; == bh/helper-functions ==
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask."

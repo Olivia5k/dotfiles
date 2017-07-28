@@ -152,7 +152,7 @@ Go back if we're already in it."
 (defhydra th/org (:exit t)
   "Org commands"
   ("C-o" th/org-project "Project file")
-  ("c" org-capture "Capture")
+  ("c" cfw:open-org-calendar "calendar")
   ("o" org-capture "Capture")
   ("f" (projectile-switch-project-by-name "~/org/") "Files")
   ("s" (org-agenda nil "a") "Schedule")
