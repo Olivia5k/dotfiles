@@ -11,14 +11,21 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (set-default 'truncate-lines nil)
 
+(setenv "GOPATH" "$HOME/var/go" t)
+
+(setq th/custom-paths
+      (-map 'substitute-env-vars
+            '("$HOME/.local/bin"
+              "$HOME/.local/share/infect/util"
+              "$GOPATH/bin")))
+
 ;; Set new PATH elements that won't be there otherwise
 (unless (s-contains? ".local/" (getenv "PATH"))
   (setenv "PATH"
           (concat
-           "$HOME/.local/bin:"
-           "$HOME/.local/share/infect/util:"
-           "$GOPATH/bin:"
-           (getenv "PATH"))
-          t))
+           (s-join ":" th/custom-paths)
+           ":"
+           (getenv "PATH")))
+  (setq exec-path (append th/custom-paths exec-path)))
 
 (provide 'th-settings)
