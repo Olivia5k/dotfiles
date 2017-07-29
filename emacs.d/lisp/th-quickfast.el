@@ -30,7 +30,6 @@ Note, that this is guess work."
                (setq l (cons (substring (symbol-name f) 0 -5) l)))))
     (when (called-interactively-p 'any)
       (with-current-buffer (get-buffer-create "*Major Modes*")
-        (clear-buffer-delete)
         (let ((standard-output (current-buffer)))
           (display-completion-list l)
           (display-buffer (current-buffer)))))
@@ -40,14 +39,24 @@ Note, that this is guess work."
   "Create a quick buffer set in a major mode.
 
 By default only presents a selection of modes derived from `prog-mode'
-or `text-mode'.  With universal argument, all major modes are shown."
-  (interactive "P")
-  (let* ((derived (unless p '(prog-mode text-mode)))
+or `text-mode'.
+
+With a single universal argument, the major mode of the current buffer
+is used.
+
+With a double universal argument, all major modes are shown."
+  (interactive "p")
+  (let* ((derived (unless (= p 16) '(prog-mode text-mode)))
          (modes (list-major-modes derived))
-         (mode (completing-read "Create major mode buffer: " modes nil t)))
+         (mode (if (= p 4)
+                   (symbol-name major-mode)
+                 (completing-read "Create major mode buffer: " modes nil t))))
     (split-window-sensibly)
     (switch-to-buffer (format "*%s*" mode))
-    (funcall (intern (format "%s-mode" mode)))))
+    (funcall (intern
+              (if (not (s-suffix? "-mode" mode))
+                  (format "%s-mode" mode)
+                mode)))))
 
 (defun list-minor-modes ()
   "Returns list of currently active minor modes."
