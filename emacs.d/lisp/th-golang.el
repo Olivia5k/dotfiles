@@ -240,7 +240,7 @@ private functions (lowercase)."
   (interactive)
 
   ;; Only run this hook when in go mode
-  (when (eq major-mode 'go-mode)
+  (when (and nil (eq major-mode 'go-mode))
     (save-excursion
       (let ((fn (go--function-name)))
         (when (go--should-generate-docstring-p fn)
