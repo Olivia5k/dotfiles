@@ -1,8 +1,0 @@
-#!/usr/bin/zsh
-
-(
-    rmdir $HOME/Desktop
-    rm $HOME/gmon.out
-) &>/dev/null
-
-exit 0
