@@ -24,6 +24,7 @@
   (setq org-M-RET-may-split-line '((default nil)))
   (setq org-startup-folded nil)
   (setq org-reverse-note-order t)
+  (setq org-clock-idle-time 5)
 
 
   (setq org-todo-keywords
