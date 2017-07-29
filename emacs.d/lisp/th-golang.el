@@ -13,8 +13,9 @@
   :config
   (add-hook 'go-mode-hook 'th/go-hook)
   (add-hook 'go-mode-hook 'go-eldoc-setup)
+  (add-hook 'go-mode-hook 'flycheck-mode)
 
-  (setq gofmt-command "go imports")
+  (setq gofmt-command "goimports")
   (setq gofmt-args "")
 
   (define-key go-mode-map (kbd "C-M-x") 'th/go-single-test)
