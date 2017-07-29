@@ -14,6 +14,8 @@
   :ensure nil
   :config (winner-mode 1))
 
+(use-package auto-dim-other-buffers)
+
 (use-package i3-mode
   :ensure nil
   :demand
