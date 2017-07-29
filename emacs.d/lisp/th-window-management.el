@@ -1,6 +1,6 @@
 (use-package ace-window
   :demand
-  :bind ("M-p" . ace-window)
+  :bind ("s-w" . ace-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
