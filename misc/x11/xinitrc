@@ -1,22 +1,13 @@
 #!/bin/zsh
-set -x
 
-source /home/thiderman/.zshrc
-
-keyboard-setup &
-xset -b
-wp &
+xset -b &
 xrdb ~/.Xresources &
 
-if [[ $(hostname) == "dragonkin" ]]; then
-    xset s off
-    xset -dpms
-fi
+$HOME/git/dotfiles/util/keyboard-setup &
+$HOME/git/dotfiles/util/wp &
 
-exec nm-applet &
+# dunst &
+# compton --backend glx &
+# exec i3
 
-# export XORG_WM="hlwm"
-# exec herbstluftwm --locked
-
-export XORG_WM="i3"
-exec i3
+exec stumpwm

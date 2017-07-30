@@ -1,0 +1,194 @@
+;; -*- lisp -*-
+
+(in-package :stumpwm)
+
+(load "~/quicklisp/setup.lisp")
+
+;; Basics
+(set-prefix-key (kbd "s-w"))
+(setf *startup-message* NIL)
+(setf *suppress-abort-messages* t)
+(setf *shell-program* (getenv "SHELL"))
+
+(defvar *message-filters* '("Group dumped")
+  "Don't show these messages.")
+
+(defun message (fmt &rest args)
+  "Overwritten message function to allow filters"
+  (let ((msg-string (apply 'format nil fmt args)))
+    (unless (member msg-string *message-filters* :test #'string=)
+      (echo-string (current-screen) msg-string))))
+
+;; (set-module-dir
+;;  (pathname-as-directory (concat (getenv "HOME") "/stumpwm/contrib")))
+
+(ql:quickload :clx-truetype)
+
+;; Modules
+(load-module "ttf-fonts")
+(load-module "winner-mode")
+(load-module "globalwindows")
+
+(xft:cache-fonts)
+
+;; Looks
+(set-font (make-instance 'xft:font
+                         :family "Iosevka"
+                         :subfamily "Regular"
+                         :antialias t
+                         :size 11))
+
+(setf *emacs* "emacsclient --create-frame  ~/git/dotfiles/emacs.d/init.e")
+
+(setf *message-window-gravity* :top-right
+      *input-window-gravity* :center
+      *window-border-style* :thin
+      *message-window-padding* 10
+      *maxsize-border-width* 0
+      *normal-border-width* 0
+      *transient-border-width* 0
+      stumpwm::*float-window-border* 0
+      stumpwm::*float-window-title-height* 3
+      *mouse-focus-policy* :sloppy)
+
+(set-normal-gravity :center)
+(set-maxsize-gravity :center)
+(set-transient-gravity :center)
+
+(set-fg-color "#eeeeee")
+(set-bg-color "#2d2e2e")
+(set-border-color "#222222")
+(set-focus-color "#39393d")
+(set-unfocus-color "#39393d")
+(set-win-bg-color "#1c1e1f")
+(set-float-focus-color "#fb2874")
+(set-float-unfocus-color "#39393d")
+
+(setf *colors* (list "#1c1e1f"      ; 0 black
+                     "#ff6a6a"      ; 1 red
+                     "#66cd00"      ; 2 green
+                     "#ffd700"      ; 3 yellow
+                     "#4f94cd"      ; 4 blue
+                     "#c6e2ff"      ; 5 magenta
+                     "#00cdcd"      ; 6 cyan
+                     "#ffffff"))    ; 7 white
+
+(defun shift-windows-forward (frames win)
+  "Exchange windows through cycling frames."
+  (when frames
+    (let ((frame (car frames)))
+      (shift-windows-forward (cdr frames)
+                             (stumpwm::frame-window frame))
+      (when win
+        (stumpwm::pull-window win frame)))))
+
+;; Commands
+;; (defcommand run-or-raise-firefox () ()
+;;   (run-or-raise "firefox" '(:class "Firefox") T T))
+
+(defcommand run-or-raise-spotify () ()
+  (run-or-raise "spotify" '(:class "Spotify") T T))
+
+(defcommand emacs () ()
+  (run-shell-command *emacs*))
+
+(defmacro emacs? (name key stump-func) ()
+  "Define a binding that runs a StumpWM function or sends the keys to emacs."
+  `(progn
+     (defcommand ,(concat "emacs/" name) () ()
+       (eval-command command))
+     (define-key *top-map* (kbd ,key) ,name)))
+
+;; (defcommand rotate-windows () ()
+;;   (let* ((frames (stumpwm::head-frames (current-group) (current-head)))
+;;          (win (stumpwm::frame-window (car (last frames)))))
+;;     (shift-windows-forward frames win)))
+
+(defcommand windows-left-right () ()
+  "Open windows side by side"
+  (run-commands "only" "vsplit"))
+
+(defcommand windows-up-down () ()
+  "Open windows up and down"
+  (run-commands "only" "hsplit"))
+
+;; TODO(thiderman): Just until the (emacs?) is done.
+(define-key *top-map* (kbd "s-M-h") "move-focus left")
+(define-key *top-map* (kbd "s-M-j") "move-focus down")
+(define-key *top-map* (kbd "s-M-k") "move-focus up")
+(define-key *top-map* (kbd "s-M-l") "move-focus right")
+
+(define-key *top-map* (kbd "s-n") "pull-hidden-next")
+(define-key *top-map* (kbd "s-p") "pull-hidden-previous")
+
+(define-key *top-map* (kbd "s-f") "only")
+
+(define-key *top-map* (kbd "s-s") "run-or-raise-spotify")
+
+;; (define-key *top-map* (kbd "s-r") "rotate-windows")
+;; (define-key *top-map* (kbd "s-v") "windows-left-right")
+;; (define-key *top-map* (kbd "s-h") "windows-up-down")
+
+(define-key *top-map* (kbd "s-DEL") "exec lock2")
+(define-key *top-map* (kbd "s-RET") "exec urxvt")
+
+(define-key *root-map* (kbd "b") "windowlist")
+;; (define-key *root-map* (kbd "TAB") "pull-hidden-other")
+
+(define-key *groups-map* (kbd "Right") "gnext")
+(define-key *groups-map* (kbd "Left") "gprev")
+(define-key *groups-map* (kbd "M-Right") "gnext-with-window")
+(define-key *groups-map* (kbd "M-Left") "gprev-with-window")
+(define-key *groups-map* (kbd "b") "global-windowlist")
+
+(defvar *winner-map* (make-sparse-keymap))
+(define-key *root-map* (kbd "c") '*winner-map*)
+(define-key *winner-map* (kbd "Left") "winner-undo")
+(define-key *winner-map* (kbd "Right") "winner-redo")
+
+;; Init
+(update-color-map (current-screen))
+;; (run-shell-command "polybar bar")
+(run-shell-command "compton --backend glx")
+(run-shell-command "dunst")
+;; (run-shell-command "xmodmap ~/.Xmodmap")
+
+(define-key *root-map* (kbd "d") "gnew dev")
+
+(defcommand ror-web () ()
+  (run-or-raise "chromium" '(:class "Chromium") nil nil))
+(define-key *top-map* (kbd "s-q") "ror-web")
+
+(defcommand ror-emacs () ()
+  (run-or-raise *emacs* '(:class "Emacs") nil nil))
+(define-key *top-map* (kbd "s-d") "ror-emacs")
+
+
+(setf (group-name (car (screen-groups (current-screen)))) "dev")
+(clear-window-placement-rules)
+
+;; (define-frame-preference "float"
+;;     (nil nil t :class "Pithos"))
+
+;; Hooks
+(add-hook *post-command-hook* (lambda (command)
+                                (when (member command winner-mode:*default-commands*)
+                                  (winner-mode:dump-group-to-file))))
+
+;; Update polybar group indicator
+;; (add-hook *post-command-hook* (lambda (command)
+;;                                 (when (member command '(stumpwm:gnext
+;;                                                         stumpwm:gnext-with-window
+;;                                                         stumpwm:gprev
+;;                                                         stumpwm:gprev-with-window
+;;                                                         stumpwm:gother
+;;                                                         stumpwm:gkill
+;;                                                         stumpwm:gselect
+;;                                                         stumpwm:gmove-and-follow
+;;                                                         stumpwm:gnew
+;;                                                         stumpwm:gnew-float
+;;                                                         stumpwm:emacs
+;;                                                         run-or-raise-firefox
+;;                                                         run-or-raise-konsole
+;;                                                         run-or-raise-vivaldi))
+;;                                   (run-shell-command "polybar-msg hook stumpwmgroups 1"))))
