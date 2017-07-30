@@ -282,7 +282,7 @@ export _Z_CMD="j"
 
 # wow such shibe. https://github.com/thiderman/doge
 if (( $+commands[doge] )) ; then
-  doge
+  #doge
 fi
 
 if [[ "$TERM" == "dumb" ]]; then
