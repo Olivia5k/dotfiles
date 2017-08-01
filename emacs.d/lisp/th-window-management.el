@@ -137,10 +137,17 @@ case for this."
 
 (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
 
-(global-set-key (kbd "s-h") (i3-emacs-cmd windmove-left "focus left"))
-(global-set-key (kbd "s-j") (i3-emacs-cmd windmove-down "focus down"))
-(global-set-key (kbd "s-k") (i3-emacs-cmd windmove-up "focus up"))
-(global-set-key (kbd "s-l") (i3-emacs-cmd windmove-right "focus right"))
+(defmacro stumpwm-emacs-cmd (emacs-fun stump-cmd)
+  (let ((cmd-name (intern (format "stumpwm/%s" emacs-fun))))
+    `(defun ,cmd-name ()
+       (interactive)
+       (unless (ignore-errors (funcall ',emacs-fun))
+         (shell-command (format "stumpish %s" ,stump-cmd))))))
+
+(global-set-key (kbd "s-h") (stumpwm-emacs-cmd windmove-left "move-focus left"))
+(global-set-key (kbd "s-j") (stumpwm-emacs-cmd windmove-down "move-focus down"))
+(global-set-key (kbd "s-k") (stumpwm-emacs-cmd windmove-up "move-focus up"))
+(global-set-key (kbd "s-l") (stumpwm-emacs-cmd windmove-right "move-focus right"))
 
 ;; Also disable the old ones so that I stop using them
 (defun th/disabled-key ()
