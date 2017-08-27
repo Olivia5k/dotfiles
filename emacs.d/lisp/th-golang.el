@@ -8,7 +8,22 @@
         ("C-c i"   . go-goto-imports)
         ("C-c r"   . go-rename)
         ("M-."     . godef-jump)
-        ("M-m"     . go-goto-hydra/body))
+        ("M-m"     . go-goto-hydra/body)
+
+        ("C-M-x"   . th/go-single-test)
+        ("C-c C-c" . makefile-executor-execute-last)
+        ("C-c C-b" . th/go-benchmark)
+        ("C-c C-l" . th/go-lint)
+        ("C-c C-r" . th/go-race)
+
+        ("DEL"     . go-delete-backward-char)
+        ("C-d"     . go-delete-char)
+
+        ("C-c C-m" . go-refactor-map)
+        ("C-M-d"   . go-refactor-declaration-colon)
+        ("M-r"     . go-refactor-unwrap)
+        ("C-c s"   . th/go-server-hydra/body)
+        ("C-c a"   . ff-find-other-file))
 
   :config
   (add-hook 'go-mode-hook 'th/go-hook)
@@ -18,15 +33,7 @@
   (setq gofmt-command "goimports")
   (setq gofmt-args "")
 
-  (define-key go-mode-map (kbd "C-M-x") 'th/go-single-test)
-  (define-key go-mode-map (kbd "C-c C-c") 'makefile-executor-execute-last)
-  (define-key go-mode-map (kbd "C-c C-b") 'th/go-benchmark)
-  (define-key go-mode-map (kbd "C-c C-l") 'th/go-lint)
-  (define-key go-mode-map (kbd "C-c C-r") 'th/go-race)
-  (define-key go-mode-map (kbd "C-c C-k") 'popwin:close-popup-window)
-  (define-key go-mode-map (kbd "DEL") 'go-delete-backward-char)
-  (define-key go-mode-map (kbd "C-d") 'go-delete-char)
-  (define-key go-mode-map (kbd "C-c C-m") 'go-refactor-map)
+  (define-prefix-command 'go-refactor-map)
   (define-key go-refactor-map (kbd "i") 'go-refactor-wrap-if)
   (define-key go-refactor-map (kbd "f") 'go-refactor-wrap-for)
   (define-key go-refactor-map (kbd "g") 'go-refactor-wrap-goroutine)
@@ -34,11 +41,7 @@
   (define-key go-refactor-map (kbd "u") 'go-refactor-unwrap)
   (define-key go-refactor-map (kbd "v") 'go-refactor-extract-variable)
   (define-key go-refactor-map (kbd "d") 'go-refactor-declaration-colon)
-  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
-  (define-key go-mode-map (kbd "C-M-d") 'go-refactor-declaration-colon)
-  (define-key go-mode-map (kbd "M-r") 'go-refactor-unwrap)
-  (define-key go-mode-map (kbd "C-c s") 'go-server-map)
-  (define-key go-mode-map (kbd "C-c a") 'ff-find-other-file))
+  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver))
 
 (use-package company-go :after go-mode)
 (use-package go-guru :after go-mode)
@@ -82,6 +85,12 @@
   (">" go-guru-callees "callees")
   ("x" go-guru-expand-region "expand-region"))
 
+(defhydra th/go-server-hydra (:exit t)
+  ("c" th/go-server-compile "compile")
+  ("s" th/go-server-start "start")
+  ("k" th/go-server-stop "stop")
+  ("b" th/go-server-buffer "buffer")
+  ("n" th/npm-server-start "npm start"))
 
 (defun th/go-coverage ()
   "Toggle coverage mode for the current buffer"
@@ -292,25 +301,17 @@ private functions (lowercase)."
 
 
 
-
-(define-prefix-command 'go-refactor-map)
-
-
 (defun go-refactor-wrap-if ()
   "Wraps the current line in an if statement."
   (interactive)
   (go--refactor-wrap "if ")
   (forward-char 3))
 
-
-
 (defun go-refactor-wrap-for ()
   "Wraps the current line in a for loop."
   (interactive)
   (go--refactor-wrap "for ")
   (forward-char 4))
-
-
 
 (defun go-refactor-wrap-goroutine ()
   "Wraps the current line in a goroutine."
@@ -326,11 +327,6 @@ private functions (lowercase)."
 
   (forward-char 8))
 
-
-
-
-
-
 (defun go-refactor-wrap-errif ()
   "Wraps the current statement in an ~err := <x> ; err != nil {~ block."
   ;; TODO(thiderman): Would be really neat if this could use inspection to
@@ -342,9 +338,6 @@ private functions (lowercase)."
   (insert "; err != nil {}")
   (backward-char 1)
   (newline-and-indent))
-
-
-
 
 (defun go-refactor-unwrap ()
   "Take the current statement (or region) and raise it to replace its parent.
@@ -381,11 +374,6 @@ the previous line ending with an opening brace."
     (yank)
     (gofmt)))
 
-;; raise / unwrap
-
-
-
-
 (defun go-refactor-extract-variable ()
   "Extract the current region into a variable"
   (interactive)
@@ -406,9 +394,6 @@ the previous line ending with an opening brace."
       (insert (format "%s := " var))
       (yank))))
 
-
-
-
 (defun go-refactor-declaration-colon ()
   "Toggle if the current line should use \"=\" or \":=\"."
   (interactive)
@@ -427,10 +412,6 @@ the previous line ending with an opening brace."
       (if (looking-back ":" 1)
           (delete-char -1)
         (insert ":")))))
-
-
-
-
 
 (defun go-refactor-method-receiver ()
   "Changes or removes the method receiver of the current function.
@@ -516,8 +497,6 @@ Assumes that point is on line defining the function we are replacing in."
 
       (replace-string from to t start end))))
 
-
-
 (defun go--refactor-wrap (prefix)
   "Wraps the current line or region or statement in a templated statement.
 
@@ -572,7 +551,6 @@ Point ends up on the beginning of the templated statement."
               (line-end-position))))
     (list beg end)))
 
-
 (defun go--convert-type-name-to-receiver (tn)
   "Converts from the string \"Type\" to \"(t *Type)\""
   (format "(%s *%s)" (s-downcase (s-left 1 tn)) tn))
@@ -605,8 +583,6 @@ resulting list."
         (with-temp-buffer
           (insert-file-contents fn)
           (split-string (buffer-string) "\n" t)))))))
-
-
 
 (defvar th/go-server-args nil "Argument to go server start")
 
@@ -674,17 +650,5 @@ resulting list."
   (interactive)
   (let* ((name (f-base (projectile-project-root))))
     (switch-to-buffer (format "*%s-server*" name))))
-
-(let ((m (define-prefix-command 'go-server-map)))
-  (define-key m (kbd "s") 'th/go-server-start)
-  (define-key m (kbd "k") 'th/go-server-stop)
-  (define-key m (kbd "b") 'th/go-server-buffer)
-  (define-key m (kbd "c") 'th/go-server-compile)
-  (define-key m (kbd "n") 'th/npm-server-start))
-
-(map-keymap
- (lambda (key map)
-   (message "key %s map %s" key map))
- 'go-server-map)
 
 (provide 'th-golang)
