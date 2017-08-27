@@ -335,7 +335,6 @@ there's a region, all lines that region covers will be duplicated."
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-(fci-mode -1)
 (show-paren-mode t)
 
 (put 'downcase-region 'disabled nil)
