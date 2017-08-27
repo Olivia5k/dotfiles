@@ -1,5 +1,0 @@
-#!/bin/zsh
-
-logs=$(git log --format="%s" --no-merges)
-echo $logs | cut -d" " -f1 | tr -d '[]:' | sort | uniq -c | sort -n
-echo ' -- '$(git log --format="%s" --no-merges | wc -l) total
