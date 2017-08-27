@@ -1,6 +1,0 @@
-#!/usr/bin/zsh
-
-source $XDG_CONFIG_HOME/dmux/dmuxrc
-
-ret=$(i3titles | dmenu ${(z)DMENU_OPTS} -p "window")
-eval $(printf 'i3-msg \[title=\"%q\"\] focus' ${(q)ret})
