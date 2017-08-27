@@ -156,6 +156,8 @@ Insert it if it does not exist."
 
 (setq httpd-port 8001)
 
-(use-package npm-mode)
+(use-package npm-mode
+  :config
+  (add-hook 'json-mode-hook 'npm-mode))
 
 (provide 'th-web)
