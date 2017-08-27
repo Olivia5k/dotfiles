@@ -20,6 +20,7 @@
 (add-hook 'lisp-mode-hook 'paredit-mode)
 (add-hook 'lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'lisp-mode-hook 'prettify-symbols-mode)
+(add-hook 'lisp-mode-hook 'stumpwm-mode)
 
 (defun th/buffer-or-region (action-name buffer-func region-func)
   (let ((s "Buffer"))
