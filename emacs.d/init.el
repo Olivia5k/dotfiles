@@ -18,24 +18,14 @@
         ("marmalade"    . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-(eval-when-compile
-  (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
-
 ;; Load custom
 (setq custom-file "~/.emacs.d/custom.el")
 (unless (file-exists-p custom-file)
   (with-temp-buffer (write-file custom-file)))
 (load custom-file)
 
-;; Path configuration for libraries and themes
+;; Path configuration for libraries
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-(setq custom-theme-directory (concat user-emacs-directory "themes"))
-(dolist (path (directory-files custom-theme-directory t "\\w+"))
-  (when (file-directory-p path)
-    (add-to-list 'custom-theme-load-path path)))
 
 ;; use-package <3
 (unless (package-installed-p 'use-package)
