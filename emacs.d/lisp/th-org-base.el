@@ -87,6 +87,8 @@
   (setq org-modules '(org-habit))
   (setq org-habit-show-habits-only-for-today t))
 
+(use-package org-bullets)
+
 (setq
  org-capture-templates
  `(("t" "Tasks" entry
