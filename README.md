@@ -5,7 +5,7 @@ from [thiderman](https://github.com/thiderman). They used to be very
 versatile and contain lots of things, but since I discovered emacs in
 2015 almost all the focus has been on that.
 
-![It's so purple](img/nightmare.png)
+![It's so purple](nightmare.png)
 
 *Main features:*
 
@@ -15,19 +15,12 @@ versatile and contain lots of things, but since I discovered emacs in
   excellent [go-mode](https://github.com/dominikh/go-mode.el).
 * Lots and lots of [hydras](https://github.com/abo-abo/hydra).
 
-## Quick install
+## Installation
 
-There is a script that will install them for you.  The installer was
-written back in the time when I tried to put my vim/zsh/tmux configs
-on all the remote servers I was on.  Nowadays, everything happens in
-the aforementioned purple OS, hehe.
-
-Anyways:
-
-```
-git clone https://github.com/thiderman/dotfiles .local/share/infect
-.local/share/infect/infect install
-```
+This project
+uses [GNU Stow](https://www.gnu.org/software/stow/ "Stow") to manage
+symlinks. Run `stow --target=$HOME <dirs> ` in the root of this repo
+to symlink the modules to where they belong!
 
 ## License
 
