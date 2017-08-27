@@ -1,13 +1,3 @@
 #!/bin/zsh
 
-xset -b &
-xrdb ~/.Xresources &
-
-$HOME/git/dotfiles/util/keyboard-setup &
-$HOME/git/dotfiles/util/wp &
-
-# dunst &
-# compton --backend glx &
-# exec i3
-
 exec stumpwm
