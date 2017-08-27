@@ -4,6 +4,6 @@ date=$(date +'%Y%m%d.%H%M%S')
 localpath="$HOME/tmp/scrot/"
 
 mkdir -p $localpath
-escrotum -s $localpath/$date.png && \
+escrotum $* $localpath/$date.png && \
   notify-send --expire-time 2 --category "screenshot" "Shot taken" "$date.png" || \
   notify-send --expire-time 2 --category "screenshot" "Shot cancelled"
