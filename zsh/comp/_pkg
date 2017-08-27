@@ -1,8 +1,0 @@
-#compdef pkg
-
-typeset -A opt_args
-local context state line
-
-_values 'action' \
-  'install[Install packages]' \
-  'remove[Uninstall packages]'

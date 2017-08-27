@@ -1,7 +1,0 @@
-#compdef debug
-
-typeset -A opt_args
-local context state line
-
-# Use the output from the command itself to determine the arguments
-_values 'service' $(debug)
