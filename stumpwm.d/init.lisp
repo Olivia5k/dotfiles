@@ -10,7 +10,7 @@
 (setf *suppress-abort-messages* t)
 (setf *shell-program* (getenv "SHELL"))
 
-(defvar *message-filters* '("Group dumped")
+(defvar *message-filters* '("Group dumped" "There is only one frame.")
   "Don't show these messages.")
 
 (defun message (fmt &rest args)
@@ -49,6 +49,7 @@
       *transient-border-width* 0
       stumpwm::*float-window-border* 0
       stumpwm::*float-window-title-height* 3
+      *resize-increment* 40
       *mouse-focus-policy* :sloppy)
 
 (set-normal-gravity :center)
@@ -72,6 +73,9 @@
                      "#c6e2ff"      ; 5 magenta
                      "#00cdcd"      ; 6 cyan
                      "#ffffff"))    ; 7 white
+
+(defun run-emacs-command (cmd)
+  (run-shell-command (format nil "emacsclient -e ~s" cmd)))
 
 (defun shift-windows-forward (frames win)
   "Exchange windows through cycling frames."
@@ -122,8 +126,8 @@
 
 (defcommand emacs/terminal () ()
   (if (is? "Emacs")
-      (run-shell-command "emacsclient -e '(th/eshell-here)'")
-    (eval-command "exec mor")))
+      (run-emacs-command "(th/eshell-here)")
+    (run-or-pull "mor" '(:class "URxvt") T T)))
 
 (define-key *top-map* (kbd "s-h") "emacs/move-left")
 (define-key *top-map* (kbd "s-j") "emacs/move-down")
@@ -131,13 +135,13 @@
 (define-key *top-map* (kbd "s-l") "emacs/move-right")
 
 (defcommand webdev-setup () ()
+  ;; TODO: Toggle so that it always puts the web in the main part
   (only)
-  (hsplit)
-  (resize -380 0)
-  (move-focus :right)
-  (run-shell-command "browser"))
-
-
+  (eval-command "next-in-frame")
+  (hsplit "5/16")
+  (when (not (is? "Emacs"))
+    (eval-command "ror-emacs"))
+  (move-focus :right))
 
 (defcommand goto-messenger () ()
   (banish)
@@ -145,7 +149,6 @@
       (gother)
     (progn
       (gnew "social")
-      (move-focus :right)
       (move-focus :right))))
 
 (define-key *top-map* (kbd "s-n") "next-in-frame")
@@ -184,18 +187,19 @@
 (define-key *top-map* (kbd "s-M-k") "resize-direction up")
 (define-key *top-map* (kbd "s-M-l") "resize-direction right")
 
+(define-key *top-map* (kbd "s-H") "move-window left")
+(define-key *top-map* (kbd "s-J") "move-window down")
+(define-key *top-map* (kbd "s-K") "move-window up")
+(define-key *top-map* (kbd "s-L") "move-window right")
+
+(define-key *root-map* (kbd "l") "windowlist")
+
 (define-key *top-map* (kbd "s-C-a") "webdev-setup")
 
 (defvar *winner-map* (make-sparse-keymap))
 (define-key *root-map* (kbd "c") '*winner-map*)
 (define-key *winner-map* (kbd "Left") "winner-undo")
 (define-key *winner-map* (kbd "Right") "winner-redo")
-
-;; Init
-(update-color-map (current-screen))
-;; (run-shell-command "polybar bar")
-(run-shell-command "dunst")
-;; (run-shell-command "xmodmap ~/.Xmodmap")
 
 (define-key *root-map* (kbd "d") "gnew dev")
 
@@ -210,32 +214,24 @@
 
 (define-key *top-map* (kbd "s-M-RET") "exec browser")
 
+(define-key *top-map* (kbd "s-C-p") "exec ss -s")
+(define-key *top-map* (kbd "s-C-M-p") "exec ss")
+
 
 (setf (group-name (car (screen-groups (current-screen)))) "dev")
 (clear-window-placement-rules)
 
-;; (define-frame-preference "float"
-;;     (nil nil t :class "Pithos"))
+;; Init
+(update-color-map (current-screen))
+(run-shell-command "dunst")
+(run-shell-command "xsetroot -cursor_name left_ptr")
+(run-shell-command "xset -b")
+(run-shell-command "xrdb ~/.Xresources")
+(run-shell-command "$HOME/git/dotfiles/util/keyboard-setup")
+(run-shell-command "$HOME/git/dotfiles/util/wp")
+
 
 ;; Hooks
 (add-hook *post-command-hook* (lambda (command)
                                 (when (member command winner-mode:*default-commands*)
                                   (winner-mode:dump-group-to-file))))
-
-;; Update polybar group indicator
-;; (add-hook *post-command-hook* (lambda (command)
-;;                                 (when (member command '(stumpwm:gnext
-;;                                                         stumpwm:gnext-with-window
-;;                                                         stumpwm:gprev
-;;                                                         stumpwm:gprev-with-window
-;;                                                         stumpwm:gother
-;;                                                         stumpwm:gkill
-;;                                                         stumpwm:gselect
-;;                                                         stumpwm:gmove-and-follow
-;;                                                         stumpwm:gnew
-;;                                                         stumpwm:gnew-float
-;;                                                         stumpwm:emacs
-;;                                                         run-or-raise-firefox
-;;                                                         run-or-raise-konsole
-;;                                                         run-or-raise-vivaldi))
-;;                                   (run-shell-command "polybar-msg hook stumpwmgroups 1"))))
