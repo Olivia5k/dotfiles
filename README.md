@@ -3,7 +3,7 @@
 These are dotfiles originating
 from [thiderman](https://github.com/thiderman). They used to be very
 versatile and contain lots of things, but since I discovered emacs in
-2015 almost all the focus has been on that.
+2015 almost all the focus has been on that. <3
 
 ![It's so purple](nightmare.png)
 
@@ -19,8 +19,7 @@ versatile and contain lots of things, but since I discovered emacs in
 
 This project
 uses [GNU Stow](https://www.gnu.org/software/stow/ "Stow") to manage
-symlinks. Run `stow --target=$HOME <dirs> ` in the root of this repo
-to symlink the modules to where they belong!
+symlinks. Check the [Makefile](Makefile) for more details!
 
 ## License
 
