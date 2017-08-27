@@ -86,3 +86,5 @@
 	host = ghe
 [pull]
 	rebase = true
+[github]
+	user = thiderman
