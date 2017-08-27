@@ -14,11 +14,6 @@
   :ensure nil
   :config (winner-mode 1))
 
-(use-package i3-mode
-  :ensure nil
-  :demand
-  :load-path "/home/thiderman/git/i3-mode.el/")
-
 ;; Try to make emax split vertically when possible
 (setq split-height-threshold 100)
 (setq split-width-threshold 160)
