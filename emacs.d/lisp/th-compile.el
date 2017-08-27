@@ -17,10 +17,9 @@
 
 
 (use-package makefile-executor
-  :ensure nil
+  :ensure t
   :demand
   :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
-  :load-path "/home/thiderman/git/makefile-executor.el/"
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
