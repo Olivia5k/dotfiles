@@ -5,7 +5,6 @@
 (when (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 (when (fboundp 'mouse-wheel-mode) (mouse-wheel-mode 1))
 
-
 ;; Start the package configuration
 (require 'cl)
 (require 'url-handlers)
@@ -34,25 +33,12 @@
 (setq use-package-always-ensure t)
 (setq use-package-always-demand t)
 
-;; ...you know - every once and again... <3
-(global-set-key (kbd "<f11>") (lambda () (save-buffers-kill-emacs t)))
-
-;; Libraries that are simply useful always
-(use-package no-littering)
-(use-package cl-lib)
-(use-package dash)
-(use-package f)
-(use-package s)
-(use-package hydra)
-(use-package ivy)
-(use-package autothemer)
-
 ;; Emacs core settings
+(require 'th-core)
 (require 'th-themes)
 (require 'th-window-management)
 (require 'th-interface)
 (require 'th-modeline)
-(require 'th-settings)
 (require 'th-backups)
 (require 'th-hooks)
 
