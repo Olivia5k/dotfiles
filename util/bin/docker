@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+# Simple wrapper so that we get sudo to docker without asking for it.
+# Works very well with a passwordless sudo for docker!
+sudo /usr/bin/docker $*

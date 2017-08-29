@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+# Simple wrapper so that we get sudo to docker-compose without asking for it.
+# Works very well with a passwordless sudo for docker-compose!
+sudo /usr/bin/docker-compose $*

@@ -49,7 +49,7 @@ alias ls='command ls -bhv --color=yes --group-directories-first'
 alias l='ls -l'
 alias zz="source $HOME/.zshrc"
 
-alias docker="sudo docker"
+alias dc="docker-compose"
 alias e=$EDITOR
 alias z=keyboard-setup
 
