@@ -49,8 +49,11 @@
 
 (defvar th/clean-whitespace-p t "Cleaning whitespace or not")
 
+(setq th/clean-whitespace-p t)
+
 (defun th/clean-whitespace ()
-  (if th/clean-whitespace-p
+  (if (and th/clean-whitespace-p
+           (not (looking-back " ")))
       (save-excursion
         (save-restriction
           (delete-trailing-whitespace)
