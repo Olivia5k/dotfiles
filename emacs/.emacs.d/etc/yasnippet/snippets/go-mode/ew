@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : error wrap
+#key : ew
+#contributor : Lowe Thiderman
+# --
+errors.Wrap(${1:err}, "$0")
