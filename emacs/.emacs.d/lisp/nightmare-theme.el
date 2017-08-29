@@ -159,10 +159,10 @@
   ;; Built-in syntax
   (font-lock-builtin-face                            (:bold t :foreground nightmare-bright_orange))
   (font-lock-constant-face                           (:bold t :foreground nightmare-burlywood4))
-  (font-lock-comment-face                            (:bold t :foreground nightmare-dark4))
+  (font-lock-comment-face                            (:bold t :foreground nightmare-muted_purple))
   (font-lock-function-name-face                      (:bold t :foreground nightmare-bright_purple))
   (font-lock-keyword-face                            (:bold t :foreground nightmare-sienna))
-  (font-lock-string-face                             (:bold t :foreground nightmare-darkslategray4))
+  (font-lock-string-face                             (:bold t :foreground nightmare-neutral_purple))
   (font-lock-variable-name-face                      (:bold t :foreground nightmare-aquamarine4))
   (font-lock-type-face                               (:bold t :foreground nightmare-bright_aqua))
   (font-lock-warning-face                            (:bold t :foreground nightmare-neutral_red :bold t))
@@ -461,8 +461,8 @@
   (ac-dabbrev-selection-face                 (:inherit 'popup-menu-selection-face))
 
   ;; MODE SUPPORT: sh mode
-  (sh-heredoc                                (:foreground nightmare-darkslategray4 :background nil))
-  (sh-quoted-exec                            (:foreground nightmare-darkslategray4 :background nil))
+  (sh-heredoc                                (:foreground nightmare-neutral_purple :background nil))
+  (sh-quoted-exec                            (:foreground nightmare-neutral_purple :background nil))
 
   ;; MODE SUPPORT: company
   (company-echo                              (:inherit 'company-echo-common))
