@@ -37,7 +37,6 @@
 (use-package xkcd)
 
 
-
 ;; builtins
 (use-package semantic
   :disabled t

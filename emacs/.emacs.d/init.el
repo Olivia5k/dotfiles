@@ -47,36 +47,46 @@
 (use-package ivy)
 (use-package autothemer)
 
-;; Loading of all the modules
+;; Emacs core settings
 (require 'th-themes)
-(require 'th-interface)
 (require 'th-window-management)
+(require 'th-interface)
+(require 'th-modeline)
 (require 'th-settings)
-(require 'th-editing)
-(require 'th-hydra)
-(require 'th-utilities)
-(require 'th-dired)
-(require 'th-git)
-(require 'th-company)
-(require 'th-snippets)
-(require 'th-compile)
-(require 'th-elfeed)
-(require 'th-elisp)
-(require 'th-org-base)
-(require 'th-org-agenda)
-(require 'th-web)
-(require 'th-python)
+(require 'th-backups)
 (require 'th-hooks)
-(require 'th-alternate)
-(require 'th-toggle)
-(require 'th-context)
+
+;; emacs extensions
+(require 'th-company)
+(require 'th-dired)
+(require 'th-editing)
+(require 'th-elisp)
+(require 'th-eshell)
+(require 'th-fly)
+(require 'th-hydra)
+(require 'th-snippets)
+(require 'th-utilities)
+
+;; Programming and developing
+(require 'th-compile)
 (require 'th-docker)
 (require 'th-env)
-(require 'th-fly)
-(require 'th-backups)
-(require 'th-eshell)
-(require 'th-quickfast)
-(require 'th-modeline)
-(require 'th-golang)
+(require 'th-git)
 (require 'th-manuals)
+
+;; Languages
+(require 'th-golang)
+(require 'th-python)
+(require 'th-web)
+
+;; File browsing and toggling
+(require 'th-alternate)
+(require 'th-toggle)
+(require 'th-quickfast)
+(require 'th-context)
+
+;; Organization
 (require 'th-email)
+(require 'th-elfeed)
+(require 'th-org-base)
+(require 'th-org-agenda)
