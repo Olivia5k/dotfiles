@@ -32,6 +32,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
+(setq use-package-always-demand t)
 
 ;; ...you know - every once and again... <3
 (global-set-key (kbd "<f11>") (lambda () (save-buffers-kill-emacs t)))
