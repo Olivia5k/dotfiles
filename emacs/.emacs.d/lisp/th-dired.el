@@ -5,6 +5,7 @@
               ("M-r" . rgrep)
               ("/" . th/dired-goto-root)
               ("~" . th/dired-goto-home)
+              ("h" . dired-omit-mode)
               ("e" . th/eshell-here))
 
   :config
