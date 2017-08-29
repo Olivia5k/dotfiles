@@ -41,10 +41,6 @@
     "Restores the previous window configuration and kills the magit buffer"
     (jump-to-register :magit-fullscreen)))
 
-(use-package magithub
-  :after magit
-  :config (magithub-feature-autoinject t))
-
 
 (use-package git-gutter-fringe+
   :demand
