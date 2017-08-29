@@ -3,6 +3,8 @@
   (:map lispy-mode-map
         ("D" . th/lispy-to-defun)))
 
+(use-package stumpwm-mode)
+
 (defun th/lispy-to-defun ()
   (interactive)
   (if (lispy-left-p)
