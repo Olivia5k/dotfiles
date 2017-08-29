@@ -11,8 +11,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (set-default 'truncate-lines nil)
 
-(setenv "GOPATH" "$HOME/var/go" t)
-
 (setq th/custom-paths
       (-map 'substitute-env-vars
             '("$HOME/.local/bin"
