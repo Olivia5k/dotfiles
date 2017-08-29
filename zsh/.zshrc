@@ -15,7 +15,7 @@ export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib"
 export EDITOR="emacsclient"
 export VISUAL="emacsclient"
 export HOMEBIN="$HOME/.local/bin"
-export GOPATH="$HOME/var/go"
+export GOPATH="$HOME"
 local _PATH="$HOMEBIN:$GOPATH/bin"
 
 # If $_PATH is not in $PATH, add it, but only once.
