@@ -35,8 +35,6 @@
 [core]
   editor = emacsclient -nw
   excludesfile = ~/.cvsignore
-[init]
-  templatedir = ~/.git_template
 [alias]
   st          = status
   ci          = commit
