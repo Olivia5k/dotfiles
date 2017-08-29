@@ -1,5 +1,4 @@
 (use-package yasnippet
-  :demand
   :config
   (yas-reload-all) ;; Without this, it doesn't load...
   (add-hook 'prog-mode-hook 'yas-minor-mode)

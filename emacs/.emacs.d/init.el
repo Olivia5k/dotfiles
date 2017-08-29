@@ -46,9 +46,6 @@
 (use-package ivy)
 (use-package autothemer)
 
-;; The ones above should always be loaded
-(setq use-package-always-defer t)
-
 ;; Loading of all the modules
 (require 'th-themes)
 (require 'th-interface)

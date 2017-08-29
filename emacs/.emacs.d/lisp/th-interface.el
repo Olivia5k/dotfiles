@@ -48,7 +48,6 @@
   :bind (("C-x f" . projectile-find-file))
   :bind-keymap (("C-x p" . projectile-command-map))
   :commands (projectile-switch-project)
-  :demand
 
   :config
   (projectile-global-mode)
@@ -142,7 +141,6 @@
 
 
 (use-package fixme-mode
-  :demand
   :config
   (add-hook 'prog-mode-hook 'fixme-mode)
   (setq fixme-mode-warning-words

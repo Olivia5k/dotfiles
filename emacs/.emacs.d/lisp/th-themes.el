@@ -4,12 +4,11 @@
 
 ;; These are needed before we do the colorscheme loading
 (use-package rainbow-mode
-  :demand t
   :config
   (add-hook 'css-mode-hook 'rainbow-mode)
   (add-hook 'scss-mode-hook 'rainbow-mode))
-(use-package rainbow-delimiters :demand t)
-(use-package rainbow-identifiers :demand t)
+(use-package rainbow-delimiters)
+(use-package rainbow-identifiers)
 
 (defun th/boldly-go ()
   "Automatic bolding in all colorschemes"
@@ -52,20 +51,11 @@
   ;; And functions do not stand out at all...
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
-;; (use-package darktooth-theme
-;;   :demand t
-;;   :ensure t
-;;   :config
-;;   (load-theme 'darktooth t)
-;;   (th/fix-darktooth))
-
 (use-package nightmare-theme
-  :ensure nil
-  :demand t)
+  :ensure nil)
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
-  :demand t
   :config
   (use-package all-the-icons-dired
     :after (dired)

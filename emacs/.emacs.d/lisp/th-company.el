@@ -14,12 +14,10 @@
   )
 
 (use-package company-go
-  :after company
-  :demand t)
+  :after company)
 
 (use-package company-quickhelp
   :after company
-  :demand t
   :config
   (company-quickhelp-mode 1))
 

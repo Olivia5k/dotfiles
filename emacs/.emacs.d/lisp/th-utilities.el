@@ -53,7 +53,6 @@
   :ensure nil
   :config (setq vc-follow-symlinks t))
 (use-package edit-server
-  :demand t
   :init
   (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))

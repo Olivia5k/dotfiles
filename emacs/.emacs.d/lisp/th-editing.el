@@ -1,5 +1,4 @@
 (use-package hungry-delete
-  :demand
   :config
   (global-hungry-delete-mode))
 

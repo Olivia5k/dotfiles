@@ -18,7 +18,6 @@
 
 (use-package makefile-executor
   :ensure t
-  :demand
   :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))

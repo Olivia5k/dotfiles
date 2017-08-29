@@ -4,7 +4,6 @@
 (use-package mu4e
   :bind
   ("C-x m" . mu4e-hydra/body)
-  :demand
   :ensure nil
 
   :init

@@ -1,5 +1,4 @@
 (use-package ace-window
-  :demand
   :bind ("s-w" . ace-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
@@ -10,7 +9,6 @@
   ("M-s-p" . winner-redo)
   ("C-c <left>" . th/disabled-key)
   ("C-c <right>" . th/disabled-key)
-  :demand
   :ensure nil
   :config (winner-mode 1))
 

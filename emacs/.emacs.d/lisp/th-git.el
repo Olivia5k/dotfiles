@@ -43,7 +43,6 @@
 
 
 (use-package git-gutter-fringe+
-  :demand
   :config
   (add-hook 'prog-mode-hook 'git-gutter+-mode))
 

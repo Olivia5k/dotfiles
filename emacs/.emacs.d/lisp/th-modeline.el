@@ -53,7 +53,6 @@
 ;;       "%] "))))
 
 (use-package powerline
-  :demand t
   :ensure t
   :config
   (setq-default mode-line-format

@@ -13,15 +13,12 @@
 
 ;; http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WIqBud9vGAk
 (use-package org-gcal
-  :demand
+  :after org-agenda
   :config
   (setq org-gcal-file-alist '(("lowe.thiderman@gmail.com" . "~/org/gcal.org"))))
 
-(use-package calfw
-  :demand)
-(use-package calfw-org
-  :demand)
-
+(use-package calfw)
+(use-package calfw-org)
 
 ;; == bh/helper-functions ==
 (defun bh/is-project-p ()
