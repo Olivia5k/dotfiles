@@ -181,6 +181,8 @@
 ;; (define-key *top-map* (kbd "s-h") "windows-up-down")
 
 (define-key *top-map* (kbd "s-DEL") "exec lock")
+(define-key *top-map* (kbd "s-M-DEL") "exec sswitch work")
+(define-key *top-map* (kbd "s-S-DEL") "exec sswitch laptop")
 (define-key *top-map* (kbd "s-RET") "emacs/terminal")
 (define-key *top-map* (kbd "s-M-C-RET") "exec urxvt")
 (define-key *top-map* (kbd "s-SPC") "grouplist")
