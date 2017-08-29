@@ -180,7 +180,7 @@
 ;; (define-key *top-map* (kbd "s-v") "windows-left-right")
 ;; (define-key *top-map* (kbd "s-h") "windows-up-down")
 
-(define-key *top-map* (kbd "s-DEL") "exec lock2")
+(define-key *top-map* (kbd "s-DEL") "exec lock")
 (define-key *top-map* (kbd "s-RET") "emacs/terminal")
 (define-key *top-map* (kbd "s-M-C-RET") "exec urxvt")
 (define-key *top-map* (kbd "s-SPC") "grouplist")

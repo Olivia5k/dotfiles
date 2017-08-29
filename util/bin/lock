@@ -1,28 +1,4 @@
 #!/bin/zsh
 
-image=/tmp/screen.png
-doge=$HOME/git/dotfiles/img/doge.png
-
-# Grab a screenshot
-scrot $image
-
-# Scale it down to 10% and then back up again, giving it a nice pixelated look
-convert $image -modulate 100,33,100 -scale 10% -scale 1000% $image
-
-# If an argument was given, superimpose that image
-[[ -f $doge ]] && convert $image $doge -gravity SouthWest -composite -matte $image
-
-# Lock and clean up
-i3lock -i $image -f
-rm $image
-
-# Mute the volume if it's not already muted
-if [[ $(pulseaudio-ctl full-status | cut -d" " -f 2) == "no" ]]; then
-    vol mute
-fi
-
-# Also disable the screens
-# Unless we have the screen that takes like 10 seconds to start...
-if [[ $(hostname) != "dragonwing" ]]; then
-    xset dpms force off
-fi
+slock &|
+xset dpms force off
