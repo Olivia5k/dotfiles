@@ -38,7 +38,7 @@
                          :antialias t
                          :size 11))
 
-(setf *emacs* "emacsclient --create-frame  ~/git/dotfiles/emacs/.emacs.d/init.el")
+(setf *emacs* "emacsclient --create-frame  ~/src/github.com/thiderman/dotfiles/emacs/.emacs.d/init.el")
 
 (setf *message-window-gravity* :center
       *input-window-gravity* :center

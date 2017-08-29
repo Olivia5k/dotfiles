@@ -149,8 +149,7 @@ Go back if we're already in it."
   (save-buffer))
 
 (setq org-refile-targets
-      '((org-agenda-files :maxlevel . 5)
-        ("~/git/dotfiles/emacs.d/emacs.org" :level . 2)))
+      '((org-agenda-files :maxlevel . 5)))
 
 (defhydra th/org (:exit t)
   "Org commands"
