@@ -151,6 +151,14 @@
       (gnew "social")
       (move-focus :right))))
 
+(defcommand goto-slack () ()
+  (banish)
+  (if (string= (group-name (current-group)) "slack")
+      (gother)
+    (progn
+      (gnew "slack")
+      (move-focus :left))))
+
 (define-key *top-map* (kbd "s-n") "next-in-frame")
 (define-key *top-map* (kbd "s-p") "prev-in-frame")
 (define-key *top-map* (kbd "s-TAB") "next-in-frame")
@@ -164,6 +172,9 @@
 (define-key *top-map* (kbd "s-s") "spotify")
 (define-key *top-map* (kbd "s-m") "goto-messenger")
 (define-key *top-map* (kbd "s-M-m") "exec chrome-app https://messenger.com")
+
+(define-key *top-map* (kbd "s-e") "goto-slack")
+(define-key *top-map* (kbd "s-M-e") "exec chrome-app https://unomaly.slack.com")
 
 (define-key *top-map* (kbd "s-r") "rotate-windows")
 ;; (define-key *top-map* (kbd "s-v") "windows-left-right")
