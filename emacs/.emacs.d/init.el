@@ -44,6 +44,7 @@
 (use-package s)
 (use-package hydra)
 (use-package ivy)
+(use-package autothemer)
 
 ;; The ones above should always be loaded
 (setq use-package-always-defer t)
