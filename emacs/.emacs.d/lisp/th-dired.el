@@ -1,7 +1,7 @@
 (use-package dired
   :ensure nil
   :bind (:map dired-mode-map
-              ("M-r" . rgrep)
+              ("r" . rgrep)
               ("/" . th/dired-goto-root)
               ("~" . th/dired-goto-home)
               ("h" . dired-omit-mode)
