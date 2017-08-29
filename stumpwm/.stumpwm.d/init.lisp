@@ -162,7 +162,7 @@
 (define-key *top-map* (kbd "s-n") "next-in-frame")
 (define-key *top-map* (kbd "s-p") "prev-in-frame")
 (define-key *top-map* (kbd "s-TAB") "next-in-frame")
-(define-key *top-map* (kbd "s-S-TAB") "prev-in-frame")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "prev-in-frame")
 
 (define-key *top-map* (kbd "C-s-h") "gprev")
 (define-key *top-map* (kbd "C-s-l") "gnext")
