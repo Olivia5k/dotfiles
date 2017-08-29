@@ -38,7 +38,7 @@
                          :antialias t
                          :size 11))
 
-(setf *emacs* "emacsclient --create-frame  ~/git/dotfiles/emacs.d/init.el")
+(setf *emacs* "emacsclient --create-frame  ~/git/dotfiles/emacs/.emacs.d/init.el")
 
 (setf *message-window-gravity* :center
       *input-window-gravity* :center
@@ -171,6 +171,7 @@
 
 (define-key *top-map* (kbd "s-DEL") "exec lock2")
 (define-key *top-map* (kbd "s-RET") "emacs/terminal")
+(define-key *top-map* (kbd "s-M-C-RET") "exec urxvt")
 (define-key *top-map* (kbd "s-SPC") "grouplist")
 
 (define-key *root-map* (kbd "b") "windowlist")
@@ -227,8 +228,8 @@
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command "xset -b")
 (run-shell-command "xrdb ~/.Xresources")
-(run-shell-command "$HOME/git/dotfiles/util/keyboard-setup")
-(run-shell-command "$HOME/git/dotfiles/util/wp")
+(run-shell-command "$HOME/.local/bin/keyboard-setup")
+(run-shell-command "$HOME/.local/bin/wp")
 
 
 ;; Hooks
