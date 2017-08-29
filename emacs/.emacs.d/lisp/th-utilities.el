@@ -1,5 +1,6 @@
 ;; Major mode utilities - little to no config
-(use-package crontab-mode)
+(use-package crontab-mode
+  :mode ("\\.cron\\'" . crontab-mode))
 (use-package csv-mode)
 (use-package editorconfig
   :init (editorconfig-mode 1))
