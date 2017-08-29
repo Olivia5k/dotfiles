@@ -21,18 +21,6 @@
         (setcdr last (cddr last))
         list)))
 
-  ;; Making sure "trashing" is not the same as "deleting"
-  (setq mu4e-marks (remove-nth-element 6 mu4e-marks))
-  (add-to-list 'mu4e-marks
-               '(trash
-                 :char ("d" . "▼")
-                 :prompt "dtrash"
-                 :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
-                 :action (lambda (docid msg target)
-                           (mu4e~proc-move docid
-                                           (mu4e~mark-check-target
-                                            target) "-N"))))
-
   ;; I have my "default" parameters from Gmail
   (setq mu4e-sent-folder "/home/thiderman/.mail/sent")
   (setq mu4e-drafts-folder "/home/thiderman/.mail/drafts")
@@ -52,13 +40,28 @@
   (setq smtpmail-smtp-service 587)
   (setq smtpmail-debug-info t)
 
+  :config
+  ;; Making sure "trashing" is not the same as "deleting"
+  (setq mu4e-marks (remove-nth-element 6 mu4e-marks))
+  (add-to-list 'mu4e-marks
+               '(trash
+                 :char ("d" . "▼")
+                 :prompt "dtrash"
+                 :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
+                 :action (lambda (docid msg target)
+                           (mu4e~proc-move docid
+                                           (mu4e~mark-check-target
+                                            target) "-N"))))
+
+
   (define-key mu4e-headers-mode-map (kbd "i")
     (lambda () (interactive) (mu4e~headers-jump-to-maildir "/gmail/INBOX")))
 
   (define-key mu4e-headers-mode-map (kbd "TAB") #'th/mu4e-toggle-unread)
 
   (define-key mu4e-headers-mode-map (kbd "SPC") #'th/mu4e-to-browser)
-  (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser))
+  (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser)
+)
 
 (defhydra mu4e-hydra (:exit t)
   "mu4e"
