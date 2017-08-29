@@ -27,7 +27,7 @@ Xft.dpi: 100
 
 ! Colorscheme (unnamed)
 URxvt.foreground: #dbdbdb
-URxvt.background: #151515
+URxvt.background: #221522
 URxvt.color0: #222229
 URxvt.color1: #8e2b2e
 URxvt.color2: #45702c
