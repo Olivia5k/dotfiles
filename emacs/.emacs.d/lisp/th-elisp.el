@@ -4,7 +4,6 @@
         ("D" . th/lispy-to-defun)))
 
 (use-package stumpwm-mode)
-(use-package slime)
 
 (defun th/lispy-to-defun ()
   (interactive)
@@ -24,7 +23,6 @@
 (add-hook 'lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'lisp-mode-hook 'prettify-symbols-mode)
 (add-hook 'lisp-mode-hook 'stumpwm-mode)
-(add-hook 'lisp-mode-hook 'slime-mode)
 
 (defun th/buffer-or-region (action-name buffer-func region-func)
   (let ((s "Buffer"))
