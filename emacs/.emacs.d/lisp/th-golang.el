@@ -113,9 +113,8 @@
             (th/go-test-buffer-p)))))))
 
 (defun th/go-coverage-toggle ()
-  (windmove-left)
   (delete-other-windows)
-  (go-coverage (concat (projectile-project-root) "cover.out")))
+  (go-coverage "coverage.out"))
 
 (defun th/go-test-buffer ()
   (interactive)
