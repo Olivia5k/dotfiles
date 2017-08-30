@@ -1,0 +1,23 @@
+#!/usr/bin/zsh
+
+# Simple script that takes a directory of repositories and sorts them
+# into a $GOPATH/src-like structure.
+
+root=${1:-"$HOME/git"}
+dst=${2:-"$HOME/src"}
+
+cd $root
+
+for repo in *(/) ; do
+    remote=$(git --git-dir=$repo/.git remote get-url origin)
+
+    # Strip all the non-URL and non-directory parts of the origins
+    remote=${remote%%.git}
+    remote=${remote##git://}
+    remote=${remote##git@}
+    remote=${remote##http://}
+    remote=${remote/.com:/.com\/}
+
+    mkdir -p $dst/$remote:h
+    mv $root/$repo $dst/$remote
+done
