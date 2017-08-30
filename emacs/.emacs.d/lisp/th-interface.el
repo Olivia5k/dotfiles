@@ -25,24 +25,6 @@
     ("q" nil)))
 
 
-;; popwin - making most *special-buffers* act like popups
-(use-package popwin
-  :bind
-  ("C-x C-k" . popwin:close-popup-window)
-  :bind-keymap
-  ("C-x p" . popwin:keymap)
-
-  :config
-  (popwin-mode 1)
-  ;; It was apparently tricky to make use-package map to what's just a keymap
-  (global-set-key (kbd "C-x p") popwin:keymap)
-
-  (setq popwin:special-display-config
-        '((help-mode)
-          ("*Shell Command Output*")
-          (" *undo-tree*" :width 60 :position right))))
-
-
 ;; projectile - project management <3
 (use-package projectile
   :bind (("C-x f" . projectile-find-file))
