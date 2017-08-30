@@ -151,6 +151,11 @@ Go back if we're already in it."
 (setq org-refile-targets
       '((org-agenda-files :maxlevel . 5)))
 
+(defun th/org-current-task ()
+  "Print the substring of the clocked task, for insertion into a modeline."
+  (message (substring-no-properties
+            (org-clock-get-clock-string))))
+
 (defhydra th/org (:exit t)
   "Org commands"
   ("C-o" th/org-project "Project file")
