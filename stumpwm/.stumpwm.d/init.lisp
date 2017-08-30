@@ -4,6 +4,9 @@
 
 (load "~/quicklisp/setup.lisp")
 
+(stumpwm:toggle-mode-line (stumpwm:current-screen)
+                          (stumpwm:current-head))
+
 ;; Basics
 (set-prefix-key (kbd "s-w"))
 (setf *startup-message* NIL)
@@ -70,9 +73,12 @@
                      "#66cd00"      ; 2 green
                      "#ffd700"      ; 3 yellow
                      "#4f94cd"      ; 4 blue
-                     "#c6e2ff"      ; 5 magenta
+                     "#c652c6"      ; 5 magenta
                      "#00cdcd"      ; 6 cyan
                      "#ffffff"))    ; 7 white
+
+(setf *mode-line-background-color* "#221022"
+      *mode-line-border-width* 0)
 
 (defun run-emacs-command (cmd)
   (run-shell-command (format nil "emacsclient -e ~s" cmd)))
