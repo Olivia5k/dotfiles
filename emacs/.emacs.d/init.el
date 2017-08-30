@@ -52,6 +52,7 @@
 (require 'th-hydra)
 (require 'th-snippets)
 (require 'th-utilities)
+(require 'th-ssh)
 
 ;; Programming and developing
 (require 'th-compile)
