@@ -43,6 +43,7 @@
   (define-key go-refactor-map (kbd "d") 'go-refactor-declaration-colon)
   (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver))
 
+(use-package go-rename :after go-mode)
 (use-package company-go :after go-mode)
 (use-package go-guru :after go-mode)
 (use-package go-eldoc :after go-mode)
