@@ -1,8 +1,7 @@
 (use-package real-auto-save
   :init
-  (setq real-auto-save-interval 5)
+  (setq real-auto-save-interval 10)
   :config
-  (add-hook 'prog-mode-hook 'real-auto-save-mode)
   (add-hook 'org-mode-hook 'real-auto-save-mode))
 
 (defvar th/backup-directory (concat user-emacs-directory "backups"))
