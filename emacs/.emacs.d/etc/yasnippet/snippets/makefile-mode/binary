@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : binary
+#key : b
+#contributor : Lowe Thiderman
+# --
+BINARY = $0

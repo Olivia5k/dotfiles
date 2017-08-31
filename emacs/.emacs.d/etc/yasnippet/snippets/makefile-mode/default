@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : default
+#key : d
+#contributor : Lowe Thiderman
+# --
+.DEFAULT: $0

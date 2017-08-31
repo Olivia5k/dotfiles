@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : phony
+#key : p
+#contributor : Lowe Thiderman
+# --
+.PHONY: $0

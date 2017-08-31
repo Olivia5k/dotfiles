@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : sources
+#key : s
+#contributor : Lowe Thiderman
+# --
+SOURCES := $(shell find $(SOURCEDIR) -name '*.${1:go}')$0
