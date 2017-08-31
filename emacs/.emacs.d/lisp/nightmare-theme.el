@@ -599,11 +599,11 @@
 
   ;; MODE SUPPORT: git-gutter+
   (git-gutter+-commit-header-face            (:inherit 'font-lock-comment-face))
-  (git-gutter+-added                         (:foreground nightmare-neutral_green :background nightmare-muted_green ))
-  (git-gutter+-deleted                       (:foreground nightmare-neutral_red :background nightmare-muted_red ))
-  (git-gutter+-modified                      (:foreground nightmare-neutral_purple :background nightmare-muted_purple ))
-  (git-gutter+-separator                     (:foreground nightmare-neutral_cyan :background nightmare-muted_cyan ))
-  (git-gutter+-unchanged                     (:foreground nightmare-neutral_yellow :background nightmare-muted_yellow ))
+  (git-gutter+-added                         (:foreground nightmare-muted_green :background nil ))
+  (git-gutter+-deleted                       (:foreground nightmare-muted_red :background nil ))
+  (git-gutter+-modified                      (:foreground nightmare-muted_purple :background nil ))
+  (git-gutter+-separator                     (:foreground nightmare-muted_cyan :background nil ))
+  (git-gutter+-unchanged                     (:foreground nightmare-muted_yellow :background nil ))
 
 
   ;; MODE SUPPORT: git-gutter-fr+
