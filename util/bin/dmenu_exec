@@ -1,8 +1,0 @@
-#!/bin/zsh
-# dmenu application launcher. Uses defaulted options.
-# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
-# WTFPL
-
-source $XDG_CONFIG_HOME/dmux/dmuxrc
-
-/usr/bin/dmenu_run ${(z)DMENU_OPTS}

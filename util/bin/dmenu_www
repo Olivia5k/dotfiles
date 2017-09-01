@@ -1,6 +1,0 @@
-#!/bin/zsh
-# dmenu uzbl hax0r
-# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
-# WTFPL
-
-dmenu_any "www" "www %q"
