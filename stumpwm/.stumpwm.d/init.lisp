@@ -228,16 +228,20 @@
 (define-key *winner-map* (kbd "Left") "winner-undo")
 (define-key *winner-map* (kbd "Right") "winner-redo")
 
-(define-key *root-map* (kbd "d") "gnew dev")
+(defcommand ror-emacs () ()
+  (run-or-raise *emacs* '(:class "Emacs") nil nil))
+
+(defcommand goto-dev () ()
+  (gnew "dev")
+  (ror-emacs))
+
+(define-key *root-map* (kbd "d") "ror-emacs")
+(define-key *top-map* (kbd "s-d") "goto-dev")
+(define-key *top-map* (kbd "s-M-d") "emacs")
 
 (defcommand ror-web () ()
   (run-or-raise "chromium" '(:class "Chromium") nil nil))
 (define-key *top-map* (kbd "s-q") "ror-web")
-
-(defcommand ror-emacs () ()
-  (run-or-raise *emacs* '(:class "Emacs") nil nil))
-(define-key *top-map* (kbd "s-d") "ror-emacs")
-(define-key *top-map* (kbd "s-M-d") "emacs")
 
 (define-key *top-map* (kbd "s-M-RET") "exec browser")
 
