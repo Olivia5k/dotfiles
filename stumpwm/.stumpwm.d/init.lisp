@@ -82,7 +82,7 @@
       *mode-line-timeout* 1
       *screen-mode-line-format* "[%n] %W ^> %d")
 
-(setf *window-format* " %50t ")
+(setf *window-format* " %c ")
 
 (defun shift-windows-forward (frames win)
   "Exchange windows through cycling frames."
