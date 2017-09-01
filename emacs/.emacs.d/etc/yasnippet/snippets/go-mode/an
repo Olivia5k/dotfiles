@@ -3,4 +3,4 @@
 #key : an
 #contributor : Lowe Thiderman
 # --
-assert.Nil(${1:err})$0
+assert.Nil(t, ${1:err})$0

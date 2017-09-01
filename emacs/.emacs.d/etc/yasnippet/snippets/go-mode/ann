@@ -3,4 +3,4 @@
 #key : ann
 #contributor : Lowe Thiderman
 # --
-assert.NotNil($0)
+assert.NotNil(t, $0)

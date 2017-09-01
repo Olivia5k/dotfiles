@@ -3,4 +3,4 @@
 #key : ae
 #contributor : Lowe Thiderman
 # --
-assert.Equal(${1:first}, ${2:second})$0
+assert.Equal(t, ${1:first}, ${2:second})$0

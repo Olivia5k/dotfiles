@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name : TestCase
+# key: run
+# name: t.Run()
+# --
+t.Run("${1:Test description}", func(t *testing.T) {
+	$0
+})

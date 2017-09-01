@@ -4,6 +4,5 @@
 #contributor : Lowe Thiderman
 # --
 func Test${1:Case}(t *testing.T) {
-	assert := assert.New(t)
   $0
 }
