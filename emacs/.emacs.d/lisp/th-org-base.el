@@ -69,7 +69,11 @@
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 
   (add-hook 'org-clock-in-hook (lambda () (interactive) (org-todo "WORKING")))
-  (add-hook 'org-clock-in-hook (lambda () (interactive) (org-todo "WORKING"))))
+  (add-hook 'org-clock-out-hook
+          '(lambda ()
+             (org-todo "NEXT")
+             (setq org-mode-line-string nil)
+             (force-mode-line-update))))
 
 
 (use-package org-journal

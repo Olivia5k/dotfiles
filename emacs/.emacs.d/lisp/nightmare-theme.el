@@ -386,7 +386,7 @@
   (org-warning                               (:foreground nightmare-bright_red :weight 'bold :underline nil :bold t))
   (org-column                                (:background nightmare-dark0))
   (org-column-title                          (:background nightmare-dark0_hard :underline t :weight 'bold))
-  (org-mode-line-clock                       (:foreground nightmare-faded_cyan :background nightmare-dark0))
+  (org-mode-line-clock                       (:foreground nightmare-neutral_aqua :background nil))
   (org-mode-line-clock-overrun               (:foreground nightmare-black :background nightmare-bright_red))
   (org-ellipsis                              (:foreground nightmare-bright_yellow :underline t))
   (org-footnote                              (:foreground nightmare-faded_aqua :underline t))
