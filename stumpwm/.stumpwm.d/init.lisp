@@ -117,6 +117,14 @@
       (eval-command "other")
     (run-or-pull "spotify" '(:class "Spotify") T T)))
 
+(defcommand terminal () ()
+  (let ((name (group-name (current-group))))
+      (run-or-pull
+       (format nil "urxvt -e tmux new-session -s ~s -A" name)
+       '(:class  "URxvt")
+       nil
+       nil)))
+
 (defcommand emacs () ()
   (run-shell-command *emacs*))
 
@@ -140,7 +148,7 @@
 (defcommand emacs/terminal () ()
   (if (is? "Emacs")
       (run-emacs-command "(th/eshell-here)")
-    (run-or-pull "mor" '(:class "URxvt") T T)))
+    (terminal)))
 
 (define-key *top-map* (kbd "s-h") "emacs/move-left")
 (define-key *top-map* (kbd "s-j") "emacs/move-down")
@@ -197,7 +205,7 @@
 (define-key *top-map* (kbd "s-M-DEL") "exec sswitch work")
 (define-key *top-map* (kbd "s-S-DEL") "exec sswitch laptop")
 (define-key *top-map* (kbd "s-RET") "emacs/terminal")
-(define-key *top-map* (kbd "s-M-C-RET") "exec urxvt")
+(define-key *top-map* (kbd "s-M-C-RET") "terminal")
 (define-key *top-map* (kbd "s-SPC") "grouplist")
 
 (define-key *root-map* (kbd "b") "windowlist")
