@@ -83,7 +83,6 @@
       *screen-mode-line-format* "[%n] %W ^> %d")
 
 (setf *window-format* " %50t ")
-(message *window-format*)
 
 (defun shift-windows-forward (frames win)
   "Exchange windows through cycling frames."
