@@ -237,7 +237,10 @@
 (define-key *winner-map* (kbd "Right") "winner-redo")
 
 (defcommand ror-emacs () ()
-  (run-or-raise *emacs* '(:class "Emacs") nil nil))
+  (if (or (string= (group-name (current-group)) "social")
+          (string= (group-name (current-group)) "slack"))
+      (gnew "dev")
+    (run-or-raise *emacs* '(:class "Emacs") nil nil)))
 
 (defcommand goto-dev () ()
   (gnew "dev")
