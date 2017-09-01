@@ -1,5 +1,0 @@
-#!/bin/zsh
-# tmux session manager for smooth remote management.
-# Written by Lowe Thiderman (lowe.thiderman@gmail.com)
-# WTFPL
-tmux new-session -s ${1:-main} -A $2
