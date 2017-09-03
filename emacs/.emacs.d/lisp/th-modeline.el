@@ -76,9 +76,9 @@
                                 ;; " "
                                 ;; (powerline-minor-modes)
                                 " "
-                                (powerline-raw " %l:%c" 'mode-line 'r)
+                                (powerline-raw " %l:%c" (if active 'mode-line 'mode-line-inactive) 'r)
                                 " | "
-                                (powerline-raw "%6p" 'mode-line 'r)
+                                (powerline-raw "%6p" (if active 'mode-line 'mode-line-inactive) 'r)
                                 (powerline-hud 'highlight 'region 1)
                                 " "
                                 )))
