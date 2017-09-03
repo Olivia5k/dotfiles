@@ -75,6 +75,8 @@
              (setq org-mode-line-string nil)
              (force-mode-line-update))))
 
+(use-package org-clock
+  :ensure nil)
 
 (use-package org-journal
   :after org-mode
