@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-#name : assert.NotEqual()
-#key : ane
-#contributor : Lowe Thiderman
+# name: assert.NoError()
+# key: ane
 # --
-assert.NotEqual(t, ${1:first}, ${2:second})$0
+assert.NoError(t, err)
