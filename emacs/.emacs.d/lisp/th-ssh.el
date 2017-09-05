@@ -126,38 +126,52 @@ A default value is determined by `shell-file-name'."
   "^\\(Enter passphrase\\|Bad passphrase, try again\\) for [^:]*:"
   "Regexp for `ssh-add' passphrase prompt.")
 
+
+(defun ssh-agent-get-keys ()
+  (-filter
+   (lambda (x)
+     (or (string= x "id_rsa")
+         (s-suffix? ".rsa" x)))
+   (directory-files (substitute-in-file-name "$HOME/.ssh") t)))
+
+
 ;;;###autoload
-(defun ssh-agent-add-key (&optional key-file)
+(defun ssh-agent-add-key (key-file)
   "Add KEY-FILE into `ssh-agent'.
 If KEY-FILE is alreadly registered, do nothing.
-If KEY-FILE is nil, use default key.
+If KEY-FILE is nil, prompt for one..
 If `ssh-agent-run-on-demand' is non-nil, run `ssh-agent-run' as necessary."
-  (interactive)
+  (interactive
+   (list (completing-read "ssh key: " (ssh-agent-get-keys) nil t)))
+
   (if (not (or (ssh-agent-live-p)
-	       (and ssh-agent-run-on-demand (ssh-agent-run))))
+               (and ssh-agent-run-on-demand (ssh-agent-run))))
       (message "Could not open a connection to your authentication agent.")
-    (or (ssh-agent-registered-p key-file)
-	(let* ((process-connection-type 'pty)
-	       (process (start-process "*ssh-add*" nil ssh-agent-add-program)))
-	  (set-process-query-on-exit-flag process nil)
-	  (set-process-filter process
-			      (lambda (proc msg)
-				(save-match-data
-				  (cond
-				   ((string-match ssh-agent-add-prompt-regexp msg)
-				    (let ((password (read-passwd
-						     (replace-regexp-in-string
-						      "\\`[\r\n\s]*" "" msg))))
-				      (send-string proc password)
-				      (clear-string password)
-				      (send-string proc "\n")))
-				   (t
-				    (message "%s" (replace-regexp-in-string
-						   "\\`[\r\n\s]*\\|[\s\r\n]*\\'" "" msg))))
-				  )))
-	  (while (process-live-p process)
-	    (sleep-for 0 1))
-	  (eq 0 (process-exit-status process))))))
+
+    (if (ssh-agent-registered-p key-file)
+        (message "Key %s is already registered with this agent." key-file)
+      (let* ((process-connection-type 'pty)
+             (process (start-process "*ssh-add*" nil ssh-agent-add-program key-file)))
+
+        (set-process-query-on-exit-flag process nil)
+        (set-process-filter process
+                            (lambda (proc msg)
+                              (save-match-data
+                                (cond
+                                 ((string-match ssh-agent-add-prompt-regexp msg)
+                                  (let ((password (read-passwd
+                                                   (replace-regexp-in-string
+                                                    "\\`[\r\n\s]*" "" msg))))
+                                    (send-string proc password)
+                                    (clear-string password)
+                                    (send-string proc "\n")))
+                                 (t
+                                  (message "%s" (replace-regexp-in-string
+                                                 "\\`[\r\n\s]*\\|[\s\r\n]*\\'" "" msg))))
+                                )))
+        (while (process-live-p process)
+          (sleep-for 0 1))
+        (eq 0 (process-exit-status process))))))
 
 ;;;###autoload
 (defun ssh-agent-delete-key (&optional key-file)
@@ -166,14 +180,14 @@ If KEY-FILE is nil, delete default key.
 If KEY-FILE is non-nil without string, delete all key."
   (interactive)
   (eq 0 (apply 'call-process
-	       ssh-agent-add-program nil nil nil
-	       (cond
-		((null key-file)
-		 '("-d"))
-		((stringp key-file)
-		 `("-d" ,key-file))
-		(t
-		 '("-D"))))))
+               ssh-agent-add-program nil nil nil
+               (cond
+                ((null key-file)
+                 '("-d"))
+                ((stringp key-file)
+                 `("-d" ,key-file))
+                (t
+                 '("-D"))))))
 
 ;;;###autoload
 (defun ssh-agent-run ()
