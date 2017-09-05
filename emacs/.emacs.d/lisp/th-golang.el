@@ -41,7 +41,8 @@
   (define-key go-refactor-map (kbd "u") 'go-refactor-unwrap)
   (define-key go-refactor-map (kbd "v") 'go-refactor-extract-variable)
   (define-key go-refactor-map (kbd "d") 'go-refactor-declaration-colon)
-  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver))
+  (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
+  (define-key go-refactor-map (kbd "w") 'go-refactor-error-withstack))
 
 (use-package go-rename :after go-mode)
 (use-package company-go :after go-mode)
@@ -474,6 +475,16 @@ If there was a receiver and a new one is chosen, all variables are changed."
        ((and (not (looking-at "(")) receiver)
         ;; There is no receiver, but we are adding one. Just insert it.
         (insert (format "%s " receiver)))))))
+
+(defun go-refactor-error-withstack ()
+  "Turns 'err' to 'errors.WithStack(err)'."
+  (interactive)
+  (save-excursion
+    (unless (looking-at "err")
+      (backward-word))
+    (insert "errors.WithStack(")
+    (forward-word)
+    (insert ")")))
 
 (defun go--refactor-symbol-in-function (from to)
   "Changes instances of the symbol `from' into `to'.
