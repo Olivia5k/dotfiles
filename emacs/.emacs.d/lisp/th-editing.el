@@ -339,6 +339,8 @@ there's a region, all lines that region covers will be duplicated."
 
 (show-paren-mode t)
 
+(global-set-key (kbd "C-x l") 'downcase-region)
+
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
