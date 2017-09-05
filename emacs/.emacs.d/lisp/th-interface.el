@@ -114,6 +114,7 @@
   "Searching"
   ("C-s" counsel-grep-or-swiper "search")
   ("s" counsel-grep-or-swiper "search")
+  ("d" (rgrep (read-string "dir search: ") "*" default-directory) "dir")
   ("a" swiper-all "all")
   ("g" counsel-git-grep "git grep")
   ("i" counsel-imenu "imenu")
