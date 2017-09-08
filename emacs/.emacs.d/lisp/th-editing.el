@@ -3,6 +3,12 @@
   (global-hungry-delete-mode))
 
 
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-enable-key "e"))
+
+
 (use-package undo-tree
   :bind
   (("C-z"     . undo-tree-undo)
