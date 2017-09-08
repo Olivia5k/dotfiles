@@ -20,7 +20,9 @@
 (setq gc-cons-threshold 50000000)
 
 (fset 'yes-or-no-p 'y-or-n-p)
-(set-default 'truncate-lines nil)
+
+;; I always thought this was the other way around :'(
+(set-default 'truncate-lines t)
 
 (setenv "GOPATH" "$HOME" t)
 
@@ -38,7 +40,6 @@
            ":"
            (getenv "PATH")))
   (setq exec-path (append th/custom-paths exec-path)))
-
 
 
 (provide 'th-core)
