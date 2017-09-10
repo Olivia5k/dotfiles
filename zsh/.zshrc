@@ -31,6 +31,8 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme gentoo
 antigen bundle z; export _Z_CMD="j"
 
+[ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
+
 export ZSH_HIGHLIGHT_STYLES[alias]='fg=87,bold'
 export ZSH_HIGHLIGHT_STYLES[command]='fg=103,bold'
 export ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=103,bold'
