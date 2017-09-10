@@ -124,6 +124,11 @@
    ("q" "Quick note" item
     (file+headline "~/org/inbox.org" "Quick notes"))
 
+   ("w" "Track weight" entry
+    (file+headline "~/org/irl.org" "Weight")
+    "* %T %^{Current weight} kg"
+    :immediate-finish t)
+
    ("r" "Recipe" entry
     (file+headline "~/org/food.org" "Recipes")
     "* [[%^{URL}][%^{Title}]]"
