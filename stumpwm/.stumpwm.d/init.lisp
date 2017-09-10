@@ -78,7 +78,7 @@
 
 (setf *mode-line-background-color* "#221022"
       *mode-line-border-width* 0
-      *mode-line-position* :bottom
+      *mode-line-position* :top
       *mode-line-timeout* 1
       *screen-mode-line-format* "[%n] %W ^> %d")
 
