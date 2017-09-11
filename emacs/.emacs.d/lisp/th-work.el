@@ -1,3 +1,5 @@
+(use-package vagrant-tramp)
+
 (defvar th/unomaly-repo "~/src/lab.unomaly.com/unomaly/")
 
 (when (f-exists? th/unomaly-repo)
