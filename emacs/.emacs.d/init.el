@@ -53,6 +53,7 @@
 (require 'th-snippets)
 (require 'th-utilities)
 (require 'th-ssh)
+(require 'th-work)
 
 ;; Programming and developing
 (require 'th-compile)
