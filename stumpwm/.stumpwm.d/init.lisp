@@ -4,8 +4,6 @@
 
 (load "~/quicklisp/setup.lisp")
 
-
-
 ;; Basics
 (set-prefix-key (kbd "s-w"))
 (setf *startup-message* NIL)
@@ -145,11 +143,6 @@
 (defcommand emacs/move-up () () (if (is? "Emacs") (run-shell-command "emacsclient -e '(stumpwm/windmove-up)'") (eval-command "move-focus up")))
 (defcommand emacs/move-right () () (if (is? "Emacs") (run-shell-command "emacsclient -e '(stumpwm/windmove-right)'") (eval-command "move-focus right")))
 
-(defcommand emacs/terminal () ()
-  (if (is? "Emacs")
-      (run-emacs-command "(th/eshell-here)")
-    (terminal)))
-
 (define-key *top-map* (kbd "s-h") "emacs/move-left")
 (define-key *top-map* (kbd "s-j") "emacs/move-down")
 (define-key *top-map* (kbd "s-k") "emacs/move-up")
@@ -204,7 +197,7 @@
 (define-key *top-map* (kbd "s-DEL") "exec lock")
 (define-key *top-map* (kbd "s-M-DEL") "exec sswitch work")
 (define-key *top-map* (kbd "s-S-DEL") "exec sswitch laptop")
-(define-key *top-map* (kbd "s-RET") "emacs/terminal")
+(define-key *top-map* (kbd "s-C-RET") "terminal")
 (define-key *top-map* (kbd "s-M-C-RET") "terminal")
 (define-key *top-map* (kbd "s-SPC") "grouplist")
 
