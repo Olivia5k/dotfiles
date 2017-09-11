@@ -169,7 +169,7 @@ Go back if we're already in it."
 
 (defhydra th/org (:exit t)
   "Org commands"
-  ("C-o" th/org-project "Project file")
+  ("s-o" th/org-project "Project file")
   ("c" cfw:open-org-calendar "calendar")
   ("o" org-capture "Capture")
   ("f" (projectile-switch-project-by-name "~/org/") "Files")
@@ -179,7 +179,7 @@ Go back if we're already in it."
   ("a" org-todo-list "Agenda")
   ("t" org-tags-view "Tags"))
 
-(global-set-key (kbd "C-x C-o") 'th/org/body)
+(global-set-key (kbd "s-o") 'th/org/body)
 
 (use-package worf
   :after org-mode

@@ -16,7 +16,7 @@
   ("t" toggle-truncate-lines "Truncate lines" :exit nil)
   ("q" nil))
 
-(global-set-key (kbd "s-o") 'th/util-hydra/body)
+(global-set-key (kbd "s-c") 'th/util-hydra/body)
 
 (defun th/iosevka (size)
   (set-frame-font (format "Iosevka-%s" size)))
