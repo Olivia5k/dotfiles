@@ -246,6 +246,7 @@
 (defcommand ror-web () ()
   (run-or-raise "chromium" '(:class "Chromium") nil nil))
 (define-key *top-map* (kbd "s-q") "ror-web")
+(define-key *top-map* (kbd "s-M-q") "gnew www")
 
 (define-key *top-map* (kbd "s-M-RET") "exec browser")
 
