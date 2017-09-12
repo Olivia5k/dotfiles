@@ -23,4 +23,13 @@
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
+(defhydra th/makefile-hydra (:exit t)
+  "Makefile"
+  ("c" makefile-executor-execute-last "last target")
+  ("f" makefile-executor-goto-makefile "visit file")
+  ("C-m" makefile-executor-execute-project-target "project execute")
+  ("m" makefile-executor-execute-project-target "project execute"))
+
+(global-set-key (kbd "C-x C-m") 'th/makefile-hydra/body)
+
 (provide 'th-compile)
