@@ -195,6 +195,7 @@
 ;; (define-key *top-map* (kbd "s-h") "windows-up-down")
 
 (define-key *top-map* (kbd "s-DEL") "exec lock")
+(define-key *top-map* (kbd "s-C-DEL") "toggle-statusbar")
 (define-key *top-map* (kbd "s-M-DEL") "exec sswitch work")
 (define-key *top-map* (kbd "s-S-DEL") "exec sswitch laptop")
 (define-key *top-map* (kbd "s-C-RET") "terminal")
@@ -238,6 +239,10 @@
 (defcommand goto-dev () ()
   (gnew "dev")
   (ror-emacs))
+
+(defcommand toggle-statusbar () ()
+  (stumpwm:toggle-mode-line (stumpwm:current-screen)
+                          (stumpwm:current-head)))
 
 (define-key *root-map* (kbd "d") "ror-emacs")
 (define-key *top-map* (kbd "s-d") "goto-dev")
