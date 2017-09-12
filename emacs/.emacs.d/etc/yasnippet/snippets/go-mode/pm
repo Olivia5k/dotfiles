@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : package main
+#key : pm
+#contributor : Lowe Thiderman
+# --
+package ${1:main}
+
+$0
