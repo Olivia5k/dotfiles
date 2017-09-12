@@ -132,10 +132,12 @@ case for this."
   (let ((cmd-name (intern (format "stumpwm/%s" emacs-fun))))
     `(defun ,cmd-name ()
        (interactive)
+       ;; If these errors are ignored, the command failover won't
+       ;; work. This leads to annoying "(Shell command failed with
+       ;; code 1 and no output)" messages. Can't seem to be rid of
+       ;; them. :(
        (unless (ignore-errors (funcall ',emacs-fun))
-         (let (inhibit-message t)
-           ;; Shh bby is ok
-           (shell-command (format "stumpish %s" ,stump-cmd)))))))
+         (shell-command (format "stumpish %s" ,stump-cmd))))))
 
 (global-set-key (kbd "s-h") (stumpwm-emacs-cmd windmove-left "move-focus left"))
 (global-set-key (kbd "s-j") (stumpwm-emacs-cmd windmove-down "move-focus down"))
