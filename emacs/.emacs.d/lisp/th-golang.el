@@ -185,7 +185,7 @@
   (interactive)
   (projectile-save-project-buffers)
   (when (th/go-test-file-p)
-    (setq th/go-single-test (format "go test -v -run %s" (th/go-get-test-above))))
+    (setq th/go-single-test (format "go test -tags develop -v -run %s" (th/go-get-test-above))))
   (compile th/go-single-test))
 
 (defun th/go-select-type-signature ()
