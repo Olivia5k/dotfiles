@@ -56,4 +56,15 @@
   (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))
 
+
+;; Simple functions that have nowhere else to live
+(defun th/show-unixtime ()
+  "Prints a date of the unixtime under point."
+  (interactive)
+  (let* ((thing (substring-no-properties (symbol-name (symbol-at-point)))))
+    (shell-command (format "date -d @%s" thing)))
+)
+
+(global-set-key (kbd "C-x t") 'th/show-unixtime)
+
 (provide 'th-utilities)
