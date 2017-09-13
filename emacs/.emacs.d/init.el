@@ -71,7 +71,6 @@
 (require 'th-alternate)
 (require 'th-toggle)
 (require 'th-quickfast)
-(require 'th-context)
 
 ;; Organization
 (require 'th-email)
