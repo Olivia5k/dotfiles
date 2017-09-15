@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: with stack
+# key: ws
+# --
+errors.WithStack(err)
