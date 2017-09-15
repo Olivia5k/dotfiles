@@ -44,13 +44,13 @@
 
 (defun enved-insert ()
   "Load the current environment into the buffer"
-  (kill-region (point-min) (point-max))
+  (delete-region (point-min) (point-max))
 
   (let* ((env (enved-split-environment))
-         (edit (cdr (car env)))
-         (noedit (cdr (cadr env))))
+         (edit (cdr (assq t env)))
+         (noedit (cdr (assq nil env))))
 
-    (insert "# Current emacs process environment\n")
+    (insert "# Current emacs process environment variables\n")
     (insert
      (s-join "\n" (-sort (lambda (x y) (string< x y)) edit)))
 
@@ -66,9 +66,12 @@
    (lambda (l)
      ;; Admittedly not very elegant, but it does the job. I couldn't
      ;; find a `member'-like function that just returned boolean.
-     (not (eq nil (member (car (s-split "=" l))
-                          enved-protected-variables))))
-   process-environment))
+     (eq nil (member (car (s-split "=" l))
+                     enved-protected-variables)))
+   (-filter
+    ;; Removes empty keys
+    (lambda (l) (not (s-suffix? "=" (s-trim l))))
+    process-environment)))
 
 ;;;###autoload
 (defun enved-set ()
@@ -140,8 +143,8 @@ If `dir' is given, use that instead of current."
 
 (defvar enved-keywords
   '(("^#.*$" . font-lock-comment-face)
-    ("^[^= \n]+" . font-lock-function-name-face)
-    ("[^= \n]+$" . font-lock-string-face)
+    ("^[^=\n]+" . font-lock-variable-name-face)
+    ("[^=\n]+$" . font-lock-string-face)
     ("=" . font-lock-comment-face)))
 
 (defvar enved-mode-map

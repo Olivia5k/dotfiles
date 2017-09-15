@@ -39,7 +39,7 @@
   ("e" enved "enved")
   ("E" elfeed "elfeed")
   ("f" hydra-flycheck/body "flycheck")
-  ("M-e" th/load-env "Load 12FA env")
+  ("M-e" enved-load "Load 12FA env")
   ("h" hydra-helpful/body "helpful")
   ("g" th/git-hydra/body "git")
   ("p" th/package-hydra/body "package")
