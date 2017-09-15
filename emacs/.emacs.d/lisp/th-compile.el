@@ -32,4 +32,26 @@
 
 (global-set-key (kbd "C-x C-m") 'th/makefile-hydra/body)
 
+
+(setq go-tc/kwds
+      '(("RUN" . font-lock-function-name-face)
+        ("PASS" . font-lock-type-face)
+        ("FAIL" . font-lock-warning-face)
+        ("===\\|---" . font-lock-comment-face)
+        ("^WARN .*" . font-lock-warning-face)
+        ("20..-..-..T..:..:..Z" . font-lock-comment-face)))
+
+(define-minor-mode golang-test-compile-mode
+  "Doc string."
+  nil "blah" nil
+  (font-lock-add-keywords nil go-tc/kwds)
+
+  (if (fboundp 'font-lock-flush)
+      (font-lock-flush)
+    (when font-lock-mode
+      (with-no-warnings (font-lock-fontify-buffer)))))
+
+(add-hook 'compilation-mode-hook 'golang-test-compile-mode)
+
+
 (provide 'th-compile)
