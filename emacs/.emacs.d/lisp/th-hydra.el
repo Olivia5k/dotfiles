@@ -36,7 +36,8 @@
 (defhydra th/exec-hydra (:foreign-keys warn :exit t)
   "Execution"
   ("C-c" (projectile-switch-project-by-name "~/src/github.com/thiderman/dotfiles") "config")
-  ("e" elfeed "elfeed")
+  ("e" enved "enved")
+  ("E" elfeed "elfeed")
   ("f" hydra-flycheck/body "flycheck")
   ("M-e" th/load-env "Load 12FA env")
   ("h" hydra-helpful/body "helpful")

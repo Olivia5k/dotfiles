@@ -58,7 +58,7 @@
 ;; Programming and developing
 (require 'th-compile)
 (require 'th-docker)
-(require 'th-env)
+(require 'th-enved)
 (require 'th-git)
 (require 'th-manuals)
 
