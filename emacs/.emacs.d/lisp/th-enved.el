@@ -15,6 +15,28 @@
 
 (defvar enved-buffer-name "*enved*")
 
+(defvar enved-mode-map
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "C-c C-r") #'enved)
+    (define-key m (kbd "C-c C-c") #'enved-set)
+    m)
+  "Keymap used by ‘enved-mode’.")
+
+(defvar enved-keywords
+  '(("^#.*$" . font-lock-comment-face)
+    ("^[^=\n]+" . font-lock-variable-name-face)
+    ("[^=\n]+$" . font-lock-string-face)
+    ("=" . font-lock-comment-face)))
+
+(define-derived-mode enved-mode prog-mode "enved"
+  "Major mode for editing environment variables."
+  (font-lock-add-keywords nil enved-keywords)
+
+  (if (fboundp 'font-lock-flush)
+      (font-lock-flush)
+    (when font-lock-mode
+      (with-no-warnings (font-lock-fontify-buffer)))))
+
 ;;;###autoload
 (defun enved ()
   "Opens a special buffer in which you can edit environment variables"
@@ -26,7 +48,10 @@
 
 ;;;###autoload
 (defun enved-load (&optional dir)
-  "Loads all environment variables of the file into the emacs environment."
+  "Loads all environment variables of the file into the emacs
+environment.
+
+If `enved' is active, its buffer is refreshed."
   (interactive)
 
   (let* ((fn (enved-find-file dir))
@@ -43,7 +68,7 @@
     (message "Loaded %s.env: %s" (f-base fn) (s-join ", " keys))))
 
 (defun enved-insert ()
-  "Load the current environment into the buffer"
+  "Load the current environment into the buffer."
   (delete-region (point-min) (point-max))
 
   (let* ((env (enved-split-environment))
@@ -56,7 +81,9 @@
 
     (insert "\n\n# These are variables you can but probably wouldn't edit\n")
     (insert
-     (s-join "\n" (-sort (lambda (x y) (string< x y)) noedit)))))
+     (s-join "\n" (-sort (lambda (x y) (string< x y)) noedit)))
+
+    (goto-char (point-min))))
 
 (defun enved-split-environment ()
   "Splits the current `process-environment' into two parts: editable
@@ -86,8 +113,11 @@
 
   (let* ((spl (split-string line "="))
          (env (car spl))
-         (val (cadr spl)))
-    (when (not (string= val (getenv env)))
+         (val (s-join "=" (cdr spl)))) ; In case something contains an
+                                       ; equals sign.
+    (when (and env
+               (not (s-prefix? "#" env))
+               (not (string= val (getenv env))))
       (setenv env val t)
       (message "Updated %s to %s" env val))))
 
@@ -114,44 +144,16 @@ If `dir' is given, use that instead of current."
   (let ((table (make-hash-table :test 'equal)))
     (with-temp-buffer
       (insert-file fn)
-      (beginning-of-buffer)
-      (mapcar 'enved--put-hash
-              (enved--get-env-lines-in-file)))
+      (let ((lines (-filter
+                    (lambda (s) (s-starts-with? "export" s))
+                    (s-lines
+                     (buffer-substring-no-properties (point-min) (point-max))))))
+        (mapcar (lambda (s)
+                  (let* ((spl (s-split "=" (s-replace "export " "" s)))
+                         (key (car spl))
+                         (val (s-replace "\"" "" (cadr spl))))
+                    (puthash key val table)))
+                lines)))
     table))
-
-(defun enved--put-hash (s)
-  (let* ((spl (s-split "=" (s-replace "export " "" s)))
-         (key (car spl))
-         (val (s-replace "\"" "" (cadr spl))))
-    ;; `table' is set in the lexical scope of the callee
-    (puthash key val table)))
-
-(defun enved--get-env-lines-in-file ()
-  (-filter
-   (lambda (s) (s-starts-with? "export" s))
-   (s-lines
-    (buffer-substring-no-properties (point) (point-max)))))
-
-(define-derived-mode enved-mode prog-mode "enved"
-  "Major mode for editing environment variables."
-  (font-lock-add-keywords nil enved-keywords)
-
-  (if (fboundp 'font-lock-flush)
-      (font-lock-flush)
-    (when font-lock-mode
-      (with-no-warnings (font-lock-fontify-buffer)))))
-
-(defvar enved-keywords
-  '(("^#.*$" . font-lock-comment-face)
-    ("^[^=\n]+" . font-lock-variable-name-face)
-    ("[^=\n]+$" . font-lock-string-face)
-    ("=" . font-lock-comment-face)))
-
-(defvar enved-mode-map
-  (let ((m (make-sparse-keymap)))
-    (define-key m (kbd "C-c C-r") #'enved)
-    (define-key m (kbd "C-c C-c") #'enved-set)
-    m)
-  "Keymap used by ‘enved-mode’.")
 
 (provide 'th-enved)
