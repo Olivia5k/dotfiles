@@ -70,8 +70,7 @@
                                 " "
                                 (when active
                                   (if (org-clocking-p)
-                                      (substring
-                                       (org-clock-get-clock-string) 0 30)
+                                      (org-clock-get-clock-string)
                                     (propertize "<not clocking>"
                                                 'face 'org-mode-line-clock)))
                                 ;; " "
