@@ -29,19 +29,21 @@ The `name` argument is a substring of the buffer that should be matched."
           (previous-buffer))
       (find-file file))))
 
-(defun th/echo-file-name (p)
-  "Prints the current file name, with the current project prefix removed.
+(defun th/kill-file-name (p)
+  "Adds the current file name to the kill ring, with the current project prefix removed.
 
 Adding universal argument will display the full path regardless."
 
   (interactive "P")
   (let ((fn (file-truename (buffer-name))))
-    (message
-     (if (and (projectile-project-p) (not p))
-         (s-chop-prefix (projectile-project-root) fn)
-       fn))))
+    (kill-new
+     (message
+      (if (and (projectile-project-p)
+               (not p))
+          (s-chop-prefix (projectile-project-root) fn)
+        fn)))))
 
-(define-key global-map (kbd "C-x ?") 'th/echo-file-name)
+(define-key global-map (kbd "C-x ?") 'th/kill-file-name)
 
 
 (defun th/switch-to-previous-buffer ()
