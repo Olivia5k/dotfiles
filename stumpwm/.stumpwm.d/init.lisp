@@ -249,7 +249,11 @@
 (define-key *top-map* (kbd "s-M-d") "emacs")
 
 (defcommand ror-web () ()
+  (when (or (string= (group-name (current-group)) "social")
+            (string= (group-name (current-group)) "slack"))
+    (gnew "dev"))
   (run-or-raise "chromium" '(:class "Chromium") nil nil))
+
 (define-key *top-map* (kbd "s-q") "ror-web")
 (define-key *top-map* (kbd "s-M-q") "gnew www")
 
