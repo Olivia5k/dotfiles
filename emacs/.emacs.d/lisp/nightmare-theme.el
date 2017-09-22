@@ -197,10 +197,11 @@
   (tldr-introduction                         (:inherit 'font-lock-comment-face :slant 'italic))
 
   ;; MODE SUPPORT: markdown
-  (markdown-header-face                      (:inherit font-lock-function-name-face :bold t :height 1.7 :family "Yanone Kaffesatz"))
-  (markdown-header-face-2                    (:inherit font-lock-builtin-face :bold t :height 1.5 :family "Yanone Kaffesatz"))
-  (markdown-header-face-3                    (:inherit font-lock-string-face :bold t :height 1.2 :family "Yanone Kaffesatz"))
-  (markdown-header-face-4                    (:inherit font-lock-variable-name-face :bold t :height 1.2 :family "Yanone Kaffesatz"))
+  (markdown-header-face                      (:inherit font-lock-function-name-face :bold t :height 2.5 :family "Yanone Kaffeesatz"))
+  (markdown-header-face-2                    (:inherit font-lock-builtin-face :bold t :height 2.0 :family "Yanone Kaffeesatz"))
+  (markdown-header-face-3                    (:inherit font-lock-string-face :bold t :height 1.7 :family "Yanone Kaffeesatz"))
+  (markdown-header-face-4                    (:inherit font-lock-variable-name-face :bold t :height 1.5 :family "Yanone Kaffeesatz"))
+  (markdown-header-delimiter-face            (:inherit 'markdown-markup-face :family "Yanone Kaffeesatz" :height 2.0))
   (markdown-italic-face                      (:inherit 'italic :foreground nightmare-bright_blue))
   (markdown-list-face                        (:foreground nightmare-darkslategray4 :bold t))
 
