@@ -19,8 +19,6 @@
   :config
   (global-undo-tree-mode +1))
 
-(auto-fill-mode 1)
-
 
 (defun th/new-module (fn)
   "Create a new module and add it"
@@ -154,6 +152,17 @@
 ;; The default felt off
 (global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))
 
+
+;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+        ;; This would override `fill-column' if it's an integer.
+        (emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
+
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
 
 (defun th/duplicate-current-line-or-region (arg)
   "Duplicates the current line or region ARG times.
