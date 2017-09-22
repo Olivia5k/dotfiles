@@ -3,8 +3,8 @@
 
 case $1 in
     "laptop")
-        xrandr --output HDMI2 --off
         xrandr --output eDP1 --auto
+        xrandr --output HDMI2 --off
         ;;
     "work")
         xrandr --output HDMI2 --auto
