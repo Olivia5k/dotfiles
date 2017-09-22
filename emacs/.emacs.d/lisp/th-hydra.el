@@ -14,6 +14,7 @@
   ("n" th/toggle-minor-mode "minor-mode")
   ("r" rainbow-identifiers-mode "Rainbow identifiers")
   ("t" toggle-truncate-lines "Truncate lines" :exit nil)
+  ("w" whitespace-mode "whitespace" :exit nil)
   ("q" nil))
 
 (global-set-key (kbd "s-c") 'th/util-hydra/body)
