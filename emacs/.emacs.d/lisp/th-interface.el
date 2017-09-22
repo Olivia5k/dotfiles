@@ -173,6 +173,8 @@ is already narrowed."
 (define-key ctl-x-map "n" #'th/narrow-or-widen-dwim)
 
 
+(global-set-key (kbd "C-x <C-return>") 'browse-url)
+
 ;; Indicators on the edges of the screen
 (fringe-mode 12)
 (setq-default indicate-empty-lines t)
