@@ -56,6 +56,7 @@
   ("g" magit-status "magit" :exit t)
   ("b" magit-blame "blame" :exit t)
   ("l" magit-log-buffer-file "log" :exit t)
+  ("m" git-gutter+-mode "gutter-mode")
   ("t" git-timemachine "timemachine" :exit t)
   ("s" th/smerge-hydra/body "smerge" :exit t)
   ("RET" magithub-browse "repo" :exit t)
