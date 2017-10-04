@@ -1,5 +1,5 @@
 [colors]
-background = #281a28
+background = #312331
 background-dark = #2D2031
 background-alt = #333
 foreground = #dbdbdb
@@ -117,7 +117,7 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-volume-foreground = ${colors.foreground-alt}
 
-label-muted =  MUTED
+label-muted =  MUTE
 format-muted-foreground = ${colors.foreground-alt}
 
 [module/battery]
