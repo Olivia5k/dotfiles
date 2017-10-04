@@ -303,6 +303,7 @@
                                                         stumpwm:gprev-with-window
                                                         stumpwm:gother
                                                         stumpwm:gkill
+                                                        stumpwm:grouplist
                                                         stumpwm:gselect
                                                         stumpwm:gmove-and-follow
                                                         stumpwm:gnew
