@@ -1,5 +1,5 @@
 [global]
-    font = Yanone kaffeesatz 20
+    font = Yanone kaffeesatz 14
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -11,7 +11,7 @@
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the
     # message.
-    allow_markup = yes
+    markup = yes
 
     # The format of the message.  Possible variables are:
     #   %a  appname
@@ -147,9 +147,8 @@
     # Paths to default icons.
     icon_folders = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
 
-[frame]
-    width = 0
-    color = "#000000"
+    frame_width = 0
+    frame_color = "#000000"
 
 [shortcuts]
 
@@ -175,8 +174,8 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#331033"
-    foreground = "#AAAAAA"
+    background = "#151515"
+    foreground = "#888888"
     timeout = 10
 
 [urgency_normal]
