@@ -12,5 +12,5 @@ keymaps:
 util:
 	stow -v --target=$(HOME)/.local util
 
-emacs git stumpwm tmux zsh x11:
+emacs git stumpwm tmux zsh x11 polybar:
 	stow -v --target=$(HOME) $@

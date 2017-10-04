@@ -1,0 +1,153 @@
+[colors]
+background = #281a28
+background-dark = #2D2031
+background-alt = #333
+foreground = #dbdbdb
+foreground-alt = #aaa
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[global/wm]
+margin-top = 2
+margin-bottom = 2
+
+[bar/bar]
+width = 100%
+height = 28
+offset-x = 0
+offset-y = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+overline-size = 1
+overline-color = ${colors.background}
+underline-size = 2
+underline-color = ${colors.background}
+
+border-top-size = 0
+border-top-color = #222
+border-bottom-size = 1
+border-bottom-color = #333
+
+padding-left = 3
+padding-right = 3
+module-margin-left = 3
+module-margin-right = 3
+
+font-0 = "Yanone Kaffeesatz:size=14;1"
+font-1 = "FontAwesome:pixelsize=12;1"
+
+modules-left = stumpwmgroups
+modules-center =
+modules-right = volume cpu memory wlan powermenu battery date
+
+tray-position = left
+tray-padding = 1
+
+enable-ipc = true
+
+[module/powermenu]
+type = custom/menu
+
+label-open = "  "
+label-open-foreground = ${colors.foreground}
+label-close = "  "
+label-close-foreground = ${colors.foreground-alt}
+
+menu-0-0 = 
+menu-0-0-exec = systemctl suspend
+menu-0-1 = 
+menu-0-1-exec = reboot
+menu-0-2 = 
+menu-0-2-exec = poweroff
+
+menu-0-0-padding = 1
+menu-0-1-padding = 1
+menu-0-2-padding = 1
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 3
+format-prefix = "MEM "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = wlp58s0
+interval = 3
+
+format-connected = "<label-connected> "
+format-connected-prefix = "  "
+format-connected-underline = ${colors.foreground-alt}
+
+label-connected = %essid%
+label-disconnected =  WLAN
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 1
+time = "%H:%M:%S"
+date = "%a %d %b"
+label = "%date% %time%"
+format-prefix = "   "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.background}
+label-background = ${colors.background}
+
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage%%
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.foreground-alt}
+
+label-muted =  MUTED
+format-muted-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 750
+
+[module/stumpwmgroups]
+type = custom/ipc
+hook-0 = ~/.config/polybar/stumpwmgroups.sh
+initial = 1

@@ -287,6 +287,7 @@
 (run-shell-command "xrdb ~/.Xresources")
 (run-shell-command "$HOME/.local/bin/keyboard-setup")
 (run-shell-command "$HOME/.local/bin/wp")
+(run-shell-command "polybar bar")
 
 (stumpwm:toggle-mode-line (stumpwm:current-screen)
                           (stumpwm:current-head))
@@ -294,3 +295,18 @@
 (add-hook *post-command-hook* (lambda (command)
                                 (when (member command winner-mode:*default-commands*)
                                   (winner-mode:dump-group-to-file))))
+
+(add-hook *post-command-hook* (lambda (command)
+                                (when (member command '(stumpwm:gnext
+                                                        stumpwm:gnext-with-window
+                                                        stumpwm:gprev
+                                                        stumpwm:gprev-with-window
+                                                        stumpwm:gother
+                                                        stumpwm:gkill
+                                                        stumpwm:gselect
+                                                        stumpwm:gmove-and-follow
+                                                        stumpwm:gnew
+                                                        stumpwm:gnew-float
+                                                        stumpwm:emacs
+                                                        globalwindows:global-windowlist))
+                                  (run-shell-command "polybar-msg hook stumpwmgroups 1"))))
