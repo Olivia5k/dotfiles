@@ -261,7 +261,20 @@
 
 (define-key *top-map* (kbd "s-C-p") "exec ss -s")
 (define-key *top-map* (kbd "s-C-M-p") "exec ss")
+(define-key *top-map* (kbd "s-z") "exec vol --toggle-mute")
 
+;; TODO(thiderman): Replace with a loop :')
+(define-key *top-map* (kbd "s-1") "exec vol --set-volume 10")
+(define-key *top-map* (kbd "s-1") "exec vol --set-volume 10")
+(define-key *top-map* (kbd "s-2") "exec vol --set-volume 20")
+(define-key *top-map* (kbd "s-3") "exec vol --set-volume 30")
+(define-key *top-map* (kbd "s-4") "exec vol --set-volume 40")
+(define-key *top-map* (kbd "s-5") "exec vol --set-volume 50")
+(define-key *top-map* (kbd "s-6") "exec vol --set-volume 60")
+(define-key *top-map* (kbd "s-7") "exec vol --set-volume 70")
+(define-key *top-map* (kbd "s-8") "exec vol --set-volume 80")
+(define-key *top-map* (kbd "s-9") "exec vol --set-volume 90")
+(define-key *top-map* (kbd "s-0") "exec vol --toggle-mute")
 
 (setf (group-name (car (screen-groups (current-screen)))) "dev")
 (clear-window-placement-rules)
