@@ -314,6 +314,20 @@ there's a region, all lines that region covers will be duplicated."
     (insert result)))
 
 
+(defun th/filter-symbol-at-point (p)
+  "Use `keep-lines' or `flush-lines' on the symbol under the cursor.
+
+For the latter, give the prefix argument."
+  (interactive "P")
+  (save-excursion
+    (let* ((name (symbol-name (symbol-at-point)))
+           (func (if p 'flush-lines 'keep-lines)))
+      (goto-char (point-min))
+      (funcall func name)
+      (message "filter-symbol-at-point: (%s \"%s\")" func name))))
+
+(global-set-key (kbd "C-x C-i") 'th/filter-symbol-at-point)
+
 ;; Pasting into minibuffer
 (defun th/paste-from-x-clipboard ()
   (interactive)
