@@ -229,7 +229,7 @@
   (projectile-save-project-buffers)
   ;; The server compile command should run in the root
   (with-current-buffer (th/go-main-file-buffer)
-    (compile "go build -v")))
+    (compile "make drunkenfall")))
 
 (defun th/go-main-file ()
   "Returns the main go file of the project"
@@ -613,29 +613,30 @@ resulting list."
 
 (defvar th/go-server-args nil "Argument to go server start")
 
-(defun th/go-server-start ()
+(defun th/go-server-start (args)
   "Start the server for the app"
-  (interactive)
+  (interactive
+   (list (completing-read "server args: " '("server" ""))))
   (let* ((root (projectile-project-root))
          (name (f-base root))
-         (procname (format "%s-server" name)))
+         (procname (format "%s-server" name))
+         (buffer (format "*%s*" procname))
+         (default-directory root))
 
     ;; If the server is already running, stop it; effectively making this a restart.
     (when (get-process procname)
       (th/go-server-stop))
 
-    (when (not th/go-server-args)
-      (setq th/go-server-args
-            (completing-read (format "%s-server args: " name) '("server" ""))))
+    (setq th/go-server-args args)
 
     (start-process
      procname
-     (format "*%s-server*" name)
+     buffer
      (concat root name)
      th/go-server-args)
 
-    ;; (set-process-filter proc 'th/go-server-insertion-filter)
-    (message "Started '%s'" name)))
+    (with-current-buffer buffer
+      (goto-char (point-max)))))
 
 (defun th/go-server-stop ()
   "Stop the server for the app"
@@ -645,37 +646,31 @@ resulting list."
      (format "*%s-server*" name))
     (message "Stopped %s server" name)))
 
-;; TODO(thiderman): Move this to a non-golang place
-(defun th/npm-server-start ()
-  "Start the server for the app"
-  (interactive)
-  (let* ((root (projectile-project-root))
-         (name (format "%s-npm" (f-base root)))
-         (procname (format "%s-server" name))
-         (procbuffer (format "*%s*" procname))
-         (dir (concat root "js/")))
-
-    ;; If the server is already running, stop it; effectively making this a restart.
-    (when (get-process procname)
-      (th/npm-server-stop))
-
-    (let ((default-directory dir))
-      (start-process procname procbuffer "npm" "run" "dev"))
-
-    (message "Started %s npm server" name)))
-
-(defun th/npm-server-stop ()
-  "Stop the server for the app"
-  (interactive)
-  (let* ((name (f-base (projectile-project-root))))
-    (delete-process
-     (format "*%s-npm-server*" name))
-    (message "Stopped %s npm server" name)))
-
 (defun th/go-server-buffer ()
-  "Stop the server for the app"
+  "Visit the server output buffer"
   (interactive)
   (let* ((name (f-base (projectile-project-root))))
     (switch-to-buffer (format "*%s-server*" name))))
+
+(defun th/start-drunkenfall ()
+  (interactive)
+
+  ;; TODO(thiderman): Improve this by using th/df
+  (let* ((dir "~/src/github.com/drunkenfall/drunkenfall/")
+         (default-directory dir))
+    (find-file (concat dir "drunkenfall.go"))
+
+    (th/go-server-start "server")
+    (th/go-server-buffer)
+
+    (compile "make drunkenfall")
+
+    (split-window-below)
+    (windmove-down)
+
+    (find-file (concat dir "js/package.json"))
+    (npm-mode--exec-process "npm-run" (format "npm run %s" "dev"))
+
+    (balance-windows)))
 
 (provide 'th-golang)
