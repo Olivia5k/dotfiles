@@ -2,6 +2,7 @@
   :ensure nil
   :bind (:map dired-mode-map
               ("r" . rgrep)
+              ("f" . find-name-dired)
               ("/" . th/dired-goto-root)
               ("~" . th/dired-goto-home)
               ("h" . dired-omit-mode)
@@ -39,5 +40,13 @@
   "Shortcut to browse to $HOME via dired"
   (interactive)
   (dired "~"))
+
+;; Override of the normal find-name-dired since I always want to
+;; search in the current directory anyways.
+(defun find-name-dired (pattern)
+  (interactive "sdired find: ")
+  (find-dired
+   default-directory
+   (concat find-name-arg " " (shell-quote-argument pattern))))
 
 (provide 'th-dired)
