@@ -2,10 +2,11 @@
   "Util"
   ("s" th/yas-hydra/body "yas")
   ("a" auto-fill-mode "Auto fill")
+  ("c" firestarter-mode "firestarter")
   ("d" th/toggle-debug "debug")
   ("f" th/font-hydra/body "font-hydra")
-  ("g" customize-group "customize")
   ("M-f" fci-mode "Fill column")
+  ("g" customize-group "customize")
   ("h" highlight-symbol-mode "Highlight symbol" :exit nil)
   ("j" text-scale-decrease "Font -" :exit nil)
   ("k" text-scale-increase "Font +" :exit nil)

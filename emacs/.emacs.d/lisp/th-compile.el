@@ -1,3 +1,5 @@
+(use-package filenotify)
+
 (use-package compile
   :init
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
@@ -22,6 +24,23 @@
   :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+
+(use-package firestarter
+  :config
+  (firestarter-mode 1)
+  (add-hook 'go-mode-hook
+            (lambda () (setq firestarter '(makefile-executor-execute-last nil)))))
+
+(defvar th/df "/home/thiderman/src/github.com/drunkenfall/drunkenfall/")
+
+(defun th/drunkenfall-inotify (event)
+  (let ((fn (nth 2 event))
+        (mode (nth 1 event)))
+    (when (and (equal mode 'changed)
+               (string= fn (concat th/df "drunkenfall")))
+      (th/go-server-start "server"))))
+
+(file-notify-add-watch th/df '(change attribute-change) 'th/drunkenfall-inotify)
 
 (defhydra th/makefile-hydra (:exit t)
   "Makefile"
@@ -52,6 +71,5 @@
       (with-no-warnings (font-lock-fontify-buffer)))))
 
 (add-hook 'compilation-mode-hook 'golang-test-compile-mode)
-
 
 (provide 'th-compile)
