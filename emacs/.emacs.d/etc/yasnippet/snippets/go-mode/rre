@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: return ret, err
+# key: rre
+# --
+return ret, err
