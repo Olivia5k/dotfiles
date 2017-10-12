@@ -12,14 +12,14 @@
       (lispy-to-defun)
     (insert "D")))
 
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
 
-(add-hook 'lisp-mode-hook 'paredit-mode)
 (add-hook 'lisp-mode-hook 'lispy-mode)
+(add-hook 'lisp-mode-hook 'paredit-mode)
 (add-hook 'lisp-mode-hook 'eldoc-mode)
 (add-hook 'lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'lisp-mode-hook 'prettify-symbols-mode)
