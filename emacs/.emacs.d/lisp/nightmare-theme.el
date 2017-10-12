@@ -34,7 +34,7 @@
   (nightmare-dark3           "#665064" "#626262")
   (nightmare-dark4           "#5C3074" "#767676")
 
-  (nightmare-medium          "#927F74" "#8a8a8a")
+  (nightmare-medium          "#927F92" "#8a8a8a")
 
   (nightmare-light0_hard     "#FFFFC8" "#ffffdf")
   (nightmare-light0          "#FFDDD4" "#ffffaf")
@@ -137,8 +137,7 @@
   (link                                      (:foreground nightmare-bright_blue :underline t))
   (link-visited                              (:foreground nightmare-bright_blue :underline nil))
 
-  (mode-line                                 (:foreground nightmare-light3 :background nightmare-dark0_hard :box nil))
-  (mode-line-inactive                        (:foreground nightmare-light2 :background nightmare-dark2 :box nil))
+
   (fringe                                    (:background nightmare-dark0_hard :foreground nightmare-dark2))
   (vertical-border                           (:background nightmare-dark0 :foreground nightmare-dark2))
   (linum                                     (:foreground nightmare-dark4))
@@ -715,6 +714,13 @@
   (elfeed-search-tag-face                    (:foreground nightmare-light3))
   (elfeed-search-title-face                  (:foreground nightmare-light3 :bold nil))
   (elfeed-search-unread-title-face           (:foreground nightmare-light0_hard :bold nil))
+
+  ;; MODE SUPPORT: telephone-line
+  (mode-line                                 (:foreground nightmare-light3 :background nightmare-dark1 :box nightmare-dark4))
+  (mode-line-inactive                        (:foreground nightmare-medium :background nightmare-dark0_hard :box nightmare-dark0_soft))
+  (telephone-line-accent-active              (:foreground nightmare-light0 :background nightmare-dark4))
+  (telephone-line-accent-inactive            (:foreground nightmare-medium :background nightmare-dark0_soft))
+
 
   ;; MODE SUPPORT: message
   (message-header-to                         (:foreground nightmare-bright_cyan ))

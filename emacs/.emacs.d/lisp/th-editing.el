@@ -1,4 +1,5 @@
 (use-package hungry-delete
+  :diminish hungry-delete-mode
   :config
   (global-hungry-delete-mode))
 
@@ -10,6 +11,7 @@
 
 
 (use-package undo-tree
+  :diminish undo-tree-mode
   :bind
   (("C-z"     . undo-tree-undo)
    ("C-x C-z" . undo-tree-undo)

@@ -1,4 +1,5 @@
 (use-package lispy
+  :diminish lispy-mode
   :bind
   (:map lispy-mode-map
         ("D" . th/lispy-to-defun)))

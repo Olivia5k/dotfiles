@@ -1,14 +1,4 @@
-(defun make-rect (color height width)
-  "Create an XPM bitmap."
-  (when window-system
-    (propertize
-     " " 'display
-     (let ((data nil)
-           (i 0))
-       (setq data (make-list height (make-list width 1)))
-       (pl/make-xpm "percent" color color (reverse data))))))
-
-(defun powerline-mode-icon ()
+(defun th/modeline-icon ()
   (let ((icon (all-the-icons-icon-for-buffer)))
     (unless (symbolp icon) ;; This implies it's the major mode
       (format " %s"
@@ -16,77 +6,48 @@
                           'help-echo (format "Major-mode: `%s`" major-mode)
                           'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))))
 
-(use-package powerline
-  :ensure t
+(use-package telephone-line
+  :init
+  (telephone-line-defsegment th/telephone-buffer-segment ()
+    (list
+     (when (buffer-file-name)
+       (if buffer-read-only
+           (all-the-icons-faicon "ban"
+                                 :face 'font-lock-keyword-face
+                                 :v-adjust -0.01)
+         (when (buffer-modified-p)
+           (all-the-icons-faicon "floppy-o"
+                                 :face 'error
+                                 :v-adjust -0.01))))
+     " "
+     (buffer-name)))
+
+  (telephone-line-defsegment th/telephone-clock-segment ()
+    (when (telephone-line-selected-window-active)
+      (if (org-clocking-p)
+          (org-clock-get-clock-string)
+        "<not clocking>")))
+
+  (telephone-line-defsegment* th/vc-segment ()
+    (telephone-line-raw
+     (replace-regexp-in-string "git." "" (substring-no-properties (if vc-mode vc-mode "")) t t) t))
+
+  (setq telephone-line-faces
+        '((accent . (telephone-line-accent-active . telephone-line-accent-inactive))
+          (nil    . (mode-line . mode-line-inactive))))
+
+  (setq telephone-line-lhs
+        '((nil    . (telephone-line-process-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (nil    . (th/telephone-buffer-segment))))
+
+  (setq telephone-line-rhs
+        '((nil    . (th/telephone-clock-segment))
+          (nil    . (th/vc-segment))
+          (accent . (telephone-line-minor-mode-segment))
+          (nil    . (telephone-line-airline-position-segment))))
+
   :config
-  (setq-default mode-line-format
-                '("%e"
-                  (:eval
-                   (let* ((active (powerline-selected-window-active))
-                          (modified (buffer-modified-p))
-                          (ro buffer-read-only)
-                          (face1 (if active 'powerline-active1 'powerline-inactive1))
-                          (face2 (if active 'powerline-active2 'powerline-inactive2))
-                          (bar-color (cond ((and active modified) (face-foreground 'error))
-                                           (active (face-background 'cursor))
-                                           (t (face-background 'tooltip))))
-                          (lhs (list
-                                (make-rect bar-color 30 3)
-                                ;; If read-only, show the lock icon. If not
-                                ;; read-only and modified, show the modified icon.
-                                ;; If buffer is not tied to a file, don't show anything.
-                                (if (buffer-file-name)
-                                    (if ro
-                                        (concat
-                                         " "
-                                         (all-the-icons-faicon "ban"
-                                                               :face (when active 'font-lock-keyword-face)
-                                                               :v-adjust -0.01))
-                                      (when modified
-                                        (concat
-                                         " "
-                                         (all-the-icons-faicon "floppy-o"
-                                                               :face (when active 'error)
-                                                               :v-adjust -0.01)))))
-                                " "
-                                (powerline-buffer-id)
-                                " "))
-
-                          (center (cond
-                                   ((-contains? (list-minor-modes) 'ace-window-mode)
-                                    (list " " ace-window-mode " "))
-
-                                   ((eq major-mode 'mu4e-headers-mode)
-                                    (list " " mu4e~headers-last-query " "))
-
-                                   (t
-                                    (list
-                                     " "
-                                     (powerline-mode-icon)
-                                     " "
-                                     (powerline-major-mode)
-                                     " "))))
-                          (rhs (list
-                                " "
-                                (when active
-                                  (if (org-clocking-p)
-                                      (org-clock-get-clock-string)
-                                    (propertize "<not clocking>"
-                                                'face 'org-mode-line-clock)))
-                                ;; " "
-                                ;; (powerline-minor-modes)
-                                " "
-                                (powerline-raw " %l:%c" (if active 'mode-line 'mode-line-inactive) 'r)
-                                " | "
-                                (powerline-raw "%6p" (if active 'mode-line 'mode-line-inactive) 'r)
-                                (powerline-hud 'highlight 'region 1)
-                                " "
-                                )))
-                     (concat
-                      (powerline-render lhs)
-                      (powerline-fill-center face2 (/ (powerline-width center) 2.0))
-                      (powerline-render center)
-                      (powerline-fill face2 (powerline-width rhs))
-                      (powerline-render rhs)))))))
+  (telephone-line-mode 1))
 
 (provide 'th-modeline)

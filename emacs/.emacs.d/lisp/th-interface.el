@@ -39,6 +39,7 @@
 
 ;; ivy - better fuzzy selection
 (use-package ivy
+  :diminish ivy-mode
   :bind (("M-x"     . counsel-M-x)
          ("C-x y"   . counsel-yank-pop)
          ("C-c C-r" . ivy-resume))
@@ -141,6 +142,13 @@
     ("f" helpful-function "Function")
     ("c" helpful-command "Command")
     ("m" helpful-macro "Macro")))
+
+(use-package diminish
+  :config
+  (diminish 'paredit-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'auto-fill-function " af"))
 
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 (defun th/narrow-or-widen-dwim (p)

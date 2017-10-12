@@ -3,6 +3,7 @@
   :mode ("\\.cron\\'" . crontab-mode))
 (use-package csv-mode)
 (use-package editorconfig
+  :diminish editorconfig-mode
   :init (editorconfig-mode 1))
 (use-package fish-mode)
 (use-package highlight-symbol
@@ -21,7 +22,6 @@
 ;; minor mode utilities - little to no config
 (use-package adaptive-wrap)
 (use-package buffer-move)
-(use-package diminish)
 (use-package fill-column-indicator
   :config (setq fci-rule-color "#373b41"))
 (use-package paradox

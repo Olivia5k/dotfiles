@@ -1,4 +1,5 @@
 (use-package company
+  :diminish company-mode
   :config
   (use-package company-flx
     :config

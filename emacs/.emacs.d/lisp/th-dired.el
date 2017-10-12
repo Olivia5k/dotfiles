@@ -1,4 +1,5 @@
 (use-package dired
+  :diminish dired-omit-mode
   :ensure nil
   :bind (:map dired-mode-map
               ("r" . rgrep)
