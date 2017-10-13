@@ -148,7 +148,7 @@
   (diminish 'paredit-mode)
   (diminish 'auto-revert-mode)
   (diminish 'eldoc-mode)
-  (diminish 'auto-fill-function " af"))
+  (diminish 'auto-fill-function " fill"))
 
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 (defun th/narrow-or-widen-dwim (p)
