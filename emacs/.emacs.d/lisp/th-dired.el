@@ -2,6 +2,7 @@
   :diminish dired-omit-mode
   :ensure nil
   :bind (:map dired-mode-map
+              ("c" . wdired-change-to-wdired-mode)
               ("r" . rgrep)
               ("f" . find-name-dired)
               ("/" . th/dired-goto-root)
@@ -30,6 +31,8 @@
     (setq dired-omit-mode t))
 
   (use-package dired-subtree
+    :after (dired))
+  (use-package wdired
     :after (dired)))
 
 (defun th/dired-goto-root ()
