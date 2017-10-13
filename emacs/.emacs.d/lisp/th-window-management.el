@@ -139,10 +139,10 @@ case for this."
        (unless (ignore-errors (funcall ',emacs-fun))
          (shell-command (format "stumpish %s" ,stump-cmd))))))
 
-(global-set-key (kbd "s-h") (stumpwm-emacs-cmd windmove-left "move-focus left"))
-(global-set-key (kbd "s-j") (stumpwm-emacs-cmd windmove-down "move-focus down"))
-(global-set-key (kbd "s-k") (stumpwm-emacs-cmd windmove-up "move-focus up"))
-(global-set-key (kbd "s-l") (stumpwm-emacs-cmd windmove-right "move-focus right"))
+(global-set-key (kbd "s-h") 'windmove-left)
+(global-set-key (kbd "s-j") 'windmove-down)
+(global-set-key (kbd "s-k") 'windmove-up)
+(global-set-key (kbd "s-l") 'windmove-right)
 
 ;; Also disable the old ones so that I stop using them
 (defun th/disabled-key ()

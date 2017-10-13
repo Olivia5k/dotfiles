@@ -73,5 +73,5 @@
 (require 'th-elfeed)
 (require 'th-org-base)
 (require 'th-org-agenda)
-(require 'th-exwm)
 (require 'th-chat)
+(require 'th-exwm)
