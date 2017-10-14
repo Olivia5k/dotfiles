@@ -36,8 +36,11 @@
            " ")))
 
 (use-package circe
-  :bind (:map circe-query-mode-map
-              ("M-m" . emojify-insert-emoji))
+  :bind
+  (:map circe-query-mode-map
+        ("M-m" . emojify-insert-emoji))
+  (:map circe-channel-mode-map
+        ("M-m" . emojify-insert-emoji))
   :config
   (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
   (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
