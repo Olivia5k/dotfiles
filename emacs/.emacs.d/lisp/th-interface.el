@@ -47,7 +47,7 @@
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-height 20)
+  (setq ivy-height 25)
   (setq magit-completing-read-function 'ivy-completing-read)
 
   ;; So that we can do space separation in file name completions
