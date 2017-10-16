@@ -6,6 +6,7 @@
         ("C-c C-o" . th/go-guru/body)
         ("C-c c"   . th/go-coverage)
         ("C-c i"   . go-goto-imports)
+        ("C-c l"   . go-refactor-toggle-nolint)
         ("C-c r"   . go-rename)
         ("M-."     . godef-jump)
         ("M-m"     . go-goto-hydra/body)
@@ -429,6 +430,17 @@ the previous line ending with an opening brace."
       (if (looking-back ":" 1)
           (delete-char -1)
         (insert ":")))))
+
+(defun go-refactor-toggle-nolint ()
+  "Toggle the '// nolint' token on a line."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (if (looking-back "// nolint")
+        (progn
+          (backward-char 10)
+          (kill-line))
+      (insert " // nolint"))))
 
 (defun go-refactor-method-receiver ()
   "Changes or removes the method receiver of the current function.
