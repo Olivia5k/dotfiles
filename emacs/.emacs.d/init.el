@@ -9,11 +9,9 @@
 (require 'cl)
 (require 'url-handlers)
 (setq package-archives
-      '(("org"          . "http://orgmode.org/elpa/")
-        ("tromey"       . "http://tromey.com/elpa/")
-        ("gnu"          . "http://elpa.gnu.org/packages/")
-        ("melpa"        . "http://melpa.org/packages/")
+      '(("melpa"        . "http://melpa.org/packages/")
         ("melpa-stable" . "http://stable.melpa.org/packages/")
+        ("gnu"          . "http://elpa.gnu.org/packages/")
         ("marmalade"    . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
