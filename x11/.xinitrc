@@ -11,4 +11,4 @@ exec $HOME/.local/bin/wp &
 export VISUAL=emacsclient
 export EDITOR="$VISUAL"
 
-exec emacs
+exec emacs --debug-init
