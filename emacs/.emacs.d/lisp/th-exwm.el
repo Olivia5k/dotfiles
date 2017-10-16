@@ -51,8 +51,8 @@
                       (start-process-shell-command command nil command)))
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
-(exwm-input-set-key [(super backspace)]
-                    (lambda () (interactive) (start-process "" nil "lock")))
+;; (exwm-input-set-key (kbd "s-<F2>")
+;;                     (lambda () (interactive) (start-process "" nil "lock")))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
@@ -87,7 +87,7 @@
 ;; uncommenting the following line
 (setq exwm-workspace-minibuffer-position nil)
 
-(if (s-equals? (system-name) "dragonisle")
+(when (s-equals? (system-name) "dragonisle")
   (require 'exwm-randr)
   (setq exwm-randr-workspace-output-plist
         '(0 "HDMI-0" 1 "HDMI-0" 2 "HDMI-0" 3 "HDMI-0"
