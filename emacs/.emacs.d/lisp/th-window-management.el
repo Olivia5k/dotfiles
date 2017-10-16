@@ -7,8 +7,6 @@
   :bind
   ("M-s-n" . winner-undo)
   ("M-s-p" . winner-redo)
-  ("C-c <left>" . th/disabled-key)
-  ("C-c <right>" . th/disabled-key)
   :ensure nil
   :config (winner-mode 1))
 
@@ -143,15 +141,6 @@ case for this."
 (global-set-key (kbd "s-j") 'windmove-down)
 (global-set-key (kbd "s-k") 'windmove-up)
 (global-set-key (kbd "s-l") 'windmove-right)
-
-;; Also disable the old ones so that I stop using them
-(defun th/disabled-key ()
-  (interactive)
-  (message "This key is disabled."))
-
-(global-set-key (kbd "C-x 1") #'th/disabled-key)
-(global-set-key (kbd "C-x 2") #'th/disabled-key)
-(global-set-key (kbd "C-x 3") #'th/disabled-key)
 
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'th/split-horizontally)
