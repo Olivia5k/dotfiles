@@ -29,7 +29,7 @@
   :config
   (firestarter-mode 1)
   (add-hook 'go-mode-hook
-            (lambda () (setq firestarter '(makefile-executor-execute-last nil)))))
+            (lambda () (setq firestarter '(recompile)))))
 
 (defvar th/df "/home/thiderman/src/github.com/drunkenfall/drunkenfall/")
 
