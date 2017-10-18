@@ -23,13 +23,15 @@
   (interactive)
   (split-window-below)
   (windmove-down)
-  (balance-windows))
+  ;(balance-windows)
+  )
 
 (defun th/split-vertically ()
   (interactive)
   (split-window-right)
   (windmove-right)
-  (balance-windows))
+  ;(balance-windows)
+  )
 
 
 (defadvice customize-group (before customize-group-split-window activate)
@@ -38,7 +40,8 @@
   (other-window 1))
 
 (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
-  (balance-windows))
+  ;(balance-windows)
+  )
 
 (defun split-window-sensibly (&optional window)
   "A split-window-sensibly that's actually sensible.
@@ -64,8 +67,9 @@ case for this."
           (save-buffer))
         (delete-frame))
     (delete-window)
-    (save-excursion
-      (balance-windows))))
+    ;; (save-excursion
+    ;;   (balance-windows))
+    ))
 
 (global-set-key (kbd "C-q") 'th/kill-window)
 
@@ -125,17 +129,6 @@ case for this."
     (hydra-window/body)))
 
 (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
-
-(defmacro stumpwm-emacs-cmd (emacs-fun stump-cmd)
-  (let ((cmd-name (intern (format "stumpwm/%s" emacs-fun))))
-    `(defun ,cmd-name ()
-       (interactive)
-       ;; If these errors are ignored, the command failover won't
-       ;; work. This leads to annoying "(Shell command failed with
-       ;; code 1 and no output)" messages. Can't seem to be rid of
-       ;; them. :(
-       (unless (ignore-errors (funcall ',emacs-fun))
-         (shell-command (format "stumpish %s" ,stump-cmd))))))
 
 (global-set-key (kbd "s-h") 'windmove-left)
 (global-set-key (kbd "s-j") 'windmove-down)
