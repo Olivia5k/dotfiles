@@ -77,3 +77,6 @@
 (require 'th-org-agenda)
 (require 'th-chat)
 (require 'th-exwm)
+
+;; Lastly
+(require 'th-last)
