@@ -53,6 +53,10 @@ Modified version that does not do any properties."
     (when (telephone-line-selected-window-active)
       (th/tracking-status)))
 
+  (telephone-line-defsegment th/telephone-workspace ()
+    (when (telephone-line-selected-window-active)
+      (format "%d" exwm-workspace-current-index)))
+
   (telephone-line-defsegment* th/vc-segment ()
     (telephone-line-raw
      (replace-regexp-in-string "git." "" (substring-no-properties (if vc-mode vc-mode "")) t t) t))
@@ -63,7 +67,8 @@ Modified version that does not do any properties."
           (nil    . (mode-line . mode-line-inactive))))
 
   (setq telephone-line-lhs
-        '((nil    . (telephone-line-process-segment))
+        '((accent . (telephone-line-process-segment))
+          (nil    . (th/telephone-workspace))
           (accent . (telephone-line-major-mode-segment))
           (nil    . (th/telephone-buffer-segment))))
 
