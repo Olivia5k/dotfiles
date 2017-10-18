@@ -51,8 +51,34 @@
                       (start-process-shell-command command nil command)))
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
-;; (exwm-input-set-key (kbd "s-<F2>")
-;;                     (lambda () (interactive) (start-process "" nil "lock")))
+(exwm-input-set-key (kbd "s-<backspace>") 'lock)
+(defun lock ()
+  (interactive)
+  (start-process "" nil "lock"))
+
+(exwm-input-set-key (kbd "s-M-<backspace>") (lambda () (interactive) (start-process "" nil "sswitch" "work")))
+(exwm-input-set-key (kbd "s-S-<backspace>") (lambda () (interactive) (start-process "" nil "sswitch" "laptop")))
+
+(exwm-input-set-key (kbd "s-h") 'windmove-left)
+(exwm-input-set-key (kbd "s-j") 'windmove-down)
+(exwm-input-set-key (kbd "s-k") 'windmove-up)
+(exwm-input-set-key (kbd "s-l") 'windmove-right)
+
+(exwm-input-set-key (kbd "s-M-h") 'shrink-window-horizontally)
+(exwm-input-set-key (kbd "s-M-j") 'shrink-window)
+(exwm-input-set-key (kbd "s-M-k") 'enlarge-window)
+(exwm-input-set-key (kbd "s-M-l") 'enlarge-window-horizontally)
+
+(exwm-input-set-key (kbd "s-M-C-h") (lambda () (interactive) (shrink-window-horizontally 3)))
+(exwm-input-set-key (kbd "s-M-C-j") (lambda () (interactive) (shrink-window 3)))
+(exwm-input-set-key (kbd "s-M-C-k") (lambda () (interactive) (enlarge-window 3)))
+(exwm-input-set-key (kbd "s-M-C-l") (lambda () (interactive) (enlarge-window-horizontally 3)))
+
+(exwm-input-set-key (kbd "s-b") 'ivy-switch-buffer)
+(exwm-input-set-key (kbd "s-M-b") 'balance-windows)
+
+(exwm-input-set-key (kbd "s-M-b") 'balance-windows)
+
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
