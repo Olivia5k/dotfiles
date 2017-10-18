@@ -58,7 +58,8 @@
         ("FAIL" . font-lock-warning-face)
         ("===\\|---" . font-lock-comment-face)
         ("^WARN .*" . font-lock-warning-face)
-        ("20..-..-..T..:..:..Z" . font-lock-comment-face)))
+        ("20..-..-..T..:..:..Z" . font-lock-comment-face)
+        ("20..-..-..T..:..:......\\+...." . font-lock-comment-face)))
 
 (define-minor-mode golang-test-compile-mode
   "Doc string."
