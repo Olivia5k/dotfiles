@@ -63,7 +63,7 @@
 
 (define-minor-mode golang-test-compile-mode
   "Doc string."
-  nil "blah" nil
+  nil "☯" nil
   (font-lock-add-keywords nil go-tc/kwds)
 
   (if (fboundp 'font-lock-flush)
