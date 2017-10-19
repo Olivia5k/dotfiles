@@ -48,6 +48,7 @@
   ("n" (find-file "/np:") "nopls")
   ("p" th/package-hydra/body "package")
   ("M-p" proced "proced")
+  ("r" (th/other-files-suffix "http") "rest")
   ("s" th/smerge-hydra/body "smerge")
   ("t" counsel-tldr "tldr")
   ("x" th/hexrgb-hydra/body "hexrgb")
