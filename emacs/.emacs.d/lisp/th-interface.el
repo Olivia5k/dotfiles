@@ -105,6 +105,11 @@
          "\\|\\(?:\\`.+?[#~]\\'\\)")))
 
 
+(use-package ace-link
+  :config
+  (ace-link-setup-default))
+
+
 (use-package uniquify
   :ensure nil
   :config

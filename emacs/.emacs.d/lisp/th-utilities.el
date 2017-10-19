@@ -22,6 +22,7 @@
 ;; minor mode utilities - little to no config
 (use-package adaptive-wrap)
 (use-package buffer-move)
+(use-package define-word)
 (use-package fill-column-indicator
   :config (setq fci-rule-color "#373b41"))
 (use-package paradox
