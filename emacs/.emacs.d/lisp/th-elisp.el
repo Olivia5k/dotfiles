@@ -4,7 +4,7 @@
   (:map lispy-mode-map
         ("D" . th/lispy-to-defun)))
 
-(use-package stumpwm-mode)
+(use-package nameless)
 
 (defun th/lispy-to-defun ()
   (interactive)
@@ -17,6 +17,7 @@
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
+(add-hook 'emacs-lisp-mode-hook 'nameless-mode)
 
 (add-hook 'lisp-mode-hook 'lispy-mode)
 (add-hook 'lisp-mode-hook 'paredit-mode)
