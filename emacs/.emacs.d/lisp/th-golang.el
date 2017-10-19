@@ -45,7 +45,13 @@
   (define-key go-refactor-map (kbd "r") 'go-refactor-method-receiver)
   (define-key go-refactor-map (kbd "w") 'go-refactor-error-withstack))
 
-(use-package go-rename :after go-mode)
+(use-package go-rename
+  :after go-mode
+  :config
+  (defadvice go-rename (before save-go-rename activate)
+    "Save the buffer before calling go-rename."
+    (save-buffer)))
+
 (use-package company-go :after go-mode)
 (use-package go-guru :after go-mode)
 (use-package go-eldoc :after go-mode)
