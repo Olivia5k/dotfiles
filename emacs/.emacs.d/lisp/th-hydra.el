@@ -66,4 +66,12 @@
   ("l" list-packages "list")
   ("q" nil))
 
+(defhydra th/files (:exit t)
+  "Files"
+  ("a" th/other-files-suffix "alt")
+  ("s-f" projectile-find-file "files")
+  ("s" th/browse-suffixes "suffixes"))
+
+(global-set-key (kbd "s-f") 'th/files/body)
+
 (provide 'th-hydra)

@@ -71,4 +71,15 @@ This is useful if you have backend and frontend code in the same repo."
 
 (global-set-key (kbd "C-x C-a") 'th/other-files-same-base)
 
+(defun th/browse-suffixes ()
+  "Select a suffix from the project and then browse files with that suffix."
+  (interactive)
+  (let* ((default-directory (projectile-project-root))
+         (suffixes (remove nil
+                           (-distinct
+                            (-map (lambda (x) (f-ext x))
+                                  (projectile-get-repo-files))))))
+    (th/other-files-suffix
+     (completing-read "suffixes: " suffixes nil t))))
+
 (provide 'th-alternate)
