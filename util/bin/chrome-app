@@ -1,5 +1,3 @@
 #!/usr/bin/zsh
 
-# browser --app="$1"
-browser -new-instance "$1"
-
+browser --app="$1"

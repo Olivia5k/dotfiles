@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if (( $+commands[firefox-nightly] )); then
+if (( $+commands[firefox-nightly] )) && false; then
     firefox-nightly "$@"
 elif (( $+commands[chromium-browser] )); then
     chromium-browser "$@"
