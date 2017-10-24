@@ -45,19 +45,15 @@
 ;; + Application launcher ('M-&' also works if the output buffer does not
 ;;   bother you). Note that there is no need for processes to be created by
 ;;   Emacs.
-(exwm-input-set-key (kbd "s-SPC")
-                    (lambda (command)
-                      (interactive (list (read-shell-command "$ ")))
-                      (start-process-shell-command command nil command)))
+(defun exwm-execute (command)
+  (interactive (list (read-shell-command "$ ")))
+  (start-process-shell-command command nil command))
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
 (exwm-input-set-key (kbd "s-<backspace>") 'lock)
 (defun lock ()
   (interactive)
   (start-process "" nil "lock"))
-
-(exwm-input-set-key (kbd "s-M-<backspace>") (lambda () (interactive) (start-process "" nil "sswitch" "work")))
-(exwm-input-set-key (kbd "s-S-<backspace>") (lambda () (interactive) (start-process "" nil "sswitch" "laptop")))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
@@ -79,6 +75,35 @@
 
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 
+(exwm-input-set-key (kbd "s-SPC") 'exwm/body)
+
+(defhydra exwm (:exit t)
+  "exwm"
+  ("s-SPC" exwm-execute "exec")
+  ("x" th/switch-screens "xrandr"))
+
+(defun th/switch-screens ()
+  "Switch screen setup."
+  (interactive)
+  (let* ((arg (completing-read "screen mode: " '(laptop work desktop tv))))
+    (cond
+     ((s-equals? arg "laptop")
+      (shell-command "xrandr --output eDP1 --auto")
+      (shell-command "xrandr --output HDMI2 --off"))
+
+     ((s-equals? arg "work")
+      (shell-command "xrandr --output HDMI2 --auto")
+      (shell-command "xrandr --output eDP1 --off"))
+
+     ((s-equals? arg "desktop")
+      (shell-command "xrandr --output HDMI-0 --off")
+      (shell-command "xrandr --output DVI-I-1 --left-of DVI-D-0"))
+
+     ((s-equals? arg "tv")
+      (shell-command "xrandr --output HDMI-0 --auto")
+      (shell-command "xrandr --output HDMI-0 --right-of DVI-D-0")))
+
+    (shell-command "keyboard-setup")))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
