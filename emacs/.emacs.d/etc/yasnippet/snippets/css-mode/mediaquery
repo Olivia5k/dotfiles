@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: mediaquery
+# key: mq
+# --
+@media screen and (min-device-width: 770px) {
+}
+@media screen and (max-device-width: 769px) {
+}
