@@ -74,6 +74,7 @@
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
+(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 5)))
 
 (exwm-input-set-key (kbd "s-SPC") 'exwm/body)
 
