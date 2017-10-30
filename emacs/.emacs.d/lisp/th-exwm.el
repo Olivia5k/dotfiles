@@ -104,7 +104,8 @@
       (shell-command "xrandr --output HDMI-0 --auto")
       (shell-command "xrandr --output HDMI-0 --right-of DVI-D-0")))
 
-    (shell-command "keyboard-setup")))
+    (shell-command "keyboard-setup")
+    (exwm-randr--refresh)))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
@@ -139,18 +140,19 @@
 ;; uncommenting the following line
 (setq exwm-workspace-minibuffer-position nil)
 
-(when (s-equals? (system-name) "dragonisle")
-  (require 'exwm-randr)
+(require 'exwm-randr)
+(cond
+ ((s-equals? (system-name) "dragonisle")
   (setq exwm-randr-workspace-output-plist
         '(0 "HDMI-0" 1 "HDMI-0" 2 "HDMI-0" 3 "HDMI-0"
-          4 "DP-0"   5 "DP-0"   6 "DP-0"   7 "DP-0"))
+            4 "DP-0"   5 "DP-0"   6 "DP-0"   7 "DP-0"))
 
   (add-hook 'exwm-randr-screen-change-hook
             (lambda ()
               (start-process-shell-command
-               "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto")))
-  (exwm-randr-enable))
+               "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto")))))
 
+(exwm-randr-enable)
 ;; Do not forget to enable EXWM. It will start by itself when things are ready.
 (exwm-enable)
 
