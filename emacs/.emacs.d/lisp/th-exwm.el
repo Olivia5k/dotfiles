@@ -66,6 +66,17 @@
   (interactive)
   (start-process "" nil "lock"))
 
+(defun th/browser-golden ()
+  "Splits the current window into a browser at 2/3 of the window"
+  (interactive)
+  (delete-other-windows)
+  ;; Add one sixth to make it go from 1/2 to 1/3
+  (let* ((width (/ (window-width) 5)))
+    (split-window-right)
+    (other-window 1)
+    (enlarge-window-horizontally width)
+    (start-process-shell-command "chromium" nil "chromium --new-window")))
+
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
 (exwm-input-set-key (kbd "s-k") 'windmove-up)
@@ -83,12 +94,20 @@
 
 (exwm-input-set-key (kbd "s-b") 'ivy-switch-buffer)
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
+(exwm-input-set-key (kbd "s-<tab>") 'th/switch-to-previous-buffer)
 
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
-(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 5)))
+
+(exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
+(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
+
+(exwm-input-set-key (kbd "C-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss -s")))
+(exwm-input-set-key (kbd "C-M-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss")))
+
+(exwm-input-set-key (kbd "C-s-q") #'th/browser-golden)
+(exwm-input-set-key (kbd "C-s-s") (lambda () (interactive) (exwm-execute "spotify")))
 
 (exwm-input-set-key (kbd "s-SPC") 'exwm-execute)
-
 
 (defun th/switch-screens ()
   "Switch screen setup."
