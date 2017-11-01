@@ -43,8 +43,8 @@
   :disabled t
   :ensure nil
   :config
-  (setq global-semantic-idle-scheduler-mode nil)
-  (setq global-semanticdb-minor-mode nil))
+  (global-semantic-idle-scheduler-mode nil)
+  (global-semanticdb-minor-mode nil))
 (use-package sh-script
   :ensure nil
   :config

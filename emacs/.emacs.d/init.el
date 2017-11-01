@@ -39,6 +39,7 @@
 (require 'th-modeline)
 (require 'th-backups)
 (require 'th-hooks)
+(require 'th-utilities)
 
 ;; emacs extensions
 (require 'th-company)
@@ -49,7 +50,6 @@
 (require 'th-fly)
 (require 'th-hydra)
 (require 'th-snippets)
-(require 'th-utilities)
 (require 'th-ssh)
 (require 'th-work)
 
