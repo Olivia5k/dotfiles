@@ -69,9 +69,9 @@
   (setq alert-default-style 'notifier))
 
 
-(defhydra th/chat ()
+(defhydra th/chat (:exit t)
   "chat"
-  ("s-e" (message "chat buffers") "buffers")
+  ("s-e" (switch-to-buffer "&bitlbee") "bitlbee")
   ("i" insert-image-from-url "view last image")
   ("m" emojify-insert-emoji "emoji 💜"))
 
