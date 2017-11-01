@@ -7,6 +7,15 @@
   :ensure nil
 
   :init
+  ;; This is to tell the renderer to chill with the making of
+  ;; gray/gray HTML displays
+  (setq shr-color-visible-luminance-min 80)
+
+  (add-hook 'mu4e-view-mode-hook
+  (lambda()
+    (local-set-key (kbd "<tab>") 'shr-next-link)
+    (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
   (setq mu4e-maildir "~/.mail/")
   (setq mu4e-headers-date-format "%Y-%m-%d")
   (setq mu4e-hide-index-messages t)
