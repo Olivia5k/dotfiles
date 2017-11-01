@@ -1,6 +1,14 @@
 ;; http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/#using-mu4e-to-send-mail
 ;; https://gist.github.com/areina/3879626
 
+(defun remove-nth-element (nth list)
+  (if (zerop nth) (cdr list)
+    (let ((last (nthcdr (1- nth) list)))
+      (setcdr last (cddr last))
+      list)))
+
+(require 'smtpmail)
+
 (use-package mu4e
   :bind
   ("C-x m" . mu4e-hydra/body)
@@ -23,12 +31,6 @@
   (setq message-kill-buffer-on-exit t)
   (setq mu4e-confirm-quit nil)
 
-  (defun remove-nth-element (nth list)
-    (if (zerop nth) (cdr list)
-      (let ((last (nthcdr (1- nth) list)))
-        (setcdr last (cddr last))
-        list)))
-
   ;; I have my "default" parameters from Gmail
   (setq mu4e-sent-folder "/home/thiderman/.mail/sent")
   (setq mu4e-drafts-folder "/home/thiderman/.mail/drafts")
@@ -36,8 +38,6 @@
   (setq smtpmail-default-smtp-server "smtp.gmail.com")
   (setq smtpmail-smtp-server "smtp.gmail.com")
   (setq smtpmail-smtp-service 587)
-
-  (require 'smtpmail)
 
   (setq message-send-mail-function 'smtpmail-send-it)
   (setq starttls-use-gnutls t)
