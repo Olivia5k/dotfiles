@@ -54,8 +54,7 @@ Modified version that does not do any properties."
       (th/tracking-status)))
 
   (telephone-line-defsegment th/telephone-workspace ()
-    (when (telephone-line-selected-window-active)
-      (format "%d" exwm-workspace-current-index)))
+    (format "%d" exwm-workspace-current-index))
 
   (telephone-line-defsegment* th/vc-segment ()
     (telephone-line-raw
