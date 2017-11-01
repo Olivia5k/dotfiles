@@ -56,30 +56,12 @@
   (tracking-mode 1))
 
 
-
-
 (use-package slack
   :commands (slack-start)
   :init
   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-  (setq slack-prefer-current-team t)
-  :config
+  (setq slack-prefer-current-team t))
 
-  ;; (slack-register-team
-  ;;  :name "emacs-slack"
-  ;;  :default t
-  ;;  :client-id "aaaaaaaaaaa.00000000000"
-  ;;  :client-secret "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-  ;;  :token "aaaa-sssssssssss-88888888888-hhhhhhhhhhh-jjjjjjjjjj"
-  ;;  :subscribed-channels '(test-rename rrrrr))
-
-  ;; (slack-register-team
-  ;;  :name "test"
-  ;;  :client-id "3333333333.77777777777"
-  ;;  :client-secret "cccccccccccccccccccccccccccccccc"
-  ;;  :token "xxxx-yyyyyyyyyy-zzzzzzzzzzz-hhhhhhhhhhh-llllllllll"
-  ;;  :subscribed-channels '(hoge fuga))
-  )
 
 (use-package alert
   :commands (alert)
@@ -94,5 +76,10 @@
   ("m" emojify-insert-emoji "emoji 💜"))
 
 (global-set-key (kbd "s-e") 'th/chat/body)
+
+;; Load secret credentials and start the chats
+
+(add-to-list 'load-path "/home/thiderman/src/github.com/thiderman/secrets/emacs/.emacs.d/lisp")
+(load "th-chat-secret" nil t)
 
 (provide 'th-chat)
