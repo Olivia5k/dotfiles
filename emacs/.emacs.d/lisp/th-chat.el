@@ -66,7 +66,7 @@
 (use-package alert
   :commands (alert)
   :init
-  (setq alert-default-style 'notifier))
+  (setq alert-default-style 'libnotify))
 
 
 (defhydra th/chat (:exit t)
