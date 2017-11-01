@@ -78,5 +78,8 @@
 (require 'th-chat)
 (require 'th-exwm)
 
+;; Media
+(require 'th-spotify)
+
 ;; Lastly
 (require 'th-last)
