@@ -49,6 +49,17 @@
   (interactive (list (read-shell-command "$ ")))
   (start-process-shell-command command nil command))
 
+;; Terminal launcher
+(defun th/ansi-term ()
+  (interactive)
+  (let ((buf (get-buffer "*ansi-term*"))
+        (default-directory (getenv "HOME")))
+    (if buf
+        (switch-to-buffer buf)
+      (ansi-term "/usr/bin/zsh"))))
+
+(exwm-input-set-key (kbd "M-s-<return>") #'th/ansi-term)
+
 ;; + 'slock' is a simple X display locker provided by suckless tools.
 (exwm-input-set-key (kbd "s-<backspace>") 'lock)
 (defun lock ()
