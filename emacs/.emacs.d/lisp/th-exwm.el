@@ -76,12 +76,8 @@
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 (exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 5)))
 
-(exwm-input-set-key (kbd "s-SPC") 'exwm/body)
+(exwm-input-set-key (kbd "s-SPC") 'exwm-execute)
 
-(defhydra exwm (:exit t)
-  "exwm"
-  ("s-SPC" exwm-execute "exec")
-  ("x" th/switch-screens "xrandr"))
 
 (defun th/switch-screens ()
   "Switch screen setup."
@@ -106,6 +102,13 @@
 
     (shell-command "keyboard-setup")
     (exwm-randr--refresh)))
+
+(exwm-input-set-key (kbd "s-x") 'th/switch-screens)
+
+(defun th/exwm-chrome (url name)
+  "Open a Chrome app for `url'"
+  (interactive)
+  (start-process "" name "chrome-app" url))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
