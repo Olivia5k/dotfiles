@@ -68,8 +68,22 @@
   (define-key mu4e-headers-mode-map (kbd "TAB") #'th/mu4e-toggle-unread)
 
   (define-key mu4e-headers-mode-map (kbd "SPC") #'th/mu4e-to-browser)
-  (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser)
-)
+  (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser))
+
+(use-package mu4e-alert
+  :after mu4e
+  :init
+  (setq mu4e-alert-interesting-mail-query
+    (concat
+     "flag:unread maildir:/gmail/INBOX "
+     "OR "
+     "flag:unread maildir:/unomaly/INBOX"))
+  (mu4e-alert-enable-mode-line-display)
+  (defun gjstein-refresh-mu4e-alert-mode-line ()
+    (interactive)
+    (mu4e~proc-kill)
+    (mu4e-alert-enable-mode-line-display))
+  (run-with-timer 0 60 'gjstein-refresh-mu4e-alert-mode-line))
 
 (defhydra mu4e-hydra (:exit t)
   "mu4e"
