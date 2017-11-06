@@ -85,9 +85,19 @@
   "chat"
   ("s-e" (switch-to-buffer "&bitlbee") "bitlbee")
   ("i" insert-image-from-url "view last image")
-  ("m" emojify-insert-emoji "emoji 💜"))
+  ("m" emojify-insert-emoji "emoji 💜")
+  ("c" slack-select-rooms "slack"))
 
 (global-set-key (kbd "s-e") 'th/chat/body)
+
+
+(defadvice tracking-next-buffer (before tracking-small-windows activate)
+  "Make chat buffers appear in smaller splits"
+  (when (not (memq major-mode '(circe-query-mode
+                                circe-channel-mode
+                                slack-mode)))
+    (split-window-below -20)
+    (windmove-down)))
 
 ;; Load secret credentials and start the chats
 
