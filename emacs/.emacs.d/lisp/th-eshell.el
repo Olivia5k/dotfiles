@@ -28,7 +28,6 @@ directory to make multiple eshell windows easier."
       (eshell "new")
       (rename-buffer shellname))))
 
-(global-set-key (kbd "s-<return>") #'th/eshell-here)
 (global-set-key (kbd "C-x e") #'th/eshell-here)
 
 (setenv "PAGER" "cat")

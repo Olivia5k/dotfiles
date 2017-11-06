@@ -179,7 +179,7 @@ Go back if we're already in it."
   ("a" org-todo-list "Agenda")
   ("t" org-tags-view "Tags"))
 
-(global-set-key (kbd "s-o") 'th/org/body)
+
 
 (use-package worf
   :after org-mode

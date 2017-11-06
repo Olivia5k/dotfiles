@@ -58,6 +58,7 @@
         (switch-to-buffer buf)
       (ansi-term "/usr/bin/zsh"))))
 
+(exwm-input-set-key (kbd "s-<return>") #'th/eshell-here)
 (exwm-input-set-key (kbd "M-s-<return>") #'th/ansi-term)
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
@@ -96,7 +97,17 @@
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 (exwm-input-set-key (kbd "s-<tab>") 'th/switch-to-previous-buffer)
 
+(exwm-input-set-key (kbd "s-n") 'flycheck-next-error)
+(exwm-input-set-key (kbd "s-p") 'flycheck-previous-error)
+(exwm-input-set-key (kbd "s-M-C-n") 'first-error)
+(exwm-input-set-key (kbd "s-M-n") 'next-error)
+(exwm-input-set-key (kbd "s-M-p") 'previous-error)
+
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
+
+(exwm-input-set-key (kbd "s-C-a") 'org-build-agenda)
+(exwm-input-set-key (kbd "s-o") 'th/org/body)
+(exwm-input-set-key (kbd "s-m") 'mu4e-hydra/body)
 
 (exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
 (exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
