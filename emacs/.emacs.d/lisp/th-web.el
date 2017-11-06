@@ -136,9 +136,8 @@ Insert it if it does not exist."
 
 (defun th/auto-html-vue ()
   (interactive)
-  (when (eq 'vue-mode major-mode)
+  (when (string-equal (f-ext (buffer-file-name)) "vue")
     (vue-mode)))
-
 
 (use-package emmet-mode
   :after vue-mode
