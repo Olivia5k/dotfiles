@@ -89,7 +89,18 @@
             (interactive)
             (kill-buffer buf)
             (message "Buffer %s killed" buf))
-      "delete")))
+      "delete")
+     ("k"
+      (lambda (x)
+        (kill-buffer x)
+        (ivy--reset-state ivy-last))
+      "kill")
+     ("j"
+      ivy--switch-buffer-other-window-action
+      "other window")
+     ("r"
+      ivy--rename-buffer-action
+      "rename")))
 
   (ivy-mode 1))
 
