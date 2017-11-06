@@ -60,8 +60,20 @@
   :commands (slack-start)
   :init
   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-  (setq slack-prefer-current-team t))
+  (setq slack-prefer-current-team t)
 
+  (setq tracking-ignored-buffers
+        '("#gitlab"
+          "#notifications"
+          "#support"
+          "#infrastructure")))
+
+;; omfg how can the buffer names be so long by default
+(defmethod slack-room-buffer-name ((room slack-channel))
+  (concat "#" (slack-room-display-name room)))
+
+(defmethod slack-room-buffer-name ((room slack-group))
+  (concat (slack-room-display-name room)))
 
 (use-package alert
   :commands (alert)
