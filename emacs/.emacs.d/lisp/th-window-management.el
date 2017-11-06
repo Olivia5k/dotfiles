@@ -10,6 +10,12 @@
   :ensure nil
   :config (winner-mode 1))
 
+(use-package shackle
+  :config
+  (setq shackle-default-rule '(:select t))
+  (setq shackle-rules '((compilation-mode :noselect t)
+                        (circe-query-mode :align t :size 0.3))))
+
 ;; Try to make emax split vertically when possible
 (setq split-height-threshold 100)
 (setq split-width-threshold 160)
