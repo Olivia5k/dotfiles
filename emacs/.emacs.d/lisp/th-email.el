@@ -87,6 +87,7 @@
 
 (defhydra mu4e-hydra (:exit t)
   "mu4e"
+  ("s-m" (mu4e~headers-jump-to-maildir "/unomaly/INBOX") "unomaly")
   ("m" (mu4e~headers-jump-to-maildir "/gmail/INBOX") "inbox")
   ("j" mu4e~headers-jump-to-maildir "mailboxes")
   ("c" (mu4e-compose-new) "compose")
