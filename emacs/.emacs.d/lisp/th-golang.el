@@ -678,6 +678,8 @@ resulting list."
          (default-directory dir))
     (find-file (concat dir "drunkenfall.go"))
 
+    (enved-load dir)
+
     (th/go-server-start "server")
     (th/go-server-buffer)
 
