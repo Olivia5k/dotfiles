@@ -109,6 +109,11 @@
 (exwm-input-set-key (kbd "s-o") 'th/org/body)
 (exwm-input-set-key (kbd "s-m") 'mu4e-hydra/body)
 
+(exwm-input-set-key (kbd "s-.") (lambda () (interactive)
+                                  (message
+                                   (format-time-string
+                                    "%Y-%M-%d %T (%a w%W)"))))
+
 (exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
 (exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
 
