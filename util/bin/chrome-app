@@ -1,3 +1,0 @@
-#!/usr/bin/zsh
-
-browser --app="$1"
