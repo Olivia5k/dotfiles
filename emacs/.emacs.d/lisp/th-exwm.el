@@ -176,8 +176,7 @@
    ([?\C-e] . end)
    ([?\M-v] . prior)
    ([?\C-v] . next)
-   ([?\C-d] . delete)
-   ([?\C-k] . (S-end delete))))
+   ([?\C-d] . delete)))
 
 ;; You can hide the mode-line of floating X windows by uncommenting the
 ;; following lines
