@@ -153,7 +153,7 @@
 (defun th/exwm-chrome (url name)
   "Open a Chrome app for `url'"
   (interactive)
-  (start-process "" name "chrome-app" url))
+  (start-process "" name "browser-app" url))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to

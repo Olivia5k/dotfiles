@@ -8,10 +8,10 @@
 (use-package ivy)
 (use-package autothemer)
 
-;; This uses the `chrome-app` command from the dotfiles repo and puts browser
+;; This uses the `browser-app` command from the dotfiles repo and puts browser
 ;; configuration outside of emacs.
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "chrome-app")
+(setq browse-url-generic-program "browser-app")
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; *scratch*\n\n")
 (setq scroll-step 10)

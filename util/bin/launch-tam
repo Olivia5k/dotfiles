@@ -1,4 +1,4 @@
 #!/usr/bin/zsh
 
-chrome-app https://youtube.com/sleepcyclesgaming &|
-chrome-app https://twitch.tv/sleepcycles &|
+browser-app https://youtube.com/sleepcyclesgaming &|
+browser-app https://twitch.tv/sleepcycles &|
