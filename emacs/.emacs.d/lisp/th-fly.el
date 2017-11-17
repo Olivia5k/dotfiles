@@ -29,11 +29,4 @@ _m_ manual        _p_ previous      _?_ describe
   ("v" flycheck-verify-setup)
   ("?" flycheck-describe-checker))
 
-(use-package flyspell
-  :bind
-  ("C-;" . iedit-mode)
-  :config
-  ;; (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))
-  (add-hook 'text-mode-hook (lambda () (flyspell-mode))))
-
 (provide 'th-fly)
