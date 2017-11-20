@@ -21,7 +21,8 @@
 (add-hook 'emacs-lisp-mode-hook 'nameless-mode)
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
-            (push '("interactive" . ?ι) prettify-symbols-alist)))
+            (push '("interactive" . ?ι) prettify-symbols-alist)
+            (push '("exwm-input-set-key" . ?Ψ) prettify-symbols-alist)))
 
 
 (defun th/buffer-or-region (action-name buffer-func region-func)
