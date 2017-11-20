@@ -11,7 +11,7 @@
 ;; This uses the `browser-app` command from the dotfiles repo and puts browser
 ;; configuration outside of emacs.
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "browser-app")
+(setq browse-url-generic-program "browser")
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; *scratch*\n\n")
 (setq scroll-step 10)
