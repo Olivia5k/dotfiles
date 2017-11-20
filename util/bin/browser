@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if (( $+commands[firefox] )) && false; then
+if (( $+commands[firefox] )); then
     firefox "$@"
 elif (( $+commands[chromium-browser] )); then
     chromium-browser "$@"
