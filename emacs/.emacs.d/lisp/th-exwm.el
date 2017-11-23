@@ -76,7 +76,7 @@
     (split-window-right)
     (other-window 1)
     (enlarge-window-horizontally width)
-    (start-process-shell-command "chromium" nil "chromium --new-window")))
+    (start-process-shell-command "firefox" nil "firefox")))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
