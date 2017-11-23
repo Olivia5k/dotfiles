@@ -673,8 +673,7 @@ resulting list."
 (defun th/start-drunkenfall ()
   (interactive)
 
-  ;; TODO(thiderman): Improve this by using th/df
-  (let* ((dir "~/src/github.com/drunkenfall/drunkenfall/")
+  (let* ((dir th/df)
          (default-directory dir))
     (find-file (concat dir "drunkenfall.go"))
 
@@ -682,6 +681,9 @@ resulting list."
 
     (th/go-server-start "server")
     (th/go-server-buffer)
+
+    (start-process-shell-command
+     "caddy" "*caddy*" "caddy")
 
     (compile "make drunkenfall")
 
