@@ -1,0 +1,6 @@
+#!/usr/bin/zsh
+
+set -x
+
+govendor get $1
+govendor add $1
