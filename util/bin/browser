@@ -1,6 +1,7 @@
 #!/bin/zsh
 
-if (( $+commands[firefox] )); then
+# Prefer Firefox, but do use Chromium for meet.google.com
+if (( $+commands[firefox] )) && ! [[ $1 =~ "meet.google.com" ]]; then
     firefox "$@"
 elif (( $+commands[chromium-browser] )); then
     chromium-browser "$@"
