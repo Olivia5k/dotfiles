@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: zap-string
+# key: z
+# --
+zap.String("$1", $0)
