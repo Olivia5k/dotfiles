@@ -83,7 +83,9 @@
 
 (defhydra th/chat (:exit t)
   "chat"
-  ("s-e" (switch-to-buffer "&bitlbee") "bitlbee")
+  ("s-e" (switch-to-buffer "&bitlbee") "bitlbee buffer")
+  ("s" slack-start "start slack")
+  ("b" (circe "BitlBee") "start bitlbee")
   ("i" insert-image-from-url "view last image")
   ("m" emojify-insert-emoji "emoji 💜")
   ("c" slack-select-rooms "slack"))
