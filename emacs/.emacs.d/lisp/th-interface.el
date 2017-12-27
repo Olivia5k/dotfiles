@@ -60,13 +60,13 @@
             (interactive)
             (split-window-below)
             (windmove-down)
-            (find-file fn))
+            (find-file (expand-file-name fn (projectile-project-root))))
       "horz")
      ("s" (lambda (fn)
             (interactive)
             (split-window-right)
             (windmove-right)
-            (find-file fn))
+            (find-file (expand-file-name fn (projectile-project-root))))
       "vert")))
 
   (ivy-set-actions
