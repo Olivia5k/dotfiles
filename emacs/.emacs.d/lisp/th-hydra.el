@@ -1,5 +1,6 @@
 (defhydra th/util-hydra (:foreign-keys warn :exit t)
   "Util"
+  ("s-c" (switch-to-buffer "*compilation*") "*compilation*")
   ("s" th/yas-hydra/body "yas")
   ("a" auto-fill-mode "Auto fill")
   ("c" firestarter-mode "firestarter")
