@@ -46,7 +46,8 @@
 ;;   bother you). Note that there is no need for processes to be created by
 ;;   Emacs.
 (defun exwm-execute (command)
-  (interactive (list (read-shell-command "$ ")))
+  (interactive
+   (list (read-shell-command "$ ")))
   (start-process-shell-command command nil command))
 
 ;; Terminal launcher
@@ -60,6 +61,8 @@
 
 (exwm-input-set-key (kbd "s-<return>") #'th/eshell-here)
 (exwm-input-set-key (kbd "M-s-<return>") #'th/ansi-term)
+(exwm-input-set-key (kbd "C-M-s-<return>") (lambda () (interactive) (start-process-shell-command
+                                     "urxvt" nil "urxvt")))
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
 (exwm-input-set-key (kbd "s-<backspace>") 'lock)
@@ -77,6 +80,23 @@
     (other-window 1)
     (enlarge-window-horizontally width)
     (start-process-shell-command "firefox" nil "firefox")))
+
+(defun th/goto-browser ()
+  "Run or raise a browser in the current frame.
+
+If there are multiple, complete for them."
+  (interactive)
+  (let* ((browser-buffers (--map (buffer-name it)
+                                 (--filter (s-prefix? "Firefox" (buffer-name it))
+                                  (buffer-list)))))
+    (cond
+     ((= (length browser-buffers) 1)
+      (switch-to-buffer (car browser-buffers)))
+     ((> (length browser-buffers) 1)
+      (switch-to-buffer (switch-to-buffer
+                         (completing-read "Select firefox: " browser-buffers))))
+     (t
+      (message "There are no browser buffers open right now")))))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
@@ -111,16 +131,18 @@
 
 (exwm-input-set-key (kbd "s-.") (lambda () (interactive) (message (format-time-string "%Y-%m-%d %T (%a w%W)"))))
 
-(exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
-(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
-
 (exwm-input-set-key (kbd "C-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss -s")))
 (exwm-input-set-key (kbd "C-M-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss")))
 
+(exwm-input-set-key (kbd "s-q") #'th/goto-browser)
 (exwm-input-set-key (kbd "C-s-q") #'th/browser-golden)
 (exwm-input-set-key (kbd "C-s-s") (lambda () (interactive) (exwm-execute "spotify")))
 
 (exwm-input-set-key (kbd "s-SPC") 'exwm-execute)
+
+;; Workspace management
+(exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
+(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
 
 (defun th/switch-screens ()
   "Switch screen setup."
