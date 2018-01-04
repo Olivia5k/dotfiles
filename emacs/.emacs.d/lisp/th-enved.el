@@ -13,6 +13,10 @@
     "XDG_RUNTIME_DIR")
   "Environment variables one usually will not modify.")
 
+;; TODO(thiderman): Make custom
+(defvar enved-environments nil
+  "Files to load environment variables from")
+
 (defvar enved-buffer-name "*enved*")
 
 (defvar enved-mode-map
@@ -47,14 +51,14 @@
   (enved-mode))
 
 ;;;###autoload
-(defun enved-load (&optional dir)
+(defun enved-load (&optional file)
   "Loads all environment variables of the file into the emacs
 environment.
 
 If `enved' is active, its buffer is refreshed."
   (interactive)
 
-  (let* ((fn (enved-find-file dir))
+  (let* ((fn (enved-find-file file))
          (hash (enved-get-hash fn))
          (keys (hash-table-keys hash))
          (buf (get-buffer enved-buffer-name)))
