@@ -96,7 +96,7 @@ If there are multiple, complete for them."
       (switch-to-buffer (switch-to-buffer
                          (completing-read "Select firefox: " browser-buffers))))
      (t
-      (message "There are no browser buffers open right now")))))
+      (start-process-shell-command "firefox" nil "firefox")))))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
