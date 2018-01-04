@@ -10,6 +10,6 @@
 (defun th/docker-compose ()
   "Run docker compose on the current file"
   (interactive)
-  (compile "docker-compose build"))
+  (compile "make docker"))
 
 (provide 'th-docker)
