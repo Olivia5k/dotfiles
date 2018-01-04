@@ -50,7 +50,13 @@ Adding universal argument will display the full path regardless."
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (cond
+   ((string-equal (buffer-name) "Spotify")
+    (switch-to-buffer "Firefox"))
+   ((string-equal (buffer-name) "Firefox")
+    (switch-to-buffer "Spotify"))
+   (t
+    (switch-to-buffer (other-buffer (current-buffer) 1)))))
 
 (global-set-key (kbd "C-x C-b") 'th/switch-to-previous-buffer)
 
