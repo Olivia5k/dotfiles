@@ -18,6 +18,8 @@
 (setq scroll-conservatively 100)
 (setq debug-on-error nil)
 (setq gc-cons-threshold 50000000)
+(setq-default bidi-display-reordering nil)
+
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
