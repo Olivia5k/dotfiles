@@ -287,6 +287,10 @@ there's a region, all lines that region covers will be duplicated."
 (use-package hexrgb
   :commands (hexrgb-increment-red hexrgb-increment-green hexrgb-increment-blue))
 
+(use-package iedit
+  :bind
+  ("C-;" . iedit-mode))
+
 ;; Hydra that can be used to gradually increase or decrease hex
 ;; colors. Very useful when designing color themes!
 ;; TODO(thiderman): Having the th/hexrgb-step variable in the hydra docstring
