@@ -31,6 +31,9 @@
 (use-package restclient
   :mode ("\\.http\\'" . restclient-mode))
 (use-package counsel-spotify)
+(use-package sql
+  :ensure nil
+  :init (add-to-list 'same-window-buffer-names "*SQL*"))
 (use-package sqlup-mode
   :config (add-hook 'sql-mode-hook 'sqlup-mode))
 (use-package transpose-frame)
