@@ -149,6 +149,7 @@
 
 (use-package helpful
   :bind
+  ("C-h f" . helpful-function)
   ("C-c h" . hydra-helpful/body)
 
   :config
