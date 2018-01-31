@@ -16,7 +16,7 @@
 (use-package org-gcal
   :after org-agenda
   :config
-  (setq org-gcal-file-alist '(("lowe.thiderman@gmail.com" . "~/org/gcal.org"))))
+  (setq org-gcal-file-alist '(("lowe.thiderman@unomaly.com" . "~/org/gcal.org"))))
 
 (use-package calfw)
 (use-package calfw-org)
