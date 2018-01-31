@@ -1,0 +1,6 @@
+# key: range
+# name: range
+# --
+for ${3:_}, ${2:o} := range $1 {
+	$0
+}

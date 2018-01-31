@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: if-err-fatal
+# key: ief
+# --
+if err != nil {
+	log.Fatal(err)
+}
