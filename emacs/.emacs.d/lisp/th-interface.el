@@ -13,7 +13,6 @@
   :config
   (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-prefer-searcher 'ag)
-  (dumb-jump-mode 1)
 
   (defhydra th/dumb-jump-hydra (:exit t :foreign-keys warn)
     "Dumb Jump"
