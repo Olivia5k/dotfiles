@@ -53,8 +53,7 @@
 ;; Terminal launcher
 (defun th/ansi-term ()
   (interactive)
-  (let ((buf (get-buffer "*ansi-term*"))
-        (default-directory (getenv "HOME")))
+  (let ((buf (get-buffer "*ansi-term*")))
     (if buf
         (switch-to-buffer buf)
       (ansi-term "/usr/bin/zsh"))))
