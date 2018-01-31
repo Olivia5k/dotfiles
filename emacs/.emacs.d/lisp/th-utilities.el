@@ -62,13 +62,18 @@
 
 
 ;; Simple functions that have nowhere else to live
-(defun th/show-unixtime ()
-  "Prints a date of the unixtime under point."
-  (interactive)
-  (let* ((thing (substring-no-properties (symbol-name (symbol-at-point)))))
-    (shell-command (format "date -d @%s" thing)))
-)
+(defun th/unixtime (arg)
+  "Prints a date of the unixtime under point.
 
-(global-set-key (kbd "C-x t") 'th/show-unixtime)
+If given the universal argument, the current unixtime is inserted
+at point."
+  (interactive "p")
+
+  (if (= arg 4)
+      (insert (s-trim (shell-command-to-string "date +%s")))
+    (let* ((thing (substring-no-properties (symbol-name (symbol-at-point)))))
+      (shell-command (format "date -d @%s" thing)))))
+
+(global-set-key (kbd "C-x t") 'th/unixtime)
 
 (provide 'th-utilities)
