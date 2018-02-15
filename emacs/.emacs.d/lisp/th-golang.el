@@ -92,7 +92,7 @@
   ("m" go-goto-method-receiver "receiver")
   ("n" go-goto-function-name "name")
   ("r" go-goto-return-values "return")
-  ("b" pop-mark "back")
+  ;; ("b" pop-mark "back")
   ("q" nil))
 
 (defhydra th/go-guru (:exit t :columns 3)
