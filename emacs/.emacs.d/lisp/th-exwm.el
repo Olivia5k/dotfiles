@@ -173,6 +173,10 @@ If there are multiple, complete for them."
   (interactive)
   (start-process "" name "browser-app" url))
 
+;; Volume control!
+(exwm-input-set-key (kbd "s-z") (lambda () (interactive) (start-process-shell-command "pulsemixer" nil
+                                                      "pulsemixer --toggle-mute")))
+
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
 ;; `exwm-input-prefix-keys' and then add the key sequence to `exwm-mode-map'.
