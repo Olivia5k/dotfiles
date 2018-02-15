@@ -5,5 +5,5 @@ localpath="$HOME/tmp/scrot/"
 
 mkdir -p $localpath
 escrotum $* $localpath/$date.png && \
-  notify-send --expire-time 2 --category "screenshot" "Shot taken" "$date.png" || \
-  notify-send --expire-time 2 --category "screenshot" "Shot cancelled"
+  notify-send --expire-time 2000 --category "screenshot" "Shot taken" "$date.png" || \
+  notify-send --expire-time 2000 --category "screenshot" "Shot cancelled"
