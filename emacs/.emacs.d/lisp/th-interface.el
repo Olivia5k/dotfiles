@@ -33,6 +33,8 @@
   :config
   (projectile-global-mode)
   (setq projectile-completion-system 'ivy)
+  (setq projectile-enable-caching t)
+  (setq projectile-files-cache-expire (* 24 60 60))
   (setq projectile-mode-line nil))
 
 
