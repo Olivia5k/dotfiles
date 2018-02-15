@@ -1,11 +1,4 @@
 (use-package org
-  :bind
-  ("s-a" . org-build-agenda)
-  (:map org-agenda-mode-map
-        ("s-a"   . org-agenda-quit)
-        ("f"     . org-agenda-filter-by-category))
-
-
   :init
   (setq org-confirm-babel-evaluate nil)
   (setq org-directory "~/org")

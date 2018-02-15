@@ -1,7 +1,12 @@
 (use-package org-agenda
   :after org
   :ensure nil
-  :bind (("C-c a" . org-agenda))
+  :bind
+  (("C-c a" . org-agenda)
+   ("s-a" . org-build-agenda))
+  (:map org-agenda-mode-map
+        ("s-a"   . org-agenda-quit)
+        ("f"     . org-agenda-filter-by-category))
   :init
   (setq org-agenda-ndays 7)
   (setq org-agenda-files '("~/org/"))

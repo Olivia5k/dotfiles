@@ -1,6 +1,6 @@
 (use-package docker
   :bind (("C-x C-d" . docker-containers)
-         (:map docker-containers-mode-map
+         (:map docker-containers-command-map
                ("i" . docker-images))))
 (use-package dockerfile-mode
   :bind (:map dockerfile-mode-map
