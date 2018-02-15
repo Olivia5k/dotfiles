@@ -210,35 +210,35 @@ If there are multiple, complete for them."
 (setq exwm-workspace-minibuffer-position nil)
 
 (require 'exwm-randr)
+
+(defun exwm-randr-dragonwing ()
+  (start-process-shell-command
+   "xrandr" nil "xrandr --output HDMI2 --right-of eDP1 --auto"))
+
+(defun exwm-randr-dragonisle ()
+  (start-process-shell-command
+   "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto"))
+
 (cond
  ((s-equals? (system-name) "dragonisle")
   (setq exwm-randr-workspace-output-plist
         '(0 "HDMI-0" 1 "HDMI-0" 2 "HDMI-0" 3 "HDMI-0"
             4 "DP-0"   5 "DP-0"   6 "DP-0"   7 "DP-0"))
 
-  (add-hook 'exwm-randr-screen-change-hook
-            (lambda ()
-              (start-process-shell-command
-               "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0
-            --auto"))))
+  (add-hook 'exwm-randr-screen-change-hook #'exwm-randr-dragonisle))
 
- ((s-equals? (system-name) "dragonwing")
+ ((and (s-equals? (system-name) "dragonwing"))
   (setq exwm-randr-workspace-output-plist
         '(0 "eDP1" 1 "eDP1" 2 "eDP1" 3 "eDP1"
             4 "HDMI2"   5 "HDMI2"   6 "HDMI2"   7 "HDMI2"))
 
-  (add-hook 'exwm-randr-screen-change-hook
-            (lambda ()
-              (start-process-shell-command
-               "xrandr" nil "xrandr --output HDMI2 --right-of eDP1 --auto")))))
+  (add-hook 'exwm-randr-screen-change-hook #'exwm-randr-dragonwing)))
 
 ;; Whenever the screen refreshes, make sure to reset the keyboard layout
 (add-hook 'exwm-randr-refresh-hook
           (lambda ()
             (start-process-shell-command
                "" nil "keyboard-setup")))
-
-
 
 (exwm-randr-enable)
 ;; Do not forget to enable EXWM. It will start by itself when things are ready.
