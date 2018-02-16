@@ -14,6 +14,7 @@
   ("l" linum-mode "Line numbers" :exit nil)
   ("m" th/quickmajor "major-mode")
   ("n" th/toggle-minor-mode "minor-mode")
+  ("p" ivy-pass "password")
   ("r" rainbow-identifiers-mode "Rainbow identifiers")
   ("t" toggle-truncate-lines "Truncate lines" :exit nil)
   ("w" whitespace-mode "whitespace" :exit nil)

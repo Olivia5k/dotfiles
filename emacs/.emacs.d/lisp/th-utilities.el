@@ -13,6 +13,8 @@
   :config (setq markdown-asymmetric-header t))
 (use-package nginx-mode)
 (use-package pass)
+(use-package ivy-pass)
+
 (use-package protobuf-mode)
 (use-package puppet-mode)
 (use-package ssh-config-mode)
