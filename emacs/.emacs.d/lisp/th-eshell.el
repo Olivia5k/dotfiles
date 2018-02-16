@@ -1,3 +1,10 @@
+(require 'eshell)
+(require 'em-tramp)
+(setq eshell-prefer-lisp-functions t)
+(setq eshell-prefer-lisp-variables t)
+(setq password-cache t) ; enable password caching
+(setq password-cache-expiry 3600) ; for one hour (time in secs)
+
 (use-package eshell-prompt-extras
   :config
   (with-eval-after-load "esh-opt"
