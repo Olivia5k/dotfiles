@@ -29,15 +29,13 @@
   (interactive)
   (split-window-below)
   (windmove-down)
-  ;(balance-windows)
-  )
+  (balance-windows))
 
 (defun th/split-vertically ()
   (interactive)
   (split-window-right)
   (windmove-right)
-  ;(balance-windows)
-  )
+  (balance-windows))
 
 
 (defadvice customize-group (before customize-group-split-window activate)
@@ -46,8 +44,7 @@
   (other-window 1))
 
 (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
-  ;(balance-windows)
-  )
+  (balance-windows))
 
 (defun split-window-sensibly (&optional window)
   "A split-window-sensibly that's actually sensible.
@@ -59,10 +56,13 @@ Checks `window-splittable-p' as well so that windows that already have
 a fixed size can retain that fixed size. `magit-popup' is a common use
 case for this."
   (let ((window (or window (selected-window))))
-    (if (or (not (window-splittable-p window t))
-            (not (>= (window-width window) 160)))
+    (if (or (and (s-contains? "magit" (symbol-name major-mode))
+                 (not (window-splittable-p window t)))
+            (not (>= (window-width window) 120)))
         (split-window-vertically)
       (split-window-horizontally))))
+
+
 
 (defun th/kill-window ()
   "Kill the window. If it's the last one in the frame and the server is running, kill the frame."
@@ -73,9 +73,8 @@ case for this."
           (save-buffer))
         (delete-frame))
     (delete-window)
-    ;; (save-excursion
-    ;;   (balance-windows))
-    ))
+    (save-excursion
+      (balance-windows))))
 
 (global-set-key (kbd "C-q") 'th/kill-window)
 
@@ -114,7 +113,7 @@ case for this."
                    'hydra-window/body)
          (throw 'hydra-disable t))
    "swap")
-  ("t" transpose-frame "'")
+  ("t" transpose-frame "transpose")
   ("d" (lambda ()
          (interactive)
          (ace-window 16)
