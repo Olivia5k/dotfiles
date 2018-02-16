@@ -73,4 +73,16 @@
 
 (add-hook 'compilation-mode-hook 'golang-test-compile-mode)
 
+(defun th/compile-goto-makefile ()
+  "Edit the Makefile related to the current compilation buffer"
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (forward-line 3)
+    (forward-word 3)
+    (find-file-other-window
+     (thing-at-point 'filename))))
+
+(define-key compilation-mode-map (kbd "e") 'th/compile-goto-makefile)
+
 (provide 'th-compile)
