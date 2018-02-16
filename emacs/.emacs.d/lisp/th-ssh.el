@@ -148,8 +148,7 @@ If `ssh-agent-run-on-demand' is non-nil, run `ssh-agent-run' as necessary."
                (and ssh-agent-run-on-demand (ssh-agent-run))))
       (message "Could not open a connection to your authentication agent.")
 
-    (if (ssh-agent-registered-p key-file)
-        (message "Key %s is already registered with this agent." key-file)
+    (when (not (ssh-agent-registered-p key-file))
       (let* ((process-connection-type 'pty)
              (process (start-process "*ssh-add*" nil ssh-agent-add-program key-file)))
 
