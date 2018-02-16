@@ -18,6 +18,9 @@ export HOMEBIN="$HOME/.local/bin"
 export GOPATH="$HOME"
 local _PATH="$HOMEBIN:$GOPATH/bin"
 
+f="$HOME/src/github.com/thiderman/secrets/secrets.sh"
+[[ -f $f ]] && source $f
+
 # If $_PATH is not in $PATH, add it, but only once.
 if ! [[ $PATH =~ "$_PATH" ]] ; then
   export PATH=$_PATH:$PATH
