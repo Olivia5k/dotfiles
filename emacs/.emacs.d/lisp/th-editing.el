@@ -267,17 +267,6 @@ there's a region, all lines that region covers will be duplicated."
 (global-set-key [M-down] #'th/move-line-down)
 
 
-(use-package rotate-text
-  :init
-  (setq rotate-text-words '(("width" "height")
-                            ("left" "right" "top" "bottom")
-                            ("true" "false")
-                            ("==" "!=" "<=" ">=")))
-
-  (setq rotate-text-symbols '(("true" "false")
-                              ("==" "!=" "<=" ">=")))
-  :bind (("M-r" . rotate-text)))
-
 
 (use-package visual-regexp-steroids
   :bind
