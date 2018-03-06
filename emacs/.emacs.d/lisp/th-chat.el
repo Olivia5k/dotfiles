@@ -104,6 +104,6 @@
 ;; Load secret credentials and start the chats
 
 (add-to-list 'load-path "/home/thiderman/src/github.com/thiderman/secrets/emacs/.emacs.d/lisp")
-(load "th-chat-secret" nil t)
+(load "th-chat-secret" t t)
 
 (provide 'th-chat)
