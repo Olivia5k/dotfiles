@@ -61,6 +61,10 @@
   :init
   (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))
+(use-package tramp
+  :ensure nil
+  :init
+  (setq tramp-default-method "ssh"))
 
 
 ;; Simple functions that have nowhere else to live
