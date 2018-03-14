@@ -670,28 +670,28 @@ resulting list."
   (let* ((name (f-base (projectile-project-root))))
     (switch-to-buffer (format "*%s-server*" name))))
 
+(defun th/compile-in-buffer (file target buffer)
+  "Start a compilation in a decicated buffer"
+  (makefile-executor-execute-target file target)
+  (switch-to-buffer "*compilation*")
+  (rename-buffer buffer t)
+  (switch-to-buffer "*compilation*"))
+
 (defun th/start-drunkenfall ()
   (interactive)
 
   (let* ((dir th/df)
-         (default-directory dir))
-    (find-file (concat dir "drunkenfall.go"))
+         (default-directory dir)
+         (mf (concat dir "Makefile")))
+    (find-file mf)
 
     (enved-load dir)
 
-    (th/go-server-start "server")
-    (th/go-server-buffer)
+    ;; (th/go-server-start "server")
 
-    (start-process-shell-command
-     "caddy" "*caddy*" "caddy")
-
-    (compile "make drunkenfall")
-
-    (split-window-below)
-    (windmove-down)
-
-    (find-file (concat dir "js/package.json"))
-    (npm-mode--exec-process "npm-run" (format "npm run %s" "dev"))
+    (th/compile-in-buffer mf "npm-run" "*drunkenfall-npm*")
+    (th/compile-in-buffer mf "caddy" "*drunkenfall-caddy*")
+    (makefile-executor-execute-target mf "drunkenfall")
 
     (balance-windows)))
 
