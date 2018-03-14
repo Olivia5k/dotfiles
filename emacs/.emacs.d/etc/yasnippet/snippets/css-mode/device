@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: device
+# key: dev
+# --
+@media screen and (\$device: \$device-width) {
+       $0
+}

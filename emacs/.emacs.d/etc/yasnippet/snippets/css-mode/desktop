@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: desktop
+# key: desk
+# --
+@media screen and (\$desktop: \$desktop-width) {
+       $0
+}
