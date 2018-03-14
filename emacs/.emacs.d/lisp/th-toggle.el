@@ -54,7 +54,9 @@ Repeated invocations toggle between the two most recently open buffers."
    ((string-equal (buffer-name) "Spotify")
     (switch-to-buffer "Firefox"))
    ((string-equal (buffer-name) "Firefox")
-    (switch-to-buffer "Spotify"))
+    (if (get-buffer "Spotify")
+        (switch-to-buffer "Spotify")
+      (exwm-execute "spotify")))
    (t
     (switch-to-buffer (other-buffer (current-buffer) 1)))))
 
