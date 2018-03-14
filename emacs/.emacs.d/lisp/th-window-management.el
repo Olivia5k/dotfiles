@@ -95,7 +95,7 @@ case for this."
   ("b" balance-windows "balance")
   ("e" next-error "next error")
   ("E" previous-error "prev error")
-  ("M-e" first-error "first error")
+  ("M-e" first-error "first error" :color blue)
   ("n" new-frame "new frame" :color blue)
   ("a" (lambda ()
          (interactive)
