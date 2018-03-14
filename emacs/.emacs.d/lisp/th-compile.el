@@ -96,4 +96,12 @@
 
 (define-key compilation-mode-map (kbd "c") 'th/compile-execute-target)
 
+(defun th/compile-execute-dedicated ()
+  "Choose a new target in the current makefile and run it in a dedicated buffer."
+  (interactive)
+  (makefile-executor-execute-dedicated-buffer
+   (th/compile-current-makefile)))
+
+(define-key compilation-mode-map (kbd "d") 'th/compile-execute-dedicated)
+
 (provide 'th-compile)
