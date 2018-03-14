@@ -5,18 +5,15 @@
          (default-directory dir)
          (mf (concat dir "Makefile")))
     (find-file mf)
-
     (enved-load dir)
 
-    ;; (th/go-server-start "server")
-
-    (th/compile-in-buffer mf "npm-run" "*drunkenfall-npm*")
-    (th/compile-in-buffer mf "caddy" "*drunkenfall-caddy*")
+    (makefile-executor-execute-dedicated-buffer mf "npm-start")
+    (makefile-executor-execute-dedicated-buffer mf "caddy")
     (makefile-executor-execute-target mf "drunkenfall")
 
     (balance-windows)))
 
-(defun th/grab-drunkenfall ()
+(defun th/drunkenfall-db ()
   (interactive)
   (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
 
@@ -25,5 +22,14 @@
    (concat th/df "data/test.db")
    t)
   (th/go-server-start "server"))
+
+(defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
+  "DrunkenFall"
+  ("s" th/start-drunkenfall "start")
+  ("s-M-d" th/start-drunkenfall "start")
+  ("d" th/drunkenfall-db "get db"))
+
+(global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)
+
 
 (provide 'th-drunkenfall)
