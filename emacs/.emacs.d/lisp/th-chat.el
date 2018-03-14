@@ -97,6 +97,7 @@
   "Make chat buffers appear in smaller splits"
   (when (not (memq major-mode '(circe-query-mode
                                 circe-channel-mode
+                                slack-message-buffer-mode
                                 slack-mode)))
     (split-window-below -20)
     (windmove-down)))
