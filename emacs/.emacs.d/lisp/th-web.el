@@ -31,10 +31,14 @@
   (setq css-indent-offset 2)
   (setq mmm-submode-decoration-level 0)
   (add-hook 'vue-mode-hook 'th/disable-semantic)
+  (add-hook 'vue-mode-hook 'th/vue-auto-yas)
   (add-hook 'vue-mode-hook 'th/vue-auto-template-insert))
 
 (defun th/disable-semantic ()
   (semantic-mode -1))
+
+(defun th/vue-auto-yas ()
+  (yas-minor-mode 1))
 
 (defun th/vue-switcher ()
   (interactive)
