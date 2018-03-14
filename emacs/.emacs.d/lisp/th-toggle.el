@@ -75,13 +75,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-x M-d") 'th/dired-menu)
 (global-set-key (kbd "C-x M-b") 'ibuffer)
 
-
-(defun th/goto-emacs-file ()
-    (interactive)
-    (th/toggle-file (concat user-emacs-directory "lisp/th-exwm.el")))
-
-(define-key global-map (kbd "<f2>") #'th/goto-emacs-file)
-
 (defun th/goto-emacs-file-split ()
     (interactive)
     (split-window-below)
