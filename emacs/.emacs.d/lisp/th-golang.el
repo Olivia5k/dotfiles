@@ -695,4 +695,14 @@ resulting list."
 
     (balance-windows)))
 
+(defun th/grab-drunkenfall ()
+  (interactive)
+  (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
+
+  (copy-file
+   "/scp:dropletfall:drunkenfall/data/production.db"
+   (concat th/df "data/test.db")
+   t)
+  (th/go-server-start "server"))
+
 (provide 'th-golang)
