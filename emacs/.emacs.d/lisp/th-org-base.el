@@ -68,6 +68,10 @@
              (setq org-mode-line-string nil)
              (force-mode-line-update))))
 
+(use-package worf
+  :init
+  (add-hook 'org-mode-hook 'worf-mode))
+
 (use-package org-clock
   :ensure nil)
 
@@ -174,9 +178,6 @@ Go back if we're already in it."
 
 
 
-(use-package worf
-  :after org-mode
-  :init
-  (add-hook 'org-mode-hook 'worf-mode))
+
 
 (provide 'th-org-base)
