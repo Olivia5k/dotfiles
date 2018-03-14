@@ -33,14 +33,14 @@
 
 (defvar th/df "/home/thiderman/src/github.com/drunkenfall/drunkenfall/")
 
-(defun th/drunkenfall-inotify (event)
-  (let ((fn (nth 2 event))
-        (mode (nth 1 event)))
-    (when (and (equal mode 'changed)
-               (string= fn (concat th/df "drunkenfall")))
-      (th/go-server-start "server"))))
+;; (defun th/drunkenfall-inotify (event)
+;;   (let ((fn (nth 2 event))
+;;         (mode (nth 1 event)))
+;;     (when (and (equal mode 'changed)
+;;                (string= fn (concat th/df "drunkenfall")))
+;;       (th/go-server-start "server"))))
 
-(file-notify-add-watch th/df '(change attribute-change) 'th/drunkenfall-inotify)
+;; (file-notify-add-watch th/df '(change attribute-change) 'th/drunkenfall-inotify)
 
 (defhydra th/makefile-hydra (:exit t)
   "Makefile"
