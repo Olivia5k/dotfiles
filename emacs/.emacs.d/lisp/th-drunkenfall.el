@@ -9,7 +9,7 @@
 
     (makefile-executor-execute-dedicated-buffer mf "npm-start")
     (makefile-executor-execute-dedicated-buffer mf "caddy")
-    (makefile-executor-execute-target mf "drunkenfall")
+    (makefile-executor-execute-target mf "drunkenfall-start")
 
     (balance-windows)))
 
@@ -18,10 +18,9 @@
   (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
 
   (copy-file
-   "/scp:dropletfall:drunkenfall/data/production.db"
+   "/scp:dropletfall:src/github.com/drunkenfall/drunkenfall/data/production.db"
    (concat th/df "data/test.db")
-   t)
-  (th/go-server-start "server"))
+   t))
 
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
