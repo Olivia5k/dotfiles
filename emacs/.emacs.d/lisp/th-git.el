@@ -16,6 +16,7 @@
 ;; <3 <3 <3
 (use-package magit
   :bind (("C-x g" . th/magit-status)
+         ("s-g" . th/magit-status)
          :map magit-status-mode-map
          ("q"   . magit-mode-bury-buffer)
          ;; In certain modes we want to just kill the window, not magit entirely
