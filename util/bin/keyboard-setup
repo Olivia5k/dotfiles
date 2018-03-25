@@ -1,4 +1,8 @@
 #!/bin/zsh
 
-setxkbmap ${1:-qwerty-a6-us}
+if [[ "$HOSTNAME" == "dragonisle" ]]; then
+    setxkbmap us
+else
+    setxkbmap ${1:-qwerty-a6-us}
+fi
 xset r rate 330 45
