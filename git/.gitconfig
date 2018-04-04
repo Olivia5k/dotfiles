@@ -74,7 +74,11 @@
 	default = tracking
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[url "git@lab.unomaly.com:"]
+	insteadOf = https://lab.unomaly.com/
 [pull]
 	rebase = true
 [github]
 	user = thiderman
+[credential "https://lab.unomaly"]
+	com = thiderman
