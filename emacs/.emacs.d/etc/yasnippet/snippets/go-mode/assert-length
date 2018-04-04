@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: assert length
+# key: al
+# --
+if !assert.Equal(t, $1, len(${2:slice})) {
+   t.FailNow()
+}

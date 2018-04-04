@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: assert.True
+# key: at
+# --
+assert.True(t, $0)
