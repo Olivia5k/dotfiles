@@ -1,4 +1,4 @@
 # key: ze
 # name: zap error
 # --
-zap.String("error", err.Error())
+zap.Error(err)
