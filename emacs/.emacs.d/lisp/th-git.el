@@ -31,7 +31,7 @@
 
   (setq magit-save-some-buffers 'dontask)
   (setq magit-last-seen-setup-instructions "1.4.0")
-  (setq magit-no-confirm '(reverse trash delete discard drop-stashes stage-all-changes))
+  (setq magit-no-confirm '(reverse stage-all-changes))
 
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
