@@ -1,6 +1,6 @@
 ! urxvt
 URxvt.scrollBar: false
-URxvt.saveLines: 100
+URxvt.saveLines: 1000000
 URxvt.urgentOnBell: true
 URxvt.perl-ext: default,url-select,matcher,searchable-scrollback<F9>,font-size
 URxvt.keysym.M-u: perl:url-select:select_next
