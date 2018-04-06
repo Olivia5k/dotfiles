@@ -166,6 +166,13 @@ If there are multiple, complete for them."
 
 (exwm-input-set-key (kbd "s-x") 'th/switch-screens)
 
+(exwm-input-set-key (kbd "s-<prior>") (lambda () (interactive)
+                       (shell-command "keyboard-setup")
+                       (message "a6 loaded")))
+(exwm-input-set-key (kbd "s-<next>") (lambda () (interactive)
+                      (shell-command "keyboard-setup us")
+                      (message "us loaded")))
+
 (defun th/exwm-chrome (url name)
   "Open a Chrome app for `url'"
   (interactive)
