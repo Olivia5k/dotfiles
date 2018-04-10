@@ -721,6 +721,12 @@
   (telephone-line-accent-active              (:foreground nightmare-light0 :background nightmare-dark4))
   (telephone-line-accent-inactive            (:foreground nightmare-medium :background nightmare-dark0_soft))
 
+  ;; MODE SUPPORT: wgrep
+  (wgrep-done-face                           (:foreground nil :background nil))
+  (wgrep-reject-face                         (:foreground nil :background nil))
+  (wgrep-file-face                           (:foreground nil :background nil))
+  (wgrep-delete-face                         (:foreground nil :background nil))
+  (wgrep-face                                (:foreground nil :background nightmare-dark0_soft))
 
   ;; MODE SUPPORT: message
   (message-header-to                         (:foreground nightmare-bright_cyan ))
