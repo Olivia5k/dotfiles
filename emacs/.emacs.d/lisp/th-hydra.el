@@ -23,7 +23,8 @@
 (global-set-key (kbd "s-c") 'th/util-hydra/body)
 
 (defun th/iosevka (size)
-  (set-frame-font (format "Iosevka-%s" size)))
+  (set-frame-font (format "Iosevka-%s" size))
+  (telephone-line-mode 1))
 
 (defhydra th/font-hydra ()
   "Fonts"

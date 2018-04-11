@@ -78,6 +78,11 @@ Modified version that does not do any properties."
           (accent . (telephone-line-minor-mode-segment))
           (nil    . (telephone-line-airline-position-segment))))
 
+  (setq telephone-line-primary-left-separator telephone-line-utf-abs-left)
+  (setq telephone-line-secondary-left-separator telephone-line-utf-abs-left)
+  (setq telephone-line-primary-right-separator telephone-line-utf-abs-right)
+  (setq telephone-line-secondary-right-separator telephone-line-utf-abs-right)
+
   :config
   (telephone-line-mode 1))
 
