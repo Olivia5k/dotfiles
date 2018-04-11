@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: plog
+# key: pl
+# --
+plog := s.logger.With(zap.String("path", c.Request.URL.Path))

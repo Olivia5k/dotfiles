@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: context
+# key: c
+# --
+c *gin.Context
