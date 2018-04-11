@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-if [[ -z "$2" ]]; then
-  echo "Needs at least two arguments"
-  exit 1
-fi
-
-base="https://www.google.com/finance/converter"
-curl -sL "${base}?a=${1}&from=${2}&to=${3:-usd}&hl=es" | sed '/res/!d;s/<[^>]*>//g';

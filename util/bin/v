@@ -1,6 +1,0 @@
-#!/usr/bin/zsh
-
-set -x
-
-govendor get $*
-govendor add $*
