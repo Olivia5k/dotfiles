@@ -56,7 +56,8 @@ Checks `window-splittable-p' as well so that windows that already have
 a fixed size can retain that fixed size. `magit-popup' is a common use
 case for this."
   (let ((window (or window (selected-window))))
-    (if (or (and (s-contains? "magit" (symbol-name major-mode))
+    (if (or (and (or (s-contains? "magit" (symbol-name major-mode))
+                     (s-contains? "docker" (symbol-name major-mode)))
                  (not (window-splittable-p window t)))
             (not (>= (window-width window) 120)))
         (split-window-vertically)
