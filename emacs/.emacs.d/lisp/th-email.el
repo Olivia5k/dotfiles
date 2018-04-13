@@ -70,9 +70,19 @@
   (define-key mu4e-headers-mode-map (kbd "SPC") #'th/mu4e-to-browser)
   (define-key mu4e-view-mode-map (kbd "SPC") #'th/mu4e-to-browser))
 
+(defun th/mu4e-alert-modeline (count)
+  (concat " "
+          (propertize
+           (all-the-icons-faicon "mail")
+           'face display-time-mail-face)
+          (if (zerop mail-count)
+              " "
+            (format " %d " mail-count))))
+
 (use-package mu4e-alert
   :after mu4e
   :init
+  (setq mu4e-alert-modeline-formatter)
   (setq mu4e-alert-interesting-mail-query
     (concat
      "flag:unread maildir:/gmail/INBOX "
