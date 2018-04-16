@@ -53,4 +53,17 @@ directory to make multiple eshell windows easier."
 
 (global-set-key (kbd "C-x M-e") 'th/eshell-menu)
 
+(defun th/eshell-toggle-sudo ()
+  "Add sudo at the beginning of the current line.
+
+If already there, remove it."
+  (interactive)
+  (save-excursion
+    (eshell-bol)
+    (if (looking-at "sudo")
+        (delete-forward-char 5)
+      (insert "sudo "))))
+
+(bind-key "C-c C-s" #'th/eshell-toggle-sudo eshell-mode-map)
+
 (provide 'th-eshell)
