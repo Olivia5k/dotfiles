@@ -280,6 +280,10 @@ there's a region, all lines that region covers will be duplicated."
   :bind
   ("C-;" . iedit-mode))
 
+(use-package whole-line-or-region
+  :config
+  (whole-line-or-region-global-mode 1))
+
 ;; Hydra that can be used to gradually increase or decrease hex
 ;; colors. Very useful when designing color themes!
 ;; TODO(thiderman): Having the th/hexrgb-step variable in the hydra docstring
