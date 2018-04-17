@@ -58,6 +58,9 @@
   (define-key org-mode-map (kbd "C-c d")   (lambda () (interactive) (org-todo "DONE")))
   (define-key org-mode-map (kbd "C-c i")   (lambda () (interactive) (org-todo "INVALID")))
   (define-key org-mode-map (kbd "C-c SPC") (lambda () (interactive) (org-todo 'none)))
+  ;; I accidentally hit this one quite a lot, and the `pcomplete'
+  ;; bullshit sucks.
+  (define-key org-mode-map (kbd "C-M-i") 'org-cycle)
 
   (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
 
