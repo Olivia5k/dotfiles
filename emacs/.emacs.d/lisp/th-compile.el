@@ -11,12 +11,14 @@
         (ansi-color-apply-on-region compilation-filter-start (point-max))))
     (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
+  ;; We usually want to see all of it
+  (add-hook 'compilation-mode-hook (lambda () (toggle-truncate-lines -1)))
+
   (setq compilation-always-kill t)
   (setq compilation-ask-about-save nil)
   (setq compilation-auto-jump-to-first-error nil)
   (setq compilation-scroll-output t)
   (setq compilation-read-command nil))
-
 
 (use-package makefile-executor
   :ensure t
