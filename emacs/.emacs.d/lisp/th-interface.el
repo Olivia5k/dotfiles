@@ -26,7 +26,6 @@
 
 ;; projectile - project management <3
 (use-package projectile
-  :bind (("C-x f" . projectile-find-file))
   :bind-keymap (("C-x p" . projectile-command-map))
   :commands (projectile-switch-project)
 
@@ -106,7 +105,7 @@
   (ivy-mode 1))
 
 (use-package counsel
-  :bind (("C-x M-p" . counsel-package))
+  :bind (("C-x C-f" . counsel-find-file))
   :config
   ;; https://github.com/abo-abo/swiper/issues/685#issuecomment-249162962
   (setq counsel-find-file-ignore-regexp
@@ -115,6 +114,10 @@
          "\\(?:\\`[#.]\\)"
          ;; File names ending with # or ~
          "\\|\\(?:\\`.+?[#~]\\'\\)")))
+
+(use-package counsel-projectile
+  :bind (("C-x f" . counsel-projectile-find-file))
+  :after counsel)
 
 
 (use-package ace-link

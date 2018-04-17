@@ -56,12 +56,18 @@
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
+  :ensure t
+  :load-path "/home/thiderman/src/github.com/domtronn/all-the-icons.el/"
   :config
   (use-package all-the-icons-dired
     :diminish all-the-icons-dired-mode
     :after (dired)
     :config
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+  (use-package all-the-icons-ivy
+    :config
+    (all-the-icons-ivy-setup)))
 
 (setq custom-safe-themes t)
 
