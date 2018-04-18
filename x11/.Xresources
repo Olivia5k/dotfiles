@@ -21,8 +21,8 @@ URxvt.font-size.step:  2
 
 ! fonts
 ! These are set to URxvt since emacs tooltips via pos-tip crashes otherwise.
-URxvt.font: xft:iosevka:pixelsize=16
-URxvt.boldFont: xft:iosevka:bold:pixelsize=16
+URxvt.font: xft:iosevka:pixelsize=17
+URxvt.boldFont: xft:iosevka:bold:pixelsize=17
 Xft.dpi: 100
 
 ! Colorscheme (unnamed)
@@ -49,4 +49,4 @@ URxvt.color15: #ffffff
 emacs.Background: #281a28
 emacs.Foreground: #fdf4c1
 emacs.FontBackend: xft
-emacs.Font: Iosevka-13
+emacs.Font: Iosevka-17
