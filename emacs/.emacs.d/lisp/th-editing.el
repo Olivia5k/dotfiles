@@ -149,7 +149,7 @@
   (kill-line 1)
   (back-to-indentation))
 
-(global-set-key (kbd "M-k") #'th/kill-line)
+(global-set-key (kbd "M-k") (lambda () (interactive) (message "key is disabled")))
 
 ;; The default felt off
 (global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))
