@@ -79,7 +79,7 @@
   (save-excursion
     (beginning-of-buffer)
     (forward-line 3)
-    (forward-word 3)
+    (search-forward "/")
     (thing-at-point 'filename)))
 
 (defun th/compile-goto-makefile ()
