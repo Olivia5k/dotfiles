@@ -140,6 +140,7 @@ If there are multiple, complete for them."
 ;; Workspace management
 (exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
 (exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
+(exwm-input-set-key (kbd "s-x") (lambda () (interactive) (exwm-workspace-switch 5)))
 
 (defun th/switch-screens ()
   "Switch screen setup."
@@ -163,8 +164,6 @@ If there are multiple, complete for them."
 
     (shell-command "keyboard-setup")
     (exwm-randr--refresh)))
-
-(exwm-input-set-key (kbd "s-x") 'th/switch-screens)
 
 (exwm-input-set-key (kbd "s-<prior>") (lambda () (interactive)
                        (shell-command "keyboard-setup")
