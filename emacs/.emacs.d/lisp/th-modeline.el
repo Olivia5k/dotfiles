@@ -84,6 +84,7 @@ Modified version that does not do any properties."
           (accent . (telephone-line-minor-mode-segment))
           (nil    . (telephone-line-airline-position-segment))))
 
+  (require 'telephone-line-separators)
   (setq telephone-line-primary-left-separator telephone-line-utf-abs-left)
   (setq telephone-line-secondary-left-separator telephone-line-utf-abs-left)
   (setq telephone-line-primary-right-separator telephone-line-utf-abs-right)
