@@ -1,3 +1,0 @@
-#!/usr/bin/zsh
-
-emacsclient --create-frame -e '(org-build-agenda)'
