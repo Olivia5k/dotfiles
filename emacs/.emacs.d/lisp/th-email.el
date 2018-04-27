@@ -82,7 +82,7 @@
 (use-package mu4e-alert
   :after mu4e
   :init
-  (setq mu4e-alert-modeline-formatter)
+  ;; (setq mu4e-alert-modeline-formatter)
   (setq mu4e-alert-interesting-mail-query
     (concat
      "flag:unread maildir:/gmail/INBOX "
