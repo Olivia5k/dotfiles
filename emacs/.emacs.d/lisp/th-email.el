@@ -99,6 +99,7 @@
   "mu4e"
   ("s-m" (mu4e~headers-jump-to-maildir "/unomaly/INBOX") "unomaly")
   ("m" (mu4e~headers-jump-to-maildir "/gmail/INBOX") "inbox")
+  ("i" (mu4e~headers-jump-to-maildir "/gmail/INBOX") "inbox")
   ("j" mu4e~headers-jump-to-maildir "mailboxes")
   ("c" (mu4e-compose-new) "compose")
   ("u" (mu4e-headers-search "flag:unread AND NOT flag:trashed") "unread"))
