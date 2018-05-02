@@ -71,10 +71,16 @@
 
 (defhydra th/files (:exit t)
   "Files"
-  ("a" th/other-files-suffix "alt")
-  ("s-f" projectile-find-file "files")
-  ("s" th/browse-suffixes "suffixes"))
+  ("s-f" projectile-find-file "project files")
+  ("f" projectile-find-file "project files")
+  ("a" th/other-files "suffix")
+  ("b" th/other-files-same-base "base")
+  ("m" (th/other-files "Makefile") "makefiles")
+  ("c" (th/other-files "docker-compose") "docker-compose")
+  ("d" (th/other-files "Dockerfile") "dockerfile")
+  ("t" (th/other-files "test") "test"))
 
 (global-set-key (kbd "s-f") 'th/files/body)
+(global-set-key (kbd "C-x a") 'th/files/body)
 
 (provide 'th-hydra)

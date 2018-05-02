@@ -1,38 +1,36 @@
-(defun th/other-files-suffix (&optional suffix)
-  "Browse between files of a certain kind in the current project.
-Defaults to the suffix of the current buffer if none is given.
+(defun th/other-files (&optional pattern)
+  "Browse between files matching a pattern in the current project.
 
-E.g. if you are visiting a .go file, this will list all other .go files.
+Defaults to the file suffix of the current buffer if none is given.
 
-This is useful if you have backend and frontend code in the same repo."
+E.g. if you are visiting a .go file, this will list all other .go files."
 
   (interactive)
   (find-file
    (concat
     (projectile-project-root)
-    (let* ((suf (or suffix (f-ext (buffer-file-name))))
+    (let* ((bn (buffer-file-name))
+           ;; The pattern, the suffix, or the filename
+           ;; This is to make Makefiles and Dockerfiles work,
+           (pat (or pattern (f-ext bn) (f-base bn)))
            (default-directory (projectile-project-root))
            (targets (-filter
                      (lambda (x)
                        (and
-                        (s-suffix? (concat "." suf) x)
-                        ;; Filter out test files, backup files and the current file
-                        ;; (not (s-contains? "test" x))
-                        (not (s-contains? ".#" x))
-                        (not (s-contains? x (buffer-file-name)))))
+                        (s-contains? pat x)
+                        ;; Filter out the current buffer
+                        (not (s-contains? x bn))))
                      (projectile-get-repo-files))))
 
       (cond
        ((= (length targets) 1)
         (car targets))
        ((= (length targets) 0)
-        (error (format "No other %s files" suf)))
+        (error (format "No other files matching '%s'" pat)))
        (t
         (completing-read
-         (format "%s files: " suf)
+         (format "%s files: " pat)
          targets)))))))
-
-(global-set-key (kbd "C-x a") 'th/other-files-suffix)
 
 (defun th/other-files-same-base ()
   "Find other files that have the same base as the current
@@ -79,7 +77,7 @@ This is useful if you have backend and frontend code in the same repo."
                            (-distinct
                             (-map (lambda (x) (f-ext x))
                                   (projectile-get-repo-files))))))
-    (th/other-files-suffix
+    (th/other-files
      (completing-read "suffixes: " suffixes nil t))))
 
 (provide 'th-alternate)
