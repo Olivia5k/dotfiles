@@ -36,6 +36,7 @@
          (car screens)
          (cadr screens)))
   (setq th/ew/workspaces spaces)
+  (setq th/ew/current (car spaces))
   (add-hook 'exwm-randr-screen-change-hook hook))
 
 (defun th/ew/name (index)
