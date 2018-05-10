@@ -281,6 +281,7 @@ there's a region, all lines that region covers will be duplicated."
   ("C-;" . iedit-mode))
 
 (use-package whole-line-or-region
+  :diminish whole-line-or-region-local-mode
   :config
   (whole-line-or-region-global-mode 1))
 
