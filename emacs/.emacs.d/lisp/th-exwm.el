@@ -137,11 +137,6 @@ If there are multiple, complete for them."
 
 (exwm-input-set-key (kbd "s-SPC") 'exwm-execute)
 
-;; Workspace management
-(exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 1)))
-(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 4)))
-(exwm-input-set-key (kbd "s-x") (lambda () (interactive) (exwm-workspace-switch 5)))
-
 (defun th/switch-screens ()
   "Switch screen setup."
   (interactive)
@@ -213,8 +208,6 @@ If there are multiple, complete for them."
 ;; uncommenting the following line
 (setq exwm-workspace-minibuffer-position nil)
 
-(require 'exwm-randr)
-
 (defun exwm-randr-dragonwing ()
   (start-process-shell-command
    "xrandr" nil "xrandr --output HDMI2 --right-of eDP1 --auto"))
@@ -223,26 +216,28 @@ If there are multiple, complete for them."
   (start-process-shell-command
    "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto"))
 
+(require 'exwm-randr)
+(require 'th-exwm-workspace)
+
 (cond
  ((s-equals? (system-name) "dragonisle")
-  (setq exwm-randr-workspace-output-plist
-        '(0 "HDMI-0" 1 "HDMI-0" 2 "HDMI-0" 3 "HDMI-0"
-            4 "DP-0"   5 "DP-0"   6 "DP-0"   7 "DP-0"))
+  (th/ew/setup
+   '("HDMI-0" "DP-0")
+   '("drunkenfall" "conf")
+   #'exwm-randr-dragonisle))
 
-  (add-hook 'exwm-randr-screen-change-hook #'exwm-randr-dragonisle))
-
- ((and (s-equals? (system-name) "dragonwing"))
-  (setq exwm-randr-workspace-output-plist
-        '(0 "eDP1" 1 "eDP1" 2 "eDP1" 3 "eDP1"
-            4 "HDMI2"   5 "HDMI2"   6 "HDMI2"   7 "HDMI2"))
-
-  (add-hook 'exwm-randr-screen-change-hook #'exwm-randr-dragonwing)))
+ ((s-equals? (system-name) "dragonwing")
+  (th/ew/setup
+   '("eDP1" "HDMI-2")
+   '("unomaly" "conf")
+   #'exwm-randr-dragonwing)))
 
 ;; Whenever the screen refreshes, make sure to reset the keyboard layout
-(add-hook 'exwm-randr-refresh-hook
-          (lambda ()
-            (start-process-shell-command
-               "" nil "keyboard-setup")))
+;; TODO(thiderman): Temporarily disabled since it seems to cause lag
+;; (add-hook 'exwm-randr-refresh-hook
+;;           (lambda ()
+;;             (start-process-shell-command
+;;                "" nil "keyboard-setup")))
 
 (exwm-randr-enable)
 ;; Do not forget to enable EXWM. It will start by itself when things are ready.

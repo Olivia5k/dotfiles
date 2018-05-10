@@ -83,3 +83,4 @@
 
 ;; Lastly
 (require 'th-last)
+(require 'th-exwm-workspace)

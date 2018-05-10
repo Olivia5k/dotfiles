@@ -58,7 +58,8 @@ Modified version that does not do any properties."
       mu4e-alert-mode-line))
 
   (telephone-line-defsegment th/telephone-workspace ()
-    (format "%d" exwm-workspace-current-index))
+    (format "%s" (th/ew/name-for-exwm-workspace
+                  exwm-workspace-current-index)))
 
   (telephone-line-defsegment* th/vc-segment ()
     (telephone-line-raw
@@ -66,8 +67,8 @@ Modified version that does not do any properties."
 
   (setq telephone-line-faces
         '((accent . (telephone-line-accent-active . telephone-line-accent-inactive))
-          (track . (isearch-fail . mode-line-inactive))
-          (email . (mode-line . mode-line-inactive))
+          (track  . (isearch-fail . mode-line-inactive))
+          (email  . (mode-line . mode-line-inactive))
           (nil    . (mode-line . mode-line-inactive))))
 
   (setq telephone-line-lhs
@@ -78,7 +79,7 @@ Modified version that does not do any properties."
 
   (setq telephone-line-rhs
         '((nil    . (th/telephone-clock-segment))
-          (track . (th/telephone-tracking-segment))
+          (track  . (th/telephone-tracking-segment))
           (accent . (th/telephone-email-segment))
           (nil    . (th/vc-segment))
           (accent . (telephone-line-minor-mode-segment))
