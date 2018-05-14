@@ -7,6 +7,8 @@
 (use-package nameless
   :diminish 'nameless-mode)
 
+(use-package eros)
+
 (defun th/lispy-to-defun ()
   (interactive)
   (if (lispy-left-p)
@@ -19,6 +21,7 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-identifiers-mode)
 (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
 (add-hook 'emacs-lisp-mode-hook 'nameless-mode)
+(add-hook 'emacs-lisp-mode-hook 'eros-mode)
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (push '("interactive" . ?ι) prettify-symbols-alist)
