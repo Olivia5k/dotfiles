@@ -78,9 +78,8 @@
   :ensure nil)
 
 (use-package org-journal
-  :after org-mode
   :bind (("C-." . org-journal-new-entry))
-  :init
+  :config
   (setq org-journal-dir "~/org/journal/")
   (setq org-journal-file-format "%Y-%m-%d")
   (setq org-journal-date-format "%A, %Y-%m-%d")
