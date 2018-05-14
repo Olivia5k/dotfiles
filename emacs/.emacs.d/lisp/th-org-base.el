@@ -21,11 +21,10 @@
 
 
   (setq org-todo-keywords
-        '("TODO(t)" "NEXT(n)" "WORKING(w)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
+        '("TODO(t)" "NEXT(n)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
 
   (setq org-todo-keyword-faces
-        '(("WORKING"  :foreground "#556C21" :weight bold)
-          ("NEXT" :foreground "#79740E" :weight bold)
+        '(("NEXT" :foreground "#79740E" :weight bold)
           ("WAITING" :foreground "#3C3246" :weight bold)))
 
   (defface th/org-agenda-separator
