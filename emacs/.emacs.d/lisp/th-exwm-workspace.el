@@ -1,14 +1,16 @@
 (require 'dash)
 
 ;; Workspace management
-(exwm-input-set-key (kbd "s-a") (lambda () (interactive) (exwm-workspace-switch 0)))
-(exwm-input-set-key (kbd "s-d") (lambda () (interactive) (exwm-workspace-switch 1)))
-(exwm-input-set-key (kbd "s-x") (lambda () (interactive) (exwm-workspace-switch 6)))
+(exwm-input-set-key (kbd "s-a") #'th/ew/left)
+(exwm-input-set-key (kbd "s-d") #'th/ew/right)
+(exwm-input-set-key (kbd "s-p") #'th/ew/next)
+(exwm-input-set-key (kbd "s-n") #'th/ew/previous)
 (exwm-input-set-key (kbd "s-SPC") #'th/ew/hydra/body)
 
 (defhydra th/ew/hydra (:exit t)
   "exwm"
-  ("s-SPC" th/ew/switch "workspace"))
+  ("s-SPC" th/ew/switch "workspace")
+  ("r" th/ew/rename "rename"))
 
 (defvar th/ew/current "main")
 (defvar th/ew/screens '("HDMI-0"))
@@ -84,15 +86,35 @@
     (add-to-list 'th/ew/workspaces name t)
     (th/ew/goto name)))
 
+;;;###autoload
+(defun th/ew/rename (&optional name)
+  "Rename the current workspace to `name'"
+  (interactive)
+  (let ((name (or name (read-string "rename: " th/ew/current))))
+    (setq th/ew/workspaces (-replace th/ew/current name th/ew/workspaces))
+    (setq th/ew/current name)))
+
+;;;###autoload
 (defun th/ew/next ()
   "Go to the next workspace, looping back if stepping over the last"
   (interactive)
   (th/ew/goto (th/ew/shift 1)))
 
+;;;###autoload
 (defun th/ew/previous ()
   "Go to the previous workspace, looping back if stepping over the first"
   (interactive)
   (th/ew/goto (th/ew/shift -1)))
+
+(defun th/ew/left ()
+  "Go to the left screen of the current workspace"
+  (interactive)
+  (exwm-workspace-switch (th/ew/workspace-index)))
+
+(defun th/ew/right ()
+  "Go to the right screen of the current workspace"
+  (interactive)
+  (exwm-workspace-switch (+ 1 (th/ew/workspace-index))))
 
 (defun th/ew/shift (shift)
   "Step `shift' steps in workspaces, looping back if stepping over the last"
@@ -113,7 +135,5 @@
                   target))))
     (nth final th/ew/workspaces)))
 
-(exwm-input-set-key (kbd "s-p") #'th/ew/next)
-(exwm-input-set-key (kbd "s-n") #'th/ew/previous)
 
 (provide 'th-exwm-workspace)
