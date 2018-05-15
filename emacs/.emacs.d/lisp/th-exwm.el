@@ -114,8 +114,6 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 (exwm-input-set-key (kbd "s-<tab>") 'th/switch-to-previous-buffer)
 
-(exwm-input-set-key (kbd "s-n") 'flycheck-next-error)
-(exwm-input-set-key (kbd "s-p") 'flycheck-previous-error)
 (exwm-input-set-key (kbd "s-M-C-n") 'first-error)
 (exwm-input-set-key (kbd "s-M-n") 'next-error)
 (exwm-input-set-key (kbd "s-M-p") 'previous-error)
