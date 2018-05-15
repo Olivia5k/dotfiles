@@ -42,10 +42,7 @@
     "Restores the previous window configuration and kills the magit buffer"
     (jump-to-register :magit-fullscreen))
 
-  (defadvice magit-push-dwim (before ssh-agent-with-magit-push activate)
-    (th/auto-add-ssh-key))
-  (defadvice magit-fetch (before ssh-agent-with-magit-fetch activate)
-    (th/auto-add-ssh-key)))
+  )
 
 (defun th/auto-add-ssh-key ()
   "Try to add an ssh-key based on the remote"
@@ -59,6 +56,11 @@
       (ssh-agent-add-key
        (concat (getenv "HOME")
                (format "/.ssh/%s.rsa" key))))))
+
+(defadvice magit-push-dwim (before ssh-agent-with-magit-push activate)
+  (th/auto-add-ssh-key))
+(defadvice magit-fetch (before ssh-agent-with-magit-fetch activate)
+  (th/auto-add-ssh-key))
 
 
 (use-package git-gutter-fringe+
