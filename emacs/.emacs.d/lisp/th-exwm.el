@@ -173,8 +173,13 @@ If there are multiple, complete for them."
   (start-process "" name "browser-app" url))
 
 ;; Volume control!
-(exwm-input-set-key (kbd "s-z") (lambda () (interactive) (start-process-shell-command "pulsemixer" nil
-                                                      "pulsemixer --toggle-mute")))
+(exwm-input-set-key (kbd "s-z") 'th/toggle-mute)
+
+(defun th/toggle-mute ()
+  (interactive)
+  (shell-command-to-string "pulsemixer --toggle-mute")
+  (let ((muted (shell-command-to-string "pulsemixer --get-mute")))
+    (message (if (string-equal (s-trim muted) "1") "muted" "not muted"))))
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to
