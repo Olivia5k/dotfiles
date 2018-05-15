@@ -228,7 +228,7 @@ If there are multiple, complete for them."
 
  ((s-equals? (system-name) "dragonwing")
   (th/ew/setup
-   '("eDP1" "HDMI-2")
+   '("eDP1" "HDMI2")
    '("unomaly" "conf")
    #'exwm-randr-dragonwing)))
 
