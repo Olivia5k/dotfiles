@@ -1,5 +1,6 @@
 (use-package dired
   :diminish dired-omit-mode
+  :straight nil
   :ensure nil
   :bind (:map dired-mode-map
               ("c" . wdired-change-to-wdired-mode)
@@ -26,6 +27,7 @@
 
   (use-package dired-x
     :ensure nil
+    :straight nil
     :config
     (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$\\|.sock$"))
     (setq dired-omit-verbose nil) ;; https://open.spotify.com/track/2XRl0NfORYPEvUJXLtJiND

@@ -75,6 +75,7 @@
   (add-hook 'org-mode-hook 'worf-mode))
 
 (use-package org-clock
+  :straight nil
   :ensure nil)
 
 (use-package org-journal
@@ -87,6 +88,7 @@
 
 (use-package org-habit
   :ensure nil
+  :straight nil
   :init
   (setq org-modules '(org-habit))
   (setq org-habit-show-habits-only-for-today t))

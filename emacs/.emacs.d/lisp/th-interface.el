@@ -127,6 +127,7 @@
 
 (use-package uniquify
   :ensure nil
+  :straight nil
   :config
   (setq uniquify-buffer-name-style 'forward))
 

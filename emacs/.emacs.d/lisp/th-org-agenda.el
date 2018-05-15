@@ -1,5 +1,6 @@
 (use-package org-agenda
   :after org
+  :straight nil
   :ensure nil
   :bind
   (("C-c a" . org-agenda)

@@ -8,11 +8,7 @@
 ;; Start the package configuration
 (require 'cl)
 (require 'url-handlers)
-(setq package-archives
-      '(("melpa"        . "http://melpa.org/packages/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")
-        ("gnu"          . "http://elpa.gnu.org/packages/")
-        ("marmalade"    . "http://marmalade-repo.org/packages/")))
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 ;; Load custom
@@ -21,15 +17,26 @@
   (with-temp-buffer (write-file custom-file)))
 (load custom-file)
 
-;; Path configuration for libraries
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+;; Initialize straight
+(let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
+      (bootstrap-version 3))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; use-package <3
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(straight-use-package 'use-package)
+
+(setq straight-use-package-by-default t)
 (setq use-package-always-ensure t)
 (setq use-package-always-demand t)
+
+;; Path configuration for libraries
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;; Emacs core settings
 (require 'th-core)

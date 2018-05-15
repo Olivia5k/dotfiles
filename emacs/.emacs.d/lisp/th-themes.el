@@ -52,6 +52,7 @@
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
 (use-package nightmare-theme
+  :straight nil
   :ensure nil)
 
 ;; all-the-icons - fantastic icons package <3
