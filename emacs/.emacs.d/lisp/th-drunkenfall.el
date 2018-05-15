@@ -1,3 +1,5 @@
+(defvar th/df "/home/thiderman/src/github.com/drunkenfall/drunkenfall/")
+
 (defun th/start-drunkenfall ()
   (interactive)
 
@@ -18,7 +20,7 @@
   (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
 
   (copy-file
-   "/scp:dropletfall:src/github.com/drunkenfall/drunkenfall/data/production.db"
+   "/scp:df:src/github.com/drunkenfall/drunkenfall/data/production.db"
    (concat th/df "data/test.db")
    t))
 
@@ -26,9 +28,9 @@
   "DrunkenFall"
   ("s" th/start-drunkenfall "start")
   ("s-M-d" th/start-drunkenfall "start")
+  ("g" (browse-url "https://dev.drunkenfall.com") "browse")
   ("d" th/drunkenfall-db "get db"))
 
 (global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)
-
 
 (provide 'th-drunkenfall)
