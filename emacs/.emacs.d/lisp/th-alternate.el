@@ -16,10 +16,7 @@ E.g. if you are visiting a .go file, this will list all other .go files."
            (default-directory (projectile-project-root))
            (targets (-filter
                      (lambda (x)
-                       (and
-                        (s-contains? pat x)
-                        ;; Filter out the current buffer
-                        (not (s-contains? x bn))))
+                       (s-contains? pat x))
                      (projectile-get-repo-files))))
 
       (cond
