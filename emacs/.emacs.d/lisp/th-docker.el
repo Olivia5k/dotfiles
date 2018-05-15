@@ -22,12 +22,14 @@
         (list
          "build"
          "build --no-cache"
+         "logs --follow"
+         "logs --follow --tail=100"
+         "up"
+         "up --build"
          "create"
          "down"
          "exec"
          "images"
-         "logs --follow"
-         "logs --follow --tail=100"
          "logs"
          "ps"
          "pull"
@@ -39,8 +41,6 @@
          "start"
          "stop"
          "top"
-         "up"
-         "up --build"
          )))
 
 (defun th/docker-compose ()
