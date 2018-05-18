@@ -171,6 +171,13 @@ If there are multiple, complete for them."
   (interactive)
   (start-process "" name "browser-app" url))
 
+(defun th/exwm-urxvt (command)
+  "Open a terminal with a dedicated command"
+  (interactive
+   (list (read-string "urxvt: ")))
+  (exwm-execute
+   (format "urxvt -e %s" command)))
+
 ;; Volume control!
 (exwm-input-set-key (kbd "s-z") 'th/toggle-mute)
 

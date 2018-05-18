@@ -9,7 +9,10 @@
 
 (defhydra th/ew/hydra (:exit t)
   "exwm"
-  ("s-SPC" th/ew/switch "workspace")
+  ("S-SPC" th/ew/switch "workspace")
+  ("c" (exwm-execute "chromium") "chromium")
+  ("h" (th/exwm-urxvt "htop") "htop")
+  ("p" (th/exwm-urxvt "pulsemixer") "pulsemixer")
   ("r" th/ew/rename "rename"))
 
 (defvar th/ew/current "main")
