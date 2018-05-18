@@ -57,6 +57,14 @@
 
 (setq go-tc/kwds
       '(("RUN" . font-lock-function-name-face)
+        ("FROM" . font-lock-function-name-face)
+        ("ENV" . font-lock-function-name-face)
+        ("WORKDIR" . font-lock-function-name-face)
+        ("ADD" . font-lock-function-name-face)
+        ("COPY" . font-lock-function-name-face)
+        ("EXPOSE" . font-lock-function-name-face)
+        ("ENTRYPOINT" . font-lock-function-name-face)
+        ("CMD" . font-lock-function-name-face)
         ("PASS" . font-lock-type-face)
         ("FAIL" . font-lock-warning-face)
         ("===\\|---" . font-lock-comment-face)
