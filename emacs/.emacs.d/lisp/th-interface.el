@@ -206,6 +206,8 @@ is already narrowed."
 (setq enable-recursive-minibuffers t)
 
 (setq echo-keystrokes 0.2)
+(setq whitespace-style '(face trailing tabs newline empty indentation
+                              space-before-tab tab-mark newline-mark))
 
 
 (provide 'th-interface)

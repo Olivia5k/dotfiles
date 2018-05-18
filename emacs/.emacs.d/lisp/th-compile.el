@@ -25,7 +25,8 @@
   :load-path "/home/thiderman/src/github.com/thiderman/makefile-executor.el/"
   :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
   :config
-  (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+  (add-hook 'makefile-mode-hook 'makefile-executor-mode)
+  (add-hook 'makefile-mode-hook 'whitespace-mode))
 
 (use-package firestarter
   :config
