@@ -155,7 +155,6 @@
 
 (use-package helpful
   :bind
-  ("C-h f" . helpful-function)
   ("C-c h" . hydra-helpful/body)
 
   :config
@@ -163,7 +162,11 @@
     "Helpful"
     ("f" helpful-function "Function")
     ("c" helpful-command "Command")
-    ("m" helpful-macro "Macro")))
+    ("m" helpful-macro "Macro"))
+  (defalias #'describe-key #'helpful-key)
+  (defalias #'describe-function #'helpful-callable)
+  (defalias #'describe-variable #'helpful-variable)
+  (defalias #'describe-symbol #'helpful-symbol))
 
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 (defun th/narrow-or-widen-dwim (p)
