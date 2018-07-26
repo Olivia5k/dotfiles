@@ -25,7 +25,8 @@
 (add-hook 'exwm-update-title-hook
           (lambda ()
             (when (or (not exwm-instance-name)
-                      (string= "gimp" exwm-instance-name))
+                      (string= "gimp" exwm-instance-name)
+                      (string= "qutebrowser" exwm-instance-name))
               (exwm-workspace-rename-buffer exwm-title))))
 
 ;; `exwm-input-set-key' allows you to set a global key binding (available in
@@ -133,7 +134,7 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "C-s-q") #'th/browser-golden)
 (exwm-input-set-key (kbd "C-s-s") (lambda () (interactive) (exwm-execute "spotify")))
 
-(exwm-input-set-key (kbd "s-SPC") 'exwm-execute)
+(exwm-input-set-key (kbd "M-s-SPC") 'exwm-execute)
 
 (defun th/switch-screens ()
   "Switch screen setup."
