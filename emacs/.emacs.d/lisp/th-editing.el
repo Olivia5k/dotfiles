@@ -370,6 +370,7 @@ For the latter, give the prefix argument."
 (setq comment-column 42)
 (setq fill-column 78)
 (setq word-wrap t)
+(setq sentence-end-double-space nil)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-always-indent 'complete)
