@@ -43,16 +43,6 @@
 
 (global-set-key [f3] #'th/new-module)
 
-(defun th/clear-org ()
-  ""
-  (interactive)
-  (beginning-of-buffer)
-  (flush-lines "^\*")
-  (flush-lines "#+")
-  (delete-blank-lines))
-
-(global-set-key [f6] #'th/clear-org)
-
 (defvar th/clean-whitespace-p t "Cleaning whitespace or not")
 
 (setq th/clean-whitespace-p t)
