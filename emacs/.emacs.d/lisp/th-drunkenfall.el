@@ -26,9 +26,9 @@
 
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
-  ("s" th/start-drunkenfall "start")
   ("s-M-d" th/start-drunkenfall "start")
   ("g" (browse-url "https://dev.drunkenfall.com") "browse")
+  ("h" (find-file "/df:/root/src/github.com/drunkenfall/drunkenfall") "host")
   ("d" th/drunkenfall-db "get db"))
 
 (global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)
