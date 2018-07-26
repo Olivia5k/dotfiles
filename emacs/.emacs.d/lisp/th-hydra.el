@@ -1,4 +1,4 @@
-(defhydra th/util-hydra (:foreign-keys warn :exit t)
+(defhydra th/util-hydra (:foreign-keys warn :exit t :columns 5)
   "Util"
   ("s-c" (switch-to-buffer "*compilation*") "*compilation*")
   ("s" th/yas-hydra/body "yas")
