@@ -220,19 +220,54 @@ If there are multiple, complete for them."
   (start-process-shell-command
    "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto"))
 
+(defun th/xrandr (&rest commands)
+  (start-process-shell-command
+   "xrandr" nil
+   (format "xrandr %s" (s-join " --output" commands))))
+
+(defun th/exwm-randr-hook ()
+  (cond
+   ((s-equals? (system-name) "dragonisle")
+    (th/xrandr "DP-0 --right-of HDMI-0 --auto"
+               "HDMI-0 --auto"))
+
+   ((s-equals? (system-name) "dragonwing")
+    ;; If we have three screens connected, that means that the laptop
+    ;; screen is on and the two monitors are attached. Disable the
+    ;; laptop screen and align the other two.
+    (if (= 3 (length (th/get-connected-screens)))
+        (th/xrandr "eDP1 --off"
+                   "HDMI2 --right-of DP1 --auto"
+                   "DP1 --auto")
+      (th/xrandr "eDP1 --auto"
+                 "HDMI2 --off"
+                 "DP1 --off")))))
+
+(defun th/get-connected-screens ()
+  "Returns a list of the screens xrandr reports as connected"
+  (mapcar
+   (lambda (s)
+     ;; Hehe, ugly, but works since the outputs are always the first
+     ;; thing on every row.
+     (s-replace-regexp " .*" "" s))
+   (s-split
+    "\n"
+    (s-trim (shell-command-to-string
+             "xrandr --query | grep \" connected \"")))))
+
 (require 'exwm-randr)
 (require 'th-exwm-workspace)
 
 (cond
  ((s-equals? (system-name) "dragonisle")
   (th/ew/setup
-   '("HDMI-0" "DP-0")
+   (th/get-connected-screens)
    '("drunkenfall" "conf")
    #'exwm-randr-dragonisle))
 
  ((s-equals? (system-name) "dragonwing")
   (th/ew/setup
-   '("eDP1" "HDMI2")
+   (th/get-connected-screens)
    '("unomaly" "conf")
    #'exwm-randr-dragonwing)))
 

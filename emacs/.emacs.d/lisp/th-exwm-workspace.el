@@ -16,13 +16,15 @@
 (defvar th/ew/screens '("HDMI-0"))
 (defvar th/ew/workspaces '("main"))
 
-;; TODO(thiderman): Convert to dynamic amount of screens
-;; TODO(thiderman): Make into a hook that sets up based on amount of workspaces
-(defun th/ew/plist (left right)
-  "Returns workspace plist where evens are to the left and vice versa"
+;; TODO(thiderman): Make into a hook that sets up based on amount of
+;; screens
+(defun th/ew/plist (screens)
+  "Returns workspace plist where the screens are spread out.
+
+E.g. for (\"HDMI-1\" \"DP-1\") -> (0 \"HDMI-1\" 1 \"DP-1\" 2 \"HDMI-1\" ...)"
   (let (wp)
-    (dotimes (i 20)
-      (setq wp (plist-put wp i (if (evenp i) left right))))
+    (dotimes (i exwm-workspace-number)
+      (setq wp (plist-put wp i (nth (mod i (length screens)) screens))))
     wp))
 
 (defun th/ew/setup (screens spaces hook)
@@ -33,10 +35,7 @@
 `hook' is a randr hook to be run on screen change"
 
   (setq th/ew/screens screens)
-  (setq exwm-randr-workspace-output-plist
-        (th/ew/plist
-         (car screens)
-         (cadr screens)))
+  (setq exwm-randr-workspace-output-plist (th/ew/plist screens))
   (setq th/ew/workspaces spaces)
   (setq th/ew/current (car spaces))
   (add-hook 'exwm-randr-screen-change-hook hook))
