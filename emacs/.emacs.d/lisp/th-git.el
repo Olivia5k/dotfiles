@@ -81,7 +81,7 @@
   ("m" git-gutter+-mode "gutter-mode")
   ("t" git-timemachine "timemachine" :exit t)
   ("s" th/smerge-hydra/body "smerge" :exit t)
-  ("RET" magithub-browse "repo" :exit t)
+  ("RET" th/goto-repo "repo" :exit t)
   ("SPC" git-gutter+-show-hunk-inline-at-point "show")
   ("q" nil))
 
@@ -105,6 +105,21 @@
 ;; TODO(thiderman) This would be super nice to have activate immediately when
 ;; you enter a buffer that has smerge!
 ;; (add-hook 'smerge-mode-hook 'th/smerge-hydra/body)
+
+(defun th/get-repo-url ()
+  "Browse the current repo in the browser
+
+Assumes that the repo lives on a $GOPATH-like path where the path
+after $GOPATH is a canonical URL."
+  (interactive)
+  (s-replace (format "%s/src/" (getenv "GOPATH"))
+             "https://"
+             (projectile-project-root)))
+
+(defun th/goto-repo ()
+  "Browse the current repo in the browser"
+  (interactive)
+  (browse-url (th/get-repo-url)))
 
 
 (provide 'th-git)

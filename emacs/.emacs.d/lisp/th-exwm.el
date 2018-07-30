@@ -1,4 +1,5 @@
-(use-package exwm)
+(use-package exwm
+  :straight (exwm :type git :host github :repo "ch11ng/exwm"))
 
 (server-start)
 
@@ -219,18 +220,14 @@ If there are multiple, complete for them."
 ;; uncommenting the following line
 (setq exwm-workspace-minibuffer-position nil)
 
-(defun exwm-randr-dragonwing ()
-  (start-process-shell-command
-   "xrandr" nil "xrandr --output HDMI2 --right-of eDP1 --auto"))
-
 (defun exwm-randr-dragonisle ()
   (start-process-shell-command
    "xrandr" nil "xrandr --output DP-0 --right-of HDMI-0 --auto"))
 
 (defun th/xrandr (&rest commands)
-  (start-process-shell-command
-   "xrandr" nil
-   (format "xrandr %s" (s-join " --output" commands))))
+  (let ((command (format "xrandr --output %s" (s-join " --output " commands))))
+    (message command)
+    (start-process-shell-command "xrandr" nil command)))
 
 (defun th/exwm-randr-hook ()
   (cond
@@ -265,6 +262,7 @@ If there are multiple, complete for them."
 (require 'exwm-randr)
 (require 'th-exwm-workspace)
 
+
 (cond
  ((s-equals? (system-name) "dragonisle")
   (th/ew/setup
@@ -274,9 +272,14 @@ If there are multiple, complete for them."
 
  ((s-equals? (system-name) "dragonwing")
   (th/ew/setup
-   (th/get-connected-screens)
+   ;; If we have three screens, just use two of them
+   (let ((screens (th/get-connected-screens)))
+     (if (= 3 (length screens))
+         (cdr screens)
+       screens))
    '("unomaly" "conf")
-   #'exwm-randr-dragonwing)))
+   #'th/exwm-randr-hook
+   )))
 
 ;; Whenever the screen refreshes, make sure to reset the keyboard layout
 ;; TODO(thiderman): Temporarily disabled since it seems to cause lag

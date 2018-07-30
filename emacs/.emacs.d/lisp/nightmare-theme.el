@@ -164,7 +164,8 @@
   (font-lock-string-face                             (:bold t :foreground nightmare-neutral_purple))
   (font-lock-variable-name-face                      (:bold t :foreground nightmare-aquamarine4))
   (font-lock-type-face                               (:bold t :foreground nightmare-bright_aqua))
-  (font-lock-warning-face                            (:bold t :foreground nightmare-neutral_red :bold t))
+  (font-lock-warning-face                            (:bold t :foreground nightmare-neutral_red))
+  (font-lock-fixme-face                              (:bold t :foreground nightmare-neutral_red))
 
   ;; MODE SUPPORT: eldoc
   (eldoc-highlight-function-argument         (:inherit 'font-lock-keyword-face))
@@ -369,7 +370,7 @@
   (org-level-2                               (:foreground nightmare-bright_yellow :bold t))
   (org-level-3                               (:foreground nightmare-bright_blue :bold t))
   (org-level-4                               (:foreground nightmare-bright_aqua :bold t))
-  (org-level-5                               (:foreground nightmare-faded_aqua :bold t))
+  (org-level-5                               (:foreground nightmare-neutral_purple :bold t))
   (org-level-6                               (:foreground nightmare-bright_green :bold t))
   (org-level-7                               (:foreground nightmare-bright_red :bold t))
   (org-level-8                               (:foreground nightmare-bright_blue :bold t))

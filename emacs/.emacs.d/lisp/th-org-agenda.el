@@ -16,7 +16,15 @@
   (setq org-agenda-start-on-weekday 1)
   (setq org-agenda-window-setup 'current-window)
   (setq org-archive-location "~/org/archive/%s::")
-  (setq org-log-done t) )
+  (setq org-log-done t)
+
+  (add-hook 'after-save-hook #'th/org-update-agenda))
+
+(defun th/org-update-agenda ()
+  (interactive)
+  (ignore-errors
+    (when (string-equal (f-ext (buffer-file-name)) "org")
+      (org-agenda-redo-all t))))
 
 ;; http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WIqBud9vGAk
 (use-package org-gcal

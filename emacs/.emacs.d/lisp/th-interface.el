@@ -1,4 +1,3 @@
-;; avy - directed jumps to words and things
 (use-package avy
   :ensure t
   :commands avy-goto-word-1
@@ -146,9 +145,10 @@
 
 
 (use-package fixme-mode
+  :diminish fixme-mode
   :config
   (add-hook 'prog-mode-hook 'fixme-mode)
-  (setq fixme-mode-warning-words
+  (setq fixme-highlighted-words
         '("FIXME" "TODO" "BUG" "KLUDGE" "FIX" "FixMe" "HACK"
           "REFACTOR" "NOCOMMIT" "XXX")))
 

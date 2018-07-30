@@ -51,7 +51,7 @@
 ;; Override of the normal find-name-dired since I always want to
 ;; search in the current directory anyways.
 (defun find-name-dired (pattern)
-  (interactive "sdired find: ")
+  (interactive "dired find: ")
   (find-dired
    default-directory
    (concat find-name-arg " " (shell-quote-argument pattern))))

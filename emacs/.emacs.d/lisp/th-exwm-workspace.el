@@ -5,12 +5,16 @@
 (exwm-input-set-key (kbd "s-d") #'th/ew/right)
 (exwm-input-set-key (kbd "s-p") #'th/ew/next)
 (exwm-input-set-key (kbd "s-n") #'th/ew/previous)
+(exwm-input-set-key (kbd "s-M-<tab>") #'th/ew/next)
+(exwm-input-set-key (kbd "s-w") #'th/ew/switch)
 (exwm-input-set-key (kbd "s-SPC") #'th/ew/hydra/body)
 
 (defhydra th/ew/hydra (:exit t)
   "exwm"
   ("S-SPC" th/ew/switch "workspace")
+  ("w" th/ew/switch "workspace")
   ("c" (exwm-execute "chromium") "chromium")
+  ("RET" (exwm-execute "urxvt") "urxvt")
   ("h" (th/exwm-urxvt "htop") "htop")
   ("p" (th/exwm-urxvt "pulsemixer") "pulsemixer")
   ("r" th/ew/rename "rename"))
