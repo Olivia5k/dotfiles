@@ -157,6 +157,24 @@
 
 (global-set-key (kbd "M-Q") 'unfill-paragraph)
 
+(defun th/copy-unfilled-paragraphs ()
+  "Kills paragraphs as one line, suitable for pasting to things that don't understand Markdown."
+  (interactive)
+  (when (not (region-active-p))
+    (error "No region active; cannot unfill paragraphs"))
+
+  (kill-ring-save 0 0 t)
+  (with-temp-buffer
+    (yank)
+    (goto-char (point-min))
+    (push-mark (point-max))
+    (setq mark-active t)
+    (unfill-paragraph t)
+    (kill-ring-save (point-min) (point-max))
+    (message "Unfilled paragraphs killed")))
+
+(global-set-key (kbd "C-M-w") 'th/copy-unfilled-paragraphs)
+
 (defun th/duplicate-current-line-or-region (arg)
   "Duplicates the current line or region ARG times.
 
