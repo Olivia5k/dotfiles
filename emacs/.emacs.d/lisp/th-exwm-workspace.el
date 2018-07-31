@@ -9,9 +9,9 @@
 (exwm-input-set-key (kbd "s-w") #'th/ew/switch)
 (exwm-input-set-key (kbd "s-SPC") #'th/ew/hydra/body)
 
-(defhydra th/ew/hydra (:exit t)
+(defhydra th/ew/hydra (:exit t :columns 3)
   "exwm"
-  ("S-SPC" th/ew/switch "workspace")
+  ("S-SPC" th/exwm-randr-hook "screen refresh")
   ("w" th/ew/switch "workspace")
   ("c" (exwm-execute "chromium") "chromium")
   ("RET" (exwm-execute "urxvt") "urxvt")
