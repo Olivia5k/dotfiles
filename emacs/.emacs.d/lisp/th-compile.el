@@ -103,4 +103,17 @@
 
 (define-key compilation-mode-map (kbd "d") 'th/compile-execute-dedicated)
 
+;;;###autoload
+(defun makefile-toggle-phony ()
+  "Toggle .PHONY on the current rule"
+  (interactive)
+  (save-excursion
+    (backward-sentence)
+    (if (looking-at ".PHONY")
+        (kill-line 1)
+      (insert (format ".PHONY: %s\n" (symbol-at-point))))))
+
+(define-key makefile-mode-map (kbd "C-c C-p") 'makefile-toggle-phony)
+
+
 (provide 'th-compile)
