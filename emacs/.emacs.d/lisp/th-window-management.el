@@ -20,7 +20,7 @@
 (setq split-height-threshold 100)
 (setq split-width-threshold 160)
 
-;; So that (compile) and other commands re-use already open buffers in other
+;; So that `compile' and other commands re-use already open buffers in other
 ;; frames. Really useful when using dual monitors.
 (setq display-buffer-reuse-frames t)
 
