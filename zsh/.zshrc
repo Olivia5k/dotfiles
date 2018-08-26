@@ -32,6 +32,7 @@ source $HOME/.antigen.zsh
 antigen use oh-my-zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme gentoo
+export PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%1~ $(git_prompt_info)%_$(prompt_char)%{$reset_color%} '
 antigen bundle z; export _Z_CMD="j"
 
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
