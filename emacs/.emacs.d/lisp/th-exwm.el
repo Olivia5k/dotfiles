@@ -78,7 +78,7 @@
     (split-window-right)
     (other-window 1)
     (enlarge-window-horizontally width)
-    (start-process-shell-command "firefox" nil "firefox")))
+    (start-process-shell-command "chromium" nil "chromium")))
 
 (defun th/goto-browser ()
   "Run or raise a browser in the current frame.
@@ -86,16 +86,16 @@
 If there are multiple, complete for them."
   (interactive)
   (let* ((browser-buffers (--map (buffer-name it)
-                                 (--filter (s-prefix? "Firefox" (buffer-name it))
+                                 (--filter (s-prefix? "Chromium" (buffer-name it))
                                   (buffer-list)))))
     (cond
      ((= (length browser-buffers) 1)
       (switch-to-buffer (car browser-buffers)))
      ((> (length browser-buffers) 1)
       (switch-to-buffer (switch-to-buffer
-                         (completing-read "Select firefox: " browser-buffers))))
+                         (completing-read "Select chromium: " browser-buffers))))
      (t
-      (start-process-shell-command "firefox" nil "firefox")))))
+      (start-process-shell-command "chromium" nil "chromium")))))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
