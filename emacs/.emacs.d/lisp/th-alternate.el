@@ -64,7 +64,6 @@ This is useful if you have backend and frontend code in the same repo."
      (t
       (error "No alternate file for %s" (buffer-name))))))
 
-(global-set-key (kbd "C-x C-a") 'th/other-files-same-base)
 
 (defun th/browse-suffixes ()
   "Select a suffix from the project and then browse files with that suffix."
