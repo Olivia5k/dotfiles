@@ -131,6 +131,11 @@
    ("r" "Recipe" entry
     (file+headline "~/org/food.org" "Recipes")
     "* [[%^{URL}][%^{Title}]]"
+    )
+
+   ("l" "Line" entry
+    (file "~/org/code.org")
+    "* [[file://%F::%(with-current-buffer (org-capture-get :original-buffer) (number-to-string (line-number-at-pos)))][%^{Description}]]"
     )))
 
 
