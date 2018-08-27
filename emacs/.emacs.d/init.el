@@ -91,3 +91,4 @@
 ;; Lastly
 (require 'th-last)
 (require 'th-exwm-workspace)
+(require 'th-lisp)
