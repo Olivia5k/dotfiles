@@ -116,3 +116,5 @@ if (( $+commands[hub] )) ; then
     compdef hub=git
   fi
 fi
+
+alias u=/home/thiderman/src/lab.unomaly.com/unomaly/unomaly/build/sfx/unomaly/config/unomaly/bin/unomaly
