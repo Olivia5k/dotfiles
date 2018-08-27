@@ -19,6 +19,7 @@
 (use-package puppet-mode)
 (use-package ssh-config-mode)
 (use-package yaml-mode)
+(use-package systemd)
 
 
 ;; minor mode utilities - little to no config
