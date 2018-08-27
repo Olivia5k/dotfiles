@@ -101,6 +101,7 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
 (exwm-input-set-key (kbd "s-k") 'windmove-up)
 (exwm-input-set-key (kbd "s-l") 'windmove-right)
+(exwm-input-set-key (kbd "s-t") 'transpose-frame)
 
 (exwm-input-set-key (kbd "s-M-h") 'shrink-window-horizontally)
 (exwm-input-set-key (kbd "s-M-j") 'shrink-window)
