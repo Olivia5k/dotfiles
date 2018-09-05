@@ -117,4 +117,4 @@ if (( $+commands[hub] )) ; then
   fi
 fi
 
-alias u=/home/thiderman/src/lab.unomaly.com/unomaly/unomaly/build/sfx/unomaly/config/unomaly/bin/unomaly
+alias u=/home/thiderman/src/lab.unomaly.net/unomaly/unomaly/build/sfx/unomaly/config/unomaly/bin/unomaly
