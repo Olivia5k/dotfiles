@@ -79,11 +79,20 @@
     (search-forward "/")
     (thing-at-point 'filename)))
 
+(defun th/compile-current-target ()
+  (save-excursion
+    (beginning-of-buffer)
+    (forward-line 3)
+    (end-of-line)
+    (substring-no-properties (thing-at-point 'symbol))))
+
 (defun th/compile-goto-makefile ()
   "Edit the Makefile related to the current compilation buffer"
   (interactive)
   (save-excursion
-    (find-file-other-window (th/compile-current-makefile))))
+    (let* ((target (th/compile-current-target)))
+      (find-file-other-window (th/compile-current-makefile))
+      (search-forward-regexp (format "^%s" target) nil t))))
 
 (define-key compilation-mode-map (kbd "e") 'th/compile-goto-makefile)
 
