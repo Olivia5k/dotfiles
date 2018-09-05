@@ -29,7 +29,7 @@
   ("s-M-d" th/start-drunkenfall "start")
   ("g" (browse-url "https://dev.drunkenfall.com") "browse")
   ("h" (find-file "/ssh:df:/root/src/github.com/drunkenfall/drunkenfall") "host")
-  ("t" (exwm-execute "urxvt -e ssh df") "terminal")
+  ("t" (exwm-execute "kitty -e ssh df") "terminal")
   ("d" th/drunkenfall-db "get db"))
 
 (global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)

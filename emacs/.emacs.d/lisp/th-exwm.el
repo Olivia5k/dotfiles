@@ -61,7 +61,7 @@
 (exwm-input-set-key (kbd "s-<return>") #'th/eshell-here)
 (exwm-input-set-key (kbd "M-s-<return>") #'th/ansi-term)
 (exwm-input-set-key (kbd "C-M-s-<return>") (lambda () (interactive) (start-process-shell-command
-                                     "urxvt" nil "urxvt")))
+                                     "kitty" nil "kitty")))
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
 (exwm-input-set-key (kbd "s-<backspace>") 'lock)
@@ -186,12 +186,12 @@ If there are multiple, complete for them."
   (interactive)
   (start-process "" name "browser-app" url))
 
-(defun th/exwm-urxvt (command)
+(defun th/exwm-terminal (command)
   "Open a terminal with a dedicated command"
   (interactive
-   (list (read-string "urxvt: ")))
+   (list (read-string "kitty: ")))
   (exwm-execute
-   (format "urxvt -e %s" command)))
+   (format "kitty -e %s" command)))
 
 ;; Volume control!
 (exwm-input-set-key (kbd "s-z") 'th/toggle-mute)

@@ -14,9 +14,9 @@
   ("S-SPC" th/exwm-randr-hook "screen refresh")
   ("w" th/ew/switch "workspace")
   ("c" (exwm-execute "chromium") "chromium")
-  ("RET" (exwm-execute "urxvt") "urxvt")
-  ("h" (th/exwm-urxvt "htop") "htop")
-  ("p" (th/exwm-urxvt "pulsemixer") "pulsemixer")
+  ("RET" (exwm-execute "kitty") "terminal")
+  ("h" (th/exwm-terminal "htop") "htop")
+  ("p" (th/exwm-terminal "pulsemixer") "pulsemixer")
   ("r" th/ew/rename "rename"))
 
 (defvar th/ew/current "main")

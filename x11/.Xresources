@@ -1,49 +1,4 @@
-! urxvt
-URxvt.scrollBar: false
-URxvt.saveLines: 1000000
-URxvt.urgentOnBell: true
-URxvt.perl-ext: default,url-select,matcher,searchable-scrollback<F9>,font-size
-URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.url-select.launcher: www
-URxvt.url-select.underline: true
-URxvt.underlineURLs: true
-URxvt.transparent: false
-URxvt.shading: 40
-URxvt.fading: 0
-URxvt.iso14755: false
-URxvt.meta8: false
-
-URxvt.keysym.C-Up:     perl:font-size:increase
-URxvt.keysym.C-Down:   perl:font-size:decrease
-URxvt.keysym.C-S-Up:   perl:font-size:incglobal
-URxvt.keysym.C-S-Down: perl:font-size:decglobal
-URxvt.font-size.step:  2
-
-! fonts
-! These are set to URxvt since emacs tooltips via pos-tip crashes otherwise.
-URxvt.font: xft:iosevka:pixelsize=16
-URxvt.boldFont: xft:iosevka:bold:pixelsize=16
 Xft.dpi: 100
-
-! Colorscheme (unnamed)
-URxvt.foreground: #dbdbdb
-URxvt.background: #221522
-URxvt.color0: #222229
-URxvt.color1: #8e2b2e
-URxvt.color2: #45702c
-URxvt.color3: #986f43
-URxvt.color4: #25717a
-URxvt.color5: #875C8D
-URxvt.color6: #32a78a
-URxvt.color7: #888888
-URxvt.color8: #555555
-URxvt.color9: #ff464b
-URxvt.color10: #9dbf60
-URxvt.color11: #e2a564
-URxvt.color12: #5495DC
-URxvt.color13: #E41F66
-URxvt.color14: #41dbb5
-URxvt.color15: #ffffff
 
 !emacs
 emacs.Background: #281a28
