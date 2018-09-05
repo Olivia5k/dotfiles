@@ -38,10 +38,11 @@
   ("q" nil))
 
 
-(defhydra th/exec-hydra (:foreign-keys warn :exit t)
+(defhydra th/exec-hydra (:foreign-keys warn :exit t :columns 3)
   "Execution"
   ("C-c" (projectile-switch-project-by-name "~/src/github.com/thiderman/dotfiles") "config")
-  ("d" (find-file "/di:") "dragonisle")
+  ("d" (find-file "/ssh:di:") "dragonisle")
+  ("C-d" daemons "daemons")
   ("e" enved "enved")
   ("E" elfeed "elfeed")
   ("f" hydra-flycheck/body "flycheck")
@@ -77,6 +78,7 @@
   ("b" th/other-files-same-base "base")
   ("m" (th/other-files "Makefile") "makefiles")
   ("c" (th/other-files "docker-compose") "docker-compose")
+  ("i" (th/other-files "gitlab-ci") "gitlab")
   ("d" (th/other-files "Dockerfile") "dockerfile")
   ("t" (th/other-files "test") "test"))
 
