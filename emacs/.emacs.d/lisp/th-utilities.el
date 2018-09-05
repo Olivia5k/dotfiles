@@ -23,6 +23,7 @@
 (use-package ssh-config-mode)
 (use-package yaml-mode)
 (use-package systemd)
+(use-package daemons)
 
 
 ;; minor mode utilities - little to no config
