@@ -12,7 +12,10 @@
 (use-package markdown-mode
   :config (setq markdown-asymmetric-header t))
 (use-package nginx-mode)
-(use-package pass)
+(use-package pass
+  :config
+  ;; Remember to set ~/.gnupg/gpg-agent.conf to have `pinentry-program /usr/bin/pinentry-emacs`
+  (setq epa-pinentry-mode 'loopback))
 (use-package ivy-pass)
 
 (use-package protobuf-mode)
