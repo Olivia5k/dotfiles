@@ -63,6 +63,7 @@ Repeated invocations toggle between the two most recently open buffers."
 (global-set-key (kbd "C-x C-b") 'th/switch-to-previous-buffer)
 
 
+;; TODO(thiderman): Make this into a macro or something
 (defun th/dired-menu ()
   "Go to one of the currently open dired buffers (if there is one)."
   (interactive)
@@ -74,7 +75,19 @@ Repeated invocations toggle between the two most recently open buffers."
         (switch-to-buffer (completing-read "Select dired: " dired-buffers))
       (message "There's no dired buffers open right now"))))
 
+(defun th/compilation-menu ()
+  "Go to one of the currently open compilation buffers (if there are any)."
+  (interactive)
+  (let* ((compilation-buffers (--map (buffer-name it)
+                               (--filter
+                                (equal 'compilation-mode (with-current-buffer it major-mode))
+                                (buffer-list)))))
+    (if compilation-buffers
+        (switch-to-buffer (completing-read "Select compilation: " compilation-buffers))
+      (message "There are no compilation buffers open right now"))))
+
 (global-set-key (kbd "C-x M-d") 'th/dired-menu)
+(global-set-key (kbd "C-x M-c") 'th/compilation-menu)
 (global-set-key (kbd "C-x M-b") 'ibuffer)
 
 (defun th/goto-emacs-file-split ()
