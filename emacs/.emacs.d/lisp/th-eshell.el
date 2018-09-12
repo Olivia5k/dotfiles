@@ -1,8 +1,8 @@
 (require 'eshell)
-(require 'em-tramp)
+;; (require 'em-tramp)
 (setq eshell-prefer-lisp-functions nil)
-(setq eshell-prefer-lisp-variables t)
-(setq password-cache t) ; enable password caching
+(setq eshell-prefer-lisp-variables nil)
+(setq password-cache nil) ; enable password caching
 (setq password-cache-expiry 3600) ; for one hour (time in secs)
 
 (use-package eshell-prompt-extras

@@ -24,13 +24,23 @@
    (concat th/df "data/test.db")
    t))
 
+(defun th/drunkenfall-psql ()
+  (interactive)
+  (let ((sql-postgres-program "psql")
+        (sql-database "drunkenfall")
+        (sql-server "localhost")
+        (sql-user "postgres"))
+    (sql-postgres "drunkenfall-postgres")
+    (sqlup-mode 1)))
+
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
   ("s-M-d" th/start-drunkenfall "start")
   ("g" (browse-url "https://dev.drunkenfall.com") "browse")
   ("h" (find-file "/ssh:df:/root/src/github.com/drunkenfall/drunkenfall") "host")
   ("t" (exwm-execute "kitty -e ssh df") "terminal")
-  ("d" th/drunkenfall-db "get db"))
+  ("d" th/drunkenfall-db "get db")
+  ("p" th/drunkenfall-psql "psql"))
 
 (global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)
 
