@@ -9,7 +9,7 @@
 (require 'cl)
 (require 'url-handlers)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")))
-(package-initialize)
+;; (package-initialize)
 
 ;; Load custom
 (setq custom-file "~/.emacs.d/custom.el")
@@ -32,6 +32,7 @@
 (straight-use-package 'use-package)
 
 (setq straight-use-package-by-default t)
+(setq use-package-version 'straight)
 (setq use-package-always-ensure t)
 (setq use-package-always-demand t)
 
@@ -66,6 +67,7 @@
 (require 'th-enved)
 (require 'th-git)
 (require 'th-manuals)
+(require 'th-lisp)
 
 ;; Languages
 (require 'th-golang)
@@ -91,4 +93,3 @@
 ;; Lastly
 (require 'th-last)
 (require 'th-exwm-workspace)
-(require 'th-lisp)
