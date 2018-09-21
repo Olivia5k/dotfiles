@@ -62,32 +62,48 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "C-x C-b") 'th/switch-to-previous-buffer)
 
+(defmacro th/mode-menu--body (mode name)
+  `(let ((buffers
+         (--map
+          (buffer-name it)
+          (--filter
+           (equal ',mode (with-current-buffer it major-mode))
+           (buffer-list)))))
 
-;; TODO(thiderman): Make this into a macro or something
-(defun th/dired-menu ()
-  "Go to one of the currently open dired buffers (if there is one)."
+    (cond
+     ((= (length buffers) 1)
+      (switch-to-buffer (car buffers))
+      (message "Visiting only open %s buffer" ,name))
+
+     ((> (length buffers) 1)
+      (switch-to-buffer
+       (completing-read (format "%s buffers: " ,name) buffers)))
+
+     (t
+      (message "There are no %s buffers open right now" ,name)))))
+
+(defmacro th/mode-menu (mode)
+  (let* ((name (symbol-name mode))
+         (defun-name (make-symbol (format "%s-select-buffer" name))))
+
+    `(defun ,defun-name ()
+       (interactive)
+       (th/mode-menu--body ,mode ,name))))
+
+(defun th/mode-buffers ()
   (interactive)
-  (let* ((dired-buffers (--map (buffer-name it)
-                               (--filter
-                                (equal 'dired-mode (with-current-buffer it major-mode))
-                                (buffer-list)))))
-    (if dired-buffers
-        (switch-to-buffer (completing-read "Select dired: " dired-buffers))
-      (message "There's no dired buffers open right now"))))
+  (let* ((modes
+         (-sort 'string<
+                (-uniq (--map
+                        (with-current-buffer it major-mode)
+                        (buffer-list)))))
+         (mode (completing-read "major-mode: " modes nil t)))
+    (th/mode-menu--body (make-symbol mode) mode)))
 
-(defun th/compilation-menu ()
-  "Go to one of the currently open compilation buffers (if there are any)."
-  (interactive)
-  (let* ((compilation-buffers (--map (buffer-name it)
-                               (--filter
-                                (equal 'compilation-mode (with-current-buffer it major-mode))
-                                (buffer-list)))))
-    (if compilation-buffers
-        (switch-to-buffer (completing-read "Select compilation: " compilation-buffers))
-      (message "There are no compilation buffers open right now"))))
+(th/mode-buffers)
 
-(global-set-key (kbd "C-x M-d") 'th/dired-menu)
-(global-set-key (kbd "C-x M-c") 'th/compilation-menu)
+(global-set-key (kbd "C-x M-d") (th/mode-menu dired-mode))
+(global-set-key (kbd "C-x M-c") (th/mode-menu compilation-mode))
 (global-set-key (kbd "C-x M-b") 'ibuffer)
 
 (defun th/goto-emacs-file-split ()

@@ -52,6 +52,7 @@
 (require 'th-backups)
 (require 'th-hooks)
 (require 'th-utilities)
+(require 'th-toggle)
 
 ;; emacs extensions
 (require 'th-company)
@@ -80,7 +81,6 @@
 
 ;; File browsing and toggling
 (require 'th-alternate)
-(require 'th-toggle)
 (require 'th-quickfast)
 
 ;; Organization

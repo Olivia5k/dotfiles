@@ -43,20 +43,9 @@ directory to make multiple eshell windows easier."
 (global-set-key (kbd "C-x e") #'th/eshell-here)
 
 (setenv "PAGER" "cat")
-(defun th/eshell-menu ()
-  "Go to one of the currently open eshell buffers (if there is one)."
-  (interactive)
-  (let* ((eshell-buffers (--map (buffer-name it)
-                                (--filter
-                                 (equal 'eshell-mode (with-current-buffer it major-mode))
-                                 (buffer-list)))))
-    (if eshell-buffers
-        (switch-to-buffer (completing-read "Select eshell: " eshell-buffers))
-      (message "There are no eshell buffers open right now"))))
-
 (defalias 'e 'find-file)
 
-(global-set-key (kbd "C-x M-e") 'th/eshell-menu)
+(global-set-key (kbd "C-x M-e") (th/mode-menu eshell-mode))
 
 (defun th/eshell-toggle-sudo ()
   "Add sudo at the beginning of the current line.
