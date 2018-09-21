@@ -49,7 +49,7 @@ xkb_symbols "q6" {
     key <AC11> { [ apostrophe, quotedbl,   adiaeresis,          Adiaeresis ] };
 
     key <AB01> { [ z,          Z,          semicolon,           none ] };
-    key <AB02> { [ x,          X,          slash,               none ] };
+    key <AB02> { [ x,          X,          underscore,          none ] };
     key <AB03> { [ c,          C,          ampersand,           none ] };
     key <AB04> { [ v,          V,          exclam,              none ] };
     key <AB05> { [ b,          B,          backslash,           none ] };
