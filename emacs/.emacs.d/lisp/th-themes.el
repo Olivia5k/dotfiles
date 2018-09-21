@@ -51,9 +51,8 @@
   ;; And functions do not stand out at all...
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
-(use-package nightmare-theme
-  :straight nil
-  :ensure nil)
+(require 'nightmare-theme)
+(load-theme 'nightmare)
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
