@@ -5,6 +5,10 @@
 (when (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 (when (fboundp 'mouse-wheel-mode) (mouse-wheel-mode 1))
 
+;; Fix mouse focus for exwm
+(setq mouse-autoselect-window t
+      focus-follows-mouse t)
+
 ;; Start the package configuration
 (require 'cl)
 (require 'url-handlers)
