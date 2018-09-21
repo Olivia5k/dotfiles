@@ -12,12 +12,13 @@
 (defhydra th/ew/hydra (:exit t :columns 3)
   "exwm"
   ("S-SPC" th/exwm-randr-hook "screen refresh")
-  ("w" th/ew/switch "workspace")
-  ("c" (exwm-execute "chromium") "chromium")
+  ("q" (exwm-execute "chromium") "chromium")
   ("RET" (exwm-execute "kitty") "terminal")
+  ("c" (th/exwm-terminal "ctop") "ctop")
   ("h" (th/exwm-terminal "htop") "htop")
   ("p" (th/exwm-terminal "pulsemixer") "pulsemixer")
-  ("r" th/ew/rename "rename"))
+  ("r" th/ew/rename "rename")
+  ("w" th/ew/switch "switch"))
 
 (defvar th/ew/current "main")
 (defvar th/ew/screens '("HDMI-0"))
