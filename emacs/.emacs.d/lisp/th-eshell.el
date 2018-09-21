@@ -12,17 +12,21 @@
     (setq eshell-highlight-prompt nil
           eshell-prompt-function 'epe-theme-lambda)))
 
-(defun th/eshell-here ()
+(defun th/eshell-here (arg)
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
-  (interactive)
+  (interactive "P")
   (let* ((root-buffer (window-buffer (selected-window)))
          (parent (if (buffer-file-name root-buffer)
                      (file-name-directory (buffer-file-name))
                    default-directory))
          (shellname (concat "*eshell: " parent "*"))
          (shell-buffer (get-buffer shellname)))
+
+    (when (not arg)
+      (split-window-below -20)
+      (windmove-down))
 
     (if shell-buffer
         ;; If we're already in eshell, go back to where we were.
@@ -31,6 +35,7 @@ directory to make multiple eshell windows easier."
                      (buffer-name shell-buffer))
             (previous-buffer)
           (switch-to-buffer shell-buffer))
+
       ;; It doesn't exist yet - let's create it!
       (eshell "new")
       (rename-buffer shellname))))

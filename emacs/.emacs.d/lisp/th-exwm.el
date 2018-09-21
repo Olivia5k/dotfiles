@@ -64,7 +64,7 @@
       (ansi-term "/usr/bin/zsh"))))
 
 (exwm-input-set-key (kbd "s-<return>") #'th/eshell-here)
-(exwm-input-set-key (kbd "M-s-<return>") #'th/ansi-term)
+(exwm-input-set-key (kbd "M-s-<return>") (lambda () (interactive) (th/eshell-here 1)))
 (exwm-input-set-key (kbd "C-M-s-<return>") (lambda () (interactive) (start-process-shell-command
                                      "kitty" nil "kitty")))
 
