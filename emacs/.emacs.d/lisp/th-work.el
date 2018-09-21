@@ -2,8 +2,9 @@
 
 (defvar th/unomaly-repo "~/src/lab.unomaly.net/unomaly/")
 
-(when (f-exists? th/unomaly-repo)
-  (add-to-list 'load-path (concat th/unomaly-repo "elisp/"))
-  (require 'unomaly))
+(let ((elisp (concat th/unomaly-repo "elisp/")))
+  (when (f-exists? elisp)
+    (add-to-list 'load-path elisp)
+    (require 'unomaly)))
 
 (provide 'th-work)
