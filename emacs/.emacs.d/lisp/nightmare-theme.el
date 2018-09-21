@@ -165,7 +165,7 @@
   (font-lock-variable-name-face                      (:bold t :foreground nightmare-aquamarine4))
   (font-lock-type-face                               (:bold t :foreground nightmare-bright_aqua))
   (font-lock-warning-face                            (:bold t :foreground nightmare-neutral_red))
-  (font-lock-fixme-face                              (:bold t :foreground nightmare-neutral_red))
+  (font-lock-fixme-face                              (:bold t :foreground nightmare-neutral_red :background nil))
 
   ;; MODE SUPPORT: eldoc
   (eldoc-highlight-function-argument         (:inherit 'font-lock-keyword-face))
