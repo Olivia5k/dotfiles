@@ -30,6 +30,11 @@
                       (string= "qutebrowser" exwm-instance-name))
               (exwm-workspace-rename-buffer exwm-title))))
 
+;; Set input mode to be char for terminals
+(setq exwm-manage-configurations
+      '(((string= "kitty" exwm-instance-name)
+         char-mode t)))
+
 ;; `exwm-input-set-key' allows you to set a global key binding (available in
 ;; any case). Following are a few examples.
 ;; + We always need a way to go back to line-mode from char-mode
