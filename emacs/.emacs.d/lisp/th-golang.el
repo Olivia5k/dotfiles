@@ -8,7 +8,7 @@
         ("M-m"     . go-goto-hydra/body)
         ("C-c i"   . go-goto-imports)
 
-        ("C-c c"   . th/go-coverage)
+        ("C-c c"   . th/go-coverage-toggle)
         ("C-c a"   . ff-find-other-file)
         ("C-M-x"   . th/go-single-test)
         ("C-c C-c" . makefile-executor-execute-last)
@@ -130,8 +130,11 @@
             (th/go-test-buffer-p)))))))
 
 (defun th/go-coverage-toggle ()
-  (go-coverage
-   (concat (projectile-project-root) "coverage.out")))
+  (interactive)
+  (let ((fn "coverage.out"))
+    (if (f-exists? fn)
+        (go-coverage fn)
+      (error "No coverage file found in PWD"))))
 
 (defun th/go-test-file-p (&optional fn)
   "Returns boolean if the file name given is a test file"
@@ -152,7 +155,7 @@
   (projectile-save-project-buffers)
   (when (th/go-test-file-p)
     (setq th/go-single-test
-          (format "go test -tags develop -v -run %s" (th/go-get-test-above))))
+          (format "go test -tags develop -v -run %s -coverprofile=coverage.out" (th/go-get-test-above))))
   (compile th/go-single-test))
 
 (defun th/go-select-type-signature ()
