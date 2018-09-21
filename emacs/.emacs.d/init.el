@@ -9,7 +9,7 @@
 (require 'cl)
 (require 'url-handlers)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")))
-;; (package-initialize)
+(package-initialize)
 
 ;; Load custom
 (setq custom-file "~/.emacs.d/custom.el")
