@@ -668,7 +668,7 @@
   (magit-log-sha1                            (:foreground nightmare-bright_orange))
   (magit-process-ng                          (:foreground nightmare-bright_red :weight 'bold))
   (magit-process-ok                          (:foreground nightmare-bright_green :weight 'bold))
-  (magit-section-heading                     (:foreground nightmare-light2 :background nightmare-dark_blue))
+  (magit-section-heading                     (:foreground nightmare-light2))
   (magit-signature-bad                       (:foreground nightmare-bright_red :weight 'bold))
   (magit-signature-good                      (:foreground nightmare-bright_green :weight 'bold))
   (magit-signature-none                      (:foreground nightmare-faded_red))
