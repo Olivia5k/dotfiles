@@ -48,7 +48,7 @@
   "Try to add an ssh-key based on the remote"
   (let* ((url (car (magit-config-get-from-cached-list "remote.origin.url")))
          (key (cond
-               ((s-contains? "lab.unomaly.com" url)
+               ((s-contains? "lab.unomaly" url)
                 "unomaly")
                ((s-contains? "gitlab.com" url)
                 "unomaly-gitlab"))))
