@@ -44,6 +44,11 @@
 
   )
 
+;; 💜
+(use-package magit-todos
+  :config
+  (magit-todos-mode 1))
+
 (defun th/auto-add-ssh-key ()
   "Try to add an ssh-key based on the remote"
   (let* ((url (car (magit-config-get-from-cached-list "remote.origin.url")))
