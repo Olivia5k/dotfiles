@@ -9,7 +9,7 @@
               ("/" . th/dired-goto-root)
               ("~" . th/dired-goto-home)
               ("h" . dired-omit-mode)
-              ("e" . th/eshell-here))
+              ("e" . th/eshell-dired))
 
   :config
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
