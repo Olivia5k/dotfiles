@@ -5,6 +5,13 @@
 (setq password-cache nil) ; enable password caching
 (setq password-cache-expiry 3600) ; for one hour (time in secs)
 
+(setq eshell-scroll-to-bottom-on-input 'all
+      eshell-error-if-no-glob t
+      eshell-hist-ignoredups t
+      eshell-save-history-on-exit t
+      eshell-prefer-lisp-functions nil
+      eshell-destroy-buffer-when-process-dies t)
+
 (use-package eshell-prompt-extras
   :config
   (with-eval-after-load "esh-opt"
@@ -40,6 +47,10 @@ directory to make multiple eshell windows easier."
       (eshell "new")
       (rename-buffer shellname))))
 
+(defun th/eshell-dired ()
+  (interactive)
+  (th/eshell-here 1))
+
 (global-set-key (kbd "C-x e") #'th/eshell-here)
 
 (setenv "PAGER" "cat")
@@ -59,5 +70,35 @@ If already there, remove it."
       (insert "sudo "))))
 
 (bind-key "C-c C-s" #'th/eshell-toggle-sudo eshell-mode-map)
+
+(defun eshell-next-prompt (n)
+  "Move to end of Nth next prompt in the buffer. See `eshell-prompt-regexp'."
+  (interactive "p")
+  (re-search-forward eshell-prompt-regexp nil t n)
+  (when eshell-highlight-prompt
+    (while (not (get-text-property (line-beginning-position) 'read-only) )
+      (re-search-forward eshell-prompt-regexp nil t n)))
+  (eshell-skip-prompt))
+
+(defun eshell-previous-prompt (n)
+  "Move to end of Nth previous prompt in the buffer. See `eshell-prompt-regexp'."
+  (interactive "p")
+  (backward-char)
+  (eshell-next-prompt (- n)))
+
+(defun eshell-insert-history ()
+  "Displays the eshell history to select and insert back into your eshell."
+  (interactive)
+  (insert (ivy-completing-read "Eshell history: "
+                               (delete-dups
+                                (ring-elements eshell-history-ring)))))
+
+(add-hook
+ 'eshell-mode-hook
+ (lambda ()
+   (define-key eshell-mode-map (kbd "M-P") 'eshell-previous-prompt)
+   (define-key eshell-mode-map (kbd "M-N") 'eshell-next-prompt)
+   (define-key eshell-mode-map (kbd "M-r") 'eshell-insert-history)
+   (define-key eshell-mode-map (kbd "M-s") 'th/eshell-toggle-sudo)))
 
 (provide 'th-eshell)
