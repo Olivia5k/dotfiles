@@ -1,3 +1,5 @@
+(setq vc-handled-backends '(Git))
+
 (use-package gitconfig-mode)
 (use-package gitignore-mode)
 (use-package git-commit

@@ -62,8 +62,9 @@ Modified version that does not do any properties."
                   exwm-workspace-current-index)))
 
   (telephone-line-defsegment* th/vc-segment ()
-    (telephone-line-raw
-     (replace-regexp-in-string "git." "" (substring-no-properties (if vc-mode vc-mode "")) t t) t))
+    (when (not (file-remote-p (buffer-file-name)))
+      (telephone-line-raw
+       (replace-regexp-in-string "git." "" (substring-no-properties (if vc-mode vc-mode "")) t t) t)))
 
   (setq telephone-line-faces
         '((accent . (telephone-line-accent-active . telephone-line-accent-inactive))
