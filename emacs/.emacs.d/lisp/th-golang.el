@@ -77,6 +77,10 @@
 (defun th/go-hook ()
   (add-hook 'before-save-hook 'gofmt-before-save)
   (set (make-local-variable 'company-backends) '(company-go))
+  (setq imenu-generic-expression
+        '(("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
+          ("func" "^func *\\(.*\\) {" 1)
+          ("test-run" "t.Run(\"*\\(.*\\)\", func" 1)))
 
   ;; This needs to be set in the hook rather than in the :map because
   ;; the go-guru mode map will override it otherwise.
