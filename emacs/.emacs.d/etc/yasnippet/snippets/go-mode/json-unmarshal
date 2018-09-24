@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: json.Unmarshal()
+# key: u
+# --
+err = json.Unmarshal(${1:data}, &${2:o})

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ioutil.ReadAll()
+# key: ra
+# --
+body, err := ioutil.ReadAll($0)

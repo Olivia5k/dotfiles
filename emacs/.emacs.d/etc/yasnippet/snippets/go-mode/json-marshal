@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: json.Marshal
+# key: m
+# --
+out, err := json.Marshal($0)
