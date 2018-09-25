@@ -52,7 +52,7 @@
   (set-face-attribute 'font-lock-function-name-face nil :foreground "#FE8019"))
 
 (require 'nightmare-theme)
-(load-theme 'nightmare)
+;(load-theme 'nightmare)
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
