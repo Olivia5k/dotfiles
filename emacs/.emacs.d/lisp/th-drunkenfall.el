@@ -26,12 +26,15 @@
 
 (defun th/drunkenfall-psql ()
   (interactive)
-  (let ((sql-postgres-program "psql")
-        (sql-database "drunkenfall")
-        (sql-server "localhost")
-        (sql-user "postgres"))
-    (sql-postgres "drunkenfall-postgres")
-    (sqlup-mode 1)))
+  (let ((buffer (get-buffer "*SQL: drunkenfall-postgres*")))
+    (if buffer 
+        (switch-to-buffer buffer)
+      (let ((sql-postgres-program "psql")
+            (sql-database "drunkenfall")
+            (sql-server "localhost")
+            (sql-user "postgres"))
+        (sql-postgres "drunkenfall-postgres")
+        (sqlup-mode 1)))))
 
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
