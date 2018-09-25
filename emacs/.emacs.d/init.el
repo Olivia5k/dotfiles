@@ -5,6 +5,9 @@
 (when (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 (when (fboundp 'mouse-wheel-mode) (mouse-wheel-mode 1))
 
+;; This has caused me enough pain now.
+(global-unset-key (kbd "C-z"))
+
 ;; Fix mouse focus for exwm
 (setq mouse-autoselect-window t
       focus-follows-mouse t)
