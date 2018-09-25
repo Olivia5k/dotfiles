@@ -81,8 +81,8 @@ Modified version that does not do any properties."
   (setq telephone-line-rhs
         '((nil    . (th/telephone-clock-segment))
           (track  . (th/telephone-tracking-segment))
-          (accent . (th/telephone-email-segment))
-          (nil    . (th/vc-segment))
+          ;; (accent . (th/telephone-email-segment))
+          ;; (nil    . (th/vc-segment))
           (accent . (telephone-line-minor-mode-segment))
           (nil    . (telephone-line-airline-position-segment))))
 
