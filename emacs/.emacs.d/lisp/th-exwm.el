@@ -65,8 +65,7 @@
 
 (exwm-input-set-key (kbd "s-<return>") #'th/eshell-here)
 (exwm-input-set-key (kbd "M-s-<return>") (lambda () (interactive) (th/eshell-here 1)))
-(exwm-input-set-key (kbd "C-M-s-<return>") (lambda () (interactive) (start-process-shell-command
-                                     "kitty" nil "kitty")))
+(exwm-input-set-key (kbd "C-M-s-<return>") #'th/goto-terminal)
 
 ;; + 'slock' is a simple X display locker provided by suckless tools.
 (exwm-input-set-key (kbd "s-<backspace>") 'lock)
@@ -101,6 +100,23 @@ If there are multiple, complete for them."
                          (completing-read "Select chromium: " browser-buffers))))
      (t
       (start-process-shell-command "chromium" nil "chromium")))))
+
+(defun th/goto-terminal ()
+  "Run or raise a terminal in the current frame.
+
+If there are multiple, complete for them."
+  (interactive)
+  (let* ((browser-buffers (--map (buffer-name it)
+                                 (--filter (s-prefix? "kitty" (buffer-name it))
+                                  (buffer-list)))))
+    (cond
+     ((= (length browser-buffers) 1)
+      (switch-to-buffer (car browser-buffers)))
+     ((> (length browser-buffers) 1)
+      (switch-to-buffer (switch-to-buffer
+                         (completing-read "Select kitty: " browser-buffers))))
+     (t
+      (start-process-shell-command "kitty" nil "kitty")))))
 
 (exwm-input-set-key (kbd "s-h") 'windmove-left)
 (exwm-input-set-key (kbd "s-j") 'windmove-down)
