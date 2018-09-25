@@ -210,15 +210,18 @@ there's a region, all lines that region covers will be duplicated."
   (use-package change-inner)
 
   (defhydra hydra-mark (:color blue :columns 4)
-    "Mark"
+    "Mark / mc"
+    ("a" mc/mark-all-dwim "mark all")
+    ("l" mc/mark-next-like-this "mark next" :exit nil)
+    ("h" mc/mark-previous-like-this "mark previous" :exit nil)
+    ("e" mc/edit-lines "edit lines")
+
     ("d" er/mark-defun "Defun / Function")
     ("f" er/mark-defun "Defun / Function")
     ("w" er/mark-word "Word")
     ("u" er/mark-url "Url")
-    ("e" mark-sexp "S-Expression")
     ("E" er/mark-email "Email")
     ("b" mark-whole-buffer "Buffer")
-    ("l" mark-line "Line")
     ("p" er/mark-text-paragraph "Paragraph")
     ("s" er/mark-symbol "Symbol")
     ("S" er/mark-symbol-with-prefix "Prefixed symbol")
@@ -233,17 +236,12 @@ there's a region, all lines that region covers will be duplicated."
     ("t" er/mark-inner-tag "Inner Tag")
     ("T" er/mark-outer-tag "Outer Tag")
     ("c" er/mark-comment "Comment")
-    ("a" er/mark-html-attribute "HTML Attribute")
     ("i" change-inner "Inner")
     ("o" change-outer "Outer")
     ("SPC" er/expand-region "Expand Region" :exit nil)
     ("M-SPC" er/contract-region "Contract Region" :exit nil)))
 
-(use-package multiple-cursors
-  :bind
-  ("C-x C-l" . mc/mark-next-like-this)
-  ("C-x C-h" . mc/mark-previous-like-this)
-  ("C-M-s"   . mc/edit-lines))
+(use-package multiple-cursors)
 
 
 (defun th/ffap-dwim ()
