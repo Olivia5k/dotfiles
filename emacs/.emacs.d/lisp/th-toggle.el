@@ -100,8 +100,6 @@ Repeated invocations toggle between the two most recently open buffers."
          (mode (completing-read "major-mode: " modes nil t)))
     (th/mode-menu--body (make-symbol mode) mode)))
 
-(th/mode-buffers)
-
 (global-set-key (kbd "C-x M-d") (th/mode-menu dired-mode))
 (global-set-key (kbd "C-x M-c") (th/mode-menu compilation-mode))
 (global-set-key (kbd "C-x M-b") 'ibuffer)
