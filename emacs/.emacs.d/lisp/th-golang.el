@@ -7,6 +7,7 @@
         ("C-c C-f" . go-goto-hydra/body)
         ("M-m"     . go-goto-hydra/body)
         ("C-c i"   . go-goto-imports)
+        ("C-c e"   . th/go-run-main)
 
         ("C-c c"   . th/go-coverage-toggle)
         ("C-c a"   . ff-find-other-file)
@@ -176,6 +177,10 @@
            (go--convert-type-name-to-receiver
             (car (s-split " " type))))
         " "))))
+
+(defun th/go-run-main ()
+  (interactive)
+  (compile "go run main.go"))
 
 (require 'th-golang-docstring)
 (require 'th-golang-refactor)
