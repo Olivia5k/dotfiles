@@ -215,7 +215,11 @@ If there are multiple, complete for them."
    (format "kitty -e %s" command)))
 
 ;; Volume control!
-(exwm-input-set-key (kbd "s-z") 'th/toggle-mute)
+(exwm-input-set-key (kbd "s-x") 'th/toggle-mute)
+
+;; Splits
+(exwm-input-set-key (kbd "s-z") #'th/split-horizontally)
+(exwm-input-set-key (kbd "s-s") #'th/split-vertically)
 
 (defun th/toggle-mute ()
   (interactive)
