@@ -72,10 +72,11 @@
 
 [push]
 	default = tracking
+	followTags = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-[url "git@lab.unomaly.com:"]
-	insteadOf = https://lab.unomaly.com/
+[url "git@lab.unomaly.net:"]
+	insteadOf = https://lab.unomaly.net/
 [pull]
 	rebase = true
 [github]
