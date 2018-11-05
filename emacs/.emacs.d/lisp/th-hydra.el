@@ -29,7 +29,7 @@
 (defhydra th/font-hydra ()
   "Fonts"
   ("d" (th/iosevka 10))
-  ("f" (th/iosevka 13))
+  ("f" (th/iosevka 12))
   ("h" (th/iosevka 17))
   ("j" (th/iosevka 20))
   ("k" (th/iosevka 22))
