@@ -24,13 +24,14 @@
 ;; frames. Really useful when using dual monitors.
 (setq display-buffer-reuse-frames t)
 
-
+;;;###autoload
 (defun th/split-horizontally ()
   (interactive)
   (split-window-below)
   (windmove-down)
   (balance-windows))
 
+;;;###autoload
 (defun th/split-vertically ()
   (interactive)
   (split-window-right)
@@ -135,11 +136,6 @@ case for this."
     (hydra-window/body)))
 
 (global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
-
-(global-set-key (kbd "s-h") 'windmove-left)
-(global-set-key (kbd "s-j") 'windmove-down)
-(global-set-key (kbd "s-k") 'windmove-up)
-(global-set-key (kbd "s-l") 'windmove-right)
 
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'th/split-horizontally)
