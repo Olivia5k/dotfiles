@@ -158,9 +158,10 @@ If there are multiple, complete for them."
 
 (defun th/exwm-date-bat ()
   (interactive)
-  (message "%s %s"
-   (format-time-string "%Y-%m-%d %T (%a w%W)")
-   (th/exwm-bat)))
+  (message "%s %s %s"
+           (format-time-string "%Y-%m-%d %T @ %a w%W [%s]")
+           (format-time-string "(%T UTC)" nil t)
+           (th/exwm-bat)))
 (exwm-input-set-key (kbd "s-.") #'th/exwm-date-bat)
 
 (exwm-input-set-key (kbd "C-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss -s")))
