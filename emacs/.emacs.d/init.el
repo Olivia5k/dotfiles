@@ -8,9 +8,9 @@
 ;; This has caused me enough pain now.
 (global-unset-key (kbd "C-z"))
 
-;; Fix mouse focus for exwm
-(setq mouse-autoselect-window t
-      focus-follows-mouse t)
+;; Disable mouse focus for exwm
+(setq mouse-autoselect-window nil
+      focus-follows-mouse nil)
 
 ;; Start the package configuration
 (require 'cl)
