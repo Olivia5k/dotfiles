@@ -59,21 +59,9 @@
   :after go-mode
   :bind (:map go-mode-map ("C-c t" . go-add-tags)))
 
-(use-package flycheck-gometalinter
+(use-package flycheck-golangci-lint
   :ensure t
-  :init
-  ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
-  (setq flycheck-gometalinter-vendor t)
-  ;; only show errors
-  (setq flycheck-gometalinter-errors-only t)
-  ;; only run fast linters
-  (setq flycheck-gometalinter-fast t)
-  ;; use in tests files
-  (setq flycheck-gometalinter-test t)
-  (setq flycheck-gometalinter-deadline "5s")
-  :config
-  (progn
-    (flycheck-gometalinter-setup)))
+  :hook (go-mode . flycheck-golangci-lint-setup))
 
 (defun th/go-hook ()
   (add-hook 'before-save-hook 'gofmt-before-save)
