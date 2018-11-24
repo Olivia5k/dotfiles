@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-verbose
+# key: lv
+# --
+log.Printf("%+v", $0)
