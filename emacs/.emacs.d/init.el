@@ -68,6 +68,7 @@
 (require 'th-snippets)
 (require 'th-ssh)
 (require 'th-work)
+(require 'th-abbrev)
 
 ;; Programming and developing
 (require 'th-compile)

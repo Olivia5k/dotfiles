@@ -8,4 +8,6 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'prog-mode-hook 'auto-fill-mode)
 
+(add-hook 'prog-mode-hook 'abbrev-mode)
+
 (provide 'th-hooks)
