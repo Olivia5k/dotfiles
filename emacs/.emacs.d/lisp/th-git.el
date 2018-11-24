@@ -49,6 +49,7 @@
 ;; 💜
 (use-package magit-todos
   :config
+  (setq magit-todos-require-colon nil)
   (magit-todos-mode 1))
 
 (defun th/auto-add-ssh-key ()
