@@ -25,7 +25,7 @@ xkb_symbols "q6" {
 
     key <AD01> { [ q,          Q,          parenleft,           none ] };
     key <AD02> { [ w,          W,          parenright,          none ] };
-    key <AD03> { [ e,          E,          bracketleft,         none ] };
+    key <AD03> { [ e,          E,          bracketleft,         eacute ] };
     key <AD04> { [ r,          R,          bracketright,        none ] };
     key <AD05> { [ t,          T,          dollar,              none ] };
     key <AD06> { [ y,          Y,          quotedbl,            none ] };
