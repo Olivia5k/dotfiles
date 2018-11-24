@@ -5,7 +5,8 @@
   (diminish 'eldoc-mode)
   (diminish 'flycheck-mode)
   (diminish 'auto-fill-function " fill")
-  (diminish 'compilation-in-progress " 🔥"))
+  (diminish 'compilation-in-progress " 🔥")
+  (diminish 'projectile-mode))
 
 
 (provide 'th-last)
