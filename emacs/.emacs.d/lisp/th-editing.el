@@ -239,7 +239,8 @@ there's a region, all lines that region covers will be duplicated."
     ("i" change-inner "Inner")
     ("o" change-outer "Outer")
     ("SPC" er/expand-region "Expand Region" :exit nil)
-    ("M-SPC" er/contract-region "Contract Region" :exit nil)))
+    ("M-SPC" er/contract-region "Contract Region" :exit nil)
+    ("q" nil)))
 
 (use-package multiple-cursors)
 
