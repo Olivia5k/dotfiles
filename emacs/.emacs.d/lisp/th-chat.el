@@ -51,9 +51,7 @@
   (make-directory lui-logging-directory t)
   (enable-lui-logging-globally)
 
-  (add-hook 'circe-chat-mode-hook 'th/circe-prompt)
-
-  (tracking-mode 1))
+  (add-hook 'circe-chat-mode-hook 'th/circe-prompt))
 
 
 (use-package slack

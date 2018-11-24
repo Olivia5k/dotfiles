@@ -204,6 +204,7 @@ there's a region, all lines that region covers will be duplicated."
   ("M-l"   . er/expand-region)
   ("C-M-l" . er/contract-region)
   ("C-c SPC" . hydra-mark/body)
+  ("C-c C-SPC" . hydra-mark/body)
 
   :config
   (setq shift-select-mode nil) ;; https://github.com/magnars/expand-region.el/issues/220
@@ -213,6 +214,7 @@ there's a region, all lines that region covers will be duplicated."
     "Mark / mc"
     ("a" mc/mark-all-dwim "mark all")
     ("l" mc/mark-next-like-this "mark next" :exit nil)
+    ("C-SPC" mc/mark-next-like-this "mark next" :exit nil)
     ("h" mc/mark-previous-like-this "mark previous" :exit nil)
     ("e" mc/edit-lines "edit lines")
 
