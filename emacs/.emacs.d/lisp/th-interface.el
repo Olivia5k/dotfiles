@@ -210,7 +210,7 @@ is already narrowed."
 
 (setq echo-keystrokes 0.2)
 (setq whitespace-style '(face trailing tabs newline empty indentation
-                              space-before-tab tab-mark newline-mark))
+                              space-before-tab tab-mark))
 
 
 (provide 'th-interface)
