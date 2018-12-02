@@ -1,5 +1,5 @@
 (use-package ace-window
-  :conf
+  :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner
