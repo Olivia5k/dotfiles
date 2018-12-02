@@ -34,6 +34,7 @@
   (setq magit-save-some-buffers 'dontask)
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-no-confirm '(reverse stage-all-changes))
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
