@@ -18,12 +18,6 @@
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
-;; Load custom
-(setq custom-file "~/.emacs.d/custom.el")
-(unless (file-exists-p custom-file)
-  (with-temp-buffer (write-file custom-file)))
-(load custom-file)
-
 ;; Initialize straight
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
       (bootstrap-version 3))
@@ -40,8 +34,12 @@
 
 (setq straight-use-package-by-default t)
 (setq use-package-version 'straight)
-(setq use-package-always-ensure t)
-(setq use-package-always-demand t)
+
+;; Load custom
+(setq custom-file "~/.emacs.d/custom.el")
+(unless (file-exists-p custom-file)
+  (with-temp-buffer (write-file custom-file)))
+(load custom-file)
 
 ;; Path configuration for libraries
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
