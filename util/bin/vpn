@@ -1,0 +1,3 @@
+#!/usr/bin/zsh
+cd .openvpn/unomaly.net
+sudo openvpn *.conf
