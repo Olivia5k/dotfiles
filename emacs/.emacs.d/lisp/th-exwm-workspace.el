@@ -16,6 +16,7 @@
   ("RET" (exwm-execute "kitty") "terminal")
   ("c" (th/exwm-terminal "ctop") "ctop")
   ("h" (th/exwm-terminal "htop") "htop")
+  ("g" (exwm-execute "gimp") "gimp")
   ("p" (th/exwm-terminal "pulsemixer") "pulsemixer")
   ("r" th/ew/rename "rename")
   ("w" th/ew/switch "switch"))
