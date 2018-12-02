@@ -21,9 +21,6 @@
   :config
   (global-undo-tree-mode +1))
 
-(use-package darkroom
-  :straight (darkroom :type git :host github :repo "joaotavora/darkroom"))
-
 (defun th/new-module (fn)
   "Create a new module and add it"
   (interactive "MModule name: ")
