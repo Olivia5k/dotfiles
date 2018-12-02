@@ -49,14 +49,6 @@ Modified version that does not do any properties."
           (org-clock-get-clock-string)
         "<not clocking>")))
 
-  (telephone-line-defsegment th/telephone-tracking-segment ()
-    (when (telephone-line-selected-window-active)
-      (th/tracking-status)))
-
-  (telephone-line-defsegment th/telephone-email-segment ()
-    (when (telephone-line-selected-window-active)
-      mu4e-alert-mode-line))
-
   (telephone-line-defsegment th/telephone-workspace ()
     (format "%s" (th/ew/name-for-exwm-workspace
                   exwm-workspace-current-index)))
@@ -80,9 +72,6 @@ Modified version that does not do any properties."
 
   (setq telephone-line-rhs
         '((nil    . (th/telephone-clock-segment))
-          (track  . (th/telephone-tracking-segment))
-          ;; (accent . (th/telephone-email-segment))
-          ;; (nil    . (th/vc-segment))
           (accent . (telephone-line-minor-mode-segment))
           (nil    . (telephone-line-airline-position-segment))))
 
