@@ -1,3 +1,0 @@
-#!/usr/bin/zsh
-
-sudo ~/bin/caddy $*
