@@ -42,7 +42,9 @@
   :ensure nil
   :init (add-to-list 'same-window-buffer-names "*SQL*"))
 (use-package sqlup-mode
-  :config (add-hook 'sql-mode-hook 'sqlup-mode))
+  :config
+  (add-hook 'sql-mode-hook 'sqlup-mode)
+  (add-hook 'sql-mode-hook 'yas-minor-mode-on))
 (use-package transpose-frame)
 (use-package wrap-region)
 (use-package xkcd)

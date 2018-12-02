@@ -1,0 +1,4 @@
+# key: s
+# name: scores
+# --
+SELECT * FROM scores($0);

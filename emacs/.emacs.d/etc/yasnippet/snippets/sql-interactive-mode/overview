@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: overview
+# key: o
+# --
+SELECT * FROM overview($0);
