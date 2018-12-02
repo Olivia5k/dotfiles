@@ -28,6 +28,21 @@
 
   :mode "\\.vue\\'"
   :config
+  (setq vue-modes
+        '((:type template :name nil :mode web-mode)
+          (:type template :name html :mode web-mode)
+          (:type script :name nil :mode js-mode)
+          (:type script :name js :mode js-mode)
+          (:type script :name es6 :mode js-mode)
+          (:type script :name babel :mode js-mode)
+          (:type script :name typescript :mode typescript-mode)
+          (:type style :name nil :mode css-mode)
+          (:type style :name css :mode css-mode)
+          (:type style :name stylus :mode stylus-mode)
+          (:type style :name less :mode less-css-mode)
+          (:type style :name scss :mode css-mode)
+          (:type style :name sass :mode ssass-mode)))
+
   (setq css-indent-offset 2)
   (setq mmm-submode-decoration-level 0)
   (add-hook 'vue-mode-hook 'th/disable-semantic)
@@ -134,14 +149,7 @@ Insert it if it does not exist."
   (setq web-mode-attr-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
 
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  ;; If we're in vue-mode, make sure to reset it when we save.
-  (add-hook 'after-save-hook #'th/auto-html-vue))
-
-(defun th/auto-html-vue ()
-  (interactive)
-  (when (string-equal (f-ext (buffer-file-name)) "vue")
-    (vue-mode)))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 
 (use-package emmet-mode
   :after vue-mode
@@ -166,5 +174,7 @@ Insert it if it does not exist."
 (use-package npm-mode
   :config
   (add-hook 'json-mode-hook 'npm-mode))
+
+(defun semantic-idle-scheduler-function (&rest))
 
 (provide 'th-web)
