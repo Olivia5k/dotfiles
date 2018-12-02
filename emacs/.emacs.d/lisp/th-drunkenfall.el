@@ -11,9 +11,12 @@
 
     (makefile-executor-execute-dedicated-buffer mf "npm-start")
     (makefile-executor-execute-dedicated-buffer mf "caddy")
+    (makefile-executor-execute-dedicated-buffer mf "postgres")
     (makefile-executor-execute-target mf "drunkenfall-start")
 
-    (balance-windows)))
+    (switch-to-buffer "*compilation*")
+
+    (th/browser-golden)))
 
 (defun th/drunkenfall-db ()
   (interactive)
@@ -27,7 +30,7 @@
 (defun th/drunkenfall-psql ()
   (interactive)
   (let ((buffer (get-buffer "*SQL: drunkenfall-postgres*")))
-    (if buffer 
+    (if buffer
         (switch-to-buffer buffer)
       (let ((sql-postgres-program "psql")
             (sql-database "drunkenfall")
