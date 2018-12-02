@@ -20,6 +20,10 @@
   (setq compilation-scroll-output t)
   (setq compilation-read-command nil))
 
+(use-package make-mode
+  :bind (:map makefile-mode-map
+              ("C-c C-p" . makefile-toggle-phony)))
+
 (use-package makefile-executor
   :ensure t
   :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
@@ -122,7 +126,6 @@
         (kill-line 1)
       (insert (format ".PHONY: %s\n" (symbol-at-point))))))
 
-(define-key makefile-mode-map (kbd "C-c C-p") 'makefile-toggle-phony)
-
+(define-key makefile-mode-map "C-c C-p" 'makefile-toggle-phony)
 
 (provide 'th-compile)

@@ -18,6 +18,7 @@
   ("h" (th/exwm-terminal "htop") "htop")
   ("g" (exwm-execute "gimp") "gimp")
   ("p" (th/exwm-terminal "pulsemixer") "pulsemixer")
+  ("b" th/toggle-prohibit-balance "balance toggle")
   ("r" th/ew/rename "rename")
   ("w" th/ew/switch "switch"))
 

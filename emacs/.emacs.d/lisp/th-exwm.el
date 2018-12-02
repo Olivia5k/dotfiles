@@ -82,7 +82,8 @@
     (split-window-right)
     (other-window 1)
     (enlarge-window-horizontally width)
-    (start-process-shell-command "chromium" nil "chromium")))
+    (set-frame-parameter nil 'th/prohibit-balance t)
+    (th/goto-browser)))
 
 (defun th/goto-browser ()
   "Run or raise a browser in the current frame.

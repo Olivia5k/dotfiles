@@ -1,6 +1,5 @@
 (use-package ace-window
-  :bind ("s-w" . ace-window)
-  :config
+  :conf
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner
@@ -24,19 +23,34 @@
 ;; frames. Really useful when using dual monitors.
 (setq display-buffer-reuse-frames t)
 
+(defun th/balance-windows ()
+  "Balance windows, but only if there are no X windows close by"
+  (interactive)
+  (when (not (frame-parameter nil 'th/prohibit-balance))
+    (balance-windows)))
+
+(window-list)
+
+(defun th/toggle-prohibit-balance ()
+  "Toggles if balance prohibiting is on or off"
+  (interactive)
+  (let ((target (not (frame-parameter nil 'th/prohibit-balance))))
+    (set-frame-parameter nil 'th/prohibit-balance target)
+    (message (if target "Prohibit enabled" "Prohibit disabled"))))
+
 ;;;###autoload
 (defun th/split-horizontally ()
   (interactive)
   (split-window-below)
   (windmove-down)
-  (balance-windows))
+  (th/balance-windows))
 
 ;;;###autoload
 (defun th/split-vertically ()
   (interactive)
   (split-window-right)
   (windmove-right)
-  (balance-windows))
+  (th/balance-windows))
 
 
 (defadvice customize-group (before customize-group-split-window activate)
@@ -45,7 +59,7 @@
   (other-window 1))
 
 (defadvice split-window-sensibly (after split-window-sensibly-autobalance activate)
-  (balance-windows))
+  (th/balance-windows))
 
 (defun split-window-sensibly (&optional window)
   "A split-window-sensibly that's actually sensible.
@@ -76,7 +90,7 @@ case for this."
         (delete-frame))
     (delete-window)
     (save-excursion
-      (balance-windows))))
+      (th/balance-windows))))
 
 (global-set-key (kbd "C-q") 'th/kill-window)
 
@@ -94,7 +108,7 @@ case for this."
   ("L" enlarge-window-horizontally)
   ("f" projectile-find-file "file" :color blue)
   ("p" projectile-switch-project "project" :color blue)
-  ("b" balance-windows "balance")
+  ("b" th/balance-windows "balance")
   ("e" next-error "next error")
   ("E" previous-error "prev error")
   ("M-e" first-error "first error" :color blue)
@@ -121,7 +135,7 @@ case for this."
          (ace-window 16)
          (add-hook 'ace-window-end-once-hook
                    'hydra-window/body)
-         (balance-windows)
+         (th/balance-windows)
          (throw 'hydra-disable t))
    "del")
   ("o" delete-other-windows "one" :color blue)
