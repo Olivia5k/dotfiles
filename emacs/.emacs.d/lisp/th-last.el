@@ -4,6 +4,7 @@
   (diminish 'auto-revert-mode)
   (diminish 'eldoc-mode)
   (diminish 'flycheck-mode)
+  (diminish 'abbrev-mode)
   (diminish 'auto-fill-function " fill")
   (diminish 'compilation-in-progress " 🔥")
   (diminish 'projectile-mode))
