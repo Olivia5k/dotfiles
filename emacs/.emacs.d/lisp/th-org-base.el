@@ -161,7 +161,8 @@ Go back if we're already in it."
      (org-archive-subtree)
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE|INVALID" 'file)
-  (save-buffer))
+  (save-buffer)
+  (message "Done tasks archived"))
 
 (setq org-refile-targets
       '((org-agenda-files :maxlevel . 5)))
