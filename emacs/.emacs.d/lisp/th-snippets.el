@@ -6,6 +6,9 @@
   (add-hook 'markdown-mode 'yas-minor-mode)
   (add-hook 'org-mode-hook 'yas-minor-mode))
 
+(use-package yasnippet-snippets
+  :after yasnippet)
+
 (defhydra th/yas-hydra (:exit t)
   "yas"
   ("s" yas-insert-snippet "snippet")
