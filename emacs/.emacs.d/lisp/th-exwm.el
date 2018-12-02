@@ -319,12 +319,11 @@ If there are multiple, complete for them."
 (require 'exwm-randr)
 (require 'th-exwm-workspace)
 
-
 (cond
  ((s-equals? (system-name) "dragonisle")
   (th/ew/setup
    (th/get-connected-screens)
-   '("drunkenfall" "conf")
+   '("www" "drunkenfall")
    #'exwm-randr-dragonisle))
 
  ((s-equals? (system-name) "dragonwing")
@@ -334,7 +333,7 @@ If there are multiple, complete for them."
      (if (= 3 (length screens))
          (cdr screens)
        screens))
-   '("unomaly" "conf")
+   '("www" "unomaly")
    #'th/exwm-randr-hook
    )))
 
