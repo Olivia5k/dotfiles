@@ -13,6 +13,7 @@
 
   ;; We usually want to see all of it
   (add-hook 'compilation-mode-hook (lambda () (toggle-truncate-lines -1)))
+  (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
 
   (setq compilation-always-kill t)
   (setq compilation-ask-about-save nil)
