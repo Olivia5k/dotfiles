@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ioutil.ReadFile()
+# key: rf
+# --
+body, err := ioutil.ReadFile($0)
