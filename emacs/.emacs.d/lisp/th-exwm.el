@@ -149,20 +149,19 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "s-o") 'th/org/body)
 (exwm-input-set-key (kbd "s-m") 'mu4e-hydra/body)
 
-(defun th/exwm-bat ()
-  (if (string-equal (system-name) "dragonwing")
-      (format "    %s"
-              (s-replace
-               "\n" "; "
-               (s-trim (shell-command-to-string "acpi -b"))))
-    ""))
-
 (defun th/exwm-date-bat ()
   (interactive)
-  (message "%s %s %s"
-           (format-time-string "%Y-%m-%d %T @ %a w%W [%s]")
-           (format-time-string "(%T UTC)" nil t)
-           (th/exwm-bat)))
+  (message
+   "%s %s %s"
+   (format-time-string "%Y-%m-%d %T @ %a w%W [%s]")
+   (format-time-string "(%T UTC)" nil t)
+   (if (string-equal (system-name) "dragonwing")
+       (format "    %s"
+               (s-replace
+                "\n" "; "
+                (s-trim (shell-command-to-string "acpi -b"))))
+     "")))
+
 (exwm-input-set-key (kbd "s-.") #'th/exwm-date-bat)
 
 (exwm-input-set-key (kbd "C-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss -s")))
