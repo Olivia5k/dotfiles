@@ -168,7 +168,15 @@
 
 (defun th/go-run-main ()
   (interactive)
-  (compile "go run main.go"))
+
+  (compile
+   (format "go run -v %s"
+           (s-join
+            " "
+            (-filter (lambda (fn)
+                       (and (s-suffix? ".go" fn)
+                            (not (s-suffix? "_test.go" fn))))
+                     (directory-files default-directory))))))
 
 (require 'th-golang-docstring)
 (require 'th-golang-refactor)
