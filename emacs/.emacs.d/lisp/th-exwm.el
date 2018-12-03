@@ -223,6 +223,9 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "s-z") #'th/split-horizontally)
 (exwm-input-set-key (kbd "s-s") #'th/split-vertically)
 
+;; Kill split
+(exwm-input-set-key (kbd "C-s-k") 'delete-window)
+
 (defun th/toggle-mute ()
   (interactive)
   (shell-command-to-string "pulsemixer --toggle-mute")
