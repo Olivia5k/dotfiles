@@ -73,7 +73,6 @@
 (require 'th-docker)
 (require 'th-enved)
 (require 'th-git)
-(require 'th-manuals)
 (require 'th-lisp)
 
 ;; Languages
@@ -87,7 +86,6 @@
 
 ;; Organization
 (require 'th-email)
-(require 'th-elfeed)
 (require 'th-org-base)
 (require 'th-org-agenda)
 (require 'th-chat)
