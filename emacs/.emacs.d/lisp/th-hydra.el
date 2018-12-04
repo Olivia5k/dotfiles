@@ -1,32 +1,51 @@
-(defhydra th/util-hydra (:foreign-keys warn :exit t :columns 5)
-  "Util"
-  ("s-c" (switch-to-buffer "*compilation*") "*compilation*")
-  ("s" th/yas-hydra/body "yas")
-  ("a" auto-fill-mode "Auto fill")
-  ("c" firestarter-mode "firestarter")
-  ("d" th/toggle-debug "debug")
-  ("f" th/font-hydra/body "font-hydra")
-  ("M-f" fci-mode "Fill column")
-  ("g" customize-group "customize")
-  ("h" highlight-symbol-mode "Highlight symbol" :exit nil)
-  ("j" text-scale-decrease "Font -" :exit nil)
-  ("k" text-scale-increase "Font +" :exit nil)
-  ("l" linum-mode "Line numbers" :exit nil)
-  ("m" th/quickmajor "major-mode")
-  ("n" th/toggle-minor-mode "minor-mode")
-  ("p" ivy-pass "password")
-  ("r" rainbow-identifiers-mode "Rainbow identifiers")
-  ("t" toggle-truncate-lines "Truncate lines" :exit nil)
-  ("w" whitespace-mode "whitespace" :exit nil)
-  ("q" nil))
+(defvar whitespace-mode nil)
+(defhydra th/toggle-hydra (:color pink)
+   "
+_a_ abbrev-mode:       %`abbrev-mode
+_d_ debug-on-error:    %`debug-on-error
+_c_ firestarter-mode:  %`firestarter-mode
+_f_ auto-fill-mode:    %`auto-fill-function
+_h_ highlight-symbol:  %`highlight-symbol-mode
+_i_ fill-indicator:    %`fci-mode
+_l_ linum-mode:        %`linum-mode
+_r_ rainbow-idents:    %`rainbow-identifiers-mode
+_t_ truncate-lines:    %`truncate-lines
+_w_ whitespace-mode:   %`whitespace-mode
 
-(global-set-key (kbd "s-c") 'th/util-hydra/body)
+"
+   ;; Toggles
+   ("a" abbrev-mode nil)
+   ("d" toggle-debug-on-error nil)
+   ("c" firestarter-mode nil)
+   ("f" th/toggle-auto-fill nil)
+   ("h" highlight-symbol-mode nil)
+   ("i" fci-mode nil)
+   ("l" linum-mode nil)
+   ("r" rainbow-identifiers-mode nil)
+   ("t" toggle-truncate-lines nil)
+   ("w" whitespace-mode nil)
+
+   ("p" ivy-pass "password" :exit t)
+
+   ("C-f" th/font-hydra/body "font-hydra" :exit t)
+   ("C-s" th/yas-hydra/body "yas-hydra" :exit t)
+
+   ("q" nil))
+
+(defun th/toggle-auto-fill ()
+  "Toggles auto fill and FCI at the same time"
+  (interactive)
+  (let ((arg (if auto-fill-function -1 1)))
+    (auto-fill-mode arg)
+    (fci-mode arg)))
+
+(global-set-key (kbd "C-c C-v") 'th/toggle-hydra/body)
 
 (defun th/iosevka (size)
   (set-frame-font (format "Iosevka-%s" size))
   (telephone-line-mode 1))
 
-(defhydra th/font-hydra ()
+(defhydra th/font-hydra (:color amaranth)
   "Fonts"
   ("d" (th/iosevka 10))
   ("f" (th/iosevka 13))
