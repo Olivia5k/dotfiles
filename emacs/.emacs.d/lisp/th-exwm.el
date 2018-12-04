@@ -73,17 +73,21 @@
   (interactive)
   (start-process "" nil "lock"))
 
-(defun th/browser-golden ()
-  "Splits the current window into a browser at 2/3 of the window"
-  (interactive)
+(defun th/golden-split ()
+  "Splits the current window into two, at a golden-ratio like"
   (delete-other-windows)
-  ;; Add one sixth to make it go from 1/2 to 1/3
+  ;; Add one fifth to make it go from 1/2 to 1/3, ish
   (let* ((width (/ (window-width) 5)))
     (split-window-right)
     (other-window 1)
     (enlarge-window-horizontally width)
-    (set-frame-parameter nil 'th/prohibit-balance t)
-    (th/goto-browser)))
+    (set-frame-parameter nil 'th/prohibit-balance t)))
+
+(defun th/browser-golden ()
+  "Splits the current window into a browser at 2/3 of the window"
+  (interactive)
+  (th/golden-split)
+  (th/goto-browser))
 
 (defun th/goto-browser ()
   "Run or raise a browser in the current frame.
