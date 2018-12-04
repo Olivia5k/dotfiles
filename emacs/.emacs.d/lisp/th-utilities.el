@@ -31,7 +31,9 @@
 (use-package buffer-move)
 (use-package define-word)
 (use-package fill-column-indicator
-  :config (setq fci-rule-color "#373b41"))
+  :config
+  (setq fci-rule-color "#4b2d54")
+  (setq-default fill-column 100))
 (use-package paradox
   :config (setq paradox-github-token t))
 (use-package paredit)
