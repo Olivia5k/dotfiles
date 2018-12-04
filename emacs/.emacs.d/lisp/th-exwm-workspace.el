@@ -15,6 +15,7 @@
   ("q" (exwm-execute "chromium") "chromium")
   ("RET" (exwm-execute "kitty") "terminal")
   ("c" (th/exwm-terminal "ctop") "ctop")
+  ("d" (exwm-execute "discord") "discord")
   ("h" (th/exwm-terminal "htop") "htop")
   ("g" (exwm-execute "gimp") "gimp")
   ("p" (th/exwm-terminal "pulsemixer") "pulsemixer")
