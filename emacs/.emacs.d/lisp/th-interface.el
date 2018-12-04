@@ -115,7 +115,6 @@
          "\\|\\(?:\\`.+?[#~]\\'\\)")))
 
 (use-package counsel-projectile
-  :bind (("C-x f" . counsel-projectile-find-file))
   :after counsel)
 
 

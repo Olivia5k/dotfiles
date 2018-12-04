@@ -70,19 +70,20 @@
   ("l" list-packages "list")
   ("q" nil))
 
-(defhydra th/files (:exit t)
+(defhydra th/files-hydra (:color teal :idle 0.5)
   "Files"
-  ("s-f" projectile-find-file "project files")
-  ("f" projectile-find-file "project files")
-  ("a" th/other-files "suffix")
+  ("f" counsel-projectile-find-file "project files")
   ("b" th/other-files-same-base "base")
+  ("s" th/other-files "suffix")
+  ("e" th/browse-extensions "extensions")
+
   ("m" (th/other-files "Makefile") "makefiles")
+  ("r" (th/other-files ".http") "rest")
+  ("d" (th/other-files "Dockerfile") "docker")
   ("c" (th/other-files "docker-compose") "docker-compose")
   ("i" (th/other-files "gitlab-ci") "gitlab")
-  ("d" (th/other-files "Dockerfile") "dockerfile")
   ("t" (th/other-files "test") "test"))
 
-(global-set-key (kbd "s-f") 'th/files/body)
-(global-set-key (kbd "C-x a") 'th/files/body)
+(global-set-key (kbd "C-x f") 'th/files-hydra/body)
 
 (provide 'th-hydra)

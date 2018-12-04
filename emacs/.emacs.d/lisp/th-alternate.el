@@ -6,6 +6,7 @@ Defaults to the file suffix of the current buffer if none is given.
 E.g. if you are visiting a .go file, this will list all other .go files."
 
   (interactive)
+
   (find-file
    (concat
     (projectile-project-root)
@@ -13,21 +14,20 @@ E.g. if you are visiting a .go file, this will list all other .go files."
            ;; The pattern, the suffix, or the filename
            ;; This is to make Makefiles and Dockerfiles work,
            (pat (or pattern (f-ext bn) (f-base bn)))
-           (default-directory (projectile-project-root))
-           (targets (-filter
+           (files (-filter
                      (lambda (x)
                        (s-contains? pat x))
-                     (projectile-get-repo-files))))
+                     (projectile-dir-files-alien (projectile-project-root)))))
 
       (cond
-       ((= (length targets) 1)
-        (car targets))
-       ((= (length targets) 0)
-        (error (format "No other files matching '%s'" pat)))
+       ((= (length files) 1)
+        (car files))
+       ((= (length files) 0)
+        (error (format "No files matching '%s'" pat)))
        (t
         (completing-read
          (format "%s files: " pat)
-         targets)))))))
+         files)))))))
 
 (defun th/other-files-same-base ()
   "Find other files that have the same base as the current
@@ -42,7 +42,6 @@ This is useful if you have backend and frontend code in the same repo."
   (interactive)
 
   (let* ((base (f-base (buffer-file-name)))
-         (default-directory (projectile-project-root))
          (files (-filter
                  (lambda (x)
                    (and
@@ -52,27 +51,26 @@ This is useful if you have backend and frontend code in the same repo."
                     (not (s-contains? "test" x))
                     (not (s-contains? ".#" x))
                     (not (s-contains? x (buffer-file-name)))))
-                 (projectile-get-repo-files))))
-    (cond
-     ((= (length files) 1)
-      (find-file (car files)))
+                 (projectile-dir-files-alien (projectile-project-root)))))
+    (cond ((= (length files) 1)
+           (find-file (car files)))
 
-     ((> (length files) 1)
-      (find-file
-       (completing-read "Alt files: " files)))
+          ((> (length files) 1)
+           (find-file
+            (completing-read "Alt files: " files)))
 
-     (t
-      (error "No alternate file for %s" (buffer-name))))))
+          (t
+           (error "No alternate files for %s" (buffer-name))))))
 
 
-(defun th/browse-suffixes ()
-  "Select a suffix from the project and then browse files with that suffix."
+(defun th/browse-extensions ()
+  "Select a file extension from the project and browse files with that extension."
   (interactive)
-  (let* ((default-directory (projectile-project-root))
-         (suffixes (remove nil
-                           (-distinct
-                            (-map (lambda (x) (f-ext x))
-                                  (projectile-get-repo-files))))))
+  (let* ((suffixes
+          (remove nil
+                  (-distinct
+                   (-map (lambda (x) (format ".%s" (f-ext x)))
+                         (projectile-dir-files-alien (projectile-project-root)))))))
     (th/other-files
      (completing-read "suffixes: " suffixes nil t))))
 
