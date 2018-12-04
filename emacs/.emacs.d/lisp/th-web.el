@@ -144,10 +144,10 @@ Insert it if it does not exist."
 
 (use-package web-mode
   :after vue-mode
-  :bind
-  ("M-a" . web-mode-element-beginning)
-  ("M-e" . web-mode-element-end)
-  ("M-h" . web-mode-mark-and-expand)
+  :bind (:map web-mode-map
+              ("M-a" . web-mode-element-beginning)
+              ("M-e" . web-mode-element-end)
+              ("M-h" . web-mode-mark-and-expand))
 
   :config
   (setq web-mode-markup-indent-offset 2)
