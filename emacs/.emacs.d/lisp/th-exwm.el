@@ -151,7 +151,6 @@ If there are multiple, complete for them."
 
 (exwm-input-set-key (kbd "s-C-a") 'org-build-agenda)
 (exwm-input-set-key (kbd "s-o") 'th/org/body)
-(exwm-input-set-key (kbd "s-m") 'mu4e-hydra/body)
 
 (defun th/exwm-date-bat ()
   (interactive)
@@ -329,7 +328,7 @@ If there are multiple, complete for them."
  ((s-equals? (system-name) "dragonisle")
   (th/ew/setup
    (th/get-connected-screens)
-   '("www" "drunkenfall")
+   '("www" "df")
    #'exwm-randr-dragonisle))
 
  ((s-equals? (system-name) "dragonwing")
@@ -339,7 +338,7 @@ If there are multiple, complete for them."
      (if (= 3 (length screens))
          (cdr screens)
        screens))
-   '("www" "unomaly")
+   '("www" "unom")
    #'th/exwm-randr-hook
    )))
 
