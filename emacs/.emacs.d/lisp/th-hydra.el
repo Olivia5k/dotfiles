@@ -62,14 +62,6 @@
 (global-set-key (kbd "s-SPC") 'th/exec-hydra/body)
 (global-set-key (kbd "C-x C-C") 'th/exec-hydra/body)
 
-(defhydra th/package-hydra (:foreign-keys warn :exit t)
-  "Packages"
-  ("p" counsel-package "package")
-  ("r" package-refresh-contents "refresh" :exit nil)
-  ("u" paradox-upgrade-packages "upgrade")
-  ("l" list-packages "list")
-  ("q" nil))
-
 (defhydra th/files-hydra (:color teal :idle 0.5)
   "Files"
   ("f" counsel-projectile-find-file "project files")
