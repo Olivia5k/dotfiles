@@ -294,9 +294,10 @@ there's a region, all lines that region covers will be duplicated."
 
 ;; Hydra that can be used to gradually increase or decrease hex
 ;; colors. Very useful when designing color themes!
-;; TODO(thiderman): Having the th/hexrgb-step variable in the hydra docstring
 (defhydra th/hexrgb-hydra (:foreign-keys warn)
-  "Colors (rgb+, rgb-)"
+  "
+Colors (rgb+, rgb-) [%`th/hexrgb-step]
+"
   ("q" (th/hexrgb #'hexrgb-increment-red 1))
   ("w" (th/hexrgb #'hexrgb-increment-green 1))
   ("e" (th/hexrgb #'hexrgb-increment-blue 1))
