@@ -47,7 +47,7 @@ Modified version that does not do any properties."
     (when (telephone-line-selected-window-active)
       (if (org-clocking-p)
           (org-clock-get-clock-string)
-        "<not clocking>")))
+        "")))
 
   (telephone-line-defsegment th/telephone-workspace ()
     (format "%s" (th/ew/name-for-exwm-workspace
