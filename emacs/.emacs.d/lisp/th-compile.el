@@ -127,6 +127,4 @@
         (kill-line 1)
       (insert (format ".PHONY: %s\n" (symbol-at-point))))))
 
-(define-key makefile-mode-map "C-c C-p" 'makefile-toggle-phony)
-
 (provide 'th-compile)
