@@ -39,12 +39,19 @@
         (sql-postgres "drunkenfall-postgres")
         (sqlup-mode 1)))))
 
+(defun th/drunkenfall-term ()
+  "Spawn a terminal residing on the main DrunkenFall machine."
+  (interactive)
+  (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
+  (th/exwm-terminal "ssh df -t TERM=xterm-256color tmux new -A -s main"))
+
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
   ("s-M-d" th/start-drunkenfall "start")
   ("g" (browse-url "https://dev.drunkenfall.com") "browse")
   ("h" (find-file "/ssh:df:/root/src/github.com/drunkenfall/drunkenfall") "host")
-  ("t" (exwm-execute "kitty -e ssh df") "terminal")
+  ("t" th/drunkenfall-term "terminal")
+  ("RET" th/drunkenfall-term "terminal")
   ("d" th/drunkenfall-db "get db")
   ("p" th/drunkenfall-psql "psql"))
 
