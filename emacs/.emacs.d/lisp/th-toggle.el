@@ -124,12 +124,14 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (define-key global-map (kbd "<f4>") #'th/goto-scratch)
 
-(defun th/toggle-debug ()
-    (interactive)
-    (let ((doe t))
-      (if debug-on-error
-          (setq doe nil))
-      (setq debug-on-error doe)
-      (message "debug-on-error set to %s" doe)))
+(defun th/buffer-or-back (name)
+  "Switch to the named buffer, or go back if we are already are visiting it."
+  (interactive)
+  (switch-to-buffer
+   (if (string-equal (buffer-name) name)
+       (other-buffer (current-buffer) 1)
+     name)))
+
+(global-set-key (kbd "s-c") (lambda () (interactive) (th/buffer-or-back "*compilation*")))
 
 (provide 'th-toggle)
