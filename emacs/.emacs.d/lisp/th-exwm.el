@@ -89,6 +89,7 @@
   "Splits the current window into a browser at 2/3 of the window"
   (interactive)
   (th/golden-split)
+  (th/iosevka 10)
   (th/goto-browser))
 
 (defun th/goto-browser ()
