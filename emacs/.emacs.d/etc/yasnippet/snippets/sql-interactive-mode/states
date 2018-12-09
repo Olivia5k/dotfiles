@@ -1,0 +1,4 @@
+# key: st
+# name: states
+# --
+SELECT * FROM states($0);
