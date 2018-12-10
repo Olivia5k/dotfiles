@@ -1,4 +1,5 @@
 (defvar th/status-hooks '(th/es/date th/es/time-utc))
+(setq th/status-hooks '(th/es/date th/es/time-utc))
 
 (defun th/es/date ()
   "Returns the date"
@@ -11,8 +12,10 @@
 (defun th/es/battery ()
   "Returns battery status, joining multiple batteries together"
   (s-replace
-   "\n" "; "
-   (s-trim (shell-command-to-string "acpi -b"))))
+   "%" "%%"
+   (s-replace
+    "\n" "; "
+    (s-trim (shell-command-to-string "acpi -b")))))
 
 (defun th/exwm-status ()
   (interactive)
@@ -22,6 +25,7 @@
 
 ;; Only add the battery on the laptop
 (when (string-equal (system-name) "dragonwing")
-  (add-to-list 'th/status-hooks 'th/es/battery))
+  (setq th/status-hooks
+        (append th/status-hooks '(th/es/battery))))
 
 (provide 'th-exwm-status)
