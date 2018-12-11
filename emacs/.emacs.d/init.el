@@ -47,6 +47,7 @@
 ;; Emacs core settings
 (require 'th-core)
 (require 'th-themes)
+(require 'th-git)
 (require 'th-window-management)
 (require 'th-interface)
 (require 'th-modeline)
@@ -72,7 +73,6 @@
 (require 'th-compile)
 (require 'th-docker)
 (require 'th-enved)
-(require 'th-git)
 (require 'th-lisp)
 
 ;; Languages
@@ -87,7 +87,6 @@
 ;; Organization
 (require 'th-email)
 (require 'th-org-base)
-(require 'th-org-agenda)
 (require 'th-chat)
 (require 'th-exwm)
 (require 'exwm-status)

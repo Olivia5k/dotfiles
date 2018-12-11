@@ -19,6 +19,19 @@
   (setq org-reverse-note-order t)
   (setq org-clock-idle-time 5)
 
+  (setq org-refile-targets
+      '((org-agenda-files :maxlevel . 5)))
+
+  (setq org-agenda-ndays 7)
+  (setq org-agenda-files '("~/org/"))
+  (setq org-agenda-show-all-dates t)
+  (setq org-agenda-block-separator ?-)
+  (setq org-agenda-start-on-weekday 1)
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-archive-location "~/org/archive/%s::")
+  (setq org-log-done t)
+
+  (setq org-agenda-custom-commands nil)
 
   (setq org-todo-keywords
         '("TODO(t)" "NEXT(n)" "WAITING(z)" "REVIEW(r)" "|" "DONE(d)" "INVALID(i)"))
@@ -27,21 +40,6 @@
         '(("NEXT" :foreground "#79740E" :weight bold)
           ("WAITING" :foreground "#3C3246" :weight bold)))
 
-  (defface th/org-agenda-separator
-    '((t :foreground "#332033"
-         :weight bold))
-    "Face for the agenda buffer separators")
-
-  (setq th/org-agenda-faces
-        '(("^-\\+$" . th/org-agenda-separator)))
-
-  (defun th/org-agenda-separator-hook ()
-    (make-local-variable 'font-lock-defaults)
-    (setq font-lock-defaults '(th/org-agenda-faces)))
-
-  (add-hook 'org-agenda-mode-hook 'th/org-agenda-separator-hook)
-  (add-hook 'org-mode-hook 'org-bullets-mode)
-
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -49,25 +47,19 @@
      (sql . t)
      (shell . t)))
 
-  (define-key org-mode-map (kbd "C-c t")   (lambda () (interactive) (org-todo "TODO")))
-  (define-key org-mode-map (kbd "C-c n")   (lambda () (interactive) (org-todo "NEXT")))
-  (define-key org-mode-map (kbd "C-c w")   (lambda () (interactive) (org-todo "WORKING")))
-  (define-key org-mode-map (kbd "C-c z")   (lambda () (interactive) (org-todo "WAITING")))
-  (define-key org-mode-map (kbd "C-c r")   (lambda () (interactive) (org-todo "REVIEW")))
-  (define-key org-mode-map (kbd "C-c d")   (lambda () (interactive) (org-todo "DONE")))
-  (define-key org-mode-map (kbd "C-c i")   (lambda () (interactive) (org-todo "INVALID")))
-  (define-key org-mode-map (kbd "C-c SPC") (lambda () (interactive) (org-todo 'none)))
-  ;; I accidentally hit this one quite a lot, and the `pcomplete'
-  ;; bullshit sucks.
-  (define-key org-mode-map (kbd "C-M-i") 'org-cycle)
+  :bind
+  ("C-c a" . org-build-agenda)
+  (:map org-agenda-mode-map
+        ("s-a"   . org-agenda-quit)
+        ("f"     . org-agenda-filter-by-category))
+  (:map org-mode-map
+        ;; I accidentally hit this one quite a lot, and the `pcomplete'
+        ;; bullshit sucks.
+        ("C-M-i" . 'org-cycle)
+        ("C-c C-x C-a" . 'org-archive-done-tasks))
 
-  (define-key org-mode-map (kbd "C-c C-x C-a") 'org-archive-done-tasks)
-
-  (add-hook 'org-clock-out-hook
-          '(lambda ()
-             (org-todo "NEXT")
-             (setq org-mode-line-string nil)
-             (force-mode-line-update))))
+  :hook
+  ('after-save-hook . #'th/org-update-agenda))
 
 (use-package worf
   :init
@@ -78,21 +70,65 @@
   :ensure nil)
 
 (use-package org-journal
-  :bind (("C-." . org-journal-new-entry))
+  ;; :bind (("C-." . org-journal-new-entry))
   :config
   (setq org-journal-dir "~/org/journal/")
   (setq org-journal-file-format "%Y-%m-%d")
   (setq org-journal-date-format "%A, %Y-%m-%d")
   (setq org-journal-find-file 'find-file))
 
-(use-package org-habit
-  :ensure nil
-  :straight nil
-  :init
-  (setq org-modules '(org-habit))
-  (setq org-habit-show-habits-only-for-today t))
+;; (use-package org-habit
+;;   :ensure nil
+;;   :straight nil
+;;   :init
+;;   (setq org-modules '(org-habit))
+;;   (setq org-habit-show-habits-only-for-today t))
 
 ;; (use-package org-bullets)
+
+(use-package org-super-agenda
+  :config
+  (setq org-super-agenda-groups
+       '(;; Each group has an implicit boolean OR operator between its selectors.
+         (:name "Today"  ; Optionally specify section name
+                :time-grid t  ; Items that appear on the time grid
+                :todo "TODO")  ; Items that have this TODO keyword
+         (:name "Important"
+                ;; Single arguments given alone
+                :tag "bills"
+                :priority "A")
+         ;; Set order of multiple groups at once
+         (:order-multi (2 (:name "Shopping in town"
+                                 ;; Boolean AND group matches items that match all subgroups
+                                 :and (:tag "shopping" :tag "@town"))
+                          (:name "Food-related"
+                                 ;; Multiple args given in list with implicit OR
+                                 :tag ("food" "dinner"))
+                          (:name "Personal"
+                                 :habit t
+                                 :tag "personal")
+                          (:name "Space-related (non-moon-or-planet-related)"
+                                 ;; Regexps match case-insensitively on the entire entry
+                                 :and (:regexp ("space" "NASA")
+                                               ;; Boolean NOT also has implicit OR between selectors
+                                               :not (:regexp "moon" :tag "planet")))))
+         ;; Groups supply their own section names when none are given
+         (:todo "WAITING" :order 8)  ; Set order of this section
+         (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                ;; Show this group at the end of the agenda (since it has the
+                ;; highest number). If you specified this group last, items
+                ;; with these todo keywords that e.g. have priority A would be
+                ;; displayed in that group instead, because items are grouped
+                ;; out in the order the groups are listed.
+                :order 9)
+         (:priority<= "B"
+                      ;; Show this section after "Today" and "Important", because
+                      ;; their order is unspecified, defaulting to 0. Sections
+                      ;; are displayed lowest-number-first.
+                      :order 1)
+         ;; After the last group, the agenda will display items that didn't
+         ;; match any of these groups, with the default order position of 99
+         )))
 
 (setq
  org-capture-templates
@@ -139,6 +175,18 @@
     )))
 
 
+(defun th/org-update-agenda ()
+  (interactive)
+  (ignore-errors
+    (when (string-equal (f-ext (buffer-file-name)) "org")
+      (org-agenda-redo-all t))))
+
+(defun org-build-agenda ()
+  (interactive)
+  (org-agenda 0 "a"))
+
+
+
 (defun th/org-project ()
   "Go to the org project for the current repository.
 
@@ -164,55 +212,19 @@ Go back if we're already in it."
   (save-buffer)
   (message "Done tasks archived"))
 
-(setq org-refile-targets
-      '((org-agenda-files :maxlevel . 5)))
 
-(defun th/org-current-task ()
-  "Print the substring of the clocked task, for insertion into a modeline."
-  (message (substring-no-properties
-            (org-clock-get-clock-string))))
 
-(defhydra th/org (:exit t)
+(defhydra th/org-hydra (:exit t)
   "Org commands"
-  ("s-o" th/org-project "Project file")
-  ("c" cfw:open-org-calendar "calendar")
-  ("o" org-capture "Capture")
-  ("f" (projectile-switch-project-by-name "~/org/") "Files")
-  ("s" (org-agenda nil "a") "Schedule")
-  ("i" (find-file "~/org/inbox.org") "Inbox")
-  ("j" org-clock-goto "Current clocked task")
-  ("a" org-todo-list "Agenda")
-  ("t" org-tags-view "Tags"))
-
-
-(require 'subr-x)
-(straight-use-package 'git)
-
-(defun org-git-version ()
-  "The Git version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (git-run "describe"
-              "--match=release\*"
-              "--abbrev=6"
-              "HEAD"))))
-
-(defun org-release ()
-  "The release version of org-mode.
-Inserted by installing org-mode or when a release is made."
-  (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (string-remove-prefix
-      "release_"
-      (git-run "describe"
-               "--match=release\*"
-               "--abbrev=0"
-               "HEAD")))))
+  ("s-o" th/org-project "project file")
+  ;; ("c" cfw:open-org-calendar "calendar")
+  ("o" org-capture "capture")
+  ("f" (projectile-switch-project-by-name org-directory) "files")
+  ("s" (org-agenda nil "a") "schedule")
+  ("i" (find-file "~/org/inbox.org") "inbox")
+  ("j" org-journal-new-entry "journal")
+  ("a" org-todo-list "agenda")
+  ("t" org-tags-view "tags"))
 
 
 (provide 'th-org-base)

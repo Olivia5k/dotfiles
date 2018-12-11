@@ -5,7 +5,9 @@
     exwm-status-utc
     exwm-status-battery))
 
-(defvar exwm-status-always-on '(exwm-status-date exwm-status-unixtime))
+(defvar exwm-status-always-on
+  '(exwm-status-date
+    exwm-status-unixtime))
 
 (defun exwm-status-date ()
   "Returns the date"
@@ -38,14 +40,15 @@
   (let* ((name (symbol-name hook))
          (pred (intern (format "%s-p" name))))
 
-    ;; If we are forcing all the hooks to run, or we've defined the current
-    ;; hook to be always on, we should execute it.
-    (when (or force-run (memq hook exwm-status-always-on))
-      ;; If no prejudicate is set for the current hook - run it.
-      ;; Otherwise, run the prejudicate to see if we should execute the hook.
-      (when (or (not (fboundp pred))
-                (funcall pred))
-        (exwm-status-escape (funcall hook))))))
+    ;; A hook should be run under these circumstances:
+    ;;  1) We are forcing all hooks to run, or;
+    ;;  2) It is a default hook that is always on, or;
+    ;;  3) It has a prejudicate function that returns t.
+    (when (or force-run
+              (memq hook exwm-status-always-on)
+              (and (fboundp pred)
+                   (funcall pred)))
+      (exwm-status-escape (funcall hook)))))
 
 ;;
 (defun exwm-status-escape (s)
@@ -59,5 +62,6 @@
                                               exwm-status-hooks)))))
 
 (exwm-input-set-key (kbd "s-.") #'exwm-status)
+(exwm-input-set-key (kbd "s-M-.") (lambda () (interactive) (exwm-status t)))
 
 (provide 'exwm-status)

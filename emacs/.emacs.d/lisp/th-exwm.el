@@ -152,7 +152,7 @@ If there are multiple, complete for them."
 (exwm-input-set-key (kbd "s-M-b") 'balance-windows)
 
 (exwm-input-set-key (kbd "s-C-a") 'org-build-agenda)
-(exwm-input-set-key (kbd "s-o") 'th/org/body)
+(exwm-input-set-key (kbd "s-o") 'th/org-hydra/body)
 
 (exwm-input-set-key (kbd "C-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss -s")))
 (exwm-input-set-key (kbd "C-M-s-p") (lambda () (interactive) (start-process-shell-command "ss" nil "ss")))
