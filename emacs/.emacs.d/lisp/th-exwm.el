@@ -277,7 +277,7 @@ If there are multiple, complete for them."
              (th/xrandr "eDP1 --off"
                         "HDMI2 --right-of DP1 --auto"
                         "DP1 --auto")
-             (setq exwm-randr-workspace-output-plist (th/ew/plist '("DP1" "HDMI2"))))
+             (setq screens '("DP1" "HDMI2")))
 
             ;; If we have two screens connected, it means we want to
             ;; show what's going on; mirror the laptop screen to the HDMI
@@ -285,14 +285,17 @@ If there are multiple, complete for them."
              (message "Two screens; mirroring")
              (th/xrandr "eDP1 --auto"
                         "HDMI2 --same-as eDP1 --mode 1920x1080")
-             (setq exwm-randr-workspace-output-plist (th/ew/plist '("eDP1"))))
+             (setq screens '("eDP1")))
             ;; Just a laptop screen
             (t
              (message "One screen; laptop only")
              (th/xrandr "eDP1 --auto"
                         "HDMI2 --off"
                         "DP1 --off")
-             (setq exwm-randr-workspace-output-plist (th/ew/plist '("eDP1")))))))))
+             (setq screens '("eDP1"))))
+
+      (setq th/ew/screens screens)
+      (setq exwm-randr-workspace-output-plist (th/ew/plist screens))))))
 
 (defun th/get-connected-screens ()
   "Returns a list of the screens xrandr reports as connected"
