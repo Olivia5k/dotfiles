@@ -34,9 +34,14 @@
 (defun th/toggle-prohibit-balance ()
   "Toggles if balance prohibiting is on or off"
   (interactive)
-  (let ((target (not (frame-parameter nil 'th/prohibit-balance))))
-    (set-frame-parameter nil 'th/prohibit-balance target)
-    (message (if target "Prohibit enabled" "Prohibit disabled"))))
+  (let ((enabled (not (frame-parameter nil 'th/prohibit-balance))))
+    (set-frame-parameter nil 'th/prohibit-balance enabled)
+
+    ;; When we are resetting back, balance the windows immediately
+    (when (not enabled)
+      (balance-windows))
+
+    (message (if enabled "Prohibit enabled" "Prohibit disabled"))))
 
 ;;;###autoload
 (defun th/split-horizontally ()
