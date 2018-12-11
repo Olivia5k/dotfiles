@@ -73,8 +73,10 @@
   (interactive)
   (start-process "" nil "lock"))
 
+;;;###autoload
 (defun th/golden-split ()
-  "Splits the current window into two, at a golden-ratio like"
+  "Splits the current window into two, at a golden-ratio like ratio"
+  (interactive)
   (delete-other-windows)
   ;; Add one fifth to make it go from 1/2 to 1/3, ish
   (let* ((width (/ (window-width) 5)))
@@ -157,6 +159,7 @@ If there are multiple, complete for them."
 
 (exwm-input-set-key (kbd "s-q") #'th/goto-browser)
 (exwm-input-set-key (kbd "C-s-q") #'th/browser-golden)
+(exwm-input-set-key (kbd "C-M-s-q") #'th/golden-split)
 (exwm-input-set-key (kbd "C-s-s") (lambda () (interactive) (exwm-execute "spotify")))
 
 (exwm-input-set-key (kbd "M-s-SPC") 'exwm-execute)
