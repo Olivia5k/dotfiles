@@ -90,7 +90,7 @@
 (require 'th-org-agenda)
 (require 'th-chat)
 (require 'th-exwm)
-(require 'th-exwm-status)
+(require 'exwm-status)
 
 ;; Media
 (require 'th-spotify)
