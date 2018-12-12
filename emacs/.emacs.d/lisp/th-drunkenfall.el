@@ -23,8 +23,8 @@
   (ssh-agent-add-key "/home/thiderman/.ssh/digitalocean.rsa")
 
   (copy-file
-   "/scp:df:src/github.com/drunkenfall/drunkenfall/data/production.db"
-   (concat th/df "data/test.db")
+   "/scp:df:src/github.com/drunkenfall/drunkenfall/data/db.sql"
+   (concat th/df "data/db.sql")
    t))
 
 (defun th/drunkenfall-psql ()
