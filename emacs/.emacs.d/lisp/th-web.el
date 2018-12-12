@@ -166,7 +166,8 @@ Insert it if it does not exist."
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ;; Enable Emmet's css abbreviation.
-  (add-hook 'web-mode-hook  'emmet-mode))
+  (add-hook 'web-mode-hook  'emmet-mode)
+  (add-hook 'vue-mode-hook  'emmet-mode))
 
 (defun th/emmet-vue-expand ()
   "Use `emmet-expand-line' and set `emmet-use-css-transform' depending on the major mode."
