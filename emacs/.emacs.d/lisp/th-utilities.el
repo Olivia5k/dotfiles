@@ -16,6 +16,7 @@
 
 (use-package protobuf-mode)
 (use-package ssh-config-mode)
+(use-package terraform-mode)
 (use-package yaml-mode)
 (use-package systemd)
 (use-package daemons)
