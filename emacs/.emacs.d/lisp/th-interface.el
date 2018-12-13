@@ -1,5 +1,4 @@
 (use-package avy
-  :ensure t
   :commands avy-goto-word-1
   :bind
   ("C-l"     . avy-goto-word-1))
@@ -25,9 +24,9 @@
 
 ;; projectile - project management <3
 (use-package projectile
+  :diminish projectile-mode
   :bind-keymap (("C-x p" . projectile-command-map))
   :commands (projectile-switch-project)
-
   :config
   (projectile-global-mode)
   (setq projectile-completion-system 'ivy)
@@ -122,13 +121,7 @@
   :config
   (ace-link-setup-default))
 
-
-(use-package uniquify
-  :ensure nil
-  :straight nil
-  :config
-  (setq uniquify-buffer-name-style 'forward))
-
+(setq uniquify-buffer-name-style 'forward)
 
 (defhydra th/search-hydra (:exit t :foreign-keys warn)
   "Searching"

@@ -2,12 +2,9 @@
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
-(use-package winner
-  :bind
-  ("M-s-n" . winner-undo)
-  ("M-s-p" . winner-redo)
-  :ensure nil
-  :config (winner-mode 1))
+(winner-mode 1)
+(bind-key "M-s-n" 'winner-undo)
+(bind-key "M-s-p" 'winner-redo)
 
 (use-package shackle
   :config
@@ -28,8 +25,6 @@
   (interactive)
   (when (not (frame-parameter nil 'th/prohibit-balance))
     (balance-windows)))
-
-(window-list)
 
 (defun th/toggle-prohibit-balance ()
   "Toggles if balance prohibiting is on or off"

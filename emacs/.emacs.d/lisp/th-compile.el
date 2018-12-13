@@ -23,14 +23,14 @@
 
 (use-package make-mode
   :bind (:map makefile-mode-map
-              ("C-c C-p" . makefile-toggle-phony)))
+              ("C-c C-p" . makefile-toggle-phony))
+  :hook (makefile-mode . whitespace-mode))
 
 (use-package makefile-executor
-  :ensure t
-  :commands (makefile-executor-execute-target makefile-executor-execute-project-target)
-  :config
-  (add-hook 'makefile-mode-hook 'makefile-executor-mode)
-  (add-hook 'makefile-mode-hook 'whitespace-mode))
+  :straight (makefile-executor :type git :host github :repo "thiderman/makefile-executor.el")
+  :commands (makefile-executor-execute-target
+             makefile-executor-execute-project-target)
+  :hook (makefile-mode . makefile-executor-mode))
 
 (use-package firestarter
   :config

@@ -1,19 +1,10 @@
 (use-package lispy
-  :diminish lispy-mode
-  :bind
-  (:map lispy-mode-map
-        ("D" . th/lispy-to-defun)))
+  :diminish lispy-mode)
 
 (use-package nameless
   :diminish 'nameless-mode)
 
 (use-package eros)
-
-(defun th/lispy-to-defun ()
-  (interactive)
-  (if (lispy-left-p)
-      (lispy-to-defun)
-    (insert "D")))
 
 (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)

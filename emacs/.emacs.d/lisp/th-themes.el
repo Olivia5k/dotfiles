@@ -56,7 +56,6 @@
 
 ;; all-the-icons - fantastic icons package <3
 (use-package all-the-icons
-  :ensure t
   :load-path "/home/thiderman/src/github.com/domtronn/all-the-icons.el/"
   :config
   (use-package all-the-icons-dired

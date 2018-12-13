@@ -1,42 +1,30 @@
-(use-package dired
-  :diminish dired-omit-mode
-  :straight nil
-  :ensure nil
-  :bind (:map dired-mode-map
-              ("c" . wdired-change-to-wdired-mode)
-              ("r" . rgrep)
-              ("f" . find-name-dired)
-              ("/" . th/dired-goto-root)
-              ("~" . th/dired-goto-home)
-              ("h" . dired-omit-mode)
-              ("e" . th/eshell-dired))
+(require 'dired)
+(require 'dired-x)
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
-  :config
-  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(setq dired-hide-details-hide-information-lines t)
+(setq-default dired-omit-files-p t)
+(setq dired-hide-details-mode t)
+(setq diredp-hide-details-initially-flag t)
+(setq dired-listing-switches "-alh --group-directories-first")
+(setq dired-recursive-copies 'always)
+(setq dired-recursive-deletes 'always)
+(setq dired-dwim-target t)
+(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$\\|.sock$"))
+(setq dired-omit-verbose nil) ;; https://open.spotify.com/track/2XRl0NfORYPEvUJXLtJiND
+(setq dired-omit-mode t)
+(put 'dired-find-alternate-file 'disabled nil)
 
-  (setq dired-hide-details-hide-information-lines t)
-  (setq-default dired-omit-files-p t)
-  (setq dired-hide-details-mode t)
-  (setq diredp-hide-details-initially-flag t)
-  (setq dired-listing-switches "-alh --group-directories-first")
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
-  (setq dired-dwim-target t)
+(bind-key "c" 'wdired-change-to-wdired-mode dired-mode-map)
+(bind-key "r" 'rgrep dired-mode-map)
+(bind-key "f" 'find-name-dired dired-mode-map)
+(bind-key "/" 'th/dired-goto-root dired-mode-map)
+(bind-key "~" 'th/dired-goto-home dired-mode-map)
+(bind-key "h" 'dired-omit-mode dired-mode-map)
+(bind-key "e" 'th/eshell-dired dired-mode-map)
 
-  (put 'dired-find-alternate-file 'disabled nil)
-
-  (use-package dired-x
-    :ensure nil
-    :straight nil
-    :config
-    (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|.pyc$\\|.sock$"))
-    (setq dired-omit-verbose nil) ;; https://open.spotify.com/track/2XRl0NfORYPEvUJXLtJiND
-    (setq dired-omit-mode t))
-
-  (use-package dired-subtree
-    :after (dired))
-  (use-package wdired
-    :after (dired)))
+(use-package dired-subtree)
+(use-package wdired)
 
 (defun th/dired-goto-root ()
   "Shortcut to browse to root via dired"

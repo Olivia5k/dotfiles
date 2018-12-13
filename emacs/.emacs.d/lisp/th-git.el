@@ -43,9 +43,7 @@
 
   (defadvice magit-mode-bury-buffer (after magit-restore-screen activate)
     "Restores the previous window configuration and kills the magit buffer"
-    (jump-to-register :magit-fullscreen))
-
-  )
+    (jump-to-register :magit-fullscreen)))
 
 ;; 💜
 (use-package magit-todos

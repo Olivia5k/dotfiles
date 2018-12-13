@@ -12,15 +12,14 @@
 (setq mouse-autoselect-window nil
       focus-follows-mouse nil)
 
-;; Start the package configuration
 (require 'cl)
 (require 'url-handlers)
-(setq package-archives '(("melpa" . "http://melpa.org/packages/")))
-(package-initialize)
 
 ;; Initialize straight
-(let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
-      (bootstrap-version 3))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously

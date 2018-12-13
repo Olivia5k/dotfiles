@@ -50,7 +50,6 @@
   (compile "make docker"))
 
 (use-package kubernetes
-  :ensure t
   :commands (kubernetes-overview))
 
 (provide 'th-docker)

@@ -60,7 +60,6 @@
   :bind (:map go-mode-map ("C-c t" . go-add-tags)))
 
 (use-package flycheck-golangci-lint
-  :ensure t
   :hook (go-mode . flycheck-golangci-lint-setup))
 
 (defun th/go-hook ()
