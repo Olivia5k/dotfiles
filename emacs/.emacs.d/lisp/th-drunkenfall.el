@@ -35,7 +35,8 @@
       (let ((sql-postgres-program "psql")
             (sql-database "drunkenfall")
             (sql-server "localhost")
-            (sql-user "postgres"))
+            (sql-user "postgres")
+            (sql-product "postgres"))
         (sql-postgres "drunkenfall-postgres")
         (sqlup-mode 1)))))
 
