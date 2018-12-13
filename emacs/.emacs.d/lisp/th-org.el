@@ -180,4 +180,4 @@ Go back if we're already in it."
   ("t" org-tags-view "tags"))
 
 
-(provide 'th-org-base)
+(provide 'th-org)
