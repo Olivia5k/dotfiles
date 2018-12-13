@@ -1,8 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: src block split
-# key: spl
-# binding: direct-keybinding
-# --
-#+end_src
-$0
-#+begin_src emacs-lisp
