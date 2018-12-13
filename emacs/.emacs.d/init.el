@@ -83,7 +83,7 @@
 (require 'th-quickfast)
 
 ;; Organization
-(require 'th-org-base)
+(require 'th-org)
 (require 'th-chat)
 (require 'th-exwm)
 (require 'exwm-status)
