@@ -56,6 +56,10 @@ _w_ whitespace-mode:   %`whitespace-mode
   ("i" (describe-char (point)) "font information" :exit t)
   ("q" nil))
 
+;; Since I do these ones the most, it makes sense to have simpler binds
+(global-set-key (kbd "s-M-8") (lambda () (interactive) (th/iosevka 13)))
+(global-set-key (kbd "s-M-9") (lambda () (interactive) (th/iosevka 17)))
+
 (defhydra th/exec-hydra (:foreign-keys warn :exit t :columns 5)
   "Execution"
   ("C-c" (projectile-switch-project-by-name "~/src/github.com/thiderman/dotfiles") "config")
