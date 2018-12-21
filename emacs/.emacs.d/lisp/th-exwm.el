@@ -33,6 +33,8 @@
 ;; Set input mode to be char for terminals
 (setq exwm-manage-configurations
       '(((string= "kitty" exwm-instance-name)
+         char-mode t)
+        ((string= "discord" exwm-instance-name)
          char-mode t)))
 
 ;; `exwm-input-set-key' allows you to set a global key binding (available in
