@@ -63,13 +63,6 @@
   undo        = reset --soft HEAD^
   shallow     = clone --depth=1
 
-  # Stuff longer than 80 chars; put in separate scripts in ~/.git_template
-  authors     = !.git/bin/authors
-  branch-age  = !.git/bin/branch-age
-  brlog       = !.git/bin/brlog
-  ctags       = !.git/hooks/ctags
-  verbs       = !.git/bin/verbs
-
 [push]
 	default = tracking
 	followTags = true
