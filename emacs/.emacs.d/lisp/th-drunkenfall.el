@@ -1,4 +1,4 @@
-(defvar th/df "/home/thiderman/src/github.com/drunkenfall/drunkenfall/")
+(defvar th/df "/home/thiderman/src/gitlab.com/one-eye/drunkenfall/")
 
 (defun th/start-drunkenfall ()
   (interactive)
