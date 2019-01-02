@@ -80,11 +80,12 @@ _w_ whitespace-mode:   %`whitespace-mode
   ("C-q" (save-buffers-kill-emacs t) "exit emacs")
   ("q" nil))
 
-(global-set-key (kbd "s-SPC") 'th/exec-hydra/body)
+;; (global-set-key (kbd "s-SPC") 'th/exec-hydra/body)
 (global-set-key (kbd "C-x C-C") 'th/exec-hydra/body)
 
 (defhydra th/files-hydra (:color teal :idle 0.5)
   "Files"
+  ("s-f" counsel-projectile-find-file "project files")
   ("f" counsel-projectile-find-file "project files")
   ("b" th/other-files-same-base "base")
   ("s" th/other-files "suffix")
@@ -98,5 +99,6 @@ _w_ whitespace-mode:   %`whitespace-mode
   ("t" (th/other-files "test") "test"))
 
 (global-set-key (kbd "C-x f") 'th/files-hydra/body)
+(global-set-key (kbd "s-f") 'th/files-hydra/body)
 
 (provide 'th-hydra)
