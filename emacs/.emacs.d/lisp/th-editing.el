@@ -378,6 +378,8 @@ For the latter, give the prefix argument."
 
 (global-set-key (kbd "C-x l") 'downcase-region)
 
+(global-set-key (kbd "<C-tab>") 'dabbrev-expand)
+
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
