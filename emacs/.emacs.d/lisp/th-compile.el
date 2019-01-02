@@ -27,10 +27,18 @@
   :hook (makefile-mode . whitespace-mode))
 
 (use-package makefile-executor
-  :straight (makefile-executor :type git :host github :repo "thiderman/makefile-executor.el")
+  :straight (makefile-executor :type git
+                               :host github
+                               :repo "thiderman/makefile-executor.el"
+                               :branch "magefile")
   :commands (makefile-executor-execute-target
-             makefile-executor-execute-project-target)
-  :hook (makefile-mode . makefile-executor-mode))
+             makefile-executor-execute-project-target
+             magefile-executor-execute-target
+             magefile-executor-execute-project-target)
+  :hook
+  (makefile-mode . makefile-executor-mode)
+  :mode
+  ("mage\\.go" . magefile-executor-mode))
 
 (use-package firestarter
   :config
@@ -42,6 +50,7 @@
   "Makefile"
   ("c" makefile-executor-execute-last "last target")
   ("f" makefile-executor-goto-makefile "visit file")
+  ("g" magefile-executor-execute-project-target "magefile execute")
   ("C-m" makefile-executor-execute-project-target "project execute")
   ("m" makefile-executor-execute-project-target "project execute"))
 
