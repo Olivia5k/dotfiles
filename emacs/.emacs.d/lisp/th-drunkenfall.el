@@ -1,22 +1,22 @@
-(defvar th/df "/home/thiderman/src/gitlab.com/one-eye/drunkenfall/")
+(setq th/df "/home/thiderman/src/gitlab.com/one-eye/drunkenfall/")
 
 (defun th/start-drunkenfall ()
   (interactive)
 
   (let* ((dir th/df)
          (default-directory dir)
-         (mf (concat dir "Makefile")))
+         (mf (concat dir "mage.go")))
     (find-file mf)
     (enved-load dir)
 
-    (makefile-executor-execute-dedicated-buffer mf "npm-start")
-    (makefile-executor-execute-dedicated-buffer mf "caddy")
-    (makefile-executor-execute-dedicated-buffer mf "postgres")
-    (makefile-executor-execute-target mf "drunkenfall-start")
+    (ssh-agent-add-key "/home/thiderman/.ssh/gitlab.rsa")
 
-    (switch-to-buffer "*compilation*")
+    (magefile-executor-execute-dedicated-buffer mf "run:npm")
+    (magefile-executor-execute-dedicated-buffer mf "run:proxyDev")
+    (magefile-executor-execute-dedicated-buffer mf "run:postgres")
+    (magefile-executor-execute-target mf "run:drunkenfall")
 
-    (th/browser-golden)))
+    (switch-to-buffer "*compilation*")))
 
 (defun th/drunkenfall-db ()
   (interactive)
@@ -38,7 +38,9 @@
             (sql-user "postgres")
             (sql-product "postgres"))
         (sql-postgres "drunkenfall-postgres")
-        (sqlup-mode 1)))))
+        (sql-set-sqli-buffer-generally)
+        (sqlup-mode 1)
+        (yas-minor-mode 1)))))
 
 (defun th/drunkenfall-term ()
   "Spawn a terminal residing on the main DrunkenFall machine."
