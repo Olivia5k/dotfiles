@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: leaderboard
+# key: l
+# --
+SELECT * FROM leaderboard();

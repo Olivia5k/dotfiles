@@ -93,3 +93,4 @@
 
 ;; Lastly
 (require 'th-exwm-workspace)
+(require 'th-weby)
