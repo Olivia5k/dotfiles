@@ -162,6 +162,7 @@ Insert it if it does not exist."
               ("C-j" . th/emmet-vue-expand))
   :init
   (setq emmet-indentation 2)
+  (setq emmet-insert-flash-time 0.01)
 
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
