@@ -48,6 +48,14 @@
 (setq-default global-semantic-idle-scheduler-mode nil)
 (setq-default global-semanticdb-minor-mode nil)
 (semantic-mode -1)
+
+(eval-after-load 'semantic
+  (add-hook 'semantic-mode-hook
+            (lambda ()
+              (dolist (x (default-value 'completion-at-point-functions))
+                (when (string-prefix-p "semantic-" (symbol-name x))
+                  (remove-hook 'completion-at-point-functions x))))))
+
 (setq sh-indentation 4)
 (setq vc-follow-symlinks t)
 
