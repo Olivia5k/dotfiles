@@ -36,8 +36,8 @@
   :mode ("\\.http\\'" . restclient-mode))
 (use-package counsel-spotify)
 (use-package sqlup-mode
-  :hook ((sql-mode-hook . sqlup-mode)
-         (sql-mode-hook . yas-minor-mode-on)))
+  :hook ((sql-mode . sqlup-mode)
+         (sql-mode . yas-minor-mode-on)))
 (use-package transpose-frame)
 (use-package wrap-region)
 (use-package xkcd)
