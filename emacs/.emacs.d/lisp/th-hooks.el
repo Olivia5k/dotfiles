@@ -8,7 +8,6 @@
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'prog-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook 'fci-mode)
-(add-hook 'prog-mode-hook 'fci-mode)
 
 (add-hook 'prog-mode-hook 'abbrev-mode)
 
