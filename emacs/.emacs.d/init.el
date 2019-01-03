@@ -95,3 +95,4 @@
 (require 'th-exwm-workspace)
 (require 'th-weby)
 (require 'th-last)
+(require 'vue-buffers)
