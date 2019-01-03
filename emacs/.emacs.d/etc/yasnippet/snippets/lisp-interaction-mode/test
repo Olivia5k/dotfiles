@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: test
+# key: test
+# --
+(defun th/test ()
+  (interactive)
+  $0)
+
+(global-set-key (kbd "<f5>") 'th/test)
