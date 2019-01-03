@@ -4,7 +4,7 @@
 (defun weby-special-p ()
   "Returns `t' if standing on an opening tag"
   (and (looking-at "<")
-       (looking-back "^\s+")))
+       (looking-back "^\s*")))
 
 (defmacro defweby (name key &rest body)
   (let* ((defun-name (make-symbol (format "weby-%s" name))))
