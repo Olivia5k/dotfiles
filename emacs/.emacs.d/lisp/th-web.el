@@ -157,24 +157,27 @@ Insert it if it does not exist."
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 
 (use-package emmet-mode
-  :after vue-mode
   :bind (:map emmet-mode-keymap
               ("C-j" . th/emmet-vue-expand))
   :init
   (setq emmet-indentation 2)
   (setq emmet-insert-flash-time 0.01)
 
-  :config
-  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; Enable Emmet's css abbreviation.
-  (add-hook 'web-mode-hook  'emmet-mode)
-  (add-hook 'vue-mode-hook  'emmet-mode))
+  :hook
+  (sgml-mode . emmet-mode)
+  (css-mode .  emmet-mode)
+  (web-mode .  emmet-mode)
+  (vue-mode .  emmet-mode))
 
 (defun th/emmet-vue-expand ()
   "Use `emmet-expand-line' and set `emmet-use-css-transform' depending on the major mode."
   (interactive)
-  (let ((emmet-use-css-transform (derived-mode-p 'css-mode)))
-    (emmet-expand-line nil)))
+  (let ((emmet-use-css-transform (derived-mode-p 'css-mode))
+        (inhibit-message t))
+    (emmet-expand-line nil)
+
+    (when (derived-mode-p 'web-mode)
+      (web-mode-buffer-indent))))
 
 (setq httpd-port 8001)
 
