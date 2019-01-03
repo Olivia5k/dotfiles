@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [[ "$HOSTNAME" == "dragonisle" ]]; then
+if [[ $(hostname) == "dragonisle" ]]; then
     setxkbmap us
 else
     setxkbmap ${1:-qwerty-a6-us}
