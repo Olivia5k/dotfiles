@@ -8,6 +8,7 @@
 (use-package ivy)
 (use-package autothemer)
 (use-package tramp)
+(use-package diminish)
 
 ;; This uses the `browser-app` command from the dotfiles repo and puts browser
 ;; configuration outside of emacs.
