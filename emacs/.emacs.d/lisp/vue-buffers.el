@@ -171,7 +171,7 @@ corresponding section of the Vue file and save that one."
 
 (define-minor-mode vue-buffers-mode
   "Tools to handle sections in Vue.js files as separate buffers."
-  t "🎇" vue-buffers-mode-map)
+  nil "🎇" vue-buffers-mode-map)
 
 (add-hook 'vue-mode-hook 'vue-buffers-mode)
 
