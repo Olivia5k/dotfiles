@@ -145,8 +145,8 @@ Insert it if it does not exist."
 (use-package web-mode
   :after vue-mode
   :bind (:map web-mode-map
-              ("M-a" . web-mode-element-beginning)
-              ("M-e" . web-mode-element-end)
+              ("M-a" . web-mode-element-previous)
+              ("M-e" . web-mode-element-next)
               ("M-h" . web-mode-mark-and-expand))
 
   :config
