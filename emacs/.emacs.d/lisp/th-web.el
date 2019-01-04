@@ -163,6 +163,9 @@ Insert it if it does not exist."
   (setq emmet-indentation 2)
   (setq emmet-insert-flash-time 0.01)
 
+  :config
+  (unbind-key "C-c C-c w" emmet-mode-keymap)
+
   :hook
   (sgml-mode . emmet-mode)
   (css-mode .  emmet-mode)
