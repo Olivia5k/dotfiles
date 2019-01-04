@@ -6,15 +6,20 @@
       (with-current-buffer buffer
         (beginning-of-buffer)
 
-        (let* ((min
-                ;; The first position is directly after the newline after the section opener
-                (+ (re-search-forward (format "^<%s.*>" section) nil t) 1))
-               ;; The second position is at the beginning of the line with the section closer
-               (max (progn
-                      (re-search-forward (format "</%s>" section) nil t)
-                      (beginning-of-line)
-                      (point))))
-          (list min max))))))
+        (condition-case nil
+            (let* ((min
+                    ;; The first position is directly after the newline after the section opener
+                    (+ (re-search-forward (format "^<%s.*>" section) nil t) 1))
+                   ;; The second position is at the beginning of the line with the section closer
+                   (max (progn
+                          (re-search-forward (format "</%s>" section) nil t)
+                          (beginning-of-line)
+                          (point))))
+              (list min max))
+
+          ;; The primary use case for this is whenever a tag is missing
+          (error
+           (list -1 -1)))))))
 
 (defun vue-buffers-sections (&optional buffer)
   "Returns the positions of all the sections in BUFFER"
