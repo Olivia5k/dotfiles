@@ -64,6 +64,6 @@
 (defweby view "v" (recenter))
 (defweby clone "c" (web-mode-element-clone arg))
 ;TODO: Breaks the web-mode binding when in mmm
-;; (defweby fold "f" (web-mode-fold-or-unfold))
+(defweby fold "f" (web-mode-fold-or-unfold))
 
 (provide 'th-weby)
