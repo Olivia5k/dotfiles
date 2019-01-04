@@ -150,6 +150,8 @@ corresponding section of the Vue file and save that one."
 (defvar vue-buffers-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-c") 'vue-buffers-switch-buffer)
+    (define-key map (kbd "C-c C-r") 'vue-buffers-switch-buffer)
+    (define-key map (kbd "C-c C-m") 'vue-buffers-switch-buffer)
     (define-key map (kbd "C-c C-t") 'vue-buffers-goto-template)
     (define-key map (kbd "C-c C-s") 'vue-buffers-goto-style)
     (define-key map (kbd "C-c C-j") 'vue-buffers-goto-script)
