@@ -126,6 +126,8 @@ corresponding section of the Vue file and save that one."
           (let* ((pos (vue-buffers-get-section-positions section)))
             ;; Delete the original contents between the tags
             (delete-region (car pos) (cadr pos))
+            ;; Go back to where the section starts
+            (goto-char (car pos))
             (insert contents)
             (save-buffer))))
     (save-buffer)))
