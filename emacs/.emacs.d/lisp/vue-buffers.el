@@ -93,23 +93,33 @@ switch back to root buffer."
          (section (or section (vue-buffers-current-section buffer)))
          (name (format "%s<%s>" (buffer-name buffer) section))
          (positions (vue-buffers-get-section-positions section buffer))
-         (new (get-buffer-create name)))
+         (new (get-buffer name))
+         (created nil))
 
-    (with-current-buffer new
-      (erase-buffer)
-      (insert-buffer-substring buffer (nth 0 positions) (nth 1 positions))
+    (when (not new)
+      ;; If there isn't already a buffer, we should create it
+      (setq new (get-buffer-create name))
+      (setq created t)
 
-      (cond
-       ((eq section 'template)
-        (web-mode))
-       ((eq section 'script)
-        (js-mode))
-       ((eq section 'style)
-        (scss-mode)))
+      (with-current-buffer new
+        (erase-buffer)
+        (insert-buffer-substring buffer (nth 0 positions) (nth 1 positions))
 
-      (vue-buffers-mode 1))
+        (cond
+         ((eq section 'template)
+          (web-mode))
+         ((eq section 'script)
+          (js-mode))
+         ((eq section 'style)
+          (scss-mode)))
 
-    (switch-to-buffer new)))
+        (vue-buffers-mode 1)))
+
+    (switch-to-buffer new)
+
+    ;; Lastly, check if we created the buffer. If we did, we want to go to the top of it
+    (when created
+      (goto-char (point-min)))))
 
 ;;;###autoload
 (defun vue-buffers-save-buffer (&optional section buffer)
