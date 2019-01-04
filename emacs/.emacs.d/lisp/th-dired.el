@@ -25,7 +25,6 @@
 (bind-key "<left>" 'dired-jump dired-mode-map)
 (bind-key "<right>" 'dired-find-file dired-mode-map)
 
-(use-package dired-subtree)
 (use-package wdired)
 
 (defun th/dired-goto-root ()
