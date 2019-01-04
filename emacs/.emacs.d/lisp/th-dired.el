@@ -22,6 +22,8 @@
 (bind-key "~" 'th/dired-goto-home dired-mode-map)
 (bind-key "h" 'dired-omit-mode dired-mode-map)
 (bind-key "e" 'th/eshell-dired dired-mode-map)
+(bind-key "<left>" 'dired-jump dired-mode-map)
+(bind-key "<right>" 'dired-find-file dired-mode-map)
 
 (use-package dired-subtree)
 (use-package wdired)
