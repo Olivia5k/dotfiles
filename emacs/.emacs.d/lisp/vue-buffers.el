@@ -121,7 +121,7 @@ corresponding section of the Vue file and save that one."
   (if (vue-buffers-special-p)
       (let* ((buffer (or buffer (current-buffer)))
              (section (or section (vue-buffers-current-section buffer)))
-             (contents (buffer-substring (point-min) (point-max))))
+             (contents (buffer-substring-no-properties (point-min) (point-max))))
         (with-current-buffer (vue-buffers-root-buffer buffer)
           (let* ((pos (vue-buffers-get-section-positions section)))
             ;; Delete the original contents between the tags
