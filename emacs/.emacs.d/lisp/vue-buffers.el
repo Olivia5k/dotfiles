@@ -12,7 +12,7 @@
                     (+ (re-search-forward (format "^<%s.*>" section) nil t) 1))
                    ;; The second position is at the beginning of the line with the section closer
                    (max (progn
-                          (re-search-forward (format "</%s>" section) nil t)
+                          (re-search-forward (format "^</%s>" section) nil t)
                           (beginning-of-line)
                           (point))))
               (list min max))
