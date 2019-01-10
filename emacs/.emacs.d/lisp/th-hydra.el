@@ -63,6 +63,7 @@ _w_ whitespace-mode:   %`whitespace-mode
 (defhydra th/exec-hydra (:foreign-keys warn :exit t :columns 5)
   "Execution"
   ("C-c" (projectile-switch-project-by-name "~/src/github.com/thiderman/dotfiles") "config")
+  ("C-g" (magit-status "~/src/github.com/thiderman/dotfiles") "conf magit")
   ("d" (find-file "/ssh:di:") "dragonisle")
   ("C-d" daemons "daemons")
   ("f" hydra-flycheck/body "flycheck")
