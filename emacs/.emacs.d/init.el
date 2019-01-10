@@ -96,3 +96,4 @@
 (require 'th-weby)
 (require 'th-last)
 (require 'vue-buffers)
+(require 'th-find-file)
