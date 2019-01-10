@@ -29,7 +29,7 @@
 (use-package fill-column-indicator
   :config
   (setq fci-rule-color "#4b2d54")
-  (setq-default fill-column 100))
+  (setq-default fill-column 80))
 (use-package paredit
   :diminish paredit-mode)
 (use-package restclient
