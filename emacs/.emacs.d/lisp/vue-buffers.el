@@ -96,30 +96,49 @@ switch back to root buffer."
          (new (get-buffer name))
          (created nil))
 
+    (when (= -1 (nth 0 positions))
+      (user-error "No vue section found for tag '%s'" section))
+
     (when (not new)
       ;; If there isn't already a buffer, we should create it
-      (setq new (get-buffer-create name))
-      (setq created t)
-
-      (with-current-buffer new
-        (erase-buffer)
-        (insert-buffer-substring buffer (nth 0 positions) (nth 1 positions))
-
-        (cond
-         ((eq section 'template)
-          (web-mode))
-         ((eq section 'script)
-          (js-mode))
-         ((eq section 'style)
-          (scss-mode)))
-
-        (vue-buffers-mode 1)))
+      (setq new (vue-buffers--create-buffer name buffer section)))
 
     (switch-to-buffer new)
 
     ;; Lastly, check if we created the buffer. If we did, we want to go to the top of it
-    (when created
+    (when (not new)
       (goto-char (point-min)))))
+
+(defun vue-buffers--create-buffer (name buffer section)
+  "Make a dedicated buffer.
+
+Returns the newly created buffer."
+  (let ((new (get-buffer-create name))
+        (positions (vue-buffers-get-section-positions section buffer)))
+
+    (with-current-buffer name
+      ;; Do the setup
+      (erase-buffer)
+      (insert-buffer-substring buffer (nth 0 positions) (nth 1 positions))
+
+      ;; Make sure the buffer is revertable
+      (setq-local revert-buffer-function
+                  (lambda (_ignore-auto _noconfirm)
+                    (vue-buffers--create-buffer name buffer section)))
+
+      ;; Set the modes
+      (cond
+       ((eq section 'template)
+        (web-mode))
+       ((eq section 'script)
+        (js-mode))
+       ((eq section 'style)
+        (scss-mode)))
+
+      (vue-buffers-mode 1))
+
+    new))
+
 
 ;;;###autoload
 (defun vue-buffers-save-buffer (&optional section buffer)
