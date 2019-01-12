@@ -97,3 +97,4 @@
 (require 'th-last)
 (require 'vue-buffers)
 (require 'th-find-file)
+(require 'th-sql)
