@@ -50,14 +50,13 @@
 
 (defhydra th/drunkenfall-hydra (:foreign-keys warn :exit t)
   "DrunkenFall"
-  ("s-M-d" th/start-drunkenfall "start")
-  ("g" (browse-url "https://dev.drunkenfall.com") "browse")
+  ("d" th/start-drunkenfall "start")
+  ("f" (projectile-switch-project-by-name "~/src/gitlab.com/one-eye/drunkenfall") "files")
+  ("g" (magit-status "~/src/gitlab.com/one-eye/drunkenfall") "magit")
   ("h" (find-file "/ssh:df:/root/src/github.com/drunkenfall/drunkenfall") "host")
   ("t" th/drunkenfall-term "terminal")
-  ("RET" th/drunkenfall-term "terminal")
-  ("d" th/drunkenfall-db "get db")
   ("p" th/drunkenfall-psql "psql"))
 
-(global-set-key (kbd "s-M-d") 'th/drunkenfall-hydra/body)
+(global-set-key (kbd "C-c d") 'th/drunkenfall-hydra/body)
 
 (provide 'th-drunkenfall)
