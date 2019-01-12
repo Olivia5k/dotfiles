@@ -292,6 +292,8 @@ there's a region, all lines that region covers will be duplicated."
   :config
   (whole-line-or-region-global-mode 1))
 
+(bind-key "M-w" 'whole-line-or-region-kill-ring-save)
+
 ;; Hydra that can be used to gradually increase or decrease hex
 ;; colors. Very useful when designing color themes!
 (defhydra th/hexrgb-hydra (:foreign-keys warn)

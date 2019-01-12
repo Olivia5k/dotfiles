@@ -94,63 +94,6 @@ case for this."
 
 (global-set-key (kbd "C-q") 'th/kill-window)
 
-
-;; http://oremacs.com/2015/02/04/pre-hydra-post/
-(defhydra hydra-window (:columns 4)
-  "window"
-  ("h" windmove-left)
-  ("j" windmove-down)
-  ("k" windmove-up)
-  ("l" windmove-right)
-  ("H" shrink-window-horizontally)
-  ("J" shrink-window)
-  ("K" enlarge-window)
-  ("L" enlarge-window-horizontally)
-  ("f" projectile-find-file "file" :color blue)
-  ("p" projectile-switch-project "project" :color blue)
-  ("b" th/balance-windows "balance")
-  ("e" next-error "next error")
-  ("E" previous-error "prev error")
-  ("M-e" first-error "first error" :color blue)
-  ("n" new-frame "new frame" :color blue)
-  ("a" (lambda ()
-         (interactive)
-         (ace-window 1)
-         (add-hook 'ace-window-end-once-hook
-                   'hydra-window/body)
-         (throw 'hydra-disable t))
-   "ace")
-  ("s" th/split-vertically "vert")
-  ("z" th/split-horizontally "horz")
-  ("w" (lambda ()
-         (interactive)
-         (ace-window 4)
-         (add-hook 'ace-window-end-once-hook
-                   'hydra-window/body)
-         (throw 'hydra-disable t))
-   "swap")
-  ("t" transpose-frame "transpose")
-  ("d" (lambda ()
-         (interactive)
-         (ace-window 16)
-         (add-hook 'ace-window-end-once-hook
-                   'hydra-window/body)
-         (th/balance-windows)
-         (throw 'hydra-disable t))
-   "del")
-  ("o" delete-other-windows "one" :color blue)
-  ("i" ace-maximize-window "ace-one" :color blue)
-  ("q" nil "cancel"))
-
-(defun th/copy-or-hydra-window ()
-  "M-w without a region is terrible. Make it useful instead."
-  (interactive)
-  (if (use-region-p)
-      (kill-ring-save (region-beginning) (region-end))
-    (hydra-window/body)))
-
-(global-set-key (kbd "M-w") 'th/copy-or-hydra-window)
-
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'th/split-horizontally)
 (global-set-key (kbd "M-3") 'th/split-vertically)
