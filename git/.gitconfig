@@ -35,34 +35,6 @@
 [core]
   editor = emacsclient -nw
   excludesfile = ~/.cvsignore
-[alias]
-  st          = status
-  ci          = commit
-  ca          = commit --amend
-  br          = branch -avv
-  co          = checkout
-  who         = shortlog -s --
-  pr          = pull-request
-  lg          = log --abbrev-commit --decorate --date=relative --format=format:'%C(bold 239)%h%C(reset) %C(bold 103)%an%C(reset)%C(auto)%d%C(reset) %s%C(reset) %C(bold black)(%ar)%C(reset) '
-  lgg         = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold 239)%h%C(reset) %C(bold 103)%an%C(reset)%C(auto)%d%C(reset) %s%C(reset) %C(bold black)(%ar)%C(reset) '
-  lgc         = log ORIG_HEAD.. --stat --no-merges
-  lgp         = log --pretty=format:'%Cred%h%Creset -- %cn, %cr\t%Cgreen%s%Creset'
-  staged      = diff --cached
-  wdiff       = diff --color-words
-  ignored     = ls-files --others
-  oneline     = log --oneline --decorate
-  changes     = diff --name-status -r
-  wdiff       = diff --color-words
-  wlog        = log -p --word-diff=color
-  mnc         = merge --no-commit
-  tags        = for-each-ref --sort='*authordate' --format='%(tag)' refs/tags
-  unpushed    = cherry -v
-  whatrelease = name-rev --name-only
-  contains    = branch --contains
-  repourl     = config --get remote.origin.url
-  undo        = reset --soft HEAD^
-  shallow     = clone --depth=1
-
 [push]
 	default = tracking
 	followTags = true
