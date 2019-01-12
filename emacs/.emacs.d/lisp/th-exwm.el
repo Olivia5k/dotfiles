@@ -191,7 +191,7 @@ If there are multiple, complete for them."
     (exwm-randr--refresh)))
 
 (exwm-input-set-key (kbd "s-<prior>") (lambda () (interactive)
-                       (shell-command "keyboard-setup")
+                       (shell-command "keyboard-setup qwerty-a6-us")
                        (message "a6 loaded")))
 (exwm-input-set-key (kbd "s-<next>") (lambda () (interactive)
                       (shell-command "keyboard-setup us")
