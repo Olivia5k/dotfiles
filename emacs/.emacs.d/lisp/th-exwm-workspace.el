@@ -11,7 +11,8 @@
 
 (defhydra th/ew/hydra (:exit t :columns 3)
   "exwm"
-  ("S-SPC" th/exwm-randr-hook "screen refresh")
+  ("SPC" exwm-execute "exec")
+  ("s-SPC" exwm-execute "exec")
   ("q" (exwm-execute "chromium") "chromium")
   ("RET" (exwm-execute "kitty") "terminal")
   ("c" (th/exwm-terminal "ctop") "ctop")
