@@ -1,5 +1,5 @@
 [global]
-    font = Yanone kaffeesatz 16
+    font = Lato 13
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
